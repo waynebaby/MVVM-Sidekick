@@ -118,3 +118,9 @@ Supported snippets:
 example:
 
 	propvm +tab +tab
+
+[waynebabyweibo] [waynebabytwitter] [waynebabymail]
+
+[waynebabyweibo]: http://www.weibo.com/waynebabywang "@Î¤¶÷±°±É"
+[waynebabytwitter]: http://twitter.com/waynebaby "@Waynebaby"
+[waynebabymail]: mailto:blackshaman_wayne@hotmail.com "MSN"
