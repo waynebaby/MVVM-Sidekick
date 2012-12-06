@@ -119,8 +119,12 @@ example:
 
 	propvm +tab +tab
 
-[waynebabyweibo] [waynebabytwitter] [waynebabymail]
 
-[waynebabyweibo]: http://www.weibo.com/waynebabywang "@Î¤¶÷±°±É"
-[waynebabytwitter]: http://twitter.com/waynebaby "@Waynebaby"
-[waynebabymail]: mailto:blackshaman_wayne@hotmail.com "MSN"
+
+
+
+[Î¢²©] [twitter] [Mail]
+
+[Î¢²©]: http://www.weibo.com/waynebabywang "Î¤¶÷±°±É"
+[twitter]: http://twitter.com/waynebaby "Waynebaby"
+[Mail]: mailto:blackshaman_wayne@hotmail.com "MSN Skype"
