@@ -125,6 +125,6 @@ example:
 
 [Î¢²©] [twitter] [Mail]
 
-[Î¢²©]: http://www.weibo.com/waynebabywang "Î¤¶÷±°±É"
+[Î¢²©]: http://www.weibo.com/waynebabywang "WaynebabyWang"
 [twitter]: http://twitter.com/waynebaby "Waynebaby"
 [Mail]: mailto:blackshaman_wayne@hotmail.com "MSN Skype"
