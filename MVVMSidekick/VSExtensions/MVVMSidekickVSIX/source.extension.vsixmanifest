@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="0.91" Language="en-US" Publisher="Wayne Wang in MSFT" />
+    <DisplayName>MVVMSidekickVSIX</DisplayName>
+    <Description>Empty VSIX Project.</Description>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="11.0" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
+    <Dependency d:Source="Installed" Id="NuPackToolsVsix.Microsoft.67e54e40-0ae3-42c5-a949-fddf5739e7a5" DisplayName="NuGet Package Manager" Version="[2.1.31002.9028,3.0)" d:InstallSource="Download" />
+  </Dependencies>
+  <Assets>
+    <Asset d:Source="Project" Type="Microsoft.VisualStudio.ItemTemplate" d:ProjectName="MVVMSidekickViewWithVM.MordenUI" d:TargetPath="|MVVMSidekickViewWithVM.MordenUI;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickDataModel.MordenUI" d:TargetPath="|MVVMSidekickDataModel.MordenUI;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\BlankAppTemplate_MVVMSidekick.zip" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\GridAppTemplate_MVVMSidekick.zip" />
+  </Assets>
+</PackageManifest>

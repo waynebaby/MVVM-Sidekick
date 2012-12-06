@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="MVVMSidekick.ViewModels.DefaultViewModel" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.ViewModels.BindableBase" Collapsed="true">
+    <Position X="3" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBAABAACACAAAQAACEAAAAAAgAAgQQgAQAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MVVMSidekick.ViewModels.DisposableExtensions" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.ViewModels.Property&lt;TProperty&gt;" Collapsed="true">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.ViewModels.ValueContainer&lt;TProperty&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAABAAAAAgAwAAAAAAAAAAEMAAAAAAAAAiAAJAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MVVMSidekick.ViewModels.ValueChangedEventArgs&lt;TProperty&gt;" Collapsed="true">
+    <Position X="13.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.ViewModels.BindableBase&lt;TBindable&gt;" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAABAAAAAAAAQAACAAAAAACgAAKAQAAAAAAAAAQIRA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.ViewModels.ViewModelBase&lt;TViewModel, TResult&gt;" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAIAAAAAAAQABAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.ViewModels.ViewModelBase&lt;TViewModel&gt;" Collapsed="true">
+    <Position X="2" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAkAAAAAAAAAASAIAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MVVMSidekick.ViewModels.CommandModel&lt;TCommand, TResource&gt;" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgAAAAQAIAACACQAAEAAAAAAACAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MVVMSidekick.ViewModels.CommandModelExtensions" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.EventRouter.EventRouter" Collapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.EventRouter.NavigateCommandEventArgs" Collapsed="true">
+    <Position X="13.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAQAAEAAAAAEAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.EventRouter.SaveStateEventArgs" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.EventRouter.EventRouterHelper" Collapsed="true">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.EventRouter.RouterEventData&lt;TEventArgs&gt;" Collapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAIAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.Commands.EventCommandEventArgs" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAQAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.Commands.EventCommandHelper" Collapsed="true">
+    <Position X="8" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVVMSidekick.Commands.EventCommandBase" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAABCAAQAAEQAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MVVMSidekick.ValueConverters.GenericValueConverter&lt;TSource, TTarget, TParemeter&gt;" Collapsed="true">
+    <Position X="5.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAYAAAIAAAAIAIAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MVVMSidekick.ValueConverters.ViewModelDataErrorInfoTextConverter" Collapsed="true">
+    <Position X="5.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="MVVMSidekick.ViewModels.NoResult" Collapsed="true">
+    <Position X="9.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MVVMSidekick.ViewModels.ErrorEntity" Collapsed="true">
+    <Position X="8" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAIAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="System.ComponentModel.IDataErrorInfo" Collapsed="true">
+    <Position X="11.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MVVMSidekick.ViewModels.IBindableBase">
+    <Position X="5" Y="8.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>ABAABAAAACAAAQAACAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MVVMSidekick.ViewModels.IViewModelBase">
+    <Position X="5.25" Y="11.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAACAAAAAAAAEAAAAAAAAAACAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Navigator" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="MVVMSidekick.ViewModels.IErrorInfo" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MVVMSidekick.ViewModels.IValueCanSet&lt;T&gt;" Collapsed="true">
+    <Position X="8" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MVVMSidekick.ViewModels.IValueCanGet&lt;T&gt;" Collapsed="true">
+    <Position X="13.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MVVMSidekick.ViewModels.IValueContainer" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MVVMSidekick.ViewModels.ICommandModel&lt;TCommand, TResource&gt;" Collapsed="true">
+    <Position X="8" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAIAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MVVMSidekick.Commands.ICommandWithViewModel" Collapsed="true">
+    <Position X="9.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MVVMSidekick.ViewModels.IFrameNavigator">
+    <Position X="9.5" Y="10.75" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAEAAAAAAAAAAQA=</HashCode>
+      <FileName>MVVMWindowsMordenStyleExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MVVMSidekick.ValueConverters.ErrorInfoTextConverterOptions" Collapsed="true">
+    <Position X="8" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Users\waywa\Documents\GitHub\Table-Game-Sidekick\Code\CommonCode\MVVM\MVVM.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>
