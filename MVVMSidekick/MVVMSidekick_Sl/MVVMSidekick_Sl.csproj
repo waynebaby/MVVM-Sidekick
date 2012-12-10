@@ -34,6 +34,7 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>Bin\Debug\MVVMSidekick_Sl.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,16 +52,16 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.Reactive.Core">
-      <HintPath>..\..\Code\TableGameSidekick_Metro\packages\Rx-Core.2.0.20823\lib\SL5\System.Reactive.Core.dll</HintPath>
+      <HintPath>..\packages\Rx-Core.2.0.21114\lib\SL5\System.Reactive.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\..\Code\TableGameSidekick_Metro\packages\Rx-Interfaces.2.0.20823\lib\SL5\System.Reactive.Interfaces.dll</HintPath>
+      <HintPath>..\packages\Rx-Interfaces.2.0.21114\lib\SL5\System.Reactive.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Linq">
-      <HintPath>..\..\Code\TableGameSidekick_Metro\packages\Rx-Linq.2.0.20823\lib\SL5\System.Reactive.Linq.dll</HintPath>
+      <HintPath>..\packages\Rx-Linq.2.0.21114\lib\SL5\System.Reactive.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.PlatformServices">
-      <HintPath>..\..\Code\TableGameSidekick_Metro\packages\Rx-PlatformServices.2.0.20823\lib\SL5\System.Reactive.PlatformServices.dll</HintPath>
+      <HintPath>..\packages\Rx-PlatformServices.2.0.21114\lib\SL5\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
@@ -89,6 +90,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>cd $(TargetDir)..\..\..
+
+copy $(TargetDir)$(SolutionName)*.* Bin
+
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

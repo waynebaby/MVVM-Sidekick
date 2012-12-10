@@ -554,16 +554,6 @@
             是否能执行的值产生变化的事件
             </summary>
         </member>
-        <member name="T:MVVMSidekick.Controls.CalcNumberPad">
-            <summary>
-            一个通过扩展属性附加到界面上 且与Textbox绑定的数字编辑器
-            </summary>
-        </member>
-        <member name="P:MVVMSidekick.Controls.CalcNumberPad_Model.ButtonPushCommand">
-            <summary>
-            任意的Button Push，按钮的CommandName用 Parameter传递
-            </summary>
-        </member>
         <member name="T:MVVMSidekick.Views.LayoutAwarePage">
             <summary>
             Typical implementation of Page that provides several important conveniences:
