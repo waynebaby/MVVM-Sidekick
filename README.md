@@ -1,59 +1,54 @@
-
-MVVM-Sidekick
+MVVM-Sidekick (Now for Windows Runtime XAML only)
 =============
-MVVMÃÜÓÑ
-===================
+> MVVMå¯†å‹ (ç›®å‰ä»…æ”¯æŒWin8)
+> ===================
 
 
-A Modern light-weight MVVM framework based on RX and TPL await
+A Modern light-weight MVVM framework based on RX and TPL await. The CORE of this framework is ViewModelBase Type which you can use it with this framework, or use it with other framework, as well.
 
-ÇáÁ¿¼¶MVVM¿ò¼Ü,»ùÓÚRXÓë awaitµÈĞÂ¼¼Êõ 
+> æœ¬é¡¹ç›®æ˜¯ä¸€ä¸ªåŸºäºRXä¸ awaitç­‰æ–°æŠ€æœ¯çš„è½»é‡çº§MVVMæ¡†æ¶ã€‚å…¶æ ¸å¿ƒæ˜¯ViewModelBaseç±»å‹ï¼Œä½ ç”šè‡³å¯ä»¥æŠŠå®ƒæ‹¿å‡ºå»å’Œåˆ«çš„æ¡†æ¶ä¸€èµ·ä½¿ç”¨ã€‚
 
 
+The aim of this project: This project has learned a lot of good ideas from Prism and Reactive UI/Command project, and it is using new techs offered by .Net 4.5 and Windows Runtime. It offers a suitable foundation for new tech environment, based on a cool ViewModelBase and ReactiveCommand. 
 
-The aim of this project: Using new techs offered by .Net 4.5 and Windows Runtime, design a suitable foundation for new tech environment, based on a cool ViewModelBase and ReactiveCommand.
-
-Ä¿µÄÊÇ¼¯ºÏReactive Command, Prism µÈ¿ò¼ÜµÄÓÅµã£¬Ó¦¶Ô.Net 4.5 ºÍ Windows Runtime´øÀ´µÄ±ä»¯£¬ÎªĞÂ¼¼Êõ»·¾³Á¿Éí´òÔìÒ»Ì×ÒÔViewModelBase/ReactiveCommandÎªºËĞÄµÄ»ù´¡¡£
-
+> é¡¹ç›®çš„ç›®çš„ï¼šé›†åˆReactive UI/Command, Prism ç­‰æ¡†æ¶çš„ä¼˜ç‚¹ï¼Œåº”å¯¹.Net 4.5 å’Œ Windows Runtimeå¸¦æ¥çš„å˜åŒ–ï¼Œä¸ºæ–°æŠ€æœ¯ç¯å¢ƒé‡èº«æ‰“é€ ä¸€å¥—ä»¥ViewModelBase/ReactiveCommandä¸ºæ ¸å¿ƒçš„åŸºç¡€ã€‚
 
 
 MVVM-Sidekick is design on Windows 8 Modern Style Apps, and we got that ambition to cover all modern XAML runtime. 
 
-´ÓÉè¼Æ¿ªÊ¼¾ÍÒÔWindows 8 Style App×÷ÎªÔËĞĞ»·¾³½øĞĞ²âÊÔ£¬Ò°ĞÄ¸²¸ÇËùÓĞXAMLÔËĞĞ»·¾³¡£
+> ä»è®¾è®¡å¼€å§‹å°±ä»¥Windows 8 Style Appä½œä¸ºè¿è¡Œç¯å¢ƒè¿›è¡Œæµ‹è¯•ï¼Œé‡å¿ƒè¦†ç›–æ‰€æœ‰XAMLè¿è¡Œç¯å¢ƒã€‚
 
 
-
-What¡¯s good.
+Whatâ€™s the point.
 ============
-¹¦ÄÜÌØÉ«
-=======
+> åŠŸèƒ½ç‰¹è‰²
+> =======
+
 1.	Full support for Data Contract Serializing. You can keep your status that VM got into JSON and XML. Easy steps after restore the data to make vm works again.
 
-	È«ÃæÖ§³ÖDataContractĞòÁĞ»¯ ¿ÉÒÔ½«Ò»¸öVMµÄÈ«²¿×´Ì¬ÓÃÈÎºÎ·½Ê½±£´æÎªJSon/XML·´ĞòÁĞ»¯ºóÖ»ĞèÒª¼òµ¥²Ù×÷¾Í¿ÉÒÔ»Ö¸´¹¤×÷
-
+> 	å…¨é¢æ”¯æŒDataContractåºåˆ—åŒ– å¯ä»¥å°†ä¸€ä¸ªVMçš„å…¨éƒ¨çŠ¶æ€ç”¨ä»»ä½•æ–¹å¼ä¿å­˜ä¸ºJSon/XMLååºåˆ—åŒ–ååªéœ€è¦ç®€å•æ“ä½œå°±å¯ä»¥æ¢å¤å·¥ä½œ
 
 
 2.	This is light-weight one. Dll or code can works in you projects either. You just need install Reactive Extensions with nuget.
 
-	ÇáÁ¿¼¶´úÂë¼¶¿ò¼Ü£¬²»±Ø°²×°È«²¿DLL»òÕßÒıÓÃ¹¤³Ì£¬Ö»ĞèÒª½«Ö¸¶¨´úÂëÎÄ¼ş¼ÓÈëÄãµÄ¹¤³ÌÇĞ°²×°Reactive Extensions¾Í¿ÉÒÔÓÃ¡£
-
+> 	è½»é‡çº§ä»£ç çº§æ¡†æ¶ï¼Œä¸å¿…å®‰è£…å…¨éƒ¨DLLæˆ–è€…å¼•ç”¨å·¥ç¨‹ï¼Œåªéœ€è¦å°†æŒ‡å®šä»£ç æ–‡ä»¶åŠ å…¥ä½ çš„å·¥ç¨‹åˆ‡å®‰è£…Reactive Extensionså°±å¯ä»¥ç”¨ã€‚
 
 
 3.	Model Members in MVVM-Sidekick are communicated amount each other with events. Linq-Like code with RX can filter/subscribe events easily, and subscription could be disposed with model involved.
 
-	ModelËùÓĞµÄ³ÉÔ±Ö®¼äÓÃÊÂ¼şĞòÁĞÇı¶¯½»»¥£¬Ö»ĞèÒªÓÃ Linq-Like Óï·¨½øĞĞÅäÖÃºÍ¶©ÔÄ£¬¶©ÔÄÔÚVM Ïú»ÙÊ±×Ô¶¯È¡Ïû¡£
+>	Modelæ‰€æœ‰çš„æˆå‘˜ä¹‹é—´ç”¨äº‹ä»¶åºåˆ—é©±åŠ¨äº¤äº’ï¼Œåªéœ€è¦ç”¨ Linq-Like è¯­æ³•è¿›è¡Œé…ç½®å’Œè®¢é˜…ï¼Œè®¢é˜…åœ¨VM é”€æ¯æ—¶è‡ªåŠ¨å–æ¶ˆã€‚
 
 
 
-4.	You can configure business logic of your properties and commands right at where they were declared. This will reduce your jumping between different parts in one VM file. (This kills me when I was working with other frameworks:you cannot configure a DelayCommand at the property/field declaration part because ¡°this¡± instance is not ready yet .)
+4.	You can configure business logic of your properties and commands right at where they were declared. This will reduce your jumping between different parts in one VM file. (This kills me when I was working with other frameworks:you cannot configure a DelayCommand at the property/field declaration part because â€œthisâ€ instance is not ready yet .)
 
-	¿ÉÒÔÔÚÉùÃ÷propertyµÄ´úÂë´¦ÅäÖÃpropertyµÄÒµÎñÏ¸½Ú£¬¿ÉÒÔÔÚÉùÃ÷commandµÄ´úÂë´¦ÅäÖÃcommandµÄÒµÎñÏ¸½Ú,ÕâÑùÄã¾Í²»ÓÃÔÚÒ»¸övmÀïÃæ²»Í¬µÄ´úÂë¶ÎÌøÀ´ÌøÈ¥ÁË¡££¨ÓÃ±ğµÄ¿ò¼Ü¿ÉÀÛËÀÎÒÁË£¬ÉùÃ÷¸öcommand »¹²»ÄÜÔÚÉùÃ÷Ô­µØ³õÊ¼»¯£¬ÒòÎªthis»¹Ã»ÓĞÊµÀı»¯£©
+	>å¯ä»¥åœ¨å£°æ˜propertyçš„ä»£ç å¤„é…ç½®propertyçš„ä¸šåŠ¡ç»†èŠ‚ï¼Œå¯ä»¥åœ¨å£°æ˜commandçš„ä»£ç å¤„é…ç½®commandçš„ä¸šåŠ¡ç»†èŠ‚,è¿™æ ·ä½ å°±ä¸ç”¨åœ¨ä¸€ä¸ªvmé‡Œé¢ä¸åŒçš„ä»£ç æ®µè·³æ¥è·³å»äº†ã€‚ï¼ˆç”¨åˆ«çš„æ¡†æ¶å¯ç´¯æ­»æˆ‘äº†ï¼Œå£°æ˜ä¸ªcommand è¿˜ä¸èƒ½åœ¨å£°æ˜åŸåœ°åˆå§‹åŒ–ï¼Œå› ä¸ºthisè¿˜æ²¡æœ‰å®ä¾‹åŒ–ï¼‰
 
 
 
 5.	You can also separate the business logic to your VM declaration into a decorator or factory something, to manage all code involved a USE CASE together, with the documenting organizing sequence, and you can also easily add more business everywhere if you like.
 
-	¿ÉÒÔ½«VMµÄÒµÎñÏ¸½ÚÅäÖÃÓëVMµÄ´´½¨Ê±»ú·ÖÀë£¬²»µ«¿ÉÒÔÔÚÊµÌåÍâÓÃ×°ÊÎÄ£Ê½½øĞĞÅúÁ¿ÅäÖÃ(ÕâÑù¿ÉÒÔÈÃ´úÂëÓëĞèÇóÎÄµµµÄ×éÖ¯Ë³Ğò¸ß¶ÈÍ³Ò»£¬±ãÓÚÎ¬»¤)£¬Ò²¿ÉÒÔ¸ù¾İĞèÒªÁÙÊ±×°ÊÎÔö¼ÓVMµÄ¹¦ÄÜ¡£
+	>å¯ä»¥å°†VMçš„ä¸šåŠ¡ç»†èŠ‚é…ç½®ä¸VMçš„åˆ›å»ºæ—¶æœºåˆ†ç¦»ï¼Œä¸ä½†å¯ä»¥åœ¨å®ä½“å¤–ç”¨è£…é¥°æ¨¡å¼è¿›è¡Œæ‰¹é‡é…ç½®(è¿™æ ·å¯ä»¥è®©ä»£ç ä¸éœ€æ±‚æ–‡æ¡£çš„ç»„ç»‡é¡ºåºé«˜åº¦ç»Ÿä¸€ï¼Œä¾¿äºç»´æŠ¤)ï¼Œä¹Ÿå¯ä»¥æ ¹æ®éœ€è¦ä¸´æ—¶è£…é¥°å¢åŠ VMçš„åŠŸèƒ½ã€‚
 
 
 
@@ -61,70 +56,63 @@ What¡¯s good.
 Performance
 ===========
 
-ĞÔÄÜÁÁµã
-========
+>æ€§èƒ½äº®ç‚¹
+>========
 
 Propery access supports JIT inline and also support Property Name-Value Access. 
 
-±ÈÆğÒ»°ãµÄ×ÖµäÄÚºËÓë×Ö¶ÎÄÚºË£¬ MVVMSidekick µÄVMBase¶ÔÓÚÊôĞÔ·ÃÎÊ²ÉÓÃ¿ÉÄÚÁªµÄÖ±½ÓÑ°Ö··½Ê½·ÃÎÊÌá¸ßËÙ¶È£¬ÇÒÈÔÄÜ±£³Ö×Ö¶ÎÃû×Öµä·ÃÎÊ
+>æ¯”èµ·ä¸€èˆ¬çš„å­—å…¸å†…æ ¸ä¸å­—æ®µå†…æ ¸ï¼Œ MVVMSidekick çš„VMBaseå¯¹äºå±æ€§è®¿é—®é‡‡ç”¨å¯å†…è”çš„ç›´æ¥å¯»å€æ–¹å¼è®¿é—®æé«˜é€Ÿåº¦ï¼Œä¸”ä»èƒ½ä¿æŒå­—æ®µåå­—å…¸è®¿é—®
 
 
 How To Use project template ?
 ===================
-ÈçºÎÊ¹ÓÃMVVMSidekickÏîÄ¿Ä£°å£¿
+å¦‚ä½•ä½¿ç”¨MVVMSidekické¡¹ç›®æ¨¡æ¿ï¼Ÿ
 ===================
 
 1.	Enter MVVMSidekick Folder
 
-	½øÈëMVVMSidekickÄ¿Â¼
+	>è¿›å…¥MVVMSidekickç›®å½•
 
 2.	Open MVVMSidekickVSIX.vsix , install the extension.
 
-	´ò¿ª MVVMSidekickVSIX.vsix°´ÕÕÌáÊ¾°²×°
+	>æ‰“å¼€ MVVMSidekickVSIX.vsixæŒ‰ç…§æç¤ºå®‰è£…
 
 3.	Create New Project using  MVVMSidekick template.
 
-	´´½¨ĞÂÏîÄ¿£¬ÔÚc#ÏîÄ¿ÖĞÕÒµ½ MVVMSidekick Ä£°å
+	>åˆ›å»ºæ–°é¡¹ç›®ï¼Œåœ¨c#é¡¹ç›®ä¸­æ‰¾åˆ° MVVMSidekick æ¨¡æ¿
 
 4.	Create MVVMSidekick Items in project.
 
-	ÔÚ´´½¨ºÃµÄÏîÄ¿ÖĞÓÃMVVM Sidekick ´úÂëÄ£°å ´´½¨DataModelºÍView/ViewModelÎÄ¼ş
+	>åœ¨åˆ›å»ºå¥½çš„é¡¹ç›®ä¸­ç”¨MVVM Sidekick ä»£ç æ¨¡æ¿ åˆ›å»ºDataModelå’ŒView/ViewModelæ–‡ä»¶
 
 
 
 
 Code snippets is needed when you use MVVMSidekick.
 ==============
-
-±¾¿ò¼ÜĞèÒª°²×°ÈçÏÂ´úÂë¿é¸¨Öú¿ª·¢
-==============
-
-
-Install-Package MVVMSidekick.Snippet 
+> 
+> æœ¬æ¡†æ¶éœ€è¦ä»£ç å—è¾…åŠ©å¼€å‘
+> ==============
+> 
 
 
 Supported snippets:
 
-Ö§³ÖÈçÏÂ³£ÓÃ´úÂë¿é£º
+>æ”¯æŒå¦‚ä¸‹å¸¸ç”¨ä»£ç å—ï¼š
 
-	propvm  	New Propery In Model
+<table  border="3"  cellpadding="12" cellspacing="3" bordercolor="#aaaaaa">                                                                               
+<tr><td>	propvm  </td><td>	New Propery In Model                                    </td><td>	åœ¨MVVMSidekick Binable/ViewModel ä¸­å¢åŠ å±æ€§</td>          </td> </tr>
+<tr><td>	vmcmd 	</td><td>	New Command In Model                                    </td> <td>	åœ¨MVVMSidekick Binable/ViewModel ä¸­å¢åŠ å‘½ä»¤               </td>  </tr>
+</table>
 
-	propvm  	ÔÚMVVMSidekick Binable/ViewModel ÖĞÔö¼ÓÊôĞÔ
-
-	vmcmd 		New Command In Model
-
-	vmcmd 		ÔÚMVVMSidekick Binable/ViewModel ÖĞÔö¼ÓÃüÁî
 
 example:
 
-	propvm +tab +tab
+	> propvm +tab +tab
 
 
+è”ç³»æ–¹å¼ï¼š [å¾®åš] [twitter] [Mail]
 
-
-
-[Î¢²©] [twitter] [Mail]
-
-[Î¢²©]: http://www.weibo.com/waynebabywang "WaynebabyWang"
+[å¾®åš]: http://www.weibo.com/waynebabywang "WaynebabyWang"
 [twitter]: http://twitter.com/waynebaby "Waynebaby"
 [Mail]: mailto:blackshaman_wayne@hotmail.com "MSN Skype"
