@@ -196,24 +196,19 @@ namespace MVVMSidekick
     {
 
 
-        public struct NavigateResult<TViewModel, TResult>
-        {
-            public Task<TViewModel> ViewModel { get; set; }
-            public Task<TResult> Result { get; set; }
-
-        }
 
 
 
-        public partial interface IViewModelBase
-        {
-            FrameNavigator Navigator { get; set; }
 
-        }
-        public abstract partial class ViewModelBase<TViewModel>
-        {
-            public FrameNavigator Navigator { get; set; }
-        }
+        //public partial interface IViewModel
+        //{
+        //    FrameNavigator Navigator { get; set; }
+
+        //}
+        //public abstract partial class ViewModelBase<TViewModel>
+        //{
+        //    public FrameNavigator Navigator { get; set; }
+        //}
     }
 
     namespace Views
@@ -228,491 +223,491 @@ namespace MVVMSidekick
 
         }
 
-        /// <summary>
-        /// Typical implementation of Page that provides several important conveniences:
-        /// <list type="bullet">
-        /// <item>
-        /// <description>Application view state to visual state mapping</description>
-        /// </item>
-        /// <item>
-        /// <description>GoBack, GoForward, and GoHome event handlers</description>
-        /// </item>
-        /// <item>
-        /// <description>Mouse and keyboard shortcuts for navigation</description>
-        /// </item>
-        /// <item>
-        /// <description>State management for navigation and process lifetime management</description>
-        /// </item>
-        /// <item>
-        /// <description>A default view model</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        [Windows.Foundation.Metadata.WebHostHidden]
-        public class LayoutAwarePage : Page
-        {
-            /// <summary>
-            /// Identifies the <see cref="DefaultViewModel"/> dependency property.
-            /// </summary>
-            public static readonly DependencyProperty DefaultViewModelProperty =
-                DependencyProperty.Register("DefaultViewModel", typeof(IViewModelBase),
-                typeof(LayoutAwarePage), new PropertyMetadata(new DefaultViewModel()));
-
-            private List<Control> _layoutAwareControls;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="LayoutAwarePage"/> class.
-            /// </summary>
-            public LayoutAwarePage()
-            {
-                if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
-
-                // Create an empty default view model
-                //this.DefaultViewModel = new ObservableDictionary<String, Object>();
-
-                // When this page is part of the visual tree make two changes:
-                // 1) Map application view state to visual state for the page
-                // 2) Handle keyboard and mouse navigation requests
-                this.Loaded += (sender, e) =>
-                {
-                    this.StartLayoutUpdates(sender, e);
-
-                    // Keyboard and mouse navigation only apply when occupying the entire window
-                    if (this.ActualHeight == Window.Current.Bounds.Height &&
-                        this.ActualWidth == Window.Current.Bounds.Width)
-                    {
-                        // Listen to the window directly so focus isn't required
-                        Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated +=
-                            CoreDispatcher_AcceleratorKeyActivated;
-                        Window.Current.CoreWindow.PointerPressed +=
-                            this.CoreWindow_PointerPressed;
-                    }
-                };
-
-                // Undo the same changes when the page is no longer visible
-                this.Unloaded += (sender, e) =>
-                {
-                    this.StopLayoutUpdates(sender, e);
-                    Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -=
-                        CoreDispatcher_AcceleratorKeyActivated;
-                    Window.Current.CoreWindow.PointerPressed -=
-                        this.CoreWindow_PointerPressed;
-                };
-
-                //var bEnable = new Binding()
-                //{
-                //    Source = this,
-                //    Path = new PropertyPath("DefaultViewModel.IsUIBusy"),
-                //    Mode = BindingMode.OneWay,
-                //    Converter = BooleanNotConverter.Instance,                
-                //};
-
-                //this.SetBinding(IsEnabledProperty, bEnable);
-
-            }
-
-
-
-            public IViewModelBase DefaultViewModel
-            {
-                get
-                {
-                    return this.GetValue(DefaultViewModelProperty) as IViewModelBase;
-                }
-
-                set
-                {
-                    DisposeViewModel();
-                    this.SetValue(DefaultViewModelProperty, value);
-                }
-            }
-
-            protected void DisposeViewModel()
-            {
-                var oldv = this.GetValue(DefaultViewModelProperty) as BindableBase;
-                if (oldv != null)
-                {
-                    try
-                    {
-                        oldv.Dispose();
-                    }
-                    catch (Exception)
-                    {
-
-
-                    }
-                }
-            }
-
-            #region Navigation support
-
-            /// <summary>
-            /// Invoked as an event handler to navigate backward in the page's associated
-            /// <see cref="Frame"/> until it reaches the top of the navigation stack.
-            /// </summary>
-            /// <param name="sender">Instance that triggered the event.</param>
-            /// <param name="e">Event data describing the conditions that led to the event.</param>
-            protected virtual void GoHome(object sender, RoutedEventArgs e)
-            {
-                // Use the navigation frame to return to the topmost page
-                if (this.Frame != null)
-                {
-                    while (this.Frame.CanGoBack) this.Frame.GoBack();
-                }
-            }
-
-            /// <summary>
-            /// Invoked as an event handler to navigate backward in the navigation stack
-            /// associated with this page's <see cref="Frame"/>.
-            /// </summary>
-            /// <param name="sender">Instance that triggered the event.</param>
-            /// <param name="e">Event data describing the conditions that led to the
-            /// event.</param>
-            protected virtual void GoBack(object sender, RoutedEventArgs e)
-            {
-                DefaultViewModel.Close();
-
-
-
-            }
-
-            /// <summary>
-            /// Invoked as an event handler to navigate forward in the navigation stack
-            /// associated with this page's <see cref="Frame"/>.
-            /// </summary>
-            /// <param name="sender">Instance that triggered the event.</param>
-            /// <param name="e">Event data describing the conditions that led to the
-            /// event.</param>
-            protected virtual void GoForward(object sender, RoutedEventArgs e)
-            {
-                //// Use the navigation frame to move to the next page
-                //if (this.Frame != null && this.Frame.CanGoForward) this.Frame.GoForward();
-            }
-
-            /// <summary>
-            /// Invoked on every keystroke, including system keys such as Alt key combinations, when
-            /// this page is active and occupies the entire window.  Used to detect keyboard navigation
-            /// between pages even when the page itself doesn't have focus.
-            /// </summary>
-            /// <param name="sender">Instance that triggered the event.</param>
-            /// <param name="args">Event data describing the conditions that led to the event.</param>
-            private void CoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender,
-                AcceleratorKeyEventArgs args)
-            {
-                var virtualKey = args.VirtualKey;
-
-                // Only investigate further when Left, Right, or the dedicated Previous or Next keys
-                // are pressed
-                if ((args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown ||
-                    args.EventType == CoreAcceleratorKeyEventType.KeyDown) &&
-                    (virtualKey == VirtualKey.Left || virtualKey == VirtualKey.Right ||
-                    (int)virtualKey == 166 || (int)virtualKey == 167))
-                {
-                    var coreWindow = Window.Current.CoreWindow;
-                    var downState = CoreVirtualKeyStates.Down;
-                    bool menuKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
-                    bool controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
-                    bool shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
-                    bool noModifiers = !menuKey && !controlKey && !shiftKey;
-                    bool onlyAlt = menuKey && !controlKey && !shiftKey;
-
-                    if (((int)virtualKey == 166 && noModifiers) ||
-                        (virtualKey == VirtualKey.Left && onlyAlt))
-                    {
-                        // When the previous key or Alt+Left are pressed navigate back
-                        args.Handled = true;
-                        this.GoBack(this, new RoutedEventArgs());
-                    }
-                    else if (((int)virtualKey == 167 && noModifiers) ||
-                        (virtualKey == VirtualKey.Right && onlyAlt))
-                    {
-                        // When the next key or Alt+Right are pressed navigate forward
-                        args.Handled = true;
-                        this.GoForward(this, new RoutedEventArgs());
-                    }
-                }
-            }
-
-            /// <summary>
-            /// Invoked on every mouse click, touch screen tap, or equivalent interaction when this
-            /// page is active and occupies the entire window.  Used to detect browser-style next and
-            /// previous mouse button clicks to navigate between pages.
-            /// </summary>
-            /// <param name="sender">Instance that triggered the event.</param>
-            /// <param name="args">Event data describing the conditions that led to the event.</param>
-            private void CoreWindow_PointerPressed(CoreWindow sender,
-                PointerEventArgs args)
-            {
-                var properties = args.CurrentPoint.Properties;
-
-                // Ignore button chords with the left, right, and middle buttons
-                if (properties.IsLeftButtonPressed || properties.IsRightButtonPressed ||
-                    properties.IsMiddleButtonPressed) return;
-
-                // If back or foward are pressed (but not both) navigate appropriately
-                bool backPressed = properties.IsXButton1Pressed;
-                bool forwardPressed = properties.IsXButton2Pressed;
-                if (backPressed ^ forwardPressed)
-                {
-                    args.Handled = true;
-                    if (backPressed) this.GoBack(this, new RoutedEventArgs());
-                    if (forwardPressed) this.GoForward(this, new RoutedEventArgs());
-                }
-            }
-
-            #endregion
-
-            #region Visual state switching
-
-            /// <summary>
-            /// Invoked as an event handler, typically on the <see cref="FrameworkElement.Loaded"/>
-            /// event of a <see cref="Control"/> within the page, to indicate that the sender should
-            /// start receiving visual state management changes that correspond to application view
-            /// state changes.
-            /// </summary>
-            /// <param name="sender">Instance of <see cref="Control"/> that supports visual state
-            /// management corresponding to view states.</param>
-            /// <param name="e">Event data that describes how the request was made.</param>
-            /// <remarks>The current view state will immediately be used to set the corresponding
-            /// visual state when layout updates are requested.  A corresponding
-            /// <see cref="FrameworkElement.Unloaded"/> event handler connected to
-            /// <see cref="StopLayoutUpdates"/> is strongly encouraged.  Instances of
-            /// <see cref="LayoutAwarePage"/> automatically invoke these handlers in their Loaded and
-            /// Unloaded events.</remarks>
-            /// <seealso cref="DetermineVisualState"/>
-            /// <seealso cref="InvalidateVisualState"/>
-            public void StartLayoutUpdates(object sender, RoutedEventArgs e)
-            {
-                var control = sender as Control;
-                if (control == null) return;
-                if (this._layoutAwareControls == null)
-                {
-                    // Start listening to view state changes when there are controls interested in updates
-                    Window.Current.SizeChanged += this.WindowSizeChanged;
-                    this._layoutAwareControls = new List<Control>();
-                }
-                this._layoutAwareControls.Add(control);
-
-                // Set the initial visual state of the control
-                VisualStateManager.GoToState(control, DetermineVisualState(ApplicationView.Value), false);
-            }
-
-            private void WindowSizeChanged(object sender, WindowSizeChangedEventArgs e)
-            {
-                this.InvalidateVisualState();
-            }
-
-            /// <summary>
-            /// Invoked as an event handler, typically on the <see cref="FrameworkElement.Unloaded"/>
-            /// event of a <see cref="Control"/>, to indicate that the sender should start receiving
-            /// visual state management changes that correspond to application view state changes.
-            /// </summary>
-            /// <param name="sender">Instance of <see cref="Control"/> that supports visual state
-            /// management corresponding to view states.</param>
-            /// <param name="e">Event data that describes how the request was made.</param>
-            /// <remarks>The current view state will immediately be used to set the corresponding
-            /// visual state when layout updates are requested.</remarks>
-            /// <seealso cref="StartLayoutUpdates"/>
-            public void StopLayoutUpdates(object sender, RoutedEventArgs e)
-            {
-                var control = sender as Control;
-                if (control == null || this._layoutAwareControls == null) return;
-                this._layoutAwareControls.Remove(control);
-                if (this._layoutAwareControls.Count == 0)
-                {
-                    // Stop listening to view state changes when no controls are interested in updates
-                    this._layoutAwareControls = null;
-                    Window.Current.SizeChanged -= this.WindowSizeChanged;
-                }
-            }
-
-            /// <summary>
-            /// Translates <see cref="ApplicationViewState"/> values into strings for visual state
-            /// management within the page.  The default implementation uses the names of enum values.
-            /// Subclasses may override this method to control the mapping scheme used.
-            /// </summary>
-            /// <param name="viewState">View state for which a visual state is desired.</param>
-            /// <returns>Visual state name used to drive the
-            /// <see cref="VisualStateManager"/></returns>
-            /// <seealso cref="InvalidateVisualState"/>
-            protected virtual string DetermineVisualState(ApplicationViewState viewState)
-            {
-                return viewState.ToString();
-            }
-
-            /// <summary>
-            /// Updates all controls that are listening for visual state changes with the correct
-            /// visual state.
-            /// </summary>
-            /// <remarks>
-            /// Typically used in conjunction with overriding <see cref="DetermineVisualState"/> to
-            /// signal that a different value may be returned even though the view state has not
-            /// changed.
-            /// </remarks>
-            public void InvalidateVisualState()
-            {
-                if (this._layoutAwareControls != null)
-                {
-                    string visualState = DetermineVisualState(ApplicationView.Value);
-                    foreach (var layoutAwareControl in this._layoutAwareControls)
-                    {
-                        VisualStateManager.GoToState(layoutAwareControl, visualState, false);
-                    }
-                }
-            }
-
-            #endregion
-
-            #region Process lifetime management
-
-            private String _pageKey;
-
-            /// <summary>
-            /// Invoked when this page is about to be displayed in a Frame.
-            /// </summary>
-            /// <param name="e">Event data that describes how this page was reached.  The Parameter
-            /// property provides the group to be displayed.</param>
-            protected override void OnNavigatedTo(NavigationEventArgs e)
-            {
-                base.OnNavigatedTo(e);
-                // Returning to a cached page through navigation shouldn't trigger state loading
-
-
-
-                if (this._pageKey != null) return;
-
-                var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
-                this._pageKey = "Page-" + this.Frame.BackStackDepth;
-                var dic = e.Parameter as Dictionary<string, object>;
-                if (e.NavigationMode == NavigationMode.New)
-                {
-                    // Clear existing state for forward navigation when adding a new page to the
-                    // navigation stack
-                    var nextPageKey = this._pageKey;
-                    int nextPageIndex = this.Frame.BackStackDepth;
-                    while (frameState.Remove(nextPageKey))
-                    {
-                        nextPageIndex++;
-                        nextPageKey = "Page-" + nextPageIndex;
-                    }
-
-
-
-
-
-
-                    // Pass the navigation parameter to the new page
-                    //  this.LoadState(e.Parameter, dic);
-                }
-                else
-                {
-                    // Pass the navigation parameter and preserved page state to the page, using
-                    // the same strategy for loading suspended state and recreating pages discarded
-                    // from cache
-                    // this.LoadState(e.Parameter, (Dictionary<String, Object>)frameState[this._pageKey]);
-                }
-
-                Action<LayoutAwarePage, IDictionary<string, object>> init = null;
-                if (Frame.GetFrameNavigator().PageInitActions.TryGetValue(this.GetType(), out init))
-                {
-                    init(this, dic);
-                }
-                this.DefaultViewModel.Navigator = this.Frame.GetFrameNavigator();
-                object fin = null;
-                if (dic != null)
-                {
-
-
-
-                    if (dic.TryGetValue(NavigateParameterKeys.FinishedCallback, out fin))
-                    {
-                        Action<LayoutAwarePage> finishNavCallback = fin as Action<LayoutAwarePage>;
-                        DefaultViewModel.AddDisposeAction(() =>
-                        {
-                            finishNavCallback(this);
-                            // if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
-                            //GoBack(this, null);
-
-                            DefaultViewModel.Navigator.GoBack();
-                        }
-                    );
-
-                    }
-                    fin = null;
-                    if (dic.TryGetValue(NavigateParameterKeys.NavigateToCallback, out fin))
-                    {
-                        Action<LayoutAwarePage> navigateToCallback = fin as Action<LayoutAwarePage>;
-                        navigateToCallback(this);
-                    }
-                }
-
-
-
-            }
-
-            /// <summary>
-            /// Invoked when this page will no longer be displayed in a Frame.
-            /// </summary>
-            /// <param name="e">Event data that describes how this page was reached.  The Parameter
-            /// property provides the group to be displayed.</param>
-            protected override void OnNavigatedFrom(NavigationEventArgs e)
-            {
-                //var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
-                var pageState = new Dictionary<string, object> { { "", DefaultViewModel } };
-                this.SaveState(pageState);
-                //frameState[_pageKey] = pageState;
-            }
-
-            /// <summary>
-            /// Populates the page with content passed during navigation.  Any saved state is also
-            /// provided when recreating a page from a prior session.
-            /// </summary>
-            /// <param name="navigationParameter">The parameter value passed to
-            /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
-            /// </param>
-            /// <param name="pageState">A dictionary of state preserved by this page during an earlier
-            /// session.  This will be null the first time a page is visited.</param>
-            protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
-            {
-
-
-            }
-
-            /// <summary>
-            /// Preserves state associated with this page in case the application is suspended or the
-            /// page is discarded from the navigation cache.  Values must conform to the serialization
-            /// requirements of <see cref="SuspensionManager.SessionState"/>.
-            /// </summary>
-            /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
-            protected virtual void SaveState(Dictionary<String, Object> pageState)
-            {
-
-            }
-
-            #endregion
-
-
-
-            protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
-            {
-                //  DisposeViewModel();
-                base.OnNavigatingFrom(e);
-
-            }
-
-
-
-
-            public TResult GetResult<TResult>()
-            {
-                if (DefaultViewModel["Result"] is TResult)
-                    return (TResult)DefaultViewModel["Result"];
-                else
-                    return default(TResult);
-            }
-
-
-        }
+        ///// <summary>
+        ///// Typical implementation of Page that provides several important conveniences:
+        ///// <list type="bullet">
+        ///// <item>
+        ///// <description>Application view state to visual state mapping</description>
+        ///// </item>
+        ///// <item>
+        ///// <description>GoBack, GoForward, and GoHome event handlers</description>
+        ///// </item>
+        ///// <item>
+        ///// <description>Mouse and keyboard shortcuts for navigation</description>
+        ///// </item>
+        ///// <item>
+        ///// <description>State management for navigation and process lifetime management</description>
+        ///// </item>
+        ///// <item>
+        ///// <description>A default view model</description>
+        ///// </item>
+        ///// </list>
+        ///// </summary>
+        //[Windows.Foundation.Metadata.WebHostHidden]
+        //public class LayoutAwarePage : Page
+        //{
+        //    /// <summary>
+        //    /// Identifies the <see cref="DefaultViewModel"/> dependency property.
+        //    /// </summary>
+        //    public static readonly DependencyProperty DefaultViewModelProperty =
+        //        DependencyProperty.Register("DefaultViewModel", typeof(IViewModel),
+        //        typeof(LayoutAwarePage), new PropertyMetadata(new DefaultViewModel()));
+
+        //    private List<Control> _layoutAwareControls;
+
+        //    /// <summary>
+        //    /// Initializes a new instance of the <see cref="LayoutAwarePage"/> class.
+        //    /// </summary>
+        //    public LayoutAwarePage()
+        //    {
+        //        if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
+
+        //        // Create an empty default view model
+        //        //this.DefaultViewModel = new ObservableDictionary<String, Object>();
+
+        //        // When this page is part of the visual tree make two changes:
+        //        // 1) Map application view state to visual state for the page
+        //        // 2) Handle keyboard and mouse navigation requests
+        //        this.Loaded += (sender, e) =>
+        //        {
+        //            this.StartLayoutUpdates(sender, e);
+
+        //            // Keyboard and mouse navigation only apply when occupying the entire window
+        //            if (this.ActualHeight == Window.Current.Bounds.Height &&
+        //                this.ActualWidth == Window.Current.Bounds.Width)
+        //            {
+        //                // Listen to the window directly so focus isn't required
+        //                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated +=
+        //                    CoreDispatcher_AcceleratorKeyActivated;
+        //                Window.Current.CoreWindow.PointerPressed +=
+        //                    this.CoreWindow_PointerPressed;
+        //            }
+        //        };
+
+        //        // Undo the same changes when the page is no longer visible
+        //        this.Unloaded += (sender, e) =>
+        //        {
+        //            this.StopLayoutUpdates(sender, e);
+        //            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -=
+        //                CoreDispatcher_AcceleratorKeyActivated;
+        //            Window.Current.CoreWindow.PointerPressed -=
+        //                this.CoreWindow_PointerPressed;
+        //        };
+
+        //        //var bEnable = new Binding()
+        //        //{
+        //        //    Source = this,
+        //        //    Path = new PropertyPath("DefaultViewModel.IsUIBusy"),
+        //        //    Mode = BindingMode.OneWay,
+        //        //    Converter = BooleanNotConverter.Instance,                
+        //        //};
+
+        //        //this.SetBinding(IsEnabledProperty, bEnable);
+
+        //    }
+
+
+
+        //    public IViewModel DefaultViewModel
+        //    {
+        //        get
+        //        {
+        //            return this.GetValue(DefaultViewModelProperty) as IViewModel;
+        //        }
+
+        //        set
+        //        {
+        //            DisposeViewModel();
+        //            this.SetValue(DefaultViewModelProperty, value);
+        //        }
+        //    }
+
+        //    protected void DisposeViewModel()
+        //    {
+        //        var oldv = this.GetValue(DefaultViewModelProperty) as BindableBase;
+        //        if (oldv != null)
+        //        {
+        //            try
+        //            {
+        //                oldv.Dispose();
+        //            }
+        //            catch (Exception)
+        //            {
+
+
+        //            }
+        //        }
+        //    }
+
+        //    #region Navigation support
+
+        //    /// <summary>
+        //    /// Invoked as an event handler to navigate backward in the page's associated
+        //    /// <see cref="Frame"/> until it reaches the top of the navigation stack.
+        //    /// </summary>
+        //    /// <param name="sender">Instance that triggered the event.</param>
+        //    /// <param name="e">Event data describing the conditions that led to the event.</param>
+        //    protected virtual void GoHome(object sender, RoutedEventArgs e)
+        //    {
+        //        // Use the navigation frame to return to the topmost page
+        //        if (this.Frame != null)
+        //        {
+        //            while (this.Frame.CanGoBack) this.Frame.GoBack();
+        //        }
+        //    }
+
+        //    /// <summary>
+        //    /// Invoked as an event handler to navigate backward in the navigation stack
+        //    /// associated with this page's <see cref="Frame"/>.
+        //    /// </summary>
+        //    /// <param name="sender">Instance that triggered the event.</param>
+        //    /// <param name="e">Event data describing the conditions that led to the
+        //    /// event.</param>
+        //    protected virtual void GoBack(object sender, RoutedEventArgs e)
+        //    {
+        //        DefaultViewModel.Close();
+
+
+
+        //    }
+
+        //    /// <summary>
+        //    /// Invoked as an event handler to navigate forward in the navigation stack
+        //    /// associated with this page's <see cref="Frame"/>.
+        //    /// </summary>
+        //    /// <param name="sender">Instance that triggered the event.</param>
+        //    /// <param name="e">Event data describing the conditions that led to the
+        //    /// event.</param>
+        //    protected virtual void GoForward(object sender, RoutedEventArgs e)
+        //    {
+        //        //// Use the navigation frame to move to the next page
+        //        //if (this.Frame != null && this.Frame.CanGoForward) this.Frame.GoForward();
+        //    }
+
+        //    /// <summary>
+        //    /// Invoked on every keystroke, including system keys such as Alt key combinations, when
+        //    /// this page is active and occupies the entire window.  Used to detect keyboard navigation
+        //    /// between pages even when the page itself doesn't have focus.
+        //    /// </summary>
+        //    /// <param name="sender">Instance that triggered the event.</param>
+        //    /// <param name="args">Event data describing the conditions that led to the event.</param>
+        //    private void CoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender,
+        //        AcceleratorKeyEventArgs args)
+        //    {
+        //        var virtualKey = args.VirtualKey;
+
+        //        // Only investigate further when Left, Right, or the dedicated Previous or Next keys
+        //        // are pressed
+        //        if ((args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown ||
+        //            args.EventType == CoreAcceleratorKeyEventType.KeyDown) &&
+        //            (virtualKey == VirtualKey.Left || virtualKey == VirtualKey.Right ||
+        //            (int)virtualKey == 166 || (int)virtualKey == 167))
+        //        {
+        //            var coreWindow = Window.Current.CoreWindow;
+        //            var downState = CoreVirtualKeyStates.Down;
+        //            bool menuKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
+        //            bool controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
+        //            bool shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
+        //            bool noModifiers = !menuKey && !controlKey && !shiftKey;
+        //            bool onlyAlt = menuKey && !controlKey && !shiftKey;
+
+        //            if (((int)virtualKey == 166 && noModifiers) ||
+        //                (virtualKey == VirtualKey.Left && onlyAlt))
+        //            {
+        //                // When the previous key or Alt+Left are pressed navigate back
+        //                args.Handled = true;
+        //                this.GoBack(this, new RoutedEventArgs());
+        //            }
+        //            else if (((int)virtualKey == 167 && noModifiers) ||
+        //                (virtualKey == VirtualKey.Right && onlyAlt))
+        //            {
+        //                // When the next key or Alt+Right are pressed navigate forward
+        //                args.Handled = true;
+        //                this.GoForward(this, new RoutedEventArgs());
+        //            }
+        //        }
+        //    }
+
+        //    /// <summary>
+        //    /// Invoked on every mouse click, touch screen tap, or equivalent interaction when this
+        //    /// page is active and occupies the entire window.  Used to detect browser-style next and
+        //    /// previous mouse button clicks to navigate between pages.
+        //    /// </summary>
+        //    /// <param name="sender">Instance that triggered the event.</param>
+        //    /// <param name="args">Event data describing the conditions that led to the event.</param>
+        //    private void CoreWindow_PointerPressed(CoreWindow sender,
+        //        PointerEventArgs args)
+        //    {
+        //        var properties = args.CurrentPoint.Properties;
+
+        //        // Ignore button chords with the left, right, and middle buttons
+        //        if (properties.IsLeftButtonPressed || properties.IsRightButtonPressed ||
+        //            properties.IsMiddleButtonPressed) return;
+
+        //        // If back or foward are pressed (but not both) navigate appropriately
+        //        bool backPressed = properties.IsXButton1Pressed;
+        //        bool forwardPressed = properties.IsXButton2Pressed;
+        //        if (backPressed ^ forwardPressed)
+        //        {
+        //            args.Handled = true;
+        //            if (backPressed) this.GoBack(this, new RoutedEventArgs());
+        //            if (forwardPressed) this.GoForward(this, new RoutedEventArgs());
+        //        }
+        //    }
+
+        //    #endregion
+
+        //    #region Visual state switching
+
+        //    /// <summary>
+        //    /// Invoked as an event handler, typically on the <see cref="FrameworkElement.Loaded"/>
+        //    /// event of a <see cref="Control"/> within the page, to indicate that the sender should
+        //    /// start receiving visual state management changes that correspond to application view
+        //    /// state changes.
+        //    /// </summary>
+        //    /// <param name="sender">Instance of <see cref="Control"/> that supports visual state
+        //    /// management corresponding to view states.</param>
+        //    /// <param name="e">Event data that describes how the request was made.</param>
+        //    /// <remarks>The current view state will immediately be used to set the corresponding
+        //    /// visual state when layout updates are requested.  A corresponding
+        //    /// <see cref="FrameworkElement.Unloaded"/> event handler connected to
+        //    /// <see cref="StopLayoutUpdates"/> is strongly encouraged.  Instances of
+        //    /// <see cref="LayoutAwarePage"/> automatically invoke these handlers in their Loaded and
+        //    /// Unloaded events.</remarks>
+        //    /// <seealso cref="DetermineVisualState"/>
+        //    /// <seealso cref="InvalidateVisualState"/>
+        //    public void StartLayoutUpdates(object sender, RoutedEventArgs e)
+        //    {
+        //        var control = sender as Control;
+        //        if (control == null) return;
+        //        if (this._layoutAwareControls == null)
+        //        {
+        //            // Start listening to view state changes when there are controls interested in updates
+        //            Window.Current.SizeChanged += this.WindowSizeChanged;
+        //            this._layoutAwareControls = new List<Control>();
+        //        }
+        //        this._layoutAwareControls.Add(control);
+
+        //        // Set the initial visual state of the control
+        //        VisualStateManager.GoToState(control, DetermineVisualState(ApplicationView.Value), false);
+        //    }
+
+        //    private void WindowSizeChanged(object sender, WindowSizeChangedEventArgs e)
+        //    {
+        //        this.InvalidateVisualState();
+        //    }
+
+        //    /// <summary>
+        //    /// Invoked as an event handler, typically on the <see cref="FrameworkElement.Unloaded"/>
+        //    /// event of a <see cref="Control"/>, to indicate that the sender should start receiving
+        //    /// visual state management changes that correspond to application view state changes.
+        //    /// </summary>
+        //    /// <param name="sender">Instance of <see cref="Control"/> that supports visual state
+        //    /// management corresponding to view states.</param>
+        //    /// <param name="e">Event data that describes how the request was made.</param>
+        //    /// <remarks>The current view state will immediately be used to set the corresponding
+        //    /// visual state when layout updates are requested.</remarks>
+        //    /// <seealso cref="StartLayoutUpdates"/>
+        //    public void StopLayoutUpdates(object sender, RoutedEventArgs e)
+        //    {
+        //        var control = sender as Control;
+        //        if (control == null || this._layoutAwareControls == null) return;
+        //        this._layoutAwareControls.Remove(control);
+        //        if (this._layoutAwareControls.Count == 0)
+        //        {
+        //            // Stop listening to view state changes when no controls are interested in updates
+        //            this._layoutAwareControls = null;
+        //            Window.Current.SizeChanged -= this.WindowSizeChanged;
+        //        }
+        //    }
+
+        //    /// <summary>
+        //    /// Translates <see cref="ApplicationViewState"/> values into strings for visual state
+        //    /// management within the page.  The default implementation uses the names of enum values.
+        //    /// Subclasses may override this method to control the mapping scheme used.
+        //    /// </summary>
+        //    /// <param name="viewState">View state for which a visual state is desired.</param>
+        //    /// <returns>Visual state name used to drive the
+        //    /// <see cref="VisualStateManager"/></returns>
+        //    /// <seealso cref="InvalidateVisualState"/>
+        //    protected virtual string DetermineVisualState(ApplicationViewState viewState)
+        //    {
+        //        return viewState.ToString();
+        //    }
+
+        //    /// <summary>
+        //    /// Updates all controls that are listening for visual state changes with the correct
+        //    /// visual state.
+        //    /// </summary>
+        //    /// <remarks>
+        //    /// Typically used in conjunction with overriding <see cref="DetermineVisualState"/> to
+        //    /// signal that a different value may be returned even though the view state has not
+        //    /// changed.
+        //    /// </remarks>
+        //    public void InvalidateVisualState()
+        //    {
+        //        if (this._layoutAwareControls != null)
+        //        {
+        //            string visualState = DetermineVisualState(ApplicationView.Value);
+        //            foreach (var layoutAwareControl in this._layoutAwareControls)
+        //            {
+        //                VisualStateManager.GoToState(layoutAwareControl, visualState, false);
+        //            }
+        //        }
+        //    }
+
+        //    #endregion
+
+        //    #region Process lifetime management
+
+        //    private String _pageKey;
+
+        //    /// <summary>
+        //    /// Invoked when this page is about to be displayed in a Frame.
+        //    /// </summary>
+        //    /// <param name="e">Event data that describes how this page was reached.  The Parameter
+        //    /// property provides the group to be displayed.</param>
+        //    protected override void OnNavigatedTo(NavigationEventArgs e)
+        //    {
+        //        base.OnNavigatedTo(e);
+        //        // Returning to a cached page through navigation shouldn't trigger state loading
+
+
+
+        //        if (this._pageKey != null) return;
+
+        //        var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
+        //        this._pageKey = "Page-" + this.Frame.BackStackDepth;
+        //        var dic = e.Parameter as Dictionary<string, object>;
+        //        if (e.NavigationMode == NavigationMode.New)
+        //        {
+        //            // Clear existing state for forward navigation when adding a new page to the
+        //            // navigation stack
+        //            var nextPageKey = this._pageKey;
+        //            int nextPageIndex = this.Frame.BackStackDepth;
+        //            while (frameState.Remove(nextPageKey))
+        //            {
+        //                nextPageIndex++;
+        //                nextPageKey = "Page-" + nextPageIndex;
+        //            }
+
+
+
+
+
+
+        //            // Pass the navigation parameter to the new page
+        //            //  this.LoadState(e.Parameter, dic);
+        //        }
+        //        else
+        //        {
+        //            // Pass the navigation parameter and preserved page state to the page, using
+        //            // the same strategy for loading suspended state and recreating pages discarded
+        //            // from cache
+        //            // this.LoadState(e.Parameter, (Dictionary<String, Object>)frameState[this._pageKey]);
+        //        }
+
+        //        Action<LayoutAwarePage, IDictionary<string, object>> init = null;
+        //        if (Frame.GetFrameNavigator().PageInitActions.TryGetValue(this.GetType(), out init))
+        //        {
+        //            init(this, dic);
+        //        }
+        //        this.DefaultViewModel.Navigator = this.Frame.GetFrameNavigator();
+        //        object fin = null;
+        //        if (dic != null)
+        //        {
+
+
+
+        //            if (dic.TryGetValue(NavigateParameterKeys.FinishedCallback, out fin))
+        //            {
+        //                Action<LayoutAwarePage> finishNavCallback = fin as Action<LayoutAwarePage>;
+        //                DefaultViewModel.AddDisposeAction(() =>
+        //                {
+        //                    finishNavCallback(this);
+        //                    // if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
+        //                    //GoBack(this, null);
+
+        //                    DefaultViewModel.Navigator.GoBack();
+        //                }
+        //            );
+
+        //            }
+        //            fin = null;
+        //            if (dic.TryGetValue(NavigateParameterKeys.NavigateToCallback, out fin))
+        //            {
+        //                Action<LayoutAwarePage> navigateToCallback = fin as Action<LayoutAwarePage>;
+        //                navigateToCallback(this);
+        //            }
+        //        }
+
+
+
+        //    }
+
+        //    /// <summary>
+        //    /// Invoked when this page will no longer be displayed in a Frame.
+        //    /// </summary>
+        //    /// <param name="e">Event data that describes how this page was reached.  The Parameter
+        //    /// property provides the group to be displayed.</param>
+        //    protected override void OnNavigatedFrom(NavigationEventArgs e)
+        //    {
+        //        //var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
+        //        var pageState = new Dictionary<string, object> { { "", DefaultViewModel } };
+        //        this.SaveState(pageState);
+        //        //frameState[_pageKey] = pageState;
+        //    }
+
+        //    /// <summary>
+        //    /// Populates the page with content passed during navigation.  Any saved state is also
+        //    /// provided when recreating a page from a prior session.
+        //    /// </summary>
+        //    /// <param name="navigationParameter">The parameter value passed to
+        //    /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
+        //    /// </param>
+        //    /// <param name="pageState">A dictionary of state preserved by this page during an earlier
+        //    /// session.  This will be null the first time a page is visited.</param>
+        //    protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+        //    {
+
+
+        //    }
+
+        //    /// <summary>
+        //    /// Preserves state associated with this page in case the application is suspended or the
+        //    /// page is discarded from the navigation cache.  Values must conform to the serialization
+        //    /// requirements of <see cref="SuspensionManager.SessionState"/>.
+        //    /// </summary>
+        //    /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
+        //    protected virtual void SaveState(Dictionary<String, Object> pageState)
+        //    {
+
+        //    }
+
+        //    #endregion
+
+
+
+        //    protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        //    {
+        //        //  DisposeViewModel();
+        //        base.OnNavigatingFrom(e);
+
+        //    }
+
+
+
+
+        //    public TResult GetResult<TResult>()
+        //    {
+        //        if (DefaultViewModel["Result"] is TResult)
+        //            return (TResult)DefaultViewModel["Result"];
+        //        else
+        //            return default(TResult);
+        //    }
+
+
+        //}
 
         public class SuspensionManager
         {
@@ -1025,374 +1020,374 @@ namespace MVVMSidekick
 
         //}
 
-        /// <summary>
-        /// 用于控制Frame 浏览的控制器
-        /// </summary>
-        public class FrameNavigator
-        {
-            public FrameNavigator(Frame frame, EventRouter.EventRouter eventRouter)
-            {
-                _Frame = frame;
-                _EventRouter = eventRouter;
-                this.PageInitActions = new Dictionary<Type, Action<LayoutAwarePage, IDictionary<string, object>>>();
-            }
+        ///// <summary>
+        ///// 用于控制Frame 浏览的控制器
+        ///// </summary>
+        //public class FrameNavigator 
+        //{
+        //    public FrameNavigator(Frame frame, EventRouter.EventRouter eventRouter)
+        //    {
+        //        _Frame = frame;
+        //        _EventRouter = eventRouter;
+        //        this.PageInitActions = new Dictionary<Type, Action<LayoutAwarePage, IDictionary<string, object>>>();
+        //    }
 
 
-            Frame _Frame;
-            EventRouter.EventRouter _EventRouter;
+        //    Frame _Frame;
+        //    EventRouter.EventRouter _EventRouter;
 
-            void CheckParametersNull(ref  Dictionary<string, object> parameters)
-            {
-                if (parameters == null)
-                {
-                    parameters = new Dictionary<string, object>();
-                }
+        //    void CheckParametersNull(ref  Dictionary<string, object> parameters)
+        //    {
+        //        if (parameters == null)
+        //        {
+        //            parameters = new Dictionary<string, object>();
+        //        }
 
-            }
+        //    }
 
-            public Task FrameNavigate(Type targetViewType, IViewModelBase sourceVm, Dictionary<string, object> parameters = null)
-            {
-                CheckParametersNull(ref parameters);
-                var arg = CreateArgs(targetViewType, sourceVm, parameters);
+        //    public Task FrameNavigate(Type targetViewType, IViewModel sourceVm, Dictionary<string, object> parameters = null)
+        //    {
+        //        CheckParametersNull(ref parameters);
+        //        var arg = CreateArgs(targetViewType, sourceVm, parameters);
 
-                Task task = new Task(() => { });
-                Action<LayoutAwarePage> finishNavigateAction =
-                    page =>
-                    {
+        //        Task task = new Task(() => { });
+        //        Action<LayoutAwarePage> finishNavigateAction =
+        //            page =>
+        //            {
 
-                        task.Start();
-                    };
-                arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
-                _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
+        //                task.Start();
+        //            };
+        //        arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
+        //        _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
 
-                return task;
+        //        return task;
 
-            }
+        //    }
 
 
-            public Task<TResult> FrameNavigate<TResult>(Type targetViewType, IViewModelBase sourceVm, Dictionary<string, object> parameters = null)
-            {
-                CheckParametersNull(ref parameters);
+        //    public Task<TResult> FrameNavigate<TResult>(Type targetViewType, IViewModel sourceVm, Dictionary<string, object> parameters = null)
+        //    {
+        //        CheckParametersNull(ref parameters);
 
-                var arg = CreateArgs(targetViewType, sourceVm, parameters);
+        //        var arg = CreateArgs(targetViewType, sourceVm, parameters);
 
-                TResult result = default(TResult);
+        //        TResult result = default(TResult);
 
-                Task<TResult> taskR = new Task<TResult>(() => result);
-                Action<LayoutAwarePage> finishNavigateAction =
-                    page =>
-                    {
-                        result = page.GetResult<TResult>();
-                        taskR.Start();
-                    };
-                arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
+        //        Task<TResult> taskR = new Task<TResult>(() => result);
+        //        Action<LayoutAwarePage> finishNavigateAction =
+        //            page =>
+        //            {
+        //                result = page.GetResult<TResult>();
+        //                taskR.Start();
+        //            };
+        //        arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
 
 
 
-                _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
+        //        _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
 
-                return taskR;
+        //        return taskR;
 
-            }
+        //    }
 
 
-            public Task<TViewModel> FrameNavigateAndGetViewModel<TViewModel>(Type targetViewType, IViewModelBase sourceVm, Dictionary<string, object> parameters = null) where TViewModel : IViewModelBase
-            {
-                CheckParametersNull(ref parameters);
+        //    public Task<TViewModel> FrameNavigateAndGetViewModel<TViewModel>(Type targetViewType, IViewModel sourceVm, Dictionary<string, object> parameters = null) where TViewModel : IViewModel
+        //    {
+        //        CheckParametersNull(ref parameters);
 
-                var arg = CreateArgs(targetViewType, sourceVm, parameters);
+        //        var arg = CreateArgs(targetViewType, sourceVm, parameters);
 
 
-                TViewModel viewModel = default(TViewModel);
+        //        TViewModel viewModel = default(TViewModel);
 
 
-                Task<TViewModel> taskVm = new Task<TViewModel>(() => viewModel);
-                Action<LayoutAwarePage> navigateToAction =
-                    page =>
-                    {
-                        viewModel = (TViewModel)page.DefaultViewModel;
-                        taskVm.Start();
-                    };
-                arg.ParameterDictionary[NavigateParameterKeys.NavigateToCallback] = navigateToAction;
+        //        Task<TViewModel> taskVm = new Task<TViewModel>(() => viewModel);
+        //        Action<LayoutAwarePage> navigateToAction =
+        //            page =>
+        //            {
+        //                viewModel = (TViewModel)page.DefaultViewModel;
+        //                taskVm.Start();
+        //            };
+        //        arg.ParameterDictionary[NavigateParameterKeys.NavigateToCallback] = navigateToAction;
 
 
 
 
-                _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
-                return taskVm;
-            }
+        //        _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
+        //        return taskVm;
+        //    }
 
 
-            public NavigateResult<TViewModel, TResult> FrameNavigateAndGetViewModel<TViewModel, TResult>(Type targetViewType, IViewModelBase sourceVm, Dictionary<string, object> parameters = null)
-            {
-                CheckParametersNull(ref parameters);
-                var arg = CreateArgs(targetViewType, sourceVm, parameters);
+        //    public NavigateResult<TViewModel, TResult> FrameNavigateAndGetViewModel<TViewModel, TResult>(Type targetViewType, IViewModel sourceVm, Dictionary<string, object> parameters = null)
+        //    {
+        //        CheckParametersNull(ref parameters);
+        //        var arg = CreateArgs(targetViewType, sourceVm, parameters);
 
 
-                TViewModel viewModel = default(TViewModel);
-                Task<TViewModel> taskVm = new Task<TViewModel>(() => viewModel);
-                Action<LayoutAwarePage> navigateToAction =
-                    page =>
-                    {
-                        viewModel = (TViewModel)page.DefaultViewModel;
-                        taskVm.Start();
-                    };
-                arg.ParameterDictionary[NavigateParameterKeys.NavigateToCallback] = navigateToAction;
+        //        TViewModel viewModel = default(TViewModel);
+        //        Task<TViewModel> taskVm = new Task<TViewModel>(() => viewModel);
+        //        Action<LayoutAwarePage> navigateToAction =
+        //            page =>
+        //            {
+        //                viewModel = (TViewModel)page.DefaultViewModel;
+        //                taskVm.Start();
+        //            };
+        //        arg.ParameterDictionary[NavigateParameterKeys.NavigateToCallback] = navigateToAction;
 
 
-                TResult result = default(TResult);
-                Task<TResult> taskR = new Task<TResult>(() => result);
-                Action<LayoutAwarePage> finishNavigateAction =
-                    page =>
-                    {
-                        result = page.GetResult<TResult>();
-                        taskR.Start();
-                    };
-                arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
+        //        TResult result = default(TResult);
+        //        Task<TResult> taskR = new Task<TResult>(() => result);
+        //        Action<LayoutAwarePage> finishNavigateAction =
+        //            page =>
+        //            {
+        //                result = page.GetResult<TResult>();
+        //                taskR.Start();
+        //            };
+        //        arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
 
 
 
-                _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
-                return new NavigateResult<TViewModel, TResult>
-                {
-                    ViewModel = taskVm,
-                    Result = taskR
-                };
-            }
+        //        _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
+        //        return new NavigateResult<TViewModel, TResult>
+        //        {
+        //            ViewModel = taskVm,
+        //            Result = taskR
+        //        };
+        //    }
 
 
-            //public Task FrameNavigate(string targetViewName, IViewModelBase sourceVm, Dictionary<string, object> parameters = null)
-            //{
-            //    CheckParametersNull(ref parameters);
-            //    var arg = CreateArgs(targetViewName, sourceVm, parameters);
+        //    //public Task FrameNavigate(string targetViewName, IViewModelBase sourceVm, Dictionary<string, object> parameters = null)
+        //    //{
+        //    //    CheckParametersNull(ref parameters);
+        //    //    var arg = CreateArgs(targetViewName, sourceVm, parameters);
 
-            //    Task task = new Task(() => { });
-            //    Action<LayoutAwarePage> finishNavigateAction =
-            //        page =>
-            //        {
+        //    //    Task task = new Task(() => { });
+        //    //    Action<LayoutAwarePage> finishNavigateAction =
+        //    //        page =>
+        //    //        {
 
-            //            task.Start();
-            //        };
-            //    arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
-            //    _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
+        //    //            task.Start();
+        //    //        };
+        //    //    arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
+        //    //    _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
 
-            //    return task;
+        //    //    return task;
 
-            //}
+        //    //}
 
 
-            //public Task<TResult> FrameNavigate<TResult>(string targetViewName, IViewModelBase sourceVm, Dictionary<string, object> parameters = null)
-            //{
-            //    CheckParametersNull(ref parameters);
+        //    //public Task<TResult> FrameNavigate<TResult>(string targetViewName, IViewModelBase sourceVm, Dictionary<string, object> parameters = null)
+        //    //{
+        //    //    CheckParametersNull(ref parameters);
 
-            //    var arg = CreateArgs(targetViewName, sourceVm, parameters);
+        //    //    var arg = CreateArgs(targetViewName, sourceVm, parameters);
 
-            //    TResult result = default(TResult);
+        //    //    TResult result = default(TResult);
 
-            //    Task<TResult> taskR = new Task<TResult>(() => result);
-            //    Action<LayoutAwarePage> finishNavigateAction =
-            //        page =>
-            //        {
-            //            result = page.GetResult<TResult>();
-            //            taskR.Start();
-            //        };
-            //    arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
+        //    //    Task<TResult> taskR = new Task<TResult>(() => result);
+        //    //    Action<LayoutAwarePage> finishNavigateAction =
+        //    //        page =>
+        //    //        {
+        //    //            result = page.GetResult<TResult>();
+        //    //            taskR.Start();
+        //    //        };
+        //    //    arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
 
 
 
-            //    _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
+        //    //    _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
 
-            //    return taskR;
+        //    //    return taskR;
 
-            //}
+        //    //}
 
 
-            //public Task<TViewModel> FrameNavigateAndGetViewModel<TViewModel>(string targetViewName, IViewModelBase sourceVm, Dictionary<string, object> parameters = null) where TViewModel : IViewModelBase
-            //{
-            //    CheckParametersNull(ref parameters);
+        //    //public Task<TViewModel> FrameNavigateAndGetViewModel<TViewModel>(string targetViewName, IViewModelBase sourceVm, Dictionary<string, object> parameters = null) where TViewModel : IViewModelBase
+        //    //{
+        //    //    CheckParametersNull(ref parameters);
 
-            //    var arg = CreateArgs(targetViewName, sourceVm, parameters);
+        //    //    var arg = CreateArgs(targetViewName, sourceVm, parameters);
 
 
-            //    TViewModel viewModel = default(TViewModel);
+        //    //    TViewModel viewModel = default(TViewModel);
 
 
-            //    Task<TViewModel> taskVm = new Task<TViewModel>(() => viewModel);
-            //    Action<LayoutAwarePage> navigateToAction =
-            //        page =>
-            //        {
-            //            viewModel = (TViewModel)page.DefaultViewModel;
-            //            taskVm.Start();
-            //        };
-            //    arg.ParameterDictionary[NavigateParameterKeys.NavigateToCallback] = navigateToAction;
+        //    //    Task<TViewModel> taskVm = new Task<TViewModel>(() => viewModel);
+        //    //    Action<LayoutAwarePage> navigateToAction =
+        //    //        page =>
+        //    //        {
+        //    //            viewModel = (TViewModel)page.DefaultViewModel;
+        //    //            taskVm.Start();
+        //    //        };
+        //    //    arg.ParameterDictionary[NavigateParameterKeys.NavigateToCallback] = navigateToAction;
 
 
 
 
-            //    _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
-            //    return taskVm;
-            //}
+        //    //    _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
+        //    //    return taskVm;
+        //    //}
 
 
-            //public NavigateResult<TViewModel, TResult> FrameNavigateAndGetViewModel<TViewModel, TResult>(string targetViewName, IViewModelBase sourceVm, Dictionary<string, object> parameters = null)
-            //{
-            //    CheckParametersNull(ref parameters);
-            //    var arg = CreateArgs(targetViewName, sourceVm, parameters);
+        //    //public NavigateResult<TViewModel, TResult> FrameNavigateAndGetViewModel<TViewModel, TResult>(string targetViewName, IViewModelBase sourceVm, Dictionary<string, object> parameters = null)
+        //    //{
+        //    //    CheckParametersNull(ref parameters);
+        //    //    var arg = CreateArgs(targetViewName, sourceVm, parameters);
 
 
-            //    TViewModel viewModel = default(TViewModel);
-            //    Task<TViewModel> taskVm = new Task<TViewModel>(() => viewModel);
-            //    Action<LayoutAwarePage> navigateToAction =
-            //        page =>
-            //        {
-            //            viewModel = (TViewModel)page.DefaultViewModel;
-            //            taskVm.Start();
-            //        };
-            //    arg.ParameterDictionary[NavigateParameterKeys.NavigateToCallback] = navigateToAction;
+        //    //    TViewModel viewModel = default(TViewModel);
+        //    //    Task<TViewModel> taskVm = new Task<TViewModel>(() => viewModel);
+        //    //    Action<LayoutAwarePage> navigateToAction =
+        //    //        page =>
+        //    //        {
+        //    //            viewModel = (TViewModel)page.DefaultViewModel;
+        //    //            taskVm.Start();
+        //    //        };
+        //    //    arg.ParameterDictionary[NavigateParameterKeys.NavigateToCallback] = navigateToAction;
 
 
-            //    TResult result = default(TResult);
-            //    Task<TResult> taskR = new Task<TResult>(() => result);
-            //    Action<LayoutAwarePage> finishNavigateAction =
-            //        page =>
-            //        {
-            //            result = page.GetResult<TResult>();
-            //            taskR.Start();
-            //        };
-            //    arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
+        //    //    TResult result = default(TResult);
+        //    //    Task<TResult> taskR = new Task<TResult>(() => result);
+        //    //    Action<LayoutAwarePage> finishNavigateAction =
+        //    //        page =>
+        //    //        {
+        //    //            result = page.GetResult<TResult>();
+        //    //            taskR.Start();
+        //    //        };
+        //    //    arg.ParameterDictionary[NavigateParameterKeys.FinishedCallback] = finishNavigateAction;
 
 
 
-            //    _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
-            //    return new NavigateResult<TViewModel, TResult>
-            //    {
-            //        ViewModel = taskVm,
-            //        Result = taskR
-            //    };
-            //}
+        //    //    _EventRouter.RaiseEvent<NavigateCommandEventArgs>(arg.ViewModel, arg);
+        //    //    return new NavigateResult<TViewModel, TResult>
+        //    //    {
+        //    //        ViewModel = taskVm,
+        //    //        Result = taskR
+        //    //    };
+        //    //}
 
 
 
 
-            //private NavigateCommandEventArgs CreateArgs(string viewName, IViewModelBase sourceVm, Dictionary<string, object> parameters)
-            //{
-            //    var arg = new NavigateCommandEventArgs()
-            //    {
-            //        ParameterDictionary = parameters,
-            //        TargetViewType =  ,
-            //        TargetFrame = _Frame,
-            //        ViewModel = sourceVm
-            //    };
-            //    return arg;
-            //}
-            private NavigateCommandEventArgs CreateArgs(Type viewType, IViewModelBase sourceVm, Dictionary<string, object> parameters)
-            {
-                if (sourceVm == null)
-                {
-                    throw new ArgumentNullException("sourceVm cannot be null");
-                }
-                var arg = new NavigateCommandEventArgs()
-                {
-                    ParameterDictionary = parameters,
-                    TargetViewType = viewType,
-                    TargetFrame = _Frame,
-                    ViewModel = sourceVm
-                };
-                return arg;
-            }
+        //    //private NavigateCommandEventArgs CreateArgs(string viewName, IViewModelBase sourceVm, Dictionary<string, object> parameters)
+        //    //{
+        //    //    var arg = new NavigateCommandEventArgs()
+        //    //    {
+        //    //        ParameterDictionary = parameters,
+        //    //        TargetViewType =  ,
+        //    //        TargetFrame = _Frame,
+        //    //        ViewModel = sourceVm
+        //    //    };
+        //    //    return arg;
+        //    //}
+        //    private NavigateCommandEventArgs CreateArgs(Type viewType, IViewModel sourceVm, Dictionary<string, object> parameters)
+        //    {
+        //        if (sourceVm == null)
+        //        {
+        //            throw new ArgumentNullException("sourceVm cannot be null");
+        //        }
+        //        var arg = new NavigateCommandEventArgs()
+        //        {
+        //            ParameterDictionary = parameters,
+        //            TargetViewType = viewType,
+        //            TargetFrame = _Frame,
+        //            ViewModel = sourceVm
+        //        };
+        //        return arg;
+        //    }
 
 
 
-            public bool GoForward()
-            {
-                var can = _Frame.CanGoForward;
-                if (can)
-                {
-                    _Frame.GoForward();
-                }
-                return can;
-            }
+        //    public bool GoForward()
+        //    {
+        //        var can = _Frame.CanGoForward;
+        //        if (can)
+        //        {
+        //            _Frame.GoForward();
+        //        }
+        //        return can;
+        //    }
 
-            public bool GoBack()
-            {
-                var can = _Frame.CanGoBack;
-                if (can)
-                {
-                    _Frame.GoBack();
-                }
-                return can;
-            }
+        //    public bool GoBack()
+        //    {
+        //        var can = _Frame.CanGoBack;
+        //        if (can)
+        //        {
+        //            _Frame.GoBack();
+        //        }
+        //        return can;
+        //    }
 
 
 
 
 
 
-            public Dictionary<Type, Action<LayoutAwarePage, IDictionary<string, object>>> PageInitActions
-            {
-                get;
-                set;
-            }
-        }
+        //    public Dictionary<Type, Action<LayoutAwarePage, IDictionary<string, object>>> PageInitActions
+        //    {
+        //        get;
+        //        set;
+        //    }
+        //}
 
-        public static class NavigationHelper
-        {
+        //public static class NavigationHelper
+        //{
 
-            public static void InitFrameNavigator(this EventRouter.EventRouter router, ref   Frame frame)
-            {
-                FrameNavigator fn;
-                if (frame == null)
-                {
-                    frame = new Frame();
-                }
+        //    public static void InitFrameNavigator(this EventRouter.EventRouter router, ref   Frame frame)
+        //    {
+        //        FrameNavigator fn;
+        //        if (frame == null)
+        //        {
+        //            frame = new Frame();
+        //        }
 
-                if ((fn = frame.GetFrameNavigator()) == null)
-                {
-                    fn = new FrameNavigator(frame, router);
-                    frame.SetFrameNavigator(fn);
+        //        if ((fn = frame.GetFrameNavigator()) == null)
+        //        {
+        //            fn = new FrameNavigator(frame, router);
+        //            frame.SetFrameNavigator(fn);
 
-                }
+        //        }
 
 
-                var noneedDispose = router.GetEventObject<NavigateCommandEventArgs>().GetRouterEventObservable()
-                   .Where(
-                   a =>
-                   {
-                       var vm = a.Sender as ViewModels.IViewModelBase;
-                       if (vm == null)
-                       {
-                           return false;
-                       }
-                       return vm.Navigator == fn;
-                   })
-                .Subscribe(
-                  async ep =>
-                  {
-                      await Task.Delay(100);
-                      ((Frame)ep.EventArgs.TargetFrame).Navigate(ep.EventArgs.TargetViewType, ep.EventArgs.ParameterDictionary);
-                  }
-                );
+        //        var noneedDispose = router.GetEventObject<NavigateCommandEventArgs>().GetRouterEventObservable()
+        //           .Where(
+        //           a =>
+        //           {
+        //               var vm = a.Sender as ViewModels.IViewModel;
+        //               if (vm == null)
+        //               {
+        //                   return false;
+        //               }
+        //               return vm.Navigator == fn;
+        //           })
+        //        .Subscribe(
+        //          async ep =>
+        //          {
+        //              await Task.Delay(100);
+        //              ((Frame)ep.EventArgs.TargetFrame).Navigate(ep.EventArgs.TargetViewType, ep.EventArgs.ParameterDictionary);
+        //          }
+        //        );
 
 
-            }
+        //    }
 
 
-            public static FrameNavigator GetFrameNavigator(this Frame obj)
-            {
-                return (FrameNavigator)obj.GetValue(FrameNavigatorProperty);
-            }
+        //    public static FrameNavigator GetFrameNavigator(this Frame obj)
+        //    {
+        //        return (FrameNavigator)obj.GetValue(FrameNavigatorProperty);
+        //    }
 
-            public static void SetFrameNavigator(this Frame obj, FrameNavigator value)
-            {
-                obj.SetValue(FrameNavigatorProperty, value);
-            }
+        //    public static void SetFrameNavigator(this Frame obj, FrameNavigator value)
+        //    {
+        //        obj.SetValue(FrameNavigatorProperty, value);
+        //    }
 
-            // Using a DependencyProperty as the backing store for FrameNavigator.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty FrameNavigatorProperty =
-                DependencyProperty.RegisterAttached("FrameNavigator", typeof(FrameNavigator), typeof(Frame), new PropertyMetadata(null));
+        //    // Using a DependencyProperty as the backing store for FrameNavigator.  This enables animation, styling, binding, etc...
+        //    public static readonly DependencyProperty FrameNavigatorProperty =
+        //        DependencyProperty.RegisterAttached("FrameNavigator", typeof(FrameNavigator), typeof(Frame), new PropertyMetadata(null));
 
 
-        }
+        //}
 
 
 

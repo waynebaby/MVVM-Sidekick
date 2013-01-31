@@ -1,0 +1,558 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MVVMSidekick_Sl</name>
+    </assembly>
+    <members>
+        <member name="T:MVVMSidekick.ViewModels.DefaultViewModel">
+            <summary>
+            缺省的 ViewModel。可以用作最简单的字典绑定
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.ViewModels.ViewModelBase`1">
+            <summary>
+            一个VM,带有若干界面特性
+            </summary>
+            <typeparam name="TViewModel">本身的类型</typeparam>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:MVVMSidekick.ViewModels.BindableBase`1" -->
+        <member name="T:MVVMSidekick.ViewModels.BindableBase">
+            <summary>
+            ViewModel 基类。用在所有不需要明确子类型属性定义的情形。
+            </summary>
+        </member>
+        <member name="F:MVVMSidekick.ViewModels.BindableBase.disposedFlag">
+            <summary>
+             0 for not disposed, 1 for disposed
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase.GetFieldNames">
+            <summary>
+            取得本VM实例已经定义的所有字段名。其中包括静态声明的和动态添加的。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:MVVMSidekick.ViewModels.BindableBase._disposeActions">
+            <summary>
+            当本VM被销毁的时候 需要做的若干动作
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase.AddDisposeAction(System.Action)">
+            <summary>
+            注册在销毁时需要做的操作
+            </summary>
+            <param name="newAction">新操作</param>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase.AddDisposable(System.IDisposable)">
+            <summary>
+            注册销毁
+            </summary>
+            <param name="newAction">新操作</param>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase.Dispose">
+            <summary>
+            销毁，尝试运行所有注册的销毁操作
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase.OnDisposeExceptions(System.Collections.Generic.IList{System.Exception})">
+            <summary>
+            指定如何处理在dispose时出现的错误
+            </summary>
+            <param name="exceptions"></param>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.BindableBase.Item(System.String)">
+            <summary>
+            使用索引方式取得字段值
+            </summary>
+            <param name="name">字段名</param>
+            <returns>字段值</returns>
+        </member>
+        <member name="E:MVVMSidekick.ViewModels.BindableBase.PropertyChanged">
+            <summary>
+            VM属性任何绑定用值被修改后，触发此事件
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.BindableBase.System#ComponentModel#IDataErrorInfo#Error">
+            <summary>
+            验证错误内容
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.BindableBase.System#ComponentModel#IDataErrorInfo#Item(System.String)">
+            <summary>
+            对于每个字段，验证失败所产生的错误信息
+            </summary>
+            <param name="columnName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase`1.GetError">
+            <summary>
+            验证错误
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase`1.RegisterContainerLocator``1(System.String,System.Func{`0,MVVMSidekick.ViewModels.ValueContainer{``0}})">
+            <summary>
+            注册一个属性容器的定位器。
+            </summary>
+            <typeparam name="TProperty">属性类型</typeparam>
+            <param name="propertyName">属性名</param>
+            <param name="getOrCreateLocatorMethod">属性定位/创建方法 也就是定位器</param>
+            <returns>注册后的定位器</returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase`1.GetValueContainer``1(System.String)">
+            <summary>
+            根据属性名取得一个值容器
+            </summary>
+            <typeparam name="TProperty">属性类型</typeparam>
+            <param name="propertyName">属性名</param>
+            <returns>值容器</returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase`1.GetValueContainer``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            根据表达式树取得一个值容器
+            </summary>
+            <typeparam name="TProperty">属性类型</typeparam>
+            <param name="expression">表达式树</param>
+            <returns>值容器</returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase`1.GetValueContainer(System.String)">
+            <summary>
+            根据属性名取得一个值容器
+            </summary>
+            <param name="propertyName">属性名</param>
+            <returns>值容器</returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase`1.GetColumnError(System.String)">
+            <summary>
+            获取某一属性的验证错误信息
+            </summary>
+            <param name="columnName">属性名</param>
+            <returns>错误信息字符串</returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase`1.GetFieldNames">
+            <summary>
+            获取所有属性名，包括静态声明和动态添加的
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBase`1.Clone">
+            <summary>
+            创建一个VM副本
+            </summary>
+            <returns>新引用</returns>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.BindableBase`1.Item(System.String)">
+            <summary>
+            根据索引获取属性值
+            </summary>
+            <param name="colName">属性名</param>
+            <returns>属性值</returns>
+        </member>
+        <member name="T:MVVMSidekick.ViewModels.BindableBase`1.TypeDic`1">
+            <summary>
+            每个属性类型独占的一个专门的类型缓存。
+            </summary>
+            <typeparam name="TProperty"></typeparam>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.ViewModelBase`1.HaveReturnValue">
+            <summary>
+            是否有返回值
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.ViewModelBase`1.IsUIBusy">
+            <summary>
+            本UI是否处于忙状态
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.ViewModels.BindableBaseExtensions">
+            <summary>
+            为ViewModel增加的一些关于BindableBase的快捷方法
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBaseExtensions.CastToModel``1(MVVMSidekick.ViewModels.BindableBase)">
+            <summary>
+            将一个VM引用特化为本子类型的引用
+            </summary>
+            <param name="vm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBaseExtensions.Config``1(MVVMSidekick.ViewModels.ValueContainer{``0},System.Action{MVVMSidekick.ViewModels.ValueContainer{``0}})">
+            <summary>
+            使用连续的API设置ValueContainer的一些参数
+            </summary>
+            <typeparam name="TProperty">ValueContainer内容的类型</typeparam>
+            <param name="target">ValueContainer的配置目标实例</param>
+            <param name="action">配置内容</param>
+            <returns>ValueContainer的配置目标实例</returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.BindableBaseExtensions.DisposeWith``1(``0,MVVMSidekick.ViewModels.BindableBase)">
+            <summary>
+            将IDisposable 对象注册到VM中的销毁对象列表。
+            </summary>
+            <typeparam name="T">VM的类型</typeparam>
+            <param name="item">IDisposable实例</param>
+            <param name="vm">VM实例</param>
+            <returns></returns>
+        </member>
+        <member name="T:MVVMSidekick.ViewModels.Property`1">
+            <summary>
+            属性定义。一个属性定义包括一个创建/定位属性“值容器”的静态方法引用，和一个缓存该方法执行结果“值容器”的槽位
+            </summary>
+            <typeparam name="TProperty">属性的类型</typeparam>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.Property`1.LocateValueContainer(MVVMSidekick.ViewModels.BindableBase)">
+            <summary>
+            通过定位方法定位本VM实例中的值容器
+            </summary>
+            <param name="viewModel">VM实例</param>
+            <returns>值容器</returns>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.Property`1.LocatorFunc">
+            <summary>
+            定位值容器用的方法。
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.Property`1.Container">
+            <summary>
+            值容器实例
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.ViewModels.ValueContainer`1">
+            <summary>
+            值容器
+            </summary>
+            <typeparam name="TProperty"></typeparam>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.ValueContainer`1.#ctor(System.String,MVVMSidekick.ViewModels.BindableBase,`0)">
+            <summary>
+            创建属性值容器
+            </summary>
+            <param name="info">属性名</param>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.ValueContainer`1.#ctor(System.String,MVVMSidekick.ViewModels.BindableBase,System.Func{`0,`0,System.Boolean},`0)">
+            <summary>
+            创建属性值容器
+            </summary>
+            <param name="info">属性名</param>
+            <param name="equalityComparer">判断两个值是否相等的比较器</param>
+            <param name="initValue">初始值</param>
+        </member>
+        <member name="F:MVVMSidekick.ViewModels.ValueContainer`1._value">
+            <summary>
+            内部值
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.ValueContainer`1.SetValueAndTryNotify(`0)">
+            <summary>
+            保存值并且触发更改事件
+            </summary>
+            <param name="objectInstance">属性所在的ViewModel</param>
+            <param name="value">属性值</param>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.ValueContainer`1.SetValue(`0)">
+            <summary>
+            单纯保存值
+            </summary>
+            <param name="value">新值</param>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.ValueContainer`1.InternalPropertyChange(MVVMSidekick.ViewModels.BindableBase,`0,`0@,System.String)">
+            <summary>
+            保存值并且触发更改事件
+            </summary>
+            <param name="objectInstance">属性所在的ViewModel</param>
+            <param name="newValue">新值</param>
+            <param name="currentValue">当前值</param>
+            <param name="message">属性名</param>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.ValueContainer`1.EqualityComparer">
+            <summary>
+            判断两个值是否相等的比较器
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.ValueContainer`1.PropertyName">
+            <summary>
+            属性名
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.ValueContainer`1.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.ValueContainer`1.MVVMSidekick#ViewModels#IValueContainer#Value">
+            <summary>
+            值，Object形式
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.ValueContainer`1.PropertyType">
+            <summary>
+            值类型
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.ValueContainer`1.Error">
+            <summary>
+            出现问题的时候保存错误的结构
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.ViewModels.ValueChangedEventArgs`1">
+            <summary>
+            值变化事件参数
+            </summary>
+            <typeparam name="TProperty">变化属性的类型</typeparam>
+        </member>
+        <member name="T:MVVMSidekick.ViewModels.BindableTuple`2">
+            <summary>
+            一个可绑定的Tuple实现
+            </summary>
+            <typeparam name="TItem1">第一个元素的类型</typeparam>
+            <typeparam name="TItem2">第二个元素的类型</typeparam>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.BindableTuple`2.Item1">
+            <summary>
+            第一个元素
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.BindableTuple`2.Item2">
+            <summary>
+            第二个元素
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.ViewModels.BindableTuple">
+            <summary>
+            帮助快速创建BindableTuple的帮助类
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.ViewModels.CommandModel`2">
+            <summary>
+            用于封装ICommand的ViewModel。一般包括一个Command实例和对应此实例的一组资源
+            </summary>
+            <typeparam name="TCommand">ICommand 详细类型</typeparam>
+            <typeparam name="TResource">配合Command 的资源类型</typeparam>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.CommandModel`2.#ctor(`0,`1)">
+            <summary>
+            构造器
+            </summary>
+            <param name="commandCore">ICommand核心</param>
+            <param name="resource">初始资源</param>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.CommandModel`2.CanExecute(System.Object)">
+            <summary>
+            判断是否可执行
+            </summary>
+            <param name="parameter">指定参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.CommandModel`2.Execute(System.Object)">
+            <summary>
+            执行
+            </summary>
+            <param name="parameter">指定参数</param>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.CommandModel`2.CommandCore">
+            <summary>
+            ICommand核心
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.CommandModel`2.LastCanExecuteValue">
+            <summary>
+            上一次是否能够运行的值
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.ViewModels.CommandModel`2.Resource">
+            <summary>
+            资源
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.ViewModels.CommandModelExtensions">
+            <summary>
+            可绑定的CommandVM 扩展方法集
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.CommandModelExtensions.CreateCommandModel``2(``0,``1)">
+            <summary>
+            根据ICommand实例创建CommandModel
+            </summary>
+            <typeparam name="TCommand">ICommand实例的具体类型</typeparam>
+            <typeparam name="TResource">附加资源类型</typeparam>
+            <param name="command">ICommand实例</param>
+            <param name="resource">资源实例</param>
+            <returns>CommandModel实例</returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.CommandModelExtensions.CreateCommandModel``1(``0,System.Object)">
+            <summary>
+            据ICommand实例创建不具备/弱类型资源的CommandModel
+            </summary>
+            <typeparam name="TCommand">ICommand实例的具体类型</typeparam>
+            <param name="command">ICommand实例</param>
+            <param name="resource">资源实例</param>
+            <returns>CommandModel实例</returns>
+        </member>
+        <member name="M:MVVMSidekick.ViewModels.CommandModelExtensions.WithViewModel``2(MVVMSidekick.ViewModels.CommandModel{``0,``1},MVVMSidekick.ViewModels.BindableBase)">
+            <summary>
+            为CommandModel指定ViewModel
+            </summary>
+            <typeparam name="TCommand">ICommand实例的具体类型</typeparam>
+            <typeparam name="TResource">附加资源类型</typeparam>
+            <param name="cmdModel">CommandModel具体实例</param>
+            <param name="viewModel">ViewModel具体实例</param>
+            <returns></returns>
+        </member>
+        <member name="T:MVVMSidekick.EventRouter.EventRouter">
+            <summary>
+            全局事件根
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.EventRouter.EventRouter.RaiseEvent``1(System.Object,``0,System.String)">
+            <summary>
+            触发事件    
+            </summary>
+            <typeparam name="TEventArgs">事件数据类型</typeparam>
+            <param name="sender">事件发送者</param>
+            <param name="eventArgs">事件数据</param>
+            <param name="callerMemberName">发送事件名</param>
+        </member>
+        <member name="M:MVVMSidekick.EventRouter.EventRouter.GetEventObject``1">
+            <summary>
+            取得独立事件类
+            </summary>
+            <typeparam name="TEventArgs">事件数据类型</typeparam>
+            <returns>事件独立类</returns>
+        </member>
+        <member name="M:MVVMSidekick.EventRouter.EventRouter.GetIEventObjectInstance(System.Type)">
+            <summary>
+            创建事件代理对象
+            </summary>
+            <param name="argsType">事件数据类型</param>
+            <returns>代理对象实例</returns>
+        </member>
+        <member name="T:MVVMSidekick.EventRouter.EventRouter.ConcurrentDictionary`2">
+            <summary>
+            事件来源的代理对象实例
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.EventRouter.EventRouter.IEventObject">
+            <summary>
+            事件对象接口
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.EventRouter.EventRouter.EventObject`1">
+             <summary>
+            事件对象
+             </summary>
+             <typeparam name="TEventArgs"></typeparam>
+        </member>
+        <member name="T:MVVMSidekick.EventRouter.NavigateCommandEventArgs">
+            <summary>
+            导航事件数据
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.EventRouter.SaveStateEventArgs">
+            <summary>
+            保存状态事件数据
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.EventRouter.EventRouterHelper">
+            <summary>
+            事件路由的扩展方法集合
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.EventRouter.EventRouterHelper.RaiseEvent``1(MVVMSidekick.ViewModels.BindableBase,``0,System.String)">
+            <summary>
+            触发事件
+            </summary>
+            <typeparam name="TEventArgs">事件类型</typeparam>
+            <param name="source">事件来源</param>
+            <param name="eventArgs">事件数据</param>
+            <param name="callerMemberName">事件名</param>
+        </member>
+        <member name="T:MVVMSidekick.EventRouter.RouterEventData`1">
+            <summary>
+            事件信息
+            </summary>
+            <typeparam name="TEventArgs">事件数据类型</typeparam>
+        </member>
+        <member name="P:MVVMSidekick.EventRouter.RouterEventData`1.Sender">
+            <summary>
+            事件发送者
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.EventRouter.RouterEventData`1.EventName">
+            <summary>
+            事件名
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.EventRouter.RouterEventData`1.EventArgs">
+            <summary>
+            事件数据
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.Commands.EventCommandEventArgs">
+            <summary>
+            Command被运行触发的事件数据类型
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.Commands.EventCommandHelper">
+            <summary>
+            事件Command的助手类
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.Commands.EventCommandHelper.WithViewModel``1(``0,MVVMSidekick.ViewModels.BindableBase)">
+            <summary>
+            为一个事件Command制定一个VM
+            </summary>
+            <typeparam name="TCommand">事件Command具体类型</typeparam>
+            <param name="cmd">事件Command实例</param>
+            <param name="viewModel">VM实例</param>
+            <returns>事件Command实例本身</returns>
+        </member>
+        <member name="T:MVVMSidekick.Commands.ICommandWithViewModel">
+            <summary>
+            带有VM的Command接口
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.Commands.EventCommandBase">
+            <summary>
+            事件Command,运行后马上触发一个事件，事件中带有Command实例和VM实例属性
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.Commands.EventCommandBase.OnCommandExecute(MVVMSidekick.Commands.EventCommandEventArgs)">
+            <summary>
+            执行时的逻辑
+            </summary>
+            <param name="args">执行时的事件数据</param>
+        </member>
+        <member name="M:MVVMSidekick.Commands.EventCommandBase.CanExecute(System.Object)">
+            <summary>
+            该Command是否能执行
+            </summary>
+            <param name="parameter">判断参数</param>
+            <returns>是否</returns>
+        </member>
+        <member name="M:MVVMSidekick.Commands.EventCommandBase.OnCanExecuteChanged">
+            <summary>
+            是否能执行变化时触发事件的逻辑
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.Commands.EventCommandBase.Execute(System.Object)">
+            <summary>
+            执行Command
+            </summary>
+            <param name="parameter">参数条件</param>
+        </member>
+        <member name="P:MVVMSidekick.Commands.EventCommandBase.ViewModel">
+            <summary>
+            VM
+            </summary>
+        </member>
+        <member name="E:MVVMSidekick.Commands.EventCommandBase.CommandExecute">
+            <summary>
+            运行时触发的事件
+            </summary>
+        </member>
+        <member name="E:MVVMSidekick.Commands.EventCommandBase.CanExecuteChanged">
+            <summary>
+            是否能执行的值产生变化的事件
+            </summary>
+        </member>
+    </members>
+</doc>
