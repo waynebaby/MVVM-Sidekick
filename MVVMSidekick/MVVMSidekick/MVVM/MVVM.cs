@@ -43,6 +43,7 @@ using System.Windows.Data;
 #else
 using System.Collections.Concurrent;
 using MVVMSidekick.Views;
+
 #endif
 #if NETFX_CORE
 // Summary:
