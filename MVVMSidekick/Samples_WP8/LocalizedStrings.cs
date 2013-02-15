@@ -1,6 +1,6 @@
-﻿using Samples_WP8.Resources;
+﻿using Samples.Resources;
 
-namespace Samples_WP8
+namespace Samples
 {
     /// <summary>
     /// Provides access to string resources.

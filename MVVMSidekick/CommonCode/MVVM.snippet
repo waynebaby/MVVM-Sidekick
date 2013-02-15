@@ -61,16 +61,21 @@
       </Declarations>
       <Code Language="csharp">
         <![CDATA[
-        
+    //[DataContract(IsReference=true) ] //if you want
     public class $class$ : ViewModelBase<$class$> 
     {
         public $class$()
         {
             // Use propery to init value here:
+            if (IsInDesignMode)
+            { 
+                //Add design time demo data init here. These will not execute in runtime.
+            }
+            
             
         }
 
-        //Use vmprop + tab  to create a new property of vm here:
+        //Use vmprop + tab +tab  to create a new property of vm here:
            
 
     }
@@ -125,7 +130,7 @@
         static Func<BindableBase,CommandModel<$commandType$, $resourceType$>> _Command$commandName$DefaultValueFactory =
             model => {
                 var cmd=new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-                //cmd.Subscribe (_=>{ } ).RegisterDisposeToViewModel(model); //Config it if needed
+                //cmd.Subscribe (_=>{ } ).DisposeWith(model); //Config it if needed
                 return cmd.CreateCommandModel("$commandName$"); 
             };
         #endregion

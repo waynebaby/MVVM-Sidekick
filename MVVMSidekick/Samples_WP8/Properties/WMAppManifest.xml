@@ -2,7 +2,7 @@
 
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US"/>
-  <App xmlns="" ProductID="{9c99a036-5ee4-4cb4-b25c-19c6d9e5d8e0}" Title="Samples_WP8" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="Samples_WP8 author" Description="Sample description" Publisher="Samples_WP8" PublisherID="{4f0cbd85-9e79-470e-a917-556f1a647157}">
+  <App xmlns="" ProductID="{9c99a036-5ee4-4cb4-b25c-19c6d9e5d8e0}" Title="Samples" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="Samples author" Description="Sample description" Publisher="Samples" PublisherID="{4f0cbd85-9e79-470e-a917-556f1a647157}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING"/>
@@ -15,12 +15,12 @@
       <DefaultTask  Name ="_default" NavigationPage="MainPage.xaml"/>
     </Tasks>
     <Tokens>
-      <PrimaryToken TokenID="Samples_WP8Token" TaskName="_default">
+      <PrimaryToken TokenID="SamplesToken" TaskName="_default">
         <TemplateFlip>
           <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>Samples_WP8</Title>
+          <Title>Samples</Title>
           <BackContent></BackContent>
           <BackBackgroundImageURI></BackBackgroundImageURI>
           <BackTitle></BackTitle>

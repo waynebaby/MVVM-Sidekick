@@ -7,7 +7,7 @@
     <ProjectGuid>{D13C4695-7509-47B2-8C51-C1710B22975E}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Samples_WinRT</RootNamespace>
+    <RootNamespace>Samples</RootNamespace>
     <AssemblyName>Samples_WinRT</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
@@ -103,9 +103,27 @@
     <Compile Include="..\MVVMSidekick\MVVM\MVVM.cs">
       <Link>MVVM.cs</Link>
     </Compile>
+    <Compile Include="..\Samples_SL5\StartupFunctions.cs">
+      <Link>StartupFunctions.cs</Link>
+    </Compile>
+    <Compile Include="..\Samples_ViewModels\Calculator_Model.cs">
+      <Link>ViewModels\Calculator_Model.cs</Link>
+    </Compile>
+    <Compile Include="..\samples_viewmodels\Index_Model.cs">
+      <Link>ViewModels\Index_Model.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Calculator.xaml.cs">
+      <DependentUpon>Calculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\BindableBase.cs" />
+    <Compile Include="Common\BooleanNegationConverter.cs" />
+    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Common\LayoutAwarePage.cs" />
+    <Compile Include="Common\RichTextColumns.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -123,12 +141,17 @@
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Common\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Calculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Common\StandardStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

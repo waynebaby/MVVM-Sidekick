@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="Samples_WinRT.App"
+    x:Class="Samples.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Samples_WinRT">
+    xmlns:local="using:Samples">
 
     <Application.Resources>
         <ResourceDictionary>

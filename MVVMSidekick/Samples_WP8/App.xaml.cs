@@ -6,9 +6,9 @@ using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using Samples_WP8.Resources;
+using Samples.Resources;
 
-namespace Samples_WP8
+namespace Samples
 {
     public partial class App : Application
     {
@@ -34,6 +34,8 @@ namespace Samples_WP8
 
             // Language display initialization
             InitializeLanguage();
+
+            StartupFunctions.ConfigCalculator();
 
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)

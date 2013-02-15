@@ -7,11 +7,12 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using Samples_WP8.Resources;
+using Samples.Resources;
+using MVVMSidekick.Views;
 
-namespace Samples_WP8
+namespace Samples
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage : MVVMPage
     {
         // Constructor
         public MainPage()

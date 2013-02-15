@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MVVMSidekick.Views;
+using MVVMSidekick.ViewModels;
+using Samples.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,8 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Samples;
 
-namespace Samples_SL5
+namespace Samples
 {
     public partial class App : Application
     {
@@ -26,7 +30,9 @@ namespace Samples_SL5
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.RootVisual = new MainPage();
+            StartupFunctions.ConfigCalculator();
+            App.Current.RootVisual = new MainPage(null);
+
         }
 
         private void Application_Exit(object sender, EventArgs e)

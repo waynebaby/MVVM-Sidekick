@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
-namespace Samples_WinRT
+namespace Samples
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -41,6 +41,7 @@ namespace Samples_WinRT
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            Samples.StartupFunctions.ConfigCalculator();
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,

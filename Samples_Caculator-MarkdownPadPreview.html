@@ -284,14 +284,10 @@ button::-moz-focus-inner {
   <h2>千里跬步: 创建工程</h2>
 </blockquote>
 
-<ul>
-<li>Create a project of your target platform,and set Conditional compilation symbols.</li>
-</ul>
+<h3>1 .Create a project of your target platform, add basic references, and set Conditional compilation symbols.</h3>
 
 <blockquote>
-  <ul>
-  <li>创建一个目标工程，在工程中设置条件编译符号。</li>
-  </ul>
+  <h3>1 . 创建一个目标工程，添加基础引用，在工程中设置条件编译符号。</h3>
 </blockquote>
 
 <p><em>MVVM-Sidekick now supports Silverlight 5, Windows Phone 8, WPF 4.5, and Windows Runtime XAML. We only support C Sharp offically, but it is not that hard to intergrade to VB.</em></p>
@@ -300,18 +296,157 @@ button::-moz-focus-inner {
   <p><em>MVVM-Sidekick 现在支持的平台包括 Sliverlight 5, Windows Phone 8, WPF 4.5, 以及Windows Runtime Xaml程序。我们官方仅仅支持CSharp使用，但是根据我们的支持集成到VB也绝非难事</em></p>
 </blockquote>
 
-<table border="3">
-<thead><td>Platform/平台 </td><td>Symbol/符号</td></thead>
-<tr><td>Silverlight 5</td><td>SILVERLIGHT_5</td></tr>
-<tr><td>WPF 4.5</td><td>WPF</td></tr>
-<tr><td>Windows Phone 8</td><td>WINDOWS_PHONE_8</td></tr>
-<tr><td>Windows RT XAML</td><td>NETCORE_FX</td></tr>
+<table border="3" align="center">
+<thead><td>Platform/平台 </td><td>Basic References/基础引用</td><td>Symbol/符号</td></thead>
+<tr><td>Silverlight 5</td><td>
+System.Runtime.Serialization<br/>
+Microsoft.CSharp<br/>
+System.Windows.Controls.Navigation
+</td><td>SILVERLIGHT_5</td></tr>
+<tr><td>WPF 4.5</td><td>System.Runtime.Serialization<br/></td><td>WPF</td></tr>
+<tr><td>Windows Phone 8</td><td>System.Runtime.Serialization<br/></td><td>WINDOWS_PHONE_8</td></tr>
+<tr><td>Windows RT XAML</td><td>-</td><td>NETCORE_FX</td></tr>
 </table>
 
-<p><img src="Images/Symbolsinput.png" alt="Input conditional compilation symbols <HERE>
-在&lt;这里>输入条件编译符号" /></p>
+<p><center>
+<img src="Images/Symbolsinput.png" alt="Input conditional compilation symbols &lt;HERE&gt;
+在&lt;这里&gt;输入条件编译符号" /></p>
 
-<p>figure 1</p>
+<p>Figure 1
+<br/> Input conditional compilation symbols <HERE><br/>
+在&lt;这里>输入条件编译符号
+</center></p>
+
+<h3>2 . [SL5] Add async await support to your project</h3>
+
+<blockquote>
+  <h3>2 . [SL5] 为工程添加 async await 关键字支持</h3>
+</blockquote>
+
+<p><em>In Silverlight 5 projects and Wpf 4.0,  async await key words are not supported by default because awaitable TPL class are newly added since .net 4.5. You can add support in vs2012 by nuget, instead.</em></p>
+
+<blockquote>
+  <p><em>在 Silverlight 5 或者 Wpf 4.0工程里, VS并不默认支持 async await 关键字，这是因为TPL的awaitable 类型支持是在.net 4.5新加入的. 作为替代，你可以用nuget来为你的SL5工程添加这种支持.</em></p>
+</blockquote>
+
+<p><strong>Open :<code>VS Menu-&gt; TOOLS-&gt;Libary Package Manager -&gt;Manage Nuget Packages For Solution</code></strong></p>
+
+<p><strong>Search &amp; Install:<code>Online:Microsoft.CompilerService.Async</code></strong></p>
+
+<p><strong>Click Manage :<code>Installed packages, All:Microsoft.CompilerService.Async</code></strong>
+<center>
+<img src="Images/AddAsyncAwait0.png" alt="" /><br/>
+Figure 2. Add nuget package, </p>
+
+<p><img src="Images/AddAsyncAwait.png" alt="" /><br/>
+Figure 3. Target project of async support.
+</center></p>
+
+<h3>3 .  Add RX to your project</h3>
+
+<blockquote>
+  <h3>3 . 为工程添加 RX 支持</h3>
+</blockquote>
+
+<p><strong>Open :<code>VS Menu-&gt; TOOLS-&gt;Libary Package Manager -&gt;Manage Nuget Packages For Solution</code></strong></p>
+
+<p><strong>Search &amp; Install:<code>Online:Rx-Main</code></strong></p>
+
+<p><strong>Click Manage :<code>Installed packages, All: Rx-Main</code></strong>
+<center>
+<img src="Images/AddRx0.png" alt="" /><br/>
+Figure 4. Add nuget package, Rx-Main</p>
+
+<p><img src="Images/AddRx1.png" alt="" /><br/>
+Figure 5. Target projects of Rx .
+</center></p>
+
+<h3>4 .  Add MVVM.cs To your project.</h3>
+
+<blockquote>
+  <h3>4 . 为工程添加 MVVM.cs</h3>
+</blockquote>
+
+<p><strong>Open :<code>VS Menu-&gt; PROJECT-&gt;Add Existing Item -&gt;MVVM.cs(Add as Link)</code></strong></p>
+
+<h3>5 .  Try Build your Project.</h3>
+
+<blockquote>
+  <h3>5 . 尝试编译你的项目</h3>
+</blockquote>
+
+<h2>Second step: Create entrance View &amp; View Model</h2>
+
+<blockquote>
+  <h2>第二步: 创建总视图与视图模型</h2>
+</blockquote>
+
+<h3>1 .  Create empty View Model</h3>
+
+<blockquote>
+  <h3>1 . 创建空白的视图模型</h3>
+</blockquote>
+
+<p><strong><code>VS Menu-&gt; PROJECT-&gt;New Folder-&gt;Set Name:ViewModels</code></strong></p>
+
+<p><strong><code>VS Menu-&gt; PROJECT-&gt;Add New Item-&gt;Class -&gt;Set Name:Index_Model</code></strong></p>
+
+<p><em>Usually all the View Models in different platforms can be same, it is possiable to add one new View Model class file in Samples_ViewModels.csproj and add it as link to other projects. Some platform sepific API or logic can be written and orgnazined in the same file with contitional compliation symbols .</em></p>
+
+<blockquote>
+  <p><em>大多数情况，对应不同平台的视图模型有可能是完全一样的，我们把这样的视图模型放在一个工程，在其他工程中按照链接添加代码文件是可行的。对于平台特有的API和逻辑，我们可以用条件编译符号组织它们。</em></p>
+</blockquote>
+
+<p><center>
+<img src="Images/AddEmptyModel.png" alt="" /><br/>
+Figure 6. Add View Model class as link.
+</center></p>
+
+<h3>2 .  Modify View Model class to MVVM-Sidekick View Model</h3>
+
+<blockquote>
+  <h3>2 . 将添加的视图模型修改为MVVM-Sidekick模型</h3>
+</blockquote>
+
+<p>Change old code</p>
+
+<pre>
+<code>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Samples.ViewModels
+{
+    public class Index_Model
+    { 
+    }
+}
+</code>
+</pre>
+
+<p>To new code</p>
+
+<pre>
+<code>
+using MVVMSidekick.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Samples.ViewModels
+{
+    public class Index_Model : ViewModelBase &lt;Index_Model&gt;
+    {
+    }    
+}
+
+</code>
+</pre>
 
 </body>
 </html>
