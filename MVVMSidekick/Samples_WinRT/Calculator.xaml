@@ -49,13 +49,13 @@
             <RowDefinition Height="85*"/>
             <RowDefinition Height="86*"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.ColumnSpan="4" TextAlignment="Right" Text="{Binding CurrentInput, Mode=TwoWay}" IsReadOnly="True" ></TextBox>
-        <TextBlock Foreground="White" Grid.Row="1" HorizontalAlignment="Right" Text="{Binding LeftNumber}" FontSize="18" Grid.Column="3" Margin="0,0,-1,0" />
-        <StackPanel Orientation="Horizontal" Grid.Row="2"  HorizontalAlignment="Right" Grid.Column="0"  Grid.ColumnSpan="4">
-            <TextBlock Foreground="White"  HorizontalAlignment="Center" Text="{Binding Sign}" FontSize="18" Padding="0,0,100,0"></TextBlock>
-            <TextBlock Foreground="White"  HorizontalAlignment="Right" Text="{Binding RightNumber}" FontSize="18"></TextBlock>
+        <TextBox Margin="3" Grid.ColumnSpan="5" TextAlignment="Right" Text="{Binding CurrentInput, Mode=TwoWay}" IsReadOnly="True" ></TextBox>
+        <TextBlock Margin="3"  Foreground="White" Grid.Row="1" HorizontalAlignment="Right" Text="{Binding LeftNumber}" FontSize="18" Grid.Column="0" Grid.ColumnSpan="5" />
+        <StackPanel Margin="3" Orientation="Horizontal" Grid.Row="2"  HorizontalAlignment="Right" Grid.Column="0" Grid.ColumnSpan="5">
+            <TextBlock Foreground="White"  Text="{Binding Sign}" FontSize="18" Padding="0,0,10,0"></TextBlock>
+            <TextBlock Foreground="White"  Text="{Binding RightNumber}" FontSize="18"></TextBlock>
         </StackPanel>
-        <TextBlock Foreground="White"  Grid.Row="3"  HorizontalAlignment="Right" Text="{Binding Result}" FontSize="18"  Grid.Column="3"></TextBlock>
+        <TextBlock Foreground="White"  Grid.Row="3"  HorizontalAlignment="Right" Grid.ColumnSpan="5" Text="{Binding Result}" FontSize="18"  Grid.Column="0"></TextBlock>
         <Button Grid.Row="4" Grid.Column="0" Command="{Binding CommandInputNumber}" CommandParameter="{Binding Path=ButtonTexts[1]}">
             <TextBlock  Text="{Binding Path=ButtonTexts[1]}"/>
         </Button>
@@ -115,7 +115,7 @@
             <TextBlock  Text="{Binding Path=ButtonTexts[15]}"/>
         </Button>
     </Grid>
-        <!--
+    <!--
         This grid acts as a root panel for the page that defines two rows:
         * Row 0 contains the back button and page title
         * Row 1 contains the rest of the page layout
