@@ -12,8 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-
+using $rootnamespace$.Common;
+using $rootnamespace$.ViewModels;
 
 namespace $rootnamespace$
 {
@@ -22,10 +22,15 @@ namespace $rootnamespace$
     /// </summary>
     public sealed partial class MainPage : LayoutAwarePage
     {
-        public MainPage()
+        public MainPage():base(null)
         {
             this.InitializeComponent();
         }
+        public MainPage(MainPage_Model model):base(model)
+        {
+            this.InitializeComponent();
+        }
+
 
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also

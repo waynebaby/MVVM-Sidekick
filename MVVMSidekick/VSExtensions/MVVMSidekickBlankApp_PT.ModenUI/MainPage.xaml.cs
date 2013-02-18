@@ -1,4 +1,5 @@
 ﻿using MVVMSidekick.Views;
+using MVVMSidekick.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using $safeprojectname$.Common;
+using $safeprojectname$.ViewModels;
 
 
 namespace $safeprojectname$
@@ -22,7 +24,11 @@ namespace $safeprojectname$
     /// </summary>
     public sealed partial class MainPage : LayoutAwarePage
     {
-        public MainPage()
+        public MainPage():base(null)
+        {
+            this.InitializeComponent();
+        }
+        public MainPage(MainPage_Model model):base(model)
         {
             this.InitializeComponent();
         }

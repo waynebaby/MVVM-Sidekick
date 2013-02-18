@@ -72,6 +72,9 @@
     <None Include="ItemDetailPage.xaml.cs">
       <DependentUpon>ItemDetailPage.xaml</DependentUpon>
     </None>
+    <None Include="Common\BindableBase.cs" />
+    <None Include="Common\LayoutAwarePage.cs" />
+    <None Include="Common\SuspensionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

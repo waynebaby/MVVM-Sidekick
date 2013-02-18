@@ -28,11 +28,16 @@
         <ProjectItem ReplaceParameters="false" TargetFileName="StoreLogo.png">StoreLogo.png</ProjectItem>
       </Folder>
       <Folder Name="Common" TargetFolderName="Common">
-        <ProjectItem ReplaceParameters="true" TargetFileName="BooleanNegationConverter.cs">BooleanNegationConverter.cs</ProjectItem>
+   
+
+        <ProjectItem ReplaceParameters="false" TargetFileName="ReadMe.txt">ReadMe.txt</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="StandardStyles.xaml">StandardStyles.xaml</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="BindableBase.cs">BindableBase.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="BooleanToVisibilityConverter.cs">BooleanToVisibilityConverter.cs</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="ReadMe.txt">ReadMe.txt</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="BooleanNegationConverter.cs">BooleanNegationConverter.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="LayoutAwarePage.cs">LayoutAwarePage.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="RichTextColumns.cs">RichTextColumns.cs</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="StandardStyles.xaml">StandardStyles.xaml</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SuspensionManager.cs">SuspensionManager.cs</ProjectItem>
       </Folder>
       <Folder Name="DataModel" TargetFolderName="DataModel">
         <ProjectItem ReplaceParameters="true" TargetFileName="GroupModel.cs">GroupModel.cs</ProjectItem>
@@ -58,7 +63,7 @@
   </WizardExtension>
   <WizardData>
     <packages>
-      <package id="MVVM-Sidekick" version="1.0.7" />
+      <package id="MVVM-Sidekick" version="1.0.8" />
     </packages>
   </WizardData>
 </VSTemplate>

@@ -98,6 +98,7 @@
     <PostBuildEvent>cd $(TargetDir)..\..\..
 
 copy $(TargetDir)$(SolutionName)*.* Bin
+copy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\sl50
 
 </PostBuildEvent>
   </PropertyGroup>

@@ -191,7 +191,7 @@ namespace MVVMSidekick
                         {
                             lock (this)
                             {
-                                if (ServiceInstance.Equals(default(TService)))
+                                if (ServiceInstance==null||ServiceInstance.Equals(default(TService)))
                                 {
                                     return ServiceInstance = ServiceFactory(paremeter);
                                 }
@@ -1220,7 +1220,7 @@ namespace MVVMSidekick
 
             public static ValueContainer<T> Initialize<T>(this BindableBase model, string propertyName, ref Property<T> reference, ref Func<BindableBase, ValueContainer<T>> locator, Func<BindableBase, T> defaultValueFactory = null)
             {
-                return Initialize(model, propertyName, ref reference, ref locator, () => defaultValueFactory(model));
+                return Initialize(model, propertyName, ref reference, ref locator, () =>  (defaultValueFactory != null) ? defaultValueFactory(model):default(T) );
             }
         }
 

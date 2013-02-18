@@ -10,7 +10,6 @@
     <DefaultName>DataModel.cs</DefaultName>
     <ShowByDefault>false</ShowByDefault>
     <SortOrder>41</SortOrder>
-    <!--<PreviewImage>BasicPage.png</PreviewImage>-->
     <TargetPlatformName>Windows</TargetPlatformName>
     <RequiredPlatformVersion>8</RequiredPlatformVersion>
     <TemplateGroupID>WinRT-Managed</TemplateGroupID>
@@ -26,7 +25,7 @@
   </WizardExtension>
   <WizardData>
     <packages>
-      <package id="MVVM-Sidekick" version="1.0.7" />
+     <package id="MVVM-Sidekick" version="1.0.8.1" allowedVersions="[1,5)"  />
     </packages>
   </WizardData>
 </VSTemplate>

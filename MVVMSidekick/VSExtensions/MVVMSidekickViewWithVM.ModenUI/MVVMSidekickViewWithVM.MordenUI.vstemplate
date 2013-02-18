@@ -7,17 +7,11 @@
     <TemplateID>fdb471e9-7cb3-4bee-b35b-f9ee39e65fde</TemplateID>
     <ProjectType>CSharp</ProjectType>
 
-    <!--<Name Package="{BB89AFCA-43DA-45C1-907D-9D61DD11F28D}" ID="1016" />
-    <Description Package="{BB89AFCA-43DA-45C1-907D-9D61DD11F28D}" ID="1017" />
-    <Icon Package="{BB89AFCA-43DA-45C1-907D-9D61DD11F28D}" ID="4025" />
-    <TemplateID>Microsoft.CS.WinRT.BasicPage</TemplateID>
-    
-    <ProjectType>CSharp</ProjectType>-->
     <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
     <DefaultName>BasicPage.xaml</DefaultName>
     <ShowByDefault>false</ShowByDefault>
     <SortOrder>41</SortOrder>
-    <!--<PreviewImage>BasicPage.png</PreviewImage>-->
+    
     <TargetPlatformName>Windows</TargetPlatformName>
     <RequiredPlatformVersion>8</RequiredPlatformVersion>
     <TemplateGroupID>WinRT-Managed</TemplateGroupID>
@@ -43,7 +37,7 @@
   </WizardExtension>
   <WizardData>
     <packages>
-      <package id="MVVM-Sidekick" version="1.0.7" />
+      <package id="MVVM-Sidekick" version="1.0.8.1" allowedVersions="[1,5)"  />
     </packages>
   </WizardData>
 </VSTemplate>

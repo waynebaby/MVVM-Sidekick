@@ -44,7 +44,7 @@
   <CodeSnippet Format="1.0.0">
     <Header>
       <Title>MVVM Sidekick View Model Class</Title>
-      <Shortcut>vmcls</Shortcut>
+      <Shortcut>classvm</Shortcut>
       <Description>View Model for WPF &amp; Silverlight MVVM </Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
@@ -75,7 +75,8 @@
             
         }
 
-        //Use vmprop + tab +tab  to create a new property of vm here:
+        //Use propvm + tab +tab  to create a new property of vm here:
+        //Use propcmd + tab +tab  to create a new command of vm here:
            
 
     }
@@ -88,11 +89,61 @@
     </Snippet>
   </CodeSnippet>
 
+
+  <!--Bindable Class-->
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>MVVM Sidekick Bindable Class</Title>
+      <Shortcut>classvm</Shortcut>
+      <Description>Bindable type for WPF &amp; Silverlight MVVM </Description>
+      <Author>Wayne Wang</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>class</ID>
+          <ToolTip>Bindable Class Name</ToolTip>
+          <Default>SomeBindable</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[
+    //[DataContract(IsReference=true) ] //if you want
+    public class $class$ : BindableBase<$class$> 
+    {
+        public $class$()
+        {
+            // Use propery to init value here:
+            if (IsInDesignMode)
+            { 
+                //Add design time demo data init here. These will not execute in runtime.
+            }
+            
+            
+        }
+
+        //Use propvm + tab +tab  to create a new property of bindable here:
+           
+
+    }
+     
+        
+        
+        
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+
   <!--View Model Command With Resource-->
   <CodeSnippet Format="1.0.0">
     <Header>
       <Title>MVVM Sidekick View Model Command With Resource</Title>
-      <Shortcut>vmcmd</Shortcut>
+      <Shortcut>propcmd</Shortcut>
       <Description>Command Model of View Model for WPF &amp; Silverlight MVVM </Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
@@ -139,89 +190,10 @@
     </Snippet>
   </CodeSnippet>
 
-  <!--View Model Command Without Resource--><!--
-  <CodeSnippet Format="1.0.0">
-    <Header>
-      <Title>MVVM Sidekick View Model Command Without Resources</Title>
-      <Shortcut>vmcmdnr</Shortcut>
-      <Description>Command Model of View Model for WPF &amp; Silverlight MVVM </Description>
-      <Author>Wayne Wang</Author>
-      <SnippetTypes>
-        <SnippetType>Expansion</SnippetType>
-      </SnippetTypes>
-    </Header>
-    <Snippet>
-      <Declarations>
-        <Literal>
-          <ID>commandType</ID>
-          <ToolTip>View Model Command Type</ToolTip>
-          <Default>SomeCommandType</Default>
-        </Literal>
-        <Literal>
-          <ID>commandName</ID>
-          <ToolTip>View Model Command Type</ToolTip>
-          <Default>SomeCommand</Default>
-        </Literal>
-
-      </Declarations>
-      <Code Language="csharp" >
-        <![CDATA[
-        CommandModel<$commandType$> _$commandName$
-            = new $commandType$().CreateCommandModel();
-        public CommandModel<$commandType$> $commandName$
-        {
-            get { return _$commandName$; }
-            protected set { _$commandName$ = value; }
-        }        
-]]>
-      </Code>
-    </Snippet>
-  </CodeSnippet>-->
 
 
 
 
 
 
-  <!--View Model Property in View-->
-  <CodeSnippet Format="1.0.0">
-    <Header>
-      <Title>MVVM Sidekick View Model Property in View</Title>
-      <Shortcut>propvw</Shortcut>
-      <Description>Command Model of View Model for WPF &amp; Silverlight MVVM </Description>
-      <Author>Wayne Wang</Author>
-      <SnippetTypes>
-        <SnippetType>Expansion</SnippetType>
-      </SnippetTypes>
-    </Header>
-    <Snippet>
-      <Declarations>
-        <Literal>
-          <ID>propType</ID>
-          <ToolTip>View Model Property Type</ToolTip>
-          <Default>string</Default>
-        </Literal>
-        <Literal>
-          <ID>ownerType</ID>
-          <ToolTip>View Type</ToolTip>
-          <Default>ownerType</Default>
-        </Literal>
-
-      </Declarations>
-      <Code Language="csharp" >
-        <![CDATA[
-        public $propType$ ViewModel
-        {
-            get { return ($propType$)GetValue(ViewModelProperty); }
-            set { SetValue(ViewModelProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ViewModelProperty =
-            DependencyProperty.Register("ViewModel", typeof($propType$), typeof($ownerType$), new PropertyMetadata(default($propType$)));
-
-]]>
-      </Code>
-    </Snippet>
-  </CodeSnippet>
 </CodeSnippets>

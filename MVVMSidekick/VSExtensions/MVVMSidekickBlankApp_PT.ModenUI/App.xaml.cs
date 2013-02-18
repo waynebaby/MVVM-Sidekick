@@ -21,60 +21,20 @@ using Windows.UI.Xaml.Navigation;
 
 namespace $safeprojectname$
 {
-    /// <summary>
+  /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
-
-        /// <summary>
-        /// 本App的主Frame
-        /// </summary>
-        public static Frame MainFrame
-        {
-            get { return m_MainFrame; }
-            set { m_MainFrame = value; }
-        }
-        static Frame m_MainFrame;
-
-        /// <summary>
-        /// 本App的主事件路由
-        /// </summary>
-        public static EventRouter MainEventRouter = EventRouter.Instance;
-
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
-
-            MainFrame = Window.Current.Content as Frame;
-
-            MainEventRouter.InitFrameNavigator(ref m_MainFrame);
-
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-
-            MainFrame.GetFrameNavigator ().PageInitActions
-                .Add(
-                    typeof(MainPage),
-                    (p, dic) =>
-                    {
-                        //  p.DefaultViewModel["Title"] = "Ok!,String Index Property Access!";
-                        ((MainPage_Model)p.DefaultViewModel).Title   = "Ok!,Strong Type Property Access!";
-                    }
-
-                );
-
         }
-
-
-
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -84,27 +44,33 @@ namespace $safeprojectname$
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            //Todo:Init MVVM-Sidekick Navigations Here:
 
-            if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
+
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            // Do not repeat app initialization when the Window already has content,
+            // just ensure that the window is active
+            if (rootFrame == null)
             {
-                //TODO: Load state from previously suspended application
+                // Create a Frame to act as the navigation context and navigate to the first page
+                rootFrame = new Frame();
+
+                if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                {
+                    //TODO: Load state from previously suspended application
+                }
+
+                // Place the frame in the current Window
+                Window.Current.Content = rootFrame;
             }
 
-            // Place the frame in the current Window
-            Window.Current.Content = MainFrame;
-            if (MainFrame.Content == null)
+            if (rootFrame.Content == null)
             {
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                var par = new Dictionary<string, object> 
-                { 
-                    {
-                        MVVMSidekick.Views.NavigateParameterKeys.ViewInitActionName,
-                        args.Arguments
-                    }
-                };
-                if (!MainFrame.Navigate(typeof(MainPage), par))
+                if (!rootFrame.Navigate(typeof(MainPage), args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }

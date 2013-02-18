@@ -1,4 +1,5 @@
 ﻿using MVVMSidekick.Views;
+using MVVMSidekick.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using $rootnamespace$.Common;
+using $rootnamespace$.ViewModels;
 
 
 namespace $rootnamespace$
@@ -22,11 +24,15 @@ namespace $rootnamespace$
     /// </summary>
     public sealed partial class $safeitemrootname$ : LayoutAwarePage
     {
-        public $safeitemrootname$()
+
+        public $safeitemrootname$():base(null)
         {
             this.InitializeComponent();
         }
-
+        public $safeitemrootname$($safeitemrootname$_Model model):base(model)
+        {
+            this.InitializeComponent();
+        }
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
         /// provided when recreating a page from a prior session.

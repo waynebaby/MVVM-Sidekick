@@ -55,13 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </None>
     <None Include="View_Model.cs" />
     <None Include="View.xaml.cs">
       <DependentUpon>View.xaml</DependentUpon>

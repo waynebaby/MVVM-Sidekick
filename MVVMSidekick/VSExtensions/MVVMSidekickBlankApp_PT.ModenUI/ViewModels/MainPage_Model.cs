@@ -13,37 +13,29 @@ namespace $safeprojectname$.ViewModels
     [DataContract]
     public class MainPage_Model : ViewModelBase<MainPage_Model>
     {
-        // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property。
-        // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性
+        // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property propcmd for command
+        // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性 propcmd 输入命令
 
-
-        public String Title
+        public MainPage_Model()
         {
-            get { return m_TitleLocator(this).Value; }
-            set { m_TitleLocator(this).SetValueAndTryNotify(value); }
+            if (IsInDesignMode )
+            {
+                Title = "Title is a little different in Design mode";
+            }
+        
         }
 
+        //propvm tab tab string tab Title
+        public String Title
+        {
+            get { return _TitleLocator(this).Value; }
+            set { _TitleLocator(this).SetValueAndTryNotify(value); }
+        }
         #region Property String Title Setup
-        protected Property<String> m_Title =
-          new Property<String> { LocatorFunc = m_TitleLocator };
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        static Func<BindableBase, ValueContainer<String>> m_TitleLocator =
-            RegisterContainerLocator<String>(
-                "Title",
-                model =>
-                {
-                    model.m_Title =
-                        model.m_Title
-                        ??
-                        new Property<String> { LocatorFunc = m_TitleLocator };
-                    return model.m_Title.Container =
-                        model.m_Title.Container
-                        ??
-                        new ValueContainer<String>("Title", model);
-                });
+        protected Property<String> _Title = new Property<String> { LocatorFunc = _TitleLocator };
+        static Func<BindableBase, ValueContainer<String>> _TitleLocator = RegisterContainerLocator<String>("Title", model => model.Initialize("Title", ref model._Title, ref _TitleLocator, _TitleDefaultValueFactory));
+        static Func<String> _TitleDefaultValueFactory = ()=>"Title is Here";
         #endregion
-
-
 
 
     }

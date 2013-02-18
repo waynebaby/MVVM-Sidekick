@@ -1,22 +1,20 @@
 ﻿<common:LayoutAwarePage   
     x:Name="pageRoot"
     x:Class="$safeprojectname$.MainPage"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:$safeprojectname$"
-    xmlns:common="using:MVVMSidekick.Views"
-    xmlns:commonLocal="using:$safeprojectname$.Common"
+    xmlns:mvvm="using:MVVMSidekick.Views"
+    xmlns:common="using:$safeprojectname$.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:$safeprojectname$.ViewModels"
     mc:Ignorable="d">
-    <common:LayoutAwarePage.DefaultViewModel>
-        <vm:MainPage_Model></vm:MainPage_Model>
-    </common:LayoutAwarePage.DefaultViewModel>
+
     <Page.Resources>
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="AppName">My Application</x:String>
+        <vm:MainPage_Model x:Key="DesignVM"/>
     </Page.Resources>
 
     <!--
@@ -24,7 +22,7 @@
         * Row 0 contains the back button and page title
         * Row 1 contains the rest of the page layout
     -->
-    <Grid Style="{StaticResource LayoutRootStyle}">
+    <Grid Style="{StaticResource LayoutRootStyle}" DataContext="{StaticResource DesignVM}">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
@@ -37,9 +35,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{Binding DefaultViewModel.Title, ElementName=pageRoot}" Style="{StaticResource PageHeaderTextStyle}"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{Binding Title}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
-    
+
 
         <VisualStateManager.VisualStateGroups>
 

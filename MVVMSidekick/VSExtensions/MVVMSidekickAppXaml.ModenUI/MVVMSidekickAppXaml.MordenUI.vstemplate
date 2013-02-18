@@ -24,8 +24,7 @@
         <Assembly>System</Assembly>
       </Reference>
     </References>
-    <ProjectItem ReplaceParameters="true" SubType="Code"  TargetFileName="App.xaml.cs">App.xaml.cs</ProjectItem>
-    <!--<ProjectItem ReplaceParameters="true" SubType="Code"  TargetFileName="App.xaml">App.xaml</ProjectItem>-->
+
     <ProjectItem ReplaceParameters="true" SubType="Code"  TargetFileName="MainPage.xaml.cs">View.xaml.cs</ProjectItem>
     <ProjectItem ReplaceParameters="true" SubType="Code"  TargetFileName="MainPage.xaml">View.xaml</ProjectItem>
     <ProjectItem ReplaceParameters="true" SubType="Code"  TargetFileName="ViewModels/MainPage_Model.cs">View_Model.cs</ProjectItem>
@@ -36,7 +35,7 @@
   </WizardExtension>
   <WizardData>
     <packages>
-      <package id="MVVM-Sidekick" version="1.0.7" />
+      <package id="MVVM-Sidekick" version="1.0.8.1" />
     </packages>
   </WizardData>
 </VSTemplate>

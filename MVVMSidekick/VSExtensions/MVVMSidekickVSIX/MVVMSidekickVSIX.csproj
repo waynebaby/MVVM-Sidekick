@@ -50,10 +50,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MVVMSidekickAppXaml.ModenUI\MVVMSidekickAppXaml.ModenUI.csproj">
-      <Project>{67E68C92-F22B-440C-BDCB-74084DE8C6DD}</Project>
-      <Name>MVVMSidekickAppXaml.ModenUI</Name>
-      <VSIXSubPath>ItemTemplates</VSIXSubPath>
+    <ProjectReference Include="..\MVVMSidekickApplication.WPF\MVVMSidekickApplication.WPF.csproj">
+      <Project>{886C60FB-EDBD-4C3E-8D00-418579E24794}</Project>
+      <Name>MVVMSidekickApplication.WPF</Name>
+      <VSIXSubPath>ProjectTemplates</VSIXSubPath>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
     </ProjectReference>
@@ -71,10 +71,10 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
     </ProjectReference>
-    <ProjectReference Include="..\MVVMSidekickGridApp_PT.ModenUI\MVVMSidekickGridApp_PT.ModenUI.csproj">
-      <Project>{292C371E-0F20-4F41-A3C8-3C7F75DF9C71}</Project>
-      <Name>MVVMSidekickGridApp_PT.ModenUI</Name>
-      <VSIXSubPath>ProjectTemplates</VSIXSubPath>
+    <ProjectReference Include="..\MVVMSidekickDataModel.WPF\MVVMSidekickDataModel.WPF.csproj">
+      <Project>{EA433C29-D525-49AE-AE2E-6B65A7281E8A}</Project>
+      <Name>MVVMSidekickDataModel.WPF</Name>
+      <VSIXSubPath>ItemTemplates</VSIXSubPath>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
     </ProjectReference>
@@ -85,6 +85,16 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
     </ProjectReference>
+    <ProjectReference Include="..\MVVMSidekickViewWithVM.WPF\MVVMSidekickViewWithVM.WPF.csproj">
+      <Project>{2965541D-1A12-47EB-BC37-B0372B163501}</Project>
+      <Name>MVVMSidekickViewWithVM.WPF</Name>
+      <VSIXSubPath>ItemTemplates</VSIXSubPath>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

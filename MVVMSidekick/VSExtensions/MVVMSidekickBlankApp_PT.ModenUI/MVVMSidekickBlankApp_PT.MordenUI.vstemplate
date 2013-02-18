@@ -26,7 +26,14 @@
       </Folder>
       <ProjectItem ReplaceParameters="false" TargetFileName="$safeprojectname$_TemporaryKey.pfx">BlankApp_MVVMSidekick_TemporaryKey.pfx</ProjectItem>
       <Folder Name="Common" TargetFolderName="Common">
-        <ProjectItem ReplaceParameters="true" TargetFileName="StandardStyles.xaml">StandardStyles.xaml</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="ReadMe.txt">ReadMe.txt</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="StandardStyles.xaml">StandardStyles.xaml</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="BindableBase.cs">BindableBase.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="BooleanToVisibilityConverter.cs">BooleanToVisibilityConverter.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="BooleanNegationConverter.cs">BooleanNegationConverter.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="LayoutAwarePage.cs">LayoutAwarePage.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="RichTextColumns.cs">RichTextColumns.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SuspensionManager.cs">SuspensionManager.cs</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml">MainPage.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml.cs">MainPage.xaml.cs</ProjectItem>
@@ -46,7 +53,7 @@
   </WizardExtension>
   <WizardData>
     <packages>
-      <package id="MVVM-Sidekick" version="1.0.7" />
+      <package id="MVVM-Sidekick" version="1.0.8.1" allowedVersions="[1,5)"  />
     </packages>
   </WizardData>
 </VSTemplate>
