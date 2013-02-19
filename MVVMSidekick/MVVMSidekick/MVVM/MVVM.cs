@@ -135,12 +135,12 @@ namespace MVVMSidekick
             bool IsAsync<TService>(string name = "");
             ServiceLocatorEntryStruct<TService> Register<TService>(TService instance);
             ServiceLocatorEntryStruct<TService> Register<TService>(string name, TService instance);
-            ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, TService> factory, bool alwaysNew = false);
-            ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, TService> factory, bool alwaysNew = false);
+            ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, TService> factory, bool alwaysNew = true);
+            ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, TService> factory, bool alwaysNew = true);
             TService Resolve<TService>(string name = null, dynamic paremeter = null);
 
-            ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = false);
-            ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = false);
+            ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true);
+            ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true);
             Task<TService> ResolveAsync<TService>(string name = null, dynamic paremeter = null);
 
         }
@@ -151,11 +151,11 @@ namespace MVVMSidekick
             bool IsAsync(string name = "");
             ServiceLocatorEntryStruct<TService> Register(TService instance);
             ServiceLocatorEntryStruct<TService> Register(string name, TService instance);
-            ServiceLocatorEntryStruct<TService> Register(Func<dynamic, TService> factory, bool alwaysNew = false);
-            ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, TService> factory, bool alwaysNew = false);
+            ServiceLocatorEntryStruct<TService> Register(Func<dynamic, TService> factory, bool alwaysNew = true);
+            ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, TService> factory, bool alwaysNew = true);
             TService Resolve(string name = null, dynamic paremeter = null);
-            ServiceLocatorEntryStruct<TService> Register(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = false);
-            ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = false);
+            ServiceLocatorEntryStruct<TService> Register(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true);
+            ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true);
             Task<TService> ResolveAsync(string name = null, dynamic paremeter = null);
         }
 
@@ -191,7 +191,7 @@ namespace MVVMSidekick
                         {
                             lock (this)
                             {
-                                if (ServiceInstance==null||ServiceInstance.Equals(default(TService)))
+                                if (ServiceInstance == null || ServiceInstance.Equals(default(TService)))
                                 {
                                     return ServiceInstance = ServiceFactory(paremeter);
                                 }
@@ -283,12 +283,12 @@ namespace MVVMSidekick
                         };
             }
 
-            public ServiceLocatorEntryStruct<TService> Register(Func<dynamic, TService> factory, bool alwaysNew = false)
+            public ServiceLocatorEntryStruct<TService> Register(Func<dynamic, TService> factory, bool alwaysNew = true)
             {
                 return Register(null, factory, alwaysNew);
             }
 
-            public ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, TService> factory, bool alwaysNew = false)
+            public ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, TService> factory, bool alwaysNew = true)
             {
                 name = name ?? "";
 
@@ -357,12 +357,12 @@ namespace MVVMSidekick
             }
 
 
-            public ServiceLocatorEntryStruct<TService> Register(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = false)
+            public ServiceLocatorEntryStruct<TService> Register(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true)
             {
                 return Register(null, asyncFactory, alwaysNew);
             }
 
-            public ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = false)
+            public ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true)
             {
                 name = name ?? "";
 
@@ -444,8 +444,8 @@ namespace MVVMSidekick
 
 
                 if (!disposeActions.ContainsKey(typeof(TService)))
-                    disposeActions[typeof(TService)] = () => MapperCache<TService>.dic.Clear();
-                return MapperCache<TService>.dic[name] =
+                    disposeActions[typeof(TService)] = () => ServiceTypedCache<TService>.dic.Clear();
+                return ServiceTypedCache<TService>.dic[name] =
                      new ServiceLocatorEntryStruct<TService>(name)
                      {
                          ServiceInstance = instance,
@@ -453,18 +453,18 @@ namespace MVVMSidekick
                      };
             }
 
-            public ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, TService> factory, bool alwaysNew = false)
+            public ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, TService> factory, bool alwaysNew = true)
             {
                 return Register<TService>(null, factory, alwaysNew);
             }
 
-            public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, TService> factory, bool alwaysNew = false)
+            public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, TService> factory, bool alwaysNew = true)
             {
                 name = name ?? "";
                 ServiceLocatorEntryStruct<TService> rval;
                 if (alwaysNew)
                 {
-                    MapperCache<TService>.dic[name] =
+                    ServiceTypedCache<TService>.dic[name] =
                        rval =
                   new ServiceLocatorEntryStruct<TService>(name)
                   {
@@ -475,7 +475,7 @@ namespace MVVMSidekick
                 else
                 {
 
-                    MapperCache<TService>.dic[name] =
+                    ServiceTypedCache<TService>.dic[name] =
                         rval =
                        new ServiceLocatorEntryStruct<TService>(name)
                        {
@@ -484,7 +484,7 @@ namespace MVVMSidekick
                        };
                 }
                 if (!disposeActions.ContainsKey(typeof(TService)))
-                    disposeActions[typeof(TService)] = () => MapperCache<TService>.dic.Clear();
+                    disposeActions[typeof(TService)] = () => ServiceTypedCache<TService>.dic.Clear();
 
                 return rval;
             }
@@ -492,7 +492,7 @@ namespace MVVMSidekick
             public TService Resolve<TService>(string name = null, dynamic paremeters = null)
             {
                 name = name ?? "";
-                var subdic = MapperCache<TService>.dic;
+                var subdic = ServiceTypedCache<TService>.dic;
                 ServiceLocatorEntryStruct<TService> entry = null;
                 if (subdic.TryGetValue(name, out entry))
                 {
@@ -518,7 +518,7 @@ namespace MVVMSidekick
                 }
             }
 
-            static class MapperCache<TService>
+            static class ServiceTypedCache<TService>
             {
                 public static Dictionary<string, ServiceLocatorEntryStruct<TService>> dic
                     = new Dictionary<string, ServiceLocatorEntryStruct<TService>>();
@@ -530,7 +530,7 @@ namespace MVVMSidekick
             {
                 name = name ?? "";
                 ServiceLocatorEntryStruct<TService> entry = null;
-                if (MapperCache<TService>.dic.TryGetValue(name, out entry))
+                if (ServiceTypedCache<TService>.dic.TryGetValue(name, out entry))
                 {
                     return
                        entry.GetIsValueCreated();
@@ -550,7 +550,7 @@ namespace MVVMSidekick
             {
                 name = name ?? "";
                 ServiceLocatorEntryStruct<TService> entry = null;
-                if (MapperCache<TService>.dic.TryGetValue(name, out entry))
+                if (ServiceTypedCache<TService>.dic.TryGetValue(name, out entry))
                 {
                     return
                        entry.GetIsValueCreated();
@@ -562,18 +562,18 @@ namespace MVVMSidekick
                 }
             }
 
-            public ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = false)
+            public ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true)
             {
                 return Register(null, asyncFactory, alwaysNew);
             }
 
-            public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = false)
+            public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true)
             {
                 name = name ?? "";
                 ServiceLocatorEntryStruct<TService> rval;
                 if (alwaysNew)
                 {
-                    MapperCache<TService>.dic[name] = rval = new ServiceLocatorEntryStruct<TService>(name)
+                    ServiceTypedCache<TService>.dic[name] = rval = new ServiceLocatorEntryStruct<TService>(name)
                       {
                           CacheType = CacheType.AsyncFactory,
                           AsyncServiceFactory = asyncFactory
@@ -582,7 +582,7 @@ namespace MVVMSidekick
                 }
                 else
                 {
-                    MapperCache<TService>.dic[name] = rval = new ServiceLocatorEntryStruct<TService>(name)
+                    ServiceTypedCache<TService>.dic[name] = rval = new ServiceLocatorEntryStruct<TService>(name)
                       {
                           CacheType = CacheType.AsyncLazyInstance,
                           AsyncServiceFactory = asyncFactory
@@ -590,7 +590,7 @@ namespace MVVMSidekick
 
                 }
                 if (!disposeActions.ContainsKey(typeof(TService)))
-                    disposeActions[typeof(TService)] = () => MapperCache<TService>.dic.Clear();
+                    disposeActions[typeof(TService)] = () => ServiceTypedCache<TService>.dic.Clear();
                 return rval;
             }
 
@@ -598,7 +598,7 @@ namespace MVVMSidekick
             public async Task<TService> ResolveAsync<TService>(string name = null, dynamic paremeter = null)
             {
                 name = name ?? "";
-                var subdic = MapperCache<TService>.dic;
+                var subdic = ServiceTypedCache<TService>.dic;
                 ServiceLocatorEntryStruct<TService> entry = null;
                 if (subdic.TryGetValue(name, out entry))
                 {
@@ -651,12 +651,12 @@ namespace MVVMSidekick
 
         //    }
 
-        //    public ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, TService> factory, bool alwaysNew = false)
+        //    public ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, TService> factory, bool alwaysNew = true)
         //    {
         //        Register<TService>(null, factory, alwaysNew);
         //    }
 
-        //    public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, TService> factory, bool alwaysNew = false)
+        //    public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, TService> factory, bool alwaysNew = true)
         //    {
         //        name = name ?? "";
         //        dic[typeof(TService)] = dic[typeof(TService)] ?? new Dictionary<string, Tuple<Lazy<Object>, Object, Func<dynamic, Object>, CacheType>>();
@@ -1220,7 +1220,7 @@ namespace MVVMSidekick
 
             public static ValueContainer<T> Initialize<T>(this BindableBase model, string propertyName, ref Property<T> reference, ref Func<BindableBase, ValueContainer<T>> locator, Func<BindableBase, T> defaultValueFactory = null)
             {
-                return Initialize(model, propertyName, ref reference, ref locator, () =>  (defaultValueFactory != null) ? defaultValueFactory(model):default(T) );
+                return Initialize(model, propertyName, ref reference, ref locator, () => (defaultValueFactory != null) ? defaultValueFactory(model) : default(T));
             }
         }
 
@@ -1788,14 +1788,14 @@ namespace MVVMSidekick
             /// <returns>错误信息字符串</returns>
             protected override string GetColumnError(string propertyName)
             {
-                if (_plainPropertyContainerGetters[propertyName]((TSubClassType)this).Errors.Count >0)
+                if (_plainPropertyContainerGetters[propertyName]((TSubClassType)this).Errors.Count > 0)
                 {
 
 
-                    var error = string.Join (",",_plainPropertyContainerGetters[propertyName]((TSubClassType)this).Errors.Select (x=>x.Message));
+                    var error = string.Join(",", _plainPropertyContainerGetters[propertyName]((TSubClassType)this).Errors.Select(x => x.Message));
                     var propertyContainer = this.GetValueContainer(propertyName);
 #if NETFX_CORE
-                if (propertyContainer != null && typeof(INotifyDataErrorInfo).GetTypeInfo().IsAssignableFrom(propertyContainer.PropertyType.GetTypeInfo()))
+                    if (propertyContainer != null && typeof(INotifyDataErrorInfo).GetTypeInfo().IsAssignableFrom(propertyContainer.PropertyType.GetTypeInfo()))
 #else
 
                     if (propertyContainer != null && typeof(INotifyDataErrorInfo).IsAssignableFrom(propertyContainer.PropertyType))
@@ -1804,7 +1804,7 @@ namespace MVVMSidekick
                         INotifyDataErrorInfo di = this[propertyName] as INotifyDataErrorInfo;
                         if (di != null)
                         {
-                            error = error + "\r\n-----Inner " + propertyName + " as INotifyDataErrorInfo -------\r\n\t" + di.HasErrors.ToString ();
+                            error = error + "\r\n-----Inner " + propertyName + " as INotifyDataErrorInfo -------\r\n\t" + di.HasErrors.ToString();
                         }
                     }
 
@@ -3269,51 +3269,63 @@ namespace MVVMSidekick
             TViewModel SpecificTypedViewModel { get; set; }
         }
 
-        public struct ViewModelToViewRegisterToken<TModel>
-
+        public struct ViewModelToViewMapper<TModel>
             where TModel : BindableBase
         {
-
-            public string Name { get; set; }
-
-
-            public ViewModelToViewRegisterToken<TModel> Register<TView>(bool alwaysNew = true) where TView : class,IView
+            public ViewModelToViewMapper<TModel> MapToDefault<TView>(TView instance) where TView : class,IView
             {
-                ViewModelToViewMapper<TModel>.Instance.Register(Name, d => (TView)Activator.CreateInstance(typeof(TView), d), alwaysNew);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(instance);
                 return this;
             }
 
-            public ViewModelToViewRegisterToken<TModel> GetAnotherViewRegister(string name = null)
+            public ViewModelToViewMapper<TModel> MapTo<TView>(string name, TView instance) where TView : class,IView
             {
-                return new ViewModelToViewRegisterToken<TModel>() { Name = name };
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(name, instance);
+                return this;
+            }
+
+
+            public ViewModelToViewMapper<TModel> MapToDefault<TView>(bool alwaysNew = true) where TView : class,IView
+            {
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView), d), alwaysNew);
+                return this;
+            }
+            public ViewModelToViewMapper<TModel> MapTo<TView>(string name, bool alwaysNew = true) where TView : class,IView
+            {
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(name, d => (TView)Activator.CreateInstance(typeof(TView), d), alwaysNew);
+                return this;
+            }
+
+            public ViewModelToViewMapper<TModel> MapToDefault<TView>(Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
+            {
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory(d as TModel), alwaysNew);
+                return this;
+            }
+
+            public ViewModelToViewMapper<TModel> MapTo<TView>(string name, Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
+            {
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(name, d => factory(d as TModel), alwaysNew);
+                return this;
             }
         }
 
         public static class ViewModelToViewMapperExtensions
         {
 
-            public static ViewModelToViewRegisterToken<TViewModel> GetViewSameNameRegister<TViewModel>(this MVVMSidekick.Services.ServiceLocatorEntryStruct<TViewModel> vmRegisterEntry)
-                where TViewModel : BindableBase
-            {
-                return new ViewModelToViewRegisterToken<TViewModel> { Name = vmRegisterEntry.Name };
-            }
-
-
-
-            public static ViewModelToViewRegisterToken<TViewModel> GetViewRegister<TViewModel>(this MVVMSidekick.Services.ServiceLocatorEntryStruct<TViewModel> vmRegisterEntry, string name = null)
+            public static ViewModelToViewMapper<TViewModel> GetViewMapper<TViewModel>(this MVVMSidekick.Services.ServiceLocatorEntryStruct<TViewModel> vmRegisterEntry)
                   where TViewModel : BindableBase
             {
-                return new ViewModelToViewRegisterToken<TViewModel> { Name = name };
+                return new ViewModelToViewMapper<TViewModel>();
             }
 
         }
-        public class ViewModelToViewMapper<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelToViewMapper<TViewModel>, IView>
+        public class ViewModelToViewMapperServiceLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelToViewMapperServiceLocator<TViewModel>, IView>
         {
-            static ViewModelToViewMapper()
+            static ViewModelToViewMapperServiceLocator()
             {
-                Instance = new ViewModelToViewMapper<TViewModel>();
+                Instance = new ViewModelToViewMapperServiceLocator<TViewModel>();
             }
-            public static ViewModelToViewMapper<TViewModel> Instance { get; set; }
+            public static ViewModelToViewMapperServiceLocator<TViewModel> Instance { get; set; }
 
 
         }
@@ -3510,7 +3522,7 @@ namespace MVVMSidekick
                  where TTarget : class,IViewModel
             {
 
-                var view = ViewModelToViewMapper<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                var view = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
                 ShowView(view, targetContainerName, _ViewModel);
                 await targetViewModel.WaitForClose();
@@ -3521,7 +3533,7 @@ namespace MVVMSidekick
             public async Task<TResult> Navigate<TTarget, TResult>(TTarget targetViewModel = null, string viewKey = null, string targetContainerName = null)
                 where TTarget : class,IViewModel<TResult>
             {
-                var view = ViewModelToViewMapper<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                var view = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
                 ShowView(view, targetContainerName, _ViewModel);
                 return await targetViewModel.WaitForCloseWithResult();
@@ -3530,7 +3542,7 @@ namespace MVVMSidekick
             public NavigateAwaitableResult<TTarget, TResult> NavigateAndGetViewModel<TTarget, TResult>(TTarget targetViewModel = null, string viewKey = null, string targetContainerName = null)
                 where TTarget : class,IViewModel<TResult>
             {
-                var view = ViewModelToViewMapper<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                var view = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
                 ShowView(view, targetContainerName, _ViewModel);
 #if SILVERLIGHT_5
@@ -3546,7 +3558,7 @@ namespace MVVMSidekick
             public async Task<TTarget> NavigateAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewKey = null, string targetContainerName = null)
                  where TTarget : class, IViewModel
             {
-                var view = ViewModelToViewMapper<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                var view = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
                 ShowView(view, targetContainerName, _ViewModel);
                 await targetViewModel.WaitForClose();

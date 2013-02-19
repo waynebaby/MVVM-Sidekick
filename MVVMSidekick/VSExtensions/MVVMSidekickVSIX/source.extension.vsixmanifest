@@ -19,5 +19,6 @@
     <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickViewWithVM.WPF" d:TargetPath="|MVVMSidekickViewWithVM.WPF;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
     <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="MVVMSidekickBlankApp_PT.ModenUI" d:TargetPath="|MVVMSidekickBlankApp_PT.ModenUI;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
     <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="MVVMSidekickApplication.WPF" d:TargetPath="|MVVMSidekickApplication.WPF;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+
   </Assets>
 </PackageManifest>

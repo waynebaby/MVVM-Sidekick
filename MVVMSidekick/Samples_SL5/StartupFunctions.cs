@@ -14,8 +14,9 @@ namespace Samples
             ViewModelLocator<Calculator_Model>
                 .Instance
                 .Register(new Calculator_Model())
-                .GetViewRegister()
-                .Register<Calculator>(true);
+                .GetViewMapper()
+                .MapToDefault(model => new Calculator(model));
+
         }
     }
 }

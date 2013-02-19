@@ -36,8 +36,10 @@
     <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
   </WizardExtension>
   <WizardData>
-    <packages>
-      <package id="MVVM-Sidekick" version="1.0.8.1" allowedVersions="[1,5)"  />
+    <packages repository="extension"
+          repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
+      
+      <package id="MVVM-Sidekick" version="1.0.9" />
     </packages>
   </WizardData>
 </VSTemplate>

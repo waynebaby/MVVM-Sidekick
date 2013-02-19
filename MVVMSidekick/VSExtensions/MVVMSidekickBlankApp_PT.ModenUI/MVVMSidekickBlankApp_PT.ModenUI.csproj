@@ -78,7 +78,9 @@
     <None Include="MVVMSidekickBlankApp_PT.MordenUI.ico" />
   </ItemGroup>
   <ItemGroup>
-    <VSTemplate Include="MVVMSidekickBlankApp_PT.MordenUI.vstemplate" />
+    <VSTemplate Include="MVVMSidekickBlankApp_PT.MordenUI.vstemplate">
+      <SubType>Designer</SubType>
+    </VSTemplate>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Logo.png" />
