@@ -45,9 +45,11 @@ namespace $safeprojectname$
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             //Todo:Init MVVM-Sidekick Navigations Here:
-
+            Startups.StartupFunctions();
 
             Frame rootFrame = Window.Current.Content as Frame;
+
+            
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active

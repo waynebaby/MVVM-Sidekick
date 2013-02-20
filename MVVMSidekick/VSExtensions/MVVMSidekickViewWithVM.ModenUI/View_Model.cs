@@ -17,35 +17,6 @@ namespace $rootnamespace$.ViewModels
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性
 
     
-        [DataMember]
-        public string SomePropertySample
-        {
-            get { return m_SomePropertySampleLocator(this).Value; }
-            set { m_SomePropertySampleLocator(this).SetValueAndTryNotify(value); }
-        }
-
-
-        #region Property string SomePropertySample Setup
-
-        protected Property<string> m_SomePropertySample =
-          new Property<string> { LocatorFunc = m_SomePropertySampleLocator };
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        static Func<BindableBase, ValueContainer<string>> m_SomePropertySampleLocator =
-            RegisterContainerLocator<string>(
-                "SomePropertySample",
-                model =>
-                {
-                    model.m_SomePropertySample =
-                        model.m_SomePropertySample
-                        ??
-                        new Property<string> { LocatorFunc = m_SomePropertySampleLocator };
-                    return model.m_SomePropertySample.Container =
-                        model.m_SomePropertySample.Container
-                        ??
-                        new ValueContainer<string>("SomePropertySample", model);
-                });
-
-        #endregion
 
 
 

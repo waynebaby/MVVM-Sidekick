@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Samples
 {
-    public static class StartupFunctions
+    public static partial class StartupFunctions
     {
         public static void ConfigCalculator()
         {

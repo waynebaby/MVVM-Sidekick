@@ -168,11 +168,12 @@
   <files>
     <file src="tools\*.*" target="tools" />
     <file src="content\*.*" target="content" />
-    <!--<file src="src\*.*" target="src" />-->    
+    <file src="src\*.*" target="src" />    
     <file src="lib\net45\*.*" target="lib\net45" />
     <file src="lib\netcore45\*.*" target="lib\netcore45" />
     <file src="lib\sl50\*.*" target="lib\sl50" />
     <file src="lib\wp8\*.*" target="lib\wp8" />
+    
 
     
   </files>

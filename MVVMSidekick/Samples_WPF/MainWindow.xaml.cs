@@ -1,4 +1,5 @@
 ﻿using MVVMSidekick.Views;
+using Samples.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,13 @@ namespace Samples
     public partial class MainWindow : MVVMWindow
     {
         public MainWindow()
+            : base(null)
+        {
+            InitializeComponent();
+        }
+
+        public MainWindow(Index_Model model)
+            : base(model)
         {
             InitializeComponent();
         }

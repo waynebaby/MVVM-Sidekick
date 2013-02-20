@@ -17,7 +17,7 @@
     <Project TargetFileName="$safeprojectname$.csproj" File="BlankApp_MVVMSidekick.csproj" ReplaceParameters="true">
       <ProjectItem ReplaceParameters="true" TargetFileName="App.xaml">App.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="App.xaml.cs">App.xaml.cs</ProjectItem>
-    
+
       <Folder Name="Assets" TargetFolderName="Assets">
         <ProjectItem ReplaceParameters="false" TargetFileName="Logo.png">Logo.png</ProjectItem>
         <ProjectItem ReplaceParameters="false" TargetFileName="SmallLogo.png">SmallLogo.png</ProjectItem>
@@ -35,10 +35,14 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="RichTextColumns.cs">RichTextColumns.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="SuspensionManager.cs">SuspensionManager.cs</ProjectItem>
       </Folder>
+      <Folder Name="Startups" TargetFolderName="Startups">
+        <ProjectItem ReplaceParameters="true" TargetFileName="StartupFunctions.cs">StartupFunctions.cs</ProjectItem>
+      </Folder>
+              
       <ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml">MainPage.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml.cs">MainPage.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="Package.appxmanifest">Package.appxmanifest</ProjectItem>
-      
+
       <Folder Name="Properties" TargetFolderName="Properties">
         <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
       </Folder>
@@ -55,7 +59,13 @@
   <WizardData>
     <packages repository="extension"
           repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
+      <package id="Rx-Core" version="2.1.30214.0"  />
+      <package id="Rx-Interfaces" version="2.1.30214.0"  />
+      <package id="Rx-Linq" version="2.1.30214.0"  />
+      <package id="Rx-Main" version="2.1.30214.0"  />
+      <package id="Rx-PlatformServices" version="2.1.30214.0"  />
       <package id="MVVM-Sidekick" version="1.0.9" />
+
     </packages>
   </WizardData>
 </VSTemplate>

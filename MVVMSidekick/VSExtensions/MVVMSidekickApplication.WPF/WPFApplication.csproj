@@ -70,8 +70,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+
+    <Compile Include="Startups\StartupFunctions.cs">
+    
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\MainWindow_Model.cs">
+
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

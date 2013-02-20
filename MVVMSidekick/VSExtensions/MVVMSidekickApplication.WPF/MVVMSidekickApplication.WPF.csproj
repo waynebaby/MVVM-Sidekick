@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ViewModels\MainWindow_Model.cs" />
+    <None Include="Startups\StartupFunctions.cs" />
     <None Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </None>

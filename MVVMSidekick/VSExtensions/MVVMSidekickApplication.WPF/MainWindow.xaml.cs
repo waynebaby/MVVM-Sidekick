@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MVVMSidekick.Views;
+using $safeprojectname$.ViewModels;
+using System;
 using System.Collections.Generic;
 $if$ ($targetframeworkversion$ >= 3.5)using System.Linq;
 $endif$using System.Text;
@@ -18,9 +20,16 @@ namespace $safeprojectname$
     /// <summary>
     /// Interaction logic for $safeitemrootname$.xaml
     /// </summary>
-    public partial class $safeitemrootname$ : Window
+    public partial class $safeitemrootname$ : MVVMWindow
     {
         public $safeitemrootname$()
+            : base(null)
+        {
+            InitializeComponent();
+        }
+
+        public $safeitemrootname$($safeitemrootname$_Model model)
+            : base(model)
         {
             InitializeComponent();
         }

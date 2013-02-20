@@ -27,7 +27,8 @@
     <ProjectItem ReplaceParameters="true" SubType="Designer"  TargetFileName="$fileinputname$.xaml">View.xaml</ProjectItem>
     <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="$fileinputname$.xaml.cs">View.xaml.cs</ProjectItem>
     <ProjectItem ReplaceParameters="true"  SubType="Code"  TargetFileName="ViewModels\$fileinputname$_Model.cs">View_Model.cs</ProjectItem>
-
+    <ProjectItem ReplaceParameters="true"  SubType="Code"  TargetFileName="\StartUps\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
+    
 
 
   </TemplateContent>
@@ -38,8 +39,11 @@
   <WizardData>
     <packages repository="extension"
           repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
-      
-      <package id="MVVM-Sidekick" version="1.0.9" />
+      <package id="Rx-Core" version="2.1.30214.0"  />
+      <package id="Rx-Interfaces" version="2.1.30214.0"  />
+      <package id="Rx-Linq" version="2.1.30214.0"  />
+      <package id="Rx-Main" version="2.1.30214.0"  />
+      <package id="Rx-PlatformServices" version="2.1.30214.0"  />
     </packages>
   </WizardData>
 </VSTemplate>

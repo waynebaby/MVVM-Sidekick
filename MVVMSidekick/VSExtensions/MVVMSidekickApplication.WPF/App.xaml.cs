@@ -13,5 +13,9 @@ namespace $safeprojectname$
     /// </summary>
     public partial class App : Application
     {
+        static App()
+        {
+            Startups.StartupFunctions.RunAllConfig(); 
+        }
     }
 }

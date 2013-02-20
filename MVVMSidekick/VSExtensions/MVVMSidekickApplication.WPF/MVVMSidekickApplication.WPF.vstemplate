@@ -24,6 +24,28 @@
       <ProjectItem ReplaceParameters="true">App.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" SubType="Code">App.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true">App.config</ProjectItem>
+      <Folder Name="Startups" TargetFolderName="Startups">
+        <ProjectItem ReplaceParameters="true" TargetFileName="StartupFunctions.cs">StartupFunctions.cs</ProjectItem>
+      </Folder>
+      <Folder Name="ViewModels" TargetFolderName="ViewModels">
+        <ProjectItem ReplaceParameters="true" TargetFileName="MainWindow_Model.cs">MainWindow_Model.cs</ProjectItem>
+      </Folder>
     </Project>
+    
   </TemplateContent>
+  <WizardExtension>
+    <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    <packages repository="extension"
+          repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
+      <package id="Rx-Core" version="2.1.30214.0"  />
+      <package id="Rx-Interfaces" version="2.1.30214.0"  />
+      <package id="Rx-Linq" version="2.1.30214.0"  />
+      <package id="Rx-Main" version="2.1.30214.0"  />
+      <package id="Rx-PlatformServices" version="2.1.30214.0"  />
+      <package id="MVVM-Sidekick" version="1.0.9" />
+    </packages>
+  </WizardData>
 </VSTemplate>

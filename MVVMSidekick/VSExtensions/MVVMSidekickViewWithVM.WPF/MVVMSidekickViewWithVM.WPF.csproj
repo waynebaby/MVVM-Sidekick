@@ -59,18 +59,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
+    <None Include="StartupFunctions.cs" />
+    <None Include="View_Model.cs" />
+    <None Include="View.xaml.cs">
+      <DependentUpon>View.xaml</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="MVVMSidekickViewWithVM.WPF.ico" />
   </ItemGroup>
   <ItemGroup>
-    <VSTemplate Include="MVVMSidekickViewWithVM.WPF.vstemplate" />
+    <VSTemplate Include="MVVMSidekickViewWithVM.WPF.vstemplate">
+      <SubType>Designer</SubType>
+    </VSTemplate>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Window1.xaml">
+    <None Include="View.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </None>
