@@ -2,9 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="$safeitemname$" Height="350" Width="525"
-        xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"        
+        xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"
         xmlns:vm="clr-namespace:$rootnamespace$.ViewModels" >
-
     <mvvm:MVVMWindow.Resources >
         <vm:$safeitemname$_Model x:Key="DesignVM" />
     </mvvm:MVVMWindow.Resources>
