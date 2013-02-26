@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
+  <Metadata >
     <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="0.97" Language="en-US" Publisher="Wayne Wang in MSFT" />
-    <DisplayName>MVVMSidekickVSIX</DisplayName>
-    <Description xml:space="preserve">MVVMSidekickVSIX</Description>
+    <DisplayName>MVVM-Sidekick VSIX</DisplayName>
+    <Description xml:space="preserve">MVVM-Sidekick VSIX</Description>
   </Metadata>
-  <Installation AllUsers="true">
+  <Installation AllUsers="true"  >
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="11.0" />
   </Installation>
   <Dependencies>
@@ -13,12 +13,12 @@
     <Dependency d:Source="Installed" Id="NuPackToolsVsix.Microsoft.67e54e40-0ae3-42c5-a949-fddf5739e7a5" DisplayName="NuGet Package Manager" Version="[2.0,3.0)" d:InstallSource="Download" />
   </Dependencies>
   <Assets>
-    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickDataModel.ModenUI" d:TargetPath="|MVVMSidekickDataModel.ModenUI;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
-    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickViewWithVM.ModenUI" d:TargetPath="|MVVMSidekickViewWithVM.ModenUI;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
-    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickDataModel.WPF" d:TargetPath="|MVVMSidekickDataModel.WPF;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
-    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickViewWithVM.WPF" d:TargetPath="|MVVMSidekickViewWithVM.WPF;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
-    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="MVVMSidekickBlankApp_PT.ModenUI" d:TargetPath="|MVVMSidekickBlankApp_PT.ModenUI;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
-    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="MVVMSidekickApplication.WPF" d:TargetPath="|MVVMSidekickApplication.WPF;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="File" Path="ItemTemplates" d:TargetPath="ItemTemplates\WPF\MVVMSidekickViewWithVM.WPF.zip" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="File" Path="ItemTemplates" d:TargetPath="ItemTemplates\WPF\MVVMSidekickDataModel.MordenUI.zip" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="File" Path="ItemTemplates" d:TargetPath="ItemTemplates\Windows Store\MVVMSidekickDataModel.MordenUI.zip" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="File" Path="ItemTemplates" d:TargetPath="ItemTemplates\Windows Store\MVVMSidekickViewWithVM.MordenUI.zip" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows Store\MVVMSidekickBlankApp_PT.MordenUI.zip" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows\MVVMSidekickApplication.WPF.zip" />
 
   </Assets>
 </PackageManifest>

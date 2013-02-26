@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace $rootnamespace$
 {
 
-    [DataContract]
+    //[DataContract]
     public class $safeitemrootname$ : BindableBase<$safeitemrootname$>
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property。

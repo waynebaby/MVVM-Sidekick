@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-    <Name>View With ViewModel -MVVMSidekick</Name>
+    <Name>MVVM-Sidekick View for WPF</Name>
     <Description>MVVMSidekick View With VM for WPF</Description>
     <Icon>MVVMSidekickViewWithVM.WPF.ico</Icon>
     <TemplateID>861933b0-7123-44d2-a49b-ee5fa112f142</TemplateID>
     <ProjectType>CSharp</ProjectType>
-    <RequiredFrameworkVersion>4.5</RequiredFrameworkVersion>
-    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <ProjectSubType>WPF</ProjectSubType> 
+    <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
+    
     <DefaultName>Window.xaml</DefaultName>
-    <SortOrder>96</SortOrder>
+    <SortOrder>1</SortOrder>
     <TemplateGroupID>WPF</TemplateGroupID>
     <ShowByDefault>false</ShowByDefault>
   </TemplateData>

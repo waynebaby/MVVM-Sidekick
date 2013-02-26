@@ -1,21 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-    <Name>View With ViewModel -MVVMSidekick</Name>
+    <Name>MVVM-Sidekick View for Windows Store</Name>
     <Description>MVVMSidekickViewWithVM.MordenUI</Description>
     <Icon>MVVMSidekickViewWithVM.MordenUI.ico</Icon>
-    <TemplateID>fdb471e9-7cb3-4bee-b35b-f9ee39e65fde</TemplateID>
+    <TemplateID>Microsoft.CS.WinRT.MVVMSidekickViewWithVM</TemplateID>
+    <TemplateGroupID>WinRT-Managed</TemplateGroupID>
     <ProjectType>CSharp</ProjectType>
-
-    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <ProjectSubType>
+    </ProjectSubType>
+    
     <DefaultName>BasicPage.xaml</DefaultName>
     <ShowByDefault>false</ShowByDefault>
-    <SortOrder>41</SortOrder>
-    
+    <SortOrder>1</SortOrder>    
     <TargetPlatformName>Windows</TargetPlatformName>
     <RequiredPlatformVersion>8</RequiredPlatformVersion>
-    <TemplateGroupID>WinRT-Managed</TemplateGroupID>
-
   </TemplateData>
   <TemplateContent>
     <References>

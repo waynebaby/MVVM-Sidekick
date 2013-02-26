@@ -2744,151 +2744,151 @@ namespace MVVMSidekick
     }
 
 
-//    namespace ValueConverters
-//    {
+    //    namespace ValueConverters
+    //    {
 
 
-//        public class GenericValueConverter<TSource, TTarget, TParemeter> : IValueConverter
-//        {
-//            public GenericValueConverter()
-//            {
+    //        public class GenericValueConverter<TSource, TTarget, TParemeter> : IValueConverter
+    //        {
+    //            public GenericValueConverter()
+    //            {
 
-//            }
+    //            }
 
-//            public GenericValueConverter(
-//                Func<TSource, TParemeter, string, TTarget> converter,
+    //            public GenericValueConverter(
+    //                Func<TSource, TParemeter, string, TTarget> converter,
 
-//                Func<TTarget, TParemeter, string, TSource> convertBacker
-//                )
-//            {
-//                Converter = converter;
-//                ConvertBacker = convertBacker;
-//            }
-//            public object Convert(object value, Type targetType, object parameter, string language)
-//            {
-//                if (Converter == null)
-//                {
-//                    throw new NotImplementedException();
-//                }
-//                OnConvertCheckInputType(value, targetType);
-
-
-//                return Converter((TSource)value, (TParemeter)parameter, language);
-//            }
-
-//            public Func<TSource, TParemeter, string, TTarget> Converter { get; set; }
-
-//            public Func<TTarget, TParemeter, string, TSource> ConvertBacker { get; set; }
+    //                Func<TTarget, TParemeter, string, TSource> convertBacker
+    //                )
+    //            {
+    //                Converter = converter;
+    //                ConvertBacker = convertBacker;
+    //            }
+    //            public object Convert(object value, Type targetType, object parameter, string language)
+    //            {
+    //                if (Converter == null)
+    //                {
+    //                    throw new NotImplementedException();
+    //                }
+    //                OnConvertCheckInputType(value, targetType);
 
 
+    //                return Converter((TSource)value, (TParemeter)parameter, language);
+    //            }
 
+    //            public Func<TSource, TParemeter, string, TTarget> Converter { get; set; }
 
-//            public object ConvertBack(object value, Type targetType, object parameter, string language)
-//            {
-
-//                if (ConvertBacker == null)
-//                {
-//                    throw new NotImplementedException();
-//                }
-
-//                OnConvertBackCheckInputType(value, targetType);
-//                return ConvertBacker((TTarget)value, (TParemeter)parameter, language);
-//            }
-
-
-
-//            private static void OnConvertCheckInputType(object sourceValue, Type targetType)
-//            {
-//#if NETFX_CORE
-//                if (!targetType.GetTypeInfo().IsAssignableFrom(typeof(TTarget).GetTypeInfo()))
-//                {
-//                    throw new ArgumentOutOfRangeException(string.Format("Target type is not supported.  {0} and its base class type would be fine.", typeof(TTarget).FullName));
-//                }
-//#else
-//                if (!targetType.IsAssignableFrom(typeof(TTarget)))
-//                {
-//                    throw new ArgumentOutOfRangeException(string.Format("Target type is not supported.  {0} and its base class type would be fine.", typeof(TTarget).FullName));
-//                }
-//#endif
-//                if (!(sourceValue is TSource))
-//                {
-//                    throw new ArgumentOutOfRangeException(string.Format("Source type is expected source type. A {0} reference is expected.", typeof(TSource).FullName));
-//                }
-//            }
-
-//            private static void OnConvertBackCheckInputType(object backingValue, Type backType)
-//            {
-//                if (typeof(TSource) != backType)
-//                {
-//                    throw new ArgumentOutOfRangeException(string.Format("Target type is not supported.  {0} is expected.", typeof(TSource).FullName));
-//                }
-//                if (!(backingValue is TTarget))
-//                {
-//                    throw new ArgumentOutOfRangeException(string.Format("Source type is expected source type. A {0} reference is expected.", typeof(TTarget).FullName));
-//                }
-//            }
-
-
-//#if NETFX_CORE
-//#else
-//            public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-//            {
-//                return Convert(value, targetType, parameter, culture.EnglishName);
-//            }
-
-//            public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-//            {
-//                return Convert(value, targetType, parameter, culture.EnglishName);
-//            }
-//#endif
-//        }
-
-
-//        public enum ErrorInfoTextConverterOptions
-//        {
-//            ErrorOnly,
-//            ErrorWithFieldsErrors
-
-//        }
-
-
-
-//        public class ViewModelDataErrorInfoTextConverter : GenericValueConverter<IBindable, string, ErrorInfoTextConverterOptions>
-//        {
-//            //public ViewModelDataErrorInfoTextConverter()
-//            //{
-//            //    Converter = (val, options, lan) =>
-//            //        {
-//            //            var dataError = val as IDataErrorInfo;
-//            //            switch (options)
-//            //            {
-
-
-//            //                case ErrorInfoTextConverterOptions.ErrorWithFieldsErrors:
-//            //                    var sb = new StringBuilder();
-//            //                    sb.AppendLine(val.Error);
-//            //                    foreach (var fn in val.GetFieldNames().ToArray())
-//            //                    {
-//            //                        sb.Append("\t").Append(fn).Append(":\t").AppendLine(dataError[fn]);
-//            //                    }
-//            //                    return sb.ToString();
-
-//            //                case ErrorInfoTextConverterOptions.ErrorOnly:
-//            //                default:
-//            //                    return val.Error;
-//            //            }
-//            //        };
-
-
-
-//            //}
-
-//        }
+    //            public Func<TTarget, TParemeter, string, TSource> ConvertBacker { get; set; }
 
 
 
 
-//    }
+    //            public object ConvertBack(object value, Type targetType, object parameter, string language)
+    //            {
+
+    //                if (ConvertBacker == null)
+    //                {
+    //                    throw new NotImplementedException();
+    //                }
+
+    //                OnConvertBackCheckInputType(value, targetType);
+    //                return ConvertBacker((TTarget)value, (TParemeter)parameter, language);
+    //            }
+
+
+
+    //            private static void OnConvertCheckInputType(object sourceValue, Type targetType)
+    //            {
+    //#if NETFX_CORE
+    //                if (!targetType.GetTypeInfo().IsAssignableFrom(typeof(TTarget).GetTypeInfo()))
+    //                {
+    //                    throw new ArgumentOutOfRangeException(string.Format("Target type is not supported.  {0} and its base class type would be fine.", typeof(TTarget).FullName));
+    //                }
+    //#else
+    //                if (!targetType.IsAssignableFrom(typeof(TTarget)))
+    //                {
+    //                    throw new ArgumentOutOfRangeException(string.Format("Target type is not supported.  {0} and its base class type would be fine.", typeof(TTarget).FullName));
+    //                }
+    //#endif
+    //                if (!(sourceValue is TSource))
+    //                {
+    //                    throw new ArgumentOutOfRangeException(string.Format("Source type is expected source type. A {0} reference is expected.", typeof(TSource).FullName));
+    //                }
+    //            }
+
+    //            private static void OnConvertBackCheckInputType(object backingValue, Type backType)
+    //            {
+    //                if (typeof(TSource) != backType)
+    //                {
+    //                    throw new ArgumentOutOfRangeException(string.Format("Target type is not supported.  {0} is expected.", typeof(TSource).FullName));
+    //                }
+    //                if (!(backingValue is TTarget))
+    //                {
+    //                    throw new ArgumentOutOfRangeException(string.Format("Source type is expected source type. A {0} reference is expected.", typeof(TTarget).FullName));
+    //                }
+    //            }
+
+
+    //#if NETFX_CORE
+    //#else
+    //            public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    //            {
+    //                return Convert(value, targetType, parameter, culture.EnglishName);
+    //            }
+
+    //            public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    //            {
+    //                return Convert(value, targetType, parameter, culture.EnglishName);
+    //            }
+    //#endif
+    //        }
+
+
+    //        public enum ErrorInfoTextConverterOptions
+    //        {
+    //            ErrorOnly,
+    //            ErrorWithFieldsErrors
+
+    //        }
+
+
+
+    //        public class ViewModelDataErrorInfoTextConverter : GenericValueConverter<IBindable, string, ErrorInfoTextConverterOptions>
+    //        {
+    //            //public ViewModelDataErrorInfoTextConverter()
+    //            //{
+    //            //    Converter = (val, options, lan) =>
+    //            //        {
+    //            //            var dataError = val as IDataErrorInfo;
+    //            //            switch (options)
+    //            //            {
+
+
+    //            //                case ErrorInfoTextConverterOptions.ErrorWithFieldsErrors:
+    //            //                    var sb = new StringBuilder();
+    //            //                    sb.AppendLine(val.Error);
+    //            //                    foreach (var fn in val.GetFieldNames().ToArray())
+    //            //                    {
+    //            //                        sb.Append("\t").Append(fn).Append(":\t").AppendLine(dataError[fn]);
+    //            //                    }
+    //            //                    return sb.ToString();
+
+    //            //                case ErrorInfoTextConverterOptions.ErrorOnly:
+    //            //                default:
+    //            //                    return val.Error;
+    //            //            }
+    //            //        };
+
+
+
+    //            //}
+
+    //        }
+
+
+
+
+    //    }
 
 
     namespace Reactive
@@ -3096,7 +3096,8 @@ namespace MVVMSidekick
         public class MVVMWindow : Window, IView
         {
 
-            public MVVMWindow():this (null)
+            public MVVMWindow()
+                : this(null)
             {
                 //ViewModel = new DefaultViewModel ();
             }
@@ -3105,7 +3106,7 @@ namespace MVVMSidekick
             {
                 this.Loaded += (_1, _2) =>
                     {
-                        viewModel=ViewModel = viewModel ?? ViewModel; //如果传递进来一个空值 则使用默认的VM
+                        viewModel = ViewModel = viewModel ?? ViewModel; //如果传递进来一个空值 则使用默认的VM
                         viewModel.Navigator = new Navigator(ViewModel) { CurrentBindingView = this };
                         viewModel.Navigator.RegisterParentGetter(() => this.Owner);
                         viewModel.Navigator.DisposeWith(viewModel);
@@ -3378,6 +3379,60 @@ namespace MVVMSidekick
 
         }
 
+        public struct DirectionNavigator
+        {
+            public DirectionNavigator(object viewObject)
+            {
+                _viewFrame = viewObject as Frame;
+            }
+            public Frame _viewFrame;
+
+            public bool CanGoBack
+            {
+                get
+                {
+
+                    if (_viewFrame != null)
+                    {
+                        return _viewFrame.CanGoBack;
+                    }
+                    return false;
+                }
+                
+            }
+
+            public void GoBack()
+            {
+
+                if (_viewFrame != null)
+                {
+                     _viewFrame.GoBack ();
+                }
+            
+            }
+            public bool CanGoForward
+            {
+                get
+                {
+                   
+                    if ( _viewFrame!=null)
+                    {
+                        return _viewFrame.CanGoForward;
+                    }
+                    return false;
+                }
+            }
+
+            public void GoForward()
+            {
+
+                if (_viewFrame != null)
+                {
+                     _viewFrame.GoForward ();
+                }
+            }
+
+        }
 
 
         //public class stringTypeConverter : TypeConverter

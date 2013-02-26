@@ -5,12 +5,15 @@
     <Description>MVVMSidekickApplication.WPF</Description>
     <Icon>MVVMSidekickApplication.WPF.ico</Icon>
     <ProjectType>CSharp</ProjectType>
-    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
-    <SortOrder>1000</SortOrder>
+    <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
+    <SortOrder>1</SortOrder>
     <TemplateID>937ad3fa-7ac7-42c8-bfed-2561fdeb0b05</TemplateID>
+    <TemplateGroupID>Windows</TemplateGroupID> 
     <CreateNewFolder>true</CreateNewFolder>
     <DefaultName>MVVMSidekickApplication.WPF</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
+    <BuildOnLoad>true</BuildOnLoad>
+    <ShowByDefault>false</ShowByDefault>
   </TemplateData>
   <TemplateContent>
     <Project File="WPFApplication.csproj" ReplaceParameters="true">
