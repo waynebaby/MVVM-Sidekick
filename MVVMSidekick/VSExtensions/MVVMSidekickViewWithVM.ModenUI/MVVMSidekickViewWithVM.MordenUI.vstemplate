@@ -2,14 +2,13 @@
 <VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
     <Name>MVVM-Sidekick View for Windows Store</Name>
-    <Description>MVVMSidekickViewWithVM.MordenUI</Description>
+    <Description>MVVMSidekickViewWithVM for Windows Store Morden UI Apps</Description>
     <Icon>MVVMSidekickViewWithVM.MordenUI.ico</Icon>
     <TemplateID>Microsoft.CS.WinRT.MVVMSidekickViewWithVM</TemplateID>
     <TemplateGroupID>WinRT-Managed</TemplateGroupID>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType>
     </ProjectSubType>
-    
     <DefaultName>BasicPage.xaml</DefaultName>
     <ShowByDefault>false</ShowByDefault>
     <SortOrder>1</SortOrder>    
@@ -38,6 +37,7 @@
   <WizardData>
     <packages repository="extension"
           repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
+      
       <package id="Rx-Core" version="2.1.30214.0"  />
       <package id="Rx-Interfaces" version="2.1.30214.0"  />
       <package id="Rx-Linq" version="2.1.30214.0"  />

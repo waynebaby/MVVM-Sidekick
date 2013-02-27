@@ -1,0 +1,46 @@
+﻿<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>MVVM-Sidekick View for Silverlight</Name>
+    <Description>MVVMSidekickViewWithVM for Windows Store Morden UI Apps</Description>
+    <Icon >MVVMSidekickViewWithVM.SL5.ico</Icon>
+    <TemplateID>Microsoft.Silverlight.CSharp.MVVMSidekick.Page</TemplateID>
+    <TemplateGroupID>Silverlight</TemplateGroupID>
+    <ProjectType>CSharp</ProjectType>
+    <ShowByDefault>false</ShowByDefault>
+    <SortOrder>1</SortOrder>
+    
+    <DefaultName>View.xaml</DefaultName>
+    
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>System.Windows.Controls.Navigation</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem ReplaceParameters="true" SubType="Designer"  TargetFileName="$fileinputname$.xaml">View.xaml</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="$fileinputname$.xaml.cs">View.xaml.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true"  SubType="Code"  TargetFileName="ViewModels\$fileinputname$_Model.cs">View_Model.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true"  SubType="Code"  TargetFileName="\StartUps\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
+
+  </TemplateContent>
+
+  <WizardExtension>
+    <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    <packages repository="extension"
+          repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
+      <package id="Microsoft.CompilerServices.AsyncTargetingPack" version="1.0.0" />
+      <package id="Rx-Core" version="2.1.30214.0"  />
+      <package id="Rx-Interfaces" version="2.1.30214.0"  />
+      <package id="Rx-Linq" version="2.1.30214.0"  />
+      <package id="Rx-Main" version="2.1.30214.0"  />
+      <package id="Rx-PlatformServices" version="2.1.30214.0"  />
+      <package id="MVVM-Sidekick" version="1.0.9" />
+
+    </packages>
+  </WizardData>
+
+</VSTemplate>
