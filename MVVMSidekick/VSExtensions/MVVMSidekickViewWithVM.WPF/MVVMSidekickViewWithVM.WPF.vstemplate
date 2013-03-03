@@ -2,7 +2,7 @@
 <VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
     <Name>MVVM-Sidekick View for WPF</Name>
-    <Description>MVVMSidekick View With VM for WPF</Description>
+    <Description>MVVM-Sidekick View With VM for WPF Apps</Description>
     <Icon>MVVMSidekickViewWithVM.WPF.ico</Icon>
     <TemplateID>861933b0-7123-44d2-a49b-ee5fa112f142</TemplateID>
     <ProjectType>CSharp</ProjectType>
@@ -12,6 +12,7 @@
     <DefaultName>Window.xaml</DefaultName>
     <SortOrder>1</SortOrder>
     <TemplateGroupID>WPF</TemplateGroupID>
+    <BuildProjectOnLoad>true</BuildProjectOnLoad>
     <ShowByDefault>false</ShowByDefault>
   </TemplateData>
   <TemplateContent>

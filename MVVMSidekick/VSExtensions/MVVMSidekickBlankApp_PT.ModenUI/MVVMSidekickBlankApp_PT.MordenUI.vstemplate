@@ -18,7 +18,7 @@
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType></ProjectSubType>
     <ShowByDefault>false</ShowByDefault>
-    <BuildOnLoad>true</BuildOnLoad>
+    <BuildProjectOnLoad>true</BuildProjectOnLoad>
   </TemplateData>
   <TemplateContent>
     <Project TargetFileName="$safeprojectname$.csproj" File="BlankApp_MVVMSidekick.csproj" ReplaceParameters="true">
@@ -43,7 +43,7 @@
       <Folder Name="Startups" TargetFolderName="Startups">
         <ProjectItem ReplaceParameters="true" TargetFileName="StartupFunctions.cs">StartupFunctions.cs</ProjectItem>
       </Folder>
-      <ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml">MainPage.xaml</ProjectItem>
+      <ProjectItem ReplaceParameters="true" OpenInEditor="true" TargetFileName="MainPage.xaml">MainPage.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml.cs">MainPage.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="Package.appxmanifest">Package.appxmanifest</ProjectItem>
       <Folder Name="Properties" TargetFolderName="Properties">

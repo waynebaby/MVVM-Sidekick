@@ -39,16 +39,17 @@ using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using System.Windows.Data;
 #endif
-#if SILVERLIGHT_5|| WINDOWS_PHONE_8
+#if SILVERLIGHT_5|| WINDOWS_PHONE_8||WINDOWS_PHONE_7
 
 #else
 
-using MVVMSidekick.Views;
 
 #endif
+
+
 /*
 #if NETFX_CORE
-// Summary:
+// Summary:y
 
 namespace System.ComponentModel
 {
@@ -127,6 +128,20 @@ namespace System.Runtime.CompilerServices
 
 namespace MVVMSidekick
 {
+
+#if WINDOWS_PHONE_7
+    public class Lazy<T>
+    {
+        public Lazy(Func<T> factory)
+        { }
+        public T Value { get; set; }
+    }
+
+
+
+#endif
+
+
     namespace Services
     {
         public interface IServiceLocator : IDisposable
@@ -135,13 +150,13 @@ namespace MVVMSidekick
             bool IsAsync<TService>(string name = "");
             ServiceLocatorEntryStruct<TService> Register<TService>(TService instance);
             ServiceLocatorEntryStruct<TService> Register<TService>(string name, TService instance);
-            ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, TService> factory, bool alwaysNew = true);
-            ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, TService> factory, bool alwaysNew = true);
-            TService Resolve<TService>(string name = null, dynamic paremeter = null);
+            ServiceLocatorEntryStruct<TService> Register<TService>(Func<object, TService> factory, bool alwaysNew = true);
+            ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<object, TService> factory, bool alwaysNew = true);
+            TService Resolve<TService>(string name = null, object paremeter = null);
 
-            ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true);
-            ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true);
-            Task<TService> ResolveAsync<TService>(string name = null, dynamic paremeter = null);
+            ServiceLocatorEntryStruct<TService> Register<TService>(Func<object, Task<TService>> asyncFactory, bool alwaysNew = true);
+            ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<object, Task<TService>> asyncFactory, bool alwaysNew = true);
+            Task<TService> ResolveAsync<TService>(string name = null, object paremeter = null);
 
         }
 
@@ -151,12 +166,12 @@ namespace MVVMSidekick
             bool IsAsync(string name = "");
             ServiceLocatorEntryStruct<TService> Register(TService instance);
             ServiceLocatorEntryStruct<TService> Register(string name, TService instance);
-            ServiceLocatorEntryStruct<TService> Register(Func<dynamic, TService> factory, bool alwaysNew = true);
-            ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, TService> factory, bool alwaysNew = true);
-            TService Resolve(string name = null, dynamic paremeter = null);
-            ServiceLocatorEntryStruct<TService> Register(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true);
-            ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true);
-            Task<TService> ResolveAsync(string name = null, dynamic paremeter = null);
+            ServiceLocatorEntryStruct<TService> Register(Func<object, TService> factory, bool alwaysNew = true);
+            ServiceLocatorEntryStruct<TService> Register(string name, Func<object, TService> factory, bool alwaysNew = true);
+            TService Resolve(string name = null, object paremeter = null);
+            ServiceLocatorEntryStruct<TService> Register(Func<object, Task<TService>> asyncFactory, bool alwaysNew = true);
+            ServiceLocatorEntryStruct<TService> Register(string name, Func<object, Task<TService>> asyncFactory, bool alwaysNew = true);
+            Task<TService> ResolveAsync(string name = null, object paremeter = null);
         }
 
         public class ServiceLocatorEntryStruct<TService>
@@ -168,8 +183,8 @@ namespace MVVMSidekick
             public string Name { get; set; }
             public CacheType CacheType { get; set; }
             public TService ServiceInstance { private get; set; }
-            public Func<dynamic, TService> ServiceFactory { private get; set; }
-            public Func<dynamic, Task<TService>> AsyncServiceFactory { private get; set; }
+            public Func<object, TService> ServiceFactory { private get; set; }
+            public Func<object, Task<TService>> AsyncServiceFactory { private get; set; }
             public bool GetIsValueCreated()
             {
 
@@ -177,7 +192,7 @@ namespace MVVMSidekick
 
             }
 
-            public TService GetService(dynamic paremeter = null)
+            public TService GetService(object paremeter = null)
             {
                 switch (CacheType)
                 {
@@ -209,7 +224,7 @@ namespace MVVMSidekick
 
             Task<TService> _NotFinishedServiceTask;
 
-            public async Task<TService> GetServiceAsync(dynamic paremeter = null)
+            public async Task<TService> GetServiceAsync(object paremeter = null)
             {
                 switch (CacheType)
                 {
@@ -251,10 +266,12 @@ namespace MVVMSidekick
 
 
                     default:
-#if SILVERLIGHT_5
-                        return TaskEx.FromResult(GetService(paremeter));
+#if SILVERLIGHT_5||WINDOWS_PHONE_7
+                        return GetService(paremeter);
+
+
 #else
-                        return Task.FromResult(GetService(paremeter));
+                        return GetService(paremeter);
 #endif
 
                 }
@@ -283,12 +300,12 @@ namespace MVVMSidekick
                         };
             }
 
-            public ServiceLocatorEntryStruct<TService> Register(Func<dynamic, TService> factory, bool alwaysNew = true)
+            public ServiceLocatorEntryStruct<TService> Register(Func<object, TService> factory, bool alwaysNew = true)
             {
                 return Register(null, factory, alwaysNew);
             }
 
-            public ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, TService> factory, bool alwaysNew = true)
+            public ServiceLocatorEntryStruct<TService> Register(string name, Func<object, TService> factory, bool alwaysNew = true)
             {
                 name = name ?? "";
 
@@ -315,7 +332,7 @@ namespace MVVMSidekick
 
             }
 
-            public TService Resolve(string name = null, dynamic parameters = null)
+            public TService Resolve(string name = null, object parameters = null)
             {
                 name = name ?? "";
                 var subdic = dic;
@@ -357,12 +374,12 @@ namespace MVVMSidekick
             }
 
 
-            public ServiceLocatorEntryStruct<TService> Register(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true)
+            public ServiceLocatorEntryStruct<TService> Register(Func<object, Task<TService>> asyncFactory, bool alwaysNew = true)
             {
                 return Register(null, asyncFactory, alwaysNew);
             }
 
-            public ServiceLocatorEntryStruct<TService> Register(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true)
+            public ServiceLocatorEntryStruct<TService> Register(string name, Func<object, Task<TService>> asyncFactory, bool alwaysNew = true)
             {
                 name = name ?? "";
 
@@ -387,7 +404,7 @@ namespace MVVMSidekick
 
             }
 
-            public async Task<TService> ResolveAsync(string name = null, dynamic paremeter = null)
+            public async Task<TService> ResolveAsync(string name = null, object paremeter = null)
             {
                 name = name ?? "";
                 var subdic = dic;
@@ -397,7 +414,7 @@ namespace MVVMSidekick
                     return await entry.GetServiceAsync();
                 }
                 else
-#if SILVERLIGHT_5
+#if SILVERLIGHT_5||WINDOWS_PHONE_7
                     return await TaskEx.FromResult(default(TService));
 #else
                     return await Task.FromResult(default(TService));
@@ -453,12 +470,12 @@ namespace MVVMSidekick
                      };
             }
 
-            public ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, TService> factory, bool alwaysNew = true)
+            public ServiceLocatorEntryStruct<TService> Register<TService>(Func<object, TService> factory, bool alwaysNew = true)
             {
                 return Register<TService>(null, factory, alwaysNew);
             }
 
-            public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, TService> factory, bool alwaysNew = true)
+            public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<object, TService> factory, bool alwaysNew = true)
             {
                 name = name ?? "";
                 ServiceLocatorEntryStruct<TService> rval;
@@ -489,7 +506,7 @@ namespace MVVMSidekick
                 return rval;
             }
 
-            public TService Resolve<TService>(string name = null, dynamic paremeters = null)
+            public TService Resolve<TService>(string name = null, object paremeters = null)
             {
                 name = name ?? "";
                 var subdic = ServiceTypedCache<TService>.dic;
@@ -562,12 +579,12 @@ namespace MVVMSidekick
                 }
             }
 
-            public ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true)
+            public ServiceLocatorEntryStruct<TService> Register<TService>(Func<object, Task<TService>> asyncFactory, bool alwaysNew = true)
             {
                 return Register(null, asyncFactory, alwaysNew);
             }
 
-            public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, Task<TService>> asyncFactory, bool alwaysNew = true)
+            public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<object, Task<TService>> asyncFactory, bool alwaysNew = true)
             {
                 name = name ?? "";
                 ServiceLocatorEntryStruct<TService> rval;
@@ -595,7 +612,7 @@ namespace MVVMSidekick
             }
 
 
-            public async Task<TService> ResolveAsync<TService>(string name = null, dynamic paremeter = null)
+            public async Task<TService> ResolveAsync<TService>(string name = null, object paremeter = null)
             {
                 name = name ?? "";
                 var subdic = ServiceTypedCache<TService>.dic;
@@ -605,7 +622,7 @@ namespace MVVMSidekick
                     return await entry.GetServiceAsync();
                 }
                 else
-#if SILVERLIGHT_5
+#if SILVERLIGHT_5||WINDOWS_PHONE_7
                     return await TaskEx.FromResult(default(TService));
 #else
                     return await Task.FromResult(default(TService));
@@ -625,8 +642,8 @@ namespace MVVMSidekick
 
         //public class DictionaryServiceLocator : IServiceLocator
         //{
-        //    Dictionary<Type, Dictionary<string, Tuple<Lazy<Object>, Object, Func<dynamic, Object>, CacheType>>>
-        //       dic = new Dictionary<Type, Dictionary<string, Tuple<Lazy<Object>, Object, Func<dynamic, Object>, CacheType>>>();
+        //    Dictionary<Type, Dictionary<string, Tuple<Lazy<Object>, Object, Func<object, Object>, CacheType>>>
+        //       dic = new Dictionary<Type, Dictionary<string, Tuple<Lazy<Object>, Object, Func<object, Object>, CacheType>>>();
         //    public static IServiceLocator Instance { get; set; }
 
 
@@ -639,9 +656,9 @@ namespace MVVMSidekick
         //    public ServiceLocatorEntryStruct<TService> Register<TService>(string name, TService instance)
         //    {
         //        name = name ?? "";
-        //        dic[typeof(TService)] = dic[typeof(TService)] ?? new Dictionary<string, Tuple<Lazy<Object>, Object, Func<dynamic, Object>, CacheType>>();
+        //        dic[typeof(TService)] = dic[typeof(TService)] ?? new Dictionary<string, Tuple<Lazy<Object>, Object, Func<object, Object>, CacheType>>();
         //        dic[typeof(TService)][name] =
-        //             new Tuple<Lazy<Object>, Object, Func<dynamic, Object>, CacheType>(
+        //             new Tuple<Lazy<Object>, Object, Func<object, Object>, CacheType>(
         //                 null,
         //                 instance,
         //                 null,
@@ -651,20 +668,20 @@ namespace MVVMSidekick
 
         //    }
 
-        //    public ServiceLocatorEntryStruct<TService> Register<TService>(Func<dynamic, TService> factory, bool alwaysNew = true)
+        //    public ServiceLocatorEntryStruct<TService> Register<TService>(Func<object, TService> factory, bool alwaysNew = true)
         //    {
         //        Register<TService>(null, factory, alwaysNew);
         //    }
 
-        //    public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<dynamic, TService> factory, bool alwaysNew = true)
+        //    public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<object, TService> factory, bool alwaysNew = true)
         //    {
         //        name = name ?? "";
-        //        dic[typeof(TService)] = dic[typeof(TService)] ?? new Dictionary<string, Tuple<Lazy<Object>, Object, Func<dynamic, Object>, CacheType>>();
+        //        dic[typeof(TService)] = dic[typeof(TService)] ?? new Dictionary<string, Tuple<Lazy<Object>, Object, Func<object, Object>, CacheType>>();
 
         //        if (alwaysNew)
         //        {
         //            dic[typeof(TService)][name] =
-        //                new Tuple<Lazy<Object>, Object, Func<dynamic, Object>, CacheType>(
+        //                new Tuple<Lazy<Object>, Object, Func<object, Object>, CacheType>(
         //                    null,
         //                    default(TService),
         //                    d => factory(d) as object,
@@ -674,7 +691,7 @@ namespace MVVMSidekick
         //        {
 
         //            dic[typeof(TService)][name] =
-        //                new Tuple<Lazy<Object>, Object, Func<dynamic, Object>, CacheType>(
+        //                new Tuple<Lazy<Object>, Object, Func<object, Object>, CacheType>(
         //                    new Lazy<object>(() => factory(null)),
         //                    default(TService),
         //                    null,
@@ -684,14 +701,14 @@ namespace MVVMSidekick
 
         //    }
 
-        //    public TService Resolve<TService>(string name = null, dynamic parameters = null)
+        //    public TService Resolve<TService>(string name = null, object parameters = null)
         //    {
         //        name = name ?? "";
         //        var subdic = dic[typeof(TService)];
         //        if (subdic != null)
         //        {
 
-        //            Tuple<Lazy<Object>, Object, Func<dynamic, Object>, CacheType> entry = null;
+        //            Tuple<Lazy<Object>, Object, Func<object, Object>, CacheType> entry = null;
         //            if (subdic.TryGetValue(name, out entry))
         //            {
         //                switch (entry.Item4)
@@ -724,7 +741,7 @@ namespace MVVMSidekick
         //    public bool HasInstance<TService>(string name = "")
         //    {
         //        name = name ?? "";
-        //        Tuple<Lazy<Object>, object, Func<dynamic, Object>, CacheType> entry = null;
+        //        Tuple<Lazy<Object>, object, Func<object, Object>, CacheType> entry = null;
         //        if (dic[typeof(TService)].TryGetValue(name, out entry))
         //        {
         //            return
@@ -855,7 +872,7 @@ namespace MVVMSidekick
                 new Lazy<bool>(
                     () =>
                     {
-#if SILVERLIGHT_5||WINDOWS_PHONE_8
+#if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
                         return DesignerProperties.IsInDesignTool;
 #elif NETFX_CORE
                         return Windows.ApplicationModel.DesignMode.DesignModeEnabled;
@@ -892,7 +909,7 @@ namespace MVVMSidekick
 
             #region  Index and property names/索引与字段名
             /// <summary>
-            /// <para>Get all property names that were defined in subtype, or added dynamicly in runtime</para>
+            /// <para>Get all property names that were defined in subtype, or added objectly in runtime</para>
             /// <para>取得本VM实例已经定义的所有字段名。其中包括静态声明的和动态添加的。</para>
             /// </summary>
             /// <returns>String[]  Property names/字段名数组 </returns>
@@ -1652,7 +1669,7 @@ namespace MVVMSidekick
 
 
 
-#if SILVERLIGHT_5||WINDOWS_PHONE_8
+#if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
             protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
              _plainPropertyContainerGetters =
              new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
@@ -2432,7 +2449,7 @@ namespace MVVMSidekick
             /// <summary>
             /// 事件来源的代理对象实例
             /// </summary>
-#if SILVERLIGHT_5||WINDOWS_PHONE_8
+#if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
             public class ConcurrentDictionary<TK, TV> : Dictionary<TK, TV>
             {
                 public TV GetOrAdd(TK key, Func<TK, TV> factory)
@@ -3090,7 +3107,7 @@ namespace MVVMSidekick
 #if WPF
 
 #elif NETCORE_FX
-#elif WINDOWS_PHONE_7||WINDOWS_PHONE_8
+#elif WINDOWS_PHONE_7||WINDOWS_PHONE_8||WINDOWS_PHONE_7
 #endif
 #if WPF
         public class MVVMWindow : Window, IView
@@ -3288,12 +3305,12 @@ namespace MVVMSidekick
 
             public ViewModelToViewMapper<TModel> MapToDefault<TView>(bool alwaysNew = true) where TView : class,IView
             {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView), d), alwaysNew);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView), d as object ), alwaysNew);
                 return this;
             }
             public ViewModelToViewMapper<TModel> MapTo<TView>(string name, bool alwaysNew = true) where TView : class,IView
             {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(name, d => (TView)Activator.CreateInstance(typeof(TView), d), alwaysNew);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(name, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
                 return this;
             }
 
@@ -3398,7 +3415,7 @@ namespace MVVMSidekick
                     }
                     return false;
                 }
-                
+
             }
 
             public void GoBack()
@@ -3406,16 +3423,16 @@ namespace MVVMSidekick
 
                 if (_viewFrame != null)
                 {
-                     _viewFrame.GoBack ();
+                    _viewFrame.GoBack();
                 }
-            
+
             }
             public bool CanGoForward
             {
                 get
                 {
-                   
-                    if ( _viewFrame!=null)
+
+                    if (_viewFrame != null)
                     {
                         return _viewFrame.CanGoForward;
                     }
@@ -3428,7 +3445,7 @@ namespace MVVMSidekick
 
                 if (_viewFrame != null)
                 {
-                     _viewFrame.GoForward ();
+                    _viewFrame.GoForward();
                 }
             }
 
@@ -3600,7 +3617,7 @@ namespace MVVMSidekick
                 var view = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
                 ShowView(view, targetContainerName, _ViewModel);
-#if SILVERLIGHT_5
+#if SILVERLIGHT_5||WINDOWS_PHONE_7
                 var ttvm = new Task<TTarget>(() => targetViewModel);
 #else
                 var ttvm = Task.FromResult(targetViewModel);

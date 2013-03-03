@@ -2,7 +2,7 @@
 <VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
     <Name>MVVM-Sidekick View for Windows Store</Name>
-    <Description>MVVMSidekickViewWithVM for Windows Store Morden UI Apps</Description>
+    <Description>MVVM-Sidekick View With VM for Windows Store Apps</Description>
     <Icon>MVVMSidekickViewWithVM.MordenUI.ico</Icon>
     <TemplateID>Microsoft.CS.WinRT.MVVMSidekickViewWithVM</TemplateID>
     <TemplateGroupID>WinRT-Managed</TemplateGroupID>
@@ -14,6 +14,7 @@
     <SortOrder>1</SortOrder>    
     <TargetPlatformName>Windows</TargetPlatformName>
     <RequiredPlatformVersion>8</RequiredPlatformVersion>
+    <BuildProjectOnLoad>true</BuildProjectOnLoad>
   </TemplateData>
   <TemplateContent>
     <References>

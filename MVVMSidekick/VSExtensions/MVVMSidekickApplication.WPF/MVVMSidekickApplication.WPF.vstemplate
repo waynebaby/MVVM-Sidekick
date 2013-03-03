@@ -8,11 +8,11 @@
     <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
     <SortOrder>1</SortOrder>
     <TemplateID>937ad3fa-7ac7-42c8-bfed-2561fdeb0b05</TemplateID>
-    <TemplateGroupID>Windows</TemplateGroupID> 
+    <TemplateGroupID>Windows</TemplateGroupID>
     <CreateNewFolder>true</CreateNewFolder>
     <DefaultName>MVVMSidekickApplication.WPF</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
-    <BuildOnLoad>true</BuildOnLoad>
+    <BuildProjectOnLoad>true</BuildProjectOnLoad>
     <ShowByDefault>false</ShowByDefault>
   </TemplateData>
   <TemplateContent>
@@ -22,7 +22,7 @@
       <ProjectItem ReplaceParameters="true" TargetFileName="Properties\Resources.Designer.cs">Resources.Designer.cs</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="Properties\Settings.settings">Settings.settings</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Properties\Settings.Designer.cs">Settings.Designer.cs</ProjectItem>
-      <ProjectItem ReplaceParameters="true" OpenInEditor="true" SubType="Code" OpenOrder="20">MainWindow.xaml.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true"  SubType="Code" OpenOrder="20">MainWindow.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" OpenInEditor="true" OpenOrder="10">MainWindow.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true">App.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" SubType="Code">App.xaml.cs</ProjectItem>
@@ -34,7 +34,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="MainWindow_Model.cs">MainWindow_Model.cs</ProjectItem>
       </Folder>
     </Project>
-    
+
   </TemplateContent>
   <WizardExtension>
     <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>

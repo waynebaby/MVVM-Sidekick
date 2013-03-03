@@ -70,7 +70,7 @@
         </member>
         <member name="M:MVVMSidekick.ViewModels.BindableBase.GetFieldNames">
             <summary>
-            <para>Get all property names that were defined in subtype, or added dynamicly in runtime</para>
+            <para>Get all property names that were defined in subtype, or added objectly in runtime</para>
             <para>取得本VM实例已经定义的所有字段名。其中包括静态声明的和动态添加的。</para>
             </summary>
             <returns>String[]  Property names/字段名数组 </returns>

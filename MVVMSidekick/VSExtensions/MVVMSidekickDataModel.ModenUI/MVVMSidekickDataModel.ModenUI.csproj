@@ -71,7 +71,9 @@
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
 copy $(TargetDir)ItemTemplates\CSharp\1033\*.zip ..\MVVMSIDEKICKVSIX\ItemTemplates\WPF
-copy $(TargetDir)ItemTemplates\CSharp\1033\*.zip "..\MVVMSIDEKICKVSIX\ItemTemplates\Windows Store"</PostBuildEvent>
+copy $(TargetDir)ItemTemplates\CSharp\1033\*.zip "..\MVVMSIDEKICKVSIX\ItemTemplates\Windows Store"
+copy $(TargetDir)ItemTemplates\CSharp\1033\*.zip "..\MVVMSIDEKICKVSIX\ItemTemplates\Silverlight"
+copy $(TargetDir)ItemTemplates\CSharp\1033\*.zip "..\MVVMSIDEKICKVSIX\ItemTemplates\Windows Phone</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
