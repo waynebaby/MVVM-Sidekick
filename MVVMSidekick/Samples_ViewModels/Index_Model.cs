@@ -59,11 +59,12 @@ namespace Samples.ViewModels
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
                 var vm = CastToCurrentType(model);
                 cmd
-                    .Subscribe (
-                    async _=>{
-                        await vm.Navigator.Navigate<Calculator_Model>();
-                    } )
-                    .DisposeWith (model); //Config it if needed
+                    .Subscribe(
+                    async _ =>
+                    {
+                        await vm.StageManager.DefaultTarget.Show<Calculator_Model>();
+                    })
+                    .DisposeWith(model); //Config it if needed
                 return cmd.CreateCommandModel("StartCalculator");
             };
         #endregion

@@ -15,19 +15,21 @@
     <Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="117*"/>
-            <ColumnDefinition Width="83*"/>
+            <ColumnDefinition Width="56*"/>
+            <ColumnDefinition Width="27*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="23*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding HelloWorld}" Grid.RowSpan="2" Grid.ColumnSpan="2"  />
+        <TextBlock Text="{Binding HelloWorld}" Grid.RowSpan="2" Grid.ColumnSpan="3"  />
 
-        <sdk:Frame  Grid.Row="1" mvvm:Navigator.Beacon="" Grid.ColumnSpan="2" >
+        <sdk:Frame  Grid.Row="1" mvvm:StageManager.Beacon="" Grid.ColumnSpan="3" >
 
 
         </sdk:Frame>
-        <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" />
+        <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" Margin="0,0,0,0" />
+        <CheckBox IsChecked="{Binding Navigator.DefaultTarget.CanGoBack, Mode=OneWay}" Grid.Column="3"></CheckBox>
 
     </Grid>
 </mvvm:MVVMControl>

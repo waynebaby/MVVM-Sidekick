@@ -11,11 +11,12 @@ namespace Samples
     {
         public static void ConfigCalculator()
         {
-            //ViewModelLocator<Calculator_Model>
-            //    .Instance
-            //    .Register(new Calculator_Model())
-            //    .GetViewMapper()
-            //    .MapToDefault(model => new Calculator(model));
+            ViewModelLocator<Calculator_Model>
+                .Instance
+                .Register(new Calculator_Model())
+                .GetViewMapper()
+                .MapToDefault(model => 
+                    new Calculator(model));
 
         }
     }
