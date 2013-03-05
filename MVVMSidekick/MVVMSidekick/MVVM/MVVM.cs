@@ -3360,7 +3360,7 @@ namespace MVVMSidekick
 
 
 
-        public class Stage :DependencyObject 
+        public class Stage : DependencyObject
         {
             public Stage(FrameworkElement target, string beaconKey, StageManager navigator)
             {
@@ -3375,89 +3375,89 @@ namespace MVVMSidekick
 
             #region GoForward and GoBack
 
-//            void SetupNavigateFrame()
-//            {
+            //            void SetupNavigateFrame()
+            //            {
 
-//                BindingFrame = _target as Frame;
+            //                BindingFrame = _target as Frame;
 
-//                var bindingCanGoBack = new Binding()
-//                {
-//                    Source = this,
-//                    Path = new PropertyPath("BindingFrame.CanGoBack"),
+            //                var bindingCanGoBack = new Binding()
+            //                {
+            //                    Source = this,
+            //                    Path = new PropertyPath("BindingFrame.CanGoBack"),
 
-//                    Mode = BindingMode.OneWay
-//                };
-//                this.SetBinding(CanGoBackProperty, bindingCanGoBack);
-
-
-//                var bindingCanGoForward = new Binding()
-//                {
-//                    Source = this,
-//                    Path = new PropertyPath("BindingFrame.CanGoForward"),
-
-//                    Mode = BindingMode.OneWay
-//                };
-//                this.SetBinding(CanGoForwardProperty, bindingCanGoForward);
-
-//            }
-//            public void GoBack()
-//            {
-
-//                if (BindingFrame != null)
-//                {
-//                    if (BindingFrame.CanGoBack)
-//                    {
-//                        BindingFrame.GoBack();
-//                    }
-//                }
-//            }
-
-//            public void GoForward()
-//            {
-
-//                if (BindingFrame != null)
-//                {
-//                    if (BindingFrame.CanGoForward)
-//                    {
-//                        BindingFrame.GoBack();
-//                    }
-//                }
-//            }
+            //                    Mode = BindingMode.OneWay
+            //                };
+            //                this.SetBinding(CanGoBackProperty, bindingCanGoBack);
 
 
-//            private Frame BindingFrame
-//            {
-//                get { return (Frame)GetValue(BindingFrameProperty); }
-//                set { SetValue(BindingFrameProperty, value); }
-//            }
+            //                var bindingCanGoForward = new Binding()
+            //                {
+            //                    Source = this,
+            //                    Path = new PropertyPath("BindingFrame.CanGoForward"),
 
-//            // Using a DependencyProperty as the backing store for BindingFrame.  This enables animation, styling, binding, etc...
-//            public static readonly DependencyProperty BindingFrameProperty =
-//                DependencyProperty.Register("BindingFrame", typeof(Frame), typeof(NavigateTarget), new PropertyMetadata(null));
+            //                    Mode = BindingMode.OneWay
+            //                };
+            //                this.SetBinding(CanGoForwardProperty, bindingCanGoForward);
+
+            //            }
+            //            public void GoBack()
+            //            {
+
+            //                if (BindingFrame != null)
+            //                {
+            //                    if (BindingFrame.CanGoBack)
+            //                    {
+            //                        BindingFrame.GoBack();
+            //                    }
+            //                }
+            //            }
+
+            //            public void GoForward()
+            //            {
+
+            //                if (BindingFrame != null)
+            //                {
+            //                    if (BindingFrame.CanGoForward)
+            //                    {
+            //                        BindingFrame.GoBack();
+            //                    }
+            //                }
+            //            }
 
 
+            //            private Frame BindingFrame
+            //            {
+            //                get { return (Frame)GetValue(BindingFrameProperty); }
+            //                set { SetValue(BindingFrameProperty, value); }
+            //            }
 
-
-//            public bool CanGoBack
-//            {
-//                get { return (bool)GetValue(CanGoBackProperty); }
-//                private set { SetValue(CanGoBackProperty, value); }
-//            }
-
-//            // Using a DependencyProperty as the backing store for CanGoBack.  This enables animation, styling, binding, etc...
-//            public static readonly DependencyProperty CanGoBackProperty =
-//                DependencyProperty.Register("CanGoBack", typeof(bool), typeof(NavigateTarget), new PropertyMetadata(false));
+            //            // Using a DependencyProperty as the backing store for BindingFrame.  This enables animation, styling, binding, etc...
+            //            public static readonly DependencyProperty BindingFrameProperty =
+            //                DependencyProperty.Register("BindingFrame", typeof(Frame), typeof(NavigateTarget), new PropertyMetadata(null));
 
 
 
-//            public bool CanGoForward
-//            {
-//                get { return (bool)GetValue(CanGoForwardProperty); }
-//                private set { SetValue(CanGoForwardProperty, value); }
-//            }
 
-//            // Using a DependencyProperty as the backing store for CanGoForward.  This enables animation, styling, binding, etc...
-//            public static readonly DependencyProperty CanGoForwardProperty =
+            //            public bool CanGoBack
+            //            {
+            //                get { return (bool)GetValue(CanGoBackProperty); }
+            //                private set { SetValue(CanGoBackProperty, value); }
+            //            }
+
+            //            // Using a DependencyProperty as the backing store for CanGoBack.  This enables animation, styling, binding, etc...
+            //            public static readonly DependencyProperty CanGoBackProperty =
+            //                DependencyProperty.Register("CanGoBack", typeof(bool), typeof(NavigateTarget), new PropertyMetadata(false));
+
+
+
+            //            public bool CanGoForward
+            //            {
+            //                get { return (bool)GetValue(CanGoForwardProperty); }
+            //                private set { SetValue(CanGoForwardProperty, value); }
+            //            }
+
+            //            // Using a DependencyProperty as the backing store for CanGoForward.  This enables animation, styling, binding, etc...
+            //            public static readonly DependencyProperty CanGoForwardProperty =
             //                DependencyProperty.Register("CanGoForward", typeof(bool), typeof(NavigateTarget), new PropertyMetadata(false));
 
 
@@ -3480,9 +3480,9 @@ namespace MVVMSidekick
                  where TTarget : class,IViewModel
             {
 
-                var view = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                IView view = LocateViewIfNotSet<TTarget>(targetViewModel, viewKey);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                ShowView(view, _target, _navigator.CurrentBindingView.ViewModel);
+                internalShowView(view, _target, _navigator.CurrentBindingView.ViewModel);
                 await targetViewModel.WaitForClose();
             }
 
@@ -3491,18 +3491,18 @@ namespace MVVMSidekick
             public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewKey = null)
                 where TTarget : class,IViewModel<TResult>
             {
-                var view = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                IView view = LocateViewIfNotSet<TTarget>(targetViewModel, viewKey);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                ShowView(view, _target, _navigator.CurrentBindingView.ViewModel);
+                internalShowView(view, _target, _navigator.CurrentBindingView.ViewModel);
                 return await targetViewModel.WaitForCloseWithResult();
             }
 
             public ShowAwaitableResult<TTarget, TResult> ShowAndGetViewModel<TTarget, TResult>(TTarget targetViewModel = null, string viewKey = null)
                 where TTarget : class,IViewModel<TResult>
             {
-                var view = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                IView view = LocateViewIfNotSet<TTarget>(targetViewModel, viewKey);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                ShowView(view, _target, _navigator.CurrentBindingView.ViewModel);
+                internalShowView(view, _target, _navigator.CurrentBindingView.ViewModel);
 #if SILVERLIGHT_5||WINDOWS_PHONE_7
                 var ttvm = new Task<TTarget>(() => targetViewModel);
 #else
@@ -3513,23 +3513,34 @@ namespace MVVMSidekick
                 return new ShowAwaitableResult<TTarget, TResult> { Result = tr, ViewModel = ttvm };
             }
 
+
+
             public async Task<TTarget> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewKey = null)
                  where TTarget : class, IViewModel
             {
-                var view = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                IView view = LocateViewIfNotSet<TTarget>(targetViewModel, viewKey);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                ShowView(view, _target, _navigator.CurrentBindingView.ViewModel);
+                internalShowView(view, _target, _navigator.CurrentBindingView.ViewModel);
                 await targetViewModel.WaitForClose();
                 return targetViewModel;
             }
 
 
-
-
-
-            private void ShowView(IView view, FrameworkElement target, IViewModel sourceVM)
+            private static IView LocateViewIfNotSet<TTarget>(TTarget targetViewModel, string viewKey) where TTarget : class, IViewModel
             {
+                IView view = null;
+                if (targetViewModel !=null && targetViewModel.StageManager != null)
+                {
+                    view = targetViewModel.StageManager.CurrentBindingView as IView;
+                }
+                
+                view = view ?? ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                return view;
+            }
 
+
+            private void internalShowView(IView view, FrameworkElement target, IViewModel sourceVM)
+            {
 
                 if (view is UserControl || view is Page)
                 {
@@ -3538,11 +3549,8 @@ namespace MVVMSidekick
                     {
                         var targetCControl = target as ContentControl;
                         var oldcontent = targetCControl.Content as IDisposable;
-                        //if (oldcontent != null)
-                        //{
-                        //    oldcontent.Dispose();
-                        //}
-                        
+
+
                         targetCControl.Content = view;
                     }
                     else if (target is Panel)
@@ -3620,7 +3628,7 @@ namespace MVVMSidekick
             public void InitParent(Func<DependencyObject> parentLocator)
             {
                 _parentLocator = parentLocator;
-                DefaultTarget = this[""];
+                DefaultStage = this[""];
             }
 
 
@@ -3799,7 +3807,7 @@ namespace MVVMSidekick
 
 
 
-            public Stage DefaultTarget
+            public Stage DefaultStage
             {
                 get { return (Stage)GetValue(DefaultTargetProperty); }
                 set { SetValue(DefaultTargetProperty, value); }

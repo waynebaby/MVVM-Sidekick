@@ -62,7 +62,7 @@ namespace Samples.ViewModels
                     .Subscribe(
                     async _ =>
                     {
-                        await vm.StageManager.DefaultTarget.Show<Calculator_Model>();
+                        await vm.StageManager.DefaultStage.Show<Calculator_Model>();
                     })
                     .DisposeWith(model); //Config it if needed
                 return cmd.CreateCommandModel("StartCalculator");
