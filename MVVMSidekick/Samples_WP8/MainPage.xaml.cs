@@ -15,7 +15,7 @@ namespace Samples
     public partial class MainPage : MVVMPage
     {
         // Constructor
-        public MainPage()
+        public MainPage():base(null)
         {
             InitializeComponent();
 
