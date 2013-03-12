@@ -30,7 +30,8 @@ namespace Samples
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            StartupFunctions.ConfigCalculator();
+            Startups.StartupFunctions.ConfigCalculator();
+     
             App.Current.RootVisual = new MainPage(null);
 
         }

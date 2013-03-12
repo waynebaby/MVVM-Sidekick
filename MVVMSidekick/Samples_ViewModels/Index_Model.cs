@@ -1,5 +1,6 @@
 ﻿using MVVMSidekick.Reactive;
 using MVVMSidekick.ViewModels;
+using Samples.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,6 +70,7 @@ namespace Samples.ViewModels
             };
         #endregion
 
+     
 
     }
 

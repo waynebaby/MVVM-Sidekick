@@ -1,4 +1,10 @@
-﻿using MVVMSidekick.Views;
+﻿using System.Reactive;
+using System.Reactive.Linq;
+using MVVMSidekick.ViewModels;
+using MVVMSidekick.Views;
+using MVVMSidekick.Reactive;
+using MVVMSidekick.Services;
+using MVVMSidekick.Commands;
 using $rootnamespace$.ViewModels;
 using System;
 using System.Net;
@@ -15,7 +21,7 @@ namespace $rootnamespace$.Startups
                 .Instance
                 .Register(new $safeitemname$_Model())
                 .GetViewMapper()
-                .MapToDefault(model => new $safeitemname$(model));
+                .MapToDefault<$safeitemname$>();
 
         }
     }

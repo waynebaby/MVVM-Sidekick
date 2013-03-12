@@ -5,31 +5,33 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" x:Class="Samples.MainPage"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400"
+    d:DesignHeight="600" d:DesignWidth="800"
     xmlns:vm="clr-namespace:Samples.ViewModels" 
     xmlns:mvvm="clr-namespace:MVVMSidekick.Views">
     <mvvm:MVVMControl.Resources>
         <vm:Index_Model x:Key="DesignVM" />
     </mvvm:MVVMControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}" >
+    <Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}" ShowGridLines="True" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="117*"/>
-            <ColumnDefinition Width="56*"/>
-            <ColumnDefinition Width="27*"/>
+            <ColumnDefinition Width="234*"/>
+            <ColumnDefinition Width="67*"/>
+            <ColumnDefinition Width="45*"/>
+            <ColumnDefinition Width="54*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="23*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding HelloWorld}" Grid.RowSpan="2" Grid.ColumnSpan="3"  />
+        <TextBlock Text="{Binding HelloWorld}" Grid.RowSpan="2" Grid.ColumnSpan="4"  />
 
-        <sdk:Frame  Grid.Row="1" mvvm:StageManager.Beacon="" Grid.ColumnSpan="3" >
+        <sdk:Frame  Grid.Row="1" mvvm:StageManager.Beacon="" Grid.ColumnSpan="4" >
 
 
         </sdk:Frame>
-        <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" Margin="0,0,0,0" />
-        <CheckBox IsChecked="{Binding Navigator.DefaultTarget.CanGoBack, Mode=OneWay}" Grid.Column="3"></CheckBox>
+        <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" Margin="0,0,5.087,0" />
+        <Button Content="{Binding CommandChangeColor}" Grid.Column="2" Command="{Binding CommandChangeColor}" />
+        <CheckBox IsChecked="{Binding  Content.StageManager.DefaultStage.CanGoBack, ElementName=frame,Mode=OneWay}" Grid.Column="3"></CheckBox>
 
     </Grid>
 </mvvm:MVVMControl>

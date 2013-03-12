@@ -5,7 +5,7 @@ using System.Net;
 using System.Windows;
 
 
-namespace Samples
+namespace Samples.Startups
 {
     public static partial class StartupFunctions
     {

@@ -333,6 +333,7 @@ namespace $safeprojectname$.Common
         /// property provides the group to be displayed.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
             // Returning to a cached page through navigation shouldn't trigger state loading
             if (this._pageKey != null) return;
 

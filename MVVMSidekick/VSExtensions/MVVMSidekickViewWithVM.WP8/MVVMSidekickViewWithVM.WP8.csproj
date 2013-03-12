@@ -63,7 +63,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Class.cs" />
     <None Include="MVVMSidekickViewWithVM.WP8.ico" />
   </ItemGroup>
   <ItemGroup>
