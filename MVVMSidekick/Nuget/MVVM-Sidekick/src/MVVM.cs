@@ -3408,7 +3408,7 @@ namespace MVVMSidekick
                     (o, e) =>
                     {
                         ((o as MVVMControl).Content as FrameworkElement).DataContext = e.NewValue;
-                        
+
                     }
 
 

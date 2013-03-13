@@ -22,7 +22,7 @@
             <RowDefinition Height="23*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding Title}" Grid.RowSpan="2" Grid.ColumnSpan="2"  />
-        <sdk:Frame  Grid.Row="1" mvvm:Navigator.Beacon="" Grid.ColumnSpan="2" >
+        <sdk:Frame  Grid.Row="1" mvvm:StageManager.Beacon="" Grid.ColumnSpan="2" >
 
 
         </sdk:Frame>
