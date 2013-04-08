@@ -3195,15 +3195,18 @@ namespace MVVMSidekick
 
             // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null,
+                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,
                     (o, e) =>
                     {
-                       ( (o as MVVMWindow ).Content as FrameworkElement ).DataContext = e.NewValue;
-                    
+                        var target = ((o as MVVMPage).Content as FrameworkElement);
+                        if (target != null)
+                        {
+                            target.DataContext = e.NewValue;
+                        }
+
                     }
-
-
                     ));
+
 
 
             public ViewType ViewType
@@ -3269,7 +3272,7 @@ namespace MVVMSidekick
             public IViewModel Init(IViewModel viewModel)
             {
 
-                viewModel = ViewModel = viewModel ?? ViewModel; //如果传递进来一个空值 则使用默认的VM
+                viewModel = ViewModel = viewModel ?? ViewModel; //如果传递进来一个空值 则使用默认y的VM
                 viewModel.StageManager = new StageManager(ViewModel) { CurrentBindingView = this };
                 viewModel.StageManager.InitParent(() => this.Parent);
                 viewModel.StageManager.DisposeWith(viewModel);
@@ -3283,11 +3286,11 @@ namespace MVVMSidekick
             {
                 get
                 {
-                    var rval=GetValue(ViewModelProperty) as IViewModel;
-                    if (rval==null)
+                    var rval = GetValue(ViewModelProperty) as IViewModel;
+                    if (rval == null)
                     {
-                       rval= (Content as FrameworkElement).DataContext as IViewModel;
-                       SetValue(ViewModelProperty, rval);
+                        rval = (Content as FrameworkElement).DataContext as IViewModel;
+                        SetValue(ViewModelProperty, rval);
                     }
                     return rval;
                 }
@@ -3299,7 +3302,11 @@ namespace MVVMSidekick
                 DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,
                     (o, e) =>
                     {
-                        ((o as MVVMPage).Content as FrameworkElement).DataContext = e.NewValue;
+                        var target = ((o as MVVMPage).Content as FrameworkElement);
+                        if (target != null)
+                        {
+                            target.DataContext = e.NewValue;
+                        }
 
                     }
                     ));
@@ -3402,16 +3409,17 @@ namespace MVVMSidekick
                 }
                 set { SetValue(ViewModelProperty, value); }
             }
-            // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMControl), new PropertyMetadata(null,
+             public static readonly DependencyProperty ViewModelProperty =
+                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,
                     (o, e) =>
                     {
-                        ((o as MVVMControl).Content as FrameworkElement).DataContext = e.NewValue;
+                        var target = ((o as MVVMPage).Content as FrameworkElement);
+                        if (target != null)
+                        {
+                            target.DataContext = e.NewValue;
+                        }
 
                     }
-
-
                     ));
 
 
@@ -3878,7 +3886,7 @@ namespace MVVMSidekick
                         using (EventRouter.EventRouter.Instance.GetEventObject<NavigationEventArgs>()
                            .GetRouterEventObservable()
                            .Where(e =>
-                                   e.EventArgs.Parameter == paremeter)
+                              object.ReferenceEquals(e.EventArgs.Parameter, paremeter))
                            .Subscribe(e =>
                            {
                                var page = e.Sender as MVVMPage;
@@ -3970,7 +3978,7 @@ namespace MVVMSidekick
                         using (EventRouter.EventRouter.Instance.GetEventObject<NavigationEventArgs>()
                            .GetRouterEventObservable()
                            .Where(e =>
-                                   e.EventArgs.Parameter == paremeter)
+                                object.ReferenceEquals(e.EventArgs.Parameter, paremeter))
                            .Subscribe(e =>
                            {
                                var page = e.Sender as MVVMPage;
