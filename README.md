@@ -1,7 +1,7 @@
-MVVM-Sidekick (Now for Windows Runtime XAML only)
+MVVM-Sidekick
 =============
 
-> MVVM密友 (目前仅支持Win8)
+> MVVM密友 
 > ===================
 
 

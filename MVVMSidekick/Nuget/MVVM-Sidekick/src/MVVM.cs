@@ -317,10 +317,10 @@ namespace MVVMSidekick
                 if (alwaysNew)
                 {
                     return dic[name] = new ServiceLocatorEntryStruct<TService>(name)
-                        {
-                            CacheType = CacheType.Factory,
-                            ServiceFactory = factory
-                        };
+                    {
+                        CacheType = CacheType.Factory,
+                        ServiceFactory = factory
+                    };
 
                 }
                 else
@@ -596,19 +596,19 @@ namespace MVVMSidekick
                 if (alwaysNew)
                 {
                     ServiceTypedCache<TService>.dic[name] = rval = new ServiceLocatorEntryStruct<TService>(name)
-                      {
-                          CacheType = CacheType.AsyncFactory,
-                          AsyncServiceFactory = asyncFactory
-                      };
+                    {
+                        CacheType = CacheType.AsyncFactory,
+                        AsyncServiceFactory = asyncFactory
+                    };
 
                 }
                 else
                 {
                     ServiceTypedCache<TService>.dic[name] = rval = new ServiceLocatorEntryStruct<TService>(name)
-                      {
-                          CacheType = CacheType.AsyncLazyInstance,
-                          AsyncServiceFactory = asyncFactory
-                      };
+                    {
+                        CacheType = CacheType.AsyncLazyInstance,
+                        AsyncServiceFactory = asyncFactory
+                    };
 
                 }
                 if (!disposeActions.ContainsKey(typeof(TService)))
@@ -3195,18 +3195,15 @@ namespace MVVMSidekick
 
             // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,
+                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null,
                     (o, e) =>
                     {
-                        var target = ((o as MVVMPage).Content as FrameworkElement);
-                        if (target != null)
-                        {
-                            target.DataContext = e.NewValue;
-                        }
-
+                       ( (o as ContentControl  ).Content as FrameworkElement ).DataContext = e.NewValue;
+                    
                     }
-                    ));
 
+
+                    ));
 
 
             public ViewType ViewType
@@ -3254,10 +3251,10 @@ namespace MVVMSidekick
                 RoutedEventHandler loadEvent = null;
 
                 loadEvent = (_1, _2) =>
-              {
-                  EventRouter.EventRouter.Instance.RaiseEvent(this, e);
-                  this.Loaded -= loadEvent;
-              };
+                {
+                    EventRouter.EventRouter.Instance.RaiseEvent(this, e);
+                    this.Loaded -= loadEvent;
+                };
                 this.Loaded += loadEvent;
             }
 #endif
@@ -3272,7 +3269,7 @@ namespace MVVMSidekick
             public IViewModel Init(IViewModel viewModel)
             {
 
-                viewModel = ViewModel = viewModel ?? ViewModel; //如果传递进来一个空值 则使用默认y的VM
+                viewModel = ViewModel = viewModel ?? ViewModel; //如果传递进来一个空值 则使用默认的VM
                 viewModel.StageManager = new StageManager(ViewModel) { CurrentBindingView = this };
                 viewModel.StageManager.InitParent(() => this.Parent);
                 viewModel.StageManager.DisposeWith(viewModel);
@@ -3302,11 +3299,7 @@ namespace MVVMSidekick
                 DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,
                     (o, e) =>
                     {
-                        var target = ((o as MVVMPage).Content as FrameworkElement);
-                        if (target != null)
-                        {
-                            target.DataContext = e.NewValue;
-                        }
+                        ((o as ContentControl).Content as FrameworkElement).DataContext = e.NewValue;
 
                     }
                     ));
@@ -3409,17 +3402,16 @@ namespace MVVMSidekick
                 }
                 set { SetValue(ViewModelProperty, value); }
             }
-             public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,
+            // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
+            public static readonly DependencyProperty ViewModelProperty =
+                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMControl), new PropertyMetadata(null,
                     (o, e) =>
                     {
-                        var target = ((o as MVVMPage).Content as FrameworkElement);
-                        if (target != null)
-                        {
-                            target.DataContext = e.NewValue;
-                        }
+                        ((o as ContentControl).Content as FrameworkElement).DataContext = e.NewValue;
 
                     }
+
+
                     ));
 
 
@@ -3745,12 +3737,12 @@ namespace MVVMSidekick
                             .Where(e =>
                                     e.EventArgs.Uri == newUriWithParameter)
                             .Subscribe(e =>
-                                {
-                                    var page = e.Sender as MVVMPage;
-                                    page.Init(targetViewModel);
-                                    targetViewModel = (TTarget)page.ViewModel;
-                                    task.Start();
-                                }
+                            {
+                                var page = e.Sender as MVVMPage;
+                                page.Init(targetViewModel);
+                                targetViewModel = (TTarget)page.ViewModel;
+                                task.Start();
+                            }
                             ))
                         {
                             frame.Navigate(newUriWithParameter);
@@ -3787,12 +3779,12 @@ namespace MVVMSidekick
                             .Where(e =>
                                     e.EventArgs.Uri == newUriWithParameter)
                             .Subscribe(e =>
-                                {
-                                    var page = e.Sender as MVVMPage;
-                                    page.Init(targetViewModel);
-                                    targetViewModel = (TTarget)page.ViewModel;
-                                    task.Start();
-                                }
+                            {
+                                var page = e.Sender as MVVMPage;
+                                page.Init(targetViewModel);
+                                targetViewModel = (TTarget)page.ViewModel;
+                                task.Start();
+                            }
                             ))
                         {
                             frame.Navigate(newUriWithParameter);
@@ -3809,7 +3801,7 @@ namespace MVVMSidekick
                 return await targetViewModel.WaitForCloseWithResult();
             }
 
-         
+
 
             public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewKey = null)
                 where TTarget : class,IViewModel
@@ -3886,7 +3878,7 @@ namespace MVVMSidekick
                         using (EventRouter.EventRouter.Instance.GetEventObject<NavigationEventArgs>()
                            .GetRouterEventObservable()
                            .Where(e =>
-                              object.ReferenceEquals(e.EventArgs.Parameter, paremeter))
+                                   object.ReferenceEquals(e.EventArgs.Parameter, paremeter))
                            .Subscribe(e =>
                            {
                                var page = e.Sender as MVVMPage;
@@ -3931,7 +3923,7 @@ namespace MVVMSidekick
                         using (EventRouter.EventRouter.Instance.GetEventObject<NavigationEventArgs>()
                            .GetRouterEventObservable()
                            .Where(e =>
-                                   e.EventArgs.Parameter == paremeter)
+                                   object.ReferenceEquals(e.EventArgs.Parameter, paremeter))
                            .Subscribe(e =>
                            {
                                var page = e.Sender as MVVMPage;
@@ -3978,7 +3970,7 @@ namespace MVVMSidekick
                         using (EventRouter.EventRouter.Instance.GetEventObject<NavigationEventArgs>()
                            .GetRouterEventObservable()
                            .Where(e =>
-                                object.ReferenceEquals(e.EventArgs.Parameter, paremeter))
+                                   object.ReferenceEquals(e.EventArgs.Parameter, paremeter))
                            .Subscribe(e =>
                            {
                                var page = e.Sender as MVVMPage;
@@ -4314,3 +4306,4 @@ namespace MVVMSidekick
     }
 
 }
+
