@@ -41,6 +41,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM-Sidekick", "Nuget\MVVM
 		{C7B975FC-9323-4E05-AF3D-194C63AF8D34} = {C7B975FC-9323-4E05-AF3D-194C63AF8D34}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{107292D9-FB47-471C-A651-BADCD72CB7CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Documents", "Documents\Documents.csproj", "{22CF968A-8796-4F24-BAE6-20D05650F5F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FB751116-11F7-4A3D-A983-C0A29675F3E4}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -197,6 +208,16 @@ Global
 		{DC5113AC-E6A3-4BA1-92A0-E6981563AB7A}.Release|ARM.ActiveCfg = Release|Any CPU
 		{DC5113AC-E6A3-4BA1-92A0-E6981563AB7A}.Release|x64.ActiveCfg = Release|Any CPU
 		{DC5113AC-E6A3-4BA1-92A0-E6981563AB7A}.Release|x86.ActiveCfg = Release|Any CPU
+		{22CF968A-8796-4F24-BAE6-20D05650F5F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22CF968A-8796-4F24-BAE6-20D05650F5F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22CF968A-8796-4F24-BAE6-20D05650F5F2}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{22CF968A-8796-4F24-BAE6-20D05650F5F2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{22CF968A-8796-4F24-BAE6-20D05650F5F2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{22CF968A-8796-4F24-BAE6-20D05650F5F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22CF968A-8796-4F24-BAE6-20D05650F5F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22CF968A-8796-4F24-BAE6-20D05650F5F2}.Release|ARM.ActiveCfg = Release|Any CPU
+		{22CF968A-8796-4F24-BAE6-20D05650F5F2}.Release|x64.ActiveCfg = Release|Any CPU
+		{22CF968A-8796-4F24-BAE6-20D05650F5F2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -209,5 +230,6 @@ Global
 		{1E40FF46-5895-4C26-82C9-590EFB004B62} = {4BFB20FA-7B02-4B64-96FA-93940A4370DB}
 		{330BF7A4-89B5-4F0D-A95C-7BD91EDFBEF8} = {12960F01-0D4C-46C0-A682-5F6DA69B7D3D}
 		{DC5113AC-E6A3-4BA1-92A0-E6981563AB7A} = {A880AB6B-6874-4D18-B8FB-0A48B5AD9641}
+		{22CF968A-8796-4F24-BAE6-20D05650F5F2} = {107292D9-FB47-471C-A651-BADCD72CB7CA}
 	EndGlobalSection
 EndGlobal

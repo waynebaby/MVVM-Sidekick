@@ -27,26 +27,26 @@ What’s the point.
 > 功能特色
 > =======
 
-- 	Full support for Data Contract Serializing. You can keep your status that VM got into JSON and XML. Easy steps after restore the data to make vm works again.
-> 	全面支持DataContract序列化 可以将一个VM的全部状态用任何方式保存为JSon/XML反序列化后只需要简单操作就可以恢复工作
+-     Full support for Data Contract Serializing. You can keep your status that VM got into JSON and XML. Easy steps after restore the data to make VM works again.
+>全面支持Data Contract序列化 可以将一个VM的全部状态用任何方式保存为JSON/XML反序列化后只需要简单操作就可以恢复工作
 
 
-- 	This is light-weight one. Dll or code can works in you projects either. You just need install Reactive Extensions with nuget.
-> 	轻量级代码级框架，不必安装全部DLL或者引用工程，只需要将指定代码文件加入你的工程切安装Reactive Extensions就可以用。
+-     This is light-weight framework. Either Dll or code can works in you projects. You just need install Reactive Extensions with Nuget.
+>轻量级框架，不必安装全部DLL或者引用工程，只需要将指定代码文件加入你的工程切安装Reactive Extensions就可以用。
 
 
-- 	Model Members in MVVM-Sidekick are communicated amount each other with events. Linq-Like code with RX can filter/subscribe events easily, and subscription could be disposed with model involved.
->	Model所有的成员之间用事件序列驱动交互，只需要用 Linq-Like 语法进行配置和订阅，订阅在VM 销毁时自动取消。
-
-
-
-- 	You can configure business logic of your properties and commands right at where they were declared. This will reduce your jumping between different parts in one VM file. (This kills me when I was working with other frameworks:you cannot configure a DelayCommand at the property/field declaration part because “this” instance is not ready yet .)
-	>可以在声明property的代码处配置property的业务细节，可以在声明command的代码处配置command的业务细节,这样你就不用在一个vm里面不同的代码段跳来跳去了。（用别的框架可累死我了，声明个command 还不能在声明原地初始化，因为this还没有实例化）
+-     Model Members in MVVM-Sidekick are communicated amount each other with events. LinQ-Like code with RX can filter/subscribe events easily, and subscription could be disposed with model involved.
+>Model所有的成员之间用事件序列驱动交互，只需要用 LinQ-Like 语法进行配置和订阅，订阅在VM 销毁时自动取消。
 
 
 
-- 	You can also separate the business logic to your VM declaration into a decorator or factory something, to manage all code involved a USE CASE together, with the documenting organizing sequence, and you can also easily add more business everywhere if you like.
-	>可以将VM的业务细节配置与VM的创建时机分离，不但可以在实体外用装饰模式进行批量配置(这样可以让代码与需求文档的组织顺序高度统一，便于维护)，也可以根据需要临时装饰增加VM的功能。
+-     You can configure business logic of your properties and commands right at where they were declared. This will reduce your jumping between different parts in one VM file. (This kills me when I was working with other frameworks: you cannot configure a DelayCommand at the property/field declaration part because “this” instance is not ready yet .)
+    >可以在声明property的代码处配置property的业务细节，可以在声明command的代码处配置command的业务细节,这样你就不用在一个VM里面不同的代码段跳来跳去了。（用别的框架可累死我了，声明个command 还不能在声明原地初始化，因为this还没有实例化）
+
+
+
+-     You can also separate the business logic to your VM declaration into a decorator or factory something, to manage all code involved a USE CASE together, with the documenting organizing sequence, and you can also easily add more business everywhere if you like.
+    >可以将VM的业务细节配置与VM的创建时机分离，不但可以在实体外用装饰模式进行批量配置(这样可以让代码与需求文档的组织顺序高度统一，便于维护)，也可以根据需要临时装饰增加VM的功能。
 
 
 
@@ -59,8 +59,10 @@ Performance
 >性能亮点
 >========
 
-- Propery access supports JIT inline and also support Property Name-Value Access. 
->比起一般的字典内核与字段内核， MVVMSidekick 的VMBase对于属性访问采用可内联的直接寻址方式访问提高速度，且仍能保持字段名字典访问
+- Property access supports JIT inline and also support Property Name-Value Access. 
+>比起一般的字典内核与字段内核， MVVM Sidekick 的VMBase对于属性访问采用可内联的直接寻址方式访问提高速度，且仍能保持字段名字典访问
+
+
 
 
 ----------
@@ -68,13 +70,12 @@ Performance
 Samples
 ===========
 
->使用案例
+>示例
 >===========
-[https://github.com/waynebaby/Table-Game-Sidekick](https://github.com/waynebaby/Table-Game-Sidekick "Table Game Sidekick")
 
 
-- Table Game App based on MVVM-Sidekick. Not finished--yet/ever,but it is good to show how MVVM-Sidekick Works.
->基于 MVVM-Sidekick 的桌游助手APP. 目前进度---坑. 但是是个很好的样例。
+
+-In Nuget folder `\src\Samples.zip`
 
 ----------
 
@@ -82,43 +83,6 @@ How To Use project template ?
 ===================
 如何使用MVVMSidekick项目模板？
 ===================
-
-##Preparation##
->##准备工作 ##
-
-- Enter MVVMSidekick/Nuget package content Folder
-
-	>进入MVVMSidekick/Nuget包 content 目录
-
-- Open MVVMSidekickVSIX.vsix , install the extension.
-
-	>打开 MVVMSidekickVSIX.vsix按照提示安装
-
-##Creating new project ##
-
->##创建新工程 ##
-
-- 	Create New Project using  MVVMSidekick Project template.
-
-	>创建新项目，在c#项目中找到 MVVMSidekick 项目模板
-
-- 	Create MVVMSidekick Items in project.
-
-	>在创建好的项目中用MVVM Sidekick 代码模板 创建DataModel和View/ViewModel文件
-
-
-##If you already have one ##
-
->##如果已经有工程##
-
-- Open your project.
-	>打开工程
-
-- Delete the App.xaml.cs and Main Page (if you have nothing important in it.)
-	>删除工程中的 App.xaml.cs (如果你没有放什么逻辑在里面)
-
-- Add new item through "App Root and Main Page" Item Template.
-	>用App Root and Main Page 模板新建项
 
 
 
@@ -144,7 +108,7 @@ Supported snippets:
 
 <table  border="3"  cellpadding="12" cellspacing="3" bordercolor="#aaaaaa">                                                                               
 <tr><td>	propvm  </td><td>	New Propery In Model                                    </td><td>	在MVVMSidekick Binable/ViewModel 中增加属性</td>          </td> </tr>
-<tr><td>	vmcmd 	</td><td>	New Command In Model                                    </td> <td>	在MVVMSidekick Binable/ViewModel 中增加命令               </td>  </tr>
+<tr><td>	propcmd 	</td><td>	New Command In Model                                    </td> <td>	在MVVMSidekick Binable/ViewModel 中增加命令               </td>  </tr>
 </table>
 
 
