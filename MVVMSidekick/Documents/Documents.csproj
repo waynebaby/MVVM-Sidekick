@@ -38,6 +38,14 @@
     <None Include="..\..\README.md">
       <Link>README.md</Link>
     </None>
+    <None Include="1.HelloWorld.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HelloWorldSample\DefaultMainPage.png" />
+    <Content Include="HelloWorldSample\NewProject.png" />
+    <Content Include="HelloWorldSample\propcmd.png" />
+    <Content Include="HelloWorldSample\propvm.png" />
+    <Content Include="HelloWorldSample\VSIX.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

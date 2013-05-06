@@ -46,7 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.0.9.nupkg">
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.0.nupkg">
       <Link>packages\MVVM-Sidekick.1.0.9.nupkg</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
