@@ -7,8 +7,7 @@
            mc:Ignorable="d" 
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
-       
-           xmlns:mvvm="clr-namespace:MVVMSidekick.Views" 
+           xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Sl" 
            xmlns:vm="clr-namespace:Samples.ViewModels">
     <FrameworkElement.Resources>
         <vm:Calculator_Model x:Key="DesignVM" />

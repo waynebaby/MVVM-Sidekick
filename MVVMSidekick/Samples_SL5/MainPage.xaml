@@ -7,7 +7,7 @@
     mc:Ignorable="d"
     d:DesignHeight="600" d:DesignWidth="800"
     xmlns:vm="clr-namespace:Samples.ViewModels" 
-    xmlns:mvvm="clr-namespace:MVVMSidekick.Views">
+    xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Sl">
     <mvvm:MVVMControl.Resources>
         <vm:Index_Model x:Key="DesignVM" />
     </mvvm:MVVMControl.Resources>

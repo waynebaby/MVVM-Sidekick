@@ -13,7 +13,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True"    
-        xmlns:mvvm="clr-namespace:MVVMSidekick.Views"
+        xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Wp8"
     xmlns:vm="clr-namespace:Samples.ViewModels" >
     <UserControl.Resources >
         <vm:Index_Model x:Key="DesignVM" />

@@ -102,9 +102,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\MVVMSidekick\MVVM\MVVM.cs">
-      <Link>MVVM.cs</Link>
-    </Compile>
     <Compile Include="..\Samples_SL5\StartupFunctions.cs">
       <Link>StartupFunctions.cs</Link>
     </Compile>
@@ -164,6 +161,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MVVMSidekick_Metro">
+      <HintPath>..\packages\MVVM-Sidekick.1.0.9\lib\netcore45\MVVMSidekick_Metro.dll</HintPath>
+    </Reference>
     <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\NetCore45\System.Reactive.Core.dll</HintPath>

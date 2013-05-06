@@ -12,7 +12,7 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True" 
-    xmlns:mvvm="clr-namespace:MVVMSidekick.Views" 
+    xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Wp8" 
     xmlns:vm="clr-namespace:Samples.ViewModels">
     <mvvm:MVVMPage.Resources>
         <vm:Calculator_Model x:Key="DesignVM" />

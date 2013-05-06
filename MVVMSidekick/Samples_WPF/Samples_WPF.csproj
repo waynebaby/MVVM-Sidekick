@@ -39,6 +39,9 @@
     <StartupObject>Samples.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MVVMSidekick">
+      <HintPath>..\packages\MVVM-Sidekick.1.0.9\lib\net45\MVVMSidekick.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -83,9 +86,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="..\MVVMSidekick\MVVM\MVVM.cs">
-      <Link>MVVM.cs</Link>
-    </Compile>
     <Compile Include="..\Samples_SL5\StartupFunctions.cs">
       <Link>StartupFunctions.cs</Link>
     </Compile>

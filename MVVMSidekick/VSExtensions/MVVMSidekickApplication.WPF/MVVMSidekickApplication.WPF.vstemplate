@@ -1,19 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-    <Name>MVVMSidekickApplication.WPF</Name>
-    <Description>MVVMSidekickApplication.WPF</Description>
+    <Name>MVVM-Sidekick Blank WPF Application</Name>
+    <Description>A Blank Windows Presentation Framework Application template works with MVVM Sidekick</Description>
     <Icon>MVVMSidekickApplication.WPF.ico</Icon>
     <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
     <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
     <SortOrder>1</SortOrder>
     <TemplateID>937ad3fa-7ac7-42c8-bfed-2561fdeb0b05</TemplateID>
     <TemplateGroupID>Windows</TemplateGroupID>
     <CreateNewFolder>true</CreateNewFolder>
-    <DefaultName>MVVMSidekickApplication.WPF</DefaultName>
+    <LocationField>Enabled</LocationField>
+    <DefaultName>WPFApplication</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
     <BuildProjectOnLoad>true</BuildProjectOnLoad>
     <ShowByDefault>false</ShowByDefault>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
   </TemplateData>
   <TemplateContent>
     <Project File="WPFApplication.csproj" ReplaceParameters="true">
@@ -48,7 +53,7 @@
       <package id="Rx-Linq" version="2.1.30214.0"  />
       <package id="Rx-Main" version="2.1.30214.0"  />
       <package id="Rx-PlatformServices" version="2.1.30214.0"  />
-      <package id="MVVM-Sidekick" version="1.0.9" />
+      <package id="MVVM-Sidekick" version="1.1.0" />
     </packages>
   </WizardData>
 </VSTemplate>

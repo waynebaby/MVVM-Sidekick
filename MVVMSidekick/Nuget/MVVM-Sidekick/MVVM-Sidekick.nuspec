@@ -28,24 +28,20 @@
       目的是集合Reactive Command, Prism 等框架的优点，应对.Net 4.5 和 Windows Runtime带来的变化，为新技术环境量身打造一套以ViewModelBase/ReactiveCommand为核心的基础。
 
     </summary>
-    <releaseNotes>
-
-
-
-
+    <releaseNotes>     
+      
       [微博] [twitter] [Mail]
-
       [微博]: http://www.weibo.com/waynebabywang "WaynebabyWang"
       [twitter]: http://twitter.com/waynebaby "Waynebaby"
       [Mail]: mailto:blackshaman_wayne@hotmail.com "MSN Skype"
     </releaseNotes>
     <tags>Rx Reactive Extensions MVVM Win8 Metro Modern UI</tags>
     <dependencies>
-      <dependency id="Rx-Main" version="2.0.21114" />
-      <dependency id="Rx-PlatformServices" version="2.0.21114" />
-      <dependency id="Rx-Interfaces" version="2.0.21114" />
-      <dependency id="Rx-Core" version="2.0.21114" />
-      <dependency id="Rx-Linq" version="2.0.21114" />
+      <dependency id="Rx-Main" version="[2.0,3.0)" />
+      <dependency id="Rx-PlatformServices" version="[2.0,3.0)" />
+      <dependency id="Rx-Interfaces" version="[2.0,3.0)" />
+      <dependency id="Rx-Core" version="[2.0,3.0)" />
+      <dependency id="Rx-Linq" version="[2.0,3.0)" />
     </dependencies>
   </metadata>
   <files>

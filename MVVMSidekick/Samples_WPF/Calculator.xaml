@@ -1,7 +1,7 @@
 ﻿<mvvm:MVVMWindow x:Class="Samples.Calculator"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Calculator" Height="600" Width="600" xmlns:mvvm="clr-namespace:MVVMSidekick.Views"
+        Title="Calculator" Height="600" Width="600" xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"
         xmlns:vm="clr-namespace:Samples.ViewModels"  Background="black"         >
     <Window.Resources >
         <vm:Calculator_Model x:Key="DesignVM"/>

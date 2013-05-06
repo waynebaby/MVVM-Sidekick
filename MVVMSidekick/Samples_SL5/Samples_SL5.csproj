@@ -68,6 +68,9 @@
     </Reference>
     <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
+    <Reference Include="MVVMSidekick_Sl">
+      <HintPath>..\packages\MVVM-Sidekick.1.0.9\lib\sl50\MVVMSidekick_Sl.dll</HintPath>
+    </Reference>
     <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\SL5\System.Reactive.Core.dll</HintPath>
@@ -96,9 +99,6 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\MVVMSidekick\MVVM\MVVM.cs">
-      <Link>MVVM.cs</Link>
-    </Compile>
     <Compile Include="..\Samples_ViewModels\Calculator_Model.cs">
       <Link>ViewModels\Calculator_Model.cs</Link>
     </Compile>

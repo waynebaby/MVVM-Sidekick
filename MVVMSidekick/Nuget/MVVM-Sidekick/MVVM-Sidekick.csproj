@@ -11,6 +11,8 @@
     <AssemblyName>MVVM-Sidekick</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,8 +32,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MVVMSidekick, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MVVM-Sidekick.1.0.9\lib\net45\MVVMSidekick.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\..\packages\Rx-Core.2.0.21114\lib\Net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\..\packages\Rx-Interfaces.2.0.21114\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\..\packages\Rx-Linq.2.0.21114\lib\Net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\..\packages\Rx-PlatformServices.2.0.21114\lib\Net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +61,7 @@
     <Content Include="7z.exe" />
     <Content Include="src\MVVM.cs" />
     <Content Include="src\MVVM.snippet" />
+    <None Include="packages.config" />
     <None Include="tools\install.ps1" />
   </ItemGroup>
   <ItemGroup>
@@ -73,7 +91,7 @@
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
 BuildPublishPackage.cmd MVVM-Sidekick 1.1.0
-copy MVVM-Sidekick.1.0.9.nupkg $(SolutionDir)
+copy MVVM-Sidekick.1.1.0.nupkg $(SolutionDir)
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
@@ -84,13 +102,16 @@ rd Samples_WP8\bin /s /q
 rd Samples_WP8\obj /s /q
 rd Samples_WPF\bin /s /q
 rd Samples_WPF\obj /s /q
-rd amples_WinRT\bin /s /q
+rd Samples_WinRT\bin /s /q
 rd Samples_WinRT\obj /s /q
 
  cd $(ProjectDir)
  del src\samples.zip
- 7z a src\Samples.zip ..\..\Samples*</PreBuildEvent>
+ 7z a src\Samples.zip ..\..\Samples*
+ 7z a src\Samples.zip ..\..\.nuget
+ 7z a src\Samples.zip ..\..\Samples.sln</PreBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
