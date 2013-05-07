@@ -72,9 +72,10 @@ How To Use project template ?
 如何使用MVVMSidekick项目模板？
 ===================
 
- See document: Hello world
+ See document: [Hello world](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/1.HelloWorld.md)
 
- >详情见文档  跟班问世篇
+
+ >详情见文档  [跟班问世篇](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/1.HelloWorld.md)
 
 
 
