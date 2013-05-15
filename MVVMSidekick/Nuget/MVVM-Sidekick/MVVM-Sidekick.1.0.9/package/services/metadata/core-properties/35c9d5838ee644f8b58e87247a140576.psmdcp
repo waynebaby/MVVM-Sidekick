@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?><coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"><dc:creator>Wayne Wang</dc:creator><dc:description>MVVM-Sidekick
-      =============
-      MVVM密友
-      ===================
-
-
-      A Modern light-weight MVVM framework based on RX and TPL await
-
-      轻量级MVVM框架,基于RX与 await等新技术</dc:description><dc:identifier>MVVM-Sidekick</dc:identifier><version>1.0.9</version><keywords>Rx Reactive Extensions MVVM Win8 Metro Modern UI</keywords><dc:title>MVVM Sidekick Light-weight Framework</dc:title></coreProperties>

@@ -3198,7 +3198,7 @@ namespace MVVMSidekick
                 DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null,
                     (o, e) =>
                     {
-                       ( (o as ContentControl  ).Content as FrameworkElement ).DataContext = e.NewValue;
+                       ( (o as Window  ).Content as FrameworkElement ).DataContext = e.NewValue;
                     
                     }
 
@@ -3299,7 +3299,7 @@ namespace MVVMSidekick
                 DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,
                     (o, e) =>
                     {
-                        ((o as ContentControl).Content as FrameworkElement).DataContext = e.NewValue;
+                        ((o as Page).Content as FrameworkElement).DataContext = e.NewValue;
 
                     }
                     ));
@@ -3407,7 +3407,7 @@ namespace MVVMSidekick
                 DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMControl), new PropertyMetadata(null,
                     (o, e) =>
                     {
-                        ((o as ContentControl).Content as FrameworkElement).DataContext = e.NewValue;
+                        ((o as UserControl).Content as FrameworkElement).DataContext = e.NewValue;
 
                     }
 
@@ -4207,6 +4207,14 @@ namespace MVVMSidekick
                     else if (parent is ContentControl)
                     {
                         (parent as ContentControl).Content = null;
+                    }
+                    else if (parent is Page )
+                    {
+                        (parent as Page).Content = null;
+                    }
+                    else if (parent is UserControl )
+                    {
+                        (parent as UserControl).Content = null;
                     }
 
                 }

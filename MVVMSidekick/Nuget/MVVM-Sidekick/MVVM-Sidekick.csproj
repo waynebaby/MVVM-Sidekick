@@ -82,7 +82,9 @@
   <ItemGroup>
     <None Include="BuildPublishPackage.cmd" />
     <None Include="lib\netcore45\MVVMSidekick_Metro.pri" />
-    <None Include="MVVM-Sidekick.nuspec" />
+    <None Include="MVVM-Sidekick.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\" />
@@ -90,8 +92,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
-BuildPublishPackage.cmd MVVM-Sidekick 1.1.0
-copy MVVM-Sidekick.1.1.0.nupkg $(SolutionDir)
+BuildPublishPackage.cmd MVVM-Sidekick 1.1.1
+copy MVVM-Sidekick.1.1.1.nupkg $(SolutionDir)
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

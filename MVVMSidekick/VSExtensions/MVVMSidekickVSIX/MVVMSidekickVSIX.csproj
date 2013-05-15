@@ -46,11 +46,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.0.nupkg">
-      <Link>packages\MVVM-Sidekick.1.0.9.nupkg</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="Packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -104,6 +99,11 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="ItemTemplates\Windows Phone\MVVMSidekickViewWithVM.WP8.zip">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.1.nupkg">
+      <Link>packages\MVVM-Sidekick.1.1.1.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

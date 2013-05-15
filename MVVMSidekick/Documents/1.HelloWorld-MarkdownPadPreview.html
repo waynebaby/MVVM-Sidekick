@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>1.HelloWorld</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: 29d1c5bc36da364ad5aa86946d420b7bbc54a253 */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>Hello World! I am MVVM-Sidekick</h1>
+<blockquote>
+<h1>跟班儿问世篇</h1>
+</blockquote>
+<h2>1.  Install VS Extension.</h2>
+<blockquote>
+<h2>1.  安装模板包</h2>
+</blockquote>
+<p>MVVM-Sidekick VS Extension only supports VS2012 now.</p>
+<blockquote>
+<p>MVVM跟班儿的VS扩展目前只支持VS2012.</p>
+</blockquote>
+<p>You can downloaded here.</p>
+<blockquote>
+<p>你可以在此下载</p>
+</blockquote>
+<p>[<a href="http://visualstudiogallery.msdn.microsoft.com/ef9b45cb-8f54-481a-b248-d5ad359ec407" title="http://visualstudiogallery.msdn.microsoft.com/ef9b45cb-8f54-481a-b248-d5ad359ec407">http://visualstudiogallery.msdn.microsoft.com/ef9b45cb-8f54-481a-b248-d5ad359ec407</a></p>
+<p>If the link is outdated,  try search 'MVVM-Sidekick' on your 'Extensions and Updates' manager (TOOLS MENU).</p>
+<blockquote>
+<p>如果链接失效,请尝试在你的VS2012工具菜单下的&quot;扩展与更新&quot;管理器中搜索&quot;MVVM-Sidekick&quot;.</p>
+</blockquote>
+<p><img src="HelloWorldSample/VSIX.png" alt="Use Tools-&gt;Extensions and Updates" /></p>
+<h2>2.  Create a new MVVM-Sidekick Project</h2>
+<blockquote>
+<h2>2.   创建新跟班儿项目</h2>
+</blockquote>
+<p>After you install the VS extension, you can create a new MVVM-Sidekick project.</p>
+<blockquote>
+<p>安装过了模板扩展，你就可以创建新工程了</p>
+</blockquote>
+<p>Now we support WP8, Silverlight 5, WPF 4.5 ,Windows Store platforms.</p>
+<blockquote>
+<p>目前我们支持 WP8 SL5 WPF 4.5 和 Windows Store</p>
+</blockquote>
+<p>You can find our Project Template in each catalog we supported.</p>
+<blockquote>
+<p>在各个支持平台的分类中 你可以找到MVVM-Sidekick工程</p>
+</blockquote>
+<p>And you can search 'MVVM' on the top-left Textbox.</p>
+<blockquote>
+<p>你也可以在右上角搜索MVVM</p>
+</blockquote>
+<p><img src="HelloWorldSample/NewProject.png" alt="New Project" /></p>
+<p>After you create this project, press F5, if your template works well, you may meet your Mainpage.</p>
+<blockquote>
+<p>按下F5 你就可以看到首页了</p>
+</blockquote>
+<p><img src="HelloWorldSample/DefaultMainPage.png" /></p>
+<h2>3. Add simple logic to View Model via code snippets.</h2>
+<h4>Code snippets is needed when you use MVVM－Sidekick.</h4>
+<blockquote>
+<h4>本框架需要代码块辅助开发</h4>
+</blockquote>
+<p>If  your &quot;Documents&quot; Folder is not in path &quot;c:\&quot;, the nuget installation  might not working properly. Please install the snippet manually in <code>Tools-&gt;Code snippets</code> Menu. Default path is</p>
+<p><code>Packages/[MVVM-Sidekick Folder]/MVVM.snippet</code></p>
+<blockquote>
+<p>如果你的“文档”文件夹不在默认安装的C:盘，有可能Nuget的自动安装可能不能正确的定位，需要您手动在 VS的<code>工具-&gt;代码片段</code> 中添加这个路径：</p>
+<p><code>Packages/[MVVM跟班儿路径]/MVVM.snippet</code></p>
+</blockquote>
+<p>Supported snippets:</p>
+<blockquote>
+<p>支持如下常用代码块：</p>
+</blockquote>
+<table  border="3"  cellpadding="12" cellspacing="3" bordercolor="#aaaaaa">                                                                               
+<tr><td>	propvm  </td><td>	New Propery In Model                                    </td><td>	在MVVMSidekick Binable/ViewModel 中增加属性</td>          </td> </tr>
+<tr><td>	propcmd 	</td><td>	New Command In Model                                    </td> <td>	在MVVMSidekick Binable/ViewModel 中增加命令               </td>  </tr>
+</table>
+<p>example:</p>
+<pre><code>&gt; propvm +tab +tab
+</code></pre>
+
+<h4>After you install the code snippet, you can add logic in your view model.</h4>
+<blockquote>
+<h4>安装过代码块后，你就可以在 View Model 里面添加逻辑了。</h4>
+</blockquote>
+<ul>
+<li>
+<h5>Add simple logic to View Model</h5>
+<blockquote>
+<p>在 View Model 添加简单的逻辑</p>
+</blockquote>
+<ul>
+<li>
+<h6>Add a Property</h6>
+<blockquote>
+<h6>添加一个属性</h6>
+</blockquote>
+<ul>
+<li>
+<p>Open view model code file in folder <code>\ViewModels\</code>. </p>
+<blockquote>
+<p>打开<code>\ViewModels\</code>路径的VM代码文件。</p>
+</blockquote>
+<p><em>Usually,  <code>MainPage_Model.cs</code> would be the default view model for the start up screen.</em></p>
+<blockquote>
+<p><em>一般来说,  开始第一屏的VM代码是 <code>MainPage_Model.cs</code> .</em>	</p>
+</blockquote>
+</li>
+<li>
+<p>Move you cursor into class <code>MainPage_Model</code> and input <code>propvm [tab] [tab]</code></p>
+<blockquote>
+<p>将光标移动到 <code>MainPage_Model</code> 类中，输入<code>propvm [tab] [tab]</code></p>
+</blockquote>
+</li>
+<li>
+<p>Input property type <code>string</code> and tab again, then input property name <code>Message</code>.</p>
+<blockquote>
+<p>跟随着光标位置 输入 <code>string</code> 作为属性类型，然后输入属性名 <code>Message</code></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="HelloWorldSample/propvm.png" alt="Use tab to toggle 使用Tab来切换" /></p>
+<ul>
+<li>
+<h6>Add a Command</h6>
+<blockquote>
+<h6>添加一个命令</h6>
+</blockquote>
+<ul>
+<li>
+Input <code>propcmd [tab] [tab]</code> 
+<blockquote>
+<p>输入 <code>propcmd [tab] [tab]</code> </p>
+</blockquote>
+</li>
+<li>
+Input command name <code>CommandChangeMessage</code>
+<blockquote>
+<p>输入命令名 <code>CommandChangeMessage</code></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="HelloWorldSample/propcmd.png" alt="Use tab to toggle" /></p>
+<pre><code>- Remove the `//` comment before `cmd.Subscribe...`, then add code into as below.
+    &gt;移除代码中`cmd.Subscribe...`这一行的注释，修改为如下的内容
+</code></pre>
+
+</li>
+</ul>
+<p><code>csharp
+	cmd.Subscribe(_ =&gt; { CastToCurrentType(model).Message = &quot;Hello ! MVVM World!&quot;; }).DisposeWith(model);</code></p>
+<ul>
+<li>
+<h5>Bind logic to controls</h5>
+<blockquote>
+<h5>将逻辑绑定到控件</h5>
+</blockquote>
+<ul>
+<li>Open view file <code>MainPage.xaml</code> in designer.</li>
+</ul>
+<blockquote>
+<p>打开<code>MainPage.xaml</code></p>
+</blockquote>
+<ul>
+<li>
+<p>Drag a Text Box control into view from tool box, adjust the position and size.</p>
+</li>
+<li>
+<p>Locate <code>Text</code> in Property window, click the small square box over right, chose <code>Create Data binding</code>,select </p>
+</li>
+</ul>
+</li>
+</ul>
+<h2>4.Create a new view.</h2>
+<p>MainPage.xaml is usually the default entrance in a XAML application.</p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
