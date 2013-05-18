@@ -422,6 +422,12 @@
             Gets the type of property/读取值类型
             </summary>
         </member>
+        <member name="P:MVVMSidekick.ViewModels.ValueContainer`1.IsCopyToAllowed">
+            <summary>
+            <para>Can be copied by CopyTo method</para>
+            <para>是否可以被 `Copyto` 复制到另外一个属性</para>
+            </summary>
+        </member>
         <member name="T:MVVMSidekick.ViewModels.ValueChangedEventArgs`1">
             <summary>
             <para>Event args that fired when property changed, with old value and new value field.</para>

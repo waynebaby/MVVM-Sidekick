@@ -26,12 +26,14 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Controls;
 using System.Collections.Concurrent;
 using Windows.UI.Xaml.Navigation;
+using System.Collections;
 #elif WPF
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Collections.Concurrent;
 using System.Windows.Navigation;
+using System.Collections;
 #elif SILVERLIGHT_5
 using System.Windows;
 using System.Windows.Controls;
@@ -133,6 +135,23 @@ namespace System.Runtime.CompilerServices
 
 namespace MVVMSidekick
 {
+    internal static class TypeInfoHelper
+    {
+#if NETFX_CORE
+        public static TypeInfo GetTypeOrTypeInfo(this Type type)
+        {
+            return type.GetTypeInfo();
+
+        }
+#else
+        public static Type GetTypeOrTypeInfo(this Type type)
+        {
+            return type;
+
+        }
+#endif
+
+    }
 
 #if WINDOWS_PHONE_7
     public class Lazy<T>
@@ -1483,6 +1502,22 @@ namespace MVVMSidekick
 
             }
 
+
+
+#if NETFX_CORE
+            bool _IsCopyToAllowed = !typeof(ICommand).GetTypeInfo().IsAssignableFrom(typeof(TProperty).GetTypeInfo());
+#else
+            bool _IsCopyToAllowed = !typeof(ICommand).IsAssignableFrom(typeof(TProperty));
+#endif
+            /// <summary>
+            /// <para>Can be copied by CopyTo method</para>
+            /// <para>是否可以被 `Copyto` 复制到另外一个属性</para>
+            /// </summary>
+            public bool IsCopyToAllowed
+            {
+                get { return _IsCopyToAllowed; }
+                set { _IsCopyToAllowed = value; }
+            }
         }
 
 
@@ -1858,11 +1893,79 @@ namespace MVVMSidekick
                 return x;
             }
 
-            public void CopyTo(TSubClassType x)
+            static void Copyref<T>(T source, ref T target)
+            {
+
+
+                if (source == null)
+                {
+                    target = source;
+                    return;
+                }
+
+                var sourcetype = source.GetType().GetTypeOrTypeInfo();
+                if (sourcetype.IsValueType || source is string)
+                {
+                    target = source;
+                }
+#if ! (SILVERLIGHT_5 || WINDOWS_PHONE_8 || NETFX_CORE)
+
+                else if (typeof(ICloneable).IsAssignableFrom(sourcetype))
+                {
+                    target = (T)((ICloneable)source).Clone();
+                }
+#endif
+                else if (typeof(System.Collections.IList).GetTypeOrTypeInfo().IsAssignableFrom(sourcetype))
+                {
+                    var tarcol = target as System.Collections.IList;
+                    var scol = source as System.Collections.IList;
+                    if (tarcol == null)
+                    {
+
+                        var newcol = sourcetype.IsArray ?
+                            Array.CreateInstance(sourcetype.GetElementType(), scol.Count) :
+                            System.Activator.CreateInstance(source.GetType(), new object[0]) as System.Collections.IList;
+
+
+                        tarcol = (System.Collections.IList)newcol;
+                    }
+                    else
+                    {
+                        tarcol.Clear();
+                    }
+                    if (tarcol != null)
+                    {
+
+
+                        foreach (var item in scol)
+                        {
+                            object newv = null;
+                            Copyref(item, ref newv);
+                            tarcol.Add(newv);
+                        }
+                        target = (T)tarcol;
+                    }
+                    else
+                    {
+                        target = default(T);
+                    }
+                }
+            }
+
+            public void CopyTo(TSubClassType target)
             {
                 foreach (var item in GetFieldNames())
                 {
-                    x[item] = this[item];
+                    var ctThis = GetValueContainer(item);
+                    var ctTarget = target.GetValueContainer(item);
+                    if (ctThis.IsCopyToAllowed)
+                    {
+                        object temp = null;
+                        Copyref(this[item], ref temp);
+                        target[item] = temp;
+                    }
+
+
                 }
             }
 
@@ -2170,6 +2273,7 @@ namespace MVVMSidekick
         {
             Type PropertyType { get; }
             Object Value { get; set; }
+            bool IsCopyToAllowed { get; set; }
         }
 
         public interface ICommandModel<TCommand, TResource> : ICommand
@@ -3147,20 +3251,20 @@ namespace MVVMSidekick
             public MVVMWindow(IViewModel viewModel)
             {
                 this.Loaded += (_1, _2) =>
-                    {
-                        viewModel = Init(viewModel);
+                {
+                    viewModel = Init(viewModel);
 
-                    };
+                };
                 this.Closed += (_1, _2) =>
+                {
+                    IDisposable dis = this.ViewModel as IDisposable;
+                    if (dis != null)
                     {
-                        IDisposable dis = this.ViewModel as IDisposable;
-                        if (dis != null)
-                        {
-                            dis.Dispose();
+                        dis.Dispose();
 
-                        }
-                        this.ViewModel = null;
-                    };
+                    }
+                    this.ViewModel = null;
+                };
             }
 
             private IViewModel Init(IViewModel viewModel)
@@ -3171,10 +3275,10 @@ namespace MVVMSidekick
                 viewModel.StageManager.InitParent(() => this.Parent);
                 viewModel.StageManager.DisposeWith(viewModel);
                 viewModel.AddDisposeAction(() =>
-                            {
-                                this.Dispose();
-                                this.ViewModel = null;
-                            });
+                {
+                    this.Dispose();
+                    this.ViewModel = null;
+                });
                 return viewModel;
             }
 
@@ -3182,11 +3286,11 @@ namespace MVVMSidekick
             {
                 get
                 {
-                    var rval=GetValue(ViewModelProperty) as IViewModel;
-                    if (rval==null)
+                    var rval = GetValue(ViewModelProperty) as IViewModel;
+                    if (rval == null)
                     {
-                       rval= (Content as FrameworkElement).DataContext as IViewModel;
-                       SetValue(ViewModelProperty, rval);
+                        rval = (Content as FrameworkElement).DataContext as IViewModel;
+                        SetValue(ViewModelProperty, rval);
                     }
                     return rval;
                 }
@@ -3198,8 +3302,9 @@ namespace MVVMSidekick
                 DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null,
                     (o, e) =>
                     {
-                       ( (o as Window  ).Content as FrameworkElement ).DataContext = e.NewValue;
-                    
+
+                        ((o as Window).Content as FrameworkElement).DataContext = e.NewValue;
+
                     }
 
 
@@ -4208,11 +4313,11 @@ namespace MVVMSidekick
                     {
                         (parent as ContentControl).Content = null;
                     }
-                    else if (parent is Page )
+                    else if (parent is Page)
                     {
                         (parent as Page).Content = null;
                     }
-                    else if (parent is UserControl )
+                    else if (parent is UserControl)
                     {
                         (parent as UserControl).Content = null;
                     }
