@@ -46,10 +46,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.0.nupkg">
-      <IncludeInVSIX>true</IncludeInVSIX>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Packages\Rx-Core.2.1.30214.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -102,10 +98,18 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.1.nupkg">
-      <Link>packages\MVVM-Sidekick.1.1.1.nupkg</Link>
+    <Content Include="Packages\Microsoft.Bcl.1.0.19.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\Microsoft.Bcl.Async.1.0.16.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Packages\Microsoft.Bcl.Build.1.0.5.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.3.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.1.3.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>

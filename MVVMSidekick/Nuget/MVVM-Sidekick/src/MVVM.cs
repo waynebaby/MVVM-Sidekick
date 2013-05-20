@@ -3363,7 +3363,7 @@ namespace MVVMSidekick
                 this.Loaded += loadEvent;
             }
 #endif
-            internal MVVMPage()
+            public MVVMPage():this(null)
             {
 
             }
@@ -3925,7 +3925,7 @@ namespace MVVMSidekick
                         using (EventRouter.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
                             .GetRouterEventObservable()
                             .Where(e =>
-                                e.EventArgs.Uri.Query.ToString().ToUpper() == newUriWithParameter.Query.ToString().ToUpper())
+                                e.EventArgs.Uri.ToString().ToUpper() == newUriWithParameter.ToString().ToUpper())
                             .Subscribe(
                                 e =>
                                 {

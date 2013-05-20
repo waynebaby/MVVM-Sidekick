@@ -32,23 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MVVMSidekick, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MVVM-Sidekick.1.0.9\lib\net45\MVVMSidekick.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Reactive.Core">
-      <HintPath>..\..\packages\Rx-Core.2.0.21114\lib\Net45\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\..\packages\Rx-Interfaces.2.0.21114\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq">
-      <HintPath>..\..\packages\Rx-Linq.2.0.21114\lib\Net45\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices">
-      <HintPath>..\..\packages\Rx-PlatformServices.2.0.21114\lib\Net45\System.Reactive.PlatformServices.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,7 +46,6 @@
     <Content Include="7z.exe" />
     <Content Include="src\MVVM.cs" />
     <Content Include="src\MVVM.snippet" />
-    <None Include="packages.config" />
     <None Include="tools\install.ps1" />
   </ItemGroup>
   <ItemGroup>
@@ -92,8 +76,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
-BuildPublishPackage.cmd MVVM-Sidekick 1.1.1
-copy MVVM-Sidekick.1.1.1.nupkg $(SolutionDir)
+BuildPublishPackage.cmd MVVM-Sidekick 1.1.3
+
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
@@ -106,6 +90,8 @@ rd Samples_WPF\bin /s /q
 rd Samples_WPF\obj /s /q
 rd Samples_WinRT\bin /s /q
 rd Samples_WinRT\obj /s /q
+rd Samples_ViewModels\bin /s /q
+rd Samples_ViewModels\obj /s /q
 
  cd $(ProjectDir)
  del src\samples.zip
