@@ -91,7 +91,6 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="ProjectTemplates\Windows Phone\MVVMSidekickWindowsPhoneApplication.WP8.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="ItemTemplates\Windows Phone\MVVMSidekickViewWithVM.WP8.zip">
@@ -107,11 +106,8 @@
     <Content Include="Packages\Microsoft.Bcl.Build.1.0.5.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.3.1.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.1.3.1.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="ProjectTemplates\Windows Phone\MVVMSidekickWindowsPhoneApplication.WP7.zip">
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.4.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.1.4.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">

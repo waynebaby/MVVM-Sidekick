@@ -30,6 +30,22 @@ namespace  $rootnamespace$.ViewModels
         
         }
 
+    
+        protected override async Task OnBindedToView(IView view, IViewModel oldValue)
+        {
+            await base.OnBindedToView(view, oldValue);
+            // This method will be called when this VM is set to a View's ViewModel property. Add Handle Logic here.
+            // TODO: Add Binded Handle Logic here.
+        }
+
+        protected override async Task OnUnbindedFromView(IView view, IViewModel newValue)
+        {
+            await base.OnUnbindedFromView(view, newValue);
+            // This method will be called when this VM is removed from a View's ViewModel property. Add Handle Logic here.
+            // TODO: Add Binded Handle Logic here.
+        }
+      
+
         //propvm tab tab string tab Title
         public String Title
         {

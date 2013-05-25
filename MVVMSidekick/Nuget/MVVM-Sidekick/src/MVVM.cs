@@ -2251,14 +2251,14 @@ namespace MVVMSidekick
                 await TaskHelper.Yield();
             }
 
-            async Task IViewModel.OnBindedToView(MVVMSidekick.Views.IView view,IViewModel oldValue)
+            async Task IViewModel.OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
             {
                 if (IsInDesignMode)
                 {
                     await TaskHelper.Yield();
                 }
                 else
-                    await OnBindedToView(view,oldValue);
+                    await OnBindedToView(view, oldValue);
             }
             async Task IViewModel.OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue)
             {
@@ -2267,7 +2267,7 @@ namespace MVVMSidekick
                     await TaskHelper.Yield();
                 }
                 else
-                    await OnUnbindedFromView(view,newValue);
+                    await OnUnbindedFromView(view, newValue);
             }
 
             async Task IViewModel.OnBindedViewLoad(MVVMSidekick.Views.IView view)
@@ -3351,7 +3351,8 @@ namespace MVVMSidekick
             internal static PropertyChangedCallback ViewModelChangedCallback
                 = (o, e) =>
                     {
-                        ((o as Page).Content as FrameworkElement).DataContext = e.NewValue;
+                        dynamic item = o;
+                        ((o as IView).Content as FrameworkElement).DataContext = e.NewValue;
                         var nv = e.NewValue as IViewModel;
                         var ov = e.OldValue as IViewModel;
                         if (ov != null)
@@ -3594,7 +3595,7 @@ namespace MVVMSidekick
 
             // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,ViewHelper.ViewModelChangedCallback));
+                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
 
 
 
@@ -3710,7 +3711,7 @@ namespace MVVMSidekick
 
             // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMControl), new PropertyMetadata(null,ViewHelper.ViewModelChangedCallback));
+                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMControl), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
 
 
             public ViewType ViewType

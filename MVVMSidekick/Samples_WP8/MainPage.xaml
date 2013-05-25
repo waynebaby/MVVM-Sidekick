@@ -54,7 +54,7 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Button Grid.Row="1" Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" />
+        <TextBlock   Grid.Row="1"  FontSize="180" Text="{Binding CountDown}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
         <!--Uncomment to see an alignment grid to help ensure your controls are
             aligned on common boundaries.  The image has a top margin of -32px to

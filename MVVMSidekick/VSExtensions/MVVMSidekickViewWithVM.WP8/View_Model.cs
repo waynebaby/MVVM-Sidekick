@@ -23,7 +23,21 @@ namespace $rootnamespace$.ViewModels
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性
 
     
+    
+        protected override async Task OnBindedToView(IView view, IViewModel oldValue)
+        {
+            await base.OnBindedToView(view, oldValue);
+            // This method will be called when this VM is set to a View's ViewModel property. Add Handle Logic here.
+            // TODO: Add Binded Handle Logic here.
+        }
 
+        protected override async Task OnUnbindedFromView(IView view, IViewModel newValue)
+        {
+            await base.OnUnbindedFromView(view, newValue);
+            // This method will be called when this VM is removed from a View's ViewModel property. Add Handle Logic here.
+            // TODO: Add Binded Handle Logic here.
+        }
+      
 
 
     }

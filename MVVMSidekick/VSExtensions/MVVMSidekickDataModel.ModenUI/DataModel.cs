@@ -22,9 +22,6 @@ namespace $rootnamespace$
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property。
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性
 
-
-
-
     }
 	
 }

@@ -20,12 +20,9 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="23*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding HelloWorld}" Grid.RowSpan="2" Grid.ColumnSpan="2"  />
+        <TextBlock Text="{Binding HelloWorld}" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="40" />
 
-        <Frame  Grid.Row="1"  Grid.ColumnSpan="2"  >
-
-
-        </Frame>
+        <ProgressBar Minimum="0" Maximum="5" Grid.ColumnSpan="2" Margin="175,178,112,330" Grid.Row="1" Height="199" Value="{Binding CountDown}" />
         <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" />
 
     </Grid>

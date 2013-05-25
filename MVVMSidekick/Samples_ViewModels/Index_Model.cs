@@ -18,19 +18,53 @@ namespace Samples.ViewModels
             {
                 HelloWorld = "Hello Mvvm world, Design mode sample";
             }
+            else
+            {
+                GetValueContainer(x => x.CountDown ).GetNullObservable()
+                    .Subscribe(
+                        _ =>
+                        {
+                            HelloWorld = string.Format("Loading {0}", CountDown);
+                        }
+
+                    );
+            
+            }
 
         }
-        protected override async Task OnBindedToView(MVVMSidekick.Views.IView view,IViewModel oldValue)
+        protected override async Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
         {
             await base.OnBindedToView(view, oldValue);
 
-     
-
         }
+
+
+        public Double CountDown
+        {
+            get { return _CountDownLocator(this).Value; }
+            set { _CountDownLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property Double CountDown Setup
+        protected Property<Double> _CountDown = new Property<Double> { LocatorFunc = _CountDownLocator };
+        static Func<BindableBase, ValueContainer<Double>> _CountDownLocator = RegisterContainerLocator<Double>("CountDown", model => model.Initialize("CountDown", ref model._CountDown, ref _CountDownLocator, _CountDownDefaultValueFactory));
+        static Func<Double> _CountDownDefaultValueFactory = () => 5;
+        #endregion
+
 
         protected override async Task OnBindedViewLoad(MVVMSidekick.Views.IView view)
         {
             await base.OnBindedViewLoad(view);
+            for (Double i = CountDown; i > 0; i = i - 1)
+            {
+                CountDown = i;
+#if SILVERLIGHT_5||WINDOWS_PHONE
+                await TaskEx. Delay(1000);
+#else
+                await Task.Delay(1000);
+#endif
+
+
+            }
 
             CommandStartCalculator.CommandCore.Execute(null);
         }

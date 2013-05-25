@@ -74,7 +74,7 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="MVVMSidekick_Sl">
-      <HintPath>..\packages\MVVM-Sidekick.1.1.3.3\lib\sl50\MVVMSidekick_Sl.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.3.5\lib\sl50\MVVMSidekick_Sl.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -31,6 +31,13 @@ namespace $safeprojectname$.ViewModels
         
         }
 
+        protected override async Task OnBindedViewLoad(IView view)
+        {
+            await base.OnBindedViewLoad(view);
+            // This method will be called when View is raising Loaded Event, and this instance of VM is already set to ViewModel Propery.  
+            // TODO: Add Loaded Handle Logic here.
+        }
+
         //propvm tab tab string tab Title
         public String Title
         {

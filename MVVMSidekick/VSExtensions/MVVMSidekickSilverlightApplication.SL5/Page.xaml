@@ -12,20 +12,23 @@
         <vm:MainPage_Model x:Key="DesignVM" />
     </mvvm:MVVMControl.Resources>
 
+
     <Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="117*"/>
-            <ColumnDefinition Width="83*"/>
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="23*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding Title}" Grid.RowSpan="2" Grid.ColumnSpan="2"  />
-        <sdk:Frame  Grid.Row="1" mvvm:StageManager.Beacon="" Grid.ColumnSpan="2" >
-
-
-        </sdk:Frame>
+        <Grid  Background="Blue"  >
+            <TextBlock Text="{Binding Title}"  VerticalAlignment="Bottom"  Foreground="White"   />
+        </Grid>
+        <Border Grid.Row="1" Grid.ColumnSpan="2" BorderThickness="2" BorderBrush="Gray" >
+            <sdk:Frame   mvvm:StageManager.Beacon="" >
+                <TextBox Text="There is a Text box in the Root Frame" AcceptsReturn="True" />
+            </sdk:Frame>
+        </Border>
     </Grid>
 
 </mvvm:MVVMControl>
