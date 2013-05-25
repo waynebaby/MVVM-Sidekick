@@ -20,7 +20,20 @@ namespace Samples.ViewModels
             }
 
         }
+        protected override async Task OnBindedToView(MVVMSidekick.Views.IView view,IViewModel oldValue)
+        {
+            await base.OnBindedToView(view, oldValue);
 
+     
+
+        }
+
+        protected override async Task OnBindedViewLoad(MVVMSidekick.Views.IView view)
+        {
+            await base.OnBindedViewLoad(view);
+
+            CommandStartCalculator.CommandCore.Execute(null);
+        }
         public string HelloWorld
         {
             get { return _HelloWorldLocator(this).Value; }
@@ -70,7 +83,7 @@ namespace Samples.ViewModels
             };
         #endregion
 
-     
+
 
     }
 

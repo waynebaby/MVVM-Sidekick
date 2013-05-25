@@ -9,7 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-
+using $safeprojectname$.Startups;
 namespace $safeprojectname$
 {
     public partial class App: Application 
@@ -20,8 +20,8 @@ namespace $safeprojectname$
             this.Startup += this.Application_Startup;
             this.Exit += this.Application_Exit;
             this.UnhandledException += this.Application_UnhandledException;
-
             InitializeComponent();
+            StartupFunctions.RunAllConfig();
         }
 
         private void Application_Startup(object sender, StartupEventArgs e) 

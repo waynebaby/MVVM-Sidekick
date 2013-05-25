@@ -12,8 +12,10 @@ namespace Samples.ViewModels
     public class Calculator_Model : ViewModelBase<Calculator_Model, String>
     {
 
-        public Calculator_Model()
+        protected override Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
         {
+
+
             ResetStatus();
             if (IsInDesignMode)
             {
@@ -21,7 +23,7 @@ namespace Samples.ViewModels
                 LeftNumber = "LeftNumber.TEXT88888888888888888888";
                 RightNumber = "RightNumber.TEXTTEXT55555555555555555555555555555555";
                 Sign = "+";
-                
+
             }
 
 
@@ -197,8 +199,8 @@ namespace Samples.ViewModels
                     e =>
                     {
                         var tmpv = (-decimal.Parse(CurrentInput)).ToString();
-                    
-                        if (State== CalculatorState.Finished )
+
+                        if (State == CalculatorState.Finished)
                         {
                             ResetStatus();
                         }
@@ -206,6 +208,13 @@ namespace Samples.ViewModels
                     }
                 )
                 .DisposeWith(this);
+            return base.OnBindedToView(view, oldValue);
+
+
+        }
+        public Calculator_Model()
+        {
+
         }
 
         private void ResetStatus()

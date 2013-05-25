@@ -26,6 +26,7 @@ namespace Samples
             this.UnhandledException += this.Application_UnhandledException;
 
             InitializeComponent();
+            
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)

@@ -146,9 +146,6 @@
       
     </EmbeddedResource>
   </ItemGroup>
-    
-      
-      
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>

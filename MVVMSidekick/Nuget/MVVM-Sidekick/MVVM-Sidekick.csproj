@@ -45,7 +45,7 @@
     <Content Include="7z.dll" />
     <Content Include="7z.exe" />
     <Content Include="src\MVVM.cs" />
-    <Content Include="src\MVVM.snippet" />
+    <Content Include="tools\MVVM-Sidekick.snippet" />
     <None Include="tools\install.ps1" />
   </ItemGroup>
   <ItemGroup>
@@ -72,11 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\" />
+    <Folder Include="lib\SL4-WindowsPhone71\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
-BuildPublishPackage.cmd MVVM-Sidekick 1.1.3
+BuildPublishPackage.cmd MVVM-Sidekick 1.1.3.4
 
 </PostBuildEvent>
   </PropertyGroup>

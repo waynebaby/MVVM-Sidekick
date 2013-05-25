@@ -2,11 +2,11 @@
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
 
   <Identity Name="802561ae-87ee-4960-9dc3-48d6c8c29847"
-            Publisher="CN=waywa"
+            Publisher="CN=UserName"
             Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>BlankApp_MVVMSidekick</DisplayName>
+    <DisplayName>$safeprojectname$</DisplayName>
     <PublisherDisplayName>waywa</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -23,12 +23,12 @@
   <Applications>
     <Application Id="App"
         Executable="$targetnametoken$.exe"
-        EntryPoint="BlankApp_MVVMSidekick.App">
+        EntryPoint="$safeprojectname$.App">
         <VisualElements
-            DisplayName="BlankApp_MVVMSidekick"
+            DisplayName="$safeprojectname$"
             Logo="Assets\Logo.png"
             SmallLogo="Assets\SmallLogo.png"
-            Description="BlankApp_MVVMSidekick"
+            Description="$safeprojectname$"
             ForegroundText="light"
             BackgroundColor="#464646">
             <DefaultTile ShowName="allLogos" />

@@ -719,6 +719,23 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:MVVMSidekick.Views.StageManager">
+            <summary>
+            The abstract  for frame/contentcontrol. VM can access this class to Show other vm and vm's mapped view.
+            </summary>
+        </member>
+        <member name="F:MVVMSidekick.Views.StageManager.NavigatorBeaconsKey">
+            <summary>
+            This Key is a prefix for register keys. 
+            The stage registeration store the String-Element-Mapping in view's Resource Dictionary(Resource property). 
+            This can help not to overwrite the resources already defined.
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.Views.StageManager.CurrentBindingView">
+            <summary>
+            Get the currently binded view of this stagemanager. A stagemanager is for a certain view. If viewmodel is not binded to a view, the whole thing cannot work.
+            </summary>
+        </member>
         <member name="M:MVVMSidekick.Views.SuspensionManager.SaveAsync">
             <summary>
             Save the current <see cref="P:MVVMSidekick.Views.SuspensionManager.SessionState"/>.  Any <see cref="T:Windows.UI.Xaml.Controls.Frame"/> instances

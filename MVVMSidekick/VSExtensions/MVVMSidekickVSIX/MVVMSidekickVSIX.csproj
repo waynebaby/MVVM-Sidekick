@@ -47,24 +47,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Packages\Rx-Core.2.1.30214.0.nupkg">
-      <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Packages\Rx-Interfaces.2.1.30214.0.nupkg">
-      <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Packages\Rx-Linq.2.1.30214.0.nupkg">
-      <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Packages\Rx-Main.2.1.30214.0.nupkg">
-      <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Packages\Rx-PlatformServices.2.1.30214.0.nupkg">
-      <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="ItemTemplates\WPF\MVVMSidekickViewWithVM.WPF.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -107,8 +107,11 @@
     <Content Include="Packages\Microsoft.Bcl.Build.1.0.5.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.3.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.1.3.nupkg</Link>
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.3.1.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.1.3.1.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="ProjectTemplates\Windows Phone\MVVMSidekickWindowsPhoneApplication.WP7.zip">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
