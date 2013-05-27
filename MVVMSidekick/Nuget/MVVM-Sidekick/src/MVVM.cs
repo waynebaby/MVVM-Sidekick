@@ -4102,7 +4102,7 @@ namespace MVVMSidekick
 
 
 
-            public ShowAwaitableResult<TTarget> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewKey = null)
+            public  async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewKey = null)
                 where TTarget : class,IViewModel
             {
                 IView view = null;
@@ -4112,7 +4112,7 @@ namespace MVVMSidekick
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
 
 
-                return new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel };
+                return await Task.FromResult ( new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel });
             }
 #endif
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||WINDOWS_PHONE_8

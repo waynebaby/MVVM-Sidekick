@@ -168,7 +168,7 @@
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\win8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="MVVMSidekick_Metro">
-      <HintPath>..\packages\MVVM-Sidekick.1.1.4\lib\netcore45\MVVMSidekick_Metro.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.4.2\lib\netcore45\MVVMSidekick_Metro.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
