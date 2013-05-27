@@ -61,9 +61,11 @@ Samples
 
 
 
--In Nuget folder 
+In Nuget folder 
 
 `\src\Samples.zip`
+
+or [here](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Nuget/MVVM-Sidekick/src/Samples.zip?raw=true)
 
 ----------
 
@@ -78,6 +80,15 @@ How To Use project template ?
  >详情见文档  [跟班问世篇](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/1.HelloWorld.md)
 
 
+
+
+#Documents TOC
+>#文档目录
+
+1. [Hello world](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/1.HelloWorld.md) >跟班问世篇
+2. [Life time cycle of objects](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/2.LifeTimeOfObjects.md) >对象生存期
+> 
+ 
 
 ----------
 
@@ -96,5 +107,9 @@ Ping Me：
 
 [Mail]: mailto:blackshaman_wayne@hotmail.com "MSN Skype"
 
+
+
+
+-----------------------------
 
 

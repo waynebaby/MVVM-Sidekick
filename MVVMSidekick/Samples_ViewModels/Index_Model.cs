@@ -1,4 +1,5 @@
-﻿using MVVMSidekick.Reactive;
+﻿using MVVMSidekick;
+using MVVMSidekick.Reactive;
 using MVVMSidekick.ViewModels;
 using Samples.ViewModels;
 using System;
@@ -14,29 +15,67 @@ namespace Samples.ViewModels
     {
         public Index_Model()
         {
+
+
+        }
+
+        protected override async Task OnBindedViewLoad(MVVMSidekick.Views.IView view)
+        {
+            await base.OnBindedViewLoad(view);
+
             if (IsInDesignMode)
             {
                 HelloWorld = "Hello Mvvm world, Design mode sample";
             }
             else
             {
-                GetValueContainer(x => x.CountDown ).GetNullObservable()
+                GetValueContainer(x => x.CountDown).GetNullObservable()
                     .Subscribe(
                         _ =>
                         {
                             HelloWorld = string.Format("Loading {0}", CountDown);
                         }
-
                     );
-            
+            }
+            // Loading count down. You may want to replace your own logic here.
+            try
+            {
+                IsUIBusy = true;
+                for (Double i = CountDown; i > 0; i = i - 1)
+                {
+                    CountDown = i;
+                    await TaskExHelper.Delay(500);
+                }
+                CountDown = 0;
+                HelloWorld = "Hello Mvvm world!";
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                StateName = "Loaded";
+                IsUIBusy = false;
             }
 
-        }
-        protected override async Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
-        {
-            await base.OnBindedToView(view, oldValue);
+
 
         }
+
+
+
+        public String StateName
+        {
+            get { return _StateNameLocator(this).Value; }
+            set { _StateNameLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property String StateName Setup
+        protected Property<String> _StateName = new Property<String> { LocatorFunc = _StateNameLocator };
+        static Func<BindableBase, ValueContainer<String>> _StateNameLocator = RegisterContainerLocator<String>("StateName", model => model.Initialize("StateName", ref model._StateName, ref _StateNameLocator, _StateNameDefaultValueFactory));
+        static Func<String> _StateNameDefaultValueFactory = () => "Loading";
+        #endregion
+
 
 
         public Double CountDown
@@ -51,23 +90,7 @@ namespace Samples.ViewModels
         #endregion
 
 
-        protected override async Task OnBindedViewLoad(MVVMSidekick.Views.IView view)
-        {
-            await base.OnBindedViewLoad(view);
-            for (Double i = CountDown; i > 0; i = i - 1)
-            {
-                CountDown = i;
-#if SILVERLIGHT_5||WINDOWS_PHONE
-                await TaskEx. Delay(1000);
-#else
-                await Task.Delay(1000);
-#endif
 
-
-            }
-
-            CommandStartCalculator.CommandCore.Execute(null);
-        }
         public string HelloWorld
         {
             get { return _HelloWorldLocator(this).Value; }
@@ -113,7 +136,7 @@ namespace Samples.ViewModels
                         await vm.StageManager.DefaultStage.Show<Calculator_Model>();
                     })
                     .DisposeWith(model); //Config it if needed
-                return cmd.CreateCommandModel("StartCalculator");
+                return cmd.CreateCommandModel("Start Calculator").ListenToIsUIBusy(vm);
             };
         #endregion
 

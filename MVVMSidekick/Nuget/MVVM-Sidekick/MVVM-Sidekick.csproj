@@ -77,7 +77,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
-BuildPublishPackage.cmd MVVM-Sidekick 1.1.4
+BuildPublishPackage.cmd MVVM-Sidekick 1.1.4.1
 
 </PostBuildEvent>
   </PropertyGroup>
@@ -93,6 +93,8 @@ rd Samples_WinRT\bin /s /q
 rd Samples_WinRT\obj /s /q
 rd Samples_ViewModels\bin /s /q
 rd Samples_ViewModels\obj /s /q
+rd Samples_ViewModels.Test\bin /s /q
+rd Samples_ViewModels.Test\obj /s /q
 
  cd $(ProjectDir)
  del src\samples.zip

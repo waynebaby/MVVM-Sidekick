@@ -4,6 +4,12 @@
         <name>MVVMSidekick</name>
     </assembly>
     <members>
+        <member name="T:MVVMSidekick.TaskExHelper">
+            <summary>
+            Unify Task(4.5) and TaskEx (SL5) method in this helper
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:MVVMSidekick.TypeInfoHelper" -->
         <member name="T:MVVMSidekick.Storages.IStorage`1">
             <summary>
             <para>Simple storage interface, for persistence.</para>
@@ -718,6 +724,17 @@
             <para>创建一个监视属性变化事件观察者IObservable实例。</para>
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:MVVMSidekick.Reactive.MVVMRxExtensions.ListenToIsUIBusy``3(MVVMSidekick.ViewModels.CommandModel{``0,``1},MVVMSidekick.ViewModels.ViewModelBase{``2},System.Boolean)">
+            <summary>
+            Bind Command to IsUIBusy property.
+            </summary>
+            <typeparam name="TCommand">A sub class of ReactiveCommand</typeparam>
+            <typeparam name="TResource">The resource type of CommandModel</typeparam>
+            <typeparam name="TViewModel">The View Model type command wanna bind to</typeparam>
+            <param name="command">Command itself</param>
+            <param name="model">The View Model  command wanna bind to</param>
+            <returns>command instance itself</returns>
         </member>
         <member name="T:MVVMSidekick.Views.StageManager">
             <summary>

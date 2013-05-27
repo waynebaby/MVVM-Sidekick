@@ -39,6 +39,7 @@
       <Link>README.md</Link>
     </None>
     <None Include="1.HelloWorld.md" />
+    <None Include="2.LifeTimeOfObjects.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="HelloWorldSample\DefaultMainPage.png" />

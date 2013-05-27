@@ -136,7 +136,10 @@ namespace System.Runtime.CompilerServices
 
 namespace MVVMSidekick
 {
-    internal static class TaskHelper
+    /// <summary>
+    /// Unify Task(4.5) and TaskEx (SL5) method in this helper
+    /// </summary>
+    public static class TaskExHelper
     {
 
         public static async Task Yield()
@@ -171,8 +174,10 @@ namespace MVVMSidekick
         }
 
     }
-
-    internal static class TypeInfoHelper
+    /// <summary>
+    /// Unify Type(4.5 SL & WP) and TypeInfo (Windows Runtime) class in this helper
+    /// </summary>
+    public static class TypeInfoHelper
     {
 #if NETFX_CORE
         public static TypeInfo GetTypeOrTypeInfo(this Type type)
@@ -480,7 +485,7 @@ namespace MVVMSidekick
                     //#else
                     //                    return await T.ask.FromResult(default(TService));
                     //#endif
-                    return await TaskHelper.FromResult(default(TService));
+                    return await TaskExHelper.FromResult(default(TService));
 
             }
 
@@ -689,7 +694,7 @@ namespace MVVMSidekick
                     //#else
                     //                    return await T.ask.FromResult(default(TService));
                     //#endif
-                    return await TaskHelper.FromResult(default(TService));
+                    return await TaskExHelper.FromResult(default(TService));
             }
         }
 
@@ -2230,7 +2235,7 @@ namespace MVVMSidekick
                 StageManager = new StageManager(this) { CurrentBindingView = view };
                 StageManager.InitParent(() => view.Parent);
                 StageManager.DisposeWith(this);
-                await TaskHelper.Yield();
+                await TaskExHelper.Yield();
             }
 
             protected virtual async Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue)
@@ -2240,7 +2245,7 @@ namespace MVVMSidekick
                 //#else
                 //                await T.ask.Yield();
                 //#endif
-                await TaskHelper.Yield();
+                await TaskExHelper.Yield();
             }
 
             protected virtual async Task OnBindedViewLoad(IView view)
@@ -2248,14 +2253,14 @@ namespace MVVMSidekick
                 StageManager = new StageManager(this) { CurrentBindingView = view };
                 StageManager.InitParent(() => view.Parent);
                 StageManager.DisposeWith(this);
-                await TaskHelper.Yield();
+                await TaskExHelper.Yield();
             }
 
             async Task IViewModel.OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
             {
                 if (IsInDesignMode)
                 {
-                    await TaskHelper.Yield();
+                    await TaskExHelper.Yield();
                 }
                 else
                     await OnBindedToView(view, oldValue);
@@ -2264,7 +2269,7 @@ namespace MVVMSidekick
             {
                 if (IsInDesignMode)
                 {
-                    await TaskHelper.Yield();
+                    await TaskExHelper.Yield();
                 }
                 else
                     await OnUnbindedFromView(view, newValue);
@@ -2272,12 +2277,16 @@ namespace MVVMSidekick
 
             async Task IViewModel.OnBindedViewLoad(MVVMSidekick.Views.IView view)
             {
+
                 if (IsInDesignMode)
                 {
-                    await TaskHelper.Yield();
+                    await TaskExHelper.Yield();
                 }
                 else
+                {
+
                     await OnBindedViewLoad(view);
+                }
             }
 
 
@@ -3145,7 +3154,6 @@ namespace MVVMSidekick
     namespace Reactive
     {
 
-
         public static class EventTuple
         {
             public static EventTuple<TSource, TEventArgs> Create<TSource, TEventArgs>(TSource source, TEventArgs eventArgs)
@@ -3250,9 +3258,28 @@ namespace MVVMSidekick
                 return eventArgSeq;
 
             }
+            /// <summary>
+            /// Bind Command to IsUIBusy property.
+            /// </summary>
+            /// <typeparam name="TCommand">A sub class of ReactiveCommand</typeparam>
+            /// <typeparam name="TResource">The resource type of CommandModel</typeparam>
+            /// <typeparam name="TViewModel">The View Model type command wanna bind to</typeparam>
+            /// <param name="command">Command itself</param>
+            /// <param name="model">The View Model  command wanna bind to</param>
+            /// <returns>command instance itself</returns>
+            public static CommandModel<TCommand, TResource> ListenToIsUIBusy<TCommand, TResource, TViewModel>(this CommandModel<TCommand, TResource> command, ViewModelBase<TViewModel> model, bool canExecuteWhenBusy = false)
+                where TViewModel : ViewModelBase<TViewModel>
+                where TCommand : ReactiveCommand
+            {
 
+                //See Test  CommandListenToUIBusy_Test
+                model.GetValueContainer(x => x.IsUIBusy).GetNewValueObservable()
+                  .Select(e => !(canExecuteWhenBusy ^ e.EventArgs))
+                  .Subscribe(command.CommandCore.CanExecuteObserver)
+                  .DisposeWith(model);
 
-
+                return command;
+            }
 
         }
 
@@ -3446,8 +3473,18 @@ namespace MVVMSidekick
 
             public MVVMWindow(IViewModel viewModel)
             {
-                ViewModel = viewModel;
-                Loaded += async (_1, _2) =>await ViewModel.OnBindedViewLoad(this);
+
+                Loaded += async (_1, _2) =>
+                {
+                    if (viewModel != null)
+                    {
+                        if (!object.ReferenceEquals(ViewModel, viewModel))
+                        {
+                            ViewModel = viewModel;
+                        }
+                    }
+                    await ViewModel.OnBindedViewLoad(this);
+                };
             }
 
 
@@ -3488,7 +3525,7 @@ namespace MVVMSidekick
 
             // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null,ViewHelper.ViewModelChangedCallback ));
+                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
 
 
             public ViewType ViewType
@@ -3516,13 +3553,25 @@ namespace MVVMSidekick
 #endif
         {
 
+            public MVVMPage()
+                : this(null)
+            {
+
+            }            
 
             public MVVMPage(IViewModel viewModel)
             {
-
-                ViewModel = viewModel;
-                Loaded += async (_1, _2) => await ViewModel.OnBindedViewLoad(this);
-
+                Loaded += async (_1, _2) =>
+                    {
+                        if (viewModel != null)
+                        {
+                            if (!object.ReferenceEquals (ViewModel,viewModel ) )
+                            {
+                                ViewModel = viewModel;
+                            }
+                        }
+                        await ViewModel.OnBindedViewLoad(this);
+                    };
             }
 
 
@@ -3549,11 +3598,6 @@ namespace MVVMSidekick
                 this.Loaded += loadEvent;
             }
 #endif
-            public MVVMPage()
-                : this(null)
-            {
-
-            }
 
 
 
@@ -3627,8 +3671,17 @@ namespace MVVMSidekick
             }
             public MVVMControl(IViewModel viewModel)
             {
-                ViewModel = viewModel;
-                Loaded += async (_1, _2) => await ViewModel.OnBindedViewLoad(this);
+                Loaded += async (_1, _2) =>
+                {
+                    if (viewModel != null)
+                    {
+                        if (!object.ReferenceEquals(ViewModel, viewModel))
+                        {
+                            ViewModel = viewModel;
+                        }
+                    }
+                    await ViewModel.OnBindedViewLoad(this);
+                };
             }
 #if WINDOWS_PHONE_7||WINDOWS_PHONE_8||SILVERLIGHT_5||NETFX_CORE
             object IView.Content

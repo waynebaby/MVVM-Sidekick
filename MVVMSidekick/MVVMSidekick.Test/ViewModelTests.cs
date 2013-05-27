@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using MVVMSidekick.ViewModels;
 using System.Collections.ObjectModel;
+using MVVMSidekick.Reactive;
 
 namespace MVVMSidekick.Test
 {
@@ -79,6 +80,45 @@ namespace MVVMSidekick.Test
         static Func<ObservableCollection<string>> _PropStringColDefaultValueFactory = () => new ObservableCollection<string>();
         #endregion
 
+
+
+        public CommandModel<ReactiveCommand, String> CommandExecuteWithUIBusyOnly
+        {
+            get { return _CommandExecuteWithUIBusyOnlyLocator(this).Value; }
+            set { _CommandExecuteWithUIBusyOnlyLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandExecuteWithUIBusyOnly Setup
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandExecuteWithUIBusyOnly = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandExecuteWithUIBusyOnlyLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandExecuteWithUIBusyOnlyLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandExecuteWithUIBusyOnly", model => model.Initialize("CommandExecuteWithUIBusyOnly", ref model._CommandExecuteWithUIBusyOnly, ref _CommandExecuteWithUIBusyOnlyLocator, _CommandExecuteWithUIBusyOnlyDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandExecuteWithUIBusyOnlyDefaultValueFactory =
+            model =>
+            {
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                //cmd.Subscribe (_=>{ } ).DisposeWith(model); //Config it if needed
+                return cmd.CreateCommandModel("ExecuteWithUIBusyOnly");
+            };
+        #endregion
+
+
+        public CommandModel<ReactiveCommand, String> CommandExecuteWhenNotBusy
+        {
+            get { return _CommandExecuteWhenNotBusyLocator(this).Value; }
+            set { _CommandExecuteWhenNotBusyLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandExecuteWhenNotBusy Setup
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandExecuteWhenNotBusy = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandExecuteWhenNotBusyLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandExecuteWhenNotBusyLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandExecuteWhenNotBusy", model => model.Initialize("CommandExecuteWhenNotBusy", ref model._CommandExecuteWhenNotBusy, ref _CommandExecuteWhenNotBusyLocator, _CommandExecuteWhenNotBusyDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandExecuteWhenNotBusyDefaultValueFactory =
+            model =>
+            {
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                //cmd.Subscribe (_=>{ } ).DisposeWith(model); //Config it if needed
+                return cmd.CreateCommandModel("ExecuteWhenNotBusy");
+            };
+        #endregion
+
+
+
     }
 
 
@@ -93,20 +133,44 @@ namespace MVVMSidekick.Test
         /// Test  value copy 
         /// </summary>
         [TestMethod]
-        public void CopyDataTest()
+        public void CopyData_Test()
         {
-            var vm1 = new SomeViewModel { Prop1 = "aaa", Prop2 = 1, Prop3 = 555.55, PropStringCol = new ObservableCollection<string> { "a", "b", "c" } };
-            var vm2 = new SomeViewModel();
-            vm1.CopyTo(vm2);
-            Assert.AreEqual(vm1.Prop1, vm2.Prop1);
-            Assert.AreEqual(vm1.Prop2, vm2.Prop2);
-            Assert.AreEqual(vm1.Prop3, vm2.Prop3);
-            Assert.AreNotEqual(vm1.PropStringCol, vm2.PropStringCol);
-            Assert.AreEqual(vm1.PropStringCol.Count, vm2.PropStringCol.Count);
-            for (int i = 0; i < vm1.PropStringCol.Count; i++)
+            using (var vm1 = new SomeViewModel { Prop1 = "aaa", Prop2 = 1, Prop3 = 555.55, PropStringCol = new ObservableCollection<string> { "a", "b", "c" } })
+            using (var vm2 = new SomeViewModel())
             {
-                Assert.AreEqual(vm1.PropStringCol[i], vm2.PropStringCol[i]);
+                vm1.CopyTo(vm2);
+                Assert.AreEqual(vm1.Prop1, vm2.Prop1);
+                Assert.AreEqual(vm1.Prop2, vm2.Prop2);
+                Assert.AreEqual(vm1.Prop3, vm2.Prop3);
+                Assert.AreNotEqual(vm1.PropStringCol, vm2.PropStringCol);
+                Assert.AreEqual(vm1.PropStringCol.Count, vm2.PropStringCol.Count);
+                for (int i = 0; i < vm1.PropStringCol.Count; i++)
+                {
+                    Assert.AreEqual(vm1.PropStringCol[i], vm2.PropStringCol[i]);
+                }
             }
+        }
+
+        [TestMethod]
+        public void CommandListenToUIBusy_Test()
+        {
+            using (var vm1 = new SomeViewModel())
+            {
+                vm1.CommandExecuteWhenNotBusy.ListenToIsUIBusy(vm1, canExecuteWhenBusy : false);
+                vm1.CommandExecuteWithUIBusyOnly.ListenToIsUIBusy(vm1, canExecuteWhenBusy:  true);
+
+                vm1.IsUIBusy = true;
+                Assert.IsFalse(vm1.CommandExecuteWhenNotBusy.CanExecute(null));
+                Assert.IsTrue(vm1.CommandExecuteWithUIBusyOnly.CanExecute(null));
+
+                vm1.IsUIBusy = false;
+
+     
+                Assert.IsTrue(vm1.CommandExecuteWhenNotBusy.CanExecute(null));
+                Assert.IsFalse(vm1.CommandExecuteWithUIBusyOnly.CanExecute(null));
+            }
+
+
         }
     }
 }
