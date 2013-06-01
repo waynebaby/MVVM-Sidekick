@@ -20,32 +20,40 @@ using MVVMSidekick.EventRouter;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
+using MVVMSidekick.Common;
+using System.Collections;
 #if NETFX_CORE
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Controls;
 using System.Collections.Concurrent;
 using Windows.UI.Xaml.Navigation;
-using System.Collections;
+
+using Windows.UI.Xaml.Controls.Primitives;
+
 #elif WPF
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Collections.Concurrent;
 using System.Windows.Navigation;
-using System.Collections;
+
 using MVVMSidekick.Views;
+using System.Windows.Controls.Primitives;
+
 #elif SILVERLIGHT_5||SILVERLIGHT_4
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
+using System.Windows.Controls.Primitives;
 #elif WINDOWS_PHONE_8||WINDOWS_PHONE_7
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
+using System.Windows.Controls.Primitives;
 #endif
 #if SILVERLIGHT_5|| WINDOWS_PHONE_8||WINDOWS_PHONE_7
 
@@ -893,7 +901,7 @@ namespace MVVMSidekick
         /// <para>Base type of bindable model.</para>
         /// <para>ViewModel 基类</para>
         /// </summary>
-        [DataContract]
+        [DataContract(IsReference =true )]
         public abstract class BindableBase
             : IDisposable, INotifyPropertyChanged, IBindable
         {
@@ -954,7 +962,7 @@ namespace MVVMSidekick
 
                             _IsInDesignMode =
 #if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
-                                DesignerProperties.IsInDesignTool
+ DesignerProperties.IsInDesignTool
 #elif NETFX_CORE
  Windows.ApplicationModel.DesignMode.DesignModeEnabled
 #else
@@ -1603,7 +1611,7 @@ namespace MVVMSidekick
         /// </summary>
         /// <typeparam name="TItem1">Type of first item/第一个元素的类型</typeparam>
         /// <typeparam name="TItem2">Type of second item/第二个元素的类型</typeparam>
-        [DataContract]
+        [DataContract(IsReference = true)]
         public class BindableTuple<TItem1, TItem2> : BindableBase<BindableTuple<TItem1, TItem2>>
         {
             public BindableTuple(TItem1 item1, TItem2 item2)
@@ -1671,7 +1679,7 @@ namespace MVVMSidekick
         /// </example>
         /// </summary>
         /// <typeparam name="TSubClassType"> Sub Type / 子类类型</typeparam>
-        [DataContract]
+       [DataContract(IsReference = true)]
         public abstract class BindableBase<TSubClassType> : BindableBase, INotifyDataErrorInfo where TSubClassType : BindableBase<TSubClassType>
         {
 
@@ -1857,11 +1865,11 @@ namespace MVVMSidekick
             /// <returns>值容器</returns>
             public ValueContainer<TProperty> GetValueContainer<TProperty>(Expression<Func<TSubClassType, TProperty>> expression)
             {
-                MemberExpression body = expression.Body as MemberExpression;
-                var propName = (body.Member is PropertyInfo) ? body.Member.Name : string.Empty;
+                var propName = MVVMSidekick.Common.ExpressionHelper.GetPropertyName<TSubClassType, TProperty>(expression);
                 return GetValueContainer<TProperty>(propName);
 
             }
+
 
 
 
@@ -2147,7 +2155,7 @@ namespace MVVMSidekick
         }
 
 
-        [DataContract]
+        [DataContract(IsReference =true )]
         public struct NoResult
         {
 
@@ -3557,7 +3565,7 @@ namespace MVVMSidekick
                 : this(null)
             {
 
-            }            
+            }
 
             public MVVMPage(IViewModel viewModel)
             {
@@ -3565,7 +3573,7 @@ namespace MVVMSidekick
                     {
                         if (viewModel != null)
                         {
-                            if (!object.ReferenceEquals (ViewModel,viewModel ) )
+                            if (!object.ReferenceEquals(ViewModel, viewModel))
                             {
                                 ViewModel = viewModel;
                             }
@@ -4102,7 +4110,7 @@ namespace MVVMSidekick
 
 
 
-            public  async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewKey = null)
+            public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewKey = null)
                 where TTarget : class,IViewModel
             {
                 IView view = null;
@@ -4112,7 +4120,7 @@ namespace MVVMSidekick
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
 
 
-                return await Task.FromResult ( new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel });
+                return await Task.FromResult(new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel });
             }
 #endif
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||WINDOWS_PHONE_8
@@ -4138,8 +4146,8 @@ namespace MVVMSidekick
                             .Subscribe(e =>
                             {
                                 var page = e.Sender as MVVMPage;
-                                
-                                if (targetViewModel!=null) page.ViewModel = targetViewModel;
+
+                                if (targetViewModel != null) page.ViewModel = targetViewModel;
                                 targetViewModel = (TTarget)page.ViewModel;
                                 task.Start();
                             }
@@ -4181,7 +4189,7 @@ namespace MVVMSidekick
                             .Subscribe(e =>
                             {
                                 var page = e.Sender as MVVMPage;
-                                if (targetViewModel!=null) page.ViewModel = targetViewModel;
+                                if (targetViewModel != null) page.ViewModel = targetViewModel;
                                 targetViewModel = (TTarget)page.ViewModel;
                                 task.Start();
                             }
@@ -4225,7 +4233,7 @@ namespace MVVMSidekick
                                 e =>
                                 {
                                     var page = e.Sender as MVVMPage;
-                                    if (targetViewModel!=null) page.ViewModel = targetViewModel;
+                                    if (targetViewModel != null) page.ViewModel = targetViewModel;
                                     targetViewModel = (TTarget)page.ViewModel;
                                     task.Start();
                                 }
@@ -4672,6 +4680,434 @@ namespace MVVMSidekick
                 }
             }
         }
+
+
+
+    }
+
+    namespace Collections
+    {
+        public class KeyedObserableCollection<K, V> : ObservableCollection<KeyValuePair<K, V>>
+        {
+
+            public KeyedObserableCollection(IDictionary<K, V> items)
+            {
+                if (items == null)
+                {
+                    throw new ArgumentException("items could not be null.");
+                }
+                _coreDictionary = items;
+                foreach (var item in items)
+                {
+                    base.Add(item);
+                }
+            }
+
+
+
+            IDictionary<K, V> _coreDictionary;
+            int _coreVersion;
+            int _shadowVersion;
+            private void IncVer()
+            {
+                _coreVersion++;
+                if (_coreVersion >= 1024 * 1024 * 1024)
+                {
+                    _coreVersion = 0;
+                }
+            }
+
+
+
+            protected override void ClearItems()
+            {
+                base.ClearItems();
+                _coreDictionary.Clear();
+                IncVer();
+            }
+
+
+            protected override void InsertItem(int index, KeyValuePair<K, V> item)
+            {
+                _coreDictionary.Add(item.Key, item.Value);
+                base.InsertItem(index, item);
+                IncVer();
+            }
+
+            protected override void SetItem(int index, KeyValuePair<K, V> item)
+            {
+
+                _coreDictionary.Add(item.Key, item.Value);
+                RemoveFromDic(index);
+
+                base.SetItem(index, item);
+                IncVer();
+            }
+
+            private void RemoveFromDic(int index)
+            {
+                var rem = base[index];
+                if (rem.Key != null)
+                {
+                    _coreDictionary.Remove(rem.Key);
+                }
+                IncVer();
+            }
+
+            protected override void RemoveItem(int index)
+            {
+                RemoveFromDic(index);
+                base.RemoveItem(index);
+                IncVer();
+            }
+
+
+#if SILVERLIGHT_5
+                Dictionary<K, V> _shadowDictionary;
+                public IDictionary<K, V> Items
+                {
+                    get
+                    {
+                        if (_shadowDictionary==null || _shadowVersion !=_coreVersion )
+                        {
+                            _shadowDictionary=new Dictionary<K, V>(_coreDictionary);
+                            _shadowVersion =_coreVersion ;
+                        }
+                        return _shadowDictionary;
+
+                    }
+                }
+
+#else
+            ReadOnlyDictionary<K, V> _shadowDictionary;
+            public IDictionary<K, V> Items
+            {
+                get
+                {
+                    if (_shadowDictionary == null || _shadowVersion != _coreVersion)
+                    {
+                        _shadowDictionary = new ReadOnlyDictionary<K, V>(_coreDictionary);
+                        _shadowVersion = _coreVersion;
+                    }
+                    return _shadowDictionary;
+
+                }
+            }
+
+#endif
+
+        }
+
+
+        public static class ObservableItemsAndSelectionGroup
+        {
+
+
+            public static IObservableItemsAndSelectionGroup<object, object, object> GetItemSelectionGroup(DependencyObject obj)
+            {
+                return (IObservableItemsAndSelectionGroup<object, object, object>)obj.GetValue(ItemSelectionGroupProperty);
+            }
+
+            public static void SetItemSelectionGroup(DependencyObject obj, IObservableItemsAndSelectionGroup<object, object, object> value)
+            {
+                obj.SetValue(ItemSelectionGroupProperty, value);
+            }
+
+            // Using a DependencyProperty as the backing store for ItemSelectionGroup.  This enables animation, styling, binding, etc...
+            public static readonly DependencyProperty ItemSelectionGroupProperty =
+                DependencyProperty.RegisterAttached("ItemSelectionGroup", typeof(IObservableItemsAndSelectionGroup<object, object, object>), typeof(ObservableItemsAndSelectionGroup), new PropertyMetadata(null,
+                    (o, s) =>
+                    {
+                        var ls = o as ItemsControl;
+                        if (ls == null)
+                        {
+                            return;
+                        }
+                        var vm = s.NewValue as IObservableItemsAndSelectionGroup<object, object, object>;
+                        if (vm == null)
+                        {
+                            return;
+                        }
+
+                        vm.BindedTo = ls;
+                        var itemsBinding = new Binding()
+                        {
+                            Source = s.NewValue,
+                            Mode = BindingMode.OneWay,
+                            Path = new PropertyPath(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                    x => x.Items))
+                        };
+
+                        BindingOperations.SetBinding(ls, ItemsControl.ItemsSourceProperty, itemsBinding);
+
+
+
+                        if (!(ls is Selector))
+                        {
+                            return;
+                        }
+
+                        var selectedBinding = new Binding()
+                        {
+                            Source = s.NewValue,
+                            Mode = BindingMode.TwoWay,
+                            Path = new PropertyPath(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                    x => x.SelectedItem))
+                        };
+
+                        BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedBinding);
+
+
+                        var selectedindexBinding = new Binding()
+                        {
+                            Source = s.NewValue,
+                            Mode = BindingMode.TwoWay,
+                            Path = new PropertyPath(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                    x => x.SelectedIndex))
+                        };
+
+                        BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedindexBinding);
+
+
+
+                        var selectedValuePathBinding = new Binding()
+                        {
+                            Source = s.NewValue,
+                            Mode = BindingMode.TwoWay,
+                            Path = new PropertyPath(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                    x => x.SelectedValuePath))
+                        };
+
+                        BindingOperations.SetBinding(ls, Selector.SelectedValuePathProperty, selectedValuePathBinding);
+
+                        var selectedValueBinding = new Binding()
+                        {
+                            Source = s.NewValue,
+                            Mode = BindingMode.TwoWay,
+                            Path = new PropertyPath(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                    x => x.SelectedValue))
+                        };
+
+                        BindingOperations.SetBinding(ls, Selector.SelectedValueProperty, selectedValueBinding);
+#if SILVERLIGHT_5 || WINDOWS_PHONE_8
+                        if (!(ls is ListBox))
+#else
+                        if (!(ls is ListBox) || (!(ls is ListView)))
+#endif
+
+                        {
+                            return;
+                        }
+
+                        var selectionModeBinding = new Binding()
+                        {
+                            Source = s.NewValue,
+                            Mode = BindingMode.TwoWay,
+                            Path = new PropertyPath(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                    x => x.SelectionMode))
+                        };
+
+                        BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
+
+#if WPF
+
+
+                        var selectedItemsBinding = new Binding()
+                        {
+                            Source = s.NewValue,
+                            Mode = BindingMode.TwoWay,
+                            Path = new PropertyPath(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                    x => x.SelectedItems))
+                        };
+
+
+                        BindingOperations.SetBinding(ls, ListBox.SelectedItemsProperty, selectedItemsBinding);
+
+#endif
+                    }));
+
+
+
+
+
+
+        }
+
+        public interface IObservableItemsAndSelectionGroup<out TValue, out TCollection, out TList>
+        {
+            FrameworkElement BindedTo { get; set; }
+            string SelectedValuePath { get; set; }
+            SelectionMode SelectionMode { get; set; }
+            Object SelectedValue { get; set; }
+            TCollection Items { get; }
+            int SelectedIndex { get; }
+            TValue SelectedItem
+            {
+                get;
+            }
+            TList SelectedItems
+            {
+                get;
+            }
+        }
+        public class ObservableItemsAndSelectionGroup<T> : BindableBase<ObservableItemsAndSelectionGroup<T>>, IObservableItemsAndSelectionGroup<T, ObservableCollection<T>, IList>
+        {
+
+            public ObservableItemsAndSelectionGroup()
+            {
+                base.AddDisposeAction(() => BindedTo = null);
+
+            }
+
+            public FrameworkElement BindedTo { get; set; }
+
+            public SelectionMode SelectionMode
+            {
+                get { return _SelectionModeLocator(this).Value; }
+                set { _SelectionModeLocator(this).SetValueAndTryNotify(value); }
+            }
+            #region Property SelectionMode SelectionMode Setup
+            protected Property<SelectionMode> _SelectionMode = new Property<SelectionMode> { LocatorFunc = _SelectionModeLocator };
+            static Func<BindableBase, ValueContainer<SelectionMode>> _SelectionModeLocator = RegisterContainerLocator<SelectionMode>("SelectionMode", model => model.Initialize("SelectionMode", ref model._SelectionMode, ref _SelectionModeLocator, _SelectionModeDefaultValueFactory));
+            static Func<SelectionMode> _SelectionModeDefaultValueFactory = null;
+            #endregion
+
+
+
+            public string SelectedValuePath
+            {
+                get { return _SelectedValuePathLocator(this).Value; }
+                set { _SelectedValuePathLocator(this).SetValueAndTryNotify(value); }
+            }
+            #region Property string SelectedValuePath Setup
+            protected Property<string> _SelectedValuePath = new Property<string> { LocatorFunc = _SelectedValuePathLocator };
+            static Func<BindableBase, ValueContainer<string>> _SelectedValuePathLocator = RegisterContainerLocator<string>("SelectedValuePath", model => model.Initialize("SelectedValuePath", ref model._SelectedValuePath, ref _SelectedValuePathLocator, _SelectedValuePathDefaultValueFactory));
+            static Func<string> _SelectedValuePathDefaultValueFactory = null;
+            #endregion
+
+
+            public object SelectedValue
+            {
+                get { return _SelectedValueLocator(this).Value; }
+                set { _SelectedValueLocator(this).SetValueAndTryNotify(value); }
+            }
+            #region Property object SelectedValue Setup
+            protected Property<object> _SelectedValue = new Property<object> { LocatorFunc = _SelectedValueLocator };
+            static Func<BindableBase, ValueContainer<object>> _SelectedValueLocator = RegisterContainerLocator<object>("SelectedValue", model => model.Initialize("SelectedValue", ref model._SelectedValue, ref _SelectedValueLocator, _SelectedValueDefaultValueFactory));
+            static Func<object> _SelectedValueDefaultValueFactory = null;
+            #endregion
+
+
+
+            public ObservableCollection<T> Items
+            {
+                get { return _ItemsLocator(this).Value; }
+                set { _ItemsLocator(this).SetValueAndTryNotify(value); }
+            }
+            #region Property ObservableCollection<T>  Items Setup
+            protected Property<ObservableCollection<T>> _Items = new Property<ObservableCollection<T>> { LocatorFunc = _ItemsLocator };
+            static Func<BindableBase, ValueContainer<ObservableCollection<T>>> _ItemsLocator = RegisterContainerLocator<ObservableCollection<T>>("Items", model => model.Initialize("Items", ref model._Items, ref _ItemsLocator, _ItemsDefaultValueFactory));
+            static Func<ObservableCollection<T>> _ItemsDefaultValueFactory = ()=>new  ObservableCollection<T>();
+            #endregion
+
+
+
+            public int SelectedIndex
+            {
+                get { return _SelectedIndexLocator(this).Value; }
+                set { _SelectedIndexLocator(this).SetValueAndTryNotify(value); }
+            }
+            #region Property int SelectedIndex Setup
+            protected Property<int> _SelectedIndex = new Property<int> { LocatorFunc = _SelectedIndexLocator };
+            static Func<BindableBase, ValueContainer<int>> _SelectedIndexLocator = RegisterContainerLocator<int>("SelectedIndex", model => model.Initialize("SelectedIndex", ref model._SelectedIndex, ref _SelectedIndexLocator, _SelectedIndexDefaultValueFactory));
+            static Func<int> _SelectedIndexDefaultValueFactory = null;
+            #endregion
+
+
+
+            public T SelectedItem
+            {
+                get { return _SelectedItemLocator(this).Value; }
+                set { _SelectedItemLocator(this).SetValueAndTryNotify(value); }
+            }
+            #region Property T SelectedItem Setup
+            protected Property<T> _SelectedItem = new Property<T> { LocatorFunc = _SelectedItemLocator };
+            static Func<BindableBase, ValueContainer<T>> _SelectedItemLocator = RegisterContainerLocator<T>("SelectedItem", model => model.Initialize("SelectedItem", ref model._SelectedItem, ref _SelectedItemLocator, _SelectedItemDefaultValueFactory));
+            static Func<T> _SelectedItemDefaultValueFactory = null;
+            #endregion
+
+
+#if WPF
+
+
+            public IList SelectedItems
+            {
+                get { return _SelectedItemsLocator(this).Value; }
+                set { _SelectedItemsLocator(this).SetValueAndTryNotify(value); }
+            }
+            #region Property IList  SelectedItems Setup
+            protected Property<IList> _SelectedItems = new Property<IList> { LocatorFunc = _SelectedItemsLocator };
+            static Func<BindableBase, ValueContainer<IList>> _SelectedItemsLocator = RegisterContainerLocator<IList>("SelectedItems", model => model.Initialize("SelectedItems", ref model._SelectedItems, ref _SelectedItemsLocator, _SelectedItemsDefaultValueFactory));
+            static Func<IList> _SelectedItemsDefaultValueFactory = ()=>new List<Object>();
+            #endregion
+
+
+#else
+            public IList SelectedItems
+            {
+                get
+                {
+                    if (BindedTo != null)
+                    {
+                        dynamic x = BindedTo;
+                        return x.SelectedItems as IList;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+
+#endif
+
+
+
+
+        }
+    }
+
+    namespace Common
+    {
+        public class ExpressionHelper
+        {
+            public static string GetPropertyName<TSubClassType, TProperty>(Expression<Func<TSubClassType, TProperty>> expression)
+            {
+                MemberExpression body = expression.Body as MemberExpression;
+                var propName = (body.Member is PropertyInfo) ? body.Member.Name : string.Empty;
+                return propName;
+            }
+
+
+
+            public static string GetPropertyName<TSubClassType>(Expression<Func<TSubClassType, object>> expression)
+            {
+                MemberExpression body = expression.Body as MemberExpression;
+                var propName = (body.Member is PropertyInfo) ? body.Member.Name : string.Empty;
+                return propName;
+            }
+
+
+        }
+
+
     }
 
 }

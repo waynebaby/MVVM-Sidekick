@@ -541,4 +541,31 @@ namespace Samples.ViewModels
     ///,
     //=,
     //C
+
+
+
+    
+    //[DataContract(IsReference=true) ] //if you want
+    public class SomeBindable : BindableBase<SomeBindable>
+    {
+        public SomeBindable()
+        {
+            // Use propery to init value here:
+            if (IsInDesignMode)
+            {
+                //Add design time demo data init here. These will not execute in runtime.
+            }
+
+
+        }
+
+        //Use propvm + tab +tab  to create a new property of bindable here:
+
+
+    }
+     
+        
+        
+        
+
 }
