@@ -86,7 +86,7 @@ How To Use project template ?
 >#文档目录
 
 1. [Hello world](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/1.HelloWorld.md) >跟班问世篇
-2. [Life time cycle of objects](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/2.LifeTimeOfObjects.md) >对象生存期
+2. [View Models](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/2.ViewModels.md) >对象生存期
 > 
  
 
