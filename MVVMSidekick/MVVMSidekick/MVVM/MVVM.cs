@@ -901,7 +901,7 @@ namespace MVVMSidekick
         /// <para>Base type of bindable model.</para>
         /// <para>ViewModel 基类</para>
         /// </summary>
-        [DataContract(IsReference =true )]
+        [DataContract(IsReference = true)]
         public abstract class BindableBase
             : IDisposable, INotifyPropertyChanged, IBindable
         {
@@ -1679,7 +1679,7 @@ namespace MVVMSidekick
         /// </example>
         /// </summary>
         /// <typeparam name="TSubClassType"> Sub Type / 子类类型</typeparam>
-       [DataContract(IsReference = true)]
+        [DataContract(IsReference = true)]
         public abstract class BindableBase<TSubClassType> : BindableBase, INotifyDataErrorInfo where TSubClassType : BindableBase<TSubClassType>
         {
 
@@ -2155,7 +2155,7 @@ namespace MVVMSidekick
         }
 
 
-        [DataContract(IsReference =true )]
+        [DataContract(IsReference = true)]
         public struct NoResult
         {
 
@@ -5014,7 +5014,7 @@ namespace MVVMSidekick
             #region Property ObservableCollection<T>  Items Setup
             protected Property<ObservableCollection<T>> _Items = new Property<ObservableCollection<T>> { LocatorFunc = _ItemsLocator };
             static Func<BindableBase, ValueContainer<ObservableCollection<T>>> _ItemsLocator = RegisterContainerLocator<ObservableCollection<T>>("Items", model => model.Initialize("Items", ref model._Items, ref _ItemsLocator, _ItemsDefaultValueFactory));
-            static Func<ObservableCollection<T>> _ItemsDefaultValueFactory = ()=>new  ObservableCollection<T>();
+            static Func<ObservableCollection<T>> _ItemsDefaultValueFactory = () => new ObservableCollection<T>();
             #endregion
 
 
@@ -5055,7 +5055,7 @@ namespace MVVMSidekick
             #region Property IList  SelectedItems Setup
             protected Property<IList> _SelectedItems = new Property<IList> { LocatorFunc = _SelectedItemsLocator };
             static Func<BindableBase, ValueContainer<IList>> _SelectedItemsLocator = RegisterContainerLocator<IList>("SelectedItems", model => model.Initialize("SelectedItems", ref model._SelectedItems, ref _SelectedItemsLocator, _SelectedItemsDefaultValueFactory));
-            static Func<IList> _SelectedItemsDefaultValueFactory = ()=>new List<Object>();
+            static Func<IList> _SelectedItemsDefaultValueFactory = () => new List<Object>();
             #endregion
 
 
@@ -5100,9 +5100,29 @@ namespace MVVMSidekick
             public static string GetPropertyName<TSubClassType>(Expression<Func<TSubClassType, object>> expression)
             {
                 MemberExpression body = expression.Body as MemberExpression;
-                var propName = (body.Member is PropertyInfo) ? body.Member.Name : string.Empty;
-                return propName;
+                if (body != null)
+                {
+                    var propName = (body.Member is PropertyInfo) ? body.Member.Name : string.Empty;
+                    return propName;
+                }
+
+                var exp2 = expression.Body as System.Linq.Expressions.UnaryExpression;
+                if (exp2 != null)
+                {
+                    body = exp2.Operand as MemberExpression;
+                    var propName = (body.Member is PropertyInfo) ? body.Member.Name : string.Empty;
+                    return propName;
+                }
+                else
+                {
+
+                    throw new Exception();
+                }
+
             }
+
+
+
 
 
         }
