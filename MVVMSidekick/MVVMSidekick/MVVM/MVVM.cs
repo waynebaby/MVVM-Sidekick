@@ -4848,6 +4848,8 @@ namespace MVVMSidekick
                             return;
                         }
 
+
+
                         var selectedBinding = new Binding()
                         {
                             Source = s.NewValue,
@@ -4869,7 +4871,7 @@ namespace MVVMSidekick
                                     x => x.SelectedIndex))
                         };
 
-                        BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedindexBinding);
+                        BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty , selectedindexBinding);
 
 
 
@@ -4897,7 +4899,7 @@ namespace MVVMSidekick
 #if SILVERLIGHT_5 || WINDOWS_PHONE_8
                         if (!(ls is ListBox))
 #else
-                        if (!(ls is ListBox) || (!(ls is ListView)))
+                        if (!(ls is ListBox) && (!(ls is ListView)))
 #endif
 
                         {
@@ -4915,22 +4917,22 @@ namespace MVVMSidekick
 
                         BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
 
-#if WPF
+//#if WPF
 
 
-                        var selectedItemsBinding = new Binding()
-                        {
-                            Source = s.NewValue,
-                            Mode = BindingMode.TwoWay,
-                            Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
-                                    x => x.SelectedItems))
-                        };
+//                        var selectedItemsBinding = new Binding()
+//                        {
+//                            Source = s.NewValue,
+//                            Mode = BindingMode.TwoWay,
+//                            Path = new PropertyPath(
+//                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+//                                    x => x.SelectedItems))
+//                        };
 
 
-                        BindingOperations.SetBinding(ls, ListBox.SelectedItemsProperty, selectedItemsBinding);
+//                        BindingOperations.SetBinding(ls, ListBox.SelectedItemsProperty, selectedItemsBinding);
 
-#endif
+//#endif
                     }));
 
 
@@ -5044,22 +5046,22 @@ namespace MVVMSidekick
             #endregion
 
 
-#if WPF
+//#if WPF
 
 
-            public IList SelectedItems
-            {
-                get { return _SelectedItemsLocator(this).Value; }
-                set { _SelectedItemsLocator(this).SetValueAndTryNotify(value); }
-            }
-            #region Property IList  SelectedItems Setup
-            protected Property<IList> _SelectedItems = new Property<IList> { LocatorFunc = _SelectedItemsLocator };
-            static Func<BindableBase, ValueContainer<IList>> _SelectedItemsLocator = RegisterContainerLocator<IList>("SelectedItems", model => model.Initialize("SelectedItems", ref model._SelectedItems, ref _SelectedItemsLocator, _SelectedItemsDefaultValueFactory));
-            static Func<IList> _SelectedItemsDefaultValueFactory = () => new List<Object>();
-            #endregion
+//            public IList SelectedItems
+//            {
+//                get { return _SelectedItemsLocator(this).Value; }
+//                set { _SelectedItemsLocator(this).SetValueAndTryNotify(value); }
+//            }
+//            #region Property IList  SelectedItems Setup
+//            protected Property<IList> _SelectedItems = new Property<IList> { LocatorFunc = _SelectedItemsLocator };
+//            static Func<BindableBase, ValueContainer<IList>> _SelectedItemsLocator = RegisterContainerLocator<IList>("SelectedItems", model => model.Initialize("SelectedItems", ref model._SelectedItems, ref _SelectedItemsLocator, _SelectedItemsDefaultValueFactory));
+//            static Func<IList> _SelectedItemsDefaultValueFactory = () => new List<Object>();
+//            #endregion
 
 
-#else
+//#else
             public IList SelectedItems
             {
                 get
@@ -5076,7 +5078,7 @@ namespace MVVMSidekick
                 }
             }
 
-#endif
+//#endif
 
 
 
