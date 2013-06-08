@@ -55,12 +55,73 @@ using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #endif
-#if SILVERLIGHT_5|| WINDOWS_PHONE_8||WINDOWS_PHONE_7
-
-#else
 
 
+#if NET40
+
+namespace System.ComponentModel
+{
+    // Summary:
+    //     Defines members that data entity classes can implement to provide custom
+    //     synchronous and asynchronous validation support.
+    public interface INotifyDataErrorInfo
+    {
+        // Summary:
+        //     Gets a value that indicates whether the entity has validation errors.
+        //
+        // Returns:
+        //     true if the entity currently has validation errors; otherwise, false.
+        bool HasErrors { get; }
+
+        // Summary:
+        //     Occurs when the validation errors have changed for a property or for the
+        //     entire entity.
+        event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        // Summary:
+        //     Gets the validation errors for a specified property or for the entire entity.
+        //
+        // Parameters:
+        //   propertyName:
+        //     The name of the property to retrieve validation errors for; or null or System.String.Empty,
+        //     to retrieve entity-level errors.
+        //
+        // Returns:
+        //     The validation errors for the property or entity.
+        IEnumerable GetErrors(string propertyName);
+    }
+
+    // Summary:
+    //     Provides data for the System.ComponentModel.INotifyDataErrorInfo.ErrorsChanged
+    //     event.
+    public class DataErrorsChangedEventArgs : EventArgs
+    {
+        // Summary:
+        //     Initializes a new instance of the System.ComponentModel.DataErrorsChangedEventArgs
+        //     class.
+        //
+        // Parameters:
+        //   propertyName:
+        //     The name of the property that has an error. null or System.String.Empty if
+        //     the error is object-level.
+        public DataErrorsChangedEventArgs(string propertyName)
+        {
+            PropertyName = propertyName;
+        }
+
+        // Summary:
+        //     Gets the name of the property that has an error.
+        //
+        // Returns:
+        //     The name of the property that has an error. null or System.String.Empty if
+        //     the error is object-level.
+        public virtual string PropertyName { get; private set; }
+    }
+
+}
 #endif
+
+
 
 
 /*
@@ -154,6 +215,8 @@ namespace MVVMSidekick
         {
 #if SILVERLIGHT_5
             await TaskEx.Yield();
+#elif NET40
+            await Task.Factory.StartNew(() => { });
 #else
             await Task.Yield();
 #endif
@@ -164,6 +227,8 @@ namespace MVVMSidekick
         {
 #if SILVERLIGHT_5
             return await TaskEx.FromResult(result);
+#elif NET40
+            return await Task.Factory.StartNew(() => result);
 #else
             return await Task.FromResult(result);
 #endif
@@ -175,7 +240,16 @@ namespace MVVMSidekick
 
 #if SILVERLIGHT_5
             await TaskEx.Delay(ms);
+        
+#elif NET40
+            var task = new Task(() => { });
+            using (var tm = new System.Threading.Timer(o => task.Start()))
+            {
+                tm.Change(ms, -1);
+                await task;
+            }
 #else
+
             await Task.Delay(ms);
 #endif
 
@@ -4120,7 +4194,7 @@ namespace MVVMSidekick
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
 
 
-                return await Task.FromResult(new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel });
+                return await TaskExHelper.FromResult(new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel });
             }
 #endif
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||WINDOWS_PHONE_8
@@ -4762,21 +4836,21 @@ namespace MVVMSidekick
             }
 
 
-#if SILVERLIGHT_5
-                Dictionary<K, V> _shadowDictionary;
-                public IDictionary<K, V> Items
+#if SILVERLIGHT_5||NET40
+            Dictionary<K, V> _shadowDictionary;
+            public IDictionary<K, V> Items
+            {
+                get
                 {
-                    get
+                    if (_shadowDictionary == null || _shadowVersion != _coreVersion)
                     {
-                        if (_shadowDictionary==null || _shadowVersion !=_coreVersion )
-                        {
-                            _shadowDictionary=new Dictionary<K, V>(_coreDictionary);
-                            _shadowVersion =_coreVersion ;
-                        }
-                        return _shadowDictionary;
-
+                        _shadowDictionary = new Dictionary<K, V>(_coreDictionary);
+                        _shadowVersion = _coreVersion;
                     }
+                    return _shadowDictionary;
+
                 }
+            }
 
 #else
             ReadOnlyDictionary<K, V> _shadowDictionary;
@@ -4803,19 +4877,19 @@ namespace MVVMSidekick
         {
 
 
-            public static IObservableItemsAndSelectionGroup<object, object, object> GetItemSelectionGroup(DependencyObject obj)
+            public static IObservableItemsAndSelectionGroup<object, ICollection, IList> GetItemSelectionGroup(DependencyObject obj)
             {
-                return (IObservableItemsAndSelectionGroup<object, object, object>)obj.GetValue(ItemSelectionGroupProperty);
+                return (IObservableItemsAndSelectionGroup<object, ICollection, IList>)obj.GetValue(ItemSelectionGroupProperty);
             }
 
-            public static void SetItemSelectionGroup(DependencyObject obj, IObservableItemsAndSelectionGroup<object, object, object> value)
+            public static void SetItemSelectionGroup(DependencyObject obj, IObservableItemsAndSelectionGroup<object, ICollection, IList> value)
             {
                 obj.SetValue(ItemSelectionGroupProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for ItemSelectionGroup.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ItemSelectionGroupProperty =
-                DependencyProperty.RegisterAttached("ItemSelectionGroup", typeof(IObservableItemsAndSelectionGroup<object, object, object>), typeof(ObservableItemsAndSelectionGroup), new PropertyMetadata(null,
+                DependencyProperty.RegisterAttached("ItemSelectionGroup", typeof(IObservableItemsAndSelectionGroup<object, ICollection, IList>), typeof(ObservableItemsAndSelectionGroup), new PropertyMetadata(null,
                     (o, s) =>
                     {
                         var ls = o as ItemsControl;
@@ -4823,7 +4897,7 @@ namespace MVVMSidekick
                         {
                             return;
                         }
-                        var vm = s.NewValue as IObservableItemsAndSelectionGroup<object, object, object>;
+                        var vm = s.NewValue as IObservableItemsAndSelectionGroup<object, ICollection, IList>;
                         if (vm == null)
                         {
                             return;
@@ -4835,7 +4909,7 @@ namespace MVVMSidekick
                             Source = s.NewValue,
                             Mode = BindingMode.OneWay,
                             Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
                                     x => x.Items))
                         };
 
@@ -4855,7 +4929,7 @@ namespace MVVMSidekick
                             Source = s.NewValue,
                             Mode = BindingMode.TwoWay,
                             Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
                                     x => x.SelectedItem))
                         };
 
@@ -4867,11 +4941,11 @@ namespace MVVMSidekick
                             Source = s.NewValue,
                             Mode = BindingMode.TwoWay,
                             Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
                                     x => x.SelectedIndex))
                         };
 
-                        BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty , selectedindexBinding);
+                        BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty, selectedindexBinding);
 
 
 
@@ -4880,7 +4954,7 @@ namespace MVVMSidekick
                             Source = s.NewValue,
                             Mode = BindingMode.TwoWay,
                             Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
                                     x => x.SelectedValuePath))
                         };
 
@@ -4891,7 +4965,7 @@ namespace MVVMSidekick
                             Source = s.NewValue,
                             Mode = BindingMode.TwoWay,
                             Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
                                     x => x.SelectedValue))
                         };
 
@@ -4911,28 +4985,13 @@ namespace MVVMSidekick
                             Source = s.NewValue,
                             Mode = BindingMode.TwoWay,
                             Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
+                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
                                     x => x.SelectionMode))
                         };
 
                         BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
 
-//#if WPF
 
-
-//                        var selectedItemsBinding = new Binding()
-//                        {
-//                            Source = s.NewValue,
-//                            Mode = BindingMode.TwoWay,
-//                            Path = new PropertyPath(
-//                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, object, object>>(
-//                                    x => x.SelectedItems))
-//                        };
-
-
-//                        BindingOperations.SetBinding(ls, ListBox.SelectedItemsProperty, selectedItemsBinding);
-
-//#endif
                     }));
 
 
@@ -4943,6 +5002,8 @@ namespace MVVMSidekick
         }
 
         public interface IObservableItemsAndSelectionGroup<out TValue, out TCollection, out TList>
+            where TList : IList
+            where TCollection : ICollection
         {
             FrameworkElement BindedTo { get; set; }
             string SelectedValuePath { get; set; }
@@ -5046,22 +5107,6 @@ namespace MVVMSidekick
             #endregion
 
 
-//#if WPF
-
-
-//            public IList SelectedItems
-//            {
-//                get { return _SelectedItemsLocator(this).Value; }
-//                set { _SelectedItemsLocator(this).SetValueAndTryNotify(value); }
-//            }
-//            #region Property IList  SelectedItems Setup
-//            protected Property<IList> _SelectedItems = new Property<IList> { LocatorFunc = _SelectedItemsLocator };
-//            static Func<BindableBase, ValueContainer<IList>> _SelectedItemsLocator = RegisterContainerLocator<IList>("SelectedItems", model => model.Initialize("SelectedItems", ref model._SelectedItems, ref _SelectedItemsLocator, _SelectedItemsDefaultValueFactory));
-//            static Func<IList> _SelectedItemsDefaultValueFactory = () => new List<Object>();
-//            #endregion
-
-
-//#else
             public IList SelectedItems
             {
                 get
@@ -5078,7 +5123,6 @@ namespace MVVMSidekick
                 }
             }
 
-//#endif
 
 
 

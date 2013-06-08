@@ -46,26 +46,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Packages\Rx-Core.2.1.30214.0.nupkg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Packages\Rx-Interfaces.2.1.30214.0.nupkg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Packages\Rx-Linq.2.1.30214.0.nupkg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Packages\Rx-Main.2.1.30214.0.nupkg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Packages\Rx-PlatformServices.2.1.30214.0.nupkg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="ItemTemplates\WPF\MVVMSidekickViewWithVM.WPF.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -97,17 +77,40 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Microsoft.Bcl.1.0.19.nupkg">
+    <Content Include="..\..\packages\Microsoft.Bcl.1.0.19\Microsoft.Bcl.1.0.19.nupkg">
+      <Link>Packages\Microsoft.Bcl.1.0.19.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Packages\Microsoft.Bcl.Async.1.0.16.nupkg">
+    <Content Include="..\..\packages\Microsoft.Bcl.Async.1.0.16\Microsoft.Bcl.Async.1.0.16.nupkg">
+      <Link>Packages\Microsoft.Bcl.Async.1.0.16.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Packages\Microsoft.Bcl.Build.1.0.5.nupkg">
+    <Content Include="..\..\packages\Microsoft.Bcl.Build.1.0.7\Microsoft.Bcl.Build.1.0.7.nupkg">
+      <Link>Packages\Microsoft.Bcl.Build.1.0.7.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.4.5.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.1.4.5.nupkg</Link>
+    <Content Include="..\..\packages\Rx-Core.2.1.30214.0\Rx-Core.2.1.30214.0.nupkg">
+      <Link>Packages\Rx-Core.2.1.30214.0.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Rx-Interfaces.2.1.30214.0\Rx-Interfaces.2.1.30214.0.nupkg">
+      <Link>Packages\Rx-Interfaces.2.1.30214.0.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Rx-Linq.2.1.30214.0\Rx-Linq.2.1.30214.0.nupkg">
+      <Link>Packages\Rx-Linq.2.1.30214.0.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Rx-Main.2.1.30214.0\Rx-Main.2.1.30214.0.nupkg">
+      <Link>Packages\Rx-Main.2.1.30214.0.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Rx-PlatformServices.2.1.30214.0\Rx-PlatformServices.2.1.30214.0.nupkg">
+      <Link>Packages\Rx-PlatformServices.2.1.30214.0.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.4.9.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.1.4.9.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">

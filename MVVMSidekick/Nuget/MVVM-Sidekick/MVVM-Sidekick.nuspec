@@ -97,7 +97,7 @@
     <dependencies>
       <dependency id="Microsoft.Bcl" version="[1.0.19,2.0)"  />
       <dependency id="Microsoft.Bcl.Async" version="[1.0.16,2.0)" />
-      <dependency id="Microsoft.Bcl.Build" version="[1.0.5,2.0)"  />
+      <dependency id="Microsoft.Bcl.Build" version="[1.0.7,2.0)"  />
       <dependency id="Rx-Main" version="[2.1.30214.0,3.0)" />
       <dependency id="Rx-PlatformServices" version="[2.1.30214.0,3.0)" />
       <dependency id="Rx-Interfaces" version="[2.1.30214.0,3.0)" />
@@ -110,6 +110,7 @@
     <file src="content\*.*" target="content" />
     <file src="src\*.*" target="src" />    
     <file src="lib\net45\*.*" target="lib\net45" />
+    <file src="lib\net40\*.*" target="lib\net40" />
     <file src="lib\netcore45\*.*" target="lib\netcore45" />
     <file src="lib\sl50\*.*" target="lib\sl50" />
     <file src="lib\wp8\*.*" target="lib\wp8" />
