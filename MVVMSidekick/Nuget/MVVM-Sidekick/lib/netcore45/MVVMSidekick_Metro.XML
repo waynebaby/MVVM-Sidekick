@@ -4,53 +4,176 @@
         <name>MVVMSidekick_Metro</name>
     </assembly>
     <members>
-        <member name="T:MVVMSidekick.TaskExHelper">
+        <member name="T:MVVMSidekick.Commands.EventCommandEventArgs">
             <summary>
-            Unify Task(4.5) and TaskEx (SL5) method in this helper
+            Command被运行触发的事件数据类型
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:MVVMSidekick.TypeInfoHelper" -->
-        <member name="T:MVVMSidekick.Storages.IStorage`1">
+        <member name="T:MVVMSidekick.Commands.EventCommandHelper">
             <summary>
-            <para>Simple storage interface, for persistence.</para>
-            <para>简单的持久化存储类型接口</para>
-            </summary>
-            <typeparam name="T">
-            <para>The Type needs to be save/load</para>
-            <para>需要存取的类型</para>
-            </typeparam>
-        </member>
-        <member name="M:MVVMSidekick.Storages.IStorage`1.Refresh">
-            <summary>
-            <para>Ignore current changes, load from storage</para>
-            <para>忽略当前值的变化，从持久化存储中读取</para>
-            </summary>
-            <returns>Async Task</returns>
-        </member>
-        <member name="M:MVVMSidekick.Storages.IStorage`1.Save">
-            <summary>
-            <para>Save current changes to storage</para>
-            <para>把当前值的变化写入持久化存储中</para>
-            </summary>
-            <returns>Async Task</returns>
-        </member>
-        <member name="P:MVVMSidekick.Storages.IStorage`1.Value">
-            <summary>
-            <para>Current value</para>
-            <para>当前值</para>
+            事件Command的助手类
             </summary>
         </member>
-        <member name="T:MVVMSidekick.ViewModels.DefaultViewModel">
+        <member name="M:MVVMSidekick.Commands.EventCommandHelper.WithViewModel``1(``0,MVVMSidekick.ViewModels.BindableBase)">
             <summary>
-            <para>A ViewModel by default, with basic implement of name-value container.</para>
-            <para>缺省的 ViewModel。可以用作最简单的字典绑定</para>
+            为一个事件Command制定一个VM
+            </summary>
+            <typeparam name="TCommand">事件Command具体类型</typeparam>
+            <param name="cmd">事件Command实例</param>
+            <param name="viewModel">VM实例</param>
+            <returns>事件Command实例本身</returns>
+        </member>
+        <member name="T:MVVMSidekick.Commands.ICommandWithViewModel">
+            <summary>
+            带有VM的Command接口
             </summary>
         </member>
-        <member name="T:MVVMSidekick.ViewModels.ViewModelBase`1">
+        <member name="T:MVVMSidekick.Commands.EventCommandBase">
             <summary>
-            一个VM,带有若干界面特性
+            事件Command,运行后马上触发一个事件，事件中带有Command实例和VM实例属性
             </summary>
-            <typeparam name="TViewModel">本身的类型</typeparam>
+        </member>
+        <member name="M:MVVMSidekick.Commands.EventCommandBase.OnCommandExecute(MVVMSidekick.Commands.EventCommandEventArgs)">
+            <summary>
+            执行时的逻辑
+            </summary>
+            <param name="args">执行时的事件数据</param>
+        </member>
+        <member name="M:MVVMSidekick.Commands.EventCommandBase.CanExecute(System.Object)">
+            <summary>
+            该Command是否能执行
+            </summary>
+            <param name="parameter">判断参数</param>
+            <returns>是否</returns>
+        </member>
+        <member name="M:MVVMSidekick.Commands.EventCommandBase.OnCanExecuteChanged">
+            <summary>
+            是否能执行变化时触发事件的逻辑
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.Commands.EventCommandBase.Execute(System.Object)">
+            <summary>
+            执行Command
+            </summary>
+            <param name="parameter">参数条件</param>
+        </member>
+        <member name="P:MVVMSidekick.Commands.EventCommandBase.ViewModel">
+            <summary>
+            VM
+            </summary>
+        </member>
+        <member name="E:MVVMSidekick.Commands.EventCommandBase.CommandExecute">
+            <summary>
+            运行时触发的事件
+            </summary>
+        </member>
+        <member name="E:MVVMSidekick.Commands.EventCommandBase.CanExecuteChanged">
+            <summary>
+            是否能执行的值产生变化的事件
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.EventRouting.EventRouter">
+            <summary>
+            全局事件根
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.EventRouting.EventRouter.RaiseEvent``1(System.Object,``0,System.String)">
+            <summary>
+            触发事件    
+            </summary>
+            <typeparam name="TEventArgs">事件数据类型</typeparam>
+            <param name="sender">事件发送者</param>
+            <param name="eventArgs">事件数据</param>
+            <param name="callerMemberName">发送事件名</param>
+        </member>
+        <member name="M:MVVMSidekick.EventRouting.EventRouter.GetEventObject``1">
+            <summary>
+            取得独立事件类
+            </summary>
+            <typeparam name="TEventArgs">事件数据类型</typeparam>
+            <returns>事件独立类</returns>
+        </member>
+        <member name="F:MVVMSidekick.EventRouting.EventRouter.EventObjects">
+            <summary>
+            事件来源的代理对象实例
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.EventRouting.EventRouter.GetIEventObjectInstance(System.Type)">
+            <summary>
+            创建事件代理对象
+            </summary>
+            <param name="argsType">事件数据类型</param>
+            <returns>代理对象实例</returns>
+        </member>
+        <member name="T:MVVMSidekick.EventRouting.EventRouter.IEventObject">
+            <summary>
+            事件对象接口
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.EventRouting.EventRouter.EventObject`1">
+             <summary>
+            事件对象
+             </summary>
+             <typeparam name="TEventArgs"></typeparam>
+        </member>
+        <member name="T:MVVMSidekick.EventRouting.NavigateCommandEventArgs">
+            <summary>
+            导航事件数据
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.EventRouting.SaveStateEventArgs">
+            <summary>
+            保存状态事件数据
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.EventRouting.EventRouterHelper">
+            <summary>
+            事件路由的扩展方法集合
+            </summary>
+        </member>
+        <member name="M:MVVMSidekick.EventRouting.EventRouterHelper.RaiseEvent``1(MVVMSidekick.ViewModels.BindableBase,``0,System.String)">
+            <summary>
+            触发事件
+            </summary>
+            <typeparam name="TEventArgs">事件类型</typeparam>
+            <param name="source">事件来源</param>
+            <param name="eventArgs">事件数据</param>
+            <param name="callerMemberName">事件名</param>
+        </member>
+        <member name="T:MVVMSidekick.EventRouting.RouterEventData`1">
+            <summary>
+            事件信息
+            </summary>
+            <typeparam name="TEventArgs">事件数据类型</typeparam>
+        </member>
+        <member name="P:MVVMSidekick.EventRouting.RouterEventData`1.Sender">
+            <summary>
+            事件发送者
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.EventRouting.RouterEventData`1.EventName">
+            <summary>
+            事件名
+            </summary>
+        </member>
+        <member name="P:MVVMSidekick.EventRouting.RouterEventData`1.EventArgs">
+            <summary>
+            事件数据
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.Patterns.ObservableItemsAndSelectionGroup">
+            <summary>
+            A model that can bind to a ItemsControl just like ListBox or List View.  
+            Use ItemSelectionGroupProperty to bind it with single set.
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.Patterns.IObservableItemsAndSelectionGroup`3">
+            <summary>
+            The abstraction of Items AndS electionGroup
+            </summary>
+            <typeparam name="TValue"></typeparam>
+            <typeparam name="TCollection"></typeparam>
+            <typeparam name="TList"></typeparam>
         </member>
         <member name="T:MVVMSidekick.ViewModels.BindableBase`1">
             <summary>
@@ -289,6 +412,81 @@
             <para>每个属性类型独占的一个专门的类型缓存。</para>
             </summary>
             <typeparam name="TProperty"></typeparam>
+        </member>
+        <member name="T:MVVMSidekick.Patterns.ParentChildrenView`4">
+            <summary>
+            This pattern is craated for
+            </summary>
+            <typeparam name="TParent"></typeparam>
+            <typeparam name="TThis"></typeparam>
+            <typeparam name="TChildren"></typeparam>
+            <typeparam name="TState"></typeparam>
+        </member>
+        <member name="M:MVVMSidekick.Reactive.MVVMRxExtensions.CreatePropertyChangedObservable(MVVMSidekick.ViewModels.BindableBase)">
+            <summary>
+            <para>Create a instance of IObservable that fires when property changed event is raised.</para>
+            <para>创建一个监视属性变化事件观察者IObservable实例。</para>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MVVMSidekick.Reactive.MVVMRxExtensions.ListenToIsUIBusy``3(MVVMSidekick.ViewModels.CommandModel{``0,``1},MVVMSidekick.ViewModels.ViewModelBase{``2},System.Boolean)">
+            <summary>
+            Bind Command to IsUIBusy property.
+            </summary>
+            <typeparam name="TCommand">A sub class of ReactiveCommand</typeparam>
+            <typeparam name="TResource">The resource type of CommandModel</typeparam>
+            <typeparam name="TViewModel">The View Model type command wanna bind to</typeparam>
+            <param name="command">Command itself</param>
+            <param name="model">The View Model  command wanna bind to</param>
+            <returns>command instance itself</returns>
+        </member>
+        <member name="T:MVVMSidekick.Storages.IStorage`1">
+            <summary>
+            <para>Simple storage interface, for persistence.</para>
+            <para>简单的持久化存储类型接口</para>
+            </summary>
+            <typeparam name="T">
+            <para>The Type needs to be save/load</para>
+            <para>需要存取的类型</para>
+            </typeparam>
+        </member>
+        <member name="M:MVVMSidekick.Storages.IStorage`1.Refresh">
+            <summary>
+            <para>Ignore current changes, load from storage</para>
+            <para>忽略当前值的变化，从持久化存储中读取</para>
+            </summary>
+            <returns>Async Task</returns>
+        </member>
+        <member name="M:MVVMSidekick.Storages.IStorage`1.Save">
+            <summary>
+            <para>Save current changes to storage</para>
+            <para>把当前值的变化写入持久化存储中</para>
+            </summary>
+            <returns>Async Task</returns>
+        </member>
+        <member name="P:MVVMSidekick.Storages.IStorage`1.Value">
+            <summary>
+            <para>Current value</para>
+            <para>当前值</para>
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.Utilities.TaskExHelper">
+            <summary>
+            Unify Task(4.5) and TaskEx (SL5) method in this helper
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:MVVMSidekick.Utilities.TypeInfoHelper" -->
+        <member name="T:MVVMSidekick.ViewModels.DefaultViewModel">
+            <summary>
+            <para>A ViewModel by default, with basic implement of name-value container.</para>
+            <para>缺省的 ViewModel。可以用作最简单的字典绑定</para>
+            </summary>
+        </member>
+        <member name="T:MVVMSidekick.ViewModels.ViewModelBase`1">
+            <summary>
+            一个VM,带有若干界面特性
+            </summary>
+            <typeparam name="TViewModel">本身的类型</typeparam>
         </member>
         <member name="P:MVVMSidekick.ViewModels.ViewModelBase`1.HaveReturnValue">
             <summary>
@@ -560,181 +758,6 @@
             <param name="cmdModel">CommandModel具体实例</param>
             <param name="viewModel">ViewModel具体实例</param>
             <returns></returns>
-        </member>
-        <member name="T:MVVMSidekick.EventRouter.EventRouter">
-            <summary>
-            全局事件根
-            </summary>
-        </member>
-        <member name="M:MVVMSidekick.EventRouter.EventRouter.RaiseEvent``1(System.Object,``0,System.String)">
-            <summary>
-            触发事件    
-            </summary>
-            <typeparam name="TEventArgs">事件数据类型</typeparam>
-            <param name="sender">事件发送者</param>
-            <param name="eventArgs">事件数据</param>
-            <param name="callerMemberName">发送事件名</param>
-        </member>
-        <member name="M:MVVMSidekick.EventRouter.EventRouter.GetEventObject``1">
-            <summary>
-            取得独立事件类
-            </summary>
-            <typeparam name="TEventArgs">事件数据类型</typeparam>
-            <returns>事件独立类</returns>
-        </member>
-        <member name="F:MVVMSidekick.EventRouter.EventRouter.EventObjects">
-            <summary>
-            事件来源的代理对象实例
-            </summary>
-        </member>
-        <member name="M:MVVMSidekick.EventRouter.EventRouter.GetIEventObjectInstance(System.Type)">
-            <summary>
-            创建事件代理对象
-            </summary>
-            <param name="argsType">事件数据类型</param>
-            <returns>代理对象实例</returns>
-        </member>
-        <member name="T:MVVMSidekick.EventRouter.EventRouter.IEventObject">
-            <summary>
-            事件对象接口
-            </summary>
-        </member>
-        <member name="T:MVVMSidekick.EventRouter.EventRouter.EventObject`1">
-             <summary>
-            事件对象
-             </summary>
-             <typeparam name="TEventArgs"></typeparam>
-        </member>
-        <member name="T:MVVMSidekick.EventRouter.NavigateCommandEventArgs">
-            <summary>
-            导航事件数据
-            </summary>
-        </member>
-        <member name="T:MVVMSidekick.EventRouter.SaveStateEventArgs">
-            <summary>
-            保存状态事件数据
-            </summary>
-        </member>
-        <member name="T:MVVMSidekick.EventRouter.EventRouterHelper">
-            <summary>
-            事件路由的扩展方法集合
-            </summary>
-        </member>
-        <member name="M:MVVMSidekick.EventRouter.EventRouterHelper.RaiseEvent``1(MVVMSidekick.ViewModels.BindableBase,``0,System.String)">
-            <summary>
-            触发事件
-            </summary>
-            <typeparam name="TEventArgs">事件类型</typeparam>
-            <param name="source">事件来源</param>
-            <param name="eventArgs">事件数据</param>
-            <param name="callerMemberName">事件名</param>
-        </member>
-        <member name="T:MVVMSidekick.EventRouter.RouterEventData`1">
-            <summary>
-            事件信息
-            </summary>
-            <typeparam name="TEventArgs">事件数据类型</typeparam>
-        </member>
-        <member name="P:MVVMSidekick.EventRouter.RouterEventData`1.Sender">
-            <summary>
-            事件发送者
-            </summary>
-        </member>
-        <member name="P:MVVMSidekick.EventRouter.RouterEventData`1.EventName">
-            <summary>
-            事件名
-            </summary>
-        </member>
-        <member name="P:MVVMSidekick.EventRouter.RouterEventData`1.EventArgs">
-            <summary>
-            事件数据
-            </summary>
-        </member>
-        <member name="T:MVVMSidekick.Commands.EventCommandEventArgs">
-            <summary>
-            Command被运行触发的事件数据类型
-            </summary>
-        </member>
-        <member name="T:MVVMSidekick.Commands.EventCommandHelper">
-            <summary>
-            事件Command的助手类
-            </summary>
-        </member>
-        <member name="M:MVVMSidekick.Commands.EventCommandHelper.WithViewModel``1(``0,MVVMSidekick.ViewModels.BindableBase)">
-            <summary>
-            为一个事件Command制定一个VM
-            </summary>
-            <typeparam name="TCommand">事件Command具体类型</typeparam>
-            <param name="cmd">事件Command实例</param>
-            <param name="viewModel">VM实例</param>
-            <returns>事件Command实例本身</returns>
-        </member>
-        <member name="T:MVVMSidekick.Commands.ICommandWithViewModel">
-            <summary>
-            带有VM的Command接口
-            </summary>
-        </member>
-        <member name="T:MVVMSidekick.Commands.EventCommandBase">
-            <summary>
-            事件Command,运行后马上触发一个事件，事件中带有Command实例和VM实例属性
-            </summary>
-        </member>
-        <member name="M:MVVMSidekick.Commands.EventCommandBase.OnCommandExecute(MVVMSidekick.Commands.EventCommandEventArgs)">
-            <summary>
-            执行时的逻辑
-            </summary>
-            <param name="args">执行时的事件数据</param>
-        </member>
-        <member name="M:MVVMSidekick.Commands.EventCommandBase.CanExecute(System.Object)">
-            <summary>
-            该Command是否能执行
-            </summary>
-            <param name="parameter">判断参数</param>
-            <returns>是否</returns>
-        </member>
-        <member name="M:MVVMSidekick.Commands.EventCommandBase.OnCanExecuteChanged">
-            <summary>
-            是否能执行变化时触发事件的逻辑
-            </summary>
-        </member>
-        <member name="M:MVVMSidekick.Commands.EventCommandBase.Execute(System.Object)">
-            <summary>
-            执行Command
-            </summary>
-            <param name="parameter">参数条件</param>
-        </member>
-        <member name="P:MVVMSidekick.Commands.EventCommandBase.ViewModel">
-            <summary>
-            VM
-            </summary>
-        </member>
-        <member name="E:MVVMSidekick.Commands.EventCommandBase.CommandExecute">
-            <summary>
-            运行时触发的事件
-            </summary>
-        </member>
-        <member name="E:MVVMSidekick.Commands.EventCommandBase.CanExecuteChanged">
-            <summary>
-            是否能执行的值产生变化的事件
-            </summary>
-        </member>
-        <member name="M:MVVMSidekick.Reactive.MVVMRxExtensions.CreatePropertyChangedObservable(MVVMSidekick.ViewModels.BindableBase)">
-            <summary>
-            <para>Create a instance of IObservable that fires when property changed event is raised.</para>
-            <para>创建一个监视属性变化事件观察者IObservable实例。</para>
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:MVVMSidekick.Reactive.MVVMRxExtensions.ListenToIsUIBusy``3(MVVMSidekick.ViewModels.CommandModel{``0,``1},MVVMSidekick.ViewModels.ViewModelBase{``2},System.Boolean)">
-            <summary>
-            Bind Command to IsUIBusy property.
-            </summary>
-            <typeparam name="TCommand">A sub class of ReactiveCommand</typeparam>
-            <typeparam name="TResource">The resource type of CommandModel</typeparam>
-            <typeparam name="TViewModel">The View Model type command wanna bind to</typeparam>
-            <param name="command">Command itself</param>
-            <param name="model">The View Model  command wanna bind to</param>
-            <returns>command instance itself</returns>
         </member>
         <member name="T:MVVMSidekick.Views.StageManager">
             <summary>

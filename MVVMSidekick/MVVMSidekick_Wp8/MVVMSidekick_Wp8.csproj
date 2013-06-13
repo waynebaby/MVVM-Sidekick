@@ -86,8 +86,38 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\MVVMSidekick\MVVM\MVVM.cs">
-      <Link>MVVM.cs</Link>
+    <Compile Include="..\mvvmsidekick\Collections.cs">
+      <Link>FileLinks\Collections.cs</Link>
+    </Compile>
+    <Compile Include="..\mvvmsidekick\Commands.cs">
+      <Link>FileLinks\Commands.cs</Link>
+    </Compile>
+    <Compile Include="..\mvvmsidekick\EventRouting.cs">
+      <Link>FileLinks\EventRouting.cs</Link>
+    </Compile>
+    <Compile Include="..\mvvmsidekick\Patterns.cs">
+      <Link>FileLinks\Patterns.cs</Link>
+    </Compile>
+    <Compile Include="..\mvvmsidekick\PlatformPatches.cs">
+      <Link>FileLinks\PlatformPatches.cs</Link>
+    </Compile>
+    <Compile Include="..\mvvmsidekick\Reactive.cs">
+      <Link>FileLinks\Reactive.cs</Link>
+    </Compile>
+    <Compile Include="..\mvvmsidekick\Services.cs">
+      <Link>FileLinks\Services.cs</Link>
+    </Compile>
+    <Compile Include="..\mvvmsidekick\Storages.cs">
+      <Link>FileLinks\Storages.cs</Link>
+    </Compile>
+    <Compile Include="..\mvvmsidekick\Utilities.cs">
+      <Link>FileLinks\Utilities.cs</Link>
+    </Compile>
+    <Compile Include="..\mvvmsidekick\ViewModels.cs">
+      <Link>FileLinks\ViewModels.cs</Link>
+    </Compile>
+    <Compile Include="..\mvvmsidekick\Views.cs">
+      <Link>FileLinks\Views.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

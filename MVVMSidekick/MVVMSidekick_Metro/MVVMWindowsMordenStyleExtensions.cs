@@ -1,4 +1,4 @@
-﻿using MVVMSidekick.EventRouter;
+﻿using MVVMSidekick.EventRouting;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.ViewModels;
 using MVVMSidekick.Views;

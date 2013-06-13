@@ -3,15 +3,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Windows.Controls;
 using MVVMSidekick.Collections;
 using System.Collections.Generic;
+using MVVMSidekick.Patterns;
 
 namespace MVVMSidekick.Test
 {
     [TestClass]
     public class ObservableItemdAndSelectionGroupsTest
     {
-        MVVMSidekick.Collections.ObservableItemsAndSelectionGroup<string> CreateSampleGroup()
+        ObservableItemsAndSelectionGroup<string> CreateSampleGroup()
         {
-            return new Collections.ObservableItemsAndSelectionGroup<string>()
+            return new ObservableItemsAndSelectionGroup<string>()
             {
                 Items = new System.Collections.ObjectModel.ObservableCollection<string> 
                 { 
@@ -30,7 +31,7 @@ namespace MVVMSidekick.Test
         {
             var list = CreateSampleGroup();
             var listbox = new ListBox();
-            listbox.SetValue(ObservableItemsAndSelectionGroup.ItemSelectionGroupProperty, list);
+            listbox.SetValue(ObservableItemsAndSelectionGroup.ItemsAndSelectionGroupProperty, list);
             list.SelectionMode = SelectionMode.Multiple;
             list.SelectedIndex = 0;
 
