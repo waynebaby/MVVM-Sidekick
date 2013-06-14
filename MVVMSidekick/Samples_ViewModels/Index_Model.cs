@@ -1,5 +1,6 @@
 ﻿using MVVMSidekick;
 using MVVMSidekick.Reactive;
+using MVVMSidekick.Utilities;
 using MVVMSidekick.ViewModels;
 using Samples.ViewModels;
 using System;

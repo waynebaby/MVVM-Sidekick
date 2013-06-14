@@ -16,7 +16,7 @@ using MVVMSidekick.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reactive;
-using MVVMSidekick.EventRouting ;
+using MVVMSidekick.EventRouting;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
@@ -64,331 +64,428 @@ namespace MVVMSidekick
 
     namespace Patterns
     {
-        /// <summary>
-        /// A model that can bind to a ItemsControl just like ListBox or List View.  
-        /// Use ItemSelectionGroupProperty to bind it with single set.
-        /// </summary>
-        public static class ObservableItemsAndSelectionGroup
+
+
+        namespace ItemsAndSelection
         {
-
-
-            public static IObservableItemsAndSelectionGroup<object, ICollection, IList> GetItemSelectionGroup(DependencyObject obj)
+            /// <summary>
+            /// A model that can bind to a ItemsControl just like ListBox or List View.  
+            /// Use ItemSelectionGroupProperty to bind it with single set.
+            /// </summary>
+            public static class ItemsAndSelectionGroup
             {
-                return (IObservableItemsAndSelectionGroup<object, ICollection, IList>)obj.GetValue(ItemsAndSelectionGroupProperty);
-            }
 
-            public static void SetItemSelectionGroup(DependencyObject obj, IObservableItemsAndSelectionGroup<object, ICollection, IList> value)
-            {
-                obj.SetValue(ItemsAndSelectionGroupProperty, value);
-            }
 
-            public static readonly DependencyProperty ItemsAndSelectionGroupProperty =
-                DependencyProperty.RegisterAttached("ItemsAndSelectionGroup", typeof(IObservableItemsAndSelectionGroup<object, ICollection, IList>), typeof(ObservableItemsAndSelectionGroup), new PropertyMetadata(null,
-                    (o, s) =>
-                    {
-                        var ls = o as ItemsControl;
-                        if (ls == null)
+                public static IItemsAndSelectionGroup<object, ICollection, IList> GetItemSelectionGroup(DependencyObject obj)
+                {
+                    return (IItemsAndSelectionGroup<object, ICollection, IList>)obj.GetValue(ItemsAndSelectionGroupProperty);
+                }
+
+                public static void SetItemSelectionGroup(DependencyObject obj, IItemsAndSelectionGroup<object, ICollection, IList> value)
+                {
+                    obj.SetValue(ItemsAndSelectionGroupProperty, value);
+                }
+
+                public static readonly DependencyProperty ItemsAndSelectionGroupProperty =
+                    DependencyProperty.RegisterAttached("ItemsAndSelectionGroup", typeof(IItemsAndSelectionGroup<object, ICollection, IList>), typeof(ItemsAndSelectionGroup), new PropertyMetadata(null,
+                        (o, s) =>
                         {
-                            return;
-                        }
-                        var vm = s.NewValue as IObservableItemsAndSelectionGroup<object, ICollection, IList>;
-                        if (vm == null)
-                        {
-                            return;
-                        }
+                            var ls = o as ItemsControl;
+                            if (ls == null)
+                            {
+                                return;
+                            }
+                            var vm = s.NewValue as IItemsAndSelectionGroup<object, ICollection, IList>;
+                            if (vm == null)
+                            {
+                                return;
+                            }
 
-                        vm.BindedTo = ls;
-                        var itemsBinding = new Binding()
-                        {
-                            Source = s.NewValue,
-                            Mode = BindingMode.OneWay,
-                            Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
-                                    x => x.Items))
-                        };
+                            vm.BindedTo = ls;
+                            var itemsBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.OneWay,
+                                Path = new PropertyPath(
+                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
+                                        x => x.Items))
+                            };
 
-                        BindingOperations.SetBinding(ls, ItemsControl.ItemsSourceProperty, itemsBinding);
-
-
-
-                        if (!(ls is Selector))
-                        {
-                            return;
-                        }
+                            BindingOperations.SetBinding(ls, ItemsControl.ItemsSourceProperty, itemsBinding);
 
 
 
-                        var selectedBinding = new Binding()
-                        {
-                            Source = s.NewValue,
-                            Mode = BindingMode.TwoWay,
-                            Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
-                                    x => x.SelectedItem))
-                        };
-
-                        BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedBinding);
-
-
-                        var selectedindexBinding = new Binding()
-                        {
-                            Source = s.NewValue,
-                            Mode = BindingMode.TwoWay,
-                            Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
-                                    x => x.SelectedIndex))
-                        };
-
-                        BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty, selectedindexBinding);
+                            if (!(ls is Selector))
+                            {
+                                return;
+                            }
 
 
 
-                        var selectedValuePathBinding = new Binding()
-                        {
-                            Source = s.NewValue,
-                            Mode = BindingMode.TwoWay,
-                            Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
-                                    x => x.SelectedValuePath))
-                        };
+                            var selectedBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.TwoWay,
+                                Path = new PropertyPath(
+                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
+                                        x => x.SelectedItem))
+                            };
 
-                        BindingOperations.SetBinding(ls, Selector.SelectedValuePathProperty, selectedValuePathBinding);
+                            BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedBinding);
 
-                        var selectedValueBinding = new Binding()
-                        {
-                            Source = s.NewValue,
-                            Mode = BindingMode.TwoWay,
-                            Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
-                                    x => x.SelectedValue))
-                        };
 
-                        BindingOperations.SetBinding(ls, Selector.SelectedValueProperty, selectedValueBinding);
+                            var selectedindexBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.TwoWay,
+                                Path = new PropertyPath(
+                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
+                                        x => x.SelectedIndex))
+                            };
+
+                            BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty, selectedindexBinding);
+
+
+
+                            var selectedValuePathBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.TwoWay,
+                                Path = new PropertyPath(
+                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
+                                        x => x.SelectedValuePath))
+                            };
+
+                            BindingOperations.SetBinding(ls, Selector.SelectedValuePathProperty, selectedValuePathBinding);
+
+                            var selectedValueBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.TwoWay,
+                                Path = new PropertyPath(
+                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
+                                        x => x.SelectedValue))
+                            };
+
+                            BindingOperations.SetBinding(ls, Selector.SelectedValueProperty, selectedValueBinding);
 #if SILVERLIGHT_5 || WINDOWS_PHONE_8
                         if (!(ls is ListBox))
 #else
-                        if (!(ls is ListBox) && (!(ls is ListView)))
+                            if (!(ls is ListBox) && (!(ls is ListView)))
 #endif
 
-                        {
-                            return;
-                        }
+                            {
+                                return;
+                            }
 
-                        var selectionModeBinding = new Binding()
-                        {
-                            Source = s.NewValue,
-                            Mode = BindingMode.TwoWay,
-                            Path = new PropertyPath(
-                                ExpressionHelper.GetPropertyName<IObservableItemsAndSelectionGroup<object, ICollection, IList>>(
-                                    x => x.SelectionMode))
-                        };
+                            var selectionModeBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.TwoWay,
+                                Path = new PropertyPath(
+                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
+                                        x => x.SelectionMode))
+                            };
 
-                        BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
-
-
-                    }));
+                            BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
 
 
+                        }));
 
 
 
 
-        }
 
-        /// <summary>
-        /// The abstraction of Items AndS electionGroup
-        /// </summary>
-        /// <typeparam name="TValue"></typeparam>
-        /// <typeparam name="TCollection"></typeparam>
-        /// <typeparam name="TList"></typeparam>
-        public interface IObservableItemsAndSelectionGroup<out TValue, out TCollection, out TList>
-            where TList : IList
-            where TCollection : ICollection
-        {
-            FrameworkElement BindedTo { get; set; }
-            string SelectedValuePath { get; set; }
-            SelectionMode SelectionMode { get; set; }
-            Object SelectedValue { get; set; }
-            TCollection Items { get; }
-            int SelectedIndex { get; }
-            TValue SelectedItem
-            {
-                get;
-            }
-            TList SelectedItems
-            {
-                get;
-            }
-        }
-        public class ObservableItemsAndSelectionGroup<T> : BindableBase<ObservableItemsAndSelectionGroup<T>>, IObservableItemsAndSelectionGroup<T, ObservableCollection<T>, IList>
-        {
-
-            public ObservableItemsAndSelectionGroup()
-            {
-                base.AddDisposeAction(() => BindedTo = null);
 
             }
 
-            public FrameworkElement BindedTo { get; set; }
-
-            public SelectionMode SelectionMode
+            /// <summary>
+            /// The abstraction of Items AndS electionGroup
+            /// </summary>
+            /// <typeparam name="TValue"></typeparam>
+            /// <typeparam name="TCollection"></typeparam>
+            /// <typeparam name="TList"></typeparam>
+            public interface IItemsAndSelectionGroup<out TValue, out TCollection, out TList>
+                where TList : IList
+                where TCollection : ICollection
             {
-                get { return _SelectionModeLocator(this).Value; }
-                set { _SelectionModeLocator(this).SetValueAndTryNotify(value); }
-            }
-            #region Property SelectionMode SelectionMode Setup
-            protected Property<SelectionMode> _SelectionMode = new Property<SelectionMode> { LocatorFunc = _SelectionModeLocator };
-            static Func<BindableBase, ValueContainer<SelectionMode>> _SelectionModeLocator = RegisterContainerLocator<SelectionMode>("SelectionMode", model => model.Initialize("SelectionMode", ref model._SelectionMode, ref _SelectionModeLocator, _SelectionModeDefaultValueFactory));
-            static Func<SelectionMode> _SelectionModeDefaultValueFactory = null;
-            #endregion
-
-
-
-            public string SelectedValuePath
-            {
-                get { return _SelectedValuePathLocator(this).Value; }
-                set { _SelectedValuePathLocator(this).SetValueAndTryNotify(value); }
-            }
-            #region Property string SelectedValuePath Setup
-            protected Property<string> _SelectedValuePath = new Property<string> { LocatorFunc = _SelectedValuePathLocator };
-            static Func<BindableBase, ValueContainer<string>> _SelectedValuePathLocator = RegisterContainerLocator<string>("SelectedValuePath", model => model.Initialize("SelectedValuePath", ref model._SelectedValuePath, ref _SelectedValuePathLocator, _SelectedValuePathDefaultValueFactory));
-            static Func<string> _SelectedValuePathDefaultValueFactory = null;
-            #endregion
-
-
-            public object SelectedValue
-            {
-                get { return _SelectedValueLocator(this).Value; }
-                set { _SelectedValueLocator(this).SetValueAndTryNotify(value); }
-            }
-            #region Property object SelectedValue Setup
-            protected Property<object> _SelectedValue = new Property<object> { LocatorFunc = _SelectedValueLocator };
-            static Func<BindableBase, ValueContainer<object>> _SelectedValueLocator = RegisterContainerLocator<object>("SelectedValue", model => model.Initialize("SelectedValue", ref model._SelectedValue, ref _SelectedValueLocator, _SelectedValueDefaultValueFactory));
-            static Func<object> _SelectedValueDefaultValueFactory = null;
-            #endregion
-
-
-
-            public ObservableCollection<T> Items
-            {
-                get { return _ItemsLocator(this).Value; }
-                set { _ItemsLocator(this).SetValueAndTryNotify(value); }
-            }
-            #region Property ObservableCollection<T>  Items Setup
-            protected Property<ObservableCollection<T>> _Items = new Property<ObservableCollection<T>> { LocatorFunc = _ItemsLocator };
-            static Func<BindableBase, ValueContainer<ObservableCollection<T>>> _ItemsLocator = RegisterContainerLocator<ObservableCollection<T>>("Items", model => model.Initialize("Items", ref model._Items, ref _ItemsLocator, _ItemsDefaultValueFactory));
-            static Func<ObservableCollection<T>> _ItemsDefaultValueFactory = () => new ObservableCollection<T>();
-            #endregion
-
-
-
-            public int SelectedIndex
-            {
-                get { return _SelectedIndexLocator(this).Value; }
-                set { _SelectedIndexLocator(this).SetValueAndTryNotify(value); }
-            }
-            #region Property int SelectedIndex Setup
-            protected Property<int> _SelectedIndex = new Property<int> { LocatorFunc = _SelectedIndexLocator };
-            static Func<BindableBase, ValueContainer<int>> _SelectedIndexLocator = RegisterContainerLocator<int>("SelectedIndex", model => model.Initialize("SelectedIndex", ref model._SelectedIndex, ref _SelectedIndexLocator, _SelectedIndexDefaultValueFactory));
-            static Func<int> _SelectedIndexDefaultValueFactory = null;
-            #endregion
-
-
-
-            public T SelectedItem
-            {
-                get { return _SelectedItemLocator(this).Value; }
-                set { _SelectedItemLocator(this).SetValueAndTryNotify(value); }
-            }
-            #region Property T SelectedItem Setup
-            protected Property<T> _SelectedItem = new Property<T> { LocatorFunc = _SelectedItemLocator };
-            static Func<BindableBase, ValueContainer<T>> _SelectedItemLocator = RegisterContainerLocator<T>("SelectedItem", model => model.Initialize("SelectedItem", ref model._SelectedItem, ref _SelectedItemLocator, _SelectedItemDefaultValueFactory));
-            static Func<T> _SelectedItemDefaultValueFactory = null;
-            #endregion
-
-
-            public IList SelectedItems
-            {
-                get
+                FrameworkElement BindedTo { get; set; }
+                string SelectedValuePath { get; set; }
+                SelectionMode SelectionMode { get; set; }
+                Object SelectedValue { get; set; }
+                TCollection Items { get; }
+                int SelectedIndex { get; }
+                TValue SelectedItem
                 {
-                    if (BindedTo != null)
+                    get;
+                }
+                TList SelectedItems
+                {
+                    get;
+                }
+            }
+            public class ItemsAndSelectionGroup<T> : BindableBase<ItemsAndSelectionGroup<T>>, IItemsAndSelectionGroup<T, ObservableCollection<T>, IList>
+            {
+
+                public ItemsAndSelectionGroup()
+                {
+                    base.AddDisposeAction(() => BindedTo = null);
+
+                }
+
+                public FrameworkElement BindedTo { get; set; }
+
+                public SelectionMode SelectionMode
+                {
+                    get { return _SelectionModeLocator(this).Value; }
+                    set { _SelectionModeLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property SelectionMode SelectionMode Setup
+                protected Property<SelectionMode> _SelectionMode = new Property<SelectionMode> { LocatorFunc = _SelectionModeLocator };
+                static Func<BindableBase, ValueContainer<SelectionMode>> _SelectionModeLocator = RegisterContainerLocator<SelectionMode>("SelectionMode", model => model.Initialize("SelectionMode", ref model._SelectionMode, ref _SelectionModeLocator, _SelectionModeDefaultValueFactory));
+                static Func<SelectionMode> _SelectionModeDefaultValueFactory = null;
+                #endregion
+
+
+
+                public string SelectedValuePath
+                {
+                    get { return _SelectedValuePathLocator(this).Value; }
+                    set { _SelectedValuePathLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property string SelectedValuePath Setup
+                protected Property<string> _SelectedValuePath = new Property<string> { LocatorFunc = _SelectedValuePathLocator };
+                static Func<BindableBase, ValueContainer<string>> _SelectedValuePathLocator = RegisterContainerLocator<string>("SelectedValuePath", model => model.Initialize("SelectedValuePath", ref model._SelectedValuePath, ref _SelectedValuePathLocator, _SelectedValuePathDefaultValueFactory));
+                static Func<string> _SelectedValuePathDefaultValueFactory = null;
+                #endregion
+
+
+                public object SelectedValue
+                {
+                    get { return _SelectedValueLocator(this).Value; }
+                    set { _SelectedValueLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property object SelectedValue Setup
+                protected Property<object> _SelectedValue = new Property<object> { LocatorFunc = _SelectedValueLocator };
+                static Func<BindableBase, ValueContainer<object>> _SelectedValueLocator = RegisterContainerLocator<object>("SelectedValue", model => model.Initialize("SelectedValue", ref model._SelectedValue, ref _SelectedValueLocator, _SelectedValueDefaultValueFactory));
+                static Func<object> _SelectedValueDefaultValueFactory = null;
+                #endregion
+
+
+
+                public ObservableCollection<T> Items
+                {
+                    get { return _ItemsLocator(this).Value; }
+                    set { _ItemsLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property ObservableCollection<T>  Items Setup
+                protected Property<ObservableCollection<T>> _Items = new Property<ObservableCollection<T>> { LocatorFunc = _ItemsLocator };
+                static Func<BindableBase, ValueContainer<ObservableCollection<T>>> _ItemsLocator = RegisterContainerLocator<ObservableCollection<T>>("Items", model => model.Initialize("Items", ref model._Items, ref _ItemsLocator, _ItemsDefaultValueFactory));
+                static Func<ObservableCollection<T>> _ItemsDefaultValueFactory = () => new ObservableCollection<T>();
+                #endregion
+
+
+
+                public int SelectedIndex
+                {
+                    get { return _SelectedIndexLocator(this).Value; }
+                    set { _SelectedIndexLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property int SelectedIndex Setup
+                protected Property<int> _SelectedIndex = new Property<int> { LocatorFunc = _SelectedIndexLocator };
+                static Func<BindableBase, ValueContainer<int>> _SelectedIndexLocator = RegisterContainerLocator<int>("SelectedIndex", model => model.Initialize("SelectedIndex", ref model._SelectedIndex, ref _SelectedIndexLocator, _SelectedIndexDefaultValueFactory));
+                static Func<int> _SelectedIndexDefaultValueFactory = null;
+                #endregion
+
+
+
+                public T SelectedItem
+                {
+                    get { return _SelectedItemLocator(this).Value; }
+                    set { _SelectedItemLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property T SelectedItem Setup
+                protected Property<T> _SelectedItem = new Property<T> { LocatorFunc = _SelectedItemLocator };
+                static Func<BindableBase, ValueContainer<T>> _SelectedItemLocator = RegisterContainerLocator<T>("SelectedItem", model => model.Initialize("SelectedItem", ref model._SelectedItem, ref _SelectedItemLocator, _SelectedItemDefaultValueFactory));
+                static Func<T> _SelectedItemDefaultValueFactory = null;
+                #endregion
+
+
+                public IList SelectedItems
+                {
+                    get
                     {
-                        dynamic x = BindedTo;
-                        return x.SelectedItems as IList;
+                        if (BindedTo != null)
+                        {
+                            dynamic x = BindedTo;
+                            return x.SelectedItems as IList;
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
-                    else
+                }
+
+
+
+
+            }
+        }
+
+
+        namespace Tree
+        {
+            public interface ITreeItem<out TNodeValue, TState>
+            {
+                TNodeValue Value { get; }
+                TState State { get; set; }
+                ITreeItem<Object, TState> Parent { get; }
+                ICollection<ITreeItem<object, TState>> Children { get; }
+                Type NodeValueType { get; }
+            }
+
+
+
+            //[DataContract(IsReference=true) ] //if you want
+            public class CommonTreeItemModel<TNodeValue, TState, TSubType> :
+                BindableBase<TSubType>,
+                ITreeItem<TNodeValue, TState>
+                where TSubType : CommonTreeItemModel<TNodeValue, TState, TSubType>
+            {
+                public CommonTreeItemModel()
+                {
+
+                }
+
+                public Type NodeValueType
+                {
+                    get
                     {
-                        return null;
+                        return typeof(TNodeValue);
                     }
+                }
+
+                public TNodeValue Value
+                {
+                    get { return _ValueLocator(this).Value; }
+                    set { _ValueLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property TNodeValue Value Setup
+                protected Property<TNodeValue> _Value = new Property<TNodeValue> { LocatorFunc = _ValueLocator };
+                static Func<BindableBase, ValueContainer<TNodeValue>> _ValueLocator = RegisterContainerLocator<TNodeValue>("Value", model => model.Initialize("Value", ref model._Value, ref _ValueLocator, _ValueDefaultValueFactory));
+                static Func<TNodeValue> _ValueDefaultValueFactory = null;
+                #endregion
+
+
+
+                public TState State
+                {
+                    get { return _StateLocator(this).Value; }
+                    set { _StateLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property TState State Setup
+                protected Property<TState> _State = new Property<TState> { LocatorFunc = _StateLocator };
+                static Func<BindableBase, ValueContainer<TState>> _StateLocator = RegisterContainerLocator<TState>("State", model => model.Initialize("State", ref model._State, ref _StateLocator, _StateDefaultValueFactory));
+                static Func<TState> _StateDefaultValueFactory = null;
+                #endregion
+
+
+
+                public ITreeItem<object, TState> Parent
+                {
+                    get { return _ParentLocator(this).Value; }
+                    set { _ParentLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property INode<object, TState> Parent Setup
+                protected Property<ITreeItem<object, TState>> _Parent = new Property<ITreeItem<object, TState>> { LocatorFunc = _ParentLocator };
+                static Func<BindableBase, ValueContainer<ITreeItem<object, TState>>> _ParentLocator = RegisterContainerLocator<ITreeItem<object, TState>>("Parent", model => model.Initialize("Parent", ref model._Parent, ref _ParentLocator, _ParentDefaultValueFactory));
+                static Func<ITreeItem<object, TState>> _ParentDefaultValueFactory = null;
+                #endregion
+
+
+
+
+                public ObservableCollection<ITreeItem<object, TState>> Children
+                {
+                    get { return _ChildrenLocator(this).Value; }
+                    set { _ChildrenLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property ObservableCollection<ITreeItem<object,TState >> Children Setup
+                protected Property<ObservableCollection<ITreeItem<object, TState>>> _Children = new Property<ObservableCollection<ITreeItem<object, TState>>> { LocatorFunc = _ChildrenLocator };
+                static Func<BindableBase, ValueContainer<ObservableCollection<ITreeItem<object, TState>>>> _ChildrenLocator = RegisterContainerLocator<ObservableCollection<ITreeItem<object, TState>>>("Children", model => model.Initialize("Children", ref model._Children, ref _ChildrenLocator, _ChildrenDefaultValueFactory));
+                static Func<ObservableCollection<ITreeItem<object, TState>>> _ChildrenDefaultValueFactory = null;
+                #endregion
+
+
+
+
+                ICollection<ITreeItem<object, TState>> ITreeItem<TNodeValue, TState>.Children
+                {
+                    get { return Children; }
                 }
             }
 
 
 
+            //[DataContract(IsReference=true) ] //if you want
+            public class TreeViewItemState : BindableBase<TreeViewItemState>
+            {
+                public TreeViewItemState()
+                {
 
+
+                }
+
+                public bool IsSelected
+                {
+                    get { return _IsSelectedLocator(this).Value; }
+                    set { _IsSelectedLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property bool IsSelected Setup
+                protected Property<bool> _IsSelected = new Property<bool> { LocatorFunc = _IsSelectedLocator };
+                static Func<BindableBase, ValueContainer<bool>> _IsSelectedLocator = RegisterContainerLocator<bool>("IsSelected", model => model.Initialize("IsSelected", ref model._IsSelected, ref _IsSelectedLocator, _IsSelectedDefaultValueFactory));
+                static Func<bool> _IsSelectedDefaultValueFactory = null;
+                #endregion
+
+
+                public bool IsChecked
+                {
+                    get { return _IsCheckedLocator(this).Value; }
+                    set { _IsCheckedLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property bool IsChecked Setup
+                protected Property<bool> _IsChecked = new Property<bool> { LocatorFunc = _IsCheckedLocator };
+                static Func<BindableBase, ValueContainer<bool>> _IsCheckedLocator = RegisterContainerLocator<bool>("IsChecked", model => model.Initialize("IsChecked", ref model._IsChecked, ref _IsCheckedLocator, _IsCheckedDefaultValueFactory));
+                static Func<bool> _IsCheckedDefaultValueFactory = null;
+                #endregion
+
+
+                public bool CanBeSelected
+                {
+                    get { return _CanBeSelectedLocator(this).Value; }
+                    set { _CanBeSelectedLocator(this).SetValueAndTryNotify(value); }
+                }
+                #region Property bool CanBeSelected Setup
+                protected Property<bool> _CanBeSelected = new Property<bool> { LocatorFunc = _CanBeSelectedLocator };
+                static Func<BindableBase, ValueContainer<bool>> _CanBeSelectedLocator = RegisterContainerLocator<bool>("CanBeSelected", model => model.Initialize("CanBeSelected", ref model._CanBeSelected, ref _CanBeSelectedLocator, _CanBeSelectedDefaultValueFactory));
+                static Func<bool> _CanBeSelectedDefaultValueFactory = null;
+                #endregion
+
+
+
+
+            }
+
+            public class TreeViewItemModel<TValue> : CommonTreeItemModel<TValue, TreeViewItemState, TreeViewItemModel<TValue>>
+            {
+
+            }
 
         }
 
-        /// <summary>
-        /// This pattern is craated for
-        /// </summary>
-        /// <typeparam name="TParent"></typeparam>
-        /// <typeparam name="TThis"></typeparam>
-        /// <typeparam name="TChildren"></typeparam>
-        /// <typeparam name="TState"></typeparam>
-        public class ParentChildrenView<TParent, TThis, TChildren, TState> : BindableBase<ParentChildrenView<TParent, TThis, TChildren, TState>>
-        {
-
-            public TState State
-            {
-                get { return _StateLocator(this).Value; }
-                set { _StateLocator(this).SetValueAndTryNotify(value); }
-            }
-            #region Property TState State Setup
-            protected Property<TState> _State = new Property<TState> { LocatorFunc = _StateLocator };
-            static Func<BindableBase, ValueContainer<TState>> _StateLocator = RegisterContainerLocator<TState>("State", model => model.Initialize("State", ref model._State, ref _StateLocator, _StateDefaultValueFactory));
-            static Func<TState> _StateDefaultValueFactory = null;
-            #endregion
 
 
-            public TParent Parent
-            {
-                get { return _ParentLocator(this).Value; }
-                set { _ParentLocator(this).SetValueAndTryNotify(value); }
-            }
-            #region Property TParent  Parent Setup
-            protected Property<TParent> _Parent = new Property<TParent> { LocatorFunc = _ParentLocator };
-            static Func<BindableBase, ValueContainer<TParent>> _ParentLocator = RegisterContainerLocator<TParent>("Parent", model => model.Initialize("Parent", ref model._Parent, ref _ParentLocator, _ParentDefaultValueFactory));
-            static Func<TParent> _ParentDefaultValueFactory = null;
-            #endregion
-
-
-            public TThis This
-            {
-                get { return _ThisLocator(this).Value; }
-                set { _ThisLocator(this).SetValueAndTryNotify(value); }
-            }
-            #region Property TThis This Setup
-            protected Property<TThis> _This = new Property<TThis> { LocatorFunc = _ThisLocator };
-            static Func<BindableBase, ValueContainer<TThis>> _ThisLocator = RegisterContainerLocator<TThis>("This", model => model.Initialize("This", ref model._This, ref _ThisLocator, _ThisDefaultValueFactory));
-            static Func<TThis> _ThisDefaultValueFactory = null;
-            #endregion
-
-
-
-            public ObservableCollection<TChildren> Children
-            {
-                get { return _ChildrenLocator(this).Value; }
-                set { _ChildrenLocator(this).SetValueAndTryNotify(value); }
-            }
-            #region Property ObservableCollection<TChildren> Children Setup
-            protected Property<ObservableCollection<TChildren>> _Children = new Property<ObservableCollection<TChildren>> { LocatorFunc = _ChildrenLocator };
-            static Func<BindableBase, ValueContainer<ObservableCollection<TChildren>>> _ChildrenLocator = RegisterContainerLocator<ObservableCollection<TChildren>>("Children", model => model.Initialize("Children", ref model._Children, ref _ChildrenLocator, _ChildrenDefaultValueFactory));
-            static Func<ObservableCollection<TChildren>> _ChildrenDefaultValueFactory = null;
-            #endregion
-
-
-        }
 
 
 

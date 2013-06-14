@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-    <Name>MVVM-Sidekick Blank WPF 4.5 Application</Name>
-    <Description>A Blank Windows Presentation Framework 4.5 Application template works with MVVM Sidekick</Description>
+    <Name>MVVM-Sidekick Blank WPF 4 Application</Name>
+    <Description>A Blank Windows Presentation Framework 4.0 Application template works with MVVM Sidekick</Description>
     <Icon>MVVMSidekickApplication.WPF.ico</Icon>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType>
     </ProjectSubType>
-    <RequiredFrameworkVersion>4.5</RequiredFrameworkVersion>
+    <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
     <SortOrder>1</SortOrder>
     <TemplateID>Microsoft.CS.WPF.MVVMSidekickBlankApp</TemplateID>
     <TemplateGroupID>Windows</TemplateGroupID>
@@ -48,7 +48,9 @@
   <WizardData>
     <packages repository="extension"
           repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
-
+      <package id="Microsoft.Bcl" version="1.0.19" />
+      <package id="Microsoft.Bcl.Async" version="1.0.16" />
+      <package id="Microsoft.Bcl.Build" version="1.0.7" />
       <package id="Rx-Core" version="2.1.30214.0"  />
       <package id="Rx-Interfaces" version="2.1.30214.0"  />
       <package id="Rx-Linq" version="2.1.30214.0"  />

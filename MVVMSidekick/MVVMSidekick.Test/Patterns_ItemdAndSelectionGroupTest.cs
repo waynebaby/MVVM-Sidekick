@@ -4,15 +4,16 @@ using System.Windows.Controls;
 using MVVMSidekick.Collections;
 using System.Collections.Generic;
 using MVVMSidekick.Patterns;
+using MVVMSidekick.Patterns.ItemsAndSelection;
 
 namespace MVVMSidekick.Test
 {
     [TestClass]
-    public class ObservableItemdAndSelectionGroupsTest
+    public class Patterns_ItemdAndSelectionGroupTest
     {
-        ObservableItemsAndSelectionGroup<string> CreateSampleGroup()
+        ItemsAndSelectionGroup<string> CreateSampleGroup()
         {
-            return new ObservableItemsAndSelectionGroup<string>()
+            return new ItemsAndSelectionGroup<string>()
             {
                 Items = new System.Collections.ObjectModel.ObservableCollection<string> 
                 { 
@@ -31,7 +32,7 @@ namespace MVVMSidekick.Test
         {
             var list = CreateSampleGroup();
             var listbox = new ListBox();
-            listbox.SetValue(ObservableItemsAndSelectionGroup.ItemsAndSelectionGroupProperty, list);
+            listbox.SetValue(ItemsAndSelectionGroup.ItemsAndSelectionGroupProperty, list);
             list.SelectionMode = SelectionMode.Multiple;
             list.SelectedIndex = 0;
 

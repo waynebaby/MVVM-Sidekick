@@ -161,13 +161,13 @@
             事件数据
             </summary>
         </member>
-        <member name="T:MVVMSidekick.Patterns.ObservableItemsAndSelectionGroup">
+        <member name="T:MVVMSidekick.Patterns.ItemsAndSelection.ItemsAndSelectionGroup">
             <summary>
             A model that can bind to a ItemsControl just like ListBox or List View.  
             Use ItemSelectionGroupProperty to bind it with single set.
             </summary>
         </member>
-        <member name="T:MVVMSidekick.Patterns.IObservableItemsAndSelectionGroup`3">
+        <member name="T:MVVMSidekick.Patterns.ItemsAndSelection.IItemsAndSelectionGroup`3">
             <summary>
             The abstraction of Items AndS electionGroup
             </summary>
@@ -412,15 +412,6 @@
             <para>每个属性类型独占的一个专门的类型缓存。</para>
             </summary>
             <typeparam name="TProperty"></typeparam>
-        </member>
-        <member name="T:MVVMSidekick.Patterns.ParentChildrenView`4">
-            <summary>
-            This pattern is craated for
-            </summary>
-            <typeparam name="TParent"></typeparam>
-            <typeparam name="TThis"></typeparam>
-            <typeparam name="TChildren"></typeparam>
-            <typeparam name="TState"></typeparam>
         </member>
         <member name="M:MVVMSidekick.Reactive.MVVMRxExtensions.CreatePropertyChangedObservable(MVVMSidekick.ViewModels.BindableBase)">
             <summary>
