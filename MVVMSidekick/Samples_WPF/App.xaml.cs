@@ -16,7 +16,8 @@ namespace Samples
         public App()
         {
 
-            Samples.Startups.StartupFunctions .ConfigCalculator();
+            Samples.Startups.StartupFunctions .ConfigAll();
+
         }
     }
 }

@@ -9,7 +9,8 @@
     </mvvm:MVVMWindow.Resources>
 
     <Grid x:Name="grid" DataContext="{StaticResource DesignVM}">
-        <Button Content="{Binding CommandStartCalculator.Resource}" HorizontalAlignment="Left" Height="157" Margin="85,68,0,0" VerticalAlignment="Top" Width="341" Command="{Binding CommandStartCalculator}"/>
+        <Button Content="{Binding CommandStartCalculator}" HorizontalAlignment="Left" Height="68" Margin="85,68,0,0" VerticalAlignment="Top" Width="341" Command="{Binding CommandStartCalculator}"/>
+        <Button Content="{Binding CommandStartTree}" HorizontalAlignment="Left" Height="68" Margin="85,162,0,0" VerticalAlignment="Top" Width="341" Command="{Binding CommandStartTree}"/>
 
     </Grid>
 </mvvm:MVVMWindow>

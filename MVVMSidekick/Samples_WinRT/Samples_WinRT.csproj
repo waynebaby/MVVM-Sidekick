@@ -111,6 +111,9 @@
     <Compile Include="..\samples_viewmodels\Index_Model.cs">
       <Link>ViewModels\Index_Model.cs</Link>
     </Compile>
+    <Compile Include="..\Samples_ViewModels\Tree_Model.cs">
+      <Link>ViewModels\Tree_Model.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

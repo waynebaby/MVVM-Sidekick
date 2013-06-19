@@ -13,26 +13,26 @@ namespace MVVMSidekick.Test
     [TestClass]
     public class Patterns_TreeTest
     {
-        TreeViewItemModel<string> CreateSampleGroup()
-        {
-            return new TreeViewItemModel<string>()
-            {
-                Children = new ObservableCollection<ITreeItem<object, TreeViewItemState>>
-                (
+        //TreeViewItemModel<string> CreateSampleGroup()
+        //{
+        //    return new TreeViewItemModel<string>()
+        //    {
+        //        Children = new ObservableCollection<ITreeItem<object, TreeViewItemState>>
+        //        (
 
-                   Enumerable.Range(0, 15)
-                   .Select(
-                       i =>
-                        new TreeViewItemModel<int> { Value = i }
-                   )
-                   .Cast<ITreeItem<object, TreeViewItemState>>()
+        //           Enumerable.Range(0, 15)
+        //           .Select(
+        //               i =>
+        //                new TreeViewItemModel<int> { Value = i }
+        //           )
+        //           .Cast<ITreeItem<object, TreeViewItemState>>()
 
-                )
-
-
-            };
+        //        )
 
 
-        }
+        //    };
+
+
+        //}
     }
 }

@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator_Model.cs" />
+    <Compile Include="Tree_Model.cs" />
     <Compile Include="Index_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />

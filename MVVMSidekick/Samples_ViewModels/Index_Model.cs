@@ -142,6 +142,33 @@ namespace Samples.ViewModels
         #endregion
 
 
+#if !(NETFX_CORE||WINDOWS_PHONE_8)
+
+        public CommandModel<ReactiveCommand, String> CommandStartTree
+        {
+            get { return _CommandStartTreeLocator(this).Value; }
+            set { _CommandStartTreeLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandStartTree Setup
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandStartTree = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandStartTreeLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandStartTreeLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandStartTree", model => model.Initialize("CommandStartTree", ref model._CommandStartTree, ref _CommandStartTreeLocator, _CommandStartTreeDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandStartTreeDefaultValueFactory =
+            model =>
+            {
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                 var vm = CastToCurrentType(model);
+                cmd
+                    .Subscribe(
+                    async _ =>
+                    {
+                        await vm.StageManager.DefaultStage.Show<Tree_Model >();
+                    })
+                    .DisposeWith(model); //Config it if needed
+                return cmd.CreateCommandModel("StartTree");
+            };
+        #endregion
+#endif
+
 
     }
 

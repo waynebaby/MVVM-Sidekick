@@ -9,7 +9,7 @@ namespace Samples.Startups
 {
     public static partial class StartupFunctions
     {
-        public static void ConfigCalculator()
+        public static void ConfigAll()
         {
             ViewModelLocator<Calculator_Model>
                 .Instance
@@ -17,7 +17,16 @@ namespace Samples.Startups
                 .GetViewMapper()
                 .MapToDefault<Calculator>();
 
+#if !(NETFX_CORE||WINDOWS_PHONE_8)
 
+            ViewModelLocator<Tree_Model>
+                .Instance
+                .Register(new Tree_Model())
+                .GetViewMapper()
+                .MapToDefault<Tree>();
+#endif
         }
+
+
     }
 }

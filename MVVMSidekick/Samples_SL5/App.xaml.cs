@@ -31,7 +31,7 @@ namespace Samples
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            Startups.StartupFunctions.ConfigCalculator();
+            Startups.StartupFunctions.ConfigAll();
      
             App.Current.RootVisual = new MainPage(null);
 
