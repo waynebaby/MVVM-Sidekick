@@ -35,7 +35,7 @@ namespace Samples
             // Language display initialization
             InitializeLanguage();
 
-            Samples.Startups.StartupFunctions.ConfigAll();
+            Samples.Startups.StartupFunctions.RunAllConfig();
 
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)

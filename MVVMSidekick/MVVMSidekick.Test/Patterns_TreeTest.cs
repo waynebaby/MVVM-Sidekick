@@ -1,6 +1,12 @@
 ﻿using System;
+#if NETFX_CORE
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using System.Windows.Controls;
+#endif
+
 using MVVMSidekick.Collections;
 using System.Collections.Generic;
 using MVVMSidekick.Patterns;

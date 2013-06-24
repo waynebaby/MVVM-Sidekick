@@ -1,5 +1,5 @@
 ﻿using $safeprojectname$.ViewModels;
-using MVVMSidekick.EventRouter;
+using MVVMSidekick.EventRouting;
 using MVVMSidekick.Views;
 using System;
 using System.Collections.Generic;

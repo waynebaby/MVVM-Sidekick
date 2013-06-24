@@ -22,6 +22,7 @@ cmd /c nuget.exe update -Self
 echo.
 echo Creating package...
 nuget.exe pack %1.nuspec -Verbose -Version %2
+rem copy %1.%2.nupkg  ..\NugetPrivateSource\Packages
 
 :: Check if package should be published
 IF /I "%3"=="Publish" goto :publish

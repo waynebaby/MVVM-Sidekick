@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -77,8 +80,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
-BuildPublishPackage.cmd MVVM-Sidekick 1.1.5.2
-
+BuildPublishPackage.cmd MVVM-Sidekick 1.1.5.3
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
@@ -102,9 +104,6 @@ del src\samples.zip
 7z a src\Samples.zip ..\..\.nuget
 7z a src\Samples.zip ..\..\Samples.sln
 
-rd packages /s /q
-md packages
-xcopy ..\..\packages\Microsoft.Bcl.Build.1.0.7 packages\Microsoft.Bcl.Build.1.0.7  /i /y
 </PreBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

@@ -302,7 +302,9 @@ namespace MVVMSidekick
                 public T SelectedItem
                 {
                     get { return _SelectedItemLocator(this).Value; }
-                    set { _SelectedItemLocator(this).SetValueAndTryNotify(value); }
+                    set { _SelectedItemLocator(this).SetValueAndTryNotify(value);
+                    base.RaisePropertyChanged(() => new PropertyChangedEventArgs("SelectedItems"), "SelectedItems");
+                    }
                 }
                 #region Property T SelectedItem Setup
                 protected Property<T> _SelectedItem = new Property<T> { LocatorFunc = _SelectedItemLocator };

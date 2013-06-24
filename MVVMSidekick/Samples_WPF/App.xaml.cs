@@ -16,7 +16,7 @@ namespace Samples
         public App()
         {
 
-            Samples.Startups.StartupFunctions .ConfigAll();
+            Samples.Startups.StartupFunctions.RunAllConfig();
 
         }
     }

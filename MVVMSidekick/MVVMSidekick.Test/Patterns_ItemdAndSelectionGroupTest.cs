@@ -1,10 +1,19 @@
 ﻿using System;
+#if NETFX_CORE
+
+using Windows.UI.Xaml.Controls;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using System.Windows.Controls;
+#endif
 using MVVMSidekick.Collections;
 using System.Collections.Generic;
 using MVVMSidekick.Patterns;
 using MVVMSidekick.Patterns.ItemsAndSelection;
+
+
 
 namespace MVVMSidekick.Test
 {
@@ -26,8 +35,12 @@ namespace MVVMSidekick.Test
 
         }
 
+        #if NETFX_CORE
 
+        [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethodAttribute]
+#else
         [TestMethod]
+#endif
         public void TestWPListBoxFBinding()
         {
             var list = CreateSampleGroup();
@@ -46,5 +59,32 @@ namespace MVVMSidekick.Test
 
 
         }
+
+#if NETFX_CORE
+
+        [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethodAttribute]
+#else
+        [TestMethod]
+#endif
+        public void TestWPComboFBinding()
+        {
+            var list = CreateSampleGroup();
+            var combo = new ComboBox ();
+            combo.SetValue(ItemsAndSelectionGroup.ItemsAndSelectionGroupProperty, list);
+  
+            list.SelectedIndex = 0;
+
+            Assert.AreEqual(combo.Items.Count, 3);
+
+            Assert.AreEqual(list.SelectedItem, combo.SelectedItem);
+            combo.SelectedIndex = 1;
+            Assert.AreEqual(list.SelectedIndex, combo.SelectedIndex);
+            Assert.AreEqual(list.SelectedItem, combo.SelectedItem);
+
+
+
+        }
+
+
     }
 }
