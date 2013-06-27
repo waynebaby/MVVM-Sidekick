@@ -33,7 +33,16 @@ namespace Samples
         public ListsAndItemsPattern()
             : base(null)
         {
-            this.InitializeComponent();
+            try
+            {
+                this.InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
+        
         }
         public ListsAndItemsPattern(ListsAndItemsPattern_Model model)
             : base(model)

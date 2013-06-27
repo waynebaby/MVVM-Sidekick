@@ -76,121 +76,109 @@ namespace MVVMSidekick
             {
 
 
-                public static IItemsAndSelectionGroup<object, ICollection, IList> GetItemSelectionGroup(DependencyObject obj)
-                {
-                    return (IItemsAndSelectionGroup<object, ICollection, IList>)obj.GetValue(ItemsAndSelectionGroupProperty);
-                }
+//                public static Object GetItemSelectionGroup(DependencyObject obj)
+//                {
+//                    return (Object)obj.GetValue(ItemsAndSelectionGroupProperty);
+//                }
 
-                public static void SetItemSelectionGroup(DependencyObject obj, IItemsAndSelectionGroup<object, ICollection, IList> value)
-                {
-                    obj.SetValue(ItemsAndSelectionGroupProperty, value);
-                }
+//                public static void SetItemSelectionGroup(DependencyObject obj, Object value)
+//                {
+//                    obj.SetValue(ItemsAndSelectionGroupProperty, value);
+//                }
 
-                public static readonly DependencyProperty ItemsAndSelectionGroupProperty =
-                    DependencyProperty.RegisterAttached("ItemsAndSelectionGroup", typeof(IItemsAndSelectionGroup<object, ICollection, IList>), typeof(ItemsAndSelectionGroup), new PropertyMetadata(null,
-                        (o, s) =>
-                        {
-                            var ls = o as ItemsControl;
-                            if (ls == null)
-                            {
-                                return;
-                            }
-                            var vm = s.NewValue as IItemsAndSelectionGroup<object, ICollection, IList>;
-                            if (vm == null)
-                            {
-                                return;
-                            }
+//                public static readonly DependencyProperty ItemsAndSelectionGroupProperty =
+//                    DependencyProperty.RegisterAttached("ItemsAndSelectionGroup", typeof(Object), typeof(ItemsAndSelectionGroup), new PropertyMetadata(null,
+//                        (o, s) =>
+//                        {
+//                            var ls = o as ItemsControl;
+//                            if (ls == null)
+//                            {
+//                                return;
+//                            }
+//                            dynamic  vm = s.NewValue ;
+//                            if (vm == null)
+//                            {
+//                                return;
+//                            }
 
-                            vm.BindedTo = ls;
-                            var itemsBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.OneWay,
-                                Path = new PropertyPath(
-                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
-                                        x => x.Items))
-                            };
+//                            vm.BindedTo = ls;
+//                            var itemsBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.OneWay,
+//                                Path = new PropertyPath("Items")
+//                            };
 
-                            BindingOperations.SetBinding(ls, ItemsControl.ItemsSourceProperty, itemsBinding);
+//                            BindingOperations.SetBinding(ls, ItemsControl.ItemsSourceProperty, itemsBinding);
 
 
 
-                            if (!(ls is Selector))
-                            {
-                                return;
-                            }
+//                            if (!(ls is Selector))
+//                            {
+//                                return;
+//                            }
 
 
 
-                            var selectedBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.TwoWay,
-                                Path = new PropertyPath(
-                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
-                                        x => x.SelectedItem))
-                            };
+//                            var selectedBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.TwoWay,
+//                                Path = new PropertyPath("SelectedItem")
+//                            };
 
-                            BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedBinding);
+//                            BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedBinding);
 
 
-                            var selectedindexBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.TwoWay,
-                                Path = new PropertyPath(
-                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
-                                        x => x.SelectedIndex))
-                            };
+//                            var selectedindexBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.TwoWay,
+//                                Path = new PropertyPath("SelectedIndex")
+//                            };
 
-                            BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty, selectedindexBinding);
+//                            BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty, selectedindexBinding);
 
 
 
-                            var selectedValuePathBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.TwoWay,
-                                Path = new PropertyPath(
-                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
-                                        x => x.SelectedValuePath))
-                            };
+//                            var selectedValuePathBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.TwoWay,
+//                                Path = new PropertyPath("SelectedValuePath")
+//                            };
 
-                            BindingOperations.SetBinding(ls, Selector.SelectedValuePathProperty, selectedValuePathBinding);
+//                            BindingOperations.SetBinding(ls, Selector.SelectedValuePathProperty, selectedValuePathBinding);
 
-                            var selectedValueBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.TwoWay,
-                                Path = new PropertyPath(
-                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
-                                        x => x.SelectedValue))
-                            };
+//                            var selectedValueBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.TwoWay,
+//                                Path = new PropertyPath("SelectedValue")
+//                            };
 
-                            BindingOperations.SetBinding(ls, Selector.SelectedValueProperty, selectedValueBinding);
-#if SILVERLIGHT_5 || WINDOWS_PHONE_8
-                        if (!(ls is ListBox))
-#else
-                            if (!(ls is ListBox) && (!(ls is ListView)))
-#endif
+//                            BindingOperations.SetBinding(ls, Selector.SelectedValueProperty, selectedValueBinding);
+//#if SILVERLIGHT_5 || WINDOWS_PHONE_8
+//                        if (!(ls is ListBox))
+//#else
+//                            if (!(ls is ListBox) && (!(ls is ListView)))
+//#endif
 
-                            {
-                                return;
-                            }
+//                            {
+//                                return;
+//                            }
 
-                            var selectionModeBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.TwoWay,
-                                Path = new PropertyPath(
-                                    ExpressionHelper.GetPropertyName<IItemsAndSelectionGroup<object, ICollection, IList>>(
-                                        x => x.SelectionMode))
-                            };
+//                            var selectionModeBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.TwoWay,
+//                                Path = new PropertyPath("SelectionMode")
+//                            };
 
-                            BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
+//                            BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
 
 
-                        }));
+//                        }));
 
 
 
@@ -205,26 +193,25 @@ namespace MVVMSidekick
             /// <typeparam name="TValue"></typeparam>
             /// <typeparam name="TCollection"></typeparam>
             /// <typeparam name="TList"></typeparam>
-            public interface IItemsAndSelectionGroup<out TValue, out TCollection, out TList>
-                where TList : IList
-                where TCollection : ICollection
+            public interface IItemsAndSelectionGroup
+           
             {
                 FrameworkElement BindedTo { get; set; }
                 string SelectedValuePath { get; set; }
                 SelectionMode SelectionMode { get; set; }
                 Object SelectedValue { get; set; }
-                TCollection Items { get; }
+                IEnumerable  Items { get; }
                 int SelectedIndex { get; }
-                TValue SelectedItem
+                Object  SelectedItem
                 {
                     get;
                 }
-                TList SelectedItems
+                IList  SelectedItems
                 {
                     get;
                 }
             }
-            public class ItemsAndSelectionGroup<T> : BindableBase<ItemsAndSelectionGroup<T>>, IItemsAndSelectionGroup<T, ObservableCollection<T>, IList>
+            public class ItemsAndSelectionGroup<T> : BindableBase<ItemsAndSelectionGroup<T>>, IItemsAndSelectionGroup
             {
 
                 public ItemsAndSelectionGroup()
@@ -332,6 +319,26 @@ namespace MVVMSidekick
 
 
 
+
+
+
+              
+
+                IEnumerable IItemsAndSelectionGroup.Items
+                {
+                    get { return Items; }
+                }
+
+
+                object IItemsAndSelectionGroup.SelectedItem
+                {
+                    get { return SelectedItem; }
+                }
+
+                IList IItemsAndSelectionGroup.SelectedItems
+                {
+                    get { return SelectedItems; }
+                }
             }
         }
 

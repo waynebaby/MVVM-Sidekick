@@ -22,7 +22,20 @@ namespace Samples.ViewModels
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property。
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性
+        public ListsAndItemsPattern_Model() {
+            ItemsGroup.Items.Add("I1");
+            ItemsGroup.Items.Add("I2");
+            ItemsGroup.Items.Add("I3");
 
+            ListGroup.Items.Add("L1");
+            ListGroup.Items.Add("L2");
+            ListGroup.Items.Add("L3");
+
+            ComboGroup.Items.Add("C1");
+            ComboGroup.Items.Add("C2");
+            ComboGroup.Items.Add("C3");
+
+        }
         public String Title
         {
             get { return _TitleLocator(this).Value; }
@@ -60,7 +73,8 @@ namespace Samples.ViewModels
         #region Property MVVMSidekick.Patterns.ItemsAndSelection.ItemsAndSelectionGroup <string> ListGroup Setup
         protected Property<MVVMSidekick.Patterns.ItemsAndSelection.ItemsAndSelectionGroup <string>> _ListGroup = new Property<MVVMSidekick.Patterns.ItemsAndSelection.ItemsAndSelectionGroup <string>> { LocatorFunc = _ListGroupLocator };
         static Func<BindableBase, ValueContainer<MVVMSidekick.Patterns.ItemsAndSelection.ItemsAndSelectionGroup <string>>> _ListGroupLocator = RegisterContainerLocator<MVVMSidekick.Patterns.ItemsAndSelection.ItemsAndSelectionGroup <string>>("ListGroup", model => model.Initialize("ListGroup", ref model._ListGroup, ref _ListGroupLocator, _ListGroupDefaultValueFactory));
-        static Func<MVVMSidekick.Patterns.ItemsAndSelection.ItemsAndSelectionGroup <string>> _ListGroupDefaultValueFactory = null;
+        static Func<MVVMSidekick.Patterns.ItemsAndSelection.ItemsAndSelectionGroup <string>> _ListGroupDefaultValueFactory = 
+            ()=>            new  ItemsAndSelectionGroup <string>()            ;
         #endregion
 
         
@@ -72,7 +86,8 @@ namespace Samples.ViewModels
         #region Property ItemsAndSelectionGroup <string> ComboGroup Setup
         protected Property<ItemsAndSelectionGroup <string>> _ComboGroup = new Property<ItemsAndSelectionGroup <string>> { LocatorFunc = _ComboGroupLocator };
         static Func<BindableBase, ValueContainer<ItemsAndSelectionGroup <string>>> _ComboGroupLocator = RegisterContainerLocator<ItemsAndSelectionGroup <string>>("ComboGroup", model => model.Initialize("ComboGroup", ref model._ComboGroup, ref _ComboGroupLocator, _ComboGroupDefaultValueFactory));
-        static Func<ItemsAndSelectionGroup <string>> _ComboGroupDefaultValueFactory = null;
+        static Func<ItemsAndSelectionGroup <string>> _ComboGroupDefaultValueFactory =
+            () => new ItemsAndSelectionGroup<string>();
         #endregion
 
 
@@ -85,7 +100,8 @@ namespace Samples.ViewModels
         #region Property ItemsAndSelectionGroup <string> ItemsGroup Setup
         protected Property<ItemsAndSelectionGroup <string>> _ItemsGroup = new Property<ItemsAndSelectionGroup <string>> { LocatorFunc = _ItemsGroupLocator };
         static Func<BindableBase, ValueContainer<ItemsAndSelectionGroup <string>>> _ItemsGroupLocator = RegisterContainerLocator<ItemsAndSelectionGroup <string>>("ItemsGroup", model => model.Initialize("ItemsGroup", ref model._ItemsGroup, ref _ItemsGroupLocator, _ItemsGroupDefaultValueFactory));
-        static Func<ItemsAndSelectionGroup <string>> _ItemsGroupDefaultValueFactory = null;
+        static Func<ItemsAndSelectionGroup <string>> _ItemsGroupDefaultValueFactory = 
+            ()=>            new  ItemsAndSelectionGroup <string>()            ;
         #endregion
 
 

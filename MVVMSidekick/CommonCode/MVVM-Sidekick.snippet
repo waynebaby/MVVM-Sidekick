@@ -181,7 +181,13 @@
         static Func<BindableBase,CommandModel<$commandType$, $resourceType$>> _Command$commandName$DefaultValueFactory =
             model => {
                 var cmd=new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-                //cmd.Subscribe (_=>{ } ).DisposeWith(model); //Config it if needed
+                //Config it if you want
+                //var vm = CastToCurrentType(model); //vm instance 
+                //cmd.Subscribe (
+                //  async _=>
+                //  {
+                //  } )
+                //  .DisposeWith(vm); 
                 return cmd.CreateCommandModel("$commandName$"); 
             };
         #endregion

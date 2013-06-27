@@ -9,7 +9,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Samples.ViewModels"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+  
+    >
 
 
 
@@ -19,11 +21,6 @@
         <vm:ListsAndItemsPattern_Model x:Key="DesignVM"/>
     </Page.Resources>
 
-    <!--
-        This grid acts as a root panel for the page that defines two rows:
-        * Row 0 contains the back button and page title
-        * Row 1 contains the rest of the page layout
-    -->
     <Grid Style="{StaticResource LayoutRootStyle}" DataContext="{StaticResource DesignVM}">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
@@ -42,16 +39,47 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Grid />
-            <Grid>
-                
+            <Grid.RowDefinitions>
+                <RowDefinition ></RowDefinition>
+                <RowDefinition ></RowDefinition>
+            </Grid.RowDefinitions>
+                <Grid Grid.Column="1">
+                <!--<ListView patItems:ItemsAndSelectionGroup.ItemSelectionGroup="{Binding ItemsGroup}" />-->
             </Grid>
-            <Grid >
-                
+            <Grid Grid.Column="2" >
+                <!--<ComboBox  patItems:ItemsAndSelectionGroup.ItemSelectionGroup="{Binding ComboGroup}" ></ComboBox>-->
             </Grid>
+            <Grid Grid.Column="3"   DataContext ="{Binding ListGroup }">
+                <ListBox 
+                    ItemsSource="{Binding Items}"
+                    SelectedIndex="{Binding SelectedIndex}" 
+                    SelectedItem="{Binding SelectedItem}" 
+                    SelectedValue="{Binding SelectedValue}" 
+                    SelectedValuePath="{Binding SelectedValuePath}" 
+                    SelectionMode="{Binding SelectionMode}" 
+                   
+                    ></ListBox>
+
+            </Grid>
+            <StackPanel Grid.Row="1"  Grid.Column="1" DataContext="{Binding ListGroup}">
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Width="100">Selected Item</TextBlock><TextBox Text="{Binding SelectedItem, Mode=TwoWay}" ></TextBox>
+                    
+                </StackPanel>
+                    
+            </StackPanel>
+            <StackPanel Grid.Row="1"  Grid.Column="2">
+                
+            </StackPanel>
+            <StackPanel Grid.Row="1"  Grid.Column="3">
+                
+            </StackPanel>
+            
         </Grid>
         <VisualStateManager.VisualStateGroups>
 

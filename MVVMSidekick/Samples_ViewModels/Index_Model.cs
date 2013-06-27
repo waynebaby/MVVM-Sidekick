@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Reflection ;
 namespace Samples.ViewModels
 {
 
@@ -169,7 +169,33 @@ namespace Samples.ViewModels
         #endregion
 #endif
 
+#if NETFX_CORE
+        
+        public CommandModel<ReactiveCommand, String> CommandListTest
+        {
+            get { return _CommandListTestLocator(this).Value; }
+            set { _CommandListTestLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandListTest Setup
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandListTest = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandListTestLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandListTestLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandListTest", model => model.Initialize("CommandListTest", ref model._CommandListTest, ref _CommandListTestLocator, _CommandListTestDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandListTestDefaultValueFactory =
+            model =>
+            {
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                                var vm = CastToCurrentType(model);
+                                cmd
+                                    .Subscribe(
+                                    async _ =>
+                                    {
+                                        
+                                        await vm.StageManager.DefaultStage.Show<ListsAndItemsPattern_Model>();
+                                    }).DisposeWith (vm);
+                return cmd.CreateCommandModel("ListTest");
+            };
+        #endregion
 
+#endif
     }
 
 
