@@ -68,123 +68,192 @@ namespace MVVMSidekick
 
         namespace ItemsAndSelection
         {
-            /// <summary>
-            /// A model that can bind to a ItemsControl just like ListBox or List View.  
-            /// Use ItemSelectionGroupProperty to bind it with single set.
-            /// </summary>
-            public static class ItemsAndSelectionGroup
+//            /// <summary>
+//            /// A model that can bind to a ItemsControl just like ListBox or List View.  
+//            /// Use ItemSelectionGroupProperty to bind it with single set.
+//            /// </summary>
+//            public  class ItemsAndSelectionGroup :DependencyObject 
+//            {
+
+
+
+
+//                public static object  GetItemSelectionGroup(DependencyObject obj)
+//                {
+//                    return (object)obj.GetValue(ItemsAndSelectionGroupProperty);
+//                }
+
+//                public static void SetItemSelectionGroup(DependencyObject obj, object value)
+//                {
+//                    obj.SetValue(ItemsAndSelectionGroupProperty, value);
+//                }
+
+//                public static readonly DependencyProperty ItemsAndSelectionGroupProperty =
+//                    DependencyProperty.RegisterAttached("ItemsAndSelectionGroup", typeof(object), typeof(ItemsAndSelectionGroup), new PropertyMetadata(null,
+//                        (o, s) =>
+//                        {
+//                            dynamic vm =o.GetValue (ItemsAndSelectionGroupProperty);
+
+//                            if (vm is  Binding )
+//                            {
+//                                return;
+//                            }
+
+//                            var ls = o as ItemsControl;
+//                            if (ls == null)
+//                            {
+//                                return;
+//                            }
+               
+                            
+                         
+//                            if (vm == null)
+//                            {
+//                                return;
+//                            }
+
+                            
+
+//                            vm.BindedTo = ls;
+//                            var itemsBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.OneWay,
+//                                Path = new PropertyPath("Items")
+//                            };
+
+//                            BindingOperations.SetBinding(ls, ItemsControl.ItemsSourceProperty, itemsBinding);
+
+
+
+//                            if (!(ls is Selector))
+//                            {
+//                                return;
+//                            }
+
+
+
+//                            var selectedBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.TwoWay,
+//                                Path = new PropertyPath("SelectedItem")
+//                            };
+
+//                            BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedBinding);
+
+
+//                            var selectedindexBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.TwoWay,
+//                                Path = new PropertyPath("SelectedIndex")
+//                            };
+
+//                            BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty, selectedindexBinding);
+
+
+
+//                            var selectedValuePathBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.TwoWay,
+//                                Path = new PropertyPath("SelectedValuePath")
+//                            };
+
+//                            BindingOperations.SetBinding(ls, Selector.SelectedValuePathProperty, selectedValuePathBinding);
+
+//                            var selectedValueBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.TwoWay,
+//                                Path = new PropertyPath("SelectedValue")
+//                            };
+
+//                            BindingOperations.SetBinding(ls, Selector.SelectedValueProperty, selectedValueBinding);
+//#if SILVERLIGHT_5 || WINDOWS_PHONE_8
+//                        if (!(ls is ListBox))
+//#else
+//                            if (!(ls is ListBox) && (!(ls is ListView)))
+//#endif
+
+//                            {
+//                                return;
+//                            }
+
+//                            var selectionModeBinding = new Binding()
+//                            {
+//                                Source = s.NewValue,
+//                                Mode = BindingMode.TwoWay,
+//                                Path = new PropertyPath("SelectionMode")
+//                            };
+
+//                            BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
+
+
+//                        }));
+
+
+
+
+
+
+//            }
+
+
+            public class ElementBinder:DependencyObject 
             {
 
 
-                public static Object GetItemSelectionGroup(DependencyObject obj)
+
+
+                public static ElementBinder GetElementBinder(DependencyObject obj)
                 {
-                    return (Object)obj.GetValue(ItemsAndSelectionGroupProperty);
+                    return (ElementBinder)obj.GetValue(ElementBinderProperty);
                 }
 
-                public static void SetItemSelectionGroup(DependencyObject obj, Object value)
+                public static void SetElementBinder(DependencyObject obj, ElementBinder value)
                 {
-                    obj.SetValue(ItemsAndSelectionGroupProperty, value);
+                    obj.SetValue(ElementBinderProperty, value);
                 }
 
-                public static readonly DependencyProperty ItemsAndSelectionGroupProperty =
-                    DependencyProperty.RegisterAttached("ItemsAndSelectionGroup", typeof(Object), typeof(ItemsAndSelectionGroup), new PropertyMetadata(null,
-                        (o, s) =>
+                // Using a DependencyProperty as the backing store for ElementBinder.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty ElementBinderProperty =
+                    DependencyProperty.RegisterAttached("ElementBinder", typeof(ElementBinder), typeof(ElementBinder), new PropertyMetadata(null,
+                        (o, e) =>
                         {
-                            var ls = o as ItemsControl;
-                            if (ls == null)
+                            if (e.NewValue  is ElementBinder)
                             {
-                                return;
+                                var eb = e.NewValue as ElementBinder;
+                                eb.Element = o ;
                             }
-                            dynamic vm = s.NewValue;
-                            if (vm == null)
-                            {
-                                return;
-                            }
-
-                            vm.BindedTo = ls;
-                            var itemsBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.OneWay,
-                                Path = new PropertyPath("Items")
-                            };
-
-                            BindingOperations.SetBinding(ls, ItemsControl.ItemsSourceProperty, itemsBinding);
+                        
+                        }
 
 
-
-                            if (!(ls is Selector))
-                            {
-                                return;
-                            }
-
-
-
-                            var selectedBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.TwoWay,
-                                Path = new PropertyPath("SelectedItem")
-                            };
-
-                            BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedBinding);
-
-
-                            var selectedindexBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.TwoWay,
-                                Path = new PropertyPath("SelectedIndex")
-                            };
-
-                            BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty, selectedindexBinding);
-
-
-
-                            var selectedValuePathBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.TwoWay,
-                                Path = new PropertyPath("SelectedValuePath")
-                            };
-
-                            BindingOperations.SetBinding(ls, Selector.SelectedValuePathProperty, selectedValuePathBinding);
-
-                            var selectedValueBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.TwoWay,
-                                Path = new PropertyPath("SelectedValue")
-                            };
-
-                            BindingOperations.SetBinding(ls, Selector.SelectedValueProperty, selectedValueBinding);
-#if SILVERLIGHT_5 || WINDOWS_PHONE_8
-                        if (!(ls is ListBox))
-#else
-                            if (!(ls is ListBox) && (!(ls is ListView)))
-#endif
-
-                            {
-                                return;
-                            }
-
-                            var selectionModeBinding = new Binding()
-                            {
-                                Source = s.NewValue,
-                                Mode = BindingMode.TwoWay,
-                                Path = new PropertyPath("SelectionMode")
-                            };
-
-                            BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
-
-
-                        }));
+                        ));
 
 
 
 
 
 
+                public DependencyObject Element
+                {
+                    get { return (DependencyObject)GetValue(ElementProperty); }
+                    set { SetValue(ElementProperty, value); }
+                }
+
+                // Using a DependencyProperty as the backing store for Element.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty ElementProperty =
+                    DependencyProperty.Register("Element", typeof(DependencyObject), typeof(ElementBinder ), new PropertyMetadata(0));
+
+                
+       
+                
+          
+
+                    
             }
 
             /// <summary>
@@ -196,7 +265,7 @@ namespace MVVMSidekick
             public interface IItemsAndSelectionGroup
            
             {
-                FrameworkElement BindedTo { get; set; }
+                DependencyObject BindedTo { get; set; }
                 string SelectedValuePath { get; set; }
                 SelectionMode SelectionMode { get; set; }
                 Object SelectedValue { get; set; }
@@ -220,7 +289,7 @@ namespace MVVMSidekick
 
                 }
 
-                public FrameworkElement BindedTo { get; set; }
+                public DependencyObject BindedTo { get; set; }
 
                 public SelectionMode SelectionMode
                 {
