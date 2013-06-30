@@ -47,13 +47,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Documents", "Documents\Documents.csproj", "{22CF968A-8796-4F24-BAE6-20D05650F5F2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FB751116-11F7-4A3D-A983-C0A29675F3E4}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C5921E6D-635D-4D9B-A1C2-C84661D66CD4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMSidekick.Test", "MVVMSidekick.Test\MVVMSidekick.Test.csproj", "{B72B87F2-532B-47E5-9704-70646968CB39}"

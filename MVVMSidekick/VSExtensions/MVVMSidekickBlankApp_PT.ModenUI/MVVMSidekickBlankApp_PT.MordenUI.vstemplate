@@ -1,6 +1,6 @@
 ﻿<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
-    <Name >MVVM-Sidekick Blank Windows Store App</Name>
+    <Name >MVVM-Sidekick Blank Windows Store App 8.0</Name>
     <Description>A Blank App template works with MVVM Sidekick</Description>    
     <Icon>MVVMSidekickBlankApp_PT.MordenUI.ico</Icon>
     <TemplateID>Microsoft.CS.WinRT.MVVMSidekickBlankApp</TemplateID>
@@ -69,7 +69,7 @@
       <package id="Rx-Linq" version="2.1.30214.0"  />
       <package id="Rx-Main" version="2.1.30214.0"  />
       <package id="Rx-PlatformServices" version="2.1.30214.0"  />
-      <package id="MVVM-Sidekick" version="1.1.5.2"/>
+      <package id="MVVM-Sidekick" version="1.1.5.5"/>
     </packages>
   </WizardData>
 </VSTemplate>

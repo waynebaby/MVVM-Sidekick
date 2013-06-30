@@ -76,109 +76,109 @@ namespace MVVMSidekick
             {
 
 
-//                public static Object GetItemSelectionGroup(DependencyObject obj)
-//                {
-//                    return (Object)obj.GetValue(ItemsAndSelectionGroupProperty);
-//                }
+                public static Object GetItemSelectionGroup(DependencyObject obj)
+                {
+                    return (Object)obj.GetValue(ItemsAndSelectionGroupProperty);
+                }
 
-//                public static void SetItemSelectionGroup(DependencyObject obj, Object value)
-//                {
-//                    obj.SetValue(ItemsAndSelectionGroupProperty, value);
-//                }
+                public static void SetItemSelectionGroup(DependencyObject obj, Object value)
+                {
+                    obj.SetValue(ItemsAndSelectionGroupProperty, value);
+                }
 
-//                public static readonly DependencyProperty ItemsAndSelectionGroupProperty =
-//                    DependencyProperty.RegisterAttached("ItemsAndSelectionGroup", typeof(Object), typeof(ItemsAndSelectionGroup), new PropertyMetadata(null,
-//                        (o, s) =>
-//                        {
-//                            var ls = o as ItemsControl;
-//                            if (ls == null)
-//                            {
-//                                return;
-//                            }
-//                            dynamic  vm = s.NewValue ;
-//                            if (vm == null)
-//                            {
-//                                return;
-//                            }
+                public static readonly DependencyProperty ItemsAndSelectionGroupProperty =
+                    DependencyProperty.RegisterAttached("ItemsAndSelectionGroup", typeof(Object), typeof(ItemsAndSelectionGroup), new PropertyMetadata(null,
+                        (o, s) =>
+                        {
+                            var ls = o as ItemsControl;
+                            if (ls == null)
+                            {
+                                return;
+                            }
+                            dynamic vm = s.NewValue;
+                            if (vm == null)
+                            {
+                                return;
+                            }
 
-//                            vm.BindedTo = ls;
-//                            var itemsBinding = new Binding()
-//                            {
-//                                Source = s.NewValue,
-//                                Mode = BindingMode.OneWay,
-//                                Path = new PropertyPath("Items")
-//                            };
+                            vm.BindedTo = ls;
+                            var itemsBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.OneWay,
+                                Path = new PropertyPath("Items")
+                            };
 
-//                            BindingOperations.SetBinding(ls, ItemsControl.ItemsSourceProperty, itemsBinding);
-
-
-
-//                            if (!(ls is Selector))
-//                            {
-//                                return;
-//                            }
+                            BindingOperations.SetBinding(ls, ItemsControl.ItemsSourceProperty, itemsBinding);
 
 
 
-//                            var selectedBinding = new Binding()
-//                            {
-//                                Source = s.NewValue,
-//                                Mode = BindingMode.TwoWay,
-//                                Path = new PropertyPath("SelectedItem")
-//                            };
-
-//                            BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedBinding);
-
-
-//                            var selectedindexBinding = new Binding()
-//                            {
-//                                Source = s.NewValue,
-//                                Mode = BindingMode.TwoWay,
-//                                Path = new PropertyPath("SelectedIndex")
-//                            };
-
-//                            BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty, selectedindexBinding);
+                            if (!(ls is Selector))
+                            {
+                                return;
+                            }
 
 
 
-//                            var selectedValuePathBinding = new Binding()
-//                            {
-//                                Source = s.NewValue,
-//                                Mode = BindingMode.TwoWay,
-//                                Path = new PropertyPath("SelectedValuePath")
-//                            };
+                            var selectedBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.TwoWay,
+                                Path = new PropertyPath("SelectedItem")
+                            };
 
-//                            BindingOperations.SetBinding(ls, Selector.SelectedValuePathProperty, selectedValuePathBinding);
-
-//                            var selectedValueBinding = new Binding()
-//                            {
-//                                Source = s.NewValue,
-//                                Mode = BindingMode.TwoWay,
-//                                Path = new PropertyPath("SelectedValue")
-//                            };
-
-//                            BindingOperations.SetBinding(ls, Selector.SelectedValueProperty, selectedValueBinding);
-//#if SILVERLIGHT_5 || WINDOWS_PHONE_8
-//                        if (!(ls is ListBox))
-//#else
-//                            if (!(ls is ListBox) && (!(ls is ListView)))
-//#endif
-
-//                            {
-//                                return;
-//                            }
-
-//                            var selectionModeBinding = new Binding()
-//                            {
-//                                Source = s.NewValue,
-//                                Mode = BindingMode.TwoWay,
-//                                Path = new PropertyPath("SelectionMode")
-//                            };
-
-//                            BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
+                            BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedBinding);
 
 
-//                        }));
+                            var selectedindexBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.TwoWay,
+                                Path = new PropertyPath("SelectedIndex")
+                            };
+
+                            BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty, selectedindexBinding);
+
+
+
+                            var selectedValuePathBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.TwoWay,
+                                Path = new PropertyPath("SelectedValuePath")
+                            };
+
+                            BindingOperations.SetBinding(ls, Selector.SelectedValuePathProperty, selectedValuePathBinding);
+
+                            var selectedValueBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.TwoWay,
+                                Path = new PropertyPath("SelectedValue")
+                            };
+
+                            BindingOperations.SetBinding(ls, Selector.SelectedValueProperty, selectedValueBinding);
+#if SILVERLIGHT_5 || WINDOWS_PHONE_8
+                        if (!(ls is ListBox))
+#else
+                            if (!(ls is ListBox) && (!(ls is ListView)))
+#endif
+
+                            {
+                                return;
+                            }
+
+                            var selectionModeBinding = new Binding()
+                            {
+                                Source = s.NewValue,
+                                Mode = BindingMode.TwoWay,
+                                Path = new PropertyPath("SelectionMode")
+                            };
+
+                            BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
+
+
+                        }));
 
 
 
