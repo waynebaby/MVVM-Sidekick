@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Samples.ViewModels"
     mc:Ignorable="d"
-    xmlns:patItems="using:MVVMSidekick.Patterns.ItemsAndSelection"
+    xmlns:patItems="using:MVVMSidekick.Patterns"
     >
 
 
@@ -48,43 +48,53 @@
                 <RowDefinition ></RowDefinition>
                 <RowDefinition ></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid Grid.Column="1"  DataContext ="{Binding ListGroup }">
-                <ListBox 
-                    ItemsSource="{Binding Items,  Mode=TwoWay }"
-                    SelectedIndex="{Binding SelectedIndex,  Mode=TwoWay }" 
-                    SelectedItem="{Binding SelectedItem,   Mode=TwoWay}" 
-                    SelectedValue="{Binding SelectedValue,  Mode=TwoWay}" 
-                    SelectedValuePath="{Binding SelectedValuePath,  Mode=TwoWay}" 
-                    SelectionMode="{Binding SelectionMode,  Mode=TwoWay}" 
-                    
-                    >
-                    <patItems:ElementBinder.ElementBinder>
-                        <patItems:ElementBinder  ></patItems:ElementBinder>
-                    </patItems:ElementBinder.ElementBinder>
-                    
-                </ListBox>
+            <Grid Grid.Column="1"  DataContext ="{Binding ListGroup}">
+                <ListBox  patItems:ElementBinder.Binder="{Binding Binder, Mode=OneWay}"                    />
 
 
             </Grid>
-            <Grid Grid.Column="2"   DataContext ="{Binding ListGroup }">
-                <!--<ComboBox  patItems:ItemsAndSelectionGroup.ItemSelectionGroup="{Binding ComboGroup}" ></ComboBox>-->
+            <Grid Grid.Column="2"   DataContext ="{Binding ComboGroup}">
+                <ComboBox  patItems:ElementBinder.Binder="{Binding Binder, Mode=OneWay}" ></ComboBox>
             </Grid>
             <Grid Grid.Column="3"   DataContext ="{Binding ItemsGroup }" >
-                <!--<ListView patItems:ItemsAndSelectionGroup.ItemSelectionGroup="{Binding}" />-->
+                <ListView  patItems:ElementBinder.Binder="{Binding Binder, Mode=OneWay}" SelectionMode="Multiple" />
             </Grid>
-            <StackPanel Grid.Row="1"  Grid.Column="1" DataContext="{Binding ListGroup}">
+            <StackPanel Grid.Row="1" Grid.Column="1" DataContext="{Binding ListGroup}">
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Width="100">Selected Item</TextBlock>
+                    <TextBox Text="{Binding SelectedItem, Mode=TwoWay}" ></TextBox>
+            
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Width="100">Selected Items</TextBlock>
+                    <ListBox  ItemsSource="{Binding SelectedItems}" ></ListBox>
+
+                </StackPanel>
+       
+            </StackPanel>
+            <StackPanel Grid.Row="1"  Grid.Column="2" DataContext="{Binding ComboGroup}">
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Width="100">Selected Item</TextBlock>
                     <TextBox Text="{Binding SelectedItem, Mode=TwoWay}" ></TextBox>
 
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Width="100">Selected Items</TextBlock>
+                    <ListBox  ItemsSource="{Binding SelectedItems}" ></ListBox>
 
+                </StackPanel>
             </StackPanel>
-            <StackPanel Grid.Row="1"  Grid.Column="2">
+            <StackPanel Grid.Row="1"  Grid.Column="3" DataContext="{Binding ItemsGroup}" >
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Width="100">Selected Item</TextBlock>
+                    <TextBox Text="{Binding SelectedItem, Mode=TwoWay}" ></TextBox>
 
-            </StackPanel>
-            <StackPanel Grid.Row="1"  Grid.Column="3">
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Width="100">Selected Items</TextBlock>
+                    <ListBox  ItemsSource="{Binding SelectedItems}" ></ListBox>
 
+                </StackPanel>
             </StackPanel>
 
         </Grid>

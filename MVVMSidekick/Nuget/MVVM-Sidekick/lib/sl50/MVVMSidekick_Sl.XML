@@ -161,14 +161,6 @@
             事件数据
             </summary>
         </member>
-        <member name="T:MVVMSidekick.Patterns.ItemsAndSelection.IItemsAndSelectionGroup">
-            <summary>
-            The abstraction of Items AndS electionGroup
-            </summary>
-            <typeparam name="TValue"></typeparam>
-            <typeparam name="TCollection"></typeparam>
-            <typeparam name="TList"></typeparam>
-        </member>
         <member name="T:MVVMSidekick.ViewModels.BindableBase`1">
             <summary>
             <para>Model type with detail subtype type paremeter.</para>
