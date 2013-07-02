@@ -1,47 +1,26 @@
-﻿<common:LayoutAwarePage   
-    x:Name="pageRoot"
-    x:Class="Samples.ListsAndItemsPattern"    
+﻿<mvvm:MVVMPage x:Class="Samples.ListsAndItemsPattern"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Samples"
-    xmlns:mvvm="using:MVVMSidekick.Views"
-    xmlns:common="using:Samples.Common"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:Samples.ViewModels"
     mc:Ignorable="d"
-    xmlns:patItems="using:MVVMSidekick.Patterns"
-    >
+    xmlns:patItems="clr-namespace:MVVMSidekick.Patterns;assembly=MVVMSidekick_Sl"
+    d:DesignHeight="300" d:DesignWidth="400"
+    xmlns:vm="clr-namespace:Samples.ViewModels" 
+    xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Sl">
+    
+    <mvvm:MVVMPage.Resources>
+        <vm:ListsAndItemsPattern_Model x:Key="DesignVM" />
+    </mvvm:MVVMPage.Resources>
 
-
-
-    <Page.Resources>
-        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="AppName">My Application</x:String>
-        <vm:ListsAndItemsPattern_Model x:Key="DesignVM"/>
-    </Page.Resources>
-
-    <Grid Style="{StaticResource LayoutRootStyle}" DataContext="{StaticResource DesignVM}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="140"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <!-- Back button and page title -->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{Binding Title}" Style="{StaticResource PageHeaderTextStyle}"/>
-        </Grid>
+    <Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}" >
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
+            
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -60,10 +39,7 @@
             <Grid Grid.Column="2" Grid.Row="1"   DataContext ="{Binding ComboGroup}">
                 <ComboBox  patItems:ElementBinder.Binder="{Binding Binder, Mode=OneWay}" ></ComboBox>
             </Grid>
-            <TextBlock Grid.Column="3">ListView</TextBlock>
-            <Grid Grid.Column="3" Grid.Row="1"   DataContext ="{Binding ItemsGroup }" >
-                <ListView  patItems:ElementBinder.Binder="{Binding Binder, Mode=OneWay}" SelectionMode="Multiple" />
-            </Grid>
+     
             <StackPanel  Grid.Row="2" Grid.Column="1" DataContext="{Binding ListGroup}" Grid.RowSpan="2">
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Width="100">Selected Item</TextBlock>
@@ -89,18 +65,7 @@
 
                 </StackPanel>
             </StackPanel>
-            <StackPanel Grid.Row="2"  Grid.Column="3" DataContext="{Binding ItemsGroup}" Grid.RowSpan="2" >
-                <StackPanel Orientation="Horizontal" >
-                    <TextBlock Width="100">Selected Item</TextBlock>
-                    <TextBox Text="{Binding SelectedItem, Mode=TwoWay}" ></TextBox>
-
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" >
-                    <TextBlock Width="100">Selected Items</TextBlock>
-                    <ListBox  ItemsSource="{Binding SelectedItems}" ></ListBox>
-
-                </StackPanel>
-            </StackPanel>
+ 
             <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center">
             	<Span Foreground="Black" FontSize="25" FontFamily="Consolas">
             		<Run Text=" "/>
@@ -143,34 +108,6 @@
             	</Span>
             </TextBlock>
         </Grid>
-        <VisualStateManager.VisualStateGroups>
-
-            <!-- Visual states reflect the application's view state -->
-            <VisualStateGroup x:Name="ApplicationViewStates">
-                <VisualState x:Name="FullScreenLandscape"/>
-                <VisualState x:Name="Filled"/>
-
-                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
-                <VisualState x:Name="FullScreenPortrait">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-
-                <!-- The back button and title have different styles when snapped -->
-                <VisualState x:Name="Snapped">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
     </Grid>
-</common:LayoutAwarePage>
+
+</mvvm:MVVMPage>

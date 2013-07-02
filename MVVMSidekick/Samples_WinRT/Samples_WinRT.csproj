@@ -111,6 +111,9 @@
     <Compile Include="..\samples_viewmodels\Index_Model.cs">
       <Link>ViewModels\Index_Model.cs</Link>
     </Compile>
+    <Compile Include="..\Samples_ViewModels\ListsAndItemsPattern_Model.cs">
+      <Link>ViewModels\ListsAndItemsPattern_Model.cs</Link>
+    </Compile>
     <Compile Include="..\Samples_ViewModels\Tree_Model.cs">
       <Link>ViewModels\Tree_Model.cs</Link>
     </Compile>
@@ -134,7 +137,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startups\ListsAndItemsPattern.cs" />
-    <Compile Include="ViewModels\ListsAndItemsPattern_Model.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

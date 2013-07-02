@@ -176,165 +176,9 @@ namespace MVVMSidekick
 
         namespace ItemsAndSelection
         {
-            //            /// <summary>
-            //            /// A model that can bind to a ItemsControl just like ListBox or List View.  
-            //            /// Use ItemSelectionGroupProperty to bind it with single set.
-            //            /// </summary>
-            //            public  class ItemsAndSelectionGroup :DependencyObject 
-            //            {
+        
 
-
-
-
-            //                public static object  GetItemSelectionGroup(DependencyObject obj)
-            //                {
-            //                    return (object)obj.GetValue(ItemsAndSelectionGroupProperty);
-            //                }
-
-            //                public static void SetItemSelectionGroup(DependencyObject obj, object value)
-            //                {
-            //                    obj.SetValue(ItemsAndSelectionGroupProperty, value);
-            //                }
-
-            //                public static readonly DependencyProperty ItemsAndSelectionGroupProperty =
-            //                    DependencyProperty.RegisterAttached("ItemsAndSelectionGroup", typeof(object), typeof(ItemsAndSelectionGroup), new PropertyMetadata(null,
-            //                        (o, s) =>
-            //                        {
-            //                            dynamic vm =o.GetValue (ItemsAndSelectionGroupProperty);
-
-            //                            if (vm is  Binding )
-            //                            {
-            //                                return;
-            //                            }
-
-            //                            var ls = o as ItemsControl;
-            //                            if (ls == null)
-            //                            {
-            //                                return;
-            //                            }
-
-
-
-            //                            if (vm == null)
-            //                            {
-            //                                return;
-            //                            }
-
-
-
-            //                            vm.BindedTo = ls;
-            //                            var itemsBinding = new Binding()
-            //                            {
-            //                                Source = s.NewValue,
-            //                                Mode = BindingMode.OneWay,
-            //                                Path = new PropertyPath("Items")
-            //                            };
-
-            //                            BindingOperations.SetBinding(ls, ItemsControl.ItemsSourceProperty, itemsBinding);
-
-
-
-            //                            if (!(ls is Selector))
-            //                            {
-            //                                return;
-            //                            }
-
-
-
-            //                            var selectedBinding = new Binding()
-            //                            {
-            //                                Source = s.NewValue,
-            //                                Mode = BindingMode.TwoWay,
-            //                                Path = new PropertyPath("SelectedItem")
-            //                            };
-
-            //                            BindingOperations.SetBinding(ls, Selector.SelectedItemProperty, selectedBinding);
-
-
-            //                            var selectedindexBinding = new Binding()
-            //                            {
-            //                                Source = s.NewValue,
-            //                                Mode = BindingMode.TwoWay,
-            //                                Path = new PropertyPath("SelectedIndex")
-            //                            };
-
-            //                            BindingOperations.SetBinding(ls, Selector.SelectedIndexProperty, selectedindexBinding);
-
-
-
-            //                            var selectedValuePathBinding = new Binding()
-            //                            {
-            //                                Source = s.NewValue,
-            //                                Mode = BindingMode.TwoWay,
-            //                                Path = new PropertyPath("SelectedValuePath")
-            //                            };
-
-            //                            BindingOperations.SetBinding(ls, Selector.SelectedValuePathProperty, selectedValuePathBinding);
-
-            //                            var selectedValueBinding = new Binding()
-            //                            {
-            //                                Source = s.NewValue,
-            //                                Mode = BindingMode.TwoWay,
-            //                                Path = new PropertyPath("SelectedValue")
-            //                            };
-
-            //                            BindingOperations.SetBinding(ls, Selector.SelectedValueProperty, selectedValueBinding);
-            //#if SILVERLIGHT_5 || WINDOWS_PHONE_8
-            //                        if (!(ls is ListBox))
-            //#else
-            //                            if (!(ls is ListBox) && (!(ls is ListView)))
-            //#endif
-
-            //                            {
-            //                                return;
-            //                            }
-
-            //                            var selectionModeBinding = new Binding()
-            //                            {
-            //                                Source = s.NewValue,
-            //                                Mode = BindingMode.TwoWay,
-            //                                Path = new PropertyPath("SelectionMode")
-            //                            };
-
-            //                            BindingOperations.SetBinding(ls, ListBox.SelectionModeProperty, selectionModeBinding);
-
-
-            //                        }));
-
-
-
-
-
-
-            //            }
-
-
-
-            ///// <summary>
-            ///// The abstraction of Items AndS electionGroup
-            ///// </summary>
-            ///// <typeparam name="TValue"></typeparam>
-            ///// <typeparam name="TCollection"></typeparam>
-            ///// <typeparam name="TList"></typeparam>
-            //public interface IItemsAndSelectionGroup
-            //{
-            //    FrameworkElement BindedTo { get; }
-            //    string SelectedValuePath { get; set; }
-            //    SelectionMode SelectionMode { get; set; }
-            //    Object SelectedValue { get; set; }
-            //    IEnumerable Items { get; }
-            //    int SelectedIndex { get; }
-            //    Object SelectedItem
-            //    {
-            //        get;
-            //    }
-            //    IList SelectedItems
-            //    {
-            //        get;
-            //    }
-            //}
-
-            public class ItemsAndSelectionGroup<T> : ItemsAndSelectionGroup<T, ObservableCollection<T>>
+            public class ItemsAndSelectionGroup<T> : ItemsAndSelectionGroup<T, ObservableCollection<T>,SelectionMode>
             {
                 static ItemsAndSelectionGroup()
                 {
@@ -343,7 +187,7 @@ namespace MVVMSidekick
                 }
             }
 
-            public class ItemsAndSelectionGroup<T, TCollection> : BindableBase<ItemsAndSelectionGroup<T, TCollection>>
+            public class ItemsAndSelectionGroup<T, TCollection ,TSelectionMode> : BindableBase<ItemsAndSelectionGroup<T, TCollection,TSelectionMode>>
                 where TCollection : ICollection<T>, INotifyCollectionChanged
             {
 
@@ -479,16 +323,18 @@ namespace MVVMSidekick
                 }
 
 
-                public SelectionMode SelectionMode
+                
+                public TSelectionMode SelectionMode
                 {
                     get { return _SelectionModeLocator(this).Value; }
                     set { _SelectionModeLocator(this).SetValueAndTryNotify(value); }
                 }
-                #region Property SelectionMode SelectionMode Setup
-                protected Property<SelectionMode> _SelectionMode = new Property<SelectionMode> { LocatorFunc = _SelectionModeLocator };
-                static Func<BindableBase, ValueContainer<SelectionMode>> _SelectionModeLocator = RegisterContainerLocator<SelectionMode>("SelectionMode", model => model.Initialize("SelectionMode", ref model._SelectionMode, ref _SelectionModeLocator, _SelectionModeDefaultValueFactory));
-                static Func<SelectionMode> _SelectionModeDefaultValueFactory = null;
+                #region Property TSelectionMode SelectionMode Setup
+                protected Property<TSelectionMode> _SelectionMode = new Property<TSelectionMode> { LocatorFunc = _SelectionModeLocator };
+                static Func<BindableBase, ValueContainer<TSelectionMode>> _SelectionModeLocator = RegisterContainerLocator<TSelectionMode>("SelectionMode", model => model.Initialize("SelectionMode", ref model._SelectionMode, ref _SelectionModeLocator, _SelectionModeDefaultValueFactory));
+                static Func<TSelectionMode> _SelectionModeDefaultValueFactory = null;
                 #endregion
+
 
 
 
@@ -574,7 +420,7 @@ namespace MVVMSidekick
                                 return x.SelectedItems;
 
                             }
-                            catch (Exception)
+                            catch (Exception ex)
                             {
 
 

@@ -14,8 +14,8 @@
 
     <Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}" ShowGridLines="True" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="234*"/>
-            <ColumnDefinition Width="67*"/>
+            <ColumnDefinition Width="65*"/>
+            <ColumnDefinition Width="236*"/>
             <ColumnDefinition Width="45*"/>
             <ColumnDefinition Width="54*"/>
         </Grid.ColumnDefinitions>
@@ -28,9 +28,12 @@
         <sdk:Frame  Grid.Row="1" mvvm:StageManager.Beacon="" Grid.ColumnSpan="4" >
             <ProgressBar Minimum="0" Maximum="5" Value="{Binding CountDown}" TextOptions.TextFormattingMode="Display"  />
         </sdk:Frame>
-        <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" Margin="0,0,5.087,0" />
-        <Button Content="{Binding CommandStartTree}" Grid.Column="2" Command="{Binding CommandStartTree}" />
-        <CheckBox IsChecked="{Binding  Content.StageManager.DefaultStage.CanGoBack, ElementName=frame,Mode=OneWay}" Grid.Column="3"></CheckBox>
+        <StackPanel Grid.ColumnSpan="3" Grid.Column="1"  Orientation="Horizontal">
+            <Button Content="{Binding CommandStartCalculator.Resource}" Command="{Binding CommandStartCalculator}"  />
+            <Button Content="{Binding CommandStartTree}" Command="{Binding CommandStartTree}"  />
+            <Button Content="{Binding CommandListTest}" Command="{Binding CommandListTest}"  />
+
+        </StackPanel>
 
     </Grid>
 </mvvm:MVVMControl>
