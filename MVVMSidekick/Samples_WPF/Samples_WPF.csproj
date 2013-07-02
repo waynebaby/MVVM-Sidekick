@@ -84,13 +84,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\Samples_ViewModels\ListsAndItemsPattern_Model.cs">
+      <Link>ViewModels\ListsAndItemsPattern_Model.cs</Link>
+    </Compile>
     <Compile Include="..\Samples_ViewModels\Tree_Model.cs">
       <Link>ViewModels\Tree_Model.cs</Link>
     </Compile>
+    <Compile Include="ListsAndItemsPattern.xaml.cs">
+      <DependentUpon>ListsAndItemsPattern.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StartUps\ListsAndItemsPattern.cs" />
     <Compile Include="Tree.xaml.cs">
       <DependentUpon>Tree.xaml</DependentUpon>
     </Compile>
     <Page Include="Calculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ListsAndItemsPattern.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

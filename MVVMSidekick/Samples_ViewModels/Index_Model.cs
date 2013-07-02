@@ -169,7 +169,6 @@ namespace Samples.ViewModels
         #endregion
 #endif
 
-#if NETFX_CORE || SILVERLIGHT_5 || WINDOWS_PHONE_8
         
         public CommandModel<ReactiveCommand, String> CommandListTest
         {
@@ -195,7 +194,7 @@ namespace Samples.ViewModels
             };
         #endregion
 
-#endif
+
     }
 
 

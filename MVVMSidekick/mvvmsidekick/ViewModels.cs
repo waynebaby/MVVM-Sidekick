@@ -291,7 +291,8 @@ namespace MVVMSidekick
                 {
                     if (_disposeInfos != null)
                     {
-                        var l = _disposeInfos.Select
+                        var l = _disposeInfos.ToList ()
+                            .Select
                             (
                                 info =>
                                 {

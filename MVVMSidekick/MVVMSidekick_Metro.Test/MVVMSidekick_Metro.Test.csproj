@@ -160,6 +160,12 @@
       <HintPath>..\packages\Rx-PlatformServices.2.1.30214.0\lib\NetCore45\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MVVMSidekick_Metro\MVVMSidekick_Metro.csproj">
+      <Project>{f69407b0-9503-4242-85c4-c0b9be28a73f}</Project>
+      <Name>MVVMSidekick_Metro</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

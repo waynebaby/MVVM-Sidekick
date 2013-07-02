@@ -67,43 +67,43 @@
             </StackPanel>
  
             <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center">
-            	<Span Foreground="Black" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="Black" FontSize="15" FontFamily="Consolas">
             		<Run Text=" "/>
             	</Span>
-            	<Span Foreground="Blue" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="Blue" FontSize="15" FontFamily="Consolas">
             		<Run Text="&lt;"/>
             	</Span>
-            	<Span Foreground="#FFA31515" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="#FFA31515" FontSize="15" FontFamily="Consolas">
             		<Run Text="ListBox"/>
             	</Span>
-            	<Span Foreground="Black" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="Black" FontSize="15" FontFamily="Consolas">
             		<Run Text=" "/>
             	</Span>
-            	<Span Foreground="Red" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="Red" FontSize="15" FontFamily="Consolas">
             		<Run Text=" patItems"/>
             	</Span>
-            	<Span Foreground="Blue" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="Blue" FontSize="15" FontFamily="Consolas">
             		<Run Text=":"/>
             	</Span>
-            	<Span Foreground="Red" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="Red" FontSize="15" FontFamily="Consolas">
             		<Run Text="ElementBinder.Binder"/>
             	</Span>
-            	<Span Foreground="Blue" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="Blue" FontSize="15" FontFamily="Consolas">
             		<Run Text="=&quot;{"/>
             	</Span>
-            	<Span Foreground="#FFA31515" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="#FFA31515" FontSize="15" FontFamily="Consolas">
             		<Run Text="Binding"/>
             	</Span>
-            	<Span Foreground="Red" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="Red" FontSize="15" FontFamily="Consolas">
             		<Run Text=" Binder"/>
             	</Span>
-            	<Span Foreground="Blue" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="Blue" FontSize="15" FontFamily="Consolas">
             		<Run Text=","/>
             	</Span>
-            	<Span Foreground="Red" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="Red" FontSize="15" FontFamily="Consolas">
             		<Run Text=" Mode"/>
             	</Span>
-            	<Span Foreground="Blue" FontSize="25" FontFamily="Consolas">
+            	<Span Foreground="Blue" FontSize="15" FontFamily="Consolas">
             		<Run Text="=OneWay}&quot; /&gt;"/>
             	</Span>
             </TextBlock>

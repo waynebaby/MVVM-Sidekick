@@ -80,6 +80,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MVVMSidekick\MVVMSidekick.csproj">
+      <Project>{0d9da5fb-bbfa-46ac-9c18-1253684a7c9a}</Project>
+      <Name>MVVMSidekick</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

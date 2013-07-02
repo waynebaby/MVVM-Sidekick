@@ -21,9 +21,9 @@ namespace MVVMSidekick.Test
     [TestClass]
     public class Patterns_ItemdAndSelectionGroupTest
     {
-        ItemsAndSelectionGroup<string,ObservableCollection<string >> CreateSampleGroup()
+        ItemsAndSelectionGroup<string > CreateSampleGroup()
         {
-            return new ItemsAndSelectionGroup<string, ObservableCollection<string>>
+            return new ItemsAndSelectionGroup<string>
             {
               Items=   new System.Collections.ObjectModel.ObservableCollection<string> 
                 { 
