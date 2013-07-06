@@ -151,7 +151,7 @@ namespace MVVMSidekick
             }
 
 
-#if SILVERLIGHT_5||NET40
+#if SILVERLIGHT_5||NET40||WINDOWS_PHONE_7
             Dictionary<K, V> _shadowDictionary;
             public IDictionary<K, V> Items
             {

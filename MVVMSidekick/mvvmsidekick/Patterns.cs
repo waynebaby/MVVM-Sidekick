@@ -286,7 +286,7 @@ namespace MVVMSidekick
                                  };
 
                                  BindingOperations.SetBinding(ls, Selector.SelectedValueProperty, selectedValueBinding);
-#if SILVERLIGHT_5 || WINDOWS_PHONE_8
+#if SILVERLIGHT_5 || WINDOWS_PHONE_8||WINDOWS_PHONE_7
                                  if (!(ls is ListBox))
 #else
                                  if (!(ls is ListBox) && (!(ls is ListView)))
@@ -416,8 +416,17 @@ namespace MVVMSidekick
 
                             try
                             {
+#if WINDOWS_PHONE_7
+                                var m = BindedTo.GetType().GetProperty("SelectedItems");
+                                if (m!=null)
+                                {
+                                    return m.GetValue(BindedTo,new object [0]) as IEnumerable;
+                                }
+                               
+#else
                                 dynamic x = BindedTo;
                                 return x.SelectedItems;
+#endif
 
                             }
                             catch (Exception ex)

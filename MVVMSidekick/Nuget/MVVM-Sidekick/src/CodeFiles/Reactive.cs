@@ -16,12 +16,12 @@ using MVVMSidekick.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reactive;
-using MVVMSidekick.EventRouting ;
+using MVVMSidekick.EventRouting;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Collections;
-
+using MVVMSidekick.Utilities;
 #if NETFX_CORE
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
@@ -191,6 +191,7 @@ namespace MVVMSidekick
             }
 
         }
+
 
 
 

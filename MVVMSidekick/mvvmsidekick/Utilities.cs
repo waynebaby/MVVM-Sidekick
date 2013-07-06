@@ -70,7 +70,7 @@ namespace MVVMSidekick
 
             public static async Task Yield()
             {
-#if SILVERLIGHT_5
+#if SILVERLIGHT_5||WINDOWS_PHONE_7
             await TaskEx.Yield();
 #elif NET40
             await Task.Factory.StartNew(() => { });
@@ -82,8 +82,8 @@ namespace MVVMSidekick
 
             public static async Task<T> FromResult<T>(T result)
             {
-#if SILVERLIGHT_5
-            return await TaskEx.FromResult(result);
+#if SILVERLIGHT_5||WINDOWS_PHONE_7
+                return await TaskEx.FromResult(result);
 #elif NET40
             return await Task.Factory.StartNew(() => result);
 #else
@@ -95,7 +95,7 @@ namespace MVVMSidekick
             public static async Task Delay(int ms)
             {
 
-#if SILVERLIGHT_5
+#if SILVERLIGHT_5||WINDOWS_PHONE_7
             await TaskEx.Delay(ms);
         
 #elif NET40
@@ -156,7 +156,7 @@ namespace MVVMSidekick
             {
                 lock(this)
                 {
-                    if(_value ==default(T))
+                    if(_value.Equals(default(T)))
                     {
                         _value=_factory();
                  
@@ -175,7 +175,7 @@ namespace MVVMSidekick
         { 
             get
             {
-               return _value ==default(T)?_factory()：_value; 
+               return _value.Equals (default(T))?_factory():_value; 
             }
         
             set

@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata >
-    <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="1.281" Language="en-US" Publisher="Wayne Wang in MSFT" />
+    <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="1.30" Language="en-US" Publisher="Wayne Wang in MSFT" />
     <DisplayName>MVVM-Sidekick VSIX</DisplayName>
     <Description xml:space="preserve">MVVM-Sidekick VSIX</Description>
   </Metadata>
   <Installation AllUsers="true"  >
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="(10.0,13.0]" />
-    <InstallationTarget Version="(10.0,13.0]" Id="Microsoft.VisualStudio.Premium" />
-    <InstallationTarget Version="(10.0,13.0]" Id="Microsoft.VisualStudio.Ultimate" />
-    <InstallationTarget Version="(10.0,13.0]" Id="Microsoft.VisualStudio.VSWinExpress" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[11.0,12.0]" />
+    <InstallationTarget Version="[11.0,12.0]" Id="Microsoft.VisualStudio.Premium" />
+    <InstallationTarget Version="[11.0,12.0]" Id="Microsoft.VisualStudio.Ultimate" />
+    <InstallationTarget Version="[11.0,12.0]" Id="Microsoft.VisualStudio.VSWinExpress" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />

@@ -21,8 +21,8 @@ namespace Samples.Startups
 #endif
 
                 .Where(m => m.Name.StartsWith("Config") && m.IsStatic)
-#if !(WINDOWS_PHONE_8||SILVERLIGHT_5)
-                .AsParallel()
+#if !(WINDOWS_PHONE_8||SILVERLIGHT_5||WINDOWS_PHONE_7)
+.AsParallel()
                 .ForAll(
 #else
                 .ToList ()
@@ -42,7 +42,7 @@ namespace Samples.Startups
                 .GetViewMapper()
                 .MapToDefault<Calculator>();
 
-#if !(NETFX_CORE||WINDOWS_PHONE_8)
+#if !(NETFX_CORE||WINDOWS_PHONE_8||WINDOWS_PHONE_7)
 
             ViewModelLocator<Tree_Model>
                 .Instance
