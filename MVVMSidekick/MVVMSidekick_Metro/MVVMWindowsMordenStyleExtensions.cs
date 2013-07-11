@@ -31,162 +31,162 @@ namespace MVVMSidekick
 {
     namespace Storages
     {
-        public class Storage<T> : BindableBase<Storage<T>>, Storages.IStorage<T> where T : new()
-        {
-            public Storage(string fileName = null, StorageFolder folder = null, Type[] knownTypes = null)
-            {
-                knownTypes = knownTypes ?? new Type[0];
-                _BusyWait = new System.Threading.AutoResetEvent(true)
-                    .DisposeWith(this);
-                _Folder = folder ?? Windows.Storage.ApplicationData.Current.LocalFolder;
-                _FileName = fileName ?? typeof(T).FullName;
-                _Ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(T), knownTypes);
+        //public class Storage<T> : BindableBase<Storage<T>>, Storages.IStorage<T> where T : new()
+        //{
+        //    public Storage(string fileName = null, StorageFolder folder = null, Type[] knownTypes = null)
+        //    {
+        //        knownTypes = knownTypes ?? new Type[0];
+        //        _BusyWait = new System.Threading.AutoResetEvent(true)
+        //            .DisposeWith(this);
+        //        _Folder = folder ?? Windows.Storage.ApplicationData.Current.LocalFolder;
+        //        _FileName = fileName ?? typeof(T).FullName;
+        //        _Ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(T), knownTypes);
 
-            }
+        //    }
 
-            protected string _FileName;
-            private System.Runtime.Serialization.Json.DataContractJsonSerializer _Ser;
-
-
-
-            StorageFolder _Folder;
-
-            protected System.Threading.AutoResetEvent _BusyWait;
-
-            protected IDisposable CreateBusyLock()
-            {
-                _BusyWait.WaitOne();
-
-                var dis = System.Reactive.Disposables.Disposable.Create(() => _BusyWait.Set());
-
-                return dis;
-            }
-
-
-            public virtual async Task Save()
-            {
-                using (CreateBusyLock())
-                {
-                    var folder = _Folder;
-                    var file = await GetFileIfExists(folder);
-
-
-                    if (file == null)
-                    {
-                        file = await folder.CreateFileAsync(_FileName);
-                    }
-
-                    var ms = new MemoryStream();
-                    _Ser.WriteObject(ms, this.Value);
-                    ms.Position = 0;
-                    await Windows.Storage.FileIO.WriteBytesAsync(file, ms.ToArray());
+        //    protected string _FileName;
+        //    private System.Runtime.Serialization.Json.DataContractJsonSerializer _Ser;
 
 
 
+        //    StorageFolder _Folder;
 
-                }
+        //    protected System.Threading.AutoResetEvent _BusyWait;
 
-            }
+        //    protected IDisposable CreateBusyLock()
+        //    {
+        //        _BusyWait.WaitOne();
 
-            private async Task<Windows.Storage.StorageFile> GetFileIfExists(Windows.Storage.StorageFolder folder)
-            {
+        //        var dis = System.Reactive.Disposables.Disposable.Create(() => _BusyWait.Set());
 
-                try
-                {
-                    return await _Folder.GetFileAsync(_FileName);
-                }
-                catch (FileNotFoundException)
-                {
-
-                    return null;
-                }
-            }
-
-            public async Task Refresh()
-            {
-                using (CreateBusyLock())
-                {
-                    var folder = _Folder;
-                    var file = await GetFileIfExists(folder);
-                    if (file != null)
-                    {
-                        using (var stream = await file.OpenSequentialReadAsync())
-                        {
-                            var ms = new MemoryStream();
-                            await stream.AsStreamForRead().CopyToAsync(ms);
-                            ms.Position = 0;
-
-                            try
-                            {
-                                var lst = _Ser.ReadObject(ms);
-
-                                this.Value = (T)(lst);
-                            }
-                            catch (System.Runtime.Serialization.SerializationException)
-                            {
+        //        return dis;
+        //    }
 
 
-                            }
+        //    public virtual async Task Save()
+        //    {
+        //        using (CreateBusyLock())
+        //        {
+        //            var folder = _Folder;
+        //            var file = await GetFileIfExists(folder);
 
 
+        //            if (file == null)
+        //            {
+        //                file = await folder.CreateFileAsync(_FileName);
+        //            }
 
-                        }
-
-                    }
-
-
-
-                }
-
-            }
+        //            var ms = new MemoryStream();
+        //            _Ser.WriteObject(ms, this.Value);
+        //            ms.Position = 0;
+        //            await Windows.Storage.FileIO.WriteBytesAsync(file, ms.ToArray());
 
 
 
 
-            public T Value
-            {
-                get
-                {
+        //        }
 
-                    var vc = _ValueLocator(this);
-                    var v = vc.Value;
-                    //if (v == null || v.Equals(default(T)))
-                    //{
+        //    }
 
-                    //    vc.Value = v = new T();
-                    //}
+        //    private async Task<Windows.Storage.StorageFile> GetFileIfExists(Windows.Storage.StorageFolder folder)
+        //    {
 
-                    return v;
+        //        try
+        //        {
+        //            return await _Folder.GetFileAsync(_FileName);
+        //        }
+        //        catch (FileNotFoundException)
+        //        {
 
-                }
-                set { _ValueLocator(this).SetValueAndTryNotify(value); }
-            }
+        //            return null;
+        //        }
+        //    }
+
+        //    public async Task Refresh()
+        //    {
+        //        using (CreateBusyLock())
+        //        {
+        //            var folder = _Folder;
+        //            var file = await GetFileIfExists(folder);
+        //            if (file != null)
+        //            {
+        //                using (var stream = await file.OpenSequentialReadAsync())
+        //                {
+        //                    var ms = new MemoryStream();
+        //                    await stream.AsStreamForRead().CopyToAsync(ms);
+        //                    ms.Position = 0;
+
+        //                    try
+        //                    {
+        //                        var lst = _Ser.ReadObject(ms);
+
+        //                        this.Value = (T)(lst);
+        //                    }
+        //                    catch (System.Runtime.Serialization.SerializationException)
+        //                    {
 
 
-            #region Property T Value Setup
-
-            protected Property<T> _Value =
-              new Property<T> { LocatorFunc = _ValueLocator };
-            [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-            static Func<BindableBase, ValueContainer<T>> _ValueLocator =
-                RegisterContainerLocator<T>(
-                "Value",
-                model =>
-                {
-                    model._Value =
-                        model._Value
-                        ??
-                        new Property<T> { LocatorFunc = _ValueLocator };
-                    return model._Value.Container =
-                        model._Value.Container
-                        ??
-                        new ValueContainer<T>("Value", model);
-                });
-
-            #endregion
+        //                    }
 
 
-        }
+
+        //                }
+
+        //            }
+
+
+
+        //        }
+
+        //    }
+
+
+
+
+        //    public T Value
+        //    {
+        //        get
+        //        {
+
+        //            var vc = _ValueLocator(this);
+        //            var v = vc.Value;
+        //            //if (v == null || v.Equals(default(T)))
+        //            //{
+
+        //            //    vc.Value = v = new T();
+        //            //}
+
+        //            return v;
+
+        //        }
+        //        set { _ValueLocator(this).SetValueAndTryNotify(value); }
+        //    }
+
+
+        //    #region Property T Value Setup
+
+        //    protected Property<T> _Value =
+        //      new Property<T> { LocatorFunc = _ValueLocator };
+        //    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        //    static Func<BindableBase, ValueContainer<T>> _ValueLocator =
+        //        RegisterContainerLocator<T>(
+        //        "Value",
+        //        model =>
+        //        {
+        //            model._Value =
+        //                model._Value
+        //                ??
+        //                new Property<T> { LocatorFunc = _ValueLocator };
+        //            return model._Value.Container =
+        //                model._Value.Container
+        //                ??
+        //                new ValueContainer<T>("Value", model);
+        //        });
+
+        //    #endregion
+
+
+        //}
 
 
 
@@ -213,15 +213,15 @@ namespace MVVMSidekick
 
     namespace Views
     {
-        public static class NavigateParameterKeys
-        {
-            public static readonly string ViewInitActionName = "InitAction";
-            public static readonly string GameInfomation_ChosenGame = "GameInfomation_ChosenGame";
-            public static readonly string NavigateToCallback = "NavigateToCallback";
-            public static readonly string FinishedCallback = "FinishedCallback";
-            public static readonly string AppliactionActiveArgs = "AppliactionActiveArgs";
+        //public static class NavigateParameterKeys
+        //{
+        //    public static readonly string ViewInitActionName = "InitAction";
+        //    public static readonly string GameInfomation_ChosenGame = "GameInfomation_ChosenGame";
+        //    public static readonly string NavigateToCallback = "NavigateToCallback";
+        //    public static readonly string FinishedCallback = "FinishedCallback";
+        //    public static readonly string AppliactionActiveArgs = "AppliactionActiveArgs";
 
-        }
+        //}
 
         ///// <summary>
         ///// Typical implementation of Page that provides several important conveniences:

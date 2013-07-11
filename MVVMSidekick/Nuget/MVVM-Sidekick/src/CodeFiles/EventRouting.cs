@@ -123,31 +123,7 @@ namespace MVVMSidekick
             /// <summary>
             /// 事件来源的代理对象实例
             /// </summary>
-#if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
-            public class ConcurrentDictionary<TK, TV> : Dictionary<TK, TV>
-            {
-                public TV GetOrAdd(TK key, Func<TK, TV> factory)
-                {
-                    TV rval = default(TV);
 
-                    if (!base.TryGetValue(key, out rval))
-                    {
-                        lock (this)
-                        {
-                            if (!base.TryGetValue(key, out rval))
-                            {
-                                rval = factory(key);
-                                base.Add(key, rval);
-                            }
-
-
-                        }
-                    }
-
-                    return rval;
-                }
-            }
-#endif
             static protected readonly ConcurrentDictionary<Type, IEventObject> EventObjects
      = new ConcurrentDictionary<Type, IEventObject>();
             /// <summary>

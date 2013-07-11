@@ -14,7 +14,7 @@
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
     <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
     <TargetPlatformName>Windows</TargetPlatformName>
-    <RequiredPlatformVersion>8.1</RequiredPlatformVersion>
+    <RequiredPlatformVersion>8</RequiredPlatformVersion>
     <CreateInPlace>true</CreateInPlace>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType></ProjectSubType>

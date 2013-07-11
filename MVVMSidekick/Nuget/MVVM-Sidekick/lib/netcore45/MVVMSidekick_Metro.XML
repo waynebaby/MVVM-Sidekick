@@ -434,7 +434,7 @@
             </summary>
             <returns>Async Task</returns>
         </member>
-        <member name="M:MVVMSidekick.Storages.IStorage`1.Save">
+        <member name="M:MVVMSidekick.Storages.IStorage`1.Save(`0)">
             <summary>
             <para>Save current changes to storage</para>
             <para>把当前值的变化写入持久化存储中</para>
@@ -446,6 +446,20 @@
             <para>Current value</para>
             <para>当前值</para>
             </summary>
+        </member>
+        <member name="T:MVVMSidekick.Storages.IStorageHub`2">
+            <summary>
+            <para>Simple storage interface, for persistence.</para>
+            <para>简单的持久化存储类型接口</para>
+            </summary>
+            <typeparam name="TToken">
+            <para>The Token/token Type needs to be save/load</para>
+            <para>需要存取的凭据类型</para>
+            </typeparam>
+            <typeparam name="TValue">
+            <para>The Value Type needs to be save/load</para>
+            <para>需要存取的类型</para>
+            </typeparam>
         </member>
         <member name="T:MVVMSidekick.Utilities.TaskExHelper">
             <summary>

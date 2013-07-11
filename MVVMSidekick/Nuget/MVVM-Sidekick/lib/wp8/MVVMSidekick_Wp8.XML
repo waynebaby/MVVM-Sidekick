@@ -93,17 +93,17 @@
             <typeparam name="TEventArgs">事件数据类型</typeparam>
             <returns>事件独立类</returns>
         </member>
+        <member name="F:MVVMSidekick.EventRouting.EventRouter.EventObjects">
+            <summary>
+            事件来源的代理对象实例
+            </summary>
+        </member>
         <member name="M:MVVMSidekick.EventRouting.EventRouter.GetIEventObjectInstance(System.Type)">
             <summary>
             创建事件代理对象
             </summary>
             <param name="argsType">事件数据类型</param>
             <returns>代理对象实例</returns>
-        </member>
-        <member name="T:MVVMSidekick.EventRouting.EventRouter.ConcurrentDictionary`2">
-            <summary>
-            事件来源的代理对象实例
-            </summary>
         </member>
         <member name="T:MVVMSidekick.EventRouting.EventRouter.IEventObject">
             <summary>
@@ -434,7 +434,7 @@
             </summary>
             <returns>Async Task</returns>
         </member>
-        <member name="M:MVVMSidekick.Storages.IStorage`1.Save">
+        <member name="M:MVVMSidekick.Storages.IStorage`1.Save(`0)">
             <summary>
             <para>Save current changes to storage</para>
             <para>把当前值的变化写入持久化存储中</para>
@@ -446,6 +446,20 @@
             <para>Current value</para>
             <para>当前值</para>
             </summary>
+        </member>
+        <member name="T:MVVMSidekick.Storages.IStorageHub`2">
+            <summary>
+            <para>Simple storage interface, for persistence.</para>
+            <para>简单的持久化存储类型接口</para>
+            </summary>
+            <typeparam name="TToken">
+            <para>The Token/token Type needs to be save/load</para>
+            <para>需要存取的凭据类型</para>
+            </typeparam>
+            <typeparam name="TValue">
+            <para>The Value Type needs to be save/load</para>
+            <para>需要存取的类型</para>
+            </typeparam>
         </member>
         <member name="T:MVVMSidekick.Utilities.TaskExHelper">
             <summary>
