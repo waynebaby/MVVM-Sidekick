@@ -94,6 +94,8 @@ namespace MVVMSidekick
         }
 
 
+
+
         /// <summary>
         /// <para>Simple storage interface, for persistence.</para>
         /// <para>简单的持久化存储类型接口</para>
@@ -158,11 +160,17 @@ namespace MVVMSidekick
         }
 
 
+        public enum StreamOpenType
+        {
+            Read,
+            Write
+        }
+
         public class JsonDataContractStreamStorageHub<TToken, TValue> : StorageHubBase<TToken, TValue>
         {
-            public JsonDataContractStreamStorageHub(Func<TToken, Stream> streamOpener)
+            public JsonDataContractStreamStorageHub(Func<StreamOpenType, TToken, Task<Stream>> streamOpener)
                 : base
-                    (tk=> new JsonDataContractStreamStorage<TValue>( ()=>streamOpener(tk)))
+                    (tk => new JsonDataContractStreamStorage<TValue>(async tp => await streamOpener(tp, tk)))
             {
 
 
@@ -173,30 +181,85 @@ namespace MVVMSidekick
 
         public class JsonDataContractStreamStorage<TValue> : IStorage<TValue>
         {
+            LimitedConcurrencyLevelTaskScheduler _sch = new LimitedConcurrencyLevelTaskScheduler(1);
 
-            Subject<int> _a;
-
-            public JsonDataContractStreamStorage(Func< Stream> streamOpener)
+            public JsonDataContractStreamStorage(Func<StreamOpenType, Task<Stream>> streamOpener, params Type[] knownTypes)
             {
-    
+                _streamOpener = streamOpener;
+                _knownTypes = knownTypes;
+            }
+
+            Func<StreamOpenType, Task<Stream>> _streamOpener;
+
+            Type[] _knownTypes;
+
+            public Type[] KnownTypes
+            {
+                get { return _knownTypes; }
+                set { _knownTypes = value; }
+            }
+
+            public async Task<TValue> Refresh()
+            {
+                var kts = _knownTypes;
+                return await await
+                       Task.Factory.StartNew(
+                           async () =>
+                           {
+                               var ms = new MemoryStream();
+                               var ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(TValue), kts);
+                               using (var strm = await _streamOpener(StreamOpenType.Read))
+                               {
+                                   await strm.CopyToAsync(ms);
+                               }
+
+                               ms.Position = 0;
+
+                               var obj = (TValue)ser.ReadObject(ms);
+                               Value = obj;
+                               return obj;
+
+                           },
+                            CancellationToken.None,
+                            TaskCreationOptions.AttachedToParent,
+                            _sch
+
+                       );
+
+
 
             }
 
-
-
-            public Task<TValue> Refresh()
+            public async Task Save(TValue value)
             {
-                throw new NotImplementedException();
+                var kts = _knownTypes;
+                await Task.Factory.StartNew(
+                    async () =>
+                    {
+                        var ms = new MemoryStream();
+                        var ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(TValue), kts);
+                        Value = value;
+                        ser.WriteObject(ms, value);
+                        using (var strm = await _streamOpener(StreamOpenType.Write))
+                        {
+                            await ms.CopyToAsync(strm);
+                            await strm.FlushAsync();
+                            
+                        }
+                    },
+                    CancellationToken.None,
+                    TaskCreationOptions.AttachedToParent,
+                    _sch
+
+                    );
+
             }
 
-            public Task Save(TValue value)
-            {
-                throw new NotImplementedException();
-            }
-
+            TValue _Value;
             public TValue Value
             {
-                get { throw new NotImplementedException(); }
+                get;
+                private set;
             }
         }
 
