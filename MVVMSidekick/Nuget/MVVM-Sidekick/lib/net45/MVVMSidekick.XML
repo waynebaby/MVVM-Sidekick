@@ -427,14 +427,14 @@
             <para>需要存取的类型</para>
             </typeparam>
         </member>
-        <member name="M:MVVMSidekick.Storages.IStorage`1.Refresh">
+        <member name="M:MVVMSidekick.Storages.IStorage`1.RefreshAsync">
             <summary>
             <para>Ignore current changes, load from storage</para>
             <para>忽略当前值的变化，从持久化存储中读取</para>
             </summary>
             <returns>Async Task</returns>
         </member>
-        <member name="M:MVVMSidekick.Storages.IStorage`1.Save(`0)">
+        <member name="M:MVVMSidekick.Storages.IStorage`1.SaveAsync(`0)">
             <summary>
             <para>Save current changes to storage</para>
             <para>把当前值的变化写入持久化存储中</para>

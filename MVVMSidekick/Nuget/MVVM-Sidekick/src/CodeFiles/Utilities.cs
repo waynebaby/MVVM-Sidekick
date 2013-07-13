@@ -310,8 +310,8 @@ namespace MVVMSidekick
         private void NotifyThreadPoolOfPendingWork()
         {
 
-#if NETFX_COR
-            ThreadPool.RunAsync((_1,_2)=>
+#if NETFX_CORE
+            ThreadPool.RunAsync((_1)=>
 #else
 
             ThreadPool.QueueUserWorkItem(_ =>
@@ -349,7 +349,14 @@ namespace MVVMSidekick
                 }
                 // We're done processing items on the current thread 
                 finally { _currentThreadIsProcessingItems = false; }
+    
+            #if NETFX_CORE
+            });
+#else
+
             }, null);
+#endif
+     
         }
 
         /// <summary>Attempts to execute the specified task on the current thread.</summary> 

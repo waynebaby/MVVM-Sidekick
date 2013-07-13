@@ -427,14 +427,14 @@
             <para>需要存取的类型</para>
             </typeparam>
         </member>
-        <member name="M:MVVMSidekick.Storages.IStorage`1.Refresh">
+        <member name="M:MVVMSidekick.Storages.IStorage`1.RefreshAsync">
             <summary>
             <para>Ignore current changes, load from storage</para>
             <para>忽略当前值的变化，从持久化存储中读取</para>
             </summary>
             <returns>Async Task</returns>
         </member>
-        <member name="M:MVVMSidekick.Storages.IStorage`1.Save(`0)">
+        <member name="M:MVVMSidekick.Storages.IStorage`1.SaveAsync(`0)">
             <summary>
             <para>Save current changes to storage</para>
             <para>把当前值的变化写入持久化存储中</para>
@@ -467,6 +467,58 @@
             </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "T:MVVMSidekick.Utilities.TypeInfoHelper" -->
+        <member name="T:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler">
+            <summary> 
+            Provides a task scheduler that ensures a maximum concurrency level while 
+            running on top of the ThreadPool. 
+            </summary> 
+        </member>
+        <member name="F:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler._currentThreadIsProcessingItems">
+            <summary>Whether the current thread is processing work items.</summary>
+        </member>
+        <member name="F:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler._tasks">
+            <summary>The list of tasks to be executed.</summary> 
+        </member>
+        <member name="F:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler._maxDegreeOfParallelism">
+            <summary>The maximum concurrency level allowed by this scheduler.</summary> 
+        </member>
+        <member name="F:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler._delegatesQueuedOrRunning">
+            <summary>Whether the scheduler is currently processing work items.</summary> 
+        </member>
+        <member name="M:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler.#ctor(System.Int32)">
+            <summary> 
+            Initializes an instance of the LimitedConcurrencyLevelTaskScheduler class with the 
+            specified degree of parallelism. 
+            </summary> 
+            <param name="maxDegreeOfParallelism">The maximum degree of parallelism provided by this scheduler.</param>
+        </member>
+        <member name="M:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler.QueueTask(System.Threading.Tasks.Task)">
+            <summary>Queues a task to the scheduler.</summary> 
+            <param name="task">The task to be queued.</param>
+        </member>
+        <member name="M:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler.NotifyThreadPoolOfPendingWork">
+            <summary> 
+            Informs the ThreadPool that there's work to be executed for this scheduler. 
+            </summary> 
+        </member>
+        <member name="M:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler.TryExecuteTaskInline(System.Threading.Tasks.Task,System.Boolean)">
+            <summary>Attempts to execute the specified task on the current thread.</summary> 
+            <param name="task">The task to be executed.</param>
+            <param name="taskWasPreviouslyQueued"></param>
+            <returns>Whether the task could be executed on the current thread.</returns> 
+        </member>
+        <member name="M:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler.TryDequeue(System.Threading.Tasks.Task)">
+            <summary>Attempts to remove a previously scheduled task from the scheduler.</summary> 
+            <param name="task">The task to be removed.</param>
+            <returns>Whether the task could be found and removed.</returns> 
+        </member>
+        <member name="M:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler.GetScheduledTasks">
+            <summary>Gets an enumerable of the tasks currently scheduled on this scheduler.</summary> 
+            <returns>An enumerable of the tasks currently scheduled.</returns> 
+        </member>
+        <member name="P:MVVMSidekick.LimitedConcurrencyLevelTaskScheduler.MaximumConcurrencyLevel">
+            <summary>Gets the maximum concurrency level supported by this scheduler.</summary> 
+        </member>
         <member name="T:MVVMSidekick.ViewModels.DefaultViewModel">
             <summary>
             <para>A ViewModel by default, with basic implement of name-value container.</para>

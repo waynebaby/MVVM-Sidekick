@@ -30,6 +30,7 @@ using System.Collections.Concurrent;
 using Windows.UI.Xaml.Navigation;
 
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.Storage;
 
 #elif WPF
 using System.Windows;
@@ -48,6 +49,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
+using System.IO.IsolatedStorage;
 #elif WINDOWS_PHONE_8||WINDOWS_PHONE_7
 using System.Windows;
 using System.Windows.Controls;
@@ -55,6 +57,7 @@ using Microsoft.Phone.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
+using System.IO.IsolatedStorage;
 #endif
 
 
@@ -78,13 +81,13 @@ namespace MVVMSidekick
             /// <para>忽略当前值的变化，从持久化存储中读取</para>
             /// </summary>
             /// <returns>Async Task</returns>
-            System.Threading.Tasks.Task<T> Refresh();
+            System.Threading.Tasks.Task<T> RefreshAsync();
             /// <summary>
             /// <para>Save current changes to storage</para>
             /// <para>把当前值的变化写入持久化存储中</para>
             /// </summary>
             /// <returns>Async Task</returns>
-            System.Threading.Tasks.Task Save(T value);
+            System.Threading.Tasks.Task SaveAsync(T value);
 
             /// <summary>
             /// <para>Current value</para>
@@ -111,15 +114,15 @@ namespace MVVMSidekick
         public interface IStorageHub<TToken, TValue>
         {
 
-            System.Threading.Tasks.Task<TValue> Load(TToken token, bool forceRefresh);
+            System.Threading.Tasks.Task<TValue> LoadAsync(TToken token, bool forceRefresh);
 
-            System.Threading.Tasks.Task Save(TToken token, TValue value);
+            System.Threading.Tasks.Task SaveAsync(TToken token, TValue value);
 
         }
 
-        public abstract class StorageHubBase<TToken, TValue> : IStorageHub<TToken, TValue>
+        public class StorageHub<TToken, TValue> : IStorageHub<TToken, TValue>
         {
-            public StorageHubBase(Func<TToken, IStorage<TValue>> storageFactory)
+            public StorageHub(Func<TToken, IStorage<TValue>> storageFactory)
             {
                 _storageFactory = storageFactory;
             }
@@ -135,12 +138,12 @@ namespace MVVMSidekick
             Func<TToken, IStorage<TValue>> _storageFactory;
             ConcurrentDictionary<TToken, IStorage<TValue>> _dic = new ConcurrentDictionary<TToken, IStorage<TValue>>();
 
-            public async Task<TValue> Load(TToken token, bool forceRefresh)
+            public async Task<TValue> LoadAsync(TToken token, bool forceRefresh)
             {
                 var storage = GetOrCreatStorage(token);
                 if (forceRefresh)
                 {
-                    return await storage.Refresh();
+                    return await storage.RefreshAsync();
                 }
                 else
                 {
@@ -149,14 +152,203 @@ namespace MVVMSidekick
 
             }
 
-            public async Task Save(TToken token, TValue value)
+            public async Task SaveAsync(TToken token, TValue value)
             {
                 var storage = GetOrCreatStorage(token);
 
 
-                await storage.Save(value);
+                await storage.SaveAsync(value);
 
             }
+
+        
+#if NETFX_CORE
+            public static StorageHub<TToken, TValue> CreateJsonDatacontractFileStorageHub(
+                Func<TToken, string> fileNameFactory,
+                StorageFolder folder = null)
+            {
+
+
+
+                var hub = new JsonDataContractStreamStorageHub<TToken, TValue>(
+                   async (tp, tk) =>
+                   {
+                       folder = folder ?? Windows.Storage.ApplicationData.Current.LocalFolder;
+                       var file = await folder.CreateFileAsync(fileNameFactory(tk), CreationCollisionOption.OpenIfExists);  
+                       switch (tp)
+                       {
+                           case StreamOpenType.Read:
+
+                               return await file.OpenStreamForReadAsync ();
+
+                           case StreamOpenType.Write:
+                               return await file.OpenStreamForWriteAsync ();
+
+                           default:
+                               return null;
+       
+                       }
+
+                   }
+                );
+                return hub;
+
+            }
+
+#elif WPF
+            public static StorageHub<TToken, TValue> CreateJsonDatacontractFileStorageHub(
+             Func<TToken, string> fileNameFactory,
+             string folder = null)
+            {
+
+
+
+                var hub = new JsonDataContractStreamStorageHub<TToken, TValue>(
+                   async (tp, tk) =>
+                   {
+                       folder = folder ?? Environment.CurrentDirectory;
+                       var filepath = Path.Combine(folder, fileNameFactory(tk));
+                       try
+                       {
+
+                     
+                       switch (tp)
+                       {
+                           case StreamOpenType.Read:
+
+                               return new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+
+                           case StreamOpenType.Write:
+                               return new FileStream(filepath, FileMode.Truncate , FileAccess.Write, FileShare.None);
+
+
+                           default:
+                               return null;
+
+                       }
+                       }
+                       catch (Exception ex)
+                       {
+
+                           throw;
+                       }
+
+                   }
+                );
+                return hub;
+
+            }
+#elif WINDOWS_PHONE_8|| WINDOWS_PHONE_7
+              public static StorageHub<TToken, TValue> CreateJsonDatacontractIsolatedStorageHub(
+                Func<TToken, string> fileNameFactory,
+                IsolatedStorageFile folder = null)
+        {
+
+
+ 
+            var hub = new JsonDataContractStreamStorageHub<TToken, TValue>(
+               async (tp, tk) =>
+               {
+               
+                   folder = folder ?? IsolatedStorageFile.GetUserStoreForApplication();
+
+        
+                  
+                   var filepath=fileNameFactory(tk);
+                   switch (tp)
+                   {
+                       case StreamOpenType.Read:
+
+                           return folder.OpenFile(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+
+                       case StreamOpenType.Write:
+                           return folder.OpenFile(filepath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+
+
+                       default:
+                           return null;
+
+                   }
+
+               }
+            );
+            return hub;
+
+        }
+
+#elif SILVERLIGHT_5
+            public static StorageHub<TToken, TValue> CreateJsonDatacontractFileStorageHub(
+                Func<TToken, string> fileNameFactory,
+                string folder = null)
+            {
+
+
+
+                var hub = new JsonDataContractStreamStorageHub<TToken, TValue>(
+                   async (tp, tk) =>
+                   {
+                       folder = folder ?? Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
+                       var filepath = Path.Combine(folder, fileNameFactory(tk));
+
+                       switch (tp)
+                       {
+                           case StreamOpenType.Read:
+
+                               return new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+
+                           case StreamOpenType.Write:
+                               return new FileStream(filepath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+
+
+                           default:
+                               return null;
+
+                       }
+
+                   }
+                );
+                return hub;
+
+            }
+    
+        public static StorageHub<TToken, TValue> CreateJsonDatacontractIsolatedStorageHub(
+                Func<TToken, string> fileNameFactory,
+                IsolatedStorageFile folder = null)
+        {
+
+
+ 
+            var hub = new JsonDataContractStreamStorageHub<TToken, TValue>(
+               async (tp, tk) =>
+               {
+                   await TaskEx.Yield();
+                   folder = folder ?? IsolatedStorageFile.GetUserStoreForApplication();
+
+        
+                  
+                   var filepath=fileNameFactory(tk);
+                   switch (tp)
+                   {
+                       case StreamOpenType.Read:
+
+                           return folder.OpenFile(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+
+                       case StreamOpenType.Write:
+                           return folder.OpenFile(filepath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+
+
+                       default:
+                           return null;
+
+                   }
+
+               }
+            );
+            return hub;
+
+        }
+
+#endif
         }
 
 
@@ -166,7 +358,7 @@ namespace MVVMSidekick
             Write
         }
 
-        public class JsonDataContractStreamStorageHub<TToken, TValue> : StorageHubBase<TToken, TValue>
+        public class JsonDataContractStreamStorageHub<TToken, TValue> : StorageHub<TToken, TValue>
         {
             public JsonDataContractStreamStorageHub(Func<StreamOpenType, TToken, Task<Stream>> streamOpener)
                 : base
@@ -175,14 +367,16 @@ namespace MVVMSidekick
 
 
             }
-
         }
 
 
         public class JsonDataContractStreamStorage<TValue> : IStorage<TValue>
         {
-            LimitedConcurrencyLevelTaskScheduler _sch = new LimitedConcurrencyLevelTaskScheduler(1);
-
+#if NET45
+            ConcurrentExclusiveSchedulerPair _sch = new ConcurrentExclusiveSchedulerPair();
+#else
+            TaskScheduler _sch = new LimitedConcurrencyLevelTaskScheduler(1);
+#endif
             public JsonDataContractStreamStorage(Func<StreamOpenType, Task<Stream>> streamOpener, params Type[] knownTypes)
             {
                 _streamOpener = streamOpener;
@@ -199,7 +393,7 @@ namespace MVVMSidekick
                 set { _knownTypes = value; }
             }
 
-            public async Task<TValue> Refresh()
+            public async Task<TValue> RefreshAsync()
             {
                 var kts = _knownTypes;
                 return await await
@@ -222,15 +416,19 @@ namespace MVVMSidekick
                            },
                             CancellationToken.None,
                             TaskCreationOptions.AttachedToParent,
-                            _sch
+#if NET45
+ _sch.ConcurrentScheduler
+#else
+ _sch
+#endif
 
-                       );
+);
 
 
 
             }
 
-            public async Task Save(TValue value)
+            public async Task SaveAsync(TValue value)
             {
                 var kts = _knownTypes;
                 await Task.Factory.StartNew(
@@ -240,18 +438,24 @@ namespace MVVMSidekick
                         var ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(TValue), kts);
                         Value = value;
                         ser.WriteObject(ms, value);
+                        ms.Position = 0;
                         using (var strm = await _streamOpener(StreamOpenType.Write))
                         {
                             await ms.CopyToAsync(strm);
                             await strm.FlushAsync();
-                            
+
                         }
                     },
                     CancellationToken.None,
                     TaskCreationOptions.AttachedToParent,
-                    _sch
+#if NET45
+ _sch.ExclusiveScheduler
+#else
+ _sch
+#endif
 
-                    );
+
+);
 
             }
 
@@ -264,6 +468,33 @@ namespace MVVMSidekick
         }
 
 
+
+        public class DirectoryFileStorageHub<TToken, TValue> : StorageHub<TToken, TValue>
+        {
+
+            public DirectoryFileStorageHub(Func<TToken, Uri> filePathLocator, Func<Uri, IStorage<TValue>> storageFactory)
+                : base(tk =>
+                {
+                    var fileUri = filePathLocator(tk);
+                    var store = storageFactory(fileUri);
+                    return store;
+                })
+            {
+
+
+            }
+
+        }
+
+
+
+
+
+
+
     }
+
+
+
 
 }

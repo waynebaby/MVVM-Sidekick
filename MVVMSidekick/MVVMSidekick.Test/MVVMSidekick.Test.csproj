@@ -74,6 +74,7 @@
     <Compile Include="Patterns_TreeTest.cs" />
     <Compile Include="Playground.cs" />
     <Compile Include="Patterns_ItemdAndSelectionGroupTest.cs" />
+    <Compile Include="StorageTest.cs" />
     <Compile Include="ViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
