@@ -219,7 +219,7 @@ namespace MVVMSidekick
                                return new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
 
                            case StreamOpenType.Write:
-                               return new FileStream(filepath, FileMode.Truncate , FileAccess.Write, FileShare.None);
+                               return new FileStream(filepath, FileMode.Create  , FileAccess.Write, FileShare.None);
 
 
                            default:
@@ -262,7 +262,7 @@ namespace MVVMSidekick
                            return folder.OpenFile(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
 
                        case StreamOpenType.Write:
-                           return folder.OpenFile(filepath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                           return folder.OpenFile(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
 
 
                        default:

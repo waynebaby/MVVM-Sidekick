@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Resources;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
@@ -17,12 +18,14 @@ namespace MVVMSidekick_WP8.Test
         /// </summary>
         /// <returns>The root frame of the Phone Application.</returns>
         public static PhoneApplicationFrame RootFrame { get; private set; }
-
+        public static System.Threading.Tasks.TaskScheduler UITaskScheduler;
         /// <summary>
         /// Constructor for the Application object.
         /// </summary>
         public App()
         {
+            System.Threading.SynchronizationContext sc = new System.Threading.SynchronizationContext();
+            UITaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 

@@ -16,6 +16,9 @@ using System.Collections.Generic;
 using MVVMSidekick.Patterns;
 using MVVMSidekick.Patterns.ItemsAndSelection;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Threading;
 
 
 
@@ -24,19 +27,19 @@ namespace MVVMSidekick.Test
     [TestClass]
     public class Patterns_ItemdAndSelectionGroupTest
     {
-        ItemsAndSelectionGroup<string > CreateSampleGroup()
+        ItemsAndSelectionGroup<string> CreateSampleGroup()
         {
             return new ItemsAndSelectionGroup<string>
             {
-              Items=   new System.Collections.ObjectModel.ObservableCollection<string> 
+                Items = new System.Collections.ObjectModel.ObservableCollection<string> 
                 { 
                     "1~~",
                     "2~",
                     "3~~~"
                 }
             };
-                
-             
+
+
 
         }
 
@@ -57,6 +60,17 @@ namespace MVVMSidekick.Test
 #if NETFX_CORE
 
                 [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethodAttribute]
+#elif WINDOWS_PHONE_8
+        [TestMethod]
+        public async Task TestWPListBoxFBindingUITest()
+        {
+            await Task.Factory.StartNew(
+                       TestWPComboBinding,
+                       CancellationToken.None,
+                        TaskCreationOptions.None,
+                        MVVMSidekick_WP8.Test.App.UITaskScheduler
+                     );
+        }
 #else
         [TestMethod]
 #endif
@@ -64,7 +78,7 @@ namespace MVVMSidekick.Test
         {
             var list = CreateSampleGroup();
             var listbox = new ListBox();
-            listbox.SetValue(ElementBinder.BinderProperty , list.Binder );
+            listbox.SetValue(ElementBinder.BinderProperty, list.Binder);
             list.SelectionMode = SelectionMode.Multiple;
             list.SelectedIndex = 0;
 
@@ -75,7 +89,7 @@ namespace MVVMSidekick.Test
             Assert.AreEqual(list.SelectedIndex, listbox.SelectedIndex);
             Assert.AreEqual(list.SelectedItem, listbox.SelectedItem);
             var list2 = CreateSampleGroupInt();
-            listbox.SetValue(ElementBinder.BinderProperty, list2.Binder );
+            listbox.SetValue(ElementBinder.BinderProperty, list2.Binder);
             Assert.AreEqual(listbox.Items.Count, 4);
             list2.SelectedIndex = 0;
             Assert.AreEqual(list2.SelectedItem, listbox.SelectedItem);
@@ -86,25 +100,32 @@ namespace MVVMSidekick.Test
 #if NETFX_CORE
 
                 [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethodAttribute]
+#elif WINDOWS_PHONE_8
+        [TestMethod]
+        public async Task TestWPComboBindingUITest()
+        {
+            await Task.Factory.StartNew(
+                       TestWPComboBinding,
+                       CancellationToken.None,
+                        TaskCreationOptions.None,
+                        MVVMSidekick_WP8.Test.App.UITaskScheduler
+                     );
+        }
+
 #else
         [TestMethod]
 #endif
-        public void TestWPComboFBinding()
+        public void TestWPComboBinding()
         {
             var list = CreateSampleGroup();
             var combo = new ComboBox();
             combo.SetValue(ElementBinder.BinderProperty, list.Binder);
-
             list.SelectedIndex = 0;
-
             Assert.AreEqual(combo.Items.Count, 3);
-
             Assert.AreEqual(list.SelectedItem, combo.SelectedItem);
             combo.SelectedIndex = 1;
             Assert.AreEqual(list.SelectedIndex, combo.SelectedIndex);
             Assert.AreEqual(list.SelectedItem, combo.SelectedItem);
-
-
 
         }
 
