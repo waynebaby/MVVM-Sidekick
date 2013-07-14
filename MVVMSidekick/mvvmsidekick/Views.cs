@@ -21,6 +21,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Collections;
+using System.Windows;
+
 
 #if NETFX_CORE
 using Windows.UI.Xaml;
@@ -32,6 +34,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Controls.Primitives;
 
 #elif WPF
+using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;

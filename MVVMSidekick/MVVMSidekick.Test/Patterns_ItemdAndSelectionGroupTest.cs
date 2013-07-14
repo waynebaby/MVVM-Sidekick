@@ -3,6 +3,9 @@
 
 using Windows.UI.Xaml.Controls;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#elif WINDOWS_PHONE_8
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using System.Windows.Controls;
 #else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

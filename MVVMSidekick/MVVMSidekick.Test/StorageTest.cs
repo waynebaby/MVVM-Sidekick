@@ -1,10 +1,16 @@
-﻿using System;
+﻿#if WINDOWS_PHONE_8
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+
+#else
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+#endif
+using System;
 using System.Text;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Threading.Tasks;
-
 namespace MVVMSidekick.Test
 {
     /// <summary>
@@ -20,23 +26,6 @@ namespace MVVMSidekick.Test
             //
         }
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
 
         #region Additional test attributes
         //
@@ -59,12 +48,13 @@ namespace MVVMSidekick.Test
         // public void MyTestCleanup() { }
         //
         #endregion
-
+#if WPF
         [TestMethod]
-        public async Task TestStorage()
+        public async Task TestDirectoryStorage()
         {
 
-            var hub = MVVMSidekick.Storages.StorageHub<string, String>.CreateJsonDatacontractFileStorageHub(x => x);
+            var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractFileStorageHub(x => x);
+
             await hub.SaveAsync("aaa", "content");
             var p = Path.Combine(Environment.CurrentDirectory, "aaa");
             Assert.IsTrue (File.Exists (p));
@@ -75,5 +65,23 @@ namespace MVVMSidekick.Test
             Assert.AreEqual(newv, "content");
 
         }
+#elif WINDOWS_PHONE
+        [TestMethod]
+        public async Task TestIsolatedStorage()
+        {
+
+            var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractIsolatedStorageHub(x => x);
+
+            await hub.SaveAsync("aaa", "content");
+            var iso = System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForApplication();
+            iso.FileExists("aaa");
+            var newv = await hub.LoadAsync("aaa", false);
+            Assert.AreEqual(newv, "content");
+            newv = await hub.LoadAsync("aaa", true);
+            Assert.AreEqual(newv, "content");
+
+        }
+
+#endif
     }
 }

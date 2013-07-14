@@ -1,8 +1,15 @@
-﻿using System;
+﻿#if WINDOWS_PHONE_8
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#else
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+#endif
+
+using System;
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
 namespace MVVMSidekick.Test
 {
     [TestClass]

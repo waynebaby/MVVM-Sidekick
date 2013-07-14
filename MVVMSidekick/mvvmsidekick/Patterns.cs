@@ -23,6 +23,8 @@ using System.IO;
 using System.Collections;
 using System.Diagnostics;
 using MVVMSidekick.Utilities;
+using System.Windows;
+
 #if NETFX_CORE
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
@@ -57,8 +59,9 @@ using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Controls.Primitives;
-
 #endif
 
 namespace MVVMSidekick
