@@ -1,4 +1,4 @@
-﻿#if WINDOWS_PHONE_8
+﻿#if WINDOWS_PHONE_8||NETFX_CORE
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 #else
 

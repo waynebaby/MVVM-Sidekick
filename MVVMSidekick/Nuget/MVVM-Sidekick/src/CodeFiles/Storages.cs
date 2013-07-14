@@ -161,7 +161,7 @@ namespace MVVMSidekick
 
             }
 
-        
+
 #if NETFX_CORE
             public static StorageHub<TToken, TValue> CreateJsonDatacontractFileStorageHub(
                 Func<TToken, string> fileNameFactory,
@@ -174,19 +174,25 @@ namespace MVVMSidekick
                    async (tp, tk) =>
                    {
                        folder = folder ?? Windows.Storage.ApplicationData.Current.LocalFolder;
-                       var file = await folder.CreateFileAsync(fileNameFactory(tk), CreationCollisionOption.OpenIfExists);  
                        switch (tp)
                        {
                            case StreamOpenType.Read:
+                               {
+                                   var file = await folder.CreateFileAsync(fileNameFactory(tk), CreationCollisionOption.OpenIfExists);
 
-                               return await file.OpenStreamForReadAsync ();
+                                   return await file.OpenStreamForReadAsync();
+                               }
 
                            case StreamOpenType.Write:
-                               return await file.OpenStreamForWriteAsync ();
+                               {
+                                   var file = await folder.CreateFileAsync(fileNameFactory(tk), CreationCollisionOption.ReplaceExisting);
+
+                                   return await file.OpenStreamForWriteAsync();
+                               }
 
                            default:
                                return null;
-       
+
                        }
 
                    }
@@ -211,21 +217,21 @@ namespace MVVMSidekick
                        try
                        {
 
-                     
-                       switch (tp)
-                       {
-                           case StreamOpenType.Read:
 
-                               return new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+                           switch (tp)
+                           {
+                               case StreamOpenType.Read:
 
-                           case StreamOpenType.Write:
-                               return new FileStream(filepath, FileMode.Create  , FileAccess.Write, FileShare.None);
+                                   return new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+
+                               case StreamOpenType.Write:
+                                   return new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
 
 
-                           default:
-                               return null;
+                               default:
+                                   return null;
 
-                       }
+                           }
                        }
                        catch (Exception ex)
                        {
@@ -297,7 +303,7 @@ namespace MVVMSidekick
                                return new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
 
                            case StreamOpenType.Write:
-                               return new FileStream(filepath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                               return new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
 
 
                            default:
@@ -334,7 +340,7 @@ namespace MVVMSidekick
                            return folder.OpenFile(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
 
                        case StreamOpenType.Write:
-                           return folder.OpenFile(filepath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                           return folder.OpenFile(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
 
 
                        default:
@@ -405,6 +411,7 @@ namespace MVVMSidekick
                                using (var strm = await _streamOpener(StreamOpenType.Read))
                                {
                                    await strm.CopyToAsync(ms);
+
                                }
 
                                ms.Position = 0;
@@ -431,27 +438,27 @@ namespace MVVMSidekick
             public async Task SaveAsync(TValue value)
             {
                 var kts = _knownTypes;
-                await Task.Factory.StartNew(
-                    async () =>
-                    {
-                        var ms = new MemoryStream();
-                        var ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(TValue), kts);
-                        Value = value;
-                        ser.WriteObject(ms, value);
-                        ms.Position = 0;
-                        using (var strm = await _streamOpener(StreamOpenType.Write))
+                await await Task.Factory.StartNew(
+                        async () =>
                         {
-                            await ms.CopyToAsync(strm);
-                            await strm.FlushAsync();
+                            var ms = new MemoryStream();
+                            var ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(TValue), kts);
+                            Value = value;
+                            ser.WriteObject(ms, value);
+                            ms.Position = 0;
+                            using (var strm = await _streamOpener(StreamOpenType.Write))
+                            {
+                                await ms.CopyToAsync(strm);
+                                await strm.FlushAsync();
 
-                        }
-                    },
-                    CancellationToken.None,
-                    TaskCreationOptions.AttachedToParent,
+                            }
+                        },
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
 #if NET45
  _sch.ExclusiveScheduler
 #else
- _sch
+                    _sch
 #endif
 
 
@@ -467,24 +474,6 @@ namespace MVVMSidekick
             }
         }
 
-
-
-        public class DirectoryFileStorageHub<TToken, TValue> : StorageHub<TToken, TValue>
-        {
-
-            public DirectoryFileStorageHub(Func<TToken, Uri> filePathLocator, Func<Uri, IStorage<TValue>> storageFactory)
-                : base(tk =>
-                {
-                    var fileUri = filePathLocator(tk);
-                    var store = storageFactory(fileUri);
-                    return store;
-                })
-            {
-
-
-            }
-
-        }
 
 
 

@@ -117,6 +117,12 @@
     <Compile Include="..\MVVMSidekick.Test\Patterns_TreeTest.cs">
       <Link>Patterns_TreeTest.cs</Link>
     </Compile>
+    <Compile Include="..\MVVMSidekick.Test\Playground.cs">
+      <Link>Playground.cs</Link>
+    </Compile>
+    <Compile Include="..\MVVMSidekick.Test\StorageTest.cs">
+      <Link>StorageTest.cs</Link>
+    </Compile>
     <Compile Include="..\MVVMSidekick.Test\ViewModelTests.cs">
       <Link>ViewModelTests.cs</Link>
     </Compile>

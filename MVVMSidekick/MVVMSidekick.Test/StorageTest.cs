@@ -1,4 +1,4 @@
-﻿#if WINDOWS_PHONE_8
+﻿#if WINDOWS_PHONE_8||NETFX_CORE
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
 #else
@@ -26,7 +26,28 @@ namespace MVVMSidekick.Test
             //
         }
 
+        string fileAName = "aaa";
+        string fileBName = "bbb";
 
+        [TestMethod]
+        public async Task TestStorage()
+        {
+
+            var hub = GetHub();
+
+            await hub.SaveAsync(fileAName, "content");
+            var isThere = await FileExists(fileAName);
+            Assert.IsTrue(isThere);
+            var newv = await hub.LoadAsync(fileAName, false);
+            Assert.AreEqual(newv, "content");
+            newv = await hub.LoadAsync(fileAName, true);
+            Assert.AreEqual(newv, "content");
+
+            await hub.SaveAsync(fileAName, "contt");
+            newv = await hub.LoadAsync(fileAName, true);
+            Assert.AreNotEqual(newv, "content");
+            Assert.AreEqual(newv, "contt");
+        }
         #region Additional test attributes
         //
         // You can use the following additional attributes as you write your tests:
@@ -49,37 +70,81 @@ namespace MVVMSidekick.Test
         //
         #endregion
 #if WPF
-        [TestMethod]
-        public async Task TestDirectoryStorage()
+        //[TestMethod]
+        //public async Task TestDirectoryStorage()
+        //{
+
+        //    var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractFileStorageHub(x => x);
+
+        //    await hub.SaveAsync(fileAName, "content");
+        //    var p = Path.Combine(Environment.CurrentDirectory, fileAName);
+        //    Assert.IsTrue (File.Exists (p));
+
+        //    var newv=await hub.LoadAsync (fileAName ,false  );
+        //    Assert .AreEqual  (newv, "content");
+        //    newv = await hub.LoadAsync(fileAName, true);
+        //    Assert.AreEqual(newv, "content");
+
+        //}
+
+
+        
+
+        private static Storages.StorageHub<string, string> GetHub()
         {
-
-            var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractFileStorageHub(x => x);
-
-            await hub.SaveAsync("aaa", "content");
-            var p = Path.Combine(Environment.CurrentDirectory, "aaa");
-            Assert.IsTrue (File.Exists (p));
-
-            var newv=await hub.LoadAsync ("aaa" ,false  );
-            Assert .AreEqual  (newv, "content");
-            newv = await hub.LoadAsync("aaa", true);
-            Assert.AreEqual(newv, "content");
-
+            var hub =MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractFileStorageHub(x => x);
+            return hub;
         }
-#elif WINDOWS_PHONE
-        [TestMethod]
-        public async Task TestIsolatedStorage()
-        {
 
+        private async Task<bool> FileExists(string fileAName)
+        {
+              var p = Path.Combine(Environment.CurrentDirectory, fileAName);
+           return(File.Exists (p));
+        }
+
+#elif WINDOWS_PHONE
+        //[TestMethod]
+        //public async Task TestIsolatedStorage()
+        //{
+
+        //    var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractIsolatedStorageHub(x => x);
+
+        //    await hub.SaveAsync(fileAName, "content");
+          
+        //    var newv = await hub.LoadAsync(fileAName, false);
+        //    Assert.AreEqual(newv, "content");
+        //    newv = await hub.LoadAsync(fileAName, true);
+        //    Assert.AreEqual(newv, "content");
+
+        //}
+
+           private static Storages.StorageHub<string, string> GetHub()
+        {
             var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractIsolatedStorageHub(x => x);
 
-            await hub.SaveAsync("aaa", "content");
-            var iso = System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForApplication();
-            iso.FileExists("aaa");
-            var newv = await hub.LoadAsync("aaa", false);
-            Assert.AreEqual(newv, "content");
-            newv = await hub.LoadAsync("aaa", true);
-            Assert.AreEqual(newv, "content");
+            return hub;
+        }
 
+        private async Task<bool> FileExists(string fileAName)
+        {
+        var iso = System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForApplication();
+          return  iso.FileExists(fileAName);
+        }
+
+#elif NETFX_CORE
+
+
+        private static Storages.StorageHub<string, string> GetHub()
+        {
+            var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractFileStorageHub(x => x);
+            return hub;
+        }
+
+        private async Task<bool> FileExists(string fileAName)
+        {
+            var fd = Windows.Storage.ApplicationData.Current.LocalFolder;
+            var fl = await fd.GetFileAsync(fileAName);
+            return fl != null;
         }
 
 #endif
