@@ -84,7 +84,8 @@ BuildPublishPackage.cmd MVVM-Sidekick 1.1.5.6
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>cd  $(SolutionDir)
+    <PreBuildEvent>
+cd  $(SolutionDir)
 rd Samples_SL5\bin /s /q
 rd Samples_SL5\obj /s /q
 rd Samples_WP8\bin /s /q
@@ -98,12 +99,26 @@ rd Samples_ViewModels\obj /s /q
 rd Samples_ViewModels.Test\bin /s /q
 rd Samples_ViewModels.Test\obj /s /q
 
-cd $(ProjectDir)
-del src\samples.zip
-7z a src\Samples.zip ..\..\Samples*
-7z a src\Samples.zip ..\..\.nuget
-7z a src\Samples.zip ..\..\Samples.sln
 
+
+
+cd $(ProjectDir)
+rd Samples /s /q
+md Samples
+cd Samples
+xcopy ..\..\..\Samples_SL5  /s  /i  /y
+xcopy ..\..\..\Samples_WP8 /s  /i  /y
+xcopy ..\..\..\Samples_WPF  /s  /i /y
+xcopy ..\..\..\Samples_WinRT  /s  /i  /y
+xcopy ..\..\..\Samples_ViewModels /s  /i /y
+xcopy ..\..\..\Samples_ViewModels.Test  /s  /i /y
+xcopy ..\..\..\Samples.sln  /s  /i /y
+xcopy ..\..\..\.nuget .nuget  /s  /i  /y
+xcopy ..\..\..\packages\Microsoft.Bcl.Build* Samples\packages  /s /i /y
+cd ..
+
+del src\samples.zip
+7z a src\Samples.zip  Samples
 </PreBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
