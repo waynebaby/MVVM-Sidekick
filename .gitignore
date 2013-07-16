@@ -14,6 +14,8 @@ TestResults
 *.sln.docstates
 
 # Build results
+[Ll]ib/
+[Ss]amples/
 [Dd]ebug/
 [Rr]elease/
 x64/
@@ -37,6 +39,7 @@ x64/
 *.vssscc
 *.bak
 *.nupkg.bak
+*.nupkg
 .builds
 
 # Visual C++ cache files
