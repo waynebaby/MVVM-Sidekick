@@ -122,9 +122,10 @@ namespace MVVMSidekick
 
         public class StorageHub<TToken, TValue> : IStorageHub<TToken, TValue>
         {
-            public StorageHub(Func<TToken, IStorage<TValue>> storageFactory)
+            public StorageHub(Func<TToken, IStorage<TValue>> storageFactory, Func<Task<TToken[]>> storageTokensSelector = null)
             {
                 _storageFactory = storageFactory;
+                _storageTokensSelector = storageTokensSelector;
             }
 
 
@@ -136,6 +137,23 @@ namespace MVVMSidekick
 
 
             Func<TToken, IStorage<TValue>> _storageFactory;
+            Func<Task<TToken[]>> _storageTokensSelector;
+
+            public async Task<TToken[]> GetExistsTokens()
+            {
+                if (_storageTokensSelector != null)
+                {
+                    return await _storageTokensSelector();
+                }
+                else
+                {
+                    throw new NotImplementedException("Current storageTokensSelector is not set in constructor. ");
+                
+                }
+            
+            }
+
+
             ConcurrentDictionary<TToken, IStorage<TValue>> _dic = new ConcurrentDictionary<TToken, IStorage<TValue>>();
 
             public async Task<TValue> LoadAsync(TToken token, bool forceRefresh)
@@ -204,7 +222,8 @@ namespace MVVMSidekick
 #elif WPF
             public static StorageHub<TToken, TValue> CreateJsonDatacontractFileStorageHub(
              Func<TToken, string> fileNameFactory,
-             string folder = null)
+             string folder = null,
+                Func<Task<TToken[]>> storageTokensSelector = null)
             {
 
 
@@ -214,9 +233,7 @@ namespace MVVMSidekick
                    {
                        folder = folder ?? Environment.CurrentDirectory;
                        var filepath = Path.Combine(folder, fileNameFactory(tk));
-                       try
-                       {
-
+              
 
                            switch (tp)
                            {
@@ -232,13 +249,7 @@ namespace MVVMSidekick
                                    return null;
 
                            }
-                       }
-                       catch (Exception ex)
-                       {
-
-                           throw;
-                       }
-
+                      
                    }
                 );
                 return hub;
@@ -366,9 +377,9 @@ namespace MVVMSidekick
 
         public class JsonDataContractStreamStorageHub<TToken, TValue> : StorageHub<TToken, TValue>
         {
-            public JsonDataContractStreamStorageHub(Func<StreamOpenType, TToken, Task<Stream>> streamOpener)
+            public JsonDataContractStreamStorageHub(Func<StreamOpenType, TToken, Task<Stream>> streamOpener, Func<Task<TToken[]>> storageTokensSelector = null)
                 : base
-                    (tk => new JsonDataContractStreamStorage<TValue>(async tp => await streamOpener(tp, tk)))
+                    (tk => new JsonDataContractStreamStorage<TValue>(async tp => await streamOpener(tp, tk)),storageTokensSelector)
             {
 
 

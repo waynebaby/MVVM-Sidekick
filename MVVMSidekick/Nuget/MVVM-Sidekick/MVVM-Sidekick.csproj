@@ -106,15 +106,15 @@ cd $(ProjectDir)
 rd Samples /s /q
 md Samples
 cd Samples
-xcopy ..\..\..\Samples_SL5  /s  /i  /y
-xcopy ..\..\..\Samples_WP8 /s  /i  /y
-xcopy ..\..\..\Samples_WPF  /s  /i /y
-xcopy ..\..\..\Samples_WinRT  /s  /i  /y
-xcopy ..\..\..\Samples_ViewModels /s  /i /y
-xcopy ..\..\..\Samples_ViewModels.Test  /s  /i /y
-xcopy ..\..\..\Samples.sln  /s  /i /y
+xcopy ..\..\..\Samples_SL5  Samples_SL5   /s  /i  /y
+xcopy ..\..\..\Samples_WP8  Samples_WP8  /s  /i  /y
+xcopy ..\..\..\Samples_WPF  Samples_WPF /s  /i /y
+xcopy ..\..\..\Samples_WinRT Samples_WinRT  /s  /i  /y
+xcopy ..\..\..\Samples_ViewModels Samples_ViewModels  /s  /i /y
+xcopy ..\..\..\Samples_ViewModels.Test Samples_ViewModels.Test  /s  /i /y
+xcopy ..\..\..\Samples.sln   .
 xcopy ..\..\..\.nuget .nuget  /s  /i  /y
-xcopy ..\..\..\packages\Microsoft.Bcl.Build* Samples\packages  /s /i /y
+xcopy ..\..\..\packages\Microsoft.Bcl.Build*  packages  /s /i /y
 cd ..
 
 del src\samples.zip
