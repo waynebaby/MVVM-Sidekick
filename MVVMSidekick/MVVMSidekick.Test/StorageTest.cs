@@ -11,6 +11,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Linq;
 namespace MVVMSidekick.Test
 {
     /// <summary>
@@ -47,6 +48,15 @@ namespace MVVMSidekick.Test
             newv = await hub.LoadAsync(fileAName, true);
             Assert.AreNotEqual(newv, "content");
             Assert.AreEqual(newv, "contt");
+            await hub.SaveAsync(fileBName, "contt");
+            newv = await hub.LoadAsync(fileBName, true);
+            Assert.AreEqual(newv, "contt");
+
+            var tks = new HashSet<string>(await hub.GetExistsTokens());
+            Assert.IsTrue(tks.Contains(fileAName));
+            Assert.IsTrue(tks.Contains(fileBName));
+           
+
         }
         #region Additional test attributes
         //
@@ -88,18 +98,26 @@ namespace MVVMSidekick.Test
         //}
 
 
-        
+
 
         private static Storages.StorageHub<string, string> GetHub()
         {
-            var hub =MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractFileStorageHub(x => x);
+            var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractFileStorageHub(
+                x => x,
+                Environment.CurrentDirectory,
+                async () => await Task.FromResult(
+                        Directory
+                            .GetFiles(Environment.CurrentDirectory)
+                            .Select (x=>Path.GetFileName (x))
+                            .ToArray ())
+                );
             return hub;
         }
 
         private async Task<bool> FileExists(string fileAName)
         {
-              var p = Path.Combine(Environment.CurrentDirectory, fileAName);
-           return(File.Exists (p));
+            var p = Path.Combine(Environment.CurrentDirectory, fileAName);
+            return (File.Exists(p));
         }
 
 #elif WINDOWS_PHONE
@@ -110,7 +128,7 @@ namespace MVVMSidekick.Test
         //    var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractIsolatedStorageHub(x => x);
 
         //    await hub.SaveAsync(fileAName, "content");
-          
+
         //    var newv = await hub.LoadAsync(fileAName, false);
         //    Assert.AreEqual(newv, "content");
         //    newv = await hub.LoadAsync(fileAName, true);
@@ -118,17 +136,23 @@ namespace MVVMSidekick.Test
 
         //}
 
-           private static Storages.StorageHub<string, string> GetHub()
+        private static Storages.StorageHub<string, string> GetHub()
         {
-            var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractIsolatedStorageHub(x => x);
+            var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractIsolatedStorageHub(x => x,
+                System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForApplication(),
+                async () =>
+                {
+                    return await Task.FromResult(System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForApplication().GetFileNames());
+                }
+        );
 
             return hub;
         }
 
         private async Task<bool> FileExists(string fileAName)
         {
-        var iso = System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForApplication();
-          return  iso.FileExists(fileAName);
+            var iso = System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForApplication();
+            return iso.FileExists(fileAName);
         }
 
 #elif NETFX_CORE
@@ -136,7 +160,15 @@ namespace MVVMSidekick.Test
 
         private static Storages.StorageHub<string, string> GetHub()
         {
-            var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractFileStorageHub(x => x);
+            var hub = MVVMSidekick.Storages.StorageHub<string, string>.CreateJsonDatacontractFileStorageHub(x => x,
+              Windows.Storage.ApplicationData.Current.LocalFolder,
+             async () =>
+             {
+                 var fs = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFilesAsync();
+                 return fs.Select(f => f.Name).ToArray();
+             }
+
+            );
             return hub;
         }
 

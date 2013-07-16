@@ -148,9 +148,9 @@ namespace MVVMSidekick
                 else
                 {
                     throw new NotImplementedException("Current storageTokensSelector is not set in constructor. ");
-                
+
                 }
-            
+
             }
 
 
@@ -183,7 +183,8 @@ namespace MVVMSidekick
 #if NETFX_CORE
             public static StorageHub<TToken, TValue> CreateJsonDatacontractFileStorageHub(
                 Func<TToken, string> fileNameFactory,
-                StorageFolder folder = null)
+                StorageFolder folder = null,
+                Func<Task<TToken[]>> storageTokensSelector = null)
             {
 
 
@@ -213,7 +214,8 @@ namespace MVVMSidekick
 
                        }
 
-                   }
+                   },
+                storageTokensSelector
                 );
                 return hub;
 
@@ -221,8 +223,8 @@ namespace MVVMSidekick
 
 #elif WPF
             public static StorageHub<TToken, TValue> CreateJsonDatacontractFileStorageHub(
-             Func<TToken, string> fileNameFactory,
-             string folder = null,
+                Func<TToken, string> fileNameFactory,
+                string folder = null,
                 Func<Task<TToken[]>> storageTokensSelector = null)
             {
 
@@ -233,24 +235,25 @@ namespace MVVMSidekick
                    {
                        folder = folder ?? Environment.CurrentDirectory;
                        var filepath = Path.Combine(folder, fileNameFactory(tk));
-              
-
-                           switch (tp)
-                           {
-                               case StreamOpenType.Read:
-
-                                   return new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
-
-                               case StreamOpenType.Write:
-                                   return new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
 
 
-                               default:
-                                   return null;
+                       switch (tp)
+                       {
+                           case StreamOpenType.Read:
 
-                           }
-                      
-                   }
+                               return await TaskEx.FromResult(new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read));
+
+                           case StreamOpenType.Write:
+                               return await TaskEx.FromResult(new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite));
+
+
+                           default:
+                               return null;
+
+                       }
+
+                   },
+                   storageTokensSelector
                 );
                 return hub;
 
@@ -258,7 +261,8 @@ namespace MVVMSidekick
 #elif WINDOWS_PHONE_8|| WINDOWS_PHONE_7
               public static StorageHub<TToken, TValue> CreateJsonDatacontractIsolatedStorageHub(
                 Func<TToken, string> fileNameFactory,
-                IsolatedStorageFile folder = null)
+                IsolatedStorageFile folder = null,
+                Func<Task<TToken[]>> storageTokensSelector = null)
         {
 
 
@@ -287,7 +291,8 @@ namespace MVVMSidekick
 
                    }
 
-               }
+               },
+                storageTokensSelector
             );
             return hub;
 
@@ -296,7 +301,8 @@ namespace MVVMSidekick
 #elif SILVERLIGHT_5
             public static StorageHub<TToken, TValue> CreateJsonDatacontractFileStorageHub(
                 Func<TToken, string> fileNameFactory,
-                string folder = null)
+                string folder = null,
+                Func<Task<TToken[]>> storageTokensSelector = null)
             {
 
 
@@ -322,7 +328,8 @@ namespace MVVMSidekick
 
                        }
 
-                   }
+                   },
+                    storageTokensSelector 
                 );
                 return hub;
 
@@ -330,7 +337,8 @@ namespace MVVMSidekick
     
         public static StorageHub<TToken, TValue> CreateJsonDatacontractIsolatedStorageHub(
                 Func<TToken, string> fileNameFactory,
-                IsolatedStorageFile folder = null)
+                IsolatedStorageFile folder = null,
+                Func<Task<TToken[]>> storageTokensSelector = null)
         {
 
 
@@ -359,7 +367,8 @@ namespace MVVMSidekick
 
                    }
 
-               }
+               },
+                storageTokensSelector
             );
             return hub;
 
@@ -379,7 +388,7 @@ namespace MVVMSidekick
         {
             public JsonDataContractStreamStorageHub(Func<StreamOpenType, TToken, Task<Stream>> streamOpener, Func<Task<TToken[]>> storageTokensSelector = null)
                 : base
-                    (tk => new JsonDataContractStreamStorage<TValue>(async tp => await streamOpener(tp, tk)),storageTokensSelector)
+                    (tk => new JsonDataContractStreamStorage<TValue>(async tp => await streamOpener(tp, tk)), storageTokensSelector)
             {
 
 
