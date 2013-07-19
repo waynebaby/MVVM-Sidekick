@@ -95,7 +95,7 @@ How To Use project template ?
 1. [Hello world](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/1.HelloWorld.md) 	跟班问世篇
 2. [View Models (Part 1)](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/2.ViewModels.md) 	View Models(第1部分)
 
-3.  [View Models (Part 2)](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/2.ViewModels_2.md) 	View Models(第2部分)
+3.  [View Models (Part 2)](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/3.ViewModels_2.md) 	View Models(第2部分)
 
 ----------
 
