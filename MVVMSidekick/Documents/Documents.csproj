@@ -42,6 +42,7 @@
     </None>
     <None Include="1.HelloWorld.md" />
     <None Include="2.ViewModels.md" />
+    <None Include="3.ViewModels_2.md" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

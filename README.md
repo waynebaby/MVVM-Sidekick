@@ -1,6 +1,6 @@
- ***Warning: If you are developing WPF4 application, you need VS2012 with Update 3 RC installed， or a clean Vs2012 without any Update (not recommended)***
+      ***Warning: If you are developing WPF4 application, you need VS2012 with Update 3 or later installed， or a clean Vs2012 without any Update (not recommended)***
 > 
-> ***注意：如果您要开发WPF4程序，您需要安装 VS2012 Update 3 RC 2  或者卸载所有Update(不推荐)***
+> ***注意：如果您要开发WPF4程序，您需要安装 VS2012 Update 3 以上的版本， 或者卸载所有Update(不推荐)***
  
  
  ------------------
@@ -92,10 +92,10 @@ How To Use project template ?
 #Documents TOC
 >#文档目录
 
-1. [Hello world](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/1.HelloWorld.md) >跟班问世篇
-2. [View Models](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/2.ViewModels.md) >对象生存期
-> 
- 
+1. [Hello world](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/1.HelloWorld.md) 	跟班问世篇
+2. [View Models (Part 1)](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/2.ViewModels.md) 	View Models(第1部分)
+
+3.  [View Models (Part 2)](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/2.ViewModels_2.md) 	View Models(第2部分)
 
 ----------
 
