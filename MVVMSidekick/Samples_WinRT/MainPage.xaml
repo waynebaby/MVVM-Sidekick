@@ -25,6 +25,7 @@
         <ProgressBar Minimum="0" Maximum="5" Grid.ColumnSpan="2" Margin="175,178,112,330" Grid.Row="1" Height="199" Value="{Binding CountDown}" />
         <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" />
         <Button Content="{Binding CommandListTest.Resource}" Grid.Column="1" Command="{Binding CommandListTest}" Margin="142,13,0,10" />
+        <Button Content="{Binding CommandShowGroupView.Resource}" Grid.Column="1" Command="{Binding CommandShowGroupView}" Margin="230,13,0,10" />
 
     </Grid>
 </common:LayoutAwarePage>

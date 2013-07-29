@@ -241,10 +241,10 @@ namespace MVVMSidekick
                        {
                            case StreamOpenType.Read:
 
-                               return await TaskEx.FromResult(new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read));
+                               return await TaskExHelper.FromResult(new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read));
 
                            case StreamOpenType.Write:
-                               return await TaskEx.FromResult(new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite));
+                               return await TaskExHelper.FromResult(new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite));
 
 
                            default:

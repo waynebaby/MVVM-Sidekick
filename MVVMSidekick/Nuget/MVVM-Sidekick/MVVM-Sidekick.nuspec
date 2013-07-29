@@ -95,9 +95,7 @@
     </releaseNotes>
     <tags>Rx Reactive Extensions MVVM Win8 Metro Modern UI</tags>
     <dependencies>
-      <dependency id="Microsoft.Bcl" version="[1.0.19,2.0)"  />
-      <dependency id="Microsoft.Bcl.Async" version="[1.0.16,2.0)" />
-      <dependency id="Microsoft.Bcl.Build" version="[1.0.7,2.0)"  />
+
       <dependency id="Rx-Main" version="[2.1.30214.0,3.0)" />
       <dependency id="Rx-PlatformServices" version="[2.1.30214.0,3.0)" />
       <dependency id="Rx-Interfaces" version="[2.1.30214.0,3.0)" />

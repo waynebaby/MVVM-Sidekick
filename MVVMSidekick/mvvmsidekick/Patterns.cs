@@ -533,18 +533,29 @@ namespace MVVMSidekick
 
 
 
-                public ObservableCollection<ITreeItem<object, TState>> Children
+                //public ObservableCollection<ITreeItem<object, TState>> Children
+                //{
+                //    get { return _ChildrenLocator(this).Value; }
+                //    set { _ChildrenLocator(this).SetValueAndTryNotify(value); }
+                //}
+                //#region Property ObservableCollection<ITreeItem<object,TState >> Children Setup
+                //protected Property<ObservableCollection<ITreeItem<object, TState>>> _Children = new Property<ObservableCollection<ITreeItem<object, TState>>> { LocatorFunc = _ChildrenLocator };
+                //static Func<BindableBase, ValueContainer<ObservableCollection<ITreeItem<object, TState>>>> _ChildrenLocator = RegisterContainerLocator<ObservableCollection<ITreeItem<object, TState>>>("Children", model => model.Initialize("Children", ref model._Children, ref _ChildrenLocator, _ChildrenDefaultValueFactory));
+                //static Func<ObservableCollection<ITreeItem<object, TState>>> _ChildrenDefaultValueFactory = () => new ObservableCollection<ITreeItem<object, TState>>();
+                //#endregion
+    
+
+                
+                public Collection <ITreeItem<object, TState>> Children
                 {
                     get { return _ChildrenLocator(this).Value; }
                     set { _ChildrenLocator(this).SetValueAndTryNotify(value); }
                 }
-                #region Property ObservableCollection<ITreeItem<object,TState >> Children Setup
-                protected Property<ObservableCollection<ITreeItem<object, TState>>> _Children = new Property<ObservableCollection<ITreeItem<object, TState>>> { LocatorFunc = _ChildrenLocator };
-                static Func<BindableBase, ValueContainer<ObservableCollection<ITreeItem<object, TState>>>> _ChildrenLocator = RegisterContainerLocator<ObservableCollection<ITreeItem<object, TState>>>("Children", model => model.Initialize("Children", ref model._Children, ref _ChildrenLocator, _ChildrenDefaultValueFactory));
-                static Func<ObservableCollection<ITreeItem<object, TState>>> _ChildrenDefaultValueFactory = () => new ObservableCollection<ITreeItem<object, TState>>();
+                #region Property Collection <ITreeItem<object, TState>> Children Setup
+                protected Property<Collection <ITreeItem<object, TState>>> _Children = new Property<Collection <ITreeItem<object, TState>>> { LocatorFunc = _ChildrenLocator };
+                static Func<BindableBase, ValueContainer<Collection <ITreeItem<object, TState>>>> _ChildrenLocator = RegisterContainerLocator<Collection <ITreeItem<object, TState>>>("Children", model => model.Initialize("Children", ref model._Children, ref _ChildrenLocator, _ChildrenDefaultValueFactory));
+                static Func<Collection <ITreeItem<object, TState>>> _ChildrenDefaultValueFactory = () => new ObservableCollection<ITreeItem<object, TState>>();
                 #endregion
-
-
 
 
                 ICollection<ITreeItem<object, TState>> ITreeItem<TNodeValue, TState>.Children

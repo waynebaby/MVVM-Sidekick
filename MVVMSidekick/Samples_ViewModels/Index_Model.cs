@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Reflection ;
+using System.Reflection;
 namespace Samples.ViewModels
 {
 
@@ -168,8 +168,34 @@ namespace Samples.ViewModels
             };
         #endregion
 #endif
+#if NETFX_CORE
 
-        
+        public CommandModel<ReactiveCommand, String> CommandShowGroupView
+        {
+            get { return _CommandShowGroupViewLocator(this).Value; }
+            set { _CommandShowGroupViewLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandShowGroupView Setup
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandShowGroupView = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandShowGroupViewLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandShowGroupViewLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandShowGroupView", model => model.Initialize("CommandShowGroupView", ref model._CommandShowGroupView, ref _CommandShowGroupViewLocator, _CommandShowGroupViewDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandShowGroupViewDefaultValueFactory =
+            model =>
+            {
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                //Config it if you want
+                var vm = CastToCurrentType(model); //vm instance 
+                cmd.Subscribe(
+                  async _ =>
+                  {
+                      await vm.StageManager.DefaultStage.Show<GroupViewSample_Model>();
+                  })
+                  .DisposeWith(vm);
+                return cmd.CreateCommandModel("ShowGroupView");
+            };
+        #endregion
+
+#endif
+
         public CommandModel<ReactiveCommand, String> CommandListTest
         {
             get { return _CommandListTestLocator(this).Value; }
@@ -182,14 +208,14 @@ namespace Samples.ViewModels
             model =>
             {
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-                                var vm = CastToCurrentType(model);
-                                cmd
-                                    .Subscribe(
-                                    async _ =>
-                                    {
-                                        
-                                        await vm.StageManager.DefaultStage.Show<ListsAndItemsPattern_Model>();
-                                    }).DisposeWith (vm);
+                var vm = CastToCurrentType(model);
+                cmd
+                    .Subscribe(
+                    async _ =>
+                    {
+
+                        await vm.StageManager.DefaultStage.Show<ListsAndItemsPattern_Model>();
+                    }).DisposeWith(vm);
                 return cmd.CreateCommandModel("ListTest");
             };
         #endregion
