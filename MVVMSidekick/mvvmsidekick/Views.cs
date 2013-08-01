@@ -506,9 +506,9 @@ namespace MVVMSidekick
                 return this;
             }
 
-            public ViewModelToViewMapper<TModel> MapTo<TView>(string viewName, TView instance) where TView : class,IView
+            public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, TView instance) where TView : class,IView
             {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewName, instance);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, instance);
                 return this;
             }
 
@@ -518,9 +518,9 @@ namespace MVVMSidekick
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
                 return this;
             }
-            public ViewModelToViewMapper<TModel> MapTo<TView>(string viewName, bool alwaysNew = true) where TView : class,IView
+            public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, bool alwaysNew = true) where TView : class,IView
             {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewName, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
                 return this;
             }
 
@@ -530,9 +530,9 @@ namespace MVVMSidekick
                 return this;
             }
 
-            public ViewModelToViewMapper<TModel> MapTo<TView>(string viewName, Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
+            public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
             {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewName, d => factory(d as TModel), alwaysNew);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory(d as TModel), alwaysNew);
                 return this;
             }
 #else
@@ -542,9 +542,9 @@ namespace MVVMSidekick
                 return this;
             }
 
-            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewName, TControl instance) where TControl : MVVMControl
+            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, TControl instance) where TControl : MVVMControl
             {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewName, instance);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, instance);
                 return this;
             }
 
@@ -554,9 +554,9 @@ namespace MVVMSidekick
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
                 return this;
             }
-            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewName, bool alwaysNew = true) where TControl : MVVMControl
+            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, bool alwaysNew = true) where TControl : MVVMControl
             {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewName, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
                 return this;
             }
 
@@ -566,9 +566,9 @@ namespace MVVMSidekick
                 return this;
             }
 
-            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewName, Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
+            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
             {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewName, d => factory(d as TModel), alwaysNew);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory(d as TModel), alwaysNew);
                 return this;
             }
 #endif
@@ -606,10 +606,10 @@ namespace MVVMSidekick
 
 
 
-            public ViewModelToViewMapper<TModel> MapTo<TPage>(string viewName, Uri baseUri = null) where TPage : MVVMPage
+            public ViewModelToViewMapper<TModel> MapTo<TPage>(string viewMappingKey, Uri baseUri = null) where TPage : MVVMPage
             {
                 var pageUri = GuessViewUri<TPage>(baseUri);
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewName, pageUri);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, pageUri);
                 return this;
             }
 
@@ -619,9 +619,9 @@ namespace MVVMSidekick
                 return this;
             }
 
-            public ViewModelToViewMapper<TModel> MapTo(string viewName, Uri pageUri)
+            public ViewModelToViewMapper<TModel> MapTo(string viewMappingKey, Uri pageUri)
             {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewName, pageUri);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, pageUri);
                 return this;
             }
 #endif
@@ -638,10 +638,10 @@ namespace MVVMSidekick
             }
 
 
-            public ViewModelToViewMapper<TModel> MapToDefault<TPage>(string viewName) where TPage : MVVMPage
+            public ViewModelToViewMapper<TModel> MapToDefault<TPage>(string viewMappingKey) where TPage : MVVMPage
             {
 
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewName, typeof(TPage));
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, typeof(TPage));
                 return this;
             }
 
@@ -758,14 +758,14 @@ namespace MVVMSidekick
 
 
 #if WPF
-            private static IView InternalLocateViewIfNotSet<TTarget>(TTarget targetViewModel, string viewKey, IView view) where TTarget : class, IViewModel
+            private static IView InternalLocateViewIfNotSet<TTarget>(TTarget targetViewModel, string viewMappingKey, IView view) where TTarget : class, IViewModel
             {
                 if (targetViewModel != null && targetViewModel.StageManager != null)
                 {
                     view = targetViewModel.StageManager.CurrentBindingView as IView;
 
                 }
-                view = view ?? ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel) as IView;
+                view = view ?? ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel) as IView;
                 return view;
             }
 
@@ -773,22 +773,22 @@ namespace MVVMSidekick
 
 
 
-            public async Task Show<TTarget>(TTarget targetViewModel = null, string viewKey = null)
+            public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
                  where TTarget : class,IViewModel
             {
                 IView view = null;
-                view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewKey, view);
+                view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 await targetViewModel.WaitForClose();
             }
 
 
-            public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewKey = null)
+            public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
                 where TTarget : class,IViewModel<TResult>
             {
                 IView view = null;
-                view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewKey, view);
+                view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 return await targetViewModel.WaitForCloseWithResult();
@@ -796,11 +796,11 @@ namespace MVVMSidekick
 
 
 
-            public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewKey = null)
+            public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
                 where TTarget : class,IViewModel
             {
                 IView view = null;
-                view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewKey, view);
+                view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
 
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
@@ -811,11 +811,11 @@ namespace MVVMSidekick
 #endif
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||WINDOWS_PHONE_8
 
-            public async Task Show<TTarget>(TTarget targetViewModel = null, string viewKey = null)
+            public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
                  where TTarget : class,IViewModel
             {
 
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
                 Uri uri;
                 if ((uri = item as Uri) != null) //only sl like page Can be registered as uri
                 {
@@ -854,11 +854,11 @@ namespace MVVMSidekick
                 await targetViewModel.WaitForClose();
             }
 
-            public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewKey = null)
+            public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
                 where TTarget : class,IViewModel<TResult>
             {
 
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
                 Uri uri;
                 if ((uri = item as Uri) != null) //only sl like page Can be registered as uri
                 {
@@ -897,10 +897,10 @@ namespace MVVMSidekick
 
 
 
-            public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewKey = null)
+            public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
                 where TTarget : class,IViewModel
             {
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
                 Uri uri;
                 if ((uri = item as Uri) != null) //only sl like page Can be registered as uri
                 {
@@ -952,12 +952,12 @@ namespace MVVMSidekick
 #if NETFX_CORE
 
 
-            public async Task Show<TTarget>(TTarget targetViewModel = null, string viewKey = null)
+            public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
                  where TTarget : class,IViewModel
             {
 
 
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
                 Type type;
                 if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
                 {
@@ -1000,10 +1000,10 @@ namespace MVVMSidekick
 
             }
 
-            public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewKey = null)
+            public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
                 where TTarget : class,IViewModel<TResult>
             {
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
                 Type type;
                 if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
                 {
@@ -1047,10 +1047,10 @@ namespace MVVMSidekick
 
 
 
-            public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewKey = null)
+            public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
     where TTarget : class,IViewModel
             {
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewKey, targetViewModel);
+                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
                 Type type;
                 if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
                 {

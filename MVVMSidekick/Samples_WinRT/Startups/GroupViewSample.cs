@@ -23,6 +23,13 @@ namespace Samples.Startups
                 .GetViewMapper()
                 .MapToDefault<GroupViewSample>();
 
+            ViewModelLocator<GroupViewSample_Model>
+                .Instance
+                .Register("NewInstanceVM", o => new GroupViewSample_Model() { Title = "NewInstance" }, true) 
+                .GetViewMapper()
+                .MapToDefault<GroupViewSample>("NewInstanceVW");
+
+
         }
     }
 }

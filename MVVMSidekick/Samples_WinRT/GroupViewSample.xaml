@@ -24,7 +24,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}" Margin="0,0,0,10" Width="40" Height="40">
-                    <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                    <Button Command="{Binding ViewModel.CommandTestHit, ElementName=pageRoot}" CommandParameter="{Binding Mode=OneWay}">You Dare Click Me?</Button>
                 </Border>
                 <StackPanel Grid.Column="1" Margin="10,-10,0,0">
                     <TextBlock Text="{Binding Value}" Style="{StaticResource BodyTextStyle}" TextWrapping="NoWrap"/>
@@ -80,8 +80,9 @@
                         <DataTemplate>
                             <Grid Margin="1,0,0,6">
                                 <Button
+                                    
                                     AutomationProperties.Name="Group Title"
-                                    Style="{StaticResource TextPrimaryButtonStyle}">
+                                    Style="{StaticResource TextPrimaryButtonStyle}" >
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding Value}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
                                         <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>

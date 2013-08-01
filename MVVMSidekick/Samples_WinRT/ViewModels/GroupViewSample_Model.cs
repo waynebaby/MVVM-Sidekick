@@ -39,7 +39,7 @@ namespace Samples.ViewModels
 
         }
 
-        private void InitData(CollectionViewType type)
+        public void InitData(CollectionViewType type)
         {
             var rnd = new Random();
             var grps = Enumerable.Range(0, 100)
@@ -132,7 +132,7 @@ namespace Samples.ViewModels
 
         protected override async Task OnBindedToView(IView view, IViewModel oldValue)
         {
-            InitData(CollectionViewType.Normal);
+            //InitData(CollectionViewType.Normal);
             await base.OnBindedToView(view, oldValue);
 
 
@@ -256,6 +256,33 @@ namespace Samples.ViewModels
             };
         #endregion
 
+        
+        
+        public CommandModel<ReactiveCommand, String> CommandTestHit
+        {
+            get { return _CommandTestHitLocator(this).Value; }
+            set { _CommandTestHitLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandTestHit Setup
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandTestHit = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandTestHitLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandTestHitLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandTestHit", model => model.Initialize("CommandTestHit", ref model._CommandTestHit, ref _CommandTestHitLocator, _CommandTestHitDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandTestHitDefaultValueFactory =
+            model =>
+            {
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                //Config it if you wantS
+                var vm = CastToCurrentType(model); //vm instance 
+                cmd.Subscribe (
+                  async _=>
+                  {
+                      vm.Title = ((TreeViewItemModel<string>)_.EventArgs.Parameter).Value;
+                  } )
+                  .DisposeWith(vm); 
+                return cmd.CreateCommandModel("TestHit");
+            };
+        #endregion
+
+        
 
 
     }
