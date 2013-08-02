@@ -319,7 +319,7 @@ namespace MVVMSidekick
                         }
                     }
 
-
+                    _disposeInfos = null;
                     GC.SuppressFinalize(this);
                 }
 

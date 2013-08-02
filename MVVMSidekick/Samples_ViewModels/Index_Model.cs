@@ -187,9 +187,12 @@ namespace Samples.ViewModels
                 cmd.Subscribe(
                   async _ =>
                   {
-                      var targetvm = new GroupViewSample_Model();
-                      targetvm.InitData(CollectionViewType.Grouped);
-                      await vm.StageManager.DefaultStage.Show<GroupViewSample_Model>(targetvm);
+                      using (var targetvm = new GroupViewSample_Model())
+                      {
+                          targetvm.InitData(CollectionViewType.Grouped);
+                          await vm.StageManager.DefaultStage.Show<GroupViewSample_Model>(targetvm);
+
+                      }
                   })
                   .DisposeWith(vm);
                 return cmd.CreateCommandModel("ShowGroupView");
