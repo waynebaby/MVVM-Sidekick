@@ -77,10 +77,6 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\packages\Microsoft.Bcl.1.0.19\Microsoft.Bcl.1.0.19.nupkg">
-      <Link>Packages\Microsoft.Bcl.1.0.19.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="..\..\packages\Microsoft.Bcl.Async.1.0.16\Microsoft.Bcl.Async.1.0.16.nupkg">
       <Link>Packages\Microsoft.Bcl.Async.1.0.16.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
