@@ -91,10 +91,7 @@ namespace MVVMSidekick
                 obj.SetValue(BinderProperty, value);
             }
 
-            // Using a DependencyProperty as the backing store for ElementBinder.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty BinderProperty =
-                DependencyProperty.RegisterAttached("Binder", typeof(ElementBinder), typeof(ElementBinder), new PropertyMetadata(null,
-                    (o, e) =>
+            internal static PropertyChangedCallback BinderPropertyChangedCallback =(o, e) =>
                     {
                         if (e.NewValue is ElementBinder)
                         {
@@ -121,10 +118,13 @@ namespace MVVMSidekick
                             }
                         }
 
-                    }
+                    };
 
-
-                    ));
+            // Using a DependencyProperty as the backing store for ElementBinder.  This enables animation, styling, binding, etc...
+            public static readonly DependencyProperty BinderProperty =
+                DependencyProperty.RegisterAttached("Binder", typeof(ElementBinder), typeof(ElementBinder), new PropertyMetadata(
+                    null,
+                    BinderPropertyChangedCallback));
 
 
 

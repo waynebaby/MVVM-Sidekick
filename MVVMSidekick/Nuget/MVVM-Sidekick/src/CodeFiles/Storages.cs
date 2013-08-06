@@ -433,7 +433,10 @@ namespace MVVMSidekick
                                    await strm.CopyToAsync(ms);
 
                                }
-
+                               if (ms.Length ==0)
+                               {
+                                   return default (TValue);
+                               }
                                ms.Position = 0;
 
                                var obj = (TValue)ser.ReadObject(ms);
@@ -493,12 +496,6 @@ namespace MVVMSidekick
                 private set;
             }
         }
-
-
-
-
-
-
 
 
     }

@@ -314,8 +314,10 @@ namespace MVVMSidekick
                 {
                     throw new ArgumentException("items could not be null.");
                 }
-                _coreDictionary = items;
-                foreach (var item in items)
+                var bak=items.ToList ();
+                _coreDictionary = items  ;
+                items.Clear();
+                foreach (var item in bak)
                 {
                     base.Add(item);
                 }

@@ -162,8 +162,6 @@ namespace MVVMSidekick
                   .Select(e =>
                       e.EventArgs);
 
-
-
                 return eventArgSeq;
 
             }

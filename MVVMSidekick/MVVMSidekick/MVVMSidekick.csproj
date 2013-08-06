@@ -80,6 +80,7 @@
     <Compile Include="Utilities.cs" />
     <Compile Include="ViewModels.cs" />
     <Compile Include="Views.cs" />
+    <Compile Include="VisualStates.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

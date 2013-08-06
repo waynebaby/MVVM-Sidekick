@@ -80,7 +80,7 @@ namespace MVVMSidekick
         /// <para>Base type of bindable model.</para>
         /// <para>ViewModel 基类</para>
         /// </summary>
-        [DataContract(IsReference = true)]
+        [DataContract]
         public abstract class BindableBase
             : IDisposable, INotifyPropertyChanged, IBindable
         {
@@ -291,7 +291,7 @@ namespace MVVMSidekick
                 {
                     if (_disposeInfos != null)
                     {
-                        var l = _disposeInfos.ToList ()
+                        var l = _disposeInfos.ToList()
                             .Select
                             (
                                 info =>
@@ -791,7 +791,7 @@ namespace MVVMSidekick
         /// </summary>
         /// <typeparam name="TItem1">Type of first item/第一个元素的类型</typeparam>
         /// <typeparam name="TItem2">Type of second item/第二个元素的类型</typeparam>
-        [DataContract(IsReference = true)]
+        [DataContract]
         public class BindableTuple<TItem1, TItem2> : BindableBase<BindableTuple<TItem1, TItem2>>
         {
             public BindableTuple(TItem1 item1, TItem2 item2)
@@ -859,7 +859,7 @@ namespace MVVMSidekick
         /// </example>
         /// </summary>
         /// <typeparam name="TSubClassType"> Sub Type / 子类类型</typeparam>
-        [DataContract(IsReference = true)]
+        [DataContract]
         public abstract class BindableBase<TSubClassType> : BindableBase, INotifyDataErrorInfo where TSubClassType : BindableBase<TSubClassType>
         {
 
@@ -1335,7 +1335,7 @@ namespace MVVMSidekick
         }
 
 
-        [DataContract(IsReference = true)]
+        [DataContract]
         public struct NoResult
         {
 
@@ -1428,11 +1428,7 @@ namespace MVVMSidekick
 
             protected virtual async Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue)
             {
-                //#if SILVERLIGHT_5
-                //                await T.askEx.Yield();
-                //#else
-                //                await T.ask.Yield();
-                //#endif
+                Dispose();
                 await TaskExHelper.Yield();
             }
 
@@ -1523,16 +1519,18 @@ namespace MVVMSidekick
             public Task WaitForClose(Action closingCallback = null)
             {
                 var t = new Task(() => { });
-                if (closingCallback != null)
-                {
-                    this.AddDisposeAction(
-                        () =>
+
+                this.AddDisposeAction(
+                    () =>
+                    {
+                        if (closingCallback != null)
                         {
                             closingCallback();
-                            t.Start();
                         }
-                        );
-                }
+                        t.Start();
+                    }
+                    );
+
 
                 return t;
             }

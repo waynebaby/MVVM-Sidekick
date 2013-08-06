@@ -136,6 +136,9 @@
     <Compile Include="..\mvvmsidekick\Views.cs">
       <Link>FileLinks\Views.cs</Link>
     </Compile>
+    <Compile Include="..\MVVMSidekick\VisualStates.cs">
+      <Link>FileLinks\VisualStates.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

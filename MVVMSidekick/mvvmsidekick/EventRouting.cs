@@ -93,6 +93,10 @@ namespace MVVMSidekick
             /// <param name="eventArgs">事件数据</param>
             /// <param name="callerMemberName">发送事件名</param>
             public virtual void RaiseEvent<TEventArgs>(object sender, TEventArgs eventArgs, string callerMemberName = "")
+#if !NETFX_CORE
+ where TEventArgs : EventArgs
+#endif
+          
             {
                 var eventObject = GetIEventObjectInstance(typeof(TEventArgs));
                 eventObject.RaiseEvent(sender, callerMemberName, eventArgs);
@@ -266,6 +270,10 @@ namespace MVVMSidekick
             /// <param name="eventArgs">事件数据</param>
             /// <param name="callerMemberName">事件名</param>
             public static void RaiseEvent<TEventArgs>(this BindableBase source, TEventArgs eventArgs, string callerMemberName = "")
+#if !NETFX_CORE
+        where TEventArgs : EventArgs
+#endif
+          
             {
                 EventRouter.Instance.RaiseEvent(source, eventArgs, callerMemberName);
             }

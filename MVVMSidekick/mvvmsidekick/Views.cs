@@ -140,12 +140,7 @@ namespace MVVMSidekick
                     (view as Window).Close();
                 }
 #endif
-                else
-                {
-                    view.Dispose();
-                }
-
-
+  
 
             }
 
@@ -167,7 +162,7 @@ namespace MVVMSidekick
 
             public MVVMWindow(IViewModel viewModel)
             {
-
+                Unloaded += (_1, _2) => ViewModel = null; 
                 Loaded += async (_1, _2) =>
                 {
                     if (viewModel != null)
@@ -226,10 +221,7 @@ namespace MVVMSidekick
             {
                 get { return ViewType.Window; }
             }
-            public void Dispose()
-            {
-                this.SelfClose();
-            }
+
 
 
 
@@ -255,6 +247,7 @@ namespace MVVMSidekick
 
             public MVVMPage(IViewModel viewModel)
             {
+                Unloaded += (_1, _2) => ViewModel = null; 
                 Loaded += async (_1, _2) =>
                 {
                     if (viewModel != null)
@@ -365,6 +358,8 @@ namespace MVVMSidekick
             }
             public MVVMControl(IViewModel viewModel)
             {
+
+                Unloaded += (_1, _2) => ViewModel = null; 
                 Loaded += async (_1, _2) =>
                 {
                     if (viewModel != null)
@@ -465,10 +460,7 @@ namespace MVVMSidekick
             {
                 get { return ViewType.Control; }
             }
-            public void Dispose()
-            {
-                this.SelfClose();
-            }
+  
         }
         public enum ViewType
         {
@@ -477,7 +469,7 @@ namespace MVVMSidekick
             Control
         }
 
-        public interface IView : IDisposable
+        public interface IView 
         {
             IViewModel ViewModel { get; set; }
 
