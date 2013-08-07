@@ -179,6 +179,7 @@ namespace MVVMSidekick
 
             }
 
+            #region Json
 
 #if NETFX_CORE
             public static StorageHub<TToken, TValue> CreateJsonDatacontractFileStorageHub(
@@ -375,6 +376,210 @@ namespace MVVMSidekick
         }
 
 #endif
+            #endregion
+
+
+            #region Xml
+
+#if NETFX_CORE
+            public static StorageHub<TToken, TValue> CreateXmlDatacontractFileStorageHub(
+                Func<TToken, string> fileNameFactory,
+                StorageFolder folder = null,
+                Func<Task<TToken[]>> storageTokensSelector = null)
+            {
+
+
+
+                var hub = new XmlDataContractStreamStorageHub<TToken, TValue>(
+                   async (tp, tk) =>
+                   {
+                       folder = folder ?? Windows.Storage.ApplicationData.Current.LocalFolder;
+                       switch (tp)
+                       {
+                           case StreamOpenType.Read:
+                               {
+                                   var file = await folder.CreateFileAsync(fileNameFactory(tk), CreationCollisionOption.OpenIfExists);
+
+                                   return await file.OpenStreamForReadAsync();
+                               }
+
+                           case StreamOpenType.Write:
+                               {
+                                   var file = await folder.CreateFileAsync(fileNameFactory(tk), CreationCollisionOption.ReplaceExisting);
+
+                                   return await file.OpenStreamForWriteAsync();
+                               }
+
+                           default:
+                               return null;
+
+                       }
+
+                   },
+                storageTokensSelector
+                );
+                return hub;
+
+            }
+
+#elif WPF
+            public static StorageHub<TToken, TValue> CreateXmlDatacontractFileStorageHub(
+                Func<TToken, string> fileNameFactory,
+                string folder = null,
+                Func<Task<TToken[]>> storageTokensSelector = null)
+            {
+
+
+
+                var hub = new XmlDataContractStreamStorageHub<TToken, TValue>(
+                   async (tp, tk) =>
+                   {
+                       folder = folder ?? Environment.CurrentDirectory;
+                       var filepath = Path.Combine(folder, fileNameFactory(tk));
+
+
+                       switch (tp)
+                       {
+                           case StreamOpenType.Read:
+
+                               return await TaskExHelper.FromResult(new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read));
+
+                           case StreamOpenType.Write:
+                               return await TaskExHelper.FromResult(new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite));
+
+
+                           default:
+                               return null;
+
+                       }
+
+                   },
+                   storageTokensSelector
+                );
+                return hub;
+
+            }
+#elif WINDOWS_PHONE_8|| WINDOWS_PHONE_7
+              public static StorageHub<TToken, TValue> CreateXmlDatacontractIsolatedStorageHub(
+                Func<TToken, string> fileNameFactory,
+                IsolatedStorageFile folder = null,
+                Func<Task<TToken[]>> storageTokensSelector = null)
+        {
+
+
+ 
+            var hub = new XmlDataContractStreamStorageHub<TToken, TValue>(
+               async (tp, tk) =>
+               {
+               
+                   folder = folder ?? IsolatedStorageFile.GetUserStoreForApplication();
+
+        
+                  
+                   var filepath=fileNameFactory(tk);
+                   switch (tp)
+                   {
+                       case StreamOpenType.Read:
+
+                           return folder.OpenFile(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+
+                       case StreamOpenType.Write:
+
+                           return folder.OpenFile(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
+
+
+                       default:
+                           return null;
+
+                   }
+
+               },
+                storageTokensSelector
+            );
+            return hub;
+
+        }
+
+#elif SILVERLIGHT_5
+            public static StorageHub<TToken, TValue> CreateXmlDatacontractFileStorageHub(
+                Func<TToken, string> fileNameFactory,
+                string folder = null,
+                Func<Task<TToken[]>> storageTokensSelector = null)
+            {
+
+
+
+                var hub = new XmlDataContractStreamStorageHub<TToken, TValue>(
+                   async (tp, tk) =>
+                   {
+                       folder = folder ?? Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
+                       var filepath = Path.Combine(folder, fileNameFactory(tk));
+
+                       switch (tp)
+                       {
+                           case StreamOpenType.Read:
+
+                               return new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+
+                           case StreamOpenType.Write:
+                               return new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+
+
+                           default:
+                               return null;
+
+                       }
+
+                   },
+                    storageTokensSelector 
+                );
+                return hub;
+
+            }
+    
+        public static StorageHub<TToken, TValue> CreateXmlDatacontractIsolatedStorageHub(
+                Func<TToken, string> fileNameFactory,
+                IsolatedStorageFile folder = null,
+                Func<Task<TToken[]>> storageTokensSelector = null)
+        {
+
+
+ 
+            var hub = new XmlDataContractStreamStorageHub<TToken, TValue>(
+               async (tp, tk) =>
+               {
+                   await TaskEx.Yield();
+                   folder = folder ?? IsolatedStorageFile.GetUserStoreForApplication();
+
+        
+                  
+                   var filepath=fileNameFactory(tk);
+                   switch (tp)
+                   {
+                       case StreamOpenType.Read:
+
+                           return folder.OpenFile(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Read);
+
+                       case StreamOpenType.Write:
+                           return folder.OpenFile(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+
+
+                       default:
+                           return null;
+
+                   }
+
+               },
+                storageTokensSelector
+            );
+            return hub;
+
+        }
+
+#endif
+
+            #endregion
+
         }
 
 
@@ -433,9 +638,9 @@ namespace MVVMSidekick
                                    await strm.CopyToAsync(ms);
 
                                }
-                               if (ms.Length ==0)
+                               if (ms.Length == 0)
                                {
-                                   return default (TValue);
+                                   return default(TValue);
                                }
                                ms.Position = 0;
 
@@ -496,7 +701,118 @@ namespace MVVMSidekick
                 private set;
             }
         }
+        public class XmlDataContractStreamStorageHub<TToken, TValue> : StorageHub<TToken, TValue>
+        {
+            public XmlDataContractStreamStorageHub(Func<StreamOpenType, TToken, Task<Stream>> streamOpener, Func<Task<TToken[]>> storageTokensSelector = null)
+                : base
+                    (tk => new XmlDataContractStreamStorage<TValue>(async tp => await streamOpener(tp, tk)), storageTokensSelector)
+            {
 
+
+            }
+        }
+
+
+        public class XmlDataContractStreamStorage<TValue> : IStorage<TValue>
+        {
+#if NET45
+            ConcurrentExclusiveSchedulerPair _sch = new ConcurrentExclusiveSchedulerPair();
+#else
+            TaskScheduler _sch = new LimitedConcurrencyLevelTaskScheduler(1);
+#endif
+            public XmlDataContractStreamStorage(Func<StreamOpenType, Task<Stream>> streamOpener, params Type[] knownTypes)
+            {
+                _streamOpener = streamOpener;
+                _knownTypes = knownTypes;
+            }
+
+            Func<StreamOpenType, Task<Stream>> _streamOpener;
+
+            Type[] _knownTypes;
+
+            public Type[] KnownTypes
+            {
+                get { return _knownTypes; }
+                set { _knownTypes = value; }
+            }
+
+            public async Task<TValue> RefreshAsync()
+            {
+                var kts = _knownTypes;
+                return await await
+                       Task.Factory.StartNew(
+                           async () =>
+                           {
+                               var ms = new MemoryStream();
+                               var ser = new System.Runtime.Serialization.DataContractSerializer(typeof(TValue), kts);
+                               using (var strm = await _streamOpener(StreamOpenType.Read))
+                               {
+                                   await strm.CopyToAsync(ms);
+
+                               }
+                               if (ms.Length == 0)
+                               {
+                                   return default(TValue);
+                               }
+                               ms.Position = 0;
+
+                               var obj = (TValue)ser.ReadObject(ms);
+                               Value = obj;
+                               return obj;
+
+                           },
+                            CancellationToken.None,
+                            TaskCreationOptions.AttachedToParent,
+#if NET45
+ _sch.ConcurrentScheduler
+#else
+ _sch
+#endif
+
+);
+
+
+
+            }
+
+            public async Task SaveAsync(TValue value)
+            {
+                var kts = _knownTypes;
+                await await Task.Factory.StartNew(
+                        async () =>
+                        {
+                            var ms = new MemoryStream();
+                            var ser = new System.Runtime.Serialization.DataContractSerializer(typeof(TValue), kts);
+                            Value = value;
+                            ser.WriteObject(ms, value);
+                            ms.Position = 0;
+                            using (var strm = await _streamOpener(StreamOpenType.Write))
+                            {
+                                await ms.CopyToAsync(strm);
+                                await strm.FlushAsync();
+
+                            }
+                        },
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+#if NET45
+ _sch.ExclusiveScheduler
+#else
+                    _sch
+#endif
+
+
+);
+
+            }
+
+          
+            public TValue Value
+            {
+                get;
+                private set;
+            }
+        }
 
     }
 

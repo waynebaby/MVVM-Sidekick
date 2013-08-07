@@ -81,7 +81,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
-BuildPublishPackage.cmd MVVM-Sidekick 1.1.6.9
+BuildPublishPackage.cmd MVVM-Sidekick 1.1.7.1
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

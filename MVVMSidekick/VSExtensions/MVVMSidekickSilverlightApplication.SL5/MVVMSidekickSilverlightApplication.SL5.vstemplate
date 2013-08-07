@@ -61,7 +61,7 @@
       <package id="Rx-Linq" version="2.1.30214.0"  />
       <package id="Rx-Main" version="2.1.30214.0"  />
       <package id="Rx-PlatformServices" version="2.1.30214.0"  />
-      <package id="MVVM-Sidekick" version="1.1.6.9"/>
+      <package id="MVVM-Sidekick" version="1.1.7.0"/>
 
     </packages>
   </WizardData>
