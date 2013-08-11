@@ -69,6 +69,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CommandEventBridge.cs" />
     <Compile Include="Patterns_TreeTest.cs" />
     <Compile Include="Playground.cs" />
     <Compile Include="Patterns_ItemdAndSelectionGroupTest.cs" />

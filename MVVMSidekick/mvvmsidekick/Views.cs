@@ -16,7 +16,7 @@ using MVVMSidekick.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reactive;
-using MVVMSidekick.EventRouting ;
+using MVVMSidekick.EventRouting;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
@@ -60,6 +60,18 @@ using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #endif
 
+#if (! WPF) && (! NETFX_CORE)
+namespace System.Windows
+{
+
+
+
+}
+
+
+
+#endif
+
 namespace MVVMSidekick
 {
 
@@ -69,6 +81,7 @@ namespace MVVMSidekick
 
         public static class ViewHelper
         {
+            //public static readonly string DEFAULT_VM_NAME = "DesignVM";
             internal static PropertyChangedCallback ViewModelChangedCallback
                 = (o, e) =>
                 {
@@ -140,16 +153,12 @@ namespace MVVMSidekick
                     (view as Window).Close();
                 }
 #endif
-  
+
 
             }
 
         }
-#if WPF
 
-#elif NETCORE_FX
-#elif WINDOWS_PHONE_7||WINDOWS_PHONE_8||WINDOWS_PHONE_7
-#endif
 #if WPF
         public class MVVMWindow : Window, IView
         {
@@ -162,11 +171,13 @@ namespace MVVMSidekick
 
             public MVVMWindow(IViewModel viewModel)
             {
-                Unloaded += (_1, _2) => ViewModel = null; 
+                Unloaded += (_1, _2) => ViewModel = null;
                 Loaded += async (_1, _2) =>
                 {
+                   
                     if (viewModel != null)
                     {
+                     //   this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
                         if (!object.ReferenceEquals(ViewModel, viewModel))
                         {
                             ViewModel = viewModel;
@@ -247,11 +258,14 @@ namespace MVVMSidekick
 
             public MVVMPage(IViewModel viewModel)
             {
-                Unloaded += (_1, _2) => ViewModel = null; 
+                Unloaded += (_1, _2) => ViewModel = null;
                 Loaded += async (_1, _2) =>
                 {
+
+                  
                     if (viewModel != null)
                     {
+                       // this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
                         if (!object.ReferenceEquals(ViewModel, viewModel))
                         {
                             ViewModel = viewModel;
@@ -359,14 +373,17 @@ namespace MVVMSidekick
             public MVVMControl(IViewModel viewModel)
             {
 
-                Unloaded += (_1, _2) => ViewModel = null; 
+                Unloaded += (_1, _2) => ViewModel = null;
                 Loaded += async (_1, _2) =>
                 {
+                  
                     if (viewModel != null)
                     {
+                        //this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
                         if (!object.ReferenceEquals(ViewModel, viewModel))
                         {
                             ViewModel = viewModel;
+
                         }
                     }
                     await ViewModel.OnBindedViewLoad(this);
@@ -380,44 +397,6 @@ namespace MVVMSidekick
 
             }
 #endif
-            //public MVVMPage WarpSelfByNewPage()
-            //{
-            //    lock (this)
-            //    {
-            //        if (this.IsWarppedToPage)
-            //        {
-            //            throw new InvalidOperationException("This  WarpSelfByNewPage() or WarpSelfByPage()functions can only be called by one time");
-            //        }
-            //        MVVMPage page = new MVVMPage(ViewModel);
-            //        page.DisposeWith(ViewModel);
-            //        page.Content = this;
-            //        this.IsWarppedToPage = true;
-            //        return page;
-            //    }
-            //}
-
-            //public void WarpSelfByPage(MVVMPage page)
-            //{
-            //    lock (this)
-            //    {
-            //        if (this.IsWarppedToPage)
-            //        {
-            //            throw new InvalidOperationException("This WarpSelfByNewPage() or WarpSelfByPage()functions can only be called by one time");
-            //        }
-            //        page.ViewModel = ViewModel;
-            //        page.DisposeWith(ViewModel);
-            //        page.Content = this;
-            //        this.IsWarppedToPage = true;
-
-            //    }
-            //}
-
-            //public Page ParentPage
-            //{
-            //    get { return Parent as Page; }
-
-            //}
-            //public bool IsWarppedToPage { get; protected set; }
 
             public IViewModel ViewModel
             {
@@ -460,7 +439,7 @@ namespace MVVMSidekick
             {
                 get { return ViewType.Control; }
             }
-  
+
         }
         public enum ViewType
         {
@@ -469,7 +448,7 @@ namespace MVVMSidekick
             Control
         }
 
-        public interface IView 
+        public interface IView
         {
             IViewModel ViewModel { get; set; }
 
@@ -1205,19 +1184,27 @@ namespace MVVMSidekick
             #region Attached Property
 
 
-
-
+#if WPF
+            [AttachedPropertyBrowsableForType(typeof(ContentControl))]
+            [AttachedPropertyBrowsableForType(typeof(Frame))]
+            [AttachedPropertyBrowsableForType(typeof(Window))]
+#endif
             public static string GetBeacon(DependencyObject obj)
             {
                 return (string)obj.GetValue(BeaconProperty);
             }
+
+#if WPF
+            [AttachedPropertyBrowsableForType(typeof(ContentControl))]
+            [AttachedPropertyBrowsableForType(typeof(Frame))]
+            [AttachedPropertyBrowsableForType(typeof(Window))]
+#endif
 
             public static void SetBeacon(DependencyObject obj, string value)
             {
                 obj.SetValue(BeaconProperty, value);
             }
 
-            // Using a DependencyProperty as the backing store for Beacon.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty BeaconProperty =
                 DependencyProperty.RegisterAttached("Beacon", typeof(string), typeof(StageManager), new PropertyMetadata(null,
                        (o, p) =>

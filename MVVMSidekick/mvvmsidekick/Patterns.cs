@@ -70,32 +70,30 @@ namespace MVVMSidekick
     namespace Patterns
     {
 
-        public class ElementBinder : FrameworkElement, IDisposable
+        public class ElementBinderBase<TSubType> : DependencyObject, IDisposable where
+            TSubType : ElementBinderBase<TSubType>
         {
-
-            public ElementBinder(Action<ElementBinder> bindingAction, Action<ElementBinder> disposeAction)
+            public ElementBinderBase() { }
+            public ElementBinderBase(Action<TSubType> bindingAction, Action<TSubType> disposeAction)
             {
                 _bindingAction = bindingAction;
-                _disposeAction = disposeAction;
-            }
-            Action<ElementBinder> _bindingAction;
-            Action<ElementBinder> _disposeAction;
+                _disposeAction = ts =>
+                {
+                    disposeAction(ts);
 
-            public static ElementBinder GetBinder(DependencyObject obj)
-            {
-                return (ElementBinder)obj.GetValue(BinderProperty);
+                };
             }
+            protected Action<TSubType> _bindingAction;
+            protected Action<TSubType> _disposeAction;
 
-            public static void SetBinder(DependencyObject obj, ElementBinder value)
-            {
-                obj.SetValue(BinderProperty, value);
-            }
 
-            internal static PropertyChangedCallback BinderPropertyChangedCallback =(o, e) =>
+
+
+            protected static PropertyChangedCallback BinderPropertyChangedCallback = (o, e) =>
                     {
-                        if (e.NewValue is ElementBinder)
+                        if (e.NewValue is TSubType)
                         {
-                            var eb = e.NewValue as ElementBinder;
+                            var eb = e.NewValue as TSubType;
                             eb.Element = o as FrameworkElement;
 
                             if (eb._bindingAction != null)
@@ -120,11 +118,6 @@ namespace MVVMSidekick
 
                     };
 
-            // Using a DependencyProperty as the backing store for ElementBinder.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty BinderProperty =
-                DependencyProperty.RegisterAttached("Binder", typeof(ElementBinder), typeof(ElementBinder), new PropertyMetadata(
-                    null,
-                    BinderPropertyChangedCallback));
 
 
 
@@ -139,7 +132,7 @@ namespace MVVMSidekick
 
             // Using a DependencyProperty as the backing store for Element.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ElementProperty =
-                DependencyProperty.Register("Element", typeof(FrameworkElement), typeof(ElementBinder), new PropertyMetadata(null));
+                DependencyProperty.Register("Element", typeof(FrameworkElement), typeof(TSubType), new PropertyMetadata(null));
 
 
 
@@ -150,26 +143,40 @@ namespace MVVMSidekick
 
             #region IDisposable Members
 
+            int _Disposed = 0;
+            ~ElementBinderBase()
+            {
+                Dispose();
+            }
+
+
             public void Dispose()
             {
-                try
+                var v = Interlocked.Exchange(ref _Disposed, 1);
+                if (v == 0)
                 {
-                    if (_disposeAction != null)
+                    try
                     {
-                        _disposeAction(this);
+                        if (_disposeAction != null)
+                        {
+                            _disposeAction(this as TSubType);
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                    }
+                    finally
+                    {
+                        _disposeAction = null;
 
                     }
-                }
-                catch (Exception ex)
-                {
-
-                    Debug.WriteLine(ex);
-                }
-                finally
-                {
+                    GC.SuppressFinalize(this);
                     _disposeAction = null;
-
+                    _bindingAction = null;
                 }
+
             }
 
 
@@ -179,9 +186,9 @@ namespace MVVMSidekick
 
         namespace ItemsAndSelection
         {
-        
 
-            public class ItemsAndSelectionGroup<T> : ItemsAndSelectionGroup<T, ObservableCollection<T>,SelectionMode>
+
+            public class ItemsAndSelectionGroup<T> : ItemsAndSelectionGroup<T, ObservableCollection<T>, SelectionMode>
             {
                 static ItemsAndSelectionGroup()
                 {
@@ -190,7 +197,34 @@ namespace MVVMSidekick
                 }
             }
 
-            public class ItemsAndSelectionGroup<T, TCollection ,TSelectionMode> : BindableBase<ItemsAndSelectionGroup<T, TCollection,TSelectionMode>>
+
+            public class ItemsAndSelectionGroupBinder : ElementBinderBase<ItemsAndSelectionGroupBinder>
+            {
+                public ItemsAndSelectionGroupBinder(Action<ItemsAndSelectionGroupBinder> bindingAction, Action<ItemsAndSelectionGroupBinder> disposeAction)
+                    : base(bindingAction, disposeAction)
+                { }
+
+
+                public static ItemsAndSelectionGroupBinder GetBinder(DependencyObject obj)
+                {
+                    return (ItemsAndSelectionGroupBinder)obj.GetValue(BinderProperty);
+                }
+
+                public static void SetBinder(DependencyObject obj, ItemsAndSelectionGroupBinder value)
+                {
+                    obj.SetValue(BinderProperty, value);
+                }
+
+                // Using a DependencyProperty as the backing store for ElementBinder.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty BinderProperty =
+                    DependencyProperty.RegisterAttached("Binder", typeof(ItemsAndSelectionGroupBinder), typeof(ItemsAndSelectionGroupBinder), new PropertyMetadata(
+                        null,
+                        BinderPropertyChangedCallback));
+
+
+            }
+
+            public class ItemsAndSelectionGroup<T, TCollection, TSelectionMode> : BindableBase<ItemsAndSelectionGroup<T, TCollection, TSelectionMode>>
                 where TCollection : ICollection<T>, INotifyCollectionChanged
             {
 
@@ -203,19 +237,19 @@ namespace MVVMSidekick
 
 
 
-                public ElementBinder Binder
+                public ItemsAndSelectionGroupBinder Binder
                 {
                     get { return _BinderLocator(this).Value; }
                     set { _BinderLocator(this).SetValueAndTryNotify(value); }
                 }
                 #region Property ElementBinder Binder Setup
-                protected Property<ElementBinder> _Binder = new Property<ElementBinder> { LocatorFunc = _BinderLocator };
-                static Func<BindableBase, ValueContainer<ElementBinder>> _BinderLocator = RegisterContainerLocator<ElementBinder>("Binder", model => model.Initialize("Binder", ref model._Binder, ref _BinderLocator, _BinderDefaultValueFactory));
-                static Func<BindableBase, ElementBinder> _BinderDefaultValueFactory = model =>
+                protected Property<ItemsAndSelectionGroupBinder> _Binder = new Property<ItemsAndSelectionGroupBinder> { LocatorFunc = _BinderLocator };
+                static Func<BindableBase, ValueContainer<ItemsAndSelectionGroupBinder>> _BinderLocator = RegisterContainerLocator<ItemsAndSelectionGroupBinder>("Binder", model => model.Initialize("Binder", ref model._Binder, ref _BinderLocator, _BinderDefaultValueFactory));
+                static Func<BindableBase, ItemsAndSelectionGroupBinder> _BinderDefaultValueFactory = model =>
                     {
                         var vm = CastToCurrentType(model);
 
-                        Action<ElementBinder> bindingAc =
+                        Action<ItemsAndSelectionGroupBinder> bindingAc =
                              eb =>
                              {
 
@@ -311,7 +345,7 @@ namespace MVVMSidekick
                              };
 
 
-                        return new ElementBinder(bindingAc, (e) => e.Element = null).DisposeWith(vm);
+                        return new ItemsAndSelectionGroupBinder(bindingAc, (e) => e.Element = null).DisposeWith(vm);
 
                     };
 
@@ -326,7 +360,7 @@ namespace MVVMSidekick
                 }
 
 
-                
+
                 public TSelectionMode SelectionMode
                 {
                     get { return _SelectionModeLocator(this).Value; }
@@ -543,18 +577,18 @@ namespace MVVMSidekick
                 //static Func<BindableBase, ValueContainer<ObservableCollection<ITreeItem<object, TState>>>> _ChildrenLocator = RegisterContainerLocator<ObservableCollection<ITreeItem<object, TState>>>("Children", model => model.Initialize("Children", ref model._Children, ref _ChildrenLocator, _ChildrenDefaultValueFactory));
                 //static Func<ObservableCollection<ITreeItem<object, TState>>> _ChildrenDefaultValueFactory = () => new ObservableCollection<ITreeItem<object, TState>>();
                 //#endregion
-    
 
-                
-                public Collection <ITreeItem<object, TState>> Children
+
+
+                public Collection<ITreeItem<object, TState>> Children
                 {
                     get { return _ChildrenLocator(this).Value; }
                     set { _ChildrenLocator(this).SetValueAndTryNotify(value); }
                 }
                 #region Property Collection <ITreeItem<object, TState>> Children Setup
-                protected Property<Collection <ITreeItem<object, TState>>> _Children = new Property<Collection <ITreeItem<object, TState>>> { LocatorFunc = _ChildrenLocator };
-                static Func<BindableBase, ValueContainer<Collection <ITreeItem<object, TState>>>> _ChildrenLocator = RegisterContainerLocator<Collection <ITreeItem<object, TState>>>("Children", model => model.Initialize("Children", ref model._Children, ref _ChildrenLocator, _ChildrenDefaultValueFactory));
-                static Func<Collection <ITreeItem<object, TState>>> _ChildrenDefaultValueFactory = () => new ObservableCollection<ITreeItem<object, TState>>();
+                protected Property<Collection<ITreeItem<object, TState>>> _Children = new Property<Collection<ITreeItem<object, TState>>> { LocatorFunc = _ChildrenLocator };
+                static Func<BindableBase, ValueContainer<Collection<ITreeItem<object, TState>>>> _ChildrenLocator = RegisterContainerLocator<Collection<ITreeItem<object, TState>>>("Children", model => model.Initialize("Children", ref model._Children, ref _ChildrenLocator, _ChildrenDefaultValueFactory));
+                static Func<Collection<ITreeItem<object, TState>>> _ChildrenDefaultValueFactory = () => new ObservableCollection<ITreeItem<object, TState>>();
                 #endregion
 
 

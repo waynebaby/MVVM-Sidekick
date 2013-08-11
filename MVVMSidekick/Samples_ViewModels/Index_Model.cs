@@ -226,6 +226,33 @@ namespace Samples.ViewModels
         #endregion
 
 
+
+        
+        public CommandModel<ReactiveCommand, String> CommandCommandBinding
+        {
+            get { return _CommandCommandBindingLocator(this).Value; }
+            set { _CommandCommandBindingLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandCommandBinding Setup
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandCommandBinding = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandCommandBindingLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandCommandBindingLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandCommandBinding", model => model.Initialize("CommandCommandBinding", ref model._CommandCommandBinding, ref _CommandCommandBindingLocator, _CommandCommandBindingDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandCommandBindingDefaultValueFactory =
+            model =>
+            {
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                //Config it if you want
+                var vm = CastToCurrentType(model); //vm instance 
+                cmd.Subscribe(
+                  async _ =>
+                  {
+                      await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model >();
+                  })
+                  .DisposeWith(vm); 
+                return cmd.CreateCommandModel("CommandBinding");
+            };
+        #endregion
+
+
     }
 
 

@@ -17,6 +17,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reactive;
 using MVVMSidekick.EventRouting;
+using MVVMSidekick.Utilities ;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
@@ -694,7 +695,7 @@ namespace MVVMSidekick
 
             }
 
-            TValue _Value;
+
             public TValue Value
             {
                 get;

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="7c8ffd2b-428e-43be-983c-3da48ebfb8ae" Publisher="CN=waywa" Version="1.0.0.0" />
+  <Identity Name="7c8ffd2b-428e-43be-983c-3da48ebfb8af" Publisher="CN=waywa" Version="1.0.0.0" />
   <Properties>
     <DisplayName>Samples_WinRT</DisplayName>
     <PublisherDisplayName>waywa</PublisherDisplayName>

@@ -81,6 +81,9 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\MVVMSidekick.Test\CommandEventBridge.cs">
+      <Link>CommandEventBridge.cs</Link>
+    </Compile>
     <Compile Include="..\MVVMSidekick.Test\Patterns_ItemdAndSelectionGroupTest.cs">
       <Link>Patterns_ItemdAndSelectionGroupTest.cs</Link>
     </Compile>

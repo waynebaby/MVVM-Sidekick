@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Samples.ViewModels"
     mc:Ignorable="d"
-    xmlns:patItems="using:MVVMSidekick.Patterns"
+    xmlns:patItems="using:MVVMSidekick.Patterns.ItemsAndSelection"
     >
 
 
@@ -52,17 +52,17 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="1"  >ListBox</TextBlock>
             <Grid Grid.Column="1" Grid.Row="1"  DataContext ="{Binding ListGroup}">
-                <ListBox  patItems:ElementBinder.Binder="{Binding Binder, Mode=OneWay}" />
+                <ListBox  patItems:ItemsAndSelectionGroupBinder.Binder="{Binding Binder, Mode=OneWay}" />
 
 
             </Grid>
             <TextBlock Grid.Column="2"  >ComboBox</TextBlock>
             <Grid Grid.Column="2" Grid.Row="1"   DataContext ="{Binding ComboGroup}">
-                <ComboBox  patItems:ElementBinder.Binder="{Binding Binder, Mode=OneWay}" ></ComboBox>
+                <ComboBox  patItems:ItemsAndSelectionGroupBinder.Binder="{Binding Binder, Mode=OneWay}" ></ComboBox>
             </Grid>
             <TextBlock Grid.Column="3">ListView</TextBlock>
             <Grid Grid.Column="3" Grid.Row="1"   DataContext ="{Binding ItemsGroup }" >
-                <ListView  patItems:ElementBinder.Binder="{Binding Binder, Mode=OneWay}" SelectionMode="Multiple" />
+                <ListView   patItems:ItemsAndSelectionGroupBinder.Binder="{Binding Binder, Mode=OneWay}" SelectionMode="Multiple" />
             </Grid>
             <StackPanel  Grid.Row="2" Grid.Column="1" DataContext="{Binding ListGroup}" Grid.RowSpan="2">
                 <StackPanel Orientation="Horizontal" >
@@ -93,7 +93,7 @@
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Width="100">Selected Item</TextBlock>
                     <TextBox Text="{Binding SelectedItem, Mode=TwoWay}" ></TextBox>
-
+          
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Width="100">Selected Items</TextBlock>

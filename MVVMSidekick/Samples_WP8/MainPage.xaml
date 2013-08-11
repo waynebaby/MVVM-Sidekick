@@ -72,6 +72,12 @@
 
             </Grid>
         </Button>
+        <Button   Grid.Row="3"  Command="{Binding CommandCommandBinding}">
+            <Grid>
+                <TextBlock Text="{Binding CommandCommandBinding.Resource}" />
+
+            </Grid>
+        </Button>
         <!--Uncomment to see an alignment grid to help ensure your controls are
             aligned on common boundaries.  The image has a top margin of -32px to
             account for the System Tray. Set this to 0 (or remove the margin altogether)

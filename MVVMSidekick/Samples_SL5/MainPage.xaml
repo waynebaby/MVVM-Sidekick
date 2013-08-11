@@ -32,7 +32,7 @@
             <Button Content="{Binding CommandStartCalculator.Resource}" Command="{Binding CommandStartCalculator}"  />
             <Button Content="{Binding CommandStartTree}" Command="{Binding CommandStartTree}"  />
             <Button Content="{Binding CommandListTest}" Command="{Binding CommandListTest}"  />
-
+            <Button Content="{Binding CommandCommandBinding}" Command="{Binding CommandCommandBinding}"  />
         </StackPanel>
 
     </Grid>

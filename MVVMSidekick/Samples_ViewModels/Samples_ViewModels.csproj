@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MVVMSidekick">
-      <HintPath>..\packages\MVVM-Sidekick.1.1.6.8\lib\net45\MVVMSidekick.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.7.4\lib\net45\MVVMSidekick.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator_Model.cs" />
+    <Compile Include="CommandBindingsSample_Model.cs" />
     <Compile Include="ListsAndItemsPattern_Model.cs" />
     <Compile Include="Tree_Model.cs" />
     <Compile Include="Index_Model.cs" />

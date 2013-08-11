@@ -22,9 +22,16 @@ namespace Samples
     /// </summary>
     public sealed partial class MainPage : LayoutAwarePage
     {
-        public MainPage():base(null)
+        public MainPage()
+            : base(null)
         {
+
             this.InitializeComponent();
+
+
+            //MVVMSidekick.Utilities.EventHandlerHelper.BindEvent(EventButton, "Click", (_1, _2) => EventButton.Content = "Clicked");
+            //var d = MVVMSidekick.Utilities.EventHandlerHelper.BindEvent(DisEventButton, "Click", (_1, _2) => DisEventButton.Content = "Clicked");
+            //d.Dispose();
         }
 
         /// <summary>
@@ -35,7 +42,6 @@ namespace Samples
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
         }
     }
 }

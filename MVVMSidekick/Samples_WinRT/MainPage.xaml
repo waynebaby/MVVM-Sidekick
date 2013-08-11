@@ -1,17 +1,20 @@
 ﻿<common:LayoutAwarePage     
     xmlns:common="using:Samples.Common"
-    xmlns:mvvm="using:MVVMSidekick.Views"
+    xmlns:mvvm="using:MVVMSidekick.Views" x:Name="layoutAwarePage"
     x:Class="Samples.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Samples"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cmd="using:MVVMSidekick.Commands.EventBinding"
     mc:Ignorable="d" xmlns:vm="using:Samples.ViewModels" >
     <common:LayoutAwarePage.Resources >
         <vm:Index_Model x:Key="DesignVM" />
+
     </common:LayoutAwarePage.Resources>
-    <Grid x:Name="LayoutRoot"  DataContext="{StaticResource DesignVM}" >
+    <Grid x:Name="LayoutRoot"  DataContext="{StaticResource DesignVM}"   >
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="117*"/>
             <ColumnDefinition Width="83*"/>
@@ -26,6 +29,8 @@
         <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" />
         <Button Content="{Binding CommandListTest.Resource}" Grid.Column="1" Command="{Binding CommandListTest}" Margin="142,13,0,10" />
         <Button Content="{Binding CommandShowGroupView.Resource}" Grid.Column="1" Command="{Binding CommandShowGroupView}" Margin="230,13,0,10" />
+        <Button Content="{Binding CommandCommandBinding.Resource}" Grid.Column="1" Command="{Binding CommandCommandBinding}" Margin="396,13,0,10" />
+
 
     </Grid>
 </common:LayoutAwarePage>

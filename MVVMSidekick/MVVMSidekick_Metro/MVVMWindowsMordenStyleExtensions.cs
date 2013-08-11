@@ -1451,6 +1451,7 @@ namespace MVVMSidekick
                     et => eventInfo.RemoveMethod.Invoke(target, new object[] { et }),
                     compiled);
 
+
             }
 
             private static THandler CreateHandler<THandler, TEventArgs>(

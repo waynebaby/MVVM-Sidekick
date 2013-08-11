@@ -66,6 +66,130 @@ namespace MVVMSidekick
 
     namespace Collections
     {
+
+
+
+        public class DependencyObservableCollection<T> : DependencyObject , ICollection<T>, IList<T>, INotifyCollectionChanged, INotifyPropertyChanged
+        {
+
+
+
+
+            protected ObservableCollection<T> _core = new ObservableCollection<T>();
+            public DependencyObservableCollection()
+            {
+
+                var countBinding = new Binding();
+                countBinding.Path = new PropertyPath("Count");
+                countBinding.Mode = BindingMode.OneWay;
+                countBinding.Source = _core;
+                BindingOperations.SetBinding(this, CountProperty, countBinding);
+
+            }
+
+
+
+
+            public void Add(T item)
+            {
+                _core.Add(item);
+            }
+
+            public void Clear()
+            {
+                _core.Clear();
+            }
+
+            public bool Contains(T item)
+            {
+                return _core.Contains(item);
+            }
+
+            public void CopyTo(T[] array, int arrayIndex)
+            {
+                _core.CopyTo(array, arrayIndex);
+            }
+
+
+
+
+
+            public virtual int Count
+            {
+                get { return (int)GetValue(CountProperty); }
+                protected set { SetValue(CountProperty, value); }
+            }
+
+            // Using a DependencyProperty as the backing store for Count.  This enables animation, styling, binding, etc...
+            public static readonly DependencyProperty CountProperty =
+                DependencyProperty.Register("Count", typeof(int), typeof(DependencyObservableCollection<T>), new PropertyMetadata(0));
+
+
+
+
+            public bool IsReadOnly
+            {
+                get { return false; }
+            }
+
+            public bool Remove(T item)
+            {
+                return _core.Remove(item);
+            }
+
+            public IEnumerator<T> GetEnumerator()
+            {
+                return _core.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return _core.GetEnumerator();
+            }
+
+            public event NotifyCollectionChangedEventHandler CollectionChanged
+            {
+                add { _core.CollectionChanged += value; }
+                remove { _core.CollectionChanged -= value; }
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged
+            {
+                add { ((INotifyPropertyChanged)_core).PropertyChanged += value; }
+                remove { ((INotifyPropertyChanged)_core).PropertyChanged -= value; }
+            }
+
+
+            public int IndexOf(T item)
+            {
+                return _core.IndexOf(item);
+            }
+
+            public void Insert(int index, T item)
+            {
+                _core.Insert(index, item);
+            }
+
+            public void RemoveAt(int index)
+            {
+                _core.RemoveAt(index);
+            }
+
+            public T this[int index]
+            {
+                get
+                {
+                    return _core[index];
+                }
+                set
+                {
+                    _core[index] = value;
+                }
+            }
+        }
+
+
+
 #if NETFX_CORE
 
         //public 
@@ -314,8 +438,8 @@ namespace MVVMSidekick
                 {
                     throw new ArgumentException("items could not be null.");
                 }
-                var bak=items.ToList ();
-                _coreDictionary = items  ;
+                var bak = items.ToList();
+                _coreDictionary = items;
                 items.Clear();
                 foreach (var item in bak)
                 {
@@ -527,20 +651,20 @@ namespace MVVMSidekick
 
             }
 
-            public abstract class CollectionViewGroupCollection <TItem>:ObservableVector<CollectionViewGroupCollectionItem>
+            public abstract class CollectionViewGroupCollection<TItem> : ObservableVector<CollectionViewGroupCollectionItem>
             {
-                public static CollectionViewGroupCollection<TItem ,TGroupKey, TGroup> Create< TGroupKey, TGroup>(Func<TItem, TGroupKey> groupKeyGetter, Func<TItem, TGroup> groupFactory, Dictionary<TGroupKey, CollectionViewGroupCollectionItem> index = null)
+                public static CollectionViewGroupCollection<TItem, TGroupKey, TGroup> Create<TGroupKey, TGroup>(Func<TItem, TGroupKey> groupKeyGetter, Func<TItem, TGroup> groupFactory, Dictionary<TGroupKey, CollectionViewGroupCollectionItem> index = null)
                 {
                     return new CollectionViewGroupCollection<TItem, TGroupKey, TGroup>(groupKeyGetter, groupFactory, index);
 
                 }
 
-                                public abstract  void AddItemToGroups(object  item);
+                public abstract void AddItemToGroups(object item);
 
 
-                                public abstract void RemoveItemFromGroups(object item);
+                public abstract void RemoveItemFromGroups(object item);
             }
-            public class CollectionViewGroupCollection<TItem, TGroupKey,TGroup> : CollectionViewGroupCollection<TItem>
+            public class CollectionViewGroupCollection<TItem, TGroupKey, TGroup> : CollectionViewGroupCollection<TItem>
             {
                 public CollectionViewGroupCollection(Func<TItem, TGroupKey> groupKeyGetter, Func<TItem, TGroup> groupFactory, Dictionary<TGroupKey, CollectionViewGroupCollectionItem> index = null)
                 {
@@ -571,9 +695,9 @@ namespace MVVMSidekick
 
                 }
 
-                public override  void RemoveItemFromGroups(object  item)
+                public override void RemoveItemFromGroups(object item)
                 {
-                    var key = _groupKeyGetter((TItem )item);
+                    var key = _groupKeyGetter((TItem)item);
                     CollectionViewGroupCollectionItem grp;
                     if (_index.TryGetValue(key, out grp))
                     {

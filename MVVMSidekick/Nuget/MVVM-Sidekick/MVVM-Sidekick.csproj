@@ -50,6 +50,7 @@
     <Content Include="7z.exe" />
     <Content Include="src\CodeFiles\_place_holder.txt" />
     <Content Include="tools\MVVM-Sidekick.snippet" />
+    <None Include="laucher.cmd" />
     <None Include="tools\install.ps1" />
   </ItemGroup>
   <ItemGroup>
@@ -81,8 +82,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
-BuildPublishPackage.cmd MVVM-Sidekick 1.1.7.1
-</PostBuildEvent>
+laucher</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

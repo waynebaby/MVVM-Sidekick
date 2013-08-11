@@ -26,6 +26,7 @@ namespace Samples
             : base(null)
         {
             InitializeComponent();
+          
         }
 
         public MainWindow(Index_Model model)

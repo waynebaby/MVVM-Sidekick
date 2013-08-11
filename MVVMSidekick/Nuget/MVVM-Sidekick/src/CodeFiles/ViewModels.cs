@@ -1599,7 +1599,7 @@ namespace MVVMSidekick
         /// </summary>
         /// <typeparam name="TCommand">ICommand 详细类型</typeparam>
         /// <typeparam name="TResource">配合Command 的资源类型</typeparam>
-        public class CommandModel<TCommand, TResource> : BindableBase<CommandModel<TCommand, TResource>>, ICommandModel<TCommand, TResource>
+        public class CommandModel<TCommand, TResource> : BindableBase<CommandModel<TCommand, TResource>>, ICommandModel<TCommand, TResource>, ICommandWithViewModel
             where TCommand : ICommand
         {
             public override string ToString()
@@ -1744,7 +1744,35 @@ namespace MVVMSidekick
             /// <param name="parameter">指定参数</param>
             public void Execute(object parameter)
             {
-                CommandCore.Execute(parameter);
+                var ec = CommandCore as EventCommandBase;
+                if (ec != null)
+                {
+                    ec.OnCommandExecute(parameter as EventCommandEventArgs);
+                }
+                else
+                    CommandCore.Execute(parameter);
+            }
+
+            public BindableBase ViewModel
+            {
+                get
+                {
+                    var c = CommandCore as ICommandWithViewModel;
+                    if (c != null)
+                    {
+                        return c.ViewModel;
+                    }
+                    return null;
+                }
+                set
+                {
+                    var c = CommandCore as ICommandWithViewModel;
+                    if (c != null)
+                    {
+                        c.ViewModel = value;
+                    }
+
+                }
             }
         }
 

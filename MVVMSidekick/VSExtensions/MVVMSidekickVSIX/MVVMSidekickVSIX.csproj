@@ -115,8 +115,8 @@
       <Link>Packages\Microsoft.Bcl.Build.1.0.8.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.6.9.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.1.6.9.nupkg</Link>
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.7.4.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.1.7.4.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">

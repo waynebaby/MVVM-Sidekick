@@ -74,7 +74,7 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="MVVMSidekick_Sl">
-      <HintPath>..\packages\MVVM-Sidekick.1.1.6.8\lib\sl50\MVVMSidekick_Sl.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.7.4\lib\sl50\MVVMSidekick_Sl.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.IO">
@@ -121,6 +121,9 @@
     <Compile Include="..\Samples_ViewModels\Calculator_Model.cs">
       <Link>ViewModels\Calculator_Model.cs</Link>
     </Compile>
+    <Compile Include="..\Samples_ViewModels\CommandBindingsSample_Model.cs">
+      <Link>ViewModels\CommandBindingsSample_Model.cs</Link>
+    </Compile>
     <Compile Include="..\Samples_ViewModels\Index_Model.cs">
       <Link>ViewModels\Index_Model.cs</Link>
     </Compile>
@@ -136,9 +139,13 @@
     <Compile Include="Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CommandBindingsSample.xaml.cs">
+      <DependentUpon>CommandBindingsSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ListsAndItemsPattern.xaml.cs">
       <DependentUpon>ListsAndItemsPattern.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StartUps\CommandBindingsSample.cs" />
     <Compile Include="StartUps\ListsAndItemsPattern.cs" />
     <Compile Include="Tree.xaml.cs">
       <DependentUpon>Tree.xaml</DependentUpon>
@@ -155,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="Calculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CommandBindingsSample.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

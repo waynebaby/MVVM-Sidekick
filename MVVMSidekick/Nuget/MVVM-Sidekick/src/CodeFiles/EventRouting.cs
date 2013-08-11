@@ -11,6 +11,7 @@ using System.Threading;
 using System.Windows.Input;
 using MVVMSidekick.ViewModels;
 using MVVMSidekick.Commands;
+using MVVMSidekick.Utilities;
 using System.Runtime.CompilerServices;
 using MVVMSidekick.Reactive;
 using System.Reactive.Linq;
@@ -280,6 +281,9 @@ namespace MVVMSidekick
 
         }
 
+
+
+
         /// <summary>
         /// 事件信息
         /// </summary>
@@ -312,5 +316,17 @@ namespace MVVMSidekick
             public TEventArgs EventArgs { get; private set; }
         }
 
+
+
+        public class DataEventArgs<TData> : EventArgs
+        {
+            public DataEventArgs(TData data)
+            {
+
+                Data = data;
+            }
+
+            public TData  Data { get;  protected set; }
+        }
     }
 }
