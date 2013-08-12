@@ -262,10 +262,10 @@ namespace MVVMSidekick
                 Loaded += async (_1, _2) =>
                 {
 
-                  
+
                     if (viewModel != null)
                     {
-                       // this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
+                        // this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
                         if (!object.ReferenceEquals(ViewModel, viewModel))
                         {
                             ViewModel = viewModel;
@@ -343,6 +343,39 @@ namespace MVVMSidekick
                 DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
 
 
+#if NETFX_CORE
+
+            /// <summary>
+            /// Populates the page with content passed during navigation.  Any saved state is also
+            /// provided when recreating a page from a prior session.
+            /// </summary>
+            /// <param name="navigationParameter">The parameter value passed to
+            /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
+            /// </param>
+            /// <param name="pageState">A dictionary of state preserved by this page during an earlier
+            /// session.  This will be null the first time a page is visited.</param>
+            protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+            {
+                if (ViewModel != null)
+                {
+                    ViewModel.LoadState(navigationParameter, pageState);
+                }
+            }
+
+            /// <summary>
+            /// Preserves state associated with this page in case the application is suspended or the
+            /// page is discarded from the navigation cache.  Values must conform to the serialization
+            /// requirements of <see cref="SuspensionManager.SessionState"/>.
+            /// </summary>
+            /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
+            protected virtual void SaveState(Dictionary<String, Object> pageState)
+            {
+                if (ViewModel != null)
+                {
+                    ViewModel.SaveState(pageState);
+                }
+            }
+#endif
 
 
             public ViewType ViewType
@@ -376,7 +409,7 @@ namespace MVVMSidekick
                 Unloaded += (_1, _2) => ViewModel = null;
                 Loaded += async (_1, _2) =>
                 {
-                  
+
                     if (viewModel != null)
                     {
                         //this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
@@ -397,6 +430,40 @@ namespace MVVMSidekick
 
             }
 #endif
+#if NETFX_CORE
+
+            /// <summary>
+            /// Populates the page with content passed during navigation.  Any saved state is also
+            /// provided when recreating a page from a prior session.
+            /// </summary>
+            /// <param name="navigationParameter">The parameter value passed to
+            /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
+            /// </param>
+            /// <param name="pageState">A dictionary of state preserved by this page during an earlier
+            /// session.  This will be null the first time a page is visited.</param>
+            protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+            {
+                if (ViewModel != null)
+                {
+                    ViewModel.LoadState(navigationParameter, pageState);
+                }
+            }
+
+            /// <summary>
+            /// Preserves state associated with this page in case the application is suspended or the
+            /// page is discarded from the navigation cache.  Values must conform to the serialization
+            /// requirements of <see cref="SuspensionManager.SessionState"/>.
+            /// </summary>
+            /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
+            protected virtual void SaveState(Dictionary<String, Object> pageState)
+            {
+                if (ViewModel != null)
+                {
+                    ViewModel.SaveState(pageState);
+                }
+            }
+#endif
+
 
             public IViewModel ViewModel
             {

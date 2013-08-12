@@ -43,5 +43,6 @@ namespace Samples
         {
             base.OnNavigatedTo(e);
         }
+
     }
 }

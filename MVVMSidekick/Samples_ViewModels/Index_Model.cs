@@ -14,6 +14,8 @@ namespace Samples.ViewModels
 
     public class Index_Model : ViewModelBase<Index_Model>
     {
+
+        public static Index_Model Instance = new Index_Model();
         public Index_Model()
         {
 
@@ -30,6 +32,11 @@ namespace Samples.ViewModels
             }
             else
             {
+                if (Id == null)
+                {
+                    Id = Guid.NewGuid().ToString();
+                }
+
                 GetValueContainer(x => x.CountDown).GetNullObservable()
                     .Subscribe(
                         _ =>
@@ -64,6 +71,17 @@ namespace Samples.ViewModels
 
         }
 
+
+        public string Id
+        {
+            get { return _IdLocator(this).Value; }
+            set { _IdLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property string Id Setup
+        protected Property<string> _Id = new Property<string> { LocatorFunc = _IdLocator };
+        static Func<BindableBase, ValueContainer<string>> _IdLocator = RegisterContainerLocator<string>("Id", model => model.Initialize("Id", ref model._Id, ref _IdLocator, _IdDefaultValueFactory));
+        static Func<string> _IdDefaultValueFactory = null;
+        #endregion
 
 
         public String StateName
@@ -156,12 +174,12 @@ namespace Samples.ViewModels
             model =>
             {
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-                 var vm = CastToCurrentType(model);
+                var vm = CastToCurrentType(model);
                 cmd
                     .Subscribe(
                     async _ =>
                     {
-                        await vm.StageManager.DefaultStage.Show<Tree_Model >();
+                        await vm.StageManager.DefaultStage.Show<Tree_Model>();
                     })
                     .DisposeWith(model); //Config it if needed
                 return cmd.CreateCommandModel("StartTree");
@@ -227,7 +245,7 @@ namespace Samples.ViewModels
 
 
 
-        
+
         public CommandModel<ReactiveCommand, String> CommandCommandBinding
         {
             get { return _CommandCommandBindingLocator(this).Value; }
@@ -245,14 +263,33 @@ namespace Samples.ViewModels
                 cmd.Subscribe(
                   async _ =>
                   {
-                      await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model >();
+                      await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
                   })
-                  .DisposeWith(vm); 
+                  .DisposeWith(vm);
                 return cmd.CreateCommandModel("CommandBinding");
             };
         #endregion
+#if NETFX_CORE
+        public override void LoadState(object navigationParameter, Dictionary<string, object> pageState)
+        {
+            base.LoadState(navigationParameter, pageState);
+            if (pageState != null)
+            {
+                Id = pageState["Id"].ToString();
+            }
 
+        }
 
+        public override void SaveState(Dictionary<string, object> pageState)
+        {
+            base.SaveState(pageState);
+            if (pageState != null)
+            {
+                pageState["Id"] = Id;
+            }
+        }
+
+#endif
     }
 
 

@@ -1326,6 +1326,10 @@ namespace MVVMSidekick
             bool HaveReturnValue { get; }
             void Close();
             MVVMSidekick.Views.StageManager StageManager { get; set; }
+#if NETFX_CORE
+            void LoadState(Object navigationParameter, Dictionary<String, Object> pageState);
+            void SaveState(Dictionary<String, Object> pageState);
+#endif
         }
 
         public partial interface IViewModel<TResult> : IViewModel
@@ -1425,7 +1429,13 @@ namespace MVVMSidekick
                 StageManager.DisposeWith(this);
                 await TaskExHelper.Yield();
             }
-
+            
+            /// <summary>
+            ///  Dispose By Default, override id you don't want.
+            /// </summary>
+            /// <param name="view"></param>
+            /// <param name="newValue"></param>
+            /// <returns></returns>
             protected virtual async Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue)
             {
                 Dispose();
@@ -1473,7 +1483,32 @@ namespace MVVMSidekick
                 }
             }
 
+#if NETFX_CORE
+            /// <summary>
+            /// Populates the page with content passed during navigation.  Any saved state is also
+            /// provided when recreating a page from a prior session.
+            /// </summary>
+            /// <param name="navigationParameter">The parameter value passed to
+            /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
+            /// </param>
+            /// <param name="pageState">A dictionary of state preserved by this page during an earlier
+            /// session.  This will be null the first time a page is visited.</param>
+            public virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+            {
 
+            }
+
+            /// <summary>
+            /// Preserves state associated with this page in case the application is suspended or the
+            /// page is discarded from the navigation cache.  Values must conform to the serialization
+            /// requirements of <see cref="SuspensionManager.SessionState"/>.
+            /// </summary>
+            /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
+            public virtual void SaveState(Dictionary<String, Object> pageState)
+            {
+
+            }
+#endif
 
             MVVMSidekick.Views.StageManager _StageManager;
 
