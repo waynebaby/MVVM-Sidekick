@@ -1429,7 +1429,7 @@ namespace MVVMSidekick
                 StageManager.DisposeWith(this);
                 await TaskExHelper.Yield();
             }
-            
+
             /// <summary>
             ///  Dispose By Default, override id you don't want.
             /// </summary>
@@ -1780,9 +1780,10 @@ namespace MVVMSidekick
             public void Execute(object parameter)
             {
                 var ec = CommandCore as EventCommandBase;
-                if (ec != null)
+                var eargs = parameter as EventCommandEventArgs;
+                if (ec != null && eargs != null)
                 {
-                    ec.OnCommandExecute(parameter as EventCommandEventArgs);
+                    ec.OnCommandExecute(eargs);
                 }
                 else
                     CommandCore.Execute(parameter);

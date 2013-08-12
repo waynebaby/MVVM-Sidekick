@@ -31,9 +31,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{A49B28A2-54D9-4A05-9581-7A5B06A187ED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WP8", "WP8", "{DF8EF729-EA52-4966-8F92-EC86CC34E141}"
-	ProjectSection(SolutionItems) = preProject
-		MVVMSidekickWindowsPhoneApplication.WP7\SplashScreenImage.jpg = MVVMSidekickWindowsPhoneApplication.WP7\SplashScreenImage.jpg
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMSidekickApplication.WPF", "MVVMSidekickApplication.WPF\MVVMSidekickApplication.WPF.csproj", "{886C60FB-EDBD-4C3E-8D00-418579E24794}"
 EndProject

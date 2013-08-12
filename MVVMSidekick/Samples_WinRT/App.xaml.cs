@@ -70,7 +70,7 @@ namespace Samples
 
           
 
-                if (!rootFrame.Navigate(typeof(MainPage), args.Arguments))
+                if (!rootFrame.Navigate(typeof(Index), args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }

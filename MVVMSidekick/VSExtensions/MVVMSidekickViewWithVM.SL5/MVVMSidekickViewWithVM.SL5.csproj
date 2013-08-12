@@ -66,7 +66,9 @@
     <None Include="MVVMSidekickViewWithVM.SL5.ico" />
   </ItemGroup>
   <ItemGroup>
-    <VSTemplate Include="MVVMSidekickViewWithVM.SL5.vstemplate" />
+    <VSTemplate Include="MVVMSidekickViewWithVM.SL5.vstemplate">
+      <SubType>Designer</SubType>
+    </VSTemplate>
   </ItemGroup>
   <ItemGroup>
     <None Include="View.xaml">

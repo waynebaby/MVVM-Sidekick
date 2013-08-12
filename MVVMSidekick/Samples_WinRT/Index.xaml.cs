@@ -20,15 +20,15 @@ namespace Samples
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : LayoutAwarePage
+    public sealed partial class Index : LayoutAwarePage
     {
-        public MainPage()
+        public Index()
             : base(null)
         {
 
             this.InitializeComponent();
 
-
+         ViewModel =   MVVMSidekick.Views.ViewModelLocator<Samples.ViewModels.Index_Model>.Instance.Resolve();
             //MVVMSidekick.Utilities.EventHandlerHelper.BindEvent(EventButton, "Click", (_1, _2) => EventButton.Content = "Clicked");
             //var d = MVVMSidekick.Utilities.EventHandlerHelper.BindEvent(DisEventButton, "Click", (_1, _2) => DisEventButton.Content = "Clicked");
             //d.Dispose();

@@ -12,10 +12,10 @@ using MVVMSidekick.Views;
 
 namespace Samples
 {
-    public partial class MainPage : MVVMPage
+    public partial class Index : MVVMPage
     {
         // Constructor
-        public MainPage():base(null)
+        public Index():base(null)
         {
             InitializeComponent();
 

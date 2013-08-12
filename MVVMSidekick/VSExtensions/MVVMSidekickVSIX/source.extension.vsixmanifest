@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata >
-    <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="1.36" Language="en-US" Publisher="Wayne Wang in MSFT" />
+    <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="1.37" Language="en-US" Publisher="Wayne Wang in MSFT" />
     <DisplayName>MVVM-Sidekick VSIX</DisplayName>
     <Description xml:space="preserve">MVVM-Sidekick VSIX</Description>
+    <MoreInfo>https://github.com/waynebaby/MVVM-Sidekick/</MoreInfo>
+    <Icon>smaller.png</Icon>
+    <Tags>MVVM  WIn8 XAML  WP8 Silverlight5 WPF</Tags>
   </Metadata>
   <Installation AllUsers="true"  >
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[11.0,12.0]" />

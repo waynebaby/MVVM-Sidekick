@@ -15,12 +15,12 @@ namespace Samples.Startups
         {
             typeof(StartupFunctions)
 #if NETFX_CORE
-                .GetRuntimeMethods()
+.GetRuntimeMethods()
 #else
                 .GetMethods()
 #endif
 
-                .Where(m => m.Name.StartsWith("Config") && m.IsStatic)
+.Where(m => m.Name.StartsWith("Config") && m.IsStatic)
 #if !(WINDOWS_PHONE_8||SILVERLIGHT_5||WINDOWS_PHONE_7)
 .AsParallel()
                 .ForAll(
@@ -29,8 +29,8 @@ namespace Samples.Startups
                 .ForEach (           
 
 #endif
-                    m => m.Invoke(null, Enumerable.Empty<object>().ToArray()));
-                
+m => m.Invoke(null, Enumerable.Empty<object>().ToArray()));
+
 
         }
 
@@ -49,6 +49,14 @@ namespace Samples.Startups
                 .Register(new Tree_Model())
                 .GetViewMapper()
                 .MapToDefault<Tree>();
+#endif
+
+#if ! SILVERLIGHT_5
+            ViewModelLocator<Index_Model>
+                .Instance
+                .Register(new Index_Model())
+                .GetViewMapper()
+                .MapToDefault<Index>();
 #endif
         }
 

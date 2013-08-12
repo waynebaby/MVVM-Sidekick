@@ -183,6 +183,17 @@ namespace MVVMSidekick
                             ViewModel = viewModel;
                         }
                     }
+                    else
+                    {
+                        var solveV = this.GetDefaultViewModel();
+                        if (solveV!=null)
+                        {
+                            ViewModel = solveV;
+                        }
+
+                    }
+                    ViewModel = ViewModel ?? new DefaultViewModel();
+
                     await ViewModel.OnBindedViewLoad(this);
                 };
             }
@@ -271,6 +282,17 @@ namespace MVVMSidekick
                             ViewModel = viewModel;
                         }
                     }
+                    else
+                    {
+                        var solveV = this.GetDefaultViewModel();
+                        if (solveV != null)
+                        {
+                            ViewModel = solveV;
+                        }
+
+                    }
+                    ViewModel = ViewModel ?? new DefaultViewModel();
+
                     await ViewModel.OnBindedViewLoad(this);
                 };
             }
@@ -419,6 +441,18 @@ namespace MVVMSidekick
 
                         }
                     }
+                    else
+                    {
+                        var solveV = this.GetDefaultViewModel();
+                        if (solveV != null)
+                        {
+                            ViewModel = solveV;
+                        }
+
+                    }
+                    ViewModel = ViewModel ?? new DefaultViewModel();
+
+
                     await ViewModel.OnBindedViewLoad(this);
                 };
             }
@@ -534,54 +568,67 @@ namespace MVVMSidekick
         }
 
         public struct ViewModelToViewMapper<TModel>
-            where TModel : BindableBase
+            where TModel : IViewModel 
         {
 
+            public static void MapViewToViewModel<TView>()
+            {
+                Func<IViewModel> func;
+                if (!ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(typeof(TView), out func))
+                {
+                    ViewModelToViewMapperHelper.ViewToVMMapping.Add(typeof(TView), () =>( ViewModelLocator<TModel>.Instance.Resolve ()));
+                }
+
+
+            }
 #if WPF
             public ViewModelToViewMapper<TModel> MapToDefault<TView>(TView instance) where TView : class,IView
             {
+                MapViewToViewModel<TView>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(instance);
                 return this;
             }
 
             public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, TView instance) where TView : class,IView
-            {
+            {                 MapViewToViewModel<TView>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, instance);
                 return this;
             }
 
 
             public ViewModelToViewMapper<TModel> MapToDefault<TView>(bool alwaysNew = true) where TView : class,IView
-            {
+            {                 MapViewToViewModel<TView>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
                 return this;
             }
             public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, bool alwaysNew = true) where TView : class,IView
-            {
+            {                 MapViewToViewModel<TView>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
                 return this;
             }
 
             public ViewModelToViewMapper<TModel> MapToDefault<TView>(Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
-            {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory(d as TModel), alwaysNew);
+            {                 MapViewToViewModel<TView>();
+            ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel)d), alwaysNew);
                 return this;
             }
 
             public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
-            {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory(d as TModel), alwaysNew);
+            {                 MapViewToViewModel<TView>();
+            ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel)d), alwaysNew);
                 return this;
             }
 #else
             public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(TControl instance) where TControl : MVVMControl
             {
+                MapViewToViewModel<TControl>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(instance);
                 return this;
             }
 
             public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, TControl instance) where TControl : MVVMControl
             {
+                MapViewToViewModel<TControl>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, instance);
                 return this;
             }
@@ -589,31 +636,35 @@ namespace MVVMSidekick
 
             public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(bool alwaysNew = true) where TControl : MVVMControl
             {
+                MapViewToViewModel<TControl>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
                 return this;
             }
             public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, bool alwaysNew = true) where TControl : MVVMControl
             {
+                MapViewToViewModel<TControl>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
                 return this;
             }
 
             public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
             {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory(d as TModel), alwaysNew);
+                MapViewToViewModel<TControl>();
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel) d), alwaysNew);
                 return this;
             }
 
             public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
             {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory(d as TModel), alwaysNew);
+                MapViewToViewModel<TControl>();
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel) d), alwaysNew);
                 return this;
             }
 #endif
 
 #if WINDOWS_PHONE_8||WINDOWS_PHONE_7||SILVERLIGHT_5
             private static Uri GuessViewUri<TPage>(Uri baseUri) where TPage : MVVMPage
-            {
+            {                 MapViewToViewModel<TPage>();
 
                 baseUri = baseUri ?? new Uri("/", UriKind.Relative);
 
@@ -635,7 +686,7 @@ namespace MVVMSidekick
 
             public ViewModelToViewMapper<TModel> MapToDefault<TPage>(Uri baseUri = null) where TPage : MVVMPage
             {
-
+                    MapViewToViewModel<TPage>();
                 var pageUri = GuessViewUri<TPage>(baseUri);
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(pageUri);
                 return this;
@@ -646,22 +697,23 @@ namespace MVVMSidekick
 
             public ViewModelToViewMapper<TModel> MapTo<TPage>(string viewMappingKey, Uri baseUri = null) where TPage : MVVMPage
             {
+                  MapViewToViewModel<TPage>();
                 var pageUri = GuessViewUri<TPage>(baseUri);
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, pageUri);
                 return this;
             }
 
-            public ViewModelToViewMapper<TModel> MapToDefault(Uri pageUri)
-            {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(pageUri);
-                return this;
-            }
+            //public ViewModelToViewMapper<TModel> MapToDefault(Uri pageUri)
+            //{
+            //    ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(pageUri);
+            //    return this;
+            //}
 
-            public ViewModelToViewMapper<TModel> MapTo(string viewMappingKey, Uri pageUri)
-            {
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, pageUri);
-                return this;
-            }
+            //public ViewModelToViewMapper<TModel> MapTo(string viewMappingKey, Uri pageUri)
+            //{
+            //    ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, pageUri);
+            //    return this;
+            //}
 #endif
 #if NETFX_CORE
 
@@ -670,7 +722,7 @@ namespace MVVMSidekick
             public ViewModelToViewMapper<TModel> MapToDefault<TPage>() where TPage : MVVMPage
             {
 
-
+                MapViewToViewModel<TPage>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(typeof(TPage));
                 return this;
             }
@@ -678,7 +730,7 @@ namespace MVVMSidekick
 
             public ViewModelToViewMapper<TModel> MapToDefault<TPage>(string viewMappingKey) where TPage : MVVMPage
             {
-
+                MapViewToViewModel<TPage>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, typeof(TPage));
                 return this;
             }
@@ -690,11 +742,24 @@ namespace MVVMSidekick
 
         }
 
-        public static class ViewModelToViewMapperExtensions
+        public static class ViewModelToViewMapperHelper
         {
 
+            internal static Dictionary<Type, Func<IViewModel>> ViewToVMMapping = new Dictionary<Type, Func<IViewModel>>();
+
+            public static IViewModel GetDefaultViewModel(this IView view)
+            {
+                Func<IViewModel> func;
+                var vt = view.GetType();
+                if (ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(vt, out func))
+                {
+                    return func();
+                }
+                return new DefaultViewModel();
+            }
+
             public static ViewModelToViewMapper<TViewModel> GetViewMapper<TViewModel>(this MVVMSidekick.Services.ServiceLocatorEntryStruct<TViewModel> vmRegisterEntry)
-                  where TViewModel : BindableBase
+                  where TViewModel : IViewModel
             {
                 return new ViewModelToViewMapper<TViewModel>();
             }

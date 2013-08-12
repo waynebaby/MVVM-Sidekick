@@ -20,16 +20,16 @@ namespace Samples
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MVVMWindow
+    public partial class Index : MVVMWindow
     {
-        public MainWindow()
+        public Index()
             : base(null)
         {
             InitializeComponent();
           
         }
 
-        public MainWindow(Index_Model model)
+        public Index(Index_Model model)
             : base(model)
         {
             InitializeComponent();
