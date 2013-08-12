@@ -41,6 +41,7 @@ x64/
 *.nupkg.bak
 *.nupkg
 *.zip
+*.suo
 .builds
 
 # Visual C++ cache files
