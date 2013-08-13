@@ -57,6 +57,12 @@ m => m.Invoke(null, Enumerable.Empty<object>().ToArray()));
                 .Register(new Index_Model())
                 .GetViewMapper()
                 .MapToDefault<Index>();
+#else
+            ViewModelLocator<Index_Model>
+                .Instance
+                .Register(new Index_Model())
+                .GetViewMapper()
+                .MapToDefaultControl<Index>();
 #endif
         }
 

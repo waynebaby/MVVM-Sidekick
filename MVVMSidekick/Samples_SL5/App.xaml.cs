@@ -33,7 +33,7 @@ namespace Samples
         {
             Startups.StartupFunctions.RunAllConfig();
      
-            App.Current.RootVisual = new MainPage(null);
+            App.Current.RootVisual = new Index(null);
 
         }
 

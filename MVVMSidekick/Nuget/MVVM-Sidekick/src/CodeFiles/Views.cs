@@ -192,7 +192,7 @@ namespace MVVMSidekick
                         }
 
                     }
-                    ViewModel = ViewModel ?? new DefaultViewModel();
+                    ////ViewModel = ViewModel ?? new DefaultViewModel();
 
                     await ViewModel.OnBindedViewLoad(this);
                 };
@@ -291,7 +291,7 @@ namespace MVVMSidekick
                         }
 
                     }
-                    ViewModel = ViewModel ?? new DefaultViewModel();
+                    //////ViewModel = ViewModel ?? new DefaultViewModel();
 
                     await ViewModel.OnBindedViewLoad(this);
                 };
@@ -450,7 +450,7 @@ namespace MVVMSidekick
                         }
 
                     }
-                    ViewModel = ViewModel ?? new DefaultViewModel();
+                    //ViewModel = ViewModel ?? new DefaultViewModel();
 
 
                     await ViewModel.OnBindedViewLoad(this);
@@ -568,7 +568,7 @@ namespace MVVMSidekick
         }
 
         public struct ViewModelToViewMapper<TModel>
-            where TModel : IViewModel 
+            where TModel : IViewModel
         {
 
             public static void MapViewToViewModel<TView>()
@@ -576,7 +576,7 @@ namespace MVVMSidekick
                 Func<IViewModel> func;
                 if (!ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(typeof(TView), out func))
                 {
-                    ViewModelToViewMapperHelper.ViewToVMMapping.Add(typeof(TView), () =>( ViewModelLocator<TModel>.Instance.Resolve ()));
+                    ViewModelToViewMapperHelper.ViewToVMMapping.Add(typeof(TView), () => (ViewModelLocator<TModel>.Instance.Resolve()));
                 }
 
 
@@ -650,21 +650,22 @@ namespace MVVMSidekick
             public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
             {
                 MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel) d), alwaysNew);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel)d), alwaysNew);
                 return this;
             }
 
             public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
             {
                 MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel) d), alwaysNew);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel)d), alwaysNew);
                 return this;
             }
 #endif
 
 #if WINDOWS_PHONE_8||WINDOWS_PHONE_7||SILVERLIGHT_5
             private static Uri GuessViewUri<TPage>(Uri baseUri) where TPage : MVVMPage
-            {                 MapViewToViewModel<TPage>();
+            {
+                MapViewToViewModel<TPage>();
 
                 baseUri = baseUri ?? new Uri("/", UriKind.Relative);
 
@@ -686,9 +687,12 @@ namespace MVVMSidekick
 
             public ViewModelToViewMapper<TModel> MapToDefault<TPage>(Uri baseUri = null) where TPage : MVVMPage
             {
-                    MapViewToViewModel<TPage>();
+                MapViewToViewModel<TPage>();
                 var pageUri = GuessViewUri<TPage>(baseUri);
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(pageUri);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(
+                    Tuple.Create<Uri, Func<IView>>(pageUri,
+                    () => Activator.CreateInstance(typeof(TPage)) as IView
+                    ));
                 return this;
             }
 
@@ -697,9 +701,11 @@ namespace MVVMSidekick
 
             public ViewModelToViewMapper<TModel> MapTo<TPage>(string viewMappingKey, Uri baseUri = null) where TPage : MVVMPage
             {
-                  MapViewToViewModel<TPage>();
+                MapViewToViewModel<TPage>();
                 var pageUri = GuessViewUri<TPage>(baseUri);
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, pageUri);
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(Tuple.Create<Uri, Func<IView>>(pageUri,
+                        () => Activator.CreateInstance(typeof(TPage)) as IView
+                        ));
                 return this;
             }
 
@@ -919,15 +925,18 @@ namespace MVVMSidekick
             {
 
                 var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-                Uri uri;
-                if ((uri = item as Uri) != null) //only sl like page Can be registered as uri
+
+
+
+                Tuple<Uri, Func<IView>> uri;
+                if ((uri = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
                 {
                     Frame frame;
                     if ((frame = Target as Frame) != null)
                     {
                         var task = new Task(() => { });
                         var guid = Guid.NewGuid();
-                        var newUriWithParameter = new Uri(uri.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
+                        var newUriWithParameter = new Uri(uri.Item1 .ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
                         using (EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
                             .GetRouterEventObservable()
                             .Where(e =>
@@ -949,8 +958,12 @@ namespace MVVMSidekick
                         await targetViewModel.WaitForClose();
                         return;
                     }
-
+                    else
+                    {
+                        item = uri.Item2();
+                    }
                 }
+
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
@@ -962,15 +975,16 @@ namespace MVVMSidekick
             {
 
                 var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-                Uri uri;
-                if ((uri = item as Uri) != null) //only sl like page Can be registered as uri
+               
+                Tuple<Uri, Func<IView>> uri;
+                if ((uri = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
                 {
                     Frame frame;
                     if ((frame = Target as Frame) != null)
                     {
                         var task = new Task(() => { });
                         var guid = Guid.NewGuid();
-                        var newUriWithParameter = new Uri(uri.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
+                        var newUriWithParameter = new Uri(uri.Item1.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
                         using (EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
                             .GetRouterEventObservable()
                             .Where(e =>
@@ -990,7 +1004,10 @@ namespace MVVMSidekick
 
                         return await targetViewModel.WaitForCloseWithResult();
                     }
-
+                    else
+                    {
+                        item = uri.Item2();
+                    }
                 }
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
@@ -1004,15 +1021,15 @@ namespace MVVMSidekick
                 where TTarget : class,IViewModel
             {
                 var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-                Uri uri;
-                if ((uri = item as Uri) != null) //only sl like page Can be registered as uri
+                 Tuple<Uri, Func<IView>> uri;
+                if ((uri = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
                 {
                     Frame frame;
                     if ((frame = Target as Frame) != null)
                     {
                         var task = new Task(() => { });
                         var guid = Guid.NewGuid();
-                        var newUriWithParameter = new Uri(uri.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
+                        var newUriWithParameter = new Uri(uri.Item1.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
 
                         using (EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
                             .GetRouterEventObservable()
@@ -1036,7 +1053,11 @@ namespace MVVMSidekick
                         return new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel };
 
                     }
-
+                    else
+                    {
+                        item = uri.Item2();
+                    
+                    }
                 }
 
 

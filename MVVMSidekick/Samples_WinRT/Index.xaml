@@ -13,7 +13,7 @@
         <vm:Index_Model x:Key="DesignVM" />
 
     </common:LayoutAwarePage.Resources>
-    <Grid x:Name="LayoutRoot"    >
+    <Grid x:Name="LayoutRoot" DataContext="{StaticResource DesignVM}"    >
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="117*"/>
