@@ -12,6 +12,8 @@ TestResults
 *.suo
 *.user
 *.sln.docstates
+*.zip
+*.dll
 
 # Build results
 [Ll]ib/
