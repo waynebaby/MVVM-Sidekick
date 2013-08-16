@@ -120,6 +120,12 @@
     <Compile Include="..\Samples_ViewModels\Tree_Model.cs">
       <Link>ViewModels\Tree_Model.cs</Link>
     </Compile>
+    <Compile Include="..\Samples_ViewModels\ViewNavigation_Child_Model.cs">
+      <Link>ViewModels\ViewNavigation_Child_Model.cs</Link>
+    </Compile>
+    <Compile Include="..\Samples_ViewModels\ViewNavigation_Model.cs">
+      <Link>ViewModels\ViewNavigation_Model.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -148,7 +154,15 @@
     <Compile Include="Startups\CommandBindingsSample.cs" />
     <Compile Include="Startups\GroupViewSample.cs" />
     <Compile Include="Startups\ListsAndItemsPattern.cs" />
+    <Compile Include="Startups\ViewNavigation.cs" />
+    <Compile Include="Startups\ViewNavigation_Child.cs" />
     <Compile Include="ViewModels\GroupViewSample_Model.cs" />
+    <Compile Include="ViewNavigation.xaml.cs">
+      <DependentUpon>ViewNavigation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewNavigation_Child.xaml.cs">
+      <DependentUpon>ViewNavigation_Child.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -193,11 +207,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ViewNavigation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewNavigation_Child.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MVVMSidekick_Metro, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.1.7.5\lib\netcore45\MVVMSidekick_Metro.dll</HintPath>
+    <Reference Include="MVVMSidekick_Metro">
+      <HintPath>..\packages\MVVM-Sidekick.1.1.8.0\lib\netcore45\MVVMSidekick_Metro.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

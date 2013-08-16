@@ -12,7 +12,7 @@ namespace Samples.ViewModels
     public class Calculator_Model : ViewModelBase<Calculator_Model, String>
     {
 
-        protected override Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
+        protected   override Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
         {
 
 
@@ -26,7 +26,7 @@ namespace Samples.ViewModels
 
             }
 
-
+         
             this.GetValueContainer(x => x.CurrentInput)
                 .GetNewValueObservable()
                 .Subscribe

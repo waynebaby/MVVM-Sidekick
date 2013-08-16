@@ -74,7 +74,7 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="MVVMSidekick_Sl">
-      <HintPath>..\packages\MVVM-Sidekick.1.1.7.5\lib\sl50\MVVMSidekick_Sl.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.8.0\lib\sl50\MVVMSidekick_Sl.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.IO">
@@ -133,6 +133,12 @@
     <Compile Include="..\Samples_ViewModels\Tree_Model.cs">
       <Link>ViewModels\Tree_Model.cs</Link>
     </Compile>
+    <Compile Include="..\Samples_ViewModels\ViewNavigation_Child_Model.cs">
+      <Link>ViewModels\ViewNavigation_Child_Model.cs</Link>
+    </Compile>
+    <Compile Include="..\Samples_ViewModels\ViewNavigation_Model.cs">
+      <Link>ViewModels\ViewNavigation_Model.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -147,6 +153,8 @@
     </Compile>
     <Compile Include="StartUps\CommandBindingsSample.cs" />
     <Compile Include="StartUps\ListsAndItemsPattern.cs" />
+    <Compile Include="StartUps\ViewNavigation.cs" />
+    <Compile Include="StartUps\ViewNavigation_Child.cs" />
     <Compile Include="Tree.xaml.cs">
       <DependentUpon>Tree.xaml</DependentUpon>
     </Compile>
@@ -155,6 +163,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartupFunctions.cs" />
+    <Compile Include="ViewNavigation.xaml.cs">
+      <DependentUpon>ViewNavigation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewNavigation_Child.xaml.cs">
+      <DependentUpon>ViewNavigation_Child.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -178,6 +192,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Index.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewNavigation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewNavigation_Child.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

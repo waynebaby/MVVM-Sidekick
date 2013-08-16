@@ -27,19 +27,25 @@ namespace Samples
     /// <summary>
     /// A basic page that provides characteristics common to most applications.
     /// </summary>
-    public sealed partial class CommandBindingsSample : LayoutAwarePage
+    public sealed partial class ViewNavigation : LayoutAwarePage
     {
 
-        public CommandBindingsSample()
+        public ViewNavigation()
             : base(null)
         {
             this.InitializeComponent();
         }
-        public CommandBindingsSample(CommandBindingsSample_Model model)
+        public ViewNavigation(ViewNavigation_Model model)
             : base(model)
         {
             this.InitializeComponent();
         }
+
+
+        
+
+
+
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
         /// provided when recreating a page from a prior session.
@@ -61,11 +67,6 @@ namespace Samples
         /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
         }
     }
 }

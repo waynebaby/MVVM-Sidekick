@@ -9,27 +9,16 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Input;
-using MVVMSidekick.ViewModels;
 using MVVMSidekick.Commands;
 using System.Runtime.CompilerServices;
 using MVVMSidekick.Reactive;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using System.Reactive;
-using MVVMSidekick.EventRouting;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.IO;
-using System.Collections;
+
 
 #if NETFX_CORE
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Controls;
-using System.Collections.Concurrent;
-using Windows.UI.Xaml.Navigation;
 
-using Windows.UI.Xaml.Controls.Primitives;
+
 
 #elif WPF
 using System.Windows;
@@ -65,8 +54,8 @@ namespace MVVMSidekick
 {
     namespace ViewModels
     {
-        using MVVMSidekick.Views;
         using MVVMSidekick.Utilities;
+        using MVVMSidekick.Views;
         /// <summary>
         /// <para>A ViewModel by default, with basic implement of name-value container.</para>
         /// <para>缺省的 ViewModel。可以用作最简单的字典绑定</para>
@@ -1316,11 +1305,17 @@ namespace MVVMSidekick
 
         //        [TypeConverter(typeof(StringToViewModelInstanceConverter))]
         //#endif
-        public partial interface IViewModel : IBindable, INotifyPropertyChanged
+
+        public interface IViewModelLifetime
         {
             Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue);
             Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue);
             Task OnBindedViewLoad(MVVMSidekick.Views.IView view);
+
+        }
+        public partial interface IViewModel : IBindable, INotifyPropertyChanged, IViewModelLifetime
+        {
+
             Task WaitForClose(Action closingCallback = null);
             bool IsUIBusy { get; set; }
             bool HaveReturnValue { get; }
@@ -1416,6 +1411,24 @@ namespace MVVMSidekick
         public abstract partial class ViewModelBase<TViewModel> : BindableBase<TViewModel>, IViewModel where TViewModel : ViewModelBase<TViewModel>
         {
 
+
+            Task IViewModelLifetime.OnBindedToView(IView view, IViewModel oldValue)
+            {
+                return OnBindedToView(view, oldValue);
+            }
+
+            Task IViewModelLifetime.OnUnbindedFromView(IView view, IViewModel newValue)
+            {
+                return OnUnbindedFromView(view, newValue);
+            }
+
+            Task IViewModelLifetime.OnBindedViewLoad(IView view)
+            {
+                return OnBindedViewLoad(view);
+            }
+
+
+
             protected virtual async Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
             {
                 //#if SILVERLIGHT_5
@@ -1430,6 +1443,7 @@ namespace MVVMSidekick
                 await TaskExHelper.Yield();
             }
 
+
             /// <summary>
             ///  Dispose By Default, override id you don't want.
             /// </summary>
@@ -1438,7 +1452,10 @@ namespace MVVMSidekick
             /// <returns></returns>
             protected virtual async Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue)
             {
-                Dispose();
+                if (IsDisposingWhenUnbind)
+                {
+                    Dispose();
+                }
                 await TaskExHelper.Yield();
             }
 
@@ -1450,38 +1467,14 @@ namespace MVVMSidekick
                 await TaskExHelper.Yield();
             }
 
-            async Task IViewModel.OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
-            {
-                if (IsInDesignMode)
-                {
-                    await TaskExHelper.Yield();
-                }
-                else
-                    await OnBindedToView(view, oldValue);
-            }
-            async Task IViewModel.OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue)
-            {
-                if (IsInDesignMode)
-                {
-                    await TaskExHelper.Yield();
-                }
-                else
-                    await OnUnbindedFromView(view, newValue);
-            }
 
-            async Task IViewModel.OnBindedViewLoad(MVVMSidekick.Views.IView view)
-            {
 
-                if (IsInDesignMode)
-                {
-                    await TaskExHelper.Yield();
-                }
-                else
-                {
+            public bool IsDisposingWhenUnbind { get; protected set; }
 
-                    await OnBindedViewLoad(view);
-                }
-            }
+
+
+
+
 
 #if NETFX_CORE
             /// <summary>
@@ -1577,6 +1570,7 @@ namespace MVVMSidekick
                     this.StageManager.CurrentBindingView.SelfClose();
                 }
             }
+
 
 
         }

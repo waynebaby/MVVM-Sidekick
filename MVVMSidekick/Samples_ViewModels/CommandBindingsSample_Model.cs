@@ -148,6 +148,31 @@ namespace Samples.ViewModels
             };
         #endregion
 
+        
+        public CommandModel<ReactiveCommand, String> CommandNavigateToListAndView
+        {
+            get { return _CommandNavigateToListAndViewLocator(this).Value; }
+            set { _CommandNavigateToListAndViewLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandNavigateToListAndView Setup
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandNavigateToListAndView = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandNavigateToListAndViewLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNavigateToListAndViewLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandNavigateToListAndView", model => model.Initialize("CommandNavigateToListAndView", ref model._CommandNavigateToListAndView, ref _CommandNavigateToListAndViewLocator, _CommandNavigateToListAndViewDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNavigateToListAndViewDefaultValueFactory =
+            model =>
+            {
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                //Config it if you want
+                var vm = CastToCurrentType(model); //vm instance 
+                cmd.Subscribe(
+                  async _ =>
+                  {
+                    await  vm.StageManager.DefaultStage.Show<ListsAndItemsPattern_Model >();
+                  })
+                  .DisposeWith(vm); 
+                return cmd.CreateCommandModel("NavigateToListAndView");
+            };
+        #endregion
+
 
     }
 

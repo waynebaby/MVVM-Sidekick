@@ -21,7 +21,7 @@ namespace $rootnamespace$.Startups
                 .Instance
                 .Register(new $safeitemname$_Model())
                 .GetViewMapper()
-                .MapToDefault<$safeitemname$>();;
+                .MapToDefault<$safeitemname$>();
 
         }
     }

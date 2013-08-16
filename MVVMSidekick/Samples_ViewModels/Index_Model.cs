@@ -18,7 +18,7 @@ namespace Samples.ViewModels
         public static Index_Model Instance = new Index_Model();
         public Index_Model()
         {
-
+            IsDisposingWhenUnbind = false;
 
         }
 
@@ -290,6 +290,34 @@ namespace Samples.ViewModels
         }
 
 #endif
+
+
+
+        public CommandModel<ReactiveCommand, String> CommandNavigationSample
+        {
+            get { return _CommandNavigationSampleLocator(this).Value; }
+            set { _CommandNavigationSampleLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandNavigationSample Setup
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandNavigationSample = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandNavigationSampleLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNavigationSampleLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandNavigationSample", model => model.Initialize("CommandNavigationSample", ref model._CommandNavigationSample, ref _CommandNavigationSampleLocator, _CommandNavigationSampleDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNavigationSampleDefaultValueFactory =
+            model =>
+            {
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                //Config it if you want
+                var vm = CastToCurrentType(model); //vm instance 
+                cmd.Subscribe(
+                  async _ =>
+                  {
+                      await vm.StageManager.DefaultStage.Show(new ViewNavigation_Model()  );
+                  })
+                  .DisposeWith(vm);
+                return cmd.CreateCommandModel("NavigationSample");
+            };
+        #endregion
+
+
     }
 
 

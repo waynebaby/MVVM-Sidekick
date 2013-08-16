@@ -11,12 +11,13 @@ namespace $safeprojectname$.Startups
         
         public static void RunAllConfig()
         {
+         
             typeof(StartupFunctions)
-                    .GetMethods ()
+                    .GetMethods()
                     .Where(m => m.Name.StartsWith("Config") && m.IsStatic)
-                    .AsParallel()
-                    .ForAll(m => m.Invoke(null, Enumerable.Empty<object>().ToArray()));
-
+                    .Select(                      
+                        m => m.Invoke(null, Enumerable.Empty<object>().ToArray()))
+                    .ToArray();
             
         }
 

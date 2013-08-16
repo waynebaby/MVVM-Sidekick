@@ -28,7 +28,7 @@ namespace Samples
 
             this.InitializeComponent();
 
-         ViewModel =   MVVMSidekick.Views.ViewModelLocator<Samples.ViewModels.Index_Model>.Instance.Resolve();
+     
             //MVVMSidekick.Utilities.EventHandlerHelper.BindEvent(EventButton, "Click", (_1, _2) => EventButton.Content = "Clicked");
             //var d = MVVMSidekick.Utilities.EventHandlerHelper.BindEvent(DisEventButton, "Click", (_1, _2) => DisEventButton.Content = "Clicked");
             //d.Dispose();

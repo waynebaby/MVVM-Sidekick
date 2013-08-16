@@ -5,23 +5,23 @@ using MVVMSidekick.Views;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.Services;
 using MVVMSidekick.Commands;
-using $rootnamespace$.ViewModels;
+using Samples.ViewModels;
 using System;
 using System.Net;
 using System.Windows;
 
 
-namespace $rootnamespace$.Startups
+namespace Samples.Startups
 {
     public static partial class StartupFunctions
     {
-        public static void Config$safeitemname$()
+        public static void ConfigViewNavigation()
         {
-            ViewModelLocator<$safeitemname$_Model>
+            ViewModelLocator<ViewNavigation_Model>
                 .Instance
-                .Register(new $safeitemname$_Model())
+                .Register(new ViewNavigation_Model())
                 .GetViewMapper()
-                .MapToDefault<$safeitemname$>();
+                .MapToDefault<ViewNavigation>();
 
         }
     }

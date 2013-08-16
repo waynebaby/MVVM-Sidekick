@@ -183,15 +183,15 @@ namespace MVVMSidekick
                             ViewModel = viewModel;
                         }
                     }
-                    else
-                    {
-                        var solveV = this.GetDefaultViewModel();
-                        if (solveV!=null)
-                        {
-                            ViewModel = solveV;
-                        }
+                    //else
+                    //{
+                    //    var solveV = this.GetDefaultViewModel();
+                    //    if (solveV!=null)
+                    //    {
+                    //        ViewModel = solveV;
+                    //    }
 
-                    }
+                    //}
                     ////ViewModel = ViewModel ?? new DefaultViewModel();
 
                     await ViewModel.OnBindedViewLoad(this);
@@ -282,15 +282,15 @@ namespace MVVMSidekick
                             ViewModel = viewModel;
                         }
                     }
-                    else
-                    {
-                        var solveV = this.GetDefaultViewModel();
-                        if (solveV != null)
-                        {
-                            ViewModel = solveV;
-                        }
+                    //else
+                    //{
+                    //    var solveV = this.GetDefaultViewModel();
+                    //    if (solveV != null)
+                    //    {
+                    //        ViewModel = solveV;
+                    //    }
 
-                    }
+                    //}
                     //////ViewModel = ViewModel ?? new DefaultViewModel();
 
                     await ViewModel.OnBindedViewLoad(this);
@@ -300,7 +300,8 @@ namespace MVVMSidekick
 
 
 
-#if WINDOWS_PHONE_7||WINDOWS_PHONE_8||SILVERLIGHT_5||NETFX_CORE
+#if ! WPF
+            //WPF Pages' Content are objects but others are FE .
             object IView.Content
             {
                 get { return Content; }
@@ -308,18 +309,48 @@ namespace MVVMSidekick
 
             }
 
+            //WPF navigates page instances but other navgates with parameters
             protected override void OnNavigatedTo(NavigationEventArgs e)
             {
+
                 base.OnNavigatedTo(e);
                 RoutedEventHandler loadEvent = null;
 
                 loadEvent = (_1, _2) =>
                 {
                     EventRouting.EventRouter.Instance.RaiseEvent(this, e);
-                    this.Loaded -= loadEvent;
+                    //  this.Loaded -= loadEvent;
+
                 };
                 this.Loaded += loadEvent;
+
             }
+
+
+
+
+            protected override void OnNavigatedFrom(NavigationEventArgs e)
+            {
+                base.OnNavigatedFrom(e);
+
+#if SILVERLIGHT_5
+                if (ViewModel.StageManager.DefaultStage.NavigateRequestContexts.ContainsKey(e.Uri.ToString()))
+#else
+                if (e.NavigationMode == NavigationMode.Back)
+#endif
+
+                {
+
+                    if (ViewModel != null)
+                    {
+                        ViewModel.Dispose();
+                    }
+
+
+                }
+
+            }
+
 #endif
 
 
@@ -441,15 +472,15 @@ namespace MVVMSidekick
 
                         }
                     }
-                    else
-                    {
-                        var solveV = this.GetDefaultViewModel();
-                        if (solveV != null)
-                        {
-                            ViewModel = solveV;
-                        }
+                    //else
+                    //{
+                    //    var solveV = this.GetDefaultViewModel();
+                    //    if (solveV != null)
+                    //    {
+                    //        ViewModel = solveV;
+                    //    }
 
-                    }
+                    //}
                     //ViewModel = ViewModel ?? new DefaultViewModel();
 
 
@@ -761,7 +792,7 @@ namespace MVVMSidekick
                 {
                     return func();
                 }
-                return new DefaultViewModel();
+                return null;
             }
 
             public static ViewModelToViewMapper<TViewModel> GetViewMapper<TViewModel>(this MVVMSidekick.Services.ServiceLocatorEntryStruct<TViewModel> vmRegisterEntry)
@@ -791,7 +822,6 @@ namespace MVVMSidekick
             public static ViewModelLocator<TViewModel> Instance { get; set; }
 
         }
-
 
 
         public class Stage : DependencyObject
@@ -888,6 +918,7 @@ namespace MVVMSidekick
                 IView view = null;
                 view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+                view.ViewModel = targetViewModel;
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 await targetViewModel.WaitForClose();
             }
@@ -899,6 +930,7 @@ namespace MVVMSidekick
                 IView view = null;
                 view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+                view.ViewModel = targetViewModel;
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 return await targetViewModel.WaitForCloseWithResult();
             }
@@ -912,6 +944,7 @@ namespace MVVMSidekick
                 view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
 
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+                view.ViewModel = targetViewModel;
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
 
 
@@ -920,6 +953,39 @@ namespace MVVMSidekick
 #endif
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||WINDOWS_PHONE_8
 
+            internal Dictionary<string, IViewModel> NavigateRequestContexts
+            {
+                get
+                {
+
+                    return GetNavigateRequestContexts(Frame);
+                }
+
+                set
+                {
+                    SetNavigateRequestContexts(Frame, value);
+                }
+
+            }
+
+
+
+            public static Dictionary<string, IViewModel> GetNavigateRequestContexts(DependencyObject obj)
+            {
+                return (Dictionary<string, IViewModel>)obj.GetValue(NavigateRequestContextsProperty);
+            }
+
+            public static void SetNavigateRequestContexts(DependencyObject obj, Dictionary<string, IViewModel> value)
+            {
+                obj.SetValue(NavigateRequestContextsProperty, value);
+            }
+
+            // Using a DependencyProperty as the backing store for NavigateRequestContexts.  This enables animation, styling, binding, etc...
+            public static readonly DependencyProperty NavigateRequestContextsProperty =
+                DependencyProperty.RegisterAttached("NavigateRequestContexts", typeof(Dictionary<string, IViewModel>), typeof(Stage), new PropertyMetadata(new Dictionary<string, IViewModel>()));
+
+
+
             public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
                  where TTarget : class,IViewModel
             {
@@ -928,91 +994,112 @@ namespace MVVMSidekick
 
 
 
-                Tuple<Uri, Func<IView>> uri;
-                if ((uri = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
+                Tuple<Uri, Func<IView>> uriData;
+                uriData = item as Tuple<Uri, Func<IView>>;
+                if (uriData!= null) //only sl like page Can be registered as uri
                 {
                     Frame frame;
                     if ((frame = Target as Frame) != null)
                     {
-                        var task = new Task(() => { });
-                        var guid = Guid.NewGuid();
-                        var newUriWithParameter = new Uri(uri.Item1 .ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
-                        using (EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
-                            .GetRouterEventObservable()
-                            .Where(e =>
-                                    e.EventArgs.Uri == newUriWithParameter)
-                            .Subscribe(e =>
-                            {
-                                var page = e.Sender as MVVMPage;
-
-                                if (targetViewModel != null) page.ViewModel = targetViewModel;
-                                targetViewModel = (TTarget)page.ViewModel;
-                                task.Start();
-                            }
-                            ))
-                        {
-                            frame.Navigate(newUriWithParameter);
-                            await task;
-                        }
-
+                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
                         await targetViewModel.WaitForClose();
                         return;
                     }
                     else
                     {
-                        item = uri.Item2();
+                        item = uriData.Item2();
                     }
                 }
 
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+                view.ViewModel = targetViewModel; 
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 await targetViewModel.WaitForClose();
             }
+
+
 
             public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
                 where TTarget : class,IViewModel<TResult>
             {
 
                 var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-               
-                Tuple<Uri, Func<IView>> uri;
-                if ((uri = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
+
+                Tuple<Uri, Func<IView>> uriData;
+                if ((uriData = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
                 {
                     Frame frame;
                     if ((frame = Target as Frame) != null)
                     {
-                        var task = new Task(() => { });
-                        var guid = Guid.NewGuid();
-                        var newUriWithParameter = new Uri(uri.Item1.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
-                        using (EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
-                            .GetRouterEventObservable()
-                            .Where(e =>
-                                    e.EventArgs.Uri == newUriWithParameter)
-                            .Subscribe(e =>
-                            {
-                                var page = e.Sender as MVVMPage;
-                                if (targetViewModel != null) page.ViewModel = targetViewModel;
-                                targetViewModel = (TTarget)page.ViewModel;
-                                task.Start();
-                            }
-                            ))
-                        {
-                            frame.Navigate(newUriWithParameter);
-                            await task;
-                        }
+                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
 
                         return await targetViewModel.WaitForCloseWithResult();
                     }
                     else
                     {
-                        item = uri.Item2();
+                        item = uriData.Item2();
                     }
                 }
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+                view.ViewModel = targetViewModel;
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 return await targetViewModel.WaitForCloseWithResult();
+            }
+
+            private async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Tuple<Uri, Func<IView>> uriData, Frame frame) where TTarget : class,IViewModel
+            {
+                var task = new Task(() => { });
+                var guid = Guid.NewGuid();
+                var newUriWithParameter = new Uri(uriData.Item1.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
+
+                var dis = EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
+                    .GetRouterEventObservable()
+                    .Where(e =>
+                            e.EventArgs.Uri == newUriWithParameter)
+                    .Subscribe(e =>
+                    {
+                        var key = newUriWithParameter.ToString();
+
+                        lock (NavigateRequestContexts)
+                        {
+                            IViewModel vm = null;
+
+                            if (NavigateRequestContexts.TryGetValue(key, out vm))
+                            {
+                                targetViewModel = vm as TTarget;
+                            }
+
+                            var page = e.Sender as MVVMPage;
+
+                            if (targetViewModel != null) page.ViewModel = targetViewModel;
+
+                            targetViewModel = (TTarget)page.ViewModel;
+                            NavigateRequestContexts[key] = targetViewModel;
+                        }
+                        if (!task.IsCompleted)
+                        {
+
+                            targetViewModel.AddDisposeAction(() =>
+                            {
+                                lock (NavigateRequestContexts)
+                                {
+                                    NavigateRequestContexts.Remove(key);
+                                }
+
+                            });
+                            task.Start();
+                        }
+                    }
+                    );
+
+
+
+                frame.Navigate(newUriWithParameter);
+                await task;
+                dis.DisposeWith(targetViewModel);
+                return targetViewModel;
             }
 
 
@@ -1021,59 +1108,39 @@ namespace MVVMSidekick
                 where TTarget : class,IViewModel
             {
                 var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-                 Tuple<Uri, Func<IView>> uri;
-                if ((uri = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
+                Tuple<Uri, Func<IView>> uriData;
+                if ((uriData = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
                 {
                     Frame frame;
                     if ((frame = Target as Frame) != null)
                     {
-                        var task = new Task(() => { });
-                        var guid = Guid.NewGuid();
-                        var newUriWithParameter = new Uri(uri.Item1.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
-
-                        using (EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
-                            .GetRouterEventObservable()
-                            .Where(e =>
-                                e.EventArgs.Uri.ToString().ToUpper() == newUriWithParameter.ToString().ToUpper())
-                            .Subscribe(
-                                e =>
-                                {
-                                    var page = e.Sender as MVVMPage;
-                                    if (targetViewModel != null) page.ViewModel = targetViewModel;
-                                    targetViewModel = (TTarget)page.ViewModel;
-                                    task.Start();
-                                }
-
-                            ))
-                        {
-                            frame.Navigate(newUriWithParameter);
-                            await task;
-                        }
+                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
 
                         return new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel };
 
                     }
                     else
                     {
-                        item = uri.Item2();
-                    
+                        item = uriData.Item2();
+
                     }
                 }
 
 
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+                view.ViewModel = targetViewModel;
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-
-
-
                 var tr = targetViewModel.WaitForClose();
                 return new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel };
             }
 
 #endif
 
+
 #if NETFX_CORE
+
+
 
 
             public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
@@ -1085,30 +1152,11 @@ namespace MVVMSidekick
                 Type type;
                 if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
                 {
-                    Frame frame;
 
-                    if ((frame = Target as Frame) != null)
+                    var frame = Target as Frame;
+                    if (frame != null)
                     {
-                        Task task = new Task(() => { });
-                        object paremeter = new object();
-
-
-                        using (EventRouting.EventRouter.Instance.GetEventObject<NavigationEventArgs>()
-                           .GetRouterEventObservable()
-                           .Where(e =>
-                                   object.ReferenceEquals(e.EventArgs.Parameter, paremeter))
-                           .Subscribe(e =>
-                           {
-                               var page = e.Sender as MVVMPage;
-                               if (targetViewModel != null) page.ViewModel = targetViewModel;
-                               targetViewModel = (TTarget)page.ViewModel;
-                               task.Start();
-                           }))
-                        {
-                            frame.Navigate(type, paremeter);
-                            await task;
-                        }
-
+                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
 
                         await targetViewModel.WaitForClose();
                         return;
@@ -1118,12 +1166,56 @@ namespace MVVMSidekick
 
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+                view.ViewModel = targetViewModel; 
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 await targetViewModel.WaitForClose();
 
 
             }
 
+            private static async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Type type, Windows.UI.Xaml.Controls.Frame frame) where TTarget : class, IViewModel
+            {
+                var parameter = new StageNavigationContext<TTarget>();
+                var task = new Task(() => { });
+                var dip = EventRouting.EventRouter.Instance
+                     .GetEventObject<NavigationEventArgs>()
+                     .GetRouterEventObservable()
+                     .Where(e =>
+                             object.ReferenceEquals(e.EventArgs.Parameter, parameter))
+                     .Subscribe(e =>
+                     {
+
+                         var page = e.Sender as MVVMPage;
+
+                         if (parameter.ViewModel != null)
+                         {
+                             targetViewModel = parameter.ViewModel;
+                         }
+
+                         if (targetViewModel != null) page.ViewModel = targetViewModel;
+
+                         targetViewModel = (TTarget)page.ViewModel;
+
+                         parameter.ViewModel = targetViewModel;
+
+                         if (!task.IsCompleted)
+                         {
+
+                             task.Start();
+                         }
+                     });
+
+
+                frame.Navigate(type, parameter);
+                await task;
+                dip.DisposeWith(targetViewModel);
+                return targetViewModel;
+            }
+            class StageNavigationContext<T> where T : IViewModel
+            {
+                public T ViewModel { get; set; }
+
+            }
             public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
                 where TTarget : class,IViewModel<TResult>
             {
@@ -1134,25 +1226,7 @@ namespace MVVMSidekick
                     Frame frame;
                     if ((frame = Target as Frame) != null)
                     {
-                        Task task = new Task(() => { });
-                        object paremeter = new object();
-
-
-                        using (EventRouting.EventRouter.Instance.GetEventObject<NavigationEventArgs>()
-                           .GetRouterEventObservable()
-                           .Where(e =>
-                                   object.ReferenceEquals(e.EventArgs.Parameter, paremeter))
-                           .Subscribe(e =>
-                           {
-                               var page = e.Sender as MVVMPage;
-                               if (targetViewModel != null) page.ViewModel = targetViewModel;
-                               targetViewModel = (TTarget)page.ViewModel;
-                               task.Start();
-                           }))
-                        {
-                            frame.Navigate(type, paremeter);
-                            await task;
-                        }
+                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
 
 
 
@@ -1165,6 +1239,7 @@ namespace MVVMSidekick
 
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+                view.ViewModel = targetViewModel; 
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 return await targetViewModel.WaitForCloseWithResult();
             }
@@ -1181,27 +1256,7 @@ namespace MVVMSidekick
                     Frame frame;
                     if ((frame = Target as Frame) != null)
                     {
-                        Task task = new Task(() => { });
-                        object paremeter = new object();
-
-
-                        using (EventRouting.EventRouter.Instance.GetEventObject<NavigationEventArgs>()
-                           .GetRouterEventObservable()
-                           .Where(e =>
-                                   object.ReferenceEquals(e.EventArgs.Parameter, paremeter))
-                           .Subscribe(e =>
-                           {
-                               var page = e.Sender as MVVMPage;
-                               if (targetViewModel != null) page.ViewModel = targetViewModel;
-                               targetViewModel = (TTarget)page.ViewModel;
-                               task.Start();
-                           }))
-                        {
-                            frame.Navigate(type, paremeter);
-                            await task;
-                        }
-
-
+                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
 
                         return new ShowAwaitableResult<TTarget>
                         {
@@ -1216,8 +1271,8 @@ namespace MVVMSidekick
                 IView view = item as IView;
 
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+                view.ViewModel = targetViewModel; 
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-
 
                 var tr = targetViewModel.WaitForClose();
                 return new ShowAwaitableResult<TTarget> { Closing = tr, ViewModel = targetViewModel };

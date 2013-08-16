@@ -13,25 +13,20 @@ namespace Samples.Startups
 
         public static void RunAllConfig()
         {
-            typeof(StartupFunctions)
+            var methods =
+             typeof(StartupFunctions)
 #if NETFX_CORE
 .GetRuntimeMethods()
 #else
                 .GetMethods()
 #endif
 
-.Where(m => m.Name.StartsWith("Config") && m.IsStatic)
-#if !(WINDOWS_PHONE_8||SILVERLIGHT_5||WINDOWS_PHONE_7)
-.AsParallel()
-                .ForAll(
-#else
-                .ToList ()
-                .ForEach (           
+.Where(m => m.Name.StartsWith("Config") && m.IsStatic);
 
-#endif
-m => m.Invoke(null, Enumerable.Empty<object>().ToArray()));
-
-
+            foreach (var m in methods)
+            {
+                m.Invoke(null, Enumerable.Empty<object>().ToArray());
+            }
         }
 
         public static void ConfigOldViews()

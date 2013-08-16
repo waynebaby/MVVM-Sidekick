@@ -36,6 +36,7 @@
             <Button Content="{Binding CommandStartTree}" Command="{Binding CommandStartTree}"  />
             <Button Content="{Binding CommandListTest}" Command="{Binding CommandListTest}"  />
             <Button Content="{Binding CommandCommandBinding}" Command="{Binding CommandCommandBinding}"  />
+            <Button Content="{Binding CommandNavigationSample}" Command="{Binding CommandNavigationSample}"  />
         </StackPanel>
 
     </Grid>
