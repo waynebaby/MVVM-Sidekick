@@ -171,7 +171,7 @@ namespace MVVMSidekick
 
             public MVVMWindow(IViewModel viewModel)
             {
-                Unloaded += (_1, _2) => ViewModel = null;
+               ////////// Unloaded += (_1, _2) => ViewModel = null;
                 Loaded += async (_1, _2) =>
                 {
                    
@@ -183,15 +183,15 @@ namespace MVVMSidekick
                             ViewModel = viewModel;
                         }
                     }
-                    //else
-                    //{
-                    //    var solveV = this.GetDefaultViewModel();
-                    //    if (solveV!=null)
-                    //    {
-                    //        ViewModel = solveV;
-                    //    }
+                    else
+                    {
+                        var solveV = this.GetDefaultViewModel();
+                        if (solveV!=null)
+                        {
+                            ViewModel = solveV;
+                        }
 
-                    //}
+                    }
                     ////ViewModel = ViewModel ?? new DefaultViewModel();
 
                     await ViewModel.OnBindedViewLoad(this);
@@ -267,33 +267,40 @@ namespace MVVMSidekick
 
             }
 
+
+            internal IViewModel presetViewModel;
+
             public MVVMPage(IViewModel viewModel)
             {
-                Unloaded += (_1, _2) => ViewModel = null;
+                presetViewModel = viewModel;
+  
                 Loaded += async (_1, _2) =>
                 {
 
 
-                    if (viewModel != null)
+                    if (presetViewModel != null)
                     {
-                        // this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
-                        if (!object.ReferenceEquals(ViewModel, viewModel))
+                      
+                        if (!object.ReferenceEquals(ViewModel, presetViewModel))
                         {
-                            ViewModel = viewModel;
+                            ViewModel = presetViewModel;
                         }
                     }
-                    //else
-                    //{
-                    //    var solveV = this.GetDefaultViewModel();
-                    //    if (solveV != null)
-                    //    {
-                    //        ViewModel = solveV;
-                    //    }
+                    else
+                    {
+                        var solveV = this.GetDefaultViewModel();
+                        if (solveV != null)
+                        {
+                            ViewModel = solveV;
+                        }
 
-                    //}
-                    //////ViewModel = ViewModel ?? new DefaultViewModel();
+                    }
+  
+                    if (ViewModel != null)
+                    {
+                        await ViewModel.OnBindedViewLoad(this);
+                    }
 
-                    await ViewModel.OnBindedViewLoad(this);
                 };
             }
 
@@ -319,7 +326,7 @@ namespace MVVMSidekick
                 loadEvent = (_1, _2) =>
                 {
                     EventRouting.EventRouter.Instance.RaiseEvent(this, e);
-                    //  this.Loaded -= loadEvent;
+                    this.Loaded -= loadEvent;
 
                 };
                 this.Loaded += loadEvent;
@@ -459,7 +466,7 @@ namespace MVVMSidekick
             public MVVMControl(IViewModel viewModel)
             {
 
-                Unloaded += (_1, _2) => ViewModel = null;
+                ////////// Unloaded += (_1, _2) => ViewModel = null;
                 Loaded += async (_1, _2) =>
                 {
 
@@ -472,15 +479,15 @@ namespace MVVMSidekick
 
                         }
                     }
-                    //else
-                    //{
-                    //    var solveV = this.GetDefaultViewModel();
-                    //    if (solveV != null)
-                    //    {
-                    //        ViewModel = solveV;
-                    //    }
+                    else
+                    {
+                        var solveV = this.GetDefaultViewModel();
+                        if (solveV != null)
+                        {
+                            ViewModel = solveV;
+                        }
 
-                    //}
+                    }
                     //ViewModel = ViewModel ?? new DefaultViewModel();
 
 
@@ -996,7 +1003,7 @@ namespace MVVMSidekick
 
                 Tuple<Uri, Func<IView>> uriData;
                 uriData = item as Tuple<Uri, Func<IView>>;
-                if (uriData!= null) //only sl like page Can be registered as uri
+                if (uriData != null) //only sl like page Can be registered as uri
                 {
                     Frame frame;
                     if ((frame = Target as Frame) != null)
@@ -1013,7 +1020,7 @@ namespace MVVMSidekick
 
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                view.ViewModel = targetViewModel; 
+                SetVMAfterLoad(targetViewModel, view) ;
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 await targetViewModel.WaitForClose();
             }
@@ -1043,7 +1050,9 @@ namespace MVVMSidekick
                 }
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                view.ViewModel = targetViewModel;
+
+                SetVMAfterLoad(targetViewModel, view);
+
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 return await targetViewModel.WaitForCloseWithResult();
             }
@@ -1129,7 +1138,7 @@ namespace MVVMSidekick
 
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                view.ViewModel = targetViewModel;
+                SetVMAfterLoad(targetViewModel, view);
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 var tr = targetViewModel.WaitForClose();
                 return new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel };
@@ -1137,6 +1146,29 @@ namespace MVVMSidekick
 
 #endif
 
+
+            private static void SetVMAfterLoad<TTarget>(TTarget targetViewModel, IView view) where TTarget : class, IViewModel
+            {
+                if (view.ViewType == ViewType.Page)
+                {
+                    var pg = view as MVVMPage;
+                    pg.presetViewModel = targetViewModel; 
+                }
+                else
+                {
+                    view.ViewModel = targetViewModel;
+                }
+
+                //var frview = view as FrameworkElement;
+                //RoutedEventHandler loadEvent = null;
+                //loadEvent = (_1, _2) =>
+                //{
+                //    view.ViewModel = targetViewModel;
+                //    frview.Loaded -= loadEvent;
+                //};
+                //frview.Loaded += loadEvent;
+
+            }
 
 #if NETFX_CORE
 
@@ -1166,7 +1198,7 @@ namespace MVVMSidekick
 
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                view.ViewModel = targetViewModel; 
+                      SetVMAfterLoad(targetViewModel, view); 
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 await targetViewModel.WaitForClose();
 
@@ -1239,7 +1271,7 @@ namespace MVVMSidekick
 
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                view.ViewModel = targetViewModel; 
+                      SetVMAfterLoad(targetViewModel, view); 
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 return await targetViewModel.WaitForCloseWithResult();
             }
@@ -1271,7 +1303,7 @@ namespace MVVMSidekick
                 IView view = item as IView;
 
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                view.ViewModel = targetViewModel; 
+                      SetVMAfterLoad(targetViewModel, view); 
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
 
                 var tr = targetViewModel.WaitForClose();

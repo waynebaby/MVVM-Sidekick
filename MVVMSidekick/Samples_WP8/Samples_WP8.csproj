@@ -110,12 +110,6 @@
     <Compile Include="..\Samples_ViewModels\Tree_Model.cs">
       <Link>ViewModels\Tree_Model.cs</Link>
     </Compile>
-    <Compile Include="..\Samples_ViewModels\ViewNavigation_Child_Model.cs">
-      <Link>ViewModels\ViewNavigation_Child_Model.cs</Link>
-    </Compile>
-    <Compile Include="..\Samples_ViewModels\ViewNavigation_Model.cs">
-      <Link>ViewModels\ViewNavigation_Model.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -199,7 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MVVMSidekick_Wp8">
-      <HintPath>..\packages\MVVM-Sidekick.1.1.8.0\lib\wp8\MVVMSidekick_Wp8.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.8.1\lib\wp8\MVVMSidekick_Wp8.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\WP8\System.Reactive.Core.dll</HintPath>

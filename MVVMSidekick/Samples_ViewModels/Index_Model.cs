@@ -291,6 +291,7 @@ namespace Samples.ViewModels
 
 #endif
 
+#if ! WINDOWS_PHONE_8
 
 
         public CommandModel<ReactiveCommand, String> CommandNavigationSample
@@ -316,7 +317,7 @@ namespace Samples.ViewModels
                 return cmd.CreateCommandModel("NavigationSample");
             };
         #endregion
-
+#endif
 
     }
 

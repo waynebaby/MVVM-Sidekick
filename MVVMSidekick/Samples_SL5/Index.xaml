@@ -25,12 +25,12 @@
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding HelloWorld}" Grid.RowSpan="2" Grid.ColumnSpan="4"  />
 
-        <!--<sdk:Frame  Grid.Row="1" mvvm:StageManager.Beacon="" Grid.ColumnSpan="4" >
+        <sdk:Frame  Grid.Row="1" mvvm:StageManager.Beacon="" Grid.ColumnSpan="4"  JournalOwnership="OwnsJournal" >
             <ProgressBar Minimum="0" Maximum="5" Value="{Binding CountDown}" TextOptions.TextFormattingMode="Display"  />
-        </sdk:Frame>-->
-        <ContentControl  Grid.Row="1" mvvm:StageManager.Beacon="" Grid.ColumnSpan="4" >
+        </sdk:Frame>
+        <!--<ContentControl  Grid.Row="1" mvvm:StageManager.Beacon="" Grid.ColumnSpan="4" >
             <ProgressBar Minimum="0" Maximum="5" Value="{Binding CountDown}" TextOptions.TextFormattingMode="Display"  />
-        </ContentControl>
+        </ContentControl>-->
         <StackPanel Grid.ColumnSpan="3" Grid.Column="1"  Orientation="Horizontal">
             <Button Content="{Binding CommandStartCalculator.Resource}" Command="{Binding CommandStartCalculator}"  />
             <Button Content="{Binding CommandStartTree}" Command="{Binding CommandStartTree}"  />
