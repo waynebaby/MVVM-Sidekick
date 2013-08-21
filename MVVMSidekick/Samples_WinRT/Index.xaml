@@ -10,7 +10,8 @@
     xmlns:cmd="using:MVVMSidekick.Commands.EventBinding"
     mc:Ignorable="d" xmlns:vm="using:Samples.ViewModels" >
     <common:LayoutAwarePage.Resources >
-        <vm:Index_Model x:Key="DesignVM" />
+        <local:AppBarDataContextValueConverter x:Key="AppBarDataContextValueConverter"/>
+        <vm:Index_Model x:Key="DesignVM"  />
 
     </common:LayoutAwarePage.Resources>
     <Grid x:Name="LayoutRoot" DataContext="{StaticResource DesignVM}"    >
@@ -28,16 +29,19 @@
             <TextBlock Text="{Binding HelloWorld}" FontSize="40" />
         </StackPanel>
 
-      
+
         <ProgressBar Minimum="0" Maximum="5" Grid.ColumnSpan="2" Margin="175,178,112,330" Grid.Row="1" Height="199" Value="{Binding CountDown}" />
-        <AppBar>
-            <StackPanel Orientation="Horizontal" >
+        <mvvm:PropertyBridge   Source="{Binding Mode=OneWay}" Target="{Binding DataContext, ElementName=stackPanel, Mode=TwoWay}" ></mvvm:PropertyBridge>
+    </Grid>
+    <Page.TopAppBar >
+        <AppBar   DataContext="{Binding DataContext, ElementName=LayoutRoot}">
+            <StackPanel x:Name="stackPanel" Orientation="Horizontal" >
                 <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" />
                 <Button Content="{Binding CommandListTest.Resource}" Grid.Column="1" Command="{Binding CommandListTest}" Margin="10" />
-                <Button Content="{Binding CommandShowGroupView.Resource}" Grid.Column="1" Command="{Binding CommandShowGroupView}" Margin="10" />
+                <Button Content="{Binding  CommandShowGroupView}" Grid.Column="1" Command="{Binding CommandShowGroupView}" Margin="10" />
                 <Button Content="{Binding CommandCommandBinding.Resource}" Grid.Column="1" Command="{Binding CommandCommandBinding}" Margin="10" />
                 <Button Content="{Binding CommandNavigationSample.Resource}" Grid.Column="1" Command="{Binding CommandNavigationSample}" Margin="10" />
-                  </StackPanel></AppBar> 
-
-    </Grid>
+            </StackPanel>
+        </AppBar>
+    </Page.TopAppBar>
 </common:LayoutAwarePage>

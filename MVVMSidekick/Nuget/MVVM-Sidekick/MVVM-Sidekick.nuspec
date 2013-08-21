@@ -9,9 +9,9 @@
     <projectUrl>https://github.com/waynebaby/MVVM-Sidekick</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-      MVVM-Sidekick
+      MVVM-Sidekick https://github.com/waynebaby/MVVM-Sidekick/
       =============
-      MVVM密友
+      MVVM密友 https://github.com/waynebaby/MVVM-Sidekick/
       ===================
 
 
@@ -19,75 +19,22 @@
 
       轻量级MVVM框架,基于RX与 await等新技术
 
+      8/20/2013 1.1.8.3: Add PropertyBridge to handle WinRT [Top|Bottom]AppBar Property no-datacontext-issue. see Sample "Index.xaml"
 
-  </description>
+
+    </description>
     <summary>
-
+      https://github.com/waynebaby/MVVM-Sidekick/
+      
       The aim of this project: Using new techs offered by .Net 4.5 and Windows Runtime, design a suitable foundation for new tech environment, based on a cool ViewModelBase and ReactiveCommand.
 
       目的是集合Reactive Command, Prism 等框架的优点，应对.Net 4.5 和 Windows Runtime带来的变化，为新技术环境量身打造一套以ViewModelBase/ReactiveCommand为核心的基础。
 
 
 
-      What make difference?
-      ============
-      > 功能特色
-      > =======
-
-      - Full support for Data Contract Serializing. You can easily save your status of View Model to JSON or XML stream, and easily restore from, too.
-      >全面支持Data Contract序列化 可以将一个VM的全部状态用任何方式保存为JSON/XML,反序列化后只需要简单操作就可以恢复工作
-
-
-      - This is light-weight framework. You can use our dll or use code file, either way you just need to install Reactive Extensions with Nuget.
-      >轻量级框架，不必安装全部DLL或者引用工程，只需要将指定代码文件加入你的工程切安装Reactive Extensions就可以用。
-
-
-      - Each of Model Properties in MVVM-Sidekick has it's own event container, can subscribe or broadcast it self. LinQ-Like code with RX can be used.
-      >Model所有的成员都有自己的事件容器，可以独立与其他事件订阅与广播。可以使用 LinQ-Like 语法进行配置和订阅。
-
-
-
-      - You can configure business logic of your properties and commands where they were declared. This will avoid your jumping between different parts in one View Model code file. (This kills me when I was working with other frameworks: for example you cannot configure a `DelayCommand` at the ***Property/Field declaration*** because “***this***” instance is not ready yet .)
-      >您可以在声明property的代码处配置property的业务细节，可以在声明command的代码处配置command的业务细节,这样你就不用在一个VM里面不同的代码段跳来跳去了。（用别的框架可累死我了，声明个command 还不能在声明原地初始化，因为this还没有实例化）
-
-
-
-      - You can also separate the business logic to your View Model declaration into a decorator factory or something else, to manage ***all code involved one same USE CASE together***, with the sequence same as document you a following. You can also easily add more business logic anywhere you like.
-      >您也可以将VM的业务细节配置与VM的创建时机分离，不但可以在实体外用装饰模式进行批量配置(这样可以让代码与需求文档的组织顺序高度统一，便于维护)，也可以根据需要临时装饰增加VM的功能。
-
-
-
-
-      ----------
-
-      Samples
-      ===========
-
-      >示例
-      >===========
-
-
-
-      -In Nuget folder
-
-      `\src\Samples.zip`
-
-      ----------
-
-      How To Use project template ?
-      ===================
-      如何使用MVVMSidekick项目模板？
-      ===================
-
-      See document: Hello world
-
-      >详情见文档  跟班问世篇
-
-
-
     </summary>
-    <releaseNotes>     
-      
+    <releaseNotes>
+
       [微博] [twitter] [Mail]
       [微博]: http://www.weibo.com/waynebabywang "WaynebabyWang"
       [twitter]: http://twitter.com/waynebaby "Waynebaby"

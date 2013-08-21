@@ -171,13 +171,13 @@ namespace MVVMSidekick
 
             public MVVMWindow(IViewModel viewModel)
             {
-               ////////// Unloaded += (_1, _2) => ViewModel = null;
+                ////////// Unloaded += (_1, _2) => ViewModel = null;
                 Loaded += async (_1, _2) =>
                 {
-                   
+
                     if (viewModel != null)
                     {
-                     //   this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
+                        //   this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
                         if (!object.ReferenceEquals(ViewModel, viewModel))
                         {
                             ViewModel = viewModel;
@@ -186,7 +186,7 @@ namespace MVVMSidekick
                     else
                     {
                         var solveV = this.GetDefaultViewModel();
-                        if (solveV!=null)
+                        if (solveV != null)
                         {
                             ViewModel = solveV;
                         }
@@ -267,20 +267,42 @@ namespace MVVMSidekick
 
             }
 
+#if WPF
 
+
+            public Frame Frame
+            {
+                get { return (Frame)GetValue(FrameProperty); }
+                set { SetValue(FrameProperty, value); }
+            }
+
+            // Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
+            public static readonly DependencyProperty FrameProperty =
+                DependencyProperty.Register("Frame", typeof(Frame), typeof(MVVMPage), new PropertyMetadata(null));
+
+
+            DependencyObject IView.Parent
+            {
+                get
+                {
+                    return Frame;
+
+                }
+            }
+#endif
             internal IViewModel presetViewModel;
 
             public MVVMPage(IViewModel viewModel)
             {
                 presetViewModel = viewModel;
-  
+
                 Loaded += async (_1, _2) =>
                 {
 
 
                     if (presetViewModel != null)
                     {
-                      
+
                         if (!object.ReferenceEquals(ViewModel, presetViewModel))
                         {
                             ViewModel = presetViewModel;
@@ -295,7 +317,7 @@ namespace MVVMSidekick
                         }
 
                     }
-  
+
                     if (ViewModel != null)
                     {
                         await ViewModel.OnBindedViewLoad(this);
@@ -433,6 +455,7 @@ namespace MVVMSidekick
                 if (ViewModel != null)
                 {
                     ViewModel.SaveState(pageState);
+
                 }
             }
 #endif
@@ -628,32 +651,37 @@ namespace MVVMSidekick
             }
 
             public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, TView instance) where TView : class,IView
-            {                 MapViewToViewModel<TView>();
+            {
+                MapViewToViewModel<TView>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, instance);
                 return this;
             }
 
 
             public ViewModelToViewMapper<TModel> MapToDefault<TView>(bool alwaysNew = true) where TView : class,IView
-            {                 MapViewToViewModel<TView>();
+            {
+                MapViewToViewModel<TView>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
                 return this;
             }
             public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, bool alwaysNew = true) where TView : class,IView
-            {                 MapViewToViewModel<TView>();
+            {
+                MapViewToViewModel<TView>();
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
                 return this;
             }
 
             public ViewModelToViewMapper<TModel> MapToDefault<TView>(Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
-            {                 MapViewToViewModel<TView>();
-            ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel)d), alwaysNew);
+            {
+                MapViewToViewModel<TView>();
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel)d), alwaysNew);
                 return this;
             }
 
             public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
-            {                 MapViewToViewModel<TView>();
-            ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel)d), alwaysNew);
+            {
+                MapViewToViewModel<TView>();
+                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel)d), alwaysNew);
                 return this;
             }
 #else
@@ -870,7 +898,41 @@ namespace MVVMSidekick
 
                 }
             }
+#if WPF
+            public bool IsGoForwardSupported
+            {
+                get
+                {
+                    return Frame != null;
+                }
+            }
 
+            public bool CanGoForward
+            {
+                get
+                {
+                    return IsGoForwardSupported ? Frame.CanGoForward  : false;
+                }
+
+            }
+#else
+            public bool IsGoForwardSupported
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            public bool CanGoForward
+            {
+                get
+                {
+                    return false;
+                }
+
+            }
+#endif
             public bool IsGoBackSupported
             {
                 get
@@ -925,7 +987,13 @@ namespace MVVMSidekick
                 IView view = null;
                 view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                view.ViewModel = targetViewModel;
+                if (view.ViewType == ViewType.Page)
+                {
+                    var mvpg = view as MVVMPage;
+                    mvpg.Frame = Frame;
+                }
+
+                SetVMAfterLoad(targetViewModel, view);
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 await targetViewModel.WaitForClose();
             }
@@ -937,7 +1005,15 @@ namespace MVVMSidekick
                 IView view = null;
                 view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                view.ViewModel = targetViewModel;
+
+                if ( view.ViewType ==  ViewType.Page )
+                {
+                    var mvpg = view as MVVMPage;
+                    mvpg.Frame = Frame;
+                }
+
+                SetVMAfterLoad(targetViewModel, view);
+
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 return await targetViewModel.WaitForCloseWithResult();
             }
@@ -951,7 +1027,13 @@ namespace MVVMSidekick
                 view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
 
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                view.ViewModel = targetViewModel;
+                if (view.ViewType == ViewType.Page)
+                {
+                    var mvpg = view as MVVMPage;
+                    mvpg.Frame = Frame;
+                }
+
+                SetVMAfterLoad(targetViewModel, view);
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
 
 
@@ -1152,7 +1234,7 @@ namespace MVVMSidekick
                 if (view.ViewType == ViewType.Page)
                 {
                     var pg = view as MVVMPage;
-                    pg.presetViewModel = targetViewModel; 
+                    pg.presetViewModel = targetViewModel;
                 }
                 else
                 {
@@ -1198,7 +1280,7 @@ namespace MVVMSidekick
 
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                      SetVMAfterLoad(targetViewModel, view); 
+                SetVMAfterLoad(targetViewModel, view);
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 await targetViewModel.WaitForClose();
 
@@ -1271,7 +1353,7 @@ namespace MVVMSidekick
 
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                      SetVMAfterLoad(targetViewModel, view); 
+                SetVMAfterLoad(targetViewModel, view);
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 return await targetViewModel.WaitForCloseWithResult();
             }
@@ -1303,7 +1385,7 @@ namespace MVVMSidekick
                 IView view = item as IView;
 
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                      SetVMAfterLoad(targetViewModel, view); 
+                SetVMAfterLoad(targetViewModel, view);
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
 
                 var tr = targetViewModel.WaitForClose();
@@ -1584,6 +1666,61 @@ namespace MVVMSidekick
                         return null;
                 }
             }
+        }
+
+
+
+
+        public class PropertyBridge : FrameworkElement
+        {
+            public PropertyBridge()
+            {
+                base.Width = 0;
+                base.Height = 0;
+                base.Visibility = Visibility.Collapsed;
+
+            }
+
+
+
+
+            public object Source
+            {
+                private get { return (object)GetValue(SourceProperty); }
+                set { SetValue(SourceProperty, value); }
+            }
+
+            // Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
+            public static readonly DependencyProperty SourceProperty =
+                DependencyProperty.Register("Source", typeof(object), typeof(PropertyBridge), new PropertyMetadata(null,
+
+                    (o, a) =>
+                    {
+                        var pb = o as PropertyBridge;
+                        if (pb!=null)
+                        {
+                            pb.Target = a.NewValue;
+                        }
+                    }
+                    ));
+
+
+
+
+            public object Target
+            {
+                get { return (object)GetValue(TargetProperty); }
+                set { SetValue(TargetProperty, value); }
+            }
+
+            // Using a DependencyProperty as the backing store for Target.  This enables animation, styling, binding, etc...
+            public static readonly DependencyProperty TargetProperty =
+                DependencyProperty.Register("Target", typeof(object), typeof(PropertyBridge), new PropertyMetadata(null));
+
+
+
+
+
         }
 
 

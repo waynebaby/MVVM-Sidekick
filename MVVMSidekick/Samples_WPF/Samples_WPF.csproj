@@ -14,8 +14,8 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,7 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MVVMSidekick">
-      <HintPath>..\packages\MVVM-Sidekick.1.1.8.1\lib\net45\MVVMSidekick.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.8.3\lib\net45\MVVMSidekick.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -101,8 +101,16 @@
     </Compile>
     <Compile Include="StartUps\CommandBindingsSample.cs" />
     <Compile Include="StartUps\ListsAndItemsPattern.cs" />
+    <Compile Include="StartUps\ViewNavigation.cs" />
+    <Compile Include="StartUps\ViewNavigation_Child.cs" />
     <Compile Include="Tree.xaml.cs">
       <DependentUpon>Tree.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewNavigation.xaml.cs">
+      <DependentUpon>ViewNavigation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewNavigation_Child.xaml.cs">
+      <DependentUpon>ViewNavigation_Child.xaml</DependentUpon>
     </Compile>
     <Page Include="Calculator.xaml">
       <SubType>Designer</SubType>
@@ -141,6 +149,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Tree.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewNavigation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewNavigation_Child.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
