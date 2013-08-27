@@ -86,6 +86,11 @@ namespace MVVMSidekick
                 = (o, e) =>
                 {
                     dynamic item = o;
+                    var fele = ((o as IView).Content as FrameworkElement);
+                    if (object.ReferenceEquals (fele.DataContext ,e.NewValue ))
+                    {
+                        return;
+                    }
                     ((o as IView).Content as FrameworkElement).DataContext = e.NewValue;
                     var nv = e.NewValue as IViewModel;
                     var ov = e.OldValue as IViewModel;
@@ -398,7 +403,7 @@ namespace MVVMSidekick
 
                         rval = c.DataContext as IViewModel;
                         SetValue(ViewModelProperty, rval);
-
+                        
                     }
                     else
                     {

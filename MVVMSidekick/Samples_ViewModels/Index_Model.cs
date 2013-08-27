@@ -319,6 +319,11 @@ namespace Samples.ViewModels
         #endregion
 #endif
 
+        protected override Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
+        {
+            return base.OnBindedToView(view, oldValue);
+        }
+
     }
 
 
