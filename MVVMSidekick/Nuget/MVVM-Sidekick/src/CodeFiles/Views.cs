@@ -266,11 +266,15 @@ namespace MVVMSidekick
 #endif
         {
 
+
+
             public MVVMPage()
                 : this(null)
             {
 
             }
+
+
 
 #if WPF
 
@@ -302,19 +306,7 @@ namespace MVVMSidekick
                 presetViewModel = viewModel;
 
 
-                Loaded += (_1, _2) =>
-                {
 
-                    if (presetViewModel != null)
-                    {
-
-                        if (!object.ReferenceEquals(ViewModel, presetViewModel))
-                        {
-                            ViewModel = presetViewModel;
-                        }
-                    }
-
-                };
             }
 
 
@@ -329,6 +321,8 @@ namespace MVVMSidekick
 
             }
 
+            bool IsLoaded = false;
+
             //WPF navigates page instances but other navgates with parameters
             protected override void OnNavigatedTo(NavigationEventArgs e)
             {
@@ -341,12 +335,31 @@ namespace MVVMSidekick
                     EventRouting.EventRouter.Instance.RaiseEvent(this, e);
 
 
+                    if (presetViewModel != null)
+                    {
+
+                        if (!object.ReferenceEquals(ViewModel, presetViewModel))
+                        {
+                            ViewModel = presetViewModel;
+                        }
+                    }
+                    else
+                    {
+                        var solveV = this.GetDefaultViewModel();
+                        if (solveV != null)
+                        {
+                            ViewModel = solveV;
+                        }
+
+                    
+                    }
+
                     if (ViewModel != null)
                     {
                         await ViewModel.OnBindedViewLoad(this);
                     }
 
-
+                    IsLoaded = true;
                     this.Loaded -= loadEvent;
 
 
@@ -424,7 +437,17 @@ namespace MVVMSidekick
 
             // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
+                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null, 
+                    (o,e)=>
+                        {
+                            var p=o as MVVMPage ;
+                            if ( p.IsLoaded)
+                            {
+                                ViewHelper.ViewModelChangedCallback(o, e);
+                            }
+                        }
+                    
+                    ));
 
 
 #if NETFX_CORE
@@ -1291,7 +1314,7 @@ namespace MVVMSidekick
 
             private static async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Type type, Windows.UI.Xaml.Controls.Frame frame) where TTarget : class, IViewModel
             {
-                var parameter = new StageNavigationContext<TTarget>();
+                var parameter = new StageNavigationContext<TTarget>() { ViewModel = targetViewModel };
                 var task = new Task(() => { });
                 var dip = EventRouting.EventRouter.Instance
                      .GetEventObject<NavigationEventArgs>()
@@ -1307,10 +1330,24 @@ namespace MVVMSidekick
                          {
                              targetViewModel = parameter.ViewModel;
                          }
+                         else
+                         {
+                             var solveV = page.GetDefaultViewModel();
+                             if (solveV != null)
+                             {
+                                 targetViewModel = parameter.ViewModel = (TTarget)solveV;
+                             }
+                         }
 
-                         if (targetViewModel != null) page.ViewModel = targetViewModel;
+                         if (targetViewModel == null)
+                         {
+                             targetViewModel = (TTarget)page.ViewModel;
+                         }
+    
 
-                         targetViewModel = (TTarget)page.ViewModel;
+                         page.presetViewModel = targetViewModel;
+
+               
 
                          parameter.ViewModel = targetViewModel;
 

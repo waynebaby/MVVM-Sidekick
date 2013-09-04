@@ -43,7 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MVVMSidekick">
-      <HintPath>..\packages\MVVM-Sidekick.1.1.8.6\lib\net45\MVVMSidekick.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.8.7\lib\net45\MVVMSidekick.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

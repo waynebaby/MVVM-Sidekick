@@ -465,8 +465,11 @@ namespace MVVMSidekick
             /// <returns></returns>
             public static T DisposeWith<T>(this T item, IBindable vm, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
             {
+
                 vm.AddDisposable(item, comment, caller, file, line);
                 return item;
+
+
             }
 
             public static ValueContainer<T> Initialize<T>(this BindableBase model, string propertyName, ref Property<T> reference, ref Func<BindableBase, ValueContainer<T>> locator, Func<T> defaultValueFactory = null)

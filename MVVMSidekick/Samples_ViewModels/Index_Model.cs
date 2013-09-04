@@ -207,7 +207,7 @@ namespace Samples.ViewModels
                   {
                       using (var targetvm = new GroupViewSample_Model())
                       {
-                          targetvm.InitData(CollectionViewType.Grouped);
+                          targetvm.InitData(CollectionViewType.Loading);
                           await vm.StageManager.DefaultStage.Show<GroupViewSample_Model>(targetvm);
 
                       }
