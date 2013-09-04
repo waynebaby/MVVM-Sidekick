@@ -87,7 +87,7 @@ namespace MVVMSidekick
                 {
                     dynamic item = o;
                     var fele = ((o as IView).Content as FrameworkElement);
-                    if (object.ReferenceEquals (fele.DataContext ,e.NewValue ))
+                    if (object.ReferenceEquals(fele.DataContext, e.NewValue))
                     {
                         return;
                     }
@@ -301,9 +301,9 @@ namespace MVVMSidekick
             {
                 presetViewModel = viewModel;
 
-                Loaded += async (_1, _2) =>
-                {
 
+                Loaded += (_1, _2) =>
+                {
 
                     if (presetViewModel != null)
                     {
@@ -312,20 +312,6 @@ namespace MVVMSidekick
                         {
                             ViewModel = presetViewModel;
                         }
-                    }
-                    else
-                    {
-                        var solveV = this.GetDefaultViewModel();
-                        if (solveV != null)
-                        {
-                            ViewModel = solveV;
-                        }
-
-                    }
-
-                    if (ViewModel != null)
-                    {
-                        await ViewModel.OnBindedViewLoad(this);
                     }
 
                 };
@@ -350,10 +336,20 @@ namespace MVVMSidekick
                 base.OnNavigatedTo(e);
                 RoutedEventHandler loadEvent = null;
 
-                loadEvent = (_1, _2) =>
+                loadEvent = async (_1, _2) =>
                 {
                     EventRouting.EventRouter.Instance.RaiseEvent(this, e);
+
+
+                    if (ViewModel != null)
+                    {
+                        await ViewModel.OnBindedViewLoad(this);
+                    }
+
+
                     this.Loaded -= loadEvent;
+
+
 
                 };
                 this.Loaded += loadEvent;
@@ -377,6 +373,7 @@ namespace MVVMSidekick
 
                     if (ViewModel != null)
                     {
+
                         ViewModel.Dispose();
                     }
 
@@ -403,7 +400,7 @@ namespace MVVMSidekick
 
                         rval = c.DataContext as IViewModel;
                         SetValue(ViewModelProperty, rval);
-                        
+
                     }
                     else
                     {
@@ -1702,7 +1699,7 @@ namespace MVVMSidekick
                     (o, a) =>
                     {
                         var pb = o as PropertyBridge;
-                        if (pb!=null)
+                        if (pb != null)
                         {
                             pb.Target = a.NewValue;
                         }
