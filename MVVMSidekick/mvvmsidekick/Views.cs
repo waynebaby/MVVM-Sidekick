@@ -334,7 +334,7 @@ namespace MVVMSidekick
                 {
                     EventRouting.EventRouter.Instance.RaiseEvent(this, e);
 
-
+                    await MVVMSidekick.Utilities.TaskExHelper.Delay(100);
                     if (presetViewModel != null)
                     {
 
@@ -348,10 +348,11 @@ namespace MVVMSidekick
                         var solveV = this.GetDefaultViewModel();
                         if (solveV != null)
                         {
+                      
                             ViewModel = solveV;
                         }
 
-                    
+
                     }
 
                     if (ViewModel != null)
@@ -437,16 +438,16 @@ namespace MVVMSidekick
 
             // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null, 
-                    (o,e)=>
+                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,
+                    (o, e) =>
+                    {
+                        var p = o as MVVMPage;
+                        if (p.IsLoaded)
                         {
-                            var p=o as MVVMPage ;
-                            if ( p.IsLoaded)
-                            {
-                                ViewHelper.ViewModelChangedCallback(o, e);
-                            }
+                            ViewHelper.ViewModelChangedCallback(o, e);
                         }
-                    
+                    }
+
                     ));
 
 
@@ -1343,11 +1344,11 @@ namespace MVVMSidekick
                          {
                              targetViewModel = (TTarget)page.ViewModel;
                          }
-    
+
 
                          page.presetViewModel = targetViewModel;
 
-               
+
 
                          parameter.ViewModel = targetViewModel;
 

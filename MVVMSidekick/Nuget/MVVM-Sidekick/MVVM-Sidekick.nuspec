@@ -18,9 +18,9 @@
       A Modern light-weight MVVM framework based on RX and TPL await
 
       轻量级MVVM框架,基于RX与 await等新技术
-      
-      8/28/2013 1.1.8.4: Fixed Default View Model would execute OnBindedToView. This is just for newly set View Model instances.
-      8/20/2013 1.1.8.3: Add PropertyBridge to handle WinRT [Top|Bottom]AppBar Property no-datacontext-issue. see Sample "Index.xaml"
+      09/05/2013 1.1.8.8: Enhanced "Navigate Back" behavior VM replacement logic, make the VM property change 100ms delay after load.
+      08/28/2013 1.1.8.4: Fixed Default View Model would execute OnBindedToView. This is just for newly set View Model instances.
+      08/20/2013 1.1.8.3: Add PropertyBridge to handle WinRT [Top|Bottom]AppBar Property no-datacontext-issue. see Sample "Index.xaml"
 
 
     </description>
