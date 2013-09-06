@@ -334,7 +334,7 @@ namespace MVVMSidekick
                 {
                     EventRouting.EventRouter.Instance.RaiseEvent(this, e);
 
-                    await MVVMSidekick.Utilities.TaskExHelper.Delay(100);
+                    await MVVMSidekick.Utilities.TaskExHelper.Yield ();
                     if (presetViewModel != null)
                     {
 
