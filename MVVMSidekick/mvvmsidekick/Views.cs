@@ -82,8 +82,22 @@ namespace MVVMSidekick
         public static class ViewHelper
         {
             //public static readonly string DEFAULT_VM_NAME = "DesignVM";
+            internal static RoutedEventHandler ViewUnloadCallBack
+                = async (o, e) =>
+                {
+                    IView v = o as IView;
+                    if (v != null)
+                    {
+                        var m = v.ViewModel as IViewModelLifetime;
+                        if (m != null)
+                        {
+                            await m.OnBindedViewUnload(v);
+                        }
+                    }
+                };
+
             internal static PropertyChangedCallback ViewModelChangedCallback
-                = (o, e) =>
+                =  (o, e) =>
                 {
                     dynamic item = o;
                     var fele = ((o as IView).Content as FrameworkElement);
@@ -96,11 +110,11 @@ namespace MVVMSidekick
                     var ov = e.OldValue as IViewModel;
                     if (ov != null)
                     {
-                        ov.OnUnbindedFromView(o as IView, nv);
+                         ov.OnUnbindedFromView(o as IView, nv);
                     }
                     if (nv != null)
                     {
-                        nv.OnBindedToView(o as IView, ov);
+                         nv.OnBindedToView(o as IView, ov);
                     }
 
                 };
@@ -176,7 +190,7 @@ namespace MVVMSidekick
 
             public MVVMWindow(IViewModel viewModel)
             {
-                ////////// Unloaded += (_1, _2) => ViewModel = null;
+                Unloaded += ViewHelper.ViewUnloadCallBack;
                 Loaded += async (_1, _2) =>
                 {
 
@@ -271,7 +285,7 @@ namespace MVVMSidekick
             public MVVMPage()
                 : this(null)
             {
-
+              
             }
 
 
@@ -304,7 +318,7 @@ namespace MVVMSidekick
             public MVVMPage(IViewModel viewModel)
             {
                 presetViewModel = viewModel;
-
+                Unloaded += ViewHelper.ViewUnloadCallBack;
 
 
             }
@@ -512,7 +526,7 @@ namespace MVVMSidekick
             }
             public MVVMControl(IViewModel viewModel)
             {
-
+                Unloaded += ViewHelper.ViewUnloadCallBack;
                 ////////// Unloaded += (_1, _2) => ViewModel = null;
                 Loaded += async (_1, _2) =>
                 {
@@ -935,7 +949,7 @@ namespace MVVMSidekick
             {
                 get
                 {
-                    return IsGoForwardSupported ? Frame.CanGoForward  : false;
+                    return IsGoForwardSupported ? Frame.CanGoForward : false;
                 }
 
             }
@@ -1030,7 +1044,7 @@ namespace MVVMSidekick
                 view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
 
-                if ( view.ViewType ==  ViewType.Page )
+                if (view.ViewType == ViewType.Page)
                 {
                     var mvpg = view as MVVMPage;
                     mvpg.Frame = Frame;

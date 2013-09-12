@@ -1314,7 +1314,7 @@ namespace MVVMSidekick
             Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue);
             Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue);
             Task OnBindedViewLoad(MVVMSidekick.Views.IView view);
-
+            Task OnBindedViewUnload(MVVMSidekick.Views.IView view);
         }
         public partial interface IViewModel : IBindable, INotifyPropertyChanged, IViewModelLifetime
         {
@@ -1429,6 +1429,10 @@ namespace MVVMSidekick
             {
                 return OnBindedViewLoad(view);
             }
+            Task IViewModelLifetime.OnBindedViewUnload(IView view)
+            {
+                return OnBindedViewUnload(view);
+            }
 
 
 
@@ -1470,6 +1474,10 @@ namespace MVVMSidekick
                 await TaskExHelper.Yield();
             }
 
+            protected virtual async Task OnBindedViewUnload(IView view)
+            {
+                await TaskExHelper.Yield();
+            }
 
 
             public bool IsDisposingWhenUnbind { get; protected set; }
