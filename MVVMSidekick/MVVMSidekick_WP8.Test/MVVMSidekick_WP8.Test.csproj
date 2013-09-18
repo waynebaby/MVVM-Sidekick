@@ -79,6 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>SILVERLIGHT;WINDOWS_PHONE;;WINDOWS_PHONE_8</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\MVVMSidekick.Test\CommandEventBridge.cs">

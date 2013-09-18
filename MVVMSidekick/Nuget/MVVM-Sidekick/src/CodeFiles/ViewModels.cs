@@ -323,9 +323,10 @@ namespace MVVMSidekick
             /// <para>The exception and dispose infomation</para>
             /// <para>需要处理的异常信息</para>
             /// </param>
-            protected virtual void OnDisposeExceptions(IList<DisposeInfo> exceptions)
-            {
 
+            protected virtual  void OnDisposeExceptions(IList<DisposeInfo> exceptions)
+            {
+               
             }
 
             #endregion
@@ -1435,7 +1436,12 @@ namespace MVVMSidekick
             }
 
 
-
+            /// <summary>
+            /// This will be invoked by view when this viewmodel is set to view's ViewModel property. 
+            /// </summary>
+            /// <param name="view">Set target view</param>
+            /// <param name="oldValue">Value before set.</param>
+            /// <returns>Task awaiter</returns>
             protected virtual async Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
             {
                 //#if SILVERLIGHT_5
@@ -1452,11 +1458,11 @@ namespace MVVMSidekick
 
 
             /// <summary>
-            ///  Dispose By Default, override id you don't want.
+            /// This will be invoked by view when this instance of viewmodel in ViewModel property is overwritten.
             /// </summary>
-            /// <param name="view"></param>
-            /// <param name="newValue"></param>
-            /// <returns></returns>
+            /// <param name="view">Overwrite target view.</param>
+            /// <param name="newValue">The value replacing </param>
+            /// <returns>Task awaiter</returns>
             protected virtual async Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue)
             {
                 if (IsDisposingWhenUnbind)
@@ -1466,6 +1472,11 @@ namespace MVVMSidekick
                 await TaskExHelper.Yield();
             }
 
+            /// <summary>
+            /// This will be invoked by view when the view fires Load event and this viewmodel instance is already in view's ViewModel property
+            /// </summary>
+            /// <param name="view">View that firing Load event</param>
+            /// <returns>Task awaiter</returns>
             protected virtual async Task OnBindedViewLoad(IView view)
             {
                 StageManager = new StageManager(this) { CurrentBindingView = view };
@@ -1474,8 +1485,14 @@ namespace MVVMSidekick
                 await TaskExHelper.Yield();
             }
 
+            /// <summary>
+            /// This will be invoked by view when the view fires Unload event and this viewmodel instance is still in view's  ViewModel property
+            /// </summary>
+            /// <param name="view">View that firing Unload event</param>
+            /// <returns>Task awaiter</returns>
             protected virtual async Task OnBindedViewUnload(IView view)
             {
+
                 await TaskExHelper.Yield();
             }
 

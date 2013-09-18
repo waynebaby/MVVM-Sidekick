@@ -15,6 +15,20 @@ namespace Samples.ViewModels
         protected   override Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
         {
 
+            
+            return base.OnBindedToView(view, oldValue);
+
+
+        }
+
+
+        protected override Task OnBindedViewLoad(MVVMSidekick.Views.IView view)
+        {
+            Init();
+            return base.OnBindedViewLoad(view);
+        }
+        private void Init()
+        {
 
             ResetStatus();
             if (IsInDesignMode)
@@ -26,7 +40,7 @@ namespace Samples.ViewModels
 
             }
 
-         
+
             this.GetValueContainer(x => x.CurrentInput)
                 .GetNewValueObservable()
                 .Subscribe
@@ -208,9 +222,6 @@ namespace Samples.ViewModels
                     }
                 )
                 .DisposeWith(this);
-            return base.OnBindedToView(view, oldValue);
-
-
         }
         public Calculator_Model()
         {

@@ -114,7 +114,7 @@ xcopy ..\..\..\Samples_ViewModels Samples_ViewModels  /s  /i /y
 xcopy ..\..\..\Samples_ViewModels.Test Samples_ViewModels.Test  /s  /i /y
 xcopy ..\..\..\Samples.sln   .
 xcopy ..\..\..\.nuget .nuget  /s  /i  /y
-xcopy ..\..\..\packages\Microsoft.Bcl.Build*  packages  /s /i /y
+rem xcopy ..\..\..\packages\Microsoft.Bcl.Build*  packages  /s /i /y
 cd ..
 
 del src\samples.zip
