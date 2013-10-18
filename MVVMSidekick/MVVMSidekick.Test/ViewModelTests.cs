@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MVVMSidekick.ViewModels;
 using System.Collections.ObjectModel;
 using MVVMSidekick.Reactive;
+using System.Threading.Tasks;
 
 namespace MVVMSidekick.Test
 {
@@ -158,17 +159,16 @@ namespace MVVMSidekick.Test
         {
             using (var vm1 = new SomeViewModel())
             {
-                vm1.CommandExecuteWhenNotBusy.ListenToIsUIBusy(vm1, canExecuteWhenBusy : false);
-                vm1.CommandExecuteWithUIBusyOnly.ListenToIsUIBusy(vm1, canExecuteWhenBusy:  true);
-
-                vm1.IsUIBusy = true;
+                vm1.CommandExecuteWhenNotBusy.ListenToIsUIBusy(vm1, canExecuteWhenBusy: false);
+                vm1.CommandExecuteWithUIBusyOnly.ListenToIsUIBusy(vm1, canExecuteWhenBusy: true);
+                var task = new Task(() => { });
+                var taskend=   vm1.ExecuteUIBusyTask(async () => await task);
                 Assert.IsFalse(vm1.CommandExecuteWhenNotBusy.CanExecute(null));
                 Assert.IsTrue(vm1.CommandExecuteWithUIBusyOnly.CanExecute(null));
 
-                vm1.IsUIBusy = false;
-
-     
-                Assert.IsTrue(vm1.CommandExecuteWhenNotBusy.CanExecute(null));
+                task.Start();
+                taskend.Wait();
+                Assert.IsTrue(vm1.CommandExecuteWhenNotBusy.CanExecute(new object()));
                 Assert.IsFalse(vm1.CommandExecuteWithUIBusyOnly.CanExecute(null));
             }
 

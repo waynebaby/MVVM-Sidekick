@@ -181,7 +181,8 @@ namespace MVVMSidekick
 
                 //See Test  CommandListenToUIBusy_Test
                 model.GetValueContainer(x => x.IsUIBusy).GetNewValueObservable()
-                  .Select(e => !(canExecuteWhenBusy ^ e.EventArgs))
+                  .Select(e =>
+                      !(canExecuteWhenBusy ^ e.EventArgs))
                   .Subscribe(command.CommandCore.CanExecuteObserver)
                   .DisposeWith(model);
 

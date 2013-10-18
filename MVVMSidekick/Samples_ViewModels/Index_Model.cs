@@ -46,26 +46,31 @@ namespace Samples.ViewModels
                     );
             }
             // Loading count down. You may want to replace your own logic here.
-            try
-            {
-                IsUIBusy = true;
-                for (Double i = CountDown; i > 0; i = i - 1)
-                {
-                    CountDown = i;
-                    await TaskExHelper.Delay(500);
-                }
-                CountDown = 0;
-                HelloWorld = "Hello Mvvm world!";
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                StateName = "Loaded";
-                IsUIBusy = false;
-            }
+            await ExecuteUIBusyTask(async () =>
+                 {
+                     try
+                     {
+
+                         for (Double i = CountDown; i > 0; i = i - 1)
+                         {
+                             CountDown = i;
+                             await TaskExHelper.Delay(500);
+                         }
+                         CountDown = 0;
+                         HelloWorld = "Hello Mvvm world!";
+                     }
+                     catch (Exception)
+                     {
+                         throw;
+                     }
+                     finally
+                     {
+                         StateName = "Loaded";
+
+                     }
+                 }
+
+                 );
 
 
 
@@ -266,7 +271,7 @@ namespace Samples.ViewModels
                       await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
                   })
                   .DisposeWith(vm);
-                return cmd.CreateCommandModel("CommandBinding");
+                return cmd.CreateCommandModel("CommandBinding").ListenToIsUIBusy(vm);
             };
         #endregion
 #if NETFX_CORE
@@ -311,7 +316,7 @@ namespace Samples.ViewModels
                 cmd.Subscribe(
                   async _ =>
                   {
-                      await vm.StageManager.DefaultStage.Show(new ViewNavigation_Model()  );
+                      await vm.StageManager.DefaultStage.Show(new ViewNavigation_Model());
                   })
                   .DisposeWith(vm);
                 return cmd.CreateCommandModel("NavigationSample");
