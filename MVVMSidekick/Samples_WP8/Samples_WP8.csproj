@@ -159,7 +159,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">

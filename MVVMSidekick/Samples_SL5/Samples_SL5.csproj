@@ -205,6 +205,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Copy of packages.config" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
