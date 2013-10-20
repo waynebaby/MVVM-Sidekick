@@ -123,14 +123,14 @@
     <Content Include="ItemTemplates\Windows Store\MVVMSidekickViewWithVM_81.zip">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="ProjectTemplates\Windows Store\MVVMSidekickBlankApp_PT.zip">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="ProjectTemplates\Windows Store\MVVMSidekickBlankApp_RT_81.zip">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\..\packages\Rx-Xaml.2.1.30214.0\Rx-Xaml.2.1.30214.0.nupkg">
       <Link>Packages\Rx-Xaml.2.1.30214.0.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="ProjectTemplates\Windows Store\MVVMSidekickBlankApp_RT.zip">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
