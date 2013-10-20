@@ -44,7 +44,7 @@ namespace $safeprojectname$
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            //Todo:Init MVVM-Sidekick Navigations Here:
+            //Init MVVM-Sidekick Navigations Here:
             Startups.StartupFunctions.RunAllConfig();
 
             Frame rootFrame = Window.Current.Content as Frame;

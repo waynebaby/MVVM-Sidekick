@@ -2,7 +2,7 @@
   <TemplateData>
     <Name >MVVM-Sidekick Blank Windows Store App 8.0</Name>
     <Description>A Blank App template works with MVVM Sidekick</Description>    
-    <Icon>MVVMSidekickBlankApp_PT.MordenUI.ico</Icon>
+    <Icon>MVVMSidekickBlankApp_RT.ico</Icon>
     <TemplateID>Microsoft.CS.WinRT.MVVMSidekickBlankApp</TemplateID>
     <TemplateGroupID>Windows Store</TemplateGroupID>
     <SortOrder>1</SortOrder>
@@ -40,14 +40,15 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="RichTextColumns.cs">RichTextColumns.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="SuspensionManager.cs">SuspensionManager.cs</ProjectItem>
       </Folder>
-      <Folder Name="Startups" TargetFolderName="Startups">
-        <ProjectItem ReplaceParameters="true" TargetFileName="StartupFunctions.cs">StartupFunctions.cs</ProjectItem>
-      </Folder>
+
       <ProjectItem ReplaceParameters="true" OpenInEditor="true" TargetFileName="MainPage.xaml">MainPage.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml.cs">MainPage.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Package.appxmanifest">Package.appxmanifest</ProjectItem>
       <Folder Name="Properties" TargetFolderName="Properties">
         <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Startups" TargetFolderName="Startups">
+        <ProjectItem ReplaceParameters="true" TargetFileName="StartupFunctions.cs">StartupFunctions.cs</ProjectItem>
       </Folder>
       <Folder Name="ViewModels" TargetFolderName="ViewModels">
         <ProjectItem ReplaceParameters="true" TargetFileName="MainPage_Model.cs">MainPage_Model.cs</ProjectItem>
@@ -68,8 +69,10 @@
       <package id="Rx-Interfaces" version="2.1.30214.0"  />
       <package id="Rx-Linq" version="2.1.30214.0"  />
       <package id="Rx-Main" version="2.1.30214.0"  />
+      <package id="Rx-Xaml" version="2.1.30214.0"  />
       <package id="Rx-PlatformServices" version="2.1.30214.0"  />
-      <package id="MVVM-Sidekick" version="1.1.9.1"/>
+      <package id="MVVM-Sidekick" version="1.1.9.2"/>
+      
     </packages>
   </WizardData>
 </VSTemplate>
