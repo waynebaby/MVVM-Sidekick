@@ -10,7 +10,7 @@
     <Tags>MVVM Win8 XAML WP8 Silverlight5 WPF</Tags>
   </Metadata>
   <Installation AllUsers="true" InstalledByMsi="true"  >
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[11.0,12.0]" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[11.0,13.0]" />
     <InstallationTarget Version="[11.0,13.0]" Id="Microsoft.VisualStudio.Premium" />
     <InstallationTarget Version="[11.0,13.0]" Id="Microsoft.VisualStudio.Ultimate" />
     <InstallationTarget Version="[11.0,13.0]" Id="Microsoft.VisualStudio.VSWinExpress" />
