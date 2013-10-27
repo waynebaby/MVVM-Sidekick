@@ -73,6 +73,8 @@ namespace $rootnamespace$
         /// session. The state will be null the first time a page is visited.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            //Let Viewmodel Handle the Load/Save State Logic
+            base.LoadState(e.NavigationParameter, e.PageState);
         }
 
         /// <summary>
@@ -85,6 +87,8 @@ namespace $rootnamespace$
         /// serializable state.</param>
         private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            //Let Viewmodel Handle the Load/Save State Logic
+            base.SaveState(e.PageState);
         }
 
         #region NavigationHelper registration
