@@ -7,15 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reactive.Linq;
 
+
 namespace Samples.ViewModels
 {
     public class Calculator_Model : ViewModelBase<Calculator_Model, String>
     {
 
-        protected   override Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
+        protected override Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
         {
 
-            
+
             return base.OnBindedToView(view, oldValue);
 
 
@@ -426,9 +427,21 @@ namespace Samples.ViewModels
         static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandClearDefaultValueFactory =
             model =>
             {
+                var text = "CE";
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-                //cmd.Subscribe (_=>{ } ).RegisterDisposeToViewModel(model); //Config it if needed
-                return cmd.CreateCommandModel("CE");
+                cmd
+                    .DoExecuteUIBusyTask(
+                        model as IViewModel,
+                        async e =>
+                        {
+                            //Todo: Add command logic here.
+                            return await MVVMSidekick.Utilities.TaskExHelper.FromResult(e);
+                        }
+                    )
+                    .DoNotifyDefaultEventRouter(model, text)
+                    .Subscribe()
+                    .DisposeWith(model);
+                return cmd.CreateCommandModel(text);
             };
         #endregion
 
@@ -555,7 +568,7 @@ namespace Samples.ViewModels
 
 
 
-    
+
     //[DataContract(IsReference=true) ] //if you want
     public class SomeBindable : BindableBase<SomeBindable>
     {
@@ -574,9 +587,9 @@ namespace Samples.ViewModels
 
 
     }
-     
-        
-        
-        
+
+
+
+
 
 }

@@ -63,6 +63,76 @@ namespace MVVMSidekick
 {
     namespace Utilities
     {
+        /// <summary>
+        /// 代码调用上下文
+        ///  Calling code-context
+        /// </summary>
+        public struct CallingCodeContext
+        {
+
+            /// <summary>
+            /// 创建一个当前调用上下文数据
+            /// </summary>
+            /// <param name="comment">注释</param>
+            /// <param name="caller">调用者</param>
+            /// <param name="file">文件</param>
+            /// <param name="line">行数</param>
+            public CallingCodeContext(bool autoFillProperties, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
+                : this()
+            {
+                if (autoFillProperties)
+                {
+                    Caller = caller;
+                    Comment = comment;
+                    File = file;
+                    Line = line;
+                }
+
+            }
+
+
+
+            /// <summary>
+            /// 创建一个当前调用上下文数据
+            /// </summary>
+            /// <param name="comment">注释</param>
+            /// <param name="caller">调用者</param>
+            /// <param name="file">文件</param>
+            /// <param name="line">行数</param>
+            /// <returns>数据</returns>
+            public static CallingCodeContext Create(string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
+            {
+                return new CallingCodeContext
+                    (true, comment, caller, file, line);
+            }
+
+            /// <summary>
+            ///  <para>Comment of this Calling .</para>
+            ///  <para>对此次Calling 的附加说明</para>
+            /// </summary>
+            public string Comment { get; private set; }
+            /// <summary>
+            ///  <para>Caller Member Name of this Calling  registeration.</para>
+            ///  <para>此次Calling 注册的来源</para>
+            /// </summary>
+            public string Caller { get; private set; }
+            /// <summary>
+            ///  <para>Code file path of this Calling  registeration.</para>
+            ///  <para>注册此次Calling 注册的代码文件</para>
+            /// </summary>
+            public string File { get; private set; }
+            /// <summary>
+            ///  <para>Code line number of this Calling  registeration.</para>
+            ///  <para>注册此次Calling 注册的代码行</para>
+            /// </summary>
+            public int Line { get; private set; }
+
+        }
+
+
+
+
+
         public class Disposable : IDisposable
         {
 
@@ -212,12 +282,12 @@ namespace MVVMSidekick
                             .Select(
                                 et => System.Linq.Expressions.Expression.Parameter(et))
                         .ToArray();
-                var en = System.Linq.Expressions.Expression.Constant (eventName, typeof(string));
+                var en = System.Linq.Expressions.Expression.Constant(eventName, typeof(string));
                 var eht = System.Linq.Expressions.Expression.Constant(delegateType, typeof(Type));
-               
 
-                var expInvoke = System.Linq.Expressions.Expression.Invoke(bind,pars[0],pars [1], en,eht);
-                var lambda = System.Linq.Expressions.Expression.Lambda(delegateType, expInvoke,pars );
+
+                var expInvoke = System.Linq.Expressions.Expression.Invoke(bind, pars[0], pars[1], en, eht);
+                var lambda = System.Linq.Expressions.Expression.Lambda(delegateType, expInvoke, pars);
                 var compiled = lambda.Compile();
                 return compiled;
             }

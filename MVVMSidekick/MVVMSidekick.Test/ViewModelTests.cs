@@ -162,7 +162,7 @@ namespace MVVMSidekick.Test
                 vm1.CommandExecuteWhenNotBusy.ListenToIsUIBusy(vm1, canExecuteWhenBusy: false);
                 vm1.CommandExecuteWithUIBusyOnly.ListenToIsUIBusy(vm1, canExecuteWhenBusy: true);
                 var task = new Task(() => { });
-                var taskend=   vm1.ExecuteUIBusyTask(async () => await task);
+                var taskend=   vm1.ExecuteTask (async _ => await task,(object)null);
                 Assert.IsFalse(vm1.CommandExecuteWhenNotBusy.CanExecute(null));
                 Assert.IsTrue(vm1.CommandExecuteWithUIBusyOnly.CanExecute(null));
 

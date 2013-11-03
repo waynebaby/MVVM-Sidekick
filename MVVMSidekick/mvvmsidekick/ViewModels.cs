@@ -182,26 +182,10 @@ namespace MVVMSidekick
             public struct DisposeInfo
             {
                 /// <summary>
-                ///  <para>Comment of this dispose.</para>
-                ///  <para>对此次Dispose的附加说明</para>
+                ///  <para>Code Context in this dispose action execution register .</para>
+                ///  <para>执行代码上下文</para> 
                 /// </summary>
-                public string Comment { get; set; }
-                /// <summary>
-                ///  <para>Caller Member Name of this dispose registeration.</para>
-                ///  <para>此次Dispose注册的来源</para>
-                /// </summary>
-                public string Caller { get; set; }
-                /// <summary>
-                ///  <para>Code file path of this dispose registeration.</para>
-                ///  <para>注册此次Dispose注册的代码文件</para>
-                /// </summary>
-                public string File { get; set; }
-                /// <summary>
-                ///  <para>Code line number of this dispose registeration.</para>
-                ///  <para>注册此次Dispose注册的代码行</para>
-                /// </summary>
-                public int Line { get; set; }
-
+                public CallingCodeContext CallingCodeContext { get; set; }
 
                 /// <summary>
                 ///  <para>Exception thrown in this dispose action execution .</para>
@@ -243,10 +227,7 @@ namespace MVVMSidekick
 
                 var di = new DisposeInfo
                 {
-                    Caller = caller,
-                    Comment = comment,
-                    File = file,
-                    Line = line,
+                    CallingCodeContext = CallingCodeContext.Create(comment, caller, file, line),
                     Action = newAction
 
                 };
@@ -1325,7 +1306,16 @@ namespace MVVMSidekick
             bool HaveReturnValue { get; }
             void Close();
             MVVMSidekick.Views.StageManager StageManager { get; set; }
-            Task ExecuteUIBusyTask(Func<Task> taskBody);
+            //Task<Tout> ExecuteUIBusyTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext);
+            Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true, TaskScheduler scheduler = null);
+
+            //Task ExecuteUIBusyTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext);
+            Task ExecuteTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true, TaskScheduler scheduler = null);
+
+            //IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence,IViewModel , Func<Tin, Task<Tout>> taskBody);
+            //IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence, Func<Tin,Task<Tout>> taskBody, TaskScheduler scheduler);
+
+
 
 #if NETFX_CORE
             void LoadState(Object navigationParameter, Dictionary<String, Object> pageState);
@@ -1404,8 +1394,6 @@ namespace MVVMSidekick
             #endregion
 
 
-
-
         }
 
 
@@ -1420,10 +1408,10 @@ namespace MVVMSidekick
             {
                 GetValueContainer(x => x.UIBusyTaskCount)
                     .GetNewValueObservable()
-                    .Select(e => 
+                    .Select(e =>
                         e.EventArgs != 0)
                     .DistinctUntilChanged()
-                    .Subscribe(isBusy => 
+                    .Subscribe(isBusy =>
                         IsUIBusy = isBusy)
                     .DisposeWith(this);
             }
@@ -1558,7 +1546,7 @@ namespace MVVMSidekick
             /// <summary>
             /// 本UI是否处于忙状态
             /// </summary>
-            
+
             public bool IsUIBusy
             {
                 get { return _IsUIBusyLocator(this).Value; }
@@ -1614,32 +1602,83 @@ namespace MVVMSidekick
 
 
 
+            //protected virtual async Task<Tout> OnExecuteUIBusyTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext)
+            //{
+            //    try
+            //    {
+            //        UIBusyTaskCount++;
+            //        return await taskBody(inputContext);
+            //    }
+            //    catch (Exception)
+            //    {
+            //        throw;
+            //    }
 
-            /// <summary>
-            /// Execute a task body make sure UI is busy when the task is executing
-            /// </summary>
-            /// <param name="taskBody">async body of the task, or a task factory</param>
-            /// <remarks>this method is for ui thread or dispcher, make sure you joined right thread context before you use</remarks>
-            /// <returns>async awaiter</returns>
-            public async Task ExecuteUIBusyTask(Func<Task> taskBody)
+            //    finally
+            //    {
+            //        UIBusyTaskCount--;
+            //    }
+            //}
+            public virtual async Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true, TaskScheduler scheduler = null)
             {
-                try
+                var t = new Task<Task<Tout>>(
+                     () => taskBody(inputContext));
+
+
+
+                using (new Disposable(() => UIBusyTaskCount--))
                 {
                     UIBusyTaskCount++;
-                    await taskBody();
-                }
-                catch (Exception)
-                {
-                    throw;
+
+                    if (scheduler == null)
+                    {
+                        t.Start();
+                    }
+                    else
+                    {
+                        t.Start(scheduler);
+                    }
+                    return await await t;
                 }
 
-                finally
+            }
+            //protected virtual async Task OnExecuteUIBusyTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext)
+            //{
+            //    try
+            //    {
+            //        UIBusyTaskCount++;
+            //        await taskBody(inputContext);
+            //    }
+            //    catch (Exception)
+            //    {
+            //        throw;
+            //    }
+
+            //    finally
+            //    {
+            //        UIBusyTaskCount--;
+            //    }
+            //}
+            public virtual async Task ExecuteTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true, TaskScheduler scheduler = null)
+            {
+                var t = new Task<Task>(
+                     () =>
+                            taskBody(inputContext));
+
+                using (new Disposable(() => UIBusyTaskCount--))
                 {
-                    UIBusyTaskCount--;
+                    UIBusyTaskCount++;
+                    if (scheduler == null)
+                    {
+                        t.Start();
+                    }
+                    else
+                    {
+                        t.Start(scheduler);
+                    }
+                    await await t;
                 }
             }
-
-
         }
 
 

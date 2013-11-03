@@ -94,10 +94,9 @@ namespace MVVMSidekick
             /// <param name="eventArgs">事件数据</param>
             /// <param name="callerMemberName">发送事件名</param>
             public virtual void RaiseEvent<TEventArgs>(object sender, TEventArgs eventArgs, string callerMemberName = "")
-#if !NETFX_CORE
- where TEventArgs : EventArgs
-#endif
-          
+            //#if !NETFX_CORE
+            //// where TEventArgs : EventArgs
+            //#endif
             {
                 var eventObject = GetIEventObjectInstance(typeof(TEventArgs));
                 eventObject.RaiseEvent(sender, callerMemberName, eventArgs);
@@ -116,7 +115,7 @@ namespace MVVMSidekick
             /// <returns>事件独立类</returns>
             public virtual EventObject<TEventArgs> GetEventObject<TEventArgs>()
 #if !NETFX_CORE
- where TEventArgs : EventArgs
+// where TEventArgs : EventArgs
 #endif
             {
                 var eventObject = (EventObject<TEventArgs>)GetIEventObjectInstance(typeof(TEventArgs));
@@ -129,20 +128,20 @@ namespace MVVMSidekick
             /// 事件来源的代理对象实例
             /// </summary>
 
-            static protected readonly ConcurrentDictionary<Type, IEventObject> EventObjects
-     = new ConcurrentDictionary<Type, IEventObject>();
+            static protected readonly ConcurrentDictionary<Type, IEventObject<object>> EventObjects
+     = new ConcurrentDictionary<Type, IEventObject<Object>>();
             /// <summary>
             /// 创建事件代理对象
             /// </summary>
             /// <param name="argsType">事件数据类型</param>
             /// <returns>代理对象实例</returns>
-            static protected IEventObject GetIEventObjectInstance(Type argsType)
+            static protected IEventObject<object> GetIEventObjectInstance(Type argsType)
             {
 
                 var rval = EventObjects.GetOrAdd(
                     argsType,
                     t =>
-                        Activator.CreateInstance(typeof(EventObject<>).MakeGenericType(t)) as IEventObject
+                        Activator.CreateInstance(typeof(EventObject<>).MakeGenericType(t)) as IEventObject<object>
                     );
 
                 if (rval.BaseArgsTypeInstance == null)
@@ -167,10 +166,10 @@ namespace MVVMSidekick
             /// <summary>
             /// 事件对象接口
             /// </summary>
-            protected interface IEventObject
+            protected interface IEventObject<in TEventArgs>
             {
-                IEventObject BaseArgsTypeInstance { get; set; }
-                void RaiseEvent(object sender, string eventName, object args);
+                IEventObject<object> BaseArgsTypeInstance { get; set; }
+                void RaiseEvent(object sender, string eventName, TEventArgs args);
             }
 
 
@@ -180,41 +179,70 @@ namespace MVVMSidekick
             ///事件对象
             /// </summary>
             /// <typeparam name="TEventArgs"></typeparam>
-            public class EventObject<TEventArgs> : IEventObject
+            public class EventObject<TEventArgs> : IEventObject<TEventArgs>, IObservable<RouterEventData<TEventArgs>>, IDisposable
 #if !NETFX_CORE
- where TEventArgs : EventArgs
+// where TEventArgs : EventArgs
 #endif
 
             {
-                public EventObject()
-                {
-                }
 
 
-                IEventObject IEventObject.BaseArgsTypeInstance
+                private Subject<RouterEventData<TEventArgs>> _core = new Subject<RouterEventData<TEventArgs>>();
+
+
+
+                IEventObject<object> IEventObject<TEventArgs>.BaseArgsTypeInstance
                 {
                     get;
                     set;
                 }
 
-                void IEventObject.RaiseEvent(object sender, string eventName, object args)
+                void IEventObject<TEventArgs>.RaiseEvent(object sender, string eventName, TEventArgs args)
                 {
                     RaiseEvent(sender, eventName, args);
                 }
 
-                public void RaiseEvent(object sender, string eventName, object args)
+                /// <summary>
+                /// 发起事件
+                /// </summary>
+                /// <param name="sender">发送者</param>
+                /// <param name="eventName">事件名</param>
+                /// <param name="args">参数</param>
+                public void RaiseEvent(object sender, string eventName, TEventArgs args)
                 {
 
 
                     var a = args;
-                    if (a != null && Event != null)
+                    if (a != null)
                     {
-                        Event(sender, new RouterEventData<TEventArgs>(sender, eventName, (TEventArgs)args));
+                        //   Event(sender, new DataEventArgs<RouterEventData<TEventArgs>>(new RouterEventData<TEventArgs>(sender, eventName, (TEventArgs)args)));
+                        _core.OnNext(new RouterEventData<TEventArgs>(sender, eventName, args));
                     }
                 }
 
-                public event EventHandler<RouterEventData<TEventArgs>> Event;
+                //public event EventHandler<DataEventArgs<RouterEventData<TEventArgs>>> Event;
 
+
+
+                IDisposable IObservable<RouterEventData<TEventArgs>>.Subscribe(IObserver<RouterEventData<TEventArgs>> observer)
+                {
+                    return _core.Subscribe(observer);
+
+                }
+
+                void IDisposable.Dispose()
+                {
+                    _core.Dispose();
+       
+                }
+
+
+                ~EventObject()
+                {
+                    _core.Dispose();
+                    _core = null;
+
+                }
             }
 
 
@@ -272,9 +300,9 @@ namespace MVVMSidekick
             /// <param name="callerMemberName">事件名</param>
             public static void RaiseEvent<TEventArgs>(this BindableBase source, TEventArgs eventArgs, string callerMemberName = "")
 #if !NETFX_CORE
-        where TEventArgs : EventArgs
+       // where TEventArgs : EventArgs
 #endif
-          
+
             {
                 EventRouter.Instance.RaiseEvent(source, eventArgs, callerMemberName);
             }
@@ -288,32 +316,49 @@ namespace MVVMSidekick
         /// 事件信息
         /// </summary>
         /// <typeparam name="TEventArgs">事件数据类型</typeparam>
-        public class RouterEventData<TEventArgs>
+        public struct RouterEventData<TEventArgs>
 #if ! NETFX_CORE
- : EventArgs
-                where TEventArgs : EventArgs
+ //: EventArgs
+               // where TEventArgs : EventArgs
 #endif
 
         {
             public RouterEventData(object sender, string eventName, TEventArgs eventArgs)
             {
 
-                Sender = sender;
-                EventName = eventName;
-                EventArgs = eventArgs;
+                _Sender = sender;
+                _EventName = eventName;
+                _EventArgs = eventArgs;
             }
+
+            private Object _Sender;
             /// <summary>
             /// 事件发送者
             /// </summary>
-            public Object Sender { get; private set; }
+            public Object Sender
+            {
+                get { return _Sender; }
+
+            }
+
+            private string _EventName;
+
             /// <summary>
             /// 事件名
             /// </summary>
-            public string EventName { get; private set; }
+            public string EventName
+            {
+                get { return _EventName; }
+            }
+
+            private TEventArgs _EventArgs;
             /// <summary>
             /// 事件数据
             /// </summary>
-            public TEventArgs EventArgs { get; private set; }
+            public TEventArgs EventArgs
+            {
+                get { return _EventArgs; }
+            }
         }
 
 
@@ -326,7 +371,7 @@ namespace MVVMSidekick
                 Data = data;
             }
 
-            public TData  Data { get;  protected set; }
+            public TData Data { get; protected set; }
         }
     }
 }

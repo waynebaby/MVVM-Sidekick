@@ -140,7 +140,6 @@
       <Link>FileLinks\VisualStates.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MVVMWindowsMordenStyleExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.MVVMSidekick.cd" />

@@ -46,7 +46,7 @@ namespace Samples.ViewModels
                     );
             }
             // Loading count down. You may want to replace your own logic here.
-            await ExecuteUIBusyTask(async () =>
+            await ExecuteTask<object >(async _ =>
                  {
                      try
                      {
@@ -69,7 +69,8 @@ namespace Samples.ViewModels
 
                      }
                  }
-
+                 ,null
+                 
                  );
 
 
