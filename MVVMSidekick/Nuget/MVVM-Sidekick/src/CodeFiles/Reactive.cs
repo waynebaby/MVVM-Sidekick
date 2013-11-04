@@ -16,6 +16,7 @@ using MVVMSidekick.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reactive;
+using System.Reactive.Threading.Tasks;
 using MVVMSidekick.EventRouting;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -79,6 +80,79 @@ namespace MVVMSidekick
 
         public static class MVVMRxExtensions
         {
+
+            //public static IDisposable SubscribeToRouter(this IObservable<Task> executionSequence, BindableBase model, string eventName, CallingCodeContext callingCodeContext)
+            //{
+            //    EventRouting.EventRouter.Instance.GetEventObject<TaskExecutionWindowEventArg>().RaiseEvent(model, eventName, callingCodeContext);
+            //    return executionSequence.Subscribe();
+
+            //}
+
+            /// <summary>
+            /// Register a Do action to the observer, Notify the value in this sequence to EventRouter
+            /// </summary>
+            /// <typeparam name="T">Sequence Value Type</typeparam>
+            /// <param name="sequence">value sequence</param>
+            /// <param name="eventRounter"> target </param>
+            /// <param name="source">value source</param>
+            /// <param name="registerName">log name</param>
+            /// <returns>same value sequence inputed</returns>
+            public static IObservable<T> DoNotifyEventRouter<T>(this IObservable<T> sequence, EventRouter eventRounter, object source = null, [CallerMemberName] string registerName = null)
+            {
+                return
+                    sequence.Do(
+                            v => eventRounter.RaiseEvent(source, v, registerName)
+
+                        );
+
+            }
+
+            /// <summary>
+            /// Register a Do action to the observer, Notify the value in this sequence to EventRouter
+            /// </summary>
+            /// <typeparam name="T">Sequence Value Type</typeparam>
+            /// <param name="sequence">value sequence</param>
+            /// <param name="source">value source</param>
+            /// <param name="registerName">log name</param>
+            /// <returns>same value sequence inputed</returns>
+            public static IObservable<T> DoNotifyDefaultEventRouter<T>(this IObservable<T> sequence, object source = null, [CallerMemberName] string registerName = null)
+            {
+                return DoNotifyEventRouter(sequence, EventRouter.Instance, source, registerName);
+            }
+
+
+
+            public static IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task<Tout>> taskBody, TaskScheduler scheduler = null)
+            {
+                return sequence.Select
+                    (
+                        inContext => vm.ExecuteTask(taskBody, inContext, true, scheduler)
+                    );
+            }
+
+            public static IObservable<Task<Tout>> DoExecuteUITask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task<Tout>> taskBody, TaskScheduler scheduler = null)
+            {
+                return sequence.Select
+                    (
+                        inContext => vm.ExecuteTask(taskBody, inContext, false, scheduler)
+                    );
+            }
+            public static IObservable<Task> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody, TaskScheduler scheduler = null)
+            {
+                return sequence.Select
+                (
+                    inContext => vm.ExecuteTask(taskBody, inContext, true, scheduler)
+                );
+            }
+
+            public static IObservable<Task> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody, TaskScheduler scheduler = null)
+            {
+                return sequence.Select
+               (
+                   inContext => vm.ExecuteTask(taskBody, inContext, false, scheduler)
+               );
+            }
+
 
             /// <summary>
             /// <para>Create a instance of IObservable that fires when property changed event is raised.</para>
@@ -147,8 +221,13 @@ namespace MVVMSidekick
                         );
                 ;
             }
-
-
+            /// <summary>
+            /// 转化
+            /// </summary>
+            /// <typeparam name="TEventArgs"></typeparam>
+            /// <param name="source"></param>
+            /// <returns></returns>
+            [Obsolete("The source is already  IObservable<RouterEventData<TEventArgs>>")]
             public static IObservable<RouterEventData<TEventArgs>>
                 GetRouterEventObservable<TEventArgs>(this MVVMSidekick.EventRouting.EventRouter.EventObject<TEventArgs> source)
 #if !NETFX_CORE
@@ -156,13 +235,8 @@ namespace MVVMSidekick
 #endif
             {
 
-                var eventArgSeq = Observable.FromEventPattern<EventHandler<RouterEventData<TEventArgs>>, RouterEventData<TEventArgs>>(
-                  eh => source.Event += eh,
-                  eh => source.Event -= eh)
-                  .Select(e =>
-                      e.EventArgs);
 
-                return eventArgSeq;
+                return source;
 
             }
             /// <summary>
@@ -181,7 +255,8 @@ namespace MVVMSidekick
 
                 //See Test  CommandListenToUIBusy_Test
                 model.GetValueContainer(x => x.IsUIBusy).GetNewValueObservable()
-                  .Select(e => !(canExecuteWhenBusy ^ e.EventArgs))
+                  .Select(e =>
+                      !(canExecuteWhenBusy ^ e.EventArgs))
                   .Subscribe(command.CommandCore.CanExecuteObserver)
                   .DisposeWith(model);
 
@@ -189,9 +264,6 @@ namespace MVVMSidekick
             }
 
         }
-
-
-
 
         public class ReactiveCommand : EventCommandBase, ICommand, IObservable<EventPattern<EventCommandEventArgs>>
         {
@@ -274,6 +346,20 @@ namespace MVVMSidekick
             }
         }
 
+
+        public class TaskExecutionWindowEventArg : EventArgs
+        {
+
+            public TaskExecutionWindowEventArg(Task executedTask, CallingCodeContext callingContext)
+            {
+                TaskWindow = executedTask.ToObservable();
+                CallingCodeContext = callingContext;
+            }
+
+            public IObservable<Unit> TaskWindow { get; private set; }
+            public CallingCodeContext CallingCodeContext { get; private set; }
+
+        }
 
     }
 }
