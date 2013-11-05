@@ -128,20 +128,20 @@ namespace MVVMSidekick
             /// 事件来源的代理对象实例
             /// </summary>
 
-            static protected readonly ConcurrentDictionary<Type, IEventObject<object>> EventObjects
-     = new ConcurrentDictionary<Type, IEventObject<Object>>();
+            static protected readonly ConcurrentDictionary<Type, IEventObject> EventObjects
+     = new ConcurrentDictionary<Type, IEventObject>();
             /// <summary>
             /// 创建事件代理对象
             /// </summary>
             /// <param name="argsType">事件数据类型</param>
             /// <returns>代理对象实例</returns>
-            static protected IEventObject<object> GetIEventObjectInstance(Type argsType)
+            static protected IEventObject GetIEventObjectInstance(Type argsType)
             {
 
                 var rval = EventObjects.GetOrAdd(
                     argsType,
                     t =>
-                        Activator.CreateInstance(typeof(EventObject<>).MakeGenericType(t)) as IEventObject<object>
+                        Activator.CreateInstance(typeof(EventObject<>).MakeGenericType(t)) as IEventObject
                     );
 
                 if (rval.BaseArgsTypeInstance == null)
@@ -166,10 +166,10 @@ namespace MVVMSidekick
             /// <summary>
             /// 事件对象接口
             /// </summary>
-            protected interface IEventObject<in TEventArgs>
+            protected interface IEventObject
             {
-                IEventObject<object> BaseArgsTypeInstance { get; set; }
-                void RaiseEvent(object sender, string eventName, TEventArgs args);
+                IEventObject BaseArgsTypeInstance { get; set; }
+                void RaiseEvent(object sender, string eventName, object args);
             }
 
 
@@ -179,7 +179,7 @@ namespace MVVMSidekick
             ///事件对象
             /// </summary>
             /// <typeparam name="TEventArgs"></typeparam>
-            public class EventObject<TEventArgs> : IEventObject<TEventArgs>, IObservable<RouterEventData<TEventArgs>>, IDisposable
+            public class EventObject<TEventArgs> : IEventObject, IObservable<RouterEventData<TEventArgs>>, IDisposable
 #if !NETFX_CORE
 // where TEventArgs : EventArgs
 #endif
@@ -191,15 +191,15 @@ namespace MVVMSidekick
 
 
 
-                IEventObject<object> IEventObject<TEventArgs>.BaseArgsTypeInstance
+                IEventObject IEventObject.BaseArgsTypeInstance
                 {
                     get;
                     set;
                 }
 
-                void IEventObject<TEventArgs>.RaiseEvent(object sender, string eventName, TEventArgs args)
+                void IEventObject.RaiseEvent(object sender, string eventName, object args)
                 {
-                    RaiseEvent(sender, eventName, args);
+                    RaiseEvent(sender, eventName, (TEventArgs)args);
                 }
 
                 /// <summary>

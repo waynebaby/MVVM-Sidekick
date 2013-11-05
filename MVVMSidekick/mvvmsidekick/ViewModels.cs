@@ -14,7 +14,7 @@ using System.Runtime.CompilerServices;
 using MVVMSidekick.Reactive;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
-
+using System.Reactive.Threading.Tasks;
 #if NETFX_CORE
 using Windows.UI.Xaml.Controls;
 
@@ -26,17 +26,17 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Collections.Concurrent;
 using System.Windows.Navigation;
-
 using MVVMSidekick.Views;
 using System.Windows.Controls.Primitives;
 using MVVMSidekick.Utilities;
-
+using System.Windows.Threading;
 #elif SILVERLIGHT_5||SILVERLIGHT_4
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
 #elif WINDOWS_PHONE_8||WINDOWS_PHONE_7
 using System.Windows;
 using System.Windows.Controls;
@@ -44,6 +44,7 @@ using Microsoft.Phone.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
 #endif
 
 
@@ -56,6 +57,8 @@ namespace MVVMSidekick
     {
         using MVVMSidekick.Utilities;
         using MVVMSidekick.Views;
+
+
         /// <summary>
         /// <para>A ViewModel by default, with basic implement of name-value container.</para>
         /// <para>缺省的 ViewModel。可以用作最简单的字典绑定</para>
@@ -1300,17 +1303,30 @@ namespace MVVMSidekick
         }
         public partial interface IViewModel : IBindable, INotifyPropertyChanged, IViewModelLifetime
         {
+#if NETFX_CORE
+            Windows.UI.Core.CoreDispatcher Dispatcher { get; }
+#else
+            Dispatcher Dispatcher { get; }
 
+#endif
             Task WaitForClose(Action closingCallback = null);
             bool IsUIBusy { get; }
             bool HaveReturnValue { get; }
             void Close();
             MVVMSidekick.Views.StageManager StageManager { get; set; }
-            //Task<Tout> ExecuteUIBusyTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext);
-            Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true, TaskScheduler scheduler = null);
+            Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true);
 
-            //Task ExecuteUIBusyTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext);
-            Task ExecuteTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true, TaskScheduler scheduler = null);
+            Task ExecuteTask<Tin>(Func<Tin, CancellationToken, Task> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true);
+
+
+
+            Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true);
+
+            Task ExecuteTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true);
+
+            Task<Tout> ExecuteTask<Tout>(Func<Task<Tout>> taskBody, bool UIBusyWhenExecuting = true);
+
+            Task ExecuteTask(Func<Task> taskBody, bool UIBusyWhenExecuting = true);
 
             //IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence,IViewModel , Func<Tin, Task<Tout>> taskBody);
             //IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence, Func<Tin,Task<Tout>> taskBody, TaskScheduler scheduler);
@@ -1414,6 +1430,8 @@ namespace MVVMSidekick
                     .Subscribe(isBusy =>
                         IsUIBusy = isBusy)
                     .DisposeWith(this);
+
+
             }
 
             Task IViewModelLifetime.OnBindedToView(IView view, IViewModel oldValue)
@@ -1600,88 +1618,191 @@ namespace MVVMSidekick
             }
 
 
-
-
-            //protected virtual async Task<Tout> OnExecuteUIBusyTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext)
-            //{
-            //    try
-            //    {
-            //        UIBusyTaskCount++;
-            //        return await taskBody(inputContext);
-            //    }
-            //    catch (Exception)
-            //    {
-            //        throw;
-            //    }
-
-            //    finally
-            //    {
-            //        UIBusyTaskCount--;
-            //    }
-            //}
-            public virtual async Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true, TaskScheduler scheduler = null)
+            private async Task RunOnDispatcher(Func<Task> action)
             {
-                var t = new Task<Task<Tout>>(
-                     () => taskBody(inputContext));
+                var t = new Task(() => { });
+                Action newBody = async () =>
+               {
+                   using (new Disposable(() => t.Start()))
+                       await action();
+
+               };
+#if NETFX_CORE
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,new Windows.UI.Core.DispatchedHandler (()=>action()));
+#else
+                Dispatcher.BeginInvoke(action);
+#endif
+
+                await t;
+            }
+
+            public virtual async Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true)
+            {
+
+                Tout result = default(Tout);
+                Func<Task> action =
+                    async () =>
+                    {
+                        result = await taskBody(inputContext, cancellationToken);
+                    };
 
 
-
-                using (new Disposable(() => UIBusyTaskCount--))
+                if (UIBusyWhenExecuting)
                 {
-                    UIBusyTaskCount++;
+                    await RunOnDispatcher(async () =>
+                        {
+                            using (new Disposable(() =>
+                                UIBusyTaskCount--))
+                            {
+                                UIBusyTaskCount++;
+                                await action();
+                            }
 
-                    if (scheduler == null)
-                    {
-                        t.Start();
-                    }
-                    else
-                    {
-                        t.Start(scheduler);
-                    }
-                    return await await t;
+                        }
+                        );
+
+
                 }
 
-            }
-            //protected virtual async Task OnExecuteUIBusyTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext)
-            //{
-            //    try
-            //    {
-            //        UIBusyTaskCount++;
-            //        await taskBody(inputContext);
-            //    }
-            //    catch (Exception)
-            //    {
-            //        throw;
-            //    }
-
-            //    finally
-            //    {
-            //        UIBusyTaskCount--;
-            //    }
-            //}
-            public virtual async Task ExecuteTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true, TaskScheduler scheduler = null)
-            {
-                var t = new Task<Task>(
-                     () =>
-                            taskBody(inputContext));
-
-                using (new Disposable(() => UIBusyTaskCount--))
+                else
                 {
-                    UIBusyTaskCount++;
-                    if (scheduler == null)
-                    {
-                        t.Start();
-                    }
-                    else
-                    {
-                        t.Start(scheduler);
-                    }
-                    await await t;
+                    await RunOnDispatcher(action);
+
                 }
+
+
+                return result;
             }
+
+
+            public virtual async Task ExecuteTask<Tin>(Func<Tin, CancellationToken, Task> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true)
+            {
+
+                await ExecuteTask<Tin, object>(async (i, c) => { await taskBody(i, c); return null; }, inputContext, cancellationToken, UIBusyWhenExecuting);
+            }
+
+
+            public virtual async Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true)
+            {
+                return await ExecuteTask<Tin, Tout>(async (i, c) => await taskBody(i), inputContext, CancellationToken.None, UIBusyWhenExecuting);
+
+            }
+
+            public virtual async Task ExecuteTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true)
+            {
+                await ExecuteTask<Tin, object>(async (i, c) => { await taskBody(i); return null; }, inputContext, CancellationToken.None, UIBusyWhenExecuting);
+
+            }
+
+            public virtual async Task<Tout> ExecuteTask<Tout>(Func<Task<Tout>> taskBody, bool UIBusyWhenExecuting = true)
+            {
+                return await ExecuteTask<object, Tout>(async (i, c) => await taskBody(), null, CancellationToken.None, UIBusyWhenExecuting);
+
+            }
+
+            public virtual async Task ExecuteTask(Func<Task> taskBody, bool UIBusyWhenExecuting = true)
+            {
+                await ExecuteTask<object, object>(async (i, c) => { await taskBody(); return null; }, null, CancellationToken.None, UIBusyWhenExecuting);
+
+            }
+
+#if NETFX_CORE
+            private Windows.UI.Core.CoreDispatcher GetCurrentViewDispatcher()
+            {
+                Windows.UI.Xaml.DependencyObject dp = null;
+                if (this.StageManager == null)
+                {
+                    return null;
+                }
+                else if ((dp = (this.StageManager.CurrentBindingView as Windows.UI.Xaml.DependencyObject)) == null)
+                {
+                    return null;
+                }
+                return dp.Dispatcher;
+
+            }
+#else
+
+            private Dispatcher GetCurrentViewDispatcher()
+            {
+                DependencyObject dp = null;
+                if (this.StageManager == null)
+                {
+                    return null;
+                }
+                else if ((dp = (this.StageManager.CurrentBindingView as DependencyObject)) == null)
+                {
+                    return null;
+                }
+                return dp.Dispatcher;
+
+            }
+#endif
+#if NETFX_CORE
+            public Windows.UI.Core.CoreDispatcher Dispatcher
+            {
+                get
+                {
+
+                    var current = GetCurrentViewDispatcher();
+                    if (current != null)
+                    {
+                        return current;
+                    }
+                    if (Windows.UI.Xaml.Window.Current == null)
+                    {
+                        return null;
+                    }
+                    return Windows.UI.Xaml.Window.Current.Dispatcher;
+                }
+
+
+            }
+#elif WPF
+            public Dispatcher Dispatcher
+            {
+                get
+                {
+                    var current = GetCurrentViewDispatcher();
+                    if (current != null)
+                    {
+                        return current;
+                    }
+                    if (Application.Current == null)
+                    {
+                        return null;
+                    }
+
+                    return Application.Current.Dispatcher;
+                }
+
+
+            }
+#elif SILVERLIGHT_5||WINDOWS_PHONE_8
+            public Dispatcher Dispatcher
+            {
+                get
+                {
+                    var current = GetCurrentViewDispatcher();
+                    if (current != null)
+                    {
+                        return current;
+                    }
+                    if (Application.Current == null)
+                    {
+                        return null;
+                    }
+                    else if (Application.Current.RootVisual == null)
+                    {
+                        return null;
+                    }
+                    else return Application.Current.RootVisual.Dispatcher;
+                }
+
+
+            }
+#endif
         }
-
-
 
 
         public class ErrorEntity

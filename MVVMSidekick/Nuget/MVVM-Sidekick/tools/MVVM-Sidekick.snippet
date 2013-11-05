@@ -181,14 +181,24 @@
         static Func<BindableBase,CommandModel<$commandType$, $resourceType$>> _Command$commandName$DefaultValueFactory =
             model => {
                 var cmd=new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-                ////Config it if you want
-                //var vm = CastToCurrentType(model); //vm instance 
-                //cmd.Subscribe (
-                //  async _=>
-                //  {
-                //  } )
-                //  .DisposeWith(vm); 
+                var vm = CastToCurrentType(model); 
                 return cmd.CreateCommandModel("$commandName$"); 
+                var text = "$commandName$";
+                var commandId = "$commandName$";
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                cmd
+                    .DoExecuteUIBusyTask(
+                        vm,
+                        async e =>
+                        {
+                            //Todo: Add $commandName$ logic here, or
+                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
+                        }
+                    )
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+                return cmd.CreateCommandModel(text);
             };
         #endregion
 ]]>

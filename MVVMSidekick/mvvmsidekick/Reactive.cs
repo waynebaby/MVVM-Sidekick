@@ -122,37 +122,71 @@ namespace MVVMSidekick
 
 
 
-            public static IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task<Tout>> taskBody, TaskScheduler scheduler = null)
+            public static IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task<Tout>> taskBody, CancellationToken cancellationToken)
             {
                 return sequence.Select
                     (
-                        inContext => vm.ExecuteTask(taskBody, inContext, true, scheduler)
+                        inContext => vm.ExecuteTask(taskBody, inContext,cancellationToken, true)
                     );
             }
 
-            public static IObservable<Task<Tout>> DoExecuteUITask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task<Tout>> taskBody, TaskScheduler scheduler = null)
+            public static IObservable<Task<Tout>> DoExecuteUITask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task<Tout>> taskBody, CancellationToken cancellationToken)
             {
                 return sequence.Select
                     (
-                        inContext => vm.ExecuteTask(taskBody, inContext, false, scheduler)
+                        inContext => vm.ExecuteTask(taskBody, inContext, cancellationToken, false)
                     );
             }
-            public static IObservable<Task> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody, TaskScheduler scheduler = null)
+            public static IObservable<Task> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken)
             {
                 return sequence.Select
                 (
-                    inContext => vm.ExecuteTask(taskBody, inContext, true, scheduler)
+                    inContext => vm.ExecuteTask(taskBody, inContext,cancellationToken , true)
                 );
             }
 
-            public static IObservable<Task> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody, TaskScheduler scheduler = null)
+            public static IObservable<Task> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken)
             {
                 return sequence.Select
                (
-                   inContext => vm.ExecuteTask(taskBody, inContext, false, scheduler)
+                   inContext => vm.ExecuteTask(taskBody, inContext, cancellationToken, false)
                );
             }
 
+
+
+
+
+            public static IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task<Tout>> taskBody)
+            {
+                return sequence.Select
+                    (
+                        inContext => vm.ExecuteTask(taskBody, inContext,  true)
+                    );
+            }
+
+            public static IObservable<Task<Tout>> DoExecuteUITask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task<Tout>> taskBody)
+            {
+                return sequence.Select
+                    (
+                        inContext => vm.ExecuteTask(taskBody, inContext,  false)
+                    );
+            }
+            public static IObservable<Task> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
+            {
+                return sequence.Select
+                (
+                    inContext => vm.ExecuteTask(taskBody, inContext,  true)
+                );
+            }
+
+            public static IObservable<Task> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
+            {
+                return sequence.Select
+               (
+                   inContext => vm.ExecuteTask(taskBody, inContext,  false)
+               );
+            }
 
             /// <summary>
             /// <para>Create a instance of IObservable that fires when property changed event is raised.</para>

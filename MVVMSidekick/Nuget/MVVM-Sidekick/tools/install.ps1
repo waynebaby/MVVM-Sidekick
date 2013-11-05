@@ -4,7 +4,7 @@ param($installPath, $toolsPath, $package, $project)
 
 
 
-$vsVersions = @("2012")  
+$vsVersions = @("2012","2013")  
 
 
 

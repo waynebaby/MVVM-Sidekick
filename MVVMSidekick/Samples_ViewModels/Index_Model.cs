@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Threading;
 namespace Samples.ViewModels
 {
 
@@ -46,7 +47,8 @@ namespace Samples.ViewModels
                     );
             }
             // Loading count down. You may want to replace your own logic here.
-            await ExecuteTask<object >(async _ =>
+            await ExecuteTask(
+                async () =>
                  {
                      try
                      {
@@ -69,8 +71,7 @@ namespace Samples.ViewModels
 
                      }
                  }
-                 ,null
-                 
+     
                  );
 
 
@@ -330,7 +331,12 @@ namespace Samples.ViewModels
             return base.OnBindedToView(view, oldValue);
         }
 
+
+
+      
     }
+
+
 
 
 }

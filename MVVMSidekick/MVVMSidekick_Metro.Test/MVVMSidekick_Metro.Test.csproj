@@ -7,7 +7,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{DB67FFCA-DAE0-4AFB-B428-914B0F59CBBF}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>appcontainerexe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MVVMSidekick_Metro.Test</RootNamespace>
     <AssemblyName>MVVMSidekick_Metro.Test</AssemblyName>
@@ -89,7 +89,7 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
@@ -109,11 +109,6 @@
     <AppXPackage>True</AppXPackage>
     <AppxPackageIncludePrivateSymbols>true</AppxPackageIncludePrivateSymbols>
   </PropertyGroup>
-  <ItemGroup>
-    <!--A reference to the entire .Net Framework and Windows SDK are automatically included-->
-    <SDKReference Include="MSTestFramework, Version=11.0" />
-    <SDKReference Include="TestPlatform, Version=11.0" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="..\MVVMSidekick.Test\CommandEventBridge.cs">
       <Link>CommandEventBridge.cs</Link>
@@ -140,7 +135,6 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="MVVMSidekick_Metro.Test_TemporaryKey.pfx" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\UnitTestLogo.png">
@@ -176,8 +170,19 @@
       <Name>MVVMSidekick_Metro</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="MSTestFramework, Version=11.0">
+      <Name>MSTest for Managed Projects</Name>
+    </SDKReference>
+    <SDKReference Include="TestPlatform, Version=11.0">
+      <Name>Microsoft Visual Studio Test Core</Name>
+    </SDKReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

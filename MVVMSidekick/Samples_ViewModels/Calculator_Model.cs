@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reactive.Linq;
+using System.Threading;
 
 
 namespace Samples.ViewModels
@@ -428,19 +429,21 @@ namespace Samples.ViewModels
             model =>
             {
                 var text = "CE";
+                var commandId = "CommandClear";
+                var vm = CastToCurrentType(model); 
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
                 cmd
                     .DoExecuteUIBusyTask(
-                        model as IViewModel,
+                        vm,
                         async e =>
                         {
-                            //Todo: Add command logic here.
-                            return await MVVMSidekick.Utilities.TaskExHelper.FromResult(e);
+                            //Todo: Add command logic here. or:
+                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
                         }
                     )
-                    .DoNotifyDefaultEventRouter(model, text)
+                    .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()
-                    .DisposeWith(model);
+                    .DisposeWith(vm);
                 return cmd.CreateCommandModel(text);
             };
         #endregion
