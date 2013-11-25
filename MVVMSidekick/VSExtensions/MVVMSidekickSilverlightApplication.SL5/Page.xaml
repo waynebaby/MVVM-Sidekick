@@ -8,9 +8,9 @@
     d:DesignHeight="300" d:DesignWidth="400"
     xmlns:vm="clr-namespace:$safeprojectname$.ViewModels" 
     xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Sl">
-    <mvvm:MVVMControl.Resources>
+    <FrameworkElement.Resources>
         <vm:MainPage_Model x:Key="DesignVM" />
-    </mvvm:MVVMControl.Resources>
+    </FrameworkElement.Resources>
 
 
     <Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}" >

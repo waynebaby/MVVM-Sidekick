@@ -4,9 +4,9 @@
         Title="$safeitemname$" Height="350" Width="525"
         xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"
         xmlns:vm="clr-namespace:$rootnamespace$.ViewModels" >
-    <mvvm:MVVMWindow.Resources >
+    <FrameworkElement.Resources>
         <vm:$safeitemname$_Model x:Key="DesignVM" />
-    </mvvm:MVVMWindow.Resources>
+    </FrameworkElement.Resources>
     <Grid x:Name="grid" DataContext="{StaticResource DesignVM}">
 
 

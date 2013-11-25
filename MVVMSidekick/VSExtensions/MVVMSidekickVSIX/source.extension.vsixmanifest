@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata >
-    <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="1.53" Language="en-US" Publisher="Wayne Wang in MSFT" />
+    <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="1.55" Language="en-US" Publisher="Wayne Wang in MSFT" />
     <DisplayName>MVVM-Sidekick VSIX</DisplayName>
     <Description xml:space="preserve">MVVM-Sidekick VSIX</Description>
     <MoreInfo>https://github.com/waynebaby/MVVM-Sidekick/</MoreInfo>

@@ -7,9 +7,9 @@
     mc:Ignorable="d"    
     xmlns:vm="clr-namespace:$rootnamespace$.ViewModels" 
     xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Wp8">
-    <mvvm:MVVMPage.Resources>
+    <FrameworkElement.Resources>
         <vm:$safeitemname$_Model x:Key="DesignVM" />
-    </mvvm:MVVMPage.Resources>
+    </FrameworkElement.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}" >
      

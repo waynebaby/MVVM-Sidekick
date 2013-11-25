@@ -1,0 +1,14 @@
+﻿<mvvm:MVVMPage x:Class="$rootnamespace$.$safeitemname$"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="350" Width="525"
+        xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"
+        xmlns:vm="clr-namespace:$rootnamespace$.ViewModels" >
+    <FrameworkElement.Resources>
+        <vm:$safeitemname$_Model x:Key="DesignVM" />
+    </FrameworkElement.Resources>
+    <Grid x:Name="grid" DataContext="{StaticResource DesignVM}">
+
+
+    </Grid>
+</mvvm:MVVMPage>

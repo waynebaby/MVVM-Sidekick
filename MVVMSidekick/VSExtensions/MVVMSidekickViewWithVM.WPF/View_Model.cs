@@ -25,23 +25,14 @@ namespace  $rootnamespace$.ViewModels
         {
             if (IsInDesignMode )
             {
-                Title = "Title is a little different in Design mode";
+             
             }
         
         }
           
 
         //propvm tab tab string tab Title
-        public String Title
-        {
-            get { return _TitleLocator(this).Value; }
-            set { _TitleLocator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property String Title Setup
-        protected Property<String> _Title = new Property<String> { LocatorFunc = _TitleLocator };
-        static Func<BindableBase, ValueContainer<String>> _TitleLocator = RegisterContainerLocator<String>("Title", model => model.Initialize("Title", ref model._Title, ref _TitleLocator, _TitleDefaultValueFactory));
-        static Func<String> _TitleDefaultValueFactory = ()=>"Title is Here";
-        #endregion
+
 
 
 

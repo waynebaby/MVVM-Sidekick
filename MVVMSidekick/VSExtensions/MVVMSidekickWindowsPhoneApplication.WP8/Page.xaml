@@ -15,9 +15,9 @@
     shell:SystemTray.IsVisible="True"    
     xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Wp8"
     xmlns:vm="clr-namespace:$safeprojectname$.ViewModels">
-    <mvvm:MVVMPage.Resources >
+    <FrameworkElement.Resources>
         <vm:MainPage_Model x:Key="DesignVM" />
-    </mvvm:MVVMPage.Resources>
+    </FrameworkElement.Resources>
 
 
 

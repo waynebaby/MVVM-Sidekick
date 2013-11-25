@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.microsoft.com/developer/vstemplate/2005">
   <TemplateData>
-    <Name>MVVM-Sidekick View for Windows Store 8.1</Name>
-    <Description>MVVM-Sidekick View With VM for Windows Store Apps 8.1</Description>
+    <Name>MVVM-Sidekick Page View for Windows Store 8.1</Name>
+    <Description>MVVM-Sidekick Page View With VM for Windows Store Apps 8.1</Description>
     <Icon>MVVMSidekickViewWithVM_81.ico</Icon>
-    <TemplateID>32e8f349-87f4-4c54-8282-598bef9c956f</TemplateID>
+    <TemplateID>32e8f349-87f4-4c54-8282-598bef9c956f_Page</TemplateID>
     <TemplateGroupID>WinRT-Managed-Win81</TemplateGroupID>
     <ProjectType>CSharp</ProjectType>
 

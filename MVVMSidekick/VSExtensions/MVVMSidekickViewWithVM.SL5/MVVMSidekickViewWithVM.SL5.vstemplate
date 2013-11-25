@@ -1,7 +1,7 @@
 ﻿<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
   <TemplateData>
-    <Name>MVVM-Sidekick View for Silverlight</Name>
-    <Description>MVVM-Sidekick View With VM for Silverlight Apps</Description>
+    <Name>MVVM-Sidekick Page View for Silverlight</Name>
+    <Description>MVVM-Sidekick Page View With VM for Silverlight Apps</Description>
     <Icon >MVVMSidekickViewWithVM.SL5.ico</Icon>
     <TemplateID>Microsoft.Silverlight.CSharp.MVVMSidekick.Page</TemplateID>
     <TemplateGroupID>Silverlight</TemplateGroupID>
