@@ -110,6 +110,12 @@
     <Compile Include="..\Samples_ViewModels\Tree_Model.cs">
       <Link>ViewModels\Tree_Model.cs</Link>
     </Compile>
+    <Compile Include="..\Samples_ViewModels\ViewNavigation_Child_Model.cs">
+      <Link>ViewModels\ViewNavigation_Child_Model.cs</Link>
+    </Compile>
+    <Compile Include="..\Samples_ViewModels\ViewNavigation_Model.cs">
+      <Link>ViewModels\ViewNavigation_Model.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -134,6 +140,14 @@
     </Compile>
     <Compile Include="StartUps\CommandBindingsSample.cs" />
     <Compile Include="StartUps\ListsAndItemsPattern.cs" />
+    <Compile Include="StartUps\ViewNavigation.cs" />
+    <Compile Include="StartUps\ViewNavigation_Child.cs" />
+    <Compile Include="ViewNavigation.xaml.cs">
+      <DependentUpon>ViewNavigation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewNavigation_Child.xaml.cs">
+      <DependentUpon>ViewNavigation_Child.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -155,6 +169,14 @@
     <Page Include="Index.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewNavigation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewNavigation_Child.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -195,9 +217,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MVVMSidekick.Behaviors_WP8">
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.0.0.4\lib\wp8\MVVMSidekick.Behaviors_WP8.dll</HintPath>
+    </Reference>
     <Reference Include="MVVMSidekick_Wp8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.1.9.6\lib\wp8\MVVMSidekick_Wp8.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.9.8\lib\wp8\MVVMSidekick_Wp8.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\WP8\System.Reactive.Core.dll</HintPath>
@@ -214,6 +239,7 @@
     <Reference Include="System.Reactive.Windows.Threading">
       <HintPath>..\packages\Rx-XAML.2.1.30214.0\lib\WP8\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

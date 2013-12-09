@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\MVVMSidekick.XML</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -138,8 +141,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>cd $(TargetDir)..\..\..
-
+    <PostBuildEvent>cd $(ProjectDir)..
 
 xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\net40 /s  /i /y</PostBuildEvent>
   </PropertyGroup>

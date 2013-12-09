@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;NET45</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;NET45;WIN80</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\MVVMSidekick_Metro.XML</DocumentationFile>
@@ -31,7 +31,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;NET45</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;NET45;WIN80</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\MVVMSidekick_Metro.XML</DocumentationFile>
@@ -172,9 +172,12 @@
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>cd $(TargetDir)..\..\..
+    <PostBuildEvent>cd $(ProjectDir)..
 
 xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y
 xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\netcore45 /s  /i /y

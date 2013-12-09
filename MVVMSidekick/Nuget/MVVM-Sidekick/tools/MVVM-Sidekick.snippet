@@ -180,8 +180,7 @@
         static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $resourceType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $resourceType$>>("Command$commandName$", model =>model.Initialize("Command$commandName$",ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
         static Func<BindableBase,CommandModel<$commandType$, $resourceType$>> _Command$commandName$DefaultValueFactory =
             model => {
-                var vm = CastToCurrentType(model); 
-                var text = "$commandName$";
+                var resource = "$commandName$";           // Command resource  
                 var commandId = "$commandName$";
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
                 cmd
@@ -196,7 +195,7 @@
                     .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()
                     .DisposeWith(vm);
-                return cmd.CreateCommandModel(text);
+                return cmd.CreateCommandModel(resource);
             };
         #endregion
 ]]>

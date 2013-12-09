@@ -133,18 +133,18 @@ namespace MVVMSidekick
 
                             _IsInDesignMode =
 #if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
- DesignerProperties.IsInDesignTool
+                                DesignerProperties.IsInDesignTool
 #elif NETFX_CORE
- Windows.ApplicationModel.DesignMode.DesignModeEnabled
+                                Windows.ApplicationModel.DesignMode.DesignModeEnabled
 #else
- (bool)System.ComponentModel.DependencyPropertyDescriptor
+                                (bool)System.ComponentModel.DependencyPropertyDescriptor
                                 .FromProperty(
                                     DesignerProperties.IsInDesignModeProperty,
                                     typeof(System.Windows.FrameworkElement))
                                 .Metadata
                                 .DefaultValue
 #endif
-))
+                        ))
                         .Value;
                 }
 

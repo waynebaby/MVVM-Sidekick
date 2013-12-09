@@ -49,6 +49,9 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>Bin\Release\MVVMSidekick_Sl.XML</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -157,7 +160,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>cd $(TargetDir)..\..\..
+    <PostBuildEvent>cd $(ProjectDir)..
 
 xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y
 xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\sl50 /s  /i /y

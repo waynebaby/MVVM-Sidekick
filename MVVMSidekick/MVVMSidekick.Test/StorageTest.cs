@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
+using MVVMSidekick.Utilities;
 namespace MVVMSidekick.Test
 {
     /// <summary>
@@ -117,7 +118,7 @@ namespace MVVMSidekick.Test
         private async Task<bool> FileExists(string fileAName)
         {
             var p = Path.Combine(Environment.CurrentDirectory, fileAName);
-            return (File.Exists(p));
+            return await TaskExHelper.FromResult  (File.Exists(p));
         }
 
 #elif WINDOWS_PHONE

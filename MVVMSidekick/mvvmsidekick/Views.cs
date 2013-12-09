@@ -97,7 +97,7 @@ namespace MVVMSidekick
                 };
 
             internal static PropertyChangedCallback ViewModelChangedCallback
-                =  (o, e) =>
+                = (o, e) =>
                 {
                     dynamic item = o;
                     var fele = ((o as IView).Content as FrameworkElement);
@@ -110,11 +110,11 @@ namespace MVVMSidekick
                     var ov = e.OldValue as IViewModel;
                     if (ov != null)
                     {
-                         ov.OnUnbindedFromView(o as IView, nv);
+                        ov.OnUnbindedFromView(o as IView, nv);
                     }
                     if (nv != null)
                     {
-                         nv.OnBindedToView(o as IView, ov);
+                        nv.OnBindedToView(o as IView, ov);
                     }
 
                 };
@@ -285,7 +285,7 @@ namespace MVVMSidekick
             public MVVMPage()
                 : this(null)
             {
-              
+
             }
 
 
@@ -348,7 +348,7 @@ namespace MVVMSidekick
                 {
                     EventRouting.EventRouter.Instance.RaiseEvent(this, e);
 
-                    await MVVMSidekick.Utilities.TaskExHelper.Yield ();
+                    await MVVMSidekick.Utilities.TaskExHelper.Yield();
                     if (presetViewModel != null)
                     {
 
@@ -362,7 +362,7 @@ namespace MVVMSidekick
                         var solveV = this.GetDefaultViewModel();
                         if (solveV != null)
                         {
-                      
+
                             ViewModel = solveV;
                         }
                     }
@@ -454,10 +454,14 @@ namespace MVVMSidekick
                     (o, e) =>
                     {
                         var p = o as MVVMPage;
+#if !WPF
                         if (p.IsLoaded)
                         {
                             ViewHelper.ViewModelChangedCallback(o, e);
                         }
+#else
+                        ViewHelper.ViewModelChangedCallback(o, e);
+#endif
                     }
 
                     ));
@@ -1095,8 +1099,6 @@ namespace MVVMSidekick
 
             }
 
-
-
             public static Dictionary<string, IViewModel> GetNavigateRequestContexts(DependencyObject obj)
             {
                 return (Dictionary<string, IViewModel>)obj.GetValue(NavigateRequestContextsProperty);
@@ -1110,8 +1112,6 @@ namespace MVVMSidekick
             // Using a DependencyProperty as the backing store for NavigateRequestContexts.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty NavigateRequestContextsProperty =
                 DependencyProperty.RegisterAttached("NavigateRequestContexts", typeof(Dictionary<string, IViewModel>), typeof(Stage), new PropertyMetadata(new Dictionary<string, IViewModel>()));
-
-
 
             public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
                  where TTarget : class,IViewModel
@@ -1140,11 +1140,10 @@ namespace MVVMSidekick
 
                 IView view = item as IView;
                 targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                SetVMAfterLoad(targetViewModel, view) ;
+                SetVMAfterLoad(targetViewModel, view);
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 await targetViewModel.WaitForClose();
             }
-
 
 
             public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
@@ -1202,7 +1201,11 @@ namespace MVVMSidekick
 
                             var page = e.Sender as MVVMPage;
 
-                            if (targetViewModel != null) page.ViewModel = targetViewModel;
+                            if (targetViewModel != null) 
+                            {
+                                page.ViewModel = targetViewModel;
+                                page.presetViewModel = targetViewModel;
+                            };
 
                             targetViewModel = (TTarget)page.ViewModel;
                             NavigateRequestContexts[key] = targetViewModel;
@@ -1273,11 +1276,9 @@ namespace MVVMSidekick
                 {
                     var pg = view as MVVMPage;
                     pg.presetViewModel = targetViewModel;
+                    pg.ViewModel = targetViewModel;
                 }
-                else
-                {
-                    view.ViewModel = targetViewModel;
-                }
+                view.ViewModel = targetViewModel;
 
                 //var frview = view as FrameworkElement;
                 //RoutedEventHandler loadEvent = null;

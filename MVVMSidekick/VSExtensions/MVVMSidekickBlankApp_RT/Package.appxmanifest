@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
 
-  <Identity Name="802561ae-87ee-4960-9dc3-48d6c8c29847"
+  <Identity Name="$guid1$"
             Publisher="CN=UserName"
             Version="1.0.0.0" />
 

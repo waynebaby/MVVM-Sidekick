@@ -92,8 +92,8 @@
       <Link>Packages\Microsoft.Bcl.Build.1.0.10.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.9.6.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.1.9.6.nupkg</Link>
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.9.7.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.1.9.7.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\..\packages\Rx-Xaml.2.1.30214.0\Rx-Xaml.2.1.30214.0.nupkg">

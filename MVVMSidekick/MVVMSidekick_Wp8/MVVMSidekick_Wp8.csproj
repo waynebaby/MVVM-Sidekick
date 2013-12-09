@@ -86,6 +86,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\mvvmsidekick\Collections.cs">
       <Link>FileLinks\Collections.cs</Link>
@@ -153,7 +156,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <ProjectExtensions />
   <PropertyGroup>
-    <PostBuildEvent>cd $(TargetDir)..\..\..
+    <PostBuildEvent>cd $(ProjectDir)..
 
 xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y
 xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\wp8 /s  /i /y</PostBuildEvent>

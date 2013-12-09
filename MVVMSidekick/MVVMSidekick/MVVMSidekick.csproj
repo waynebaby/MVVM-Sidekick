@@ -98,7 +98,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>cd $(TargetDir)..\..\..
+    <PostBuildEvent>cd $(ProjectDir)..
 xcopy $(ProjectDir)*.cs Nuget\MVVM-Sidekick\src\CodeFiles /s  /i /y
 xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y
 xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\net45 /s  /i /y</PostBuildEvent>

@@ -77,7 +77,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>cd $(TargetDir)..\..\..
+    <PostBuildEvent>cd $(ProjectDir)..
 
 
 copy $(ProjectDir)*.snippet  Nuget\MVVM-Sidekick\tools

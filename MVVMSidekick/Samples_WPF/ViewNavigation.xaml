@@ -1,19 +1,24 @@
-﻿<mvvm:MVVMWindow x:Class="Samples.ViewNavigation"
+﻿<mvvm:MVVMWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ViewNavigation" Height="350" Width="525"
         xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"
-        xmlns:vm="clr-namespace:Samples.ViewModels" >
+        xmlns:vm="clr-namespace:Samples.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:Behaviors="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick.Behaviors_net45" x:Class="Samples.ViewNavigation"
+        Title="ViewNavigation" Height="350" Width="525"
+        >
     <mvvm:MVVMWindow.Resources >
         <vm:ViewNavigation_Model x:Key="DesignVM" />
     </mvvm:MVVMWindow.Resources>
-    <Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}" >
-        <Grid.RowDefinitions >
-            <RowDefinition Height="21*" ></RowDefinition>
-            <RowDefinition Height="79*" ></RowDefinition>
-        </Grid.RowDefinitions>
-        <Button Command="{Binding CommandNavigateNext}"  Content="{Binding CommandNavigateNext}" ></Button>
-        <Frame mvvm:StageManager.Beacon="Children" Grid.Row="1" BorderBrush="Green"  BorderThickness="3" Margin="15" JournalOwnership="OwnsJournal" />
-    </Grid>
+	<Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}" >
+		<Grid.RowDefinitions >
+			<RowDefinition Height="21*" />
+			<RowDefinition Height="79*" />
+		</Grid.RowDefinitions>
+		<Button Command="{Binding CommandNavigateNext}"  Content="{Binding CommandNavigateNext}" />
+		<Frame Grid.Row="1" BorderBrush="Green"  BorderThickness="3" Margin="15" JournalOwnership="OwnsJournal" >
+			<i:Interaction.Behaviors>
+				<Behaviors:BaeconBehavior BaeconName="Children"/>
+			</i:Interaction.Behaviors>
+		</Frame>
+	</Grid>
 
 </mvvm:MVVMWindow>

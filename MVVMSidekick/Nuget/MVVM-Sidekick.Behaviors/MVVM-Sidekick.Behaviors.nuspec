@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>MVVM-Sidekick.Behaviors</id>
+    <version>1.1.1</version>
+    <title>MVVM Sidekick Light-weight Framework Behavios</title>
+    <authors>Wayne Wang</authors>
+    <owners>Wayne Wang</owners>
+    <projectUrl>https://github.com/waynebaby/MVVM-Sidekick</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      MVVM-Sidekick https://github.com/waynebaby/MVVM-Sidekick/
+      =============
+      MVVM密友 https://github.com/waynebaby/MVVM-Sidekick/
+      ===================
+
+
+      A Modern light-weight MVVM framework based on RX and TPL await
+
+      轻量级MVVM框架,基于RX与 await等新技术
+
+  
+    </description>
+    <summary>
+      https://github.com/waynebaby/MVVM-Sidekick/
+
+      This Package helps you config MVVM-Sidekick bindings such as "stage beacons" and "item selecteion patterns" with Blend behaviors
+
+
+    </summary>
+    <releaseNotes>
+
+      [微博] [twitter] [Mail]
+      [微博]: http://www.weibo.com/waynebabywang "WaynebabyWang"
+      [twitter]: http://twitter.com/waynebaby "Waynebaby"
+      [Mail]: mailto:blackshaman_wayne@hotmail.com "MSN Skype"
+    </releaseNotes>
+    <tags>Rx Reactive Extensions MVVM Win8 Metro Modern UI</tags>
+    <dependencies>
+
+      <dependency id="Rx-Main" version="[2.1.30214.0,3.0)" />
+      <dependency id="Rx-PlatformServices" version="[2.1.30214.0,3.0)" />
+      <dependency id="Rx-Interfaces" version="[2.1.30214.0,3.0)" />
+      <dependency id="Rx-Core" version="[2.1.30214.0,3.0)" />
+      <dependency id="Rx-Linq" version="[2.1.30214.0,3.0)" />
+      <dependency id="Rx-Xaml" version="[2.1.30214.0,3.0)" />
+      
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Windows.Interactivity" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Windows.Interactivity" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Windows.Interactivity" targetFramework="wp8" />
+      <frameworkAssembly assemblyName="System.Windows.Interactivity" targetFramework="sl50" />
+    </frameworkAssemblies>
+    
+  </metadata>
+  <files>
+    <file src="tools\*.*" target="tools" />
+    <file src="content\*.*" target="content" />
+    <file src="src\*.*" target="src" />
+    <file src="src\CodeFiles\*.*" target="src\CodeFiles" />
+    <file src="lib\net45\*.*" target="lib\net45" />
+    <file src="lib\net40\*.*" target="lib\net40" />
+    <file src="lib\netcore45\*.*" target="lib\netcore45" />
+    <file src="lib\sl50\*.*" target="lib\sl50" />
+    <file src="lib\wp8\*.*" target="lib\wp8" />
+  </files>
+</package>

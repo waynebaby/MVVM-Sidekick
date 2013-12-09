@@ -63,7 +63,6 @@
     <file src="lib\netcore45\*.*" target="lib\netcore45" />
     <file src="lib\sl50\*.*" target="lib\sl50" />
     <file src="lib\wp8\*.*" target="lib\wp8" />
-    <file src="lib\SL4-WindowsPhone71\*.*" target="lib\SL4-WindowsPhone71" />
 
     
   </files>
