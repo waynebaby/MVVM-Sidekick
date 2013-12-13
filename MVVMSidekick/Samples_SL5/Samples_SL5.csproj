@@ -77,11 +77,11 @@
     <Reference Include="mscorlib" />
     <Reference Include="MVVMSidekick.Behaviors_SL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.1.9.8\lib\sl50\MVVMSidekick.Behaviors_SL.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.9.9\lib\sl50\MVVMSidekick.Behaviors_SL.dll</HintPath>
     </Reference>
     <Reference Include="MVVMSidekick_Sl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.1.9.8\lib\sl50\MVVMSidekick_Sl.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.9.9\lib\sl50\MVVMSidekick_Sl.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.IO">
