@@ -220,7 +220,7 @@
   <ItemGroup>
     <Reference Include="MVVMSidekick_Metro, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.1.9.8\lib\netcore45\MVVMSidekick_Metro.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.1.9.9\lib\netcore45\MVVMSidekick_Metro.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

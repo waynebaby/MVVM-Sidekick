@@ -182,6 +182,7 @@
             model => {
                 var resource = "$commandName$";           // Command resource  
                 var commandId = "$commandName$";
+                var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
                 cmd
                     .DoExecuteUIBusyTask(
