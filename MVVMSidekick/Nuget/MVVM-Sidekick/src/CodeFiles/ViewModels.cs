@@ -86,6 +86,18 @@ namespace MVVMSidekick
                 }
             }
 
+            private Guid _BindableInstanceId = Guid.NewGuid();
+            public Guid BindableInstanceId
+            {
+                get { return _BindableInstanceId; }
+
+            }
+
+
+            public override string ToString()
+            {
+                return   string.Format ("Id {0} of {1} ({2})",BindableInstanceId ,base.GetType ().Name  ,base.ToString() ) ;
+            }
 
 
             private bool _IsValidationActivated = false;
@@ -137,14 +149,14 @@ namespace MVVMSidekick
 #elif NETFX_CORE
                                 Windows.ApplicationModel.DesignMode.DesignModeEnabled
 #else
-                                (bool)System.ComponentModel.DependencyPropertyDescriptor
+ (bool)System.ComponentModel.DependencyPropertyDescriptor
                                 .FromProperty(
                                     DesignerProperties.IsInDesignModeProperty,
                                     typeof(System.Windows.FrameworkElement))
                                 .Metadata
                                 .DefaultValue
 #endif
-                        ))
+))
                         .Value;
                 }
 
@@ -1250,6 +1262,7 @@ namespace MVVMSidekick
 
         public interface IBindable : INotifyPropertyChanged
         {
+            Guid BindableInstanceId { get; }
             void AddDisposable(IDisposable item, string comment = "", string member = "", string file = "", int line = -1);
             void AddDisposeAction(Action action, string comment = "", string member = "", string file = "", int line = -1);
             string Error { get; }
