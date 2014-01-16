@@ -121,6 +121,9 @@
     <Compile Include="..\Samples_ViewModels\ListsAndItemsPattern_Model.cs">
       <Link>ViewModels\ListsAndItemsPattern_Model.cs</Link>
     </Compile>
+    <Compile Include="..\Samples_ViewModels\MultiLevelSelection_Model.cs">
+      <Link>ViewModels\MultiLevelSelection_Model.cs</Link>
+    </Compile>
     <Compile Include="..\Samples_ViewModels\Tree_Model.cs">
       <Link>ViewModels\Tree_Model.cs</Link>
     </Compile>
@@ -155,10 +158,14 @@
     <Compile Include="Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MultiLevelSelection.xaml.cs">
+      <DependentUpon>MultiLevelSelection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startups\CommandBindingsSample.cs" />
     <Compile Include="Startups\GroupViewSample.cs" />
     <Compile Include="Startups\ListsAndItemsPattern.cs" />
+    <Compile Include="Startups\MultiLevelSelection.cs" />
     <Compile Include="Startups\ViewNavigation.cs" />
     <Compile Include="Startups\ViewNavigation_Child.cs" />
     <Compile Include="ViewModels\GroupViewSample_Model.cs" />
@@ -212,6 +219,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="MultiLevelSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewNavigation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -222,12 +233,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MVVMSidekick.Behaviors_RT">
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.0.0.3\lib\netcore45\MVVMSidekick.Behaviors_RT.dll</HintPath>
-    </Reference>
-    <Reference Include="MVVMSidekick_Metro, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="MVVMSidekick.Behaviors_RT, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.1.9.9\lib\netcore45\MVVMSidekick_Metro.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.0.0.6\lib\netcore45\MVVMSidekick.Behaviors_RT.dll</HintPath>
+    </Reference>
+    <Reference Include="MVVMSidekick_Metro">
+      <HintPath>..\packages\MVVM-Sidekick.1.2.0.0\lib\netcore45\MVVMSidekick_Metro.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

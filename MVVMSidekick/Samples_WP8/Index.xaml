@@ -30,6 +30,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- LOCALIZATION NOTE:
@@ -81,6 +83,12 @@
         <Button   Grid.Row="4"  Command="{Binding CommandNavigationSample}">
             <Grid>
                 <TextBlock Text="{Binding CommandNavigationSample.Resource}" />
+
+            </Grid>
+        </Button>
+        <Button   Grid.Row="5"  Command="{Binding  CommandMultiLevelSelection}">
+            <Grid>
+                <TextBlock Text="{Binding CommandMultiLevelSelection.Resource}" />
 
             </Grid>
         </Button>

@@ -49,29 +49,29 @@ namespace Samples.ViewModels
             // Loading count down. You may want to replace your own logic here.
             await ExecuteTask(
                 async () =>
-                 {
-                     try
-                     {
+                {
+                    try
+                    {
 
-                         for (Double i = CountDown; i > 0; i = i - 1)
-                         {
-                             CountDown = i;
-                             await TaskExHelper.Delay(500);
-                         }
-                         CountDown = 0;
-                         HelloWorld = "Hello Mvvm world!";
-                     }
-                     catch (Exception)
-                     {
-                         throw;
-                     }
-                     finally
-                     {
-                         StateName = "Loaded";
+                        for (Double i = CountDown; i > 0; i = i - 1)
+                        {
+                            CountDown = i;
+                            await TaskExHelper.Delay(500);
+                        }
+                        CountDown = 0;
+                        HelloWorld = "Hello Mvvm world!";
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                    finally
+                    {
+                        StateName = "Loaded";
 
-                     }
-                 }
-     
+                    }
+                }
+
                  );
 
 
@@ -325,6 +325,41 @@ namespace Samples.ViewModels
         #endregion
 
 
+
+
+        #region Command MultiLevelSelection
+        public CommandModel<ReactiveCommand, String> CommandMultiLevelSelection
+        {
+            get { return _CommandMultiLevelSelectionLocator(this).Value; }
+            set { _CommandMultiLevelSelectionLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandMultiLevelSelection Setup
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandMultiLevelSelection = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandMultiLevelSelectionLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandMultiLevelSelectionLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandMultiLevelSelection", model => model.Initialize("CommandMultiLevelSelection", ref model._CommandMultiLevelSelection, ref _CommandMultiLevelSelectionLocator, _CommandMultiLevelSelectionDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandMultiLevelSelectionDefaultValueFactory =
+            model =>
+            {
+                var vm = CastToCurrentType(model);    // Cast the instance to current model type
+                var resource = "MultiLevelSelection";           // Command resource  
+                var commandId = "MultiLevelSelection";
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                cmd
+                    .DoExecuteUIBusyTask(
+                        vm,
+                        async e =>
+                        {
+                            await vm.StageManager.DefaultStage.Show<MultiLevelSelection_Model>();
+                        }
+                    )
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+                return cmd.CreateCommandModel(resource);
+            };
+        #endregion
+        #endregion
+
+
         protected override Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
         {
             return base.OnBindedToView(view, oldValue);
@@ -332,7 +367,7 @@ namespace Samples.ViewModels
 
 
 
-      
+
     }
 
 

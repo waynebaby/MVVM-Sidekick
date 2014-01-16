@@ -34,7 +34,7 @@
   <ItemGroup>
     <Reference Include="MVVMSidekick, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.1.9.9\lib\net45\MVVMSidekick.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.2.0.0\lib\net45\MVVMSidekick.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -69,6 +69,7 @@
     <Compile Include="Calculator_Model.cs" />
     <Compile Include="CommandBindingsSample_Model.cs" />
     <Compile Include="ListsAndItemsPattern_Model.cs" />
+    <Compile Include="MultiLevelSelection_Model.cs" />
     <Compile Include="Tree_Model.cs" />
     <Compile Include="Index_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
