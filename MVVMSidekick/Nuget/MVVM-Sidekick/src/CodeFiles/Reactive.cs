@@ -126,7 +126,7 @@ namespace MVVMSidekick
             {
                 return sequence.Select
                     (
-                        inContext => vm.ExecuteTask(taskBody, inContext,cancellationToken, true)
+                        inContext => vm.ExecuteTask(taskBody, inContext, cancellationToken, true)
                     );
             }
 
@@ -141,7 +141,7 @@ namespace MVVMSidekick
             {
                 return sequence.Select
                 (
-                    inContext => vm.ExecuteTask(taskBody, inContext,cancellationToken , true)
+                    inContext => vm.ExecuteTask(taskBody, inContext, cancellationToken, true)
                 );
             }
 
@@ -161,7 +161,7 @@ namespace MVVMSidekick
             {
                 return sequence.Select
                     (
-                        inContext => vm.ExecuteTask(taskBody, inContext,  true)
+                        inContext => vm.ExecuteTask(taskBody, inContext, true)
                     );
             }
 
@@ -169,14 +169,14 @@ namespace MVVMSidekick
             {
                 return sequence.Select
                     (
-                        inContext => vm.ExecuteTask(taskBody, inContext,  false)
+                        inContext => vm.ExecuteTask(taskBody, inContext, false)
                     );
             }
             public static IObservable<Task> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
             {
                 return sequence.Select
                 (
-                    inContext => vm.ExecuteTask(taskBody, inContext,  true)
+                    inContext => vm.ExecuteTask(taskBody, inContext, true)
                 );
             }
 
@@ -184,7 +184,7 @@ namespace MVVMSidekick
             {
                 return sequence.Select
                (
-                   inContext => vm.ExecuteTask(taskBody, inContext,  false)
+                   inContext => vm.ExecuteTask(taskBody, inContext, false)
                );
             }
 
@@ -241,6 +241,13 @@ namespace MVVMSidekick
                             x => EventTuple.Create(source, x.EventArgs)
                         );
                 ;
+            }
+
+
+            public static IObserver<TValue> AsObserver<TValue>(this ValueContainer<TValue> source)
+            {
+                return Observer.Create<TValue>(v => source.SetValueAndTryNotify(v));
+
             }
 
 

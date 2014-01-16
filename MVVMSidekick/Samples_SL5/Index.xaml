@@ -13,12 +13,11 @@
         <vm:Index_Model x:Key="DesignVM" />
     </mvvm:MVVMControl.Resources>
 
-	<Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}" ShowGridLines="True" >
+	<Grid x:Name="LayoutRoot" Background="White" DataContext="{StaticResource DesignVM}"  >
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="102*"/>
+			<ColumnDefinition Width="42*"/>
 			<ColumnDefinition Width="199*"/>
-			<ColumnDefinition Width="45*"/>
-			<ColumnDefinition Width="54*"/>
+		
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="2*"/>
@@ -26,7 +25,7 @@
 		</Grid.RowDefinitions>
 		<TextBlock Text="{Binding HelloWorld}" Grid.RowSpan="2" Grid.ColumnSpan="4"  />
 
-		<sdk:Frame  Grid.Row="1"  Grid.ColumnSpan="4"  JournalOwnership="OwnsJournal" >
+		<sdk:Frame BorderBrush="Gray" BorderThickness="10" Grid.Row="1"  Grid.ColumnSpan="4"  JournalOwnership="OwnsJournal" >
 			<i:Interaction.Behaviors>
 				<Behaviors:BaeconBehavior BaeconName=""/>
 			</i:Interaction.Behaviors>
@@ -41,6 +40,8 @@
 			<Button Content="{Binding CommandListTest}" Command="{Binding CommandListTest}"  />
 			<Button Content="{Binding CommandCommandBinding}" Command="{Binding CommandCommandBinding}"  />
 			<Button Content="{Binding CommandNavigationSample}" Command="{Binding CommandNavigationSample}"  />
+            <Button Content="{Binding CommandMultiLevelSelection}" Command="{Binding CommandMultiLevelSelection}"  />
+            
 		</StackPanel>
 
 	</Grid>

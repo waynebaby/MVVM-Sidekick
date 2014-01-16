@@ -41,6 +41,8 @@
                 <Button Content="{Binding  CommandShowGroupView}" Grid.Column="1" Command="{Binding CommandShowGroupView}" Margin="10" />
                 <Button Content="{Binding CommandCommandBinding.Resource}" Grid.Column="1" Command="{Binding CommandCommandBinding}" Margin="10" />
                 <Button Content="{Binding CommandNavigationSample.Resource}" Grid.Column="1" Command="{Binding CommandNavigationSample}" Margin="10" />
+                <Button Content="{Binding CommandMultiLevelSelection.Resource}" Grid.Column="1" Command="{Binding CommandMultiLevelSelection}" Margin="10" />
+
             </StackPanel>
         </AppBar>
     </Page.TopAppBar>
