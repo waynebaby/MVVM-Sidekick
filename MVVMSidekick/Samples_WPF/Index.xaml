@@ -14,6 +14,7 @@
         <Button Content="{Binding CommandListTest}" HorizontalAlignment="Left" Height="68" Margin="8" VerticalAlignment="Top" Width="341" Command="{Binding CommandListTest}"/>
         <Button Content="{Binding CommandCommandBinding}" HorizontalAlignment="Left" Height="68" Margin="8" VerticalAlignment="Top" Width="341" Command="{Binding CommandCommandBinding}"/>
         <Button Content="{Binding CommandNavigationSample}" HorizontalAlignment="Left" Height="68" Margin="8" VerticalAlignment="Top" Width="341" Command="{Binding CommandNavigationSample}"/>
-        
+        <Button Content="{Binding CommandMultiLevelSelection}" HorizontalAlignment="Left" Height="68" Margin="8" VerticalAlignment="Top" Width="341" Command="{Binding CommandMultiLevelSelection}"/>
+
     </StackPanel>
 </mvvm:MVVMWindow>
