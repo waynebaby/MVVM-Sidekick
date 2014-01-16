@@ -42,12 +42,12 @@
     <StartupObject>Samples.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MVVMSidekick, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.1.9.9\lib\net45\MVVMSidekick.dll</HintPath>
+    <Reference Include="MVVMSidekick">
+      <HintPath>..\packages\MVVM-Sidekick.1.2.0.0\lib\net45\MVVMSidekick.dll</HintPath>
     </Reference>
-    <Reference Include="MVVMSidekick.Behaviors_net45">
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.0.0.4\lib\net45\MVVMSidekick.Behaviors_net45.dll</HintPath>
+    <Reference Include="MVVMSidekick.Behaviors_net45, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.0.0.6\lib\net45\MVVMSidekick.Behaviors_net45.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -92,6 +92,9 @@
     <Compile Include="..\Samples_ViewModels\ListsAndItemsPattern_Model.cs">
       <Link>ViewModels\ListsAndItemsPattern_Model.cs</Link>
     </Compile>
+    <Compile Include="..\Samples_ViewModels\MultiLevelSelection_Model.cs">
+      <Link>ViewModels\MultiLevelSelection_Model.cs</Link>
+    </Compile>
     <Compile Include="..\Samples_ViewModels\Tree_Model.cs">
       <Link>ViewModels\Tree_Model.cs</Link>
     </Compile>
@@ -107,8 +110,12 @@
     <Compile Include="ListsAndItemsPattern.xaml.cs">
       <DependentUpon>ListsAndItemsPattern.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MultiLevelSelection.xaml.cs">
+      <DependentUpon>MultiLevelSelection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StartUps\CommandBindingsSample.cs" />
     <Compile Include="StartUps\ListsAndItemsPattern.cs" />
+    <Compile Include="StartUps\MultiLevelSelection.cs" />
     <Compile Include="StartUps\ViewNavigation.cs" />
     <Compile Include="StartUps\ViewNavigation_Child.cs" />
     <Compile Include="Tree.xaml.cs">
@@ -156,6 +163,10 @@
       <DependentUpon>Index.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MultiLevelSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Tree.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

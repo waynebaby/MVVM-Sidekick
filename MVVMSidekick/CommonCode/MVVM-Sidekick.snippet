@@ -23,6 +23,7 @@
           <ToolTip>Property Name</ToolTip>
           <Default>MyProperty</Default>
         </Literal>
+      
       </Declarations>
       <Code Language="csharp">
                   <![CDATA[        public $type$ $property$
@@ -33,13 +34,59 @@
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>{ LocatorFunc = _$property$Locator};
         static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator<$type$>("$property$", model =>model.Initialize("$property$",ref model._$property$, ref _$property$Locator,_$property$DefaultValueFactory));         
-        static Func<$type$> _$property$DefaultValueFactory = null;
+        static Func<$type$> _$property$DefaultValueFactory = ()=>{ return default($type$); };
         #endregion
 ]]>
       </Code>
     </Snippet>
   </CodeSnippet>
 
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>MVVM Sidekick View Model Property with complex value factory</Title>
+      <Shortcut>propcvm</Shortcut>
+      <Description>Property of View Model for WPF &amp; Silverlight MVVM </Description>
+      <Author>Wayne Wang</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>type</ID>
+          <ToolTip>Property Type</ToolTip>
+          <Default>int</Default>
+        </Literal>
+        <Literal>
+          <ID>property</ID>
+          <ToolTip>Property Name</ToolTip>
+          <Default>MyProperty</Default>
+        </Literal>
+
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[        public $type$ $property$
+        {
+            get { return _$property$Locator(this).Value; }
+            set { _$property$Locator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property $type$ $property$ Setup        
+        protected Property<$type$> _$property$ = new Property<$type$>{ LocatorFunc = _$property$Locator};
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator<$type$>("$property$", model =>model.Initialize("$property$",ref model._$property$, ref _$property$Locator,_$property$DefaultValueFactory));         
+        static Func<BindableBase,$type$> _$property$DefaultValueFactory = 
+            model=>
+            { 
+                var vm = CastToCurrentType(model);
+                //TODO: Add the logic that produce default value from vm current status.
+                return default($type$); 
+            };
+        #endregion
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+  
   <!--View Model Class-->
   <CodeSnippet Format="1.0.0">
     <Header>
