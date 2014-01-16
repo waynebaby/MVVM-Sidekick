@@ -92,8 +92,8 @@
       <Link>Packages\Microsoft.Bcl.Build.1.0.10.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.1.9.7.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.1.9.7.nupkg</Link>
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.2.0.0.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.2.0.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\..\packages\Rx-Xaml.2.1.30214.0\Rx-Xaml.2.1.30214.0.nupkg">
@@ -154,6 +154,10 @@
     </Content>
     <Content Include="..\MVVMSidekickWindowsPhoneApplication.WP8\bin\ProjectTemplates\CSharp\1033\MVVMSidekickWindowsPhoneApplication.WP8.zip">
       <Link>ProjectTemplates\Windows Phone\MVVMSidekickWindowsPhoneApplication.WP8.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\Nuget\MVVM-Sidekick.Behaviors\MVVM-Sidekick.Behaviors.0.0.0.6.nupkg">
+      <Link>Packages\MVVM-Sidekick.Behaviors.0.0.0.6.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
