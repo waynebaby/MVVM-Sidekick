@@ -224,7 +224,12 @@ namespace MVVMSidekick
 
             }
 
-            public class ItemsAndSelectionGroup<T, TCollection, TSelectionMode> : BindableBase<ItemsAndSelectionGroup<T, TCollection, TSelectionMode>>
+            public interface IItemsAndSelectionGroupBinding
+            {
+                MVVMSidekick.Patterns.ItemsAndSelection.ItemsAndSelectionGroupBinder Binder { get; set; }
+            }
+
+            public class ItemsAndSelectionGroup<T, TCollection, TSelectionMode> : BindableBase<ItemsAndSelectionGroup<T, TCollection, TSelectionMode>>, IItemsAndSelectionGroupBinding
                 where TCollection : ICollection<T>, INotifyCollectionChanged
             {
 
@@ -232,9 +237,20 @@ namespace MVVMSidekick
                 {
 
                     base.AddDisposeAction(() => Binder = null);
+                    this.GetValueContainer(x => x.Items).GetNullObservable()
+                        .Subscribe(_ => ResetSelection())
+                        .DisposeWith(this);
 
                 }
 
+
+                private void ResetSelection()
+                {
+                    ResetPropertyValue(_SelectedValue);
+                    ResetPropertyValue(_SelectedIndex);
+                    ResetPropertyValue(_SelectedItem);
+
+                }
 
 
                 public ItemsAndSelectionGroupBinder Binder
@@ -423,7 +439,7 @@ namespace MVVMSidekick
                 #region Property int SelectedIndex Setup
                 protected Property<int> _SelectedIndex = new Property<int> { LocatorFunc = _SelectedIndexLocator };
                 static Func<BindableBase, ValueContainer<int>> _SelectedIndexLocator = RegisterContainerLocator<int>("SelectedIndex", model => model.Initialize("SelectedIndex", ref model._SelectedIndex, ref _SelectedIndexLocator, _SelectedIndexDefaultValueFactory));
-                static Func<int> _SelectedIndexDefaultValueFactory = null;
+                static Func<int> _SelectedIndexDefaultValueFactory = ()=>-1;
                 #endregion
 
 
