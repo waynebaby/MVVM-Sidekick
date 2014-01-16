@@ -107,6 +107,9 @@
     <Compile Include="..\Samples_ViewModels\ListsAndItemsPattern_Model.cs">
       <Link>ViewModels\ListsAndItemsPattern_Model.cs</Link>
     </Compile>
+    <Compile Include="..\Samples_ViewModels\MultiLevelSelection_Model.cs">
+      <Link>ViewModels\MultiLevelSelection_Model.cs</Link>
+    </Compile>
     <Compile Include="..\Samples_ViewModels\Tree_Model.cs">
       <Link>ViewModels\Tree_Model.cs</Link>
     </Compile>
@@ -132,6 +135,9 @@
     <Compile Include="Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MultiLevelSelection.xaml.cs">
+      <DependentUpon>MultiLevelSelection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -140,6 +146,7 @@
     </Compile>
     <Compile Include="StartUps\CommandBindingsSample.cs" />
     <Compile Include="StartUps\ListsAndItemsPattern.cs" />
+    <Compile Include="StartUps\MultiLevelSelection.cs" />
     <Compile Include="StartUps\ViewNavigation.cs" />
     <Compile Include="StartUps\ViewNavigation_Child.cs" />
     <Compile Include="ViewNavigation.xaml.cs">
@@ -169,6 +176,10 @@
     <Page Include="Index.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MultiLevelSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewNavigation.xaml">
       <SubType>Designer</SubType>
@@ -217,12 +228,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MVVMSidekick.Behaviors_WP8">
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.0.0.4\lib\wp8\MVVMSidekick.Behaviors_WP8.dll</HintPath>
-    </Reference>
-    <Reference Include="MVVMSidekick_Wp8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="MVVMSidekick.Behaviors_WP8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.1.9.9\lib\wp8\MVVMSidekick_Wp8.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.0.0.6\lib\wp8\MVVMSidekick.Behaviors_WP8.dll</HintPath>
+    </Reference>
+    <Reference Include="MVVMSidekick_Wp8">
+      <HintPath>..\packages\MVVM-Sidekick.1.2.0.0\lib\wp8\MVVMSidekick_Wp8.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\WP8\System.Reactive.Core.dll</HintPath>
