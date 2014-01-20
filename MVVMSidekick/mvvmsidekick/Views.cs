@@ -185,11 +185,20 @@ namespace MVVMSidekick
             public MVVMWindow()
                 : this(null)
             {
-                //ViewModel = new DefaultViewModel ();
             }
 
             public MVVMWindow(IViewModel viewModel)
+
             {
+          if (Utilities.Runtime.IsInDesignMode)
+                {
+                    var binding = new Binding();
+                    binding.Path = new PropertyPath("Content.DataContext");
+                    binding.Source = this;
+                    binding.Mode = BindingMode.TwoWay;
+
+                    BindingOperations.SetBinding(this, ViewModelProperty, binding);
+                }
                 Unloaded += ViewHelper.ViewUnloadCallBack;
                 Loaded += async (_1, _2) =>
                 {
@@ -317,6 +326,18 @@ namespace MVVMSidekick
 
             public MVVMPage(IViewModel viewModel)
             {
+                if (Utilities.Runtime.IsInDesignMode)
+                {
+                    
+                    var binding = new Binding();
+                    binding.Path = new PropertyPath("Content.DataContext");
+                    binding.Source = this;
+                    binding.Mode = BindingMode.TwoWay;
+
+                    BindingOperations.SetBinding(this, ViewModelProperty, binding);
+               
+                }
+
                 presetViewModel = viewModel;
                 Unloaded += ViewHelper.ViewUnloadCallBack;
 
@@ -526,10 +547,27 @@ namespace MVVMSidekick
                 : this(null)
             {
 
+                if (Utilities.Runtime.IsInDesignMode)
+                {
+                    var binding = new Binding();
+                    binding.Path = new PropertyPath("Content.DataContext");
+                    binding.Source = this;
+                    binding.Mode = BindingMode.TwoWay;
 
+                    SetBinding(ViewModelProperty, binding);
+                }
             }
             public MVVMControl(IViewModel viewModel)
             {
+                if (Utilities.Runtime.IsInDesignMode)
+                {
+                    var binding = new Binding();
+                    binding.Path = new PropertyPath("Content.DataContext");
+                    binding.Source = this;
+                    binding.Mode = BindingMode.TwoWay;
+
+                    BindingOperations.SetBinding(this, ViewModelProperty, binding);
+                }
                 Unloaded += ViewHelper.ViewUnloadCallBack;
                 ////////// Unloaded += (_1, _2) => ViewModel = null;
                 Loaded += async (_1, _2) =>
