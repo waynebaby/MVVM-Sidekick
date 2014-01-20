@@ -63,13 +63,54 @@ namespace MVVMSidekick
 {
     namespace Utilities
     {
+
+        public static class Runtime
+        {
+
+            static bool? _IsInDesignMode;
+
+
+            /// <summary>
+            /// <para>Gets if the code is running in design time. </para>
+            /// <para>读取目前是否在设计时状态。</para>
+            /// </summary>
+            public static bool IsInDesignMode
+            {
+                get
+                {
+
+                    return (
+                        _IsInDesignMode
+                        ??
+                        (
+
+                            _IsInDesignMode =
+#if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
+ DesignerProperties.IsInDesignTool
+#elif NETFX_CORE
+                                Windows.ApplicationModel.DesignMode.DesignModeEnabled
+#else
+ (bool)System.ComponentModel.DependencyPropertyDescriptor
+                                .FromProperty(
+                                    DesignerProperties.IsInDesignModeProperty,
+                                    typeof(System.Windows.FrameworkElement))
+                                .Metadata
+                                .DefaultValue
+#endif
+))
+                        .Value;
+                }
+
+            }
+
+        }
+
         /// <summary>
         /// 代码调用上下文
         ///  Calling code-context
         /// </summary>
         public struct CallingCodeContext
         {
-
             /// <summary>
             /// 创建一个当前调用上下文数据
             /// </summary>
@@ -501,29 +542,29 @@ namespace MVVMSidekick
         }
 
 #if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
-    public class ConcurrentDictionary<TK, TV> : Dictionary<TK, TV>
-    {
-        public TV GetOrAdd(TK key, Func<TK, TV> factory)
+        public class ConcurrentDictionary<TK, TV> : Dictionary<TK, TV>
         {
-            TV rval = default(TV);
-
-            if (!base.TryGetValue(key, out rval))
+            public TV GetOrAdd(TK key, Func<TK, TV> factory)
             {
-                lock (this)
+                TV rval = default(TV);
+
+                if (!base.TryGetValue(key, out rval))
                 {
-                    if (!base.TryGetValue(key, out rval))
+                    lock (this)
                     {
-                        rval = factory(key);
-                        base.Add(key, rval);
+                        if (!base.TryGetValue(key, out rval))
+                        {
+                            rval = factory(key);
+                            base.Add(key, rval);
+                        }
+
+
                     }
-
-
                 }
-            }
 
-            return rval;
+                return rval;
+            }
         }
-    }
 #endif
 
         /// <summary> 
@@ -620,7 +661,7 @@ namespace MVVMSidekick
                     });
 #else
 
-                }, null);
+                    }, null);
 #endif
 
             }
