@@ -25,7 +25,8 @@
             <RowDefinition Height="23*"/>
         </Grid.RowDefinitions>
         <StackPanel  Orientation="Horizontal"  Grid.RowSpan="2" Grid.ColumnSpan="2" >
-            <TextBlock Text="{Binding Id}" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="40" Margin="0,38,0,-38" />
+            <TextBlock Text="{Binding BindableInstanceId}" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="40" Margin="0,38,0,-38" />
+            <TextBlock Text="{Binding ViewModel.BindableInstanceId, ElementName=layoutAwarePage, Mode=OneWay}" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="40" Margin="0,38,0,-38" />
             <TextBlock Text="{Binding HelloWorld}" FontSize="40" />
         </StackPanel>
 
