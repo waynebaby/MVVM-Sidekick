@@ -526,7 +526,29 @@ namespace MVVMSidekick
             /// <param name="info">Property name/属性名</param>
             /// <param name="initValue">The first value of this container/初始值</param>
             public ValueContainer(string info, BindableBase model, TProperty initValue = default (TProperty ))
-                : this(info, model, (v1, v2) => v1.Equals(v2), initValue)
+                : this(info, model, (v1, v2) =>
+                    {
+                        if (v1 == null)
+                        {
+                            if (v2 == null)
+                            {
+                                return   true ;
+                            }
+                            else
+                            {
+                                return false  ;
+                            }
+                        }
+                        else if (v2 == null)
+                        {
+                            return false ;
+                        }
+                        else
+                        {
+                            return v1.Equals(v2);
+                        }
+                    
+                    }, initValue)
             {
             }
 
@@ -623,7 +645,7 @@ namespace MVVMSidekick
 
             private void InternalPropertyChange(BindableBase objectInstance, TProperty newValue, ref TProperty currentValue, string message)
             {
-                var changing = (this.EqualityComparer == null) ?
+                var changing = (this.EqualityComparer != null) ?
                     !this.EqualityComparer(newValue, currentValue) :
                     !Object.Equals(newValue, currentValue);
 
@@ -1198,7 +1220,7 @@ namespace MVVMSidekick
                 var sb = new StringBuilder();
                 var rt = GetAllErrors().Select(x =>
                 {
-                    return sb.Append(x.Message).Append(":").AppendLine(x.Exception.ToString());
+                    return sb.Append(x.Message).Append(":").AppendLine( x.Exception ==null ?" " :    x.Exception.ToString());
                 }
                     )
                     .ToArray();
@@ -1212,7 +1234,6 @@ namespace MVVMSidekick
                 var errors = GetFieldNames()
                      .SelectMany(name => this.GetValueContainer(name).Errors)
                      .Where(x => x != null)
-                     .Where(x => !(string.IsNullOrEmpty(x.Message) || x.Exception == null))
                      .ToArray();
                 return errors;
             }
