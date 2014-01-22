@@ -203,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\AlignmentGrid.png" />
+    <Content Include="Assets\AppBar\add.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -240,7 +241,7 @@
     </Reference>
     <Reference Include="MVVMSidekick.Behaviors_WP8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.2.2\lib\wp8\MVVMSidekick.Behaviors_WP8.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.2.3\lib\wp8\MVVMSidekick.Behaviors_WP8.dll</HintPath>
     </Reference>
     <Reference Include="MVVMSidekick_Wp8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -97,6 +97,7 @@
     <Compile Include="..\MVVMSidekick.Behaviors_net45\ItemsSelectionBindingBehavior.cs">
       <Link>ItemsSelectionBindingBehavior.cs</Link>
     </Compile>
+    <Compile Include="AppbarCommandBindingBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
