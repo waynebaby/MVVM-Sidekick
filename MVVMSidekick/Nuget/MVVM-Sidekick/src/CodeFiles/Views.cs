@@ -283,7 +283,7 @@ namespace MVVMSidekick
 #endif
 
 #if WINDOWS_PHONE_7||WINDOWS_PHONE_8
-        public class MVVMPage : PhoneApplicationPage, IView
+        public partial class MVVMPage : PhoneApplicationPage, IView
 #else
         public class MVVMPage : Page, IView
 #endif
