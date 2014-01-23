@@ -36,7 +36,7 @@
            
             </shell:ApplicationBar.Buttons>
         </shell:ApplicationBar>
-    </mvvm:MVVMPage.ApplicationBar>-->
+    </mvvm:MVVMPage.ApplicationBar>--><!--
     <i:Interaction.Behaviors>
         <Behaviors:ApplicationBarCommandBindingBehavior Page="{Binding ElementName=mVVMPage, Mode=OneWay}">
             <Behaviors:ApplicationBarCommandBindingBehavior.IconCommandBindings>
@@ -44,7 +44,7 @@
                 <Behaviors:ApplicationBarIconButtonCommandBinding IconUri="/Assets/Tiles/FlipCycleTileLarge.png" Text="aaa"/>
             </Behaviors:ApplicationBarCommandBindingBehavior.IconCommandBindings>
         </Behaviors:ApplicationBarCommandBindingBehavior>
-    </i:Interaction.Behaviors>
+    </i:Interaction.Behaviors>-->
 
     <!--LayoutRoot is the root grid where all page content is placed-->
 	<Grid x:Name="LayoutRoot" Background="Transparent" DataContext="{StaticResource DesignVM}">
