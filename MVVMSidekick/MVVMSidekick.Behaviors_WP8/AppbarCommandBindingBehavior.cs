@@ -20,7 +20,7 @@ using System.Windows.Media;
 namespace MVVMSidekick.Behaviors
 {
 
-    public class ApplicationBarCommandBindingBehavior : Behavior<PhoneApplicationPage>, IApplicationBar
+    public class ApplicationBarCommandBindingBehavior : Behavior<Panel>, IApplicationBar
     {
         public ApplicationBarCommandBindingBehavior()
         {
@@ -29,7 +29,7 @@ namespace MVVMSidekick.Behaviors
 
         protected override void OnAttached()
         {
-            Page = AssociatedObject;
+
             base.OnAttached();
         }
 
@@ -42,7 +42,7 @@ namespace MVVMSidekick.Behaviors
             var ApplicationBar = page.ApplicationBar;
             if (ApplicationBar == null) return;
 
-            var collection = sender.IconCommandBindings;
+            var collection = sender.Buttons;
             if (collection == null) return;
 
 
@@ -54,6 +54,17 @@ namespace MVVMSidekick.Behaviors
             foreach (var item in collection)
             {
                 var newapbtn = new ApplicationBarIconButton(item.IconUri) { IsEnabled = item.IsEnabled, Text = item.Text };
+                newapbtn.Click += (o, e) =>
+                    {
+                        if (item.BindingCommand !=null)
+                        {
+                            if (item.BindingCommand.CanExecute(null))
+                            {
+                                item.BindingCommand.Execute(null);
+                            }
+                        }
+
+                    };
                 item.Core = newapbtn;
                 ApplicationBar.Buttons.Add(newapbtn);
 
@@ -62,92 +73,124 @@ namespace MVVMSidekick.Behaviors
         }
 
 
-        public IApplicationBar Core
+        IApplicationBar Core
         {
             get { return (IApplicationBar)GetValue(CoreProperty); }
             set { SetValue(CoreProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Core.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CoreProperty =
-            DependencyProperty.Register("Core", typeof(IApplicationBar), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(0));
+        static readonly DependencyProperty CoreProperty =
+           DependencyProperty.Register("Core", typeof(IApplicationBar), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(null,
+               (o, e) =>
+               {
+                   PropertyChangedHelper.IfValueChangedThen<ApplicationBarCommandBindingBehavior, IApplicationBar>(o, e,
+                     (sender, old1, new1) =>
+                     {
+                         sender.BackgroundColor = new1.BackgroundColor;
+                         sender.ForegroundColor = new1.ForegroundColor;
+                         sender.IsMenuEnabled = new1.IsMenuEnabled;
+                         sender.IsVisible = new1.IsVisible;
+                         sender.Mode = new1.Mode;
+                         sender.Opacity = new1.Opacity;
+
+                     }
+                   );
+               }
+               ));
 
 
 
-        PhoneApplicationPage _Page;
 
-        PhoneApplicationPage Page
+
+
+        public PhoneApplicationPage Page
         {
-            get { return _Page; }
-            set
-            {
-                _Page = value;
-
-
-                if (_Page == null)
-                {
-                    return;
-                }
-
-                if (_Page.ApplicationBar == null)
-                {
-                    _Page.ApplicationBar = new ApplicationBar();
-                }
-
-
-                PopulateAppBarIconButtons(this);
-            }
+            get { return (PhoneApplicationPage)GetValue(PageProperty); }
+            set { SetValue(PageProperty, value); }
         }
 
-
-
-
-
-
-
-
-        public ObservableCollection<ApplicationBarIconButtonCommandBinding> IconCommandBindings
-        {
-            get { return (ObservableCollection<ApplicationBarIconButtonCommandBinding>)GetValue(IconCommandBindingsProperty); }
-            set
-            {
-                SetValue(IconCommandBindingsProperty, value);
-            }
-        }
-
-        // Using a DependencyProperty as the backing store for IconCommandBindings.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IconCommandBindingsProperty =
-            DependencyProperty.Register("IconCommandBindings", typeof(ObservableCollection<ApplicationBarIconButtonCommandBinding>), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(new ObservableCollection<ApplicationBarIconButtonCommandBinding>(),
+        // Using a DependencyProperty as the backing store for Page.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PageProperty =
+            DependencyProperty.Register("Page", typeof(PhoneApplicationPage), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(null,
                 (o, e) =>
                 {
-                    var sender = o as ApplicationBarCommandBindingBehavior;
-                    var old = e.OldValue as ObservableCollection<ApplicationBarIconButtonCommandBinding>;
-                    if (old != null)
-                    {
-                        old.Clear();
-                    }
+                    PropertyChangedHelper.IfValueChangedThen<ApplicationBarCommandBindingBehavior, PhoneApplicationPage>
+                        (o, e,
+                        (sender, oldP, newP) =>
+                        {
 
-                    var eve = e.NewValue as ObservableCollection<ApplicationBarIconButtonCommandBinding>;
-                    if (eve != null)
-                    {
-                        eve.CollectionChanged += (col, evnta) =>
+                            if (newP == null)
                             {
-                                if (evnta.Action == NotifyCollectionChangedAction.Remove || evnta.Action == NotifyCollectionChangedAction.Replace)
-                                {
-                                    foreach (var item in evnta.OldItems)
-                                    {
+                                return;
+                            }
 
-                                        ((IDisposable)item).Dispose();
-                                    }
-                                }
+                            if (newP.ApplicationBar == null)
+                            {
+                                newP.ApplicationBar = new ApplicationBar();
+                            }
 
-                            };
-                    }
 
-                    PopulateAppBarIconButtons(sender);
+                            PopulateAppBarIconButtons(sender);
+                        });
 
                 }
                 ));
+
+
+
+
+
+
+
+
+
+
+
+
+        public DependencyObjectCollection <ApplicationBarIconButtonCommandBinding> Buttons
+        {
+            get { return (DependencyObjectCollection<ApplicationBarIconButtonCommandBinding>)GetValue(ButtonsProperty); }
+            set { SetValue(ButtonsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Buttons.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ButtonsProperty =
+            DependencyProperty.Register("Buttons", typeof(DependencyObjectCollection<ApplicationBarIconButtonCommandBinding>), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(
+                new DependencyObjectCollection<ApplicationBarIconButtonCommandBinding>(),
+
+          (o, e) =>
+          {
+              var sender = o as ApplicationBarCommandBindingBehavior;
+              var old = e.OldValue as DependencyObjectCollection<ApplicationBarIconButtonCommandBinding>;
+              if (old != null)
+              {
+                  old.Clear();
+              }
+
+              var eve = e.NewValue as DependencyObjectCollection<ApplicationBarIconButtonCommandBinding>;
+              if (eve != null)
+              {
+                  eve.CollectionChanged += (col, evnta) =>
+                      {
+                          if (evnta.Action == NotifyCollectionChangedAction.Remove || evnta.Action == NotifyCollectionChangedAction.Replace)
+                          {
+                              foreach (var item in evnta.OldItems)
+                              {
+
+                                  ((IDisposable)item).Dispose();
+                              }
+                          }
+
+                      };
+              }
+
+              PopulateAppBarIconButtons(sender);
+
+          }
+        ));
+
+
 
 
 
@@ -160,17 +203,35 @@ namespace MVVMSidekick.Behaviors
 
         // Using a DependencyProperty as the backing store for BackgroundColor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty BackgroundColorProperty =
-            DependencyProperty.Register("BackgroundColor", typeof(Color), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("BackgroundColor", typeof(Color), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(Colors.Transparent,
+                  (o, e) =>
+                  {
+                      PropertyChangedHelper.IfValueChangedThen<ApplicationBarCommandBindingBehavior, Color>(o, e,
+                        (sender, old1, new1) =>
+                        {
+                            if (sender.Core != null)
+                            {
+                                if (!PropertyChangedHelper.ValueEquals(new1, sender.Core.BackgroundColor))
+                                {
+                                    sender.Core.BackgroundColor = new1;
+                                }
+                            }
+
+                        }
+                      );
+                  }
+
+                ));
 
 
         System.Collections.IList IApplicationBar.Buttons
         {
-            get { throw new NotImplementedException(); }
+            get { return Buttons; }
         }
 
-        double IApplicationBar.DefaultSize
+        public double DefaultSize
         {
-            get { throw new NotImplementedException(); }
+            get { return Core.DefaultSize; }
         }
 
 
@@ -183,7 +244,23 @@ namespace MVVMSidekick.Behaviors
 
         // Using a DependencyProperty as the backing store for ForegroundColor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ForegroundColorProperty =
-            DependencyProperty.Register("ForegroundColor", typeof(Color), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("ForegroundColor", typeof(Color), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(Colors.Transparent,
+                (o, e) =>
+                {
+                    PropertyChangedHelper.IfValueChangedThen<ApplicationBarCommandBindingBehavior, Color>(o, e,
+                      (sender, old1, new1) =>
+                      {
+                          if (sender.Core != null)
+                          {
+                              if (!PropertyChangedHelper.ValueEquals(new1, sender.Core.ForegroundColor))
+                              {
+                                  sender.Core.ForegroundColor = new1;
+                              }
+                          }
+
+                      }
+                    );
+                }));
 
 
 
@@ -196,7 +273,23 @@ namespace MVVMSidekick.Behaviors
 
         // Using a DependencyProperty as the backing store for IsMenuEnabled.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsMenuEnabledProperty =
-            DependencyProperty.Register("IsMenuEnabled", typeof(bool), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(true));
+            DependencyProperty.Register("IsMenuEnabled", typeof(bool), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(true,
+                 (o, e) =>
+                 {
+                     PropertyChangedHelper.IfValueChangedThen<ApplicationBarCommandBindingBehavior, bool>(o, e,
+                       (sender, old1, new1) =>
+                       {
+                           if (sender.Core != null)
+                           {
+                               if (!PropertyChangedHelper.ValueEquals(new1, sender.Core.IsMenuEnabled))
+                               {
+                                   sender.Core.IsMenuEnabled = new1;
+                               }
+                           }
+
+                       }
+                     );
+                 }));
 
 
 
@@ -209,7 +302,23 @@ namespace MVVMSidekick.Behaviors
 
         // Using a DependencyProperty as the backing store for IsVisible.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsVisibleProperty =
-            DependencyProperty.Register("IsVisible", typeof(bool), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(true));
+            DependencyProperty.Register("IsVisible", typeof(bool), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(true,
+                    (o, e) =>
+                    {
+                        PropertyChangedHelper.IfValueChangedThen<ApplicationBarCommandBindingBehavior, bool>(o, e,
+                          (sender, old1, new1) =>
+                          {
+                              if (sender.Core != null)
+                              {
+                                  if (!PropertyChangedHelper.ValueEquals(new1, sender.Core.IsVisible))
+                                  {
+                                      sender.Core.IsVisible = new1;
+                                  }
+                              }
+
+                          }
+                        );
+                    }));
 
 
 
@@ -218,9 +327,9 @@ namespace MVVMSidekick.Behaviors
             get { throw new NotImplementedException(); }
         }
 
-        double IApplicationBar.MiniSize
+        public double MiniSize
         {
-            get { throw new NotImplementedException(); }
+            get { return Core.MiniSize; }
         }
 
 
@@ -233,7 +342,23 @@ namespace MVVMSidekick.Behaviors
 
         // Using a DependencyProperty as the backing store for Mode.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ModeProperty =
-            DependencyProperty.Register("Mode", typeof(ApplicationBarMode), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(default(ApplicationBarMode)));
+            DependencyProperty.Register("Mode", typeof(ApplicationBarMode), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(ApplicationBarMode.Default,
+                  (o, e) =>
+                  {
+                      PropertyChangedHelper.IfValueChangedThen<ApplicationBarCommandBindingBehavior, ApplicationBarMode>(o, e,
+                        (sender, old1, new1) =>
+                        {
+                            if (sender.Core != null)
+                            {
+                                if (!PropertyChangedHelper.ValueEquals(new1, sender.Core.Mode))
+                                {
+                                    sender.Core.Mode = new1;
+                                }
+                            }
+
+                        }
+                      );
+                  }));
 
 
 
@@ -247,7 +372,25 @@ namespace MVVMSidekick.Behaviors
 
         // Using a DependencyProperty as the backing store for Opacity.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OpacityProperty =
-            DependencyProperty.Register("Opacity", typeof(Double), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(1));
+            DependencyProperty.Register("Opacity", typeof(Double), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata((double)1,
+                (o, e) =>
+                {
+                    PropertyChangedHelper.IfValueChangedThen<ApplicationBarCommandBindingBehavior, double>(o, e,
+                      (sender, old1, new1) =>
+                      {
+                          if (sender.Core != null)
+                          {
+                              if (!PropertyChangedHelper.ValueEquals(new1, sender.Core.Opacity))
+                              {
+                                  sender.Core.Opacity = new1;
+                              }
+                          }
+
+                      }
+                    );
+                }
+
+                ));
 
 
 
@@ -272,7 +415,7 @@ namespace MVVMSidekick.Behaviors
         }
     }
 
-    internal static class Helper
+    internal static class PropertyChangedHelper
     {
         internal static bool ValueEquals<T>(T x, T y)
         {
@@ -350,7 +493,7 @@ namespace MVVMSidekick.Behaviors
             DependencyProperty.Register("Core", typeof(IApplicationBarIconButton), typeof(ApplicationBarIconButtonCommandBinding), new PropertyMetadata(null,
                 (o, e) =>
                 {
-                    Helper.IfValueChangedThen<ApplicationBarIconButtonCommandBinding, IApplicationBarIconButton>(o, e,
+                    PropertyChangedHelper.IfValueChangedThen<ApplicationBarIconButtonCommandBinding, IApplicationBarIconButton>(o, e,
                       (sender, old1, new1) =>
                       {
                           sender.IconUri = new1.IconUri;
@@ -374,16 +517,15 @@ namespace MVVMSidekick.Behaviors
         // Using a DependencyProperty as the backing store for IconUri.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IconUriProperty =
             DependencyProperty.Register("IconUri", typeof(Uri), typeof(ApplicationBarIconButtonCommandBinding), new PropertyMetadata(
-                new Uri("/Assets/AppBar/add.png", UriKind.Relative)
-                ,
+                new Uri("/Assets/AppBar/add.png", UriKind.Relative),
                 (o, e) =>
                 {
-                    Helper.IfValueChangedThen<ApplicationBarIconButtonCommandBinding, Uri>(o, e,
+                    PropertyChangedHelper.IfValueChangedThen<ApplicationBarIconButtonCommandBinding, Uri>(o, e,
                       (sender, old1, new1) =>
                       {
                           if (sender.Core != null)
                           {
-                              if (!Helper.ValueEquals(new1, sender.Core.IconUri))
+                              if (!PropertyChangedHelper.ValueEquals(new1, sender.Core.IconUri))
                               {
                                   sender.Core.IconUri = new1;
                               }
@@ -428,12 +570,12 @@ namespace MVVMSidekick.Behaviors
             DependencyProperty.Register("IsEnabled", typeof(bool), typeof(ApplicationBarIconButtonCommandBinding), new PropertyMetadata(true,
                 (o, e) =>
                 {
-                    Helper.IfValueChangedThen<ApplicationBarIconButtonCommandBinding, bool>(o, e,
+                    PropertyChangedHelper.IfValueChangedThen<ApplicationBarIconButtonCommandBinding, bool>(o, e,
                       (sender, old1, new1) =>
                       {
                           if (sender.Core != null)
                           {
-                              if (!Helper.ValueEquals(new1, sender.Core.IsEnabled))
+                              if (!PropertyChangedHelper.ValueEquals(new1, sender.Core.IsEnabled))
                               {
                                   sender.Core.IsEnabled = new1;
                               }
@@ -458,12 +600,12 @@ namespace MVVMSidekick.Behaviors
                 "Button",
                 (o, e) =>
                 {
-                    Helper.IfValueChangedThen<ApplicationBarIconButtonCommandBinding, string>(o, e,
+                    PropertyChangedHelper.IfValueChangedThen<ApplicationBarIconButtonCommandBinding, string>(o, e,
                       (sender, old1, new1) =>
                       {
                           if (sender.Core != null)
                           {
-                              if (!Helper.ValueEquals(new1, sender.Core.Text))
+                              if (!PropertyChangedHelper.ValueEquals(new1, sender.Core.Text))
                               {
                                   sender.Core.Text = new1;
                               }
