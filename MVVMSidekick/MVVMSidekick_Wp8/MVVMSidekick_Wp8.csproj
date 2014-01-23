@@ -126,6 +126,7 @@
     <Compile Include="..\MVVMSidekick\VisualStates.cs">
       <Link>FileLinks\VisualStates.cs</Link>
     </Compile>
+    <Compile Include="ApplicationBarOfPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +150,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rx-XAML.2.2.2\lib\windowsphone8\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
