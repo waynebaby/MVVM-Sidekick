@@ -115,7 +115,7 @@ namespace MVVMSidekick
             /// <returns>事件独立类</returns>
             public virtual EventObject<TEventArgs> GetEventObject<TEventArgs>()
 #if !NETFX_CORE
-// where TEventArgs : EventArgs
+            // where TEventArgs : EventArgs
 #endif
             {
                 var eventObject = (EventObject<TEventArgs>)GetIEventObjectInstance(typeof(TEventArgs));
@@ -141,17 +141,29 @@ namespace MVVMSidekick
                 var rval = EventObjects.GetOrAdd(
                     argsType,
                     t =>
-                        Activator.CreateInstance(typeof(EventObject<>).MakeGenericType(t)) as IEventObject
+                    {
+                        try
+                        {
+                            var t2 = typeof(EventObject<>).MakeGenericType(t);
+                            return Activator.CreateInstance(t2) as IEventObject;
+                        }
+                        catch (Exception ex)
+                        {
+
+                            throw;
+                        }
+                 
+                    }
                     );
 
                 if (rval.BaseArgsTypeInstance == null)
                 {
 #if NETFX_CORE
                     var baseT = argsType.GetTypeInfo().BaseType;
-                    if (baseT != typeof(object) && baseT.Name != "RuntimeClass")
+                    if (baseT != typeof(object) && baseT.Name != "RuntimeClass" && baseT != null )
 #else
                     var baseT = argsType.BaseType;
-                    if (baseT != typeof(object))
+                    if (baseT != typeof(object) && baseT != null)
 #endif
                     {
                         rval.BaseArgsTypeInstance = GetIEventObjectInstance(baseT);
@@ -181,7 +193,7 @@ namespace MVVMSidekick
             /// <typeparam name="TEventArgs"></typeparam>
             public class EventObject<TEventArgs> : IEventObject, IObservable<RouterEventData<TEventArgs>>, IDisposable
 #if !NETFX_CORE
-// where TEventArgs : EventArgs
+            // where TEventArgs : EventArgs
 #endif
 
             {
@@ -233,7 +245,7 @@ namespace MVVMSidekick
                 void IDisposable.Dispose()
                 {
                     _core.Dispose();
-       
+
                 }
 
 
@@ -300,7 +312,7 @@ namespace MVVMSidekick
             /// <param name="callerMemberName">事件名</param>
             public static void RaiseEvent<TEventArgs>(this BindableBase source, TEventArgs eventArgs, string callerMemberName = "")
 #if !NETFX_CORE
-       // where TEventArgs : EventArgs
+            // where TEventArgs : EventArgs
 #endif
 
             {
@@ -318,8 +330,8 @@ namespace MVVMSidekick
         /// <typeparam name="TEventArgs">事件数据类型</typeparam>
         public struct RouterEventData<TEventArgs>
 #if ! NETFX_CORE
- //: EventArgs
-               // where TEventArgs : EventArgs
+        //: EventArgs
+        // where TEventArgs : EventArgs
 #endif
 
         {
