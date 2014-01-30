@@ -72,7 +72,7 @@ namespace MVVMSidekick
         /// </summary>
         public class EventRouter
         {
-            protected EventRouter()
+            public EventRouter()
             {
 
             }
@@ -128,14 +128,14 @@ namespace MVVMSidekick
             /// 事件来源的代理对象实例
             /// </summary>
 
-            static protected readonly ConcurrentDictionary<Type, IEventObject> EventObjects
+             protected readonly ConcurrentDictionary<Type, IEventObject> EventObjects
      = new ConcurrentDictionary<Type, IEventObject>();
             /// <summary>
             /// 创建事件代理对象
             /// </summary>
             /// <param name="argsType">事件数据类型</param>
             /// <returns>代理对象实例</returns>
-            static protected IEventObject GetIEventObjectInstance(Type argsType)
+             protected IEventObject GetIEventObjectInstance(Type argsType)
             {
 
                 var rval = EventObjects.GetOrAdd(
