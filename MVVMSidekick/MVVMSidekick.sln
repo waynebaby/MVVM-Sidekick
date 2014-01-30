@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonCode", "CommonCode\CommonCode.csproj", "{4D755FF7-84F5-4D29-A771-55F520F87814}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -100,6 +100,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM-Sidekick.Behaviors", "
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples_WinRT81", "Samples_WinRT81\Samples_WinRT81.csproj", "{8E8E8A7C-1FC8-4F57-BE72-172E4865C729}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70F41F44-7B0A-4F65-8070-2C552D82681F}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -543,5 +548,8 @@ Global
 		{2F008E26-786C-4D3A-952B-D1DE62434CBD} = {C01F9355-8161-4C87-9CF0-4933D27929B7}
 		{CF12056F-1294-4F93-8EDB-6B1DA2682CAC} = {C01F9355-8161-4C87-9CF0-4933D27929B7}
 		{8F8F3459-0D7A-464D-87A1-59F63E876EC0} = {C01F9355-8161-4C87-9CF0-4933D27929B7}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

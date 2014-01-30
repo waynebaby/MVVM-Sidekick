@@ -57,6 +57,7 @@ namespace MVVMSidekick
     {
         using MVVMSidekick.Utilities;
         using MVVMSidekick.Views;
+        using MVVMSidekick.EventRouting;
 
 
         /// <summary>
@@ -76,6 +77,10 @@ namespace MVVMSidekick
         public abstract class BindableBase
             : IDisposable, INotifyPropertyChanged, IBindable
         {
+
+
+
+
 
             protected event EventHandler<DataErrorsChangedEventArgs> _ErrorsChanged;
             protected internal void RaiseErrorsChanged(string propertName)
@@ -392,6 +397,9 @@ namespace MVVMSidekick
 
 
 
+
+            public abstract EventRouter EventRouter { get; set; }
+
         }
 
         /// <summary>
@@ -532,22 +540,22 @@ namespace MVVMSidekick
                         {
                             if (v2 == null)
                             {
-                                return   true ;
+                                return true;
                             }
                             else
                             {
-                                return false  ;
+                                return false;
                             }
                         }
                         else if (v2 == null)
                         {
-                            return false ;
+                            return false;
                         }
                         else
                         {
                             return v1.Equals(v2);
                         }
-                    
+
                     }, initValue)
             {
             }
@@ -839,6 +847,7 @@ namespace MVVMSidekick
         public abstract class BindableBase<TSubClassType> : BindableBase, INotifyDataErrorInfo where TSubClassType : BindableBase<TSubClassType>
         {
 
+
             /// <summary>
             /// 清除值
             /// </summary>
@@ -860,6 +869,10 @@ namespace MVVMSidekick
 
 
             }
+
+
+
+
 
 
 
@@ -987,10 +1000,11 @@ namespace MVVMSidekick
             protected static Func<BindableBase, ValueContainer<TProperty>> RegisterContainerLocator<TProperty>(string propertyName, Func<TSubClassType, ValueContainer<TProperty>> getOrCreateLocatorMethod)
             {
 
-
                 TypeDic<TProperty>._propertyContainerGetters[propertyName] = getOrCreateLocatorMethod;
                 _plainPropertyContainerGetters[propertyName] = (v) => getOrCreateLocatorMethod(v) as IValueContainer;
                 return o => getOrCreateLocatorMethod((TSubClassType)o);
+
+
             }
 
 
@@ -1220,7 +1234,7 @@ namespace MVVMSidekick
                 var sb = new StringBuilder();
                 var rt = GetAllErrors().Select(x =>
                 {
-                    return sb.Append(x.Message).Append(":").AppendLine( x.Exception ==null ?" " :    x.Exception.ToString());
+                    return sb.Append(x.Message).Append(":").AppendLine(x.Exception == null ? " " : x.Exception.ToString());
                 }
                     )
                     .ToArray();
@@ -1242,12 +1256,28 @@ namespace MVVMSidekick
             //{
             //    get { return new BindableAccesser<TSubClassType>(this); }
             //}
+            /// <summary>
+            /// 给这个模型分配的消息路由引用（延迟加载）
+            /// </summary>
+            public override  EventRouter EventRouter
+            {
+                get { return _EventRouterLocator(this).Value; }
+                set { _EventRouterLocator(this).SetValueAndTryNotify(value); }
+            }
+            #region Property EventRouter EventRouter Setup
+            protected Property<EventRouter> _EventRouter = new Property<EventRouter> { LocatorFunc = _EventRouterLocator };
+            static Func<BindableBase, ValueContainer<EventRouter>> _EventRouterLocator = RegisterContainerLocator<EventRouter>("EventRouter", model => model.Initialize("EventRouter", ref model._EventRouter, ref _EventRouterLocator, _EventRouterDefaultValueFactory));
+            static Func<EventRouter> _EventRouterDefaultValueFactory = () => { return new EventRouter(); };
+            #endregion
 
+            
 
         }
 
         public interface IBindable : INotifyPropertyChanged
         {
+
+            EventRouter EventRouter { get; set; }
             Guid BindableInstanceId { get; }
             void AddDisposable(IDisposable item, string comment = "", string member = "", string file = "", int line = -1);
             void AddDisposeAction(Action action, string comment = "", string member = "", string file = "", int line = -1);
@@ -1432,6 +1462,10 @@ namespace MVVMSidekick
 
 
             }
+
+            
+        
+            
 
             Task IViewModelLifetime.OnBindedToView(IView view, IViewModel oldValue)
             {
