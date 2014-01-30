@@ -126,7 +126,6 @@
     <Compile Include="..\MVVMSidekick\VisualStates.cs">
       <Link>FileLinks\VisualStates.cs</Link>
     </Compile>
-    <Compile Include="ApplicationBarOfPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
