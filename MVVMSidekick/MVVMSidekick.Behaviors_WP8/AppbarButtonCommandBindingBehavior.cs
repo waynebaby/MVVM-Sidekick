@@ -20,7 +20,7 @@ using System.Windows.Media;
 namespace MVVMSidekick.Behaviors
 {
 
-    public class ApplicationBarCommandBindingBehavior : Behavior<Panel>, IApplicationBar
+    public class ApplicationBarCommandBindingBehavior : Behavior<PhoneApplicationPage>, IApplicationBar
     {
         public ApplicationBarCommandBindingBehavior()
         {
@@ -29,6 +29,11 @@ namespace MVVMSidekick.Behaviors
 
         protected override void OnAttached()
         {
+
+            if (AssociatedObject.ApplicationBar == null)
+            {
+                AssociatedObject.ApplicationBar = new ApplicationBar();
+            }
 
             base.OnAttached();
         }
@@ -73,122 +78,7 @@ namespace MVVMSidekick.Behaviors
         }
 
 
-        IApplicationBar Core
-        {
-            get { return (IApplicationBar)GetValue(CoreProperty); }
-            set { SetValue(CoreProperty, value); }
-        }
 
-        // Using a DependencyProperty as the backing store for Core.  This enables animation, styling, binding, etc...
-        static readonly DependencyProperty CoreProperty =
-           DependencyProperty.Register("Core", typeof(IApplicationBar), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(null,
-               (o, e) =>
-               {
-                   PropertyChangedHelper.IfValueChangedThen<ApplicationBarCommandBindingBehavior, IApplicationBar>(o, e,
-                     (sender, old1, new1) =>
-                     {
-                         sender.BackgroundColor = new1.BackgroundColor;
-                         sender.ForegroundColor = new1.ForegroundColor;
-                         sender.IsMenuEnabled = new1.IsMenuEnabled;
-                         sender.IsVisible = new1.IsVisible;
-                         sender.Mode = new1.Mode;
-                         sender.Opacity = new1.Opacity;
-
-                     }
-                   );
-               }
-               ));
-
-
-
-
-
-
-        public PhoneApplicationPage Page
-        {
-            get { return (PhoneApplicationPage)GetValue(PageProperty); }
-            set { SetValue(PageProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Page.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PageProperty =
-            DependencyProperty.Register("Page", typeof(PhoneApplicationPage), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(null,
-                (o, e) =>
-                {
-                    PropertyChangedHelper.IfValueChangedThen<ApplicationBarCommandBindingBehavior, PhoneApplicationPage>
-                        (o, e,
-                        (sender, oldP, newP) =>
-                        {
-
-                            if (newP == null)
-                            {
-                                return;
-                            }
-
-                            if (newP.ApplicationBar == null)
-                            {
-                                newP.ApplicationBar = new ApplicationBar();
-                            }
-
-
-                            PopulateAppBarIconButtons(sender);
-                        });
-
-                }
-                ));
-
-
-
-
-
-
-
-
-
-
-
-
-        public DependencyObjectCollection <ApplicationBarIconButtonCommandBinding> Buttons
-        {
-            get { return (DependencyObjectCollection<ApplicationBarIconButtonCommandBinding>)GetValue(ButtonsProperty); }
-            set { SetValue(ButtonsProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Buttons.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ButtonsProperty =
-            DependencyProperty.Register("Buttons", typeof(DependencyObjectCollection<ApplicationBarIconButtonCommandBinding>), typeof(ApplicationBarCommandBindingBehavior), new PropertyMetadata(
-                new DependencyObjectCollection<ApplicationBarIconButtonCommandBinding>(),
-
-          (o, e) =>
-          {
-              var sender = o as ApplicationBarCommandBindingBehavior;
-              var old = e.OldValue as DependencyObjectCollection<ApplicationBarIconButtonCommandBinding>;
-              if (old != null)
-              {
-                  old.Clear();
-              }
-
-              var eve = e.NewValue as DependencyObjectCollection<ApplicationBarIconButtonCommandBinding>;
-              if (eve != null)
-              {
-                  eve.CollectionChanged += (col, evnta) =>
-                      {
-                          if (evnta.Action == NotifyCollectionChangedAction.Remove || evnta.Action == NotifyCollectionChangedAction.Replace)
-                          {
-                              foreach (var item in evnta.OldItems)
-                              {
-
-                                  ((IDisposable)item).Dispose();
-                              }
-                          }
-
-                      };
-              }
-
-              PopulateAppBarIconButtons(sender);
-
-          }
-        ));
 
 
 
