@@ -97,7 +97,7 @@
     <Compile Include="..\MVVMSidekick.Behaviors_net45\ItemsSelectionBindingBehavior.cs">
       <Link>ItemsSelectionBindingBehavior.cs</Link>
     </Compile>
-    <Compile Include="AppbarCommandBindingBehavior.cs" />
+    <Compile Include="BindToAppliactionBarIconButtonBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +122,9 @@
     </Reference>
     <Reference Include="System.Reactive.PlatformServices">
       <HintPath>..\packages\Rx-PlatformServices.2.2.2\lib\windowsphone8\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading">
+      <HintPath>..\packages\Rx-XAML.2.2.2\lib\windowsphone8\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
