@@ -33,22 +33,25 @@
 
     </summary>
     <releaseNotes>
+      0.2.2.5
+      Update with Main Lib 
+
       0.2.2.4
       Add Application Bar Item binding Action
       Add SendToEventRouterAction to wire a Event to ViewModel's EventRouter or the Public static EventRouter
-      
-      
+
+
     </releaseNotes>
     <tags>Rx Reactive Extensions MVVM Win8 Metro Modern UI</tags>
     <dependencies>
 
       <dependency id="Rx-Main" version="[2.2.2,3.0)" />
-      <dependency id="Rx-PlatformServices" version="[2.2.2,3.0)" />
+      <dependency id="Rx-PlatformServices" version="[2.2.3,3.0)" />
       <dependency id="Rx-Interfaces" version="[2.2.2,3.0)" />
       <dependency id="Rx-Core" version="[2.2.2,3.0)" />
       <dependency id="Rx-Linq" version="[2.2.2,3.0)" />
       <dependency id="Rx-Xaml" version="[2.2.2,3.0)" />
-      <dependency id="MVVM-Sidekick" version="[1.2.2.3,2.0)" />
+      <dependency id="MVVM-Sidekick" version="[1.2.2.4,2.0)" />
 
     </dependencies>
     <frameworkAssemblies>
