@@ -318,7 +318,7 @@ namespace MVVMSidekick
 
             public MVVMPage(IViewModel viewModel)
             {
-              
+
 
                 presetViewModel = viewModel;
                 Unloaded += ViewHelper.ViewUnloadCallBack;
@@ -532,7 +532,7 @@ namespace MVVMSidekick
             }
             public MVVMControl(IViewModel viewModel)
             {
-              
+
                 Unloaded += ViewHelper.ViewUnloadCallBack;
                 ////////// Unloaded += (_1, _2) => ViewModel = null;
                 Loaded += async (_1, _2) =>
@@ -1181,12 +1181,12 @@ namespace MVVMSidekick
 
             private async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Tuple<Uri, Func<IView>> uriData, Frame frame) where TTarget : class,IViewModel
             {
-                var task = new Task(() => { });
+                var t = new TaskCompletionSource<object>();
                 var guid = Guid.NewGuid();
                 var newUriWithParameter = new Uri(uriData.Item1.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
 
                 var dis = EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
-                    .GetRouterEventObservable()
+
                     .Where(e =>
                             e.EventArgs.Uri == newUriWithParameter)
                     .Subscribe(e =>
@@ -1204,7 +1204,7 @@ namespace MVVMSidekick
 
                             var page = e.Sender as MVVMPage;
 
-                            if (targetViewModel != null) 
+                            if (targetViewModel != null)
                             {
                                 page.ViewModel = targetViewModel;
                                 page.presetViewModel = targetViewModel;
@@ -1213,7 +1213,7 @@ namespace MVVMSidekick
                             targetViewModel = (TTarget)page.ViewModel;
                             NavigateRequestContexts[key] = targetViewModel;
                         }
-                        if (!task.IsCompleted)
+                        if (!t.Task.IsCompleted)
                         {
 
                             targetViewModel.AddDisposeAction(() =>
@@ -1224,7 +1224,7 @@ namespace MVVMSidekick
                                 }
 
                             });
-                            task.Start();
+                            t.SetResult(null);
                         }
                     }
                     );
@@ -1232,7 +1232,7 @@ namespace MVVMSidekick
 
 
                 frame.Navigate(newUriWithParameter);
-                await task;
+                await t.Task;
                 dis.DisposeWith(targetViewModel);
                 return targetViewModel;
             }
@@ -1332,10 +1332,10 @@ namespace MVVMSidekick
             private static async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Type type, Windows.UI.Xaml.Controls.Frame frame) where TTarget : class, IViewModel
             {
                 var parameter = new StageNavigationContext<TTarget>() { ViewModel = targetViewModel };
-                var task = new Task(() => { });
+                var t = new TaskCompletionSource<object >();
                 var dip = EventRouting.EventRouter.Instance
                      .GetEventObject<NavigationEventArgs>()
-                     .GetRouterEventObservable()
+    
                      .Where(e =>
                              object.ReferenceEquals(e.EventArgs.Parameter, parameter))
                      .Subscribe(e =>
@@ -1368,16 +1368,16 @@ namespace MVVMSidekick
 
                          parameter.ViewModel = targetViewModel;
 
-                         if (!task.IsCompleted)
+                         if (!t.Task.IsCompleted)
                          {
 
-                             task.Start();
+                             t.SetResult(null); ;
                          }
                      });
 
 
                 frame.Navigate(type, parameter);
-                await task;
+                await t.Task;
                 dip.DisposeWith(targetViewModel);
                 return targetViewModel;
             }
