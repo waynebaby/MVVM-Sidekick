@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Samples</RootNamespace>
     <AssemblyName>Samples_WPF</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -50,11 +50,11 @@
     </Reference>
     <Reference Include="MVVMSidekick, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.2.2.2\lib\net45\MVVMSidekick.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.2.2.3\lib\net45\MVVMSidekick.dll</HintPath>
     </Reference>
     <Reference Include="MVVMSidekick.Behaviors_net45, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.2.2\lib\net45\MVVMSidekick.Behaviors_net45.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.2.4\lib\net45\MVVMSidekick.Behaviors_net45.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -119,6 +119,9 @@
     <Compile Include="CommandBindingsSample.xaml.cs">
       <DependentUpon>CommandBindingsSample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EventRouterBehavior.xaml.cs">
+      <DependentUpon>EventRouterBehavior.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ListsAndItemsPattern.xaml.cs">
       <DependentUpon>ListsAndItemsPattern.xaml</DependentUpon>
     </Compile>
@@ -126,6 +129,7 @@
       <DependentUpon>MultiLevelSelection.xaml</DependentUpon>
     </Compile>
     <Compile Include="StartUps\CommandBindingsSample.cs" />
+    <Compile Include="StartUps\EventRouterBehavior.cs" />
     <Compile Include="StartUps\ListsAndItemsPattern.cs" />
     <Compile Include="StartUps\MultiLevelSelection.cs" />
     <Compile Include="StartUps\ViewNavigation.cs" />
@@ -133,6 +137,7 @@
     <Compile Include="Tree.xaml.cs">
       <DependentUpon>Tree.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\EventRouterBehavior_Model.cs" />
     <Compile Include="ViewNavigation.xaml.cs">
       <DependentUpon>ViewNavigation.xaml</DependentUpon>
     </Compile>
@@ -144,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CommandBindingsSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EventRouterBehavior.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -87,7 +87,7 @@ namespace MVVMSidekick.Behaviors
 
 
 
-        private  bool IsEnabled
+        private bool IsEnabled
         {
             get { return (bool)GetValue(IsEnabledProperty); }
             set { SetValue(IsEnabledProperty, value); }
@@ -200,7 +200,7 @@ namespace MVVMSidekick.Behaviors
                     foreach (IApplicationBarIconButton btn in appb.Buttons)
                     {
                         WireEventToItem(btn);
-                        InstanceToIndexDic.Add(btn, i);
+                        InstanceToIndexDic[btn] = i;
                         i++;
                     }
                 }
@@ -212,7 +212,7 @@ namespace MVVMSidekick.Behaviors
                     foreach (IApplicationBarMenuItem itm in appb.MenuItems)
                     {
                         WireEventToItem(itm);
-                        InstanceToIndexDic.Add(itm, i);
+                        InstanceToIndexDic[itm] = i;
                         i++;
                     }
                 }
@@ -248,6 +248,10 @@ namespace MVVMSidekick.Behaviors
         protected override void OnDetaching()
         {
             base.OnDetaching();
+            if (InstanceToIndexDic != null)
+            {
+                InstanceToIndexDic.Clear();
+            }
             if (eventSubscribe != null)
             {
                 eventSubscribe.Dispose();
@@ -270,7 +274,11 @@ namespace MVVMSidekick.Behaviors
                                 var item = lst[behavior.IndexBindTo];
                                 if (item.IconUri != behavior.IconUri)
                                 {
-                                    item.IconUri = behavior.IconUri;
+                                    if (behavior.IconUri != null)
+                                    {
+                                        item.IconUri = behavior.IconUri;
+                                    }
+
                                 };
 
                                 if (item.IsEnabled != behavior.IsEnabled)
