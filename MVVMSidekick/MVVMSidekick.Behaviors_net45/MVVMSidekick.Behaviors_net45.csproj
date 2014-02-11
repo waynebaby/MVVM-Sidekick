@@ -74,6 +74,7 @@
     <Compile Include="BaeconBehavior.cs" />
     <Compile Include="BehaviorHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendToEventRouterAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

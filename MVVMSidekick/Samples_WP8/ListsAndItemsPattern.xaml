@@ -31,7 +31,18 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="1"  >ListBox</TextBlock>
             <Grid Grid.Column="1" Grid.Row="1"  DataContext ="{Binding ListGroup}">
-                <ListBox  patItems:ItemsAndSelectionGroupBinder.Binder="{Binding Binder, Mode=OneWay}" />
+                <ListBox  patItems:ItemsAndSelectionGroupBinder.Binder="{Binding Binder, Mode=OneWay}" >
+                    <ListBox.Resources>
+                        <DataTemplate x:Key="DataTemplate1">
+                            <Grid Background="Red" Width="200" Height="10">
+                                <TextBox Text="{Binding }"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.Resources>
+                    <ListBox.ItemTemplate>
+                        <StaticResource ResourceKey="DataTemplate1"/>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
             </Grid>
             <TextBlock Grid.Column="2"  >ComboBox</TextBlock>
