@@ -1259,7 +1259,7 @@ namespace MVVMSidekick
             /// <summary>
             /// 给这个模型分配的消息路由引用（延迟加载）
             /// </summary>
-            public override  EventRouter EventRouter
+            public override EventRouter EventRouter
             {
                 get { return _EventRouterLocator(this).Value; }
                 set { _EventRouterLocator(this).SetValueAndTryNotify(value); }
@@ -1270,7 +1270,7 @@ namespace MVVMSidekick
             static Func<EventRouter> _EventRouterDefaultValueFactory = () => { return new EventRouter(); };
             #endregion
 
-            
+
 
         }
 
@@ -1393,9 +1393,9 @@ namespace MVVMSidekick
 
             public override bool HaveReturnValue { get { return true; } }
 
-            public Task<TResult> WaitForCloseWithResult(Action closingCallback = null)
+            public async Task<TResult> WaitForCloseWithResult(Action closingCallback = null)
             {
-                var t = new Task<TResult>(() => Result);
+                var t = new TaskCompletionSource<TResult>();
 
                 this.AddDisposeAction(
                     () =>
@@ -1404,12 +1404,13 @@ namespace MVVMSidekick
                         {
                             closingCallback();
                         }
-                        t.Start();
+                        t.SetResult(Result);
                     }
                     );
 
 
-                return t;
+                await t.Task;
+                return Result;
             }
 
             public TResult Result
@@ -1463,9 +1464,9 @@ namespace MVVMSidekick
 
             }
 
-            
-        
-            
+
+
+
 
             Task IViewModelLifetime.OnBindedToView(IView view, IViewModel oldValue)
             {
@@ -1623,9 +1624,9 @@ namespace MVVMSidekick
             #endregion
 
 
-            public Task WaitForClose(Action closingCallback = null)
+            public async Task WaitForClose(Action closingCallback = null)
             {
-                var t = new Task(() => { });
+                var t = new TaskCompletionSource<object>();
 
                 this.AddDisposeAction(
                     () =>
@@ -1634,12 +1635,12 @@ namespace MVVMSidekick
                         {
                             closingCallback();
                         }
-                        t.Start();
+                        t.SetResult(null);
                     }
                     );
 
 
-                return t;
+                await t.Task;
             }
             public void Close()
             {
@@ -1651,60 +1652,59 @@ namespace MVVMSidekick
             }
 
 
-            private async Task RunOnDispatcher(Func<Task> action)
+            private void RunOnDispatcher(Action action)
             {
-                var t = new Task(() => { });
-                Action newBody = async () =>
-               {
-                   using (new Disposable(() => t.Start()))
-                       await action();
 
-               };
+
 #if NETFX_CORE
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,new Windows.UI.Core.DispatchedHandler (()=>action()));
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,new Windows.UI.Core.DispatchedHandler (action));
 #else
                 Dispatcher.BeginInvoke(action);
 #endif
 
-                await t;
             }
 
             public virtual async Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true)
             {
-
-                Tout result = default(Tout);
-                Func<Task> action =
-                    async () =>
-                    {
-                        result = await taskBody(inputContext, cancellationToken);
-                    };
+                TaskCompletionSource<Tout> taskComplet = new TaskCompletionSource<Tout>();
+                //Tout result = default(Tout);
+                Action action =
+                  async () =>
+                  {
+                      taskComplet.SetResult(await taskBody(inputContext, cancellationToken));
+                  };
 
 
                 if (UIBusyWhenExecuting)
                 {
-                    await RunOnDispatcher(async () =>
-                        {
-                            using (new Disposable(() =>
+                    using (
+                        new Disposable(
+                            () =>
                                 UIBusyTaskCount--))
-                            {
-                                UIBusyTaskCount++;
-                                await action();
-                            }
+                    {
+                        UIBusyTaskCount++;
 
-                        }
-                        );
+                        RunOnDispatcher(
+                             () =>
+                             {
+
+                                 action();
+                             }
+                           );
+                        return await taskComplet.Task;
+                    }
 
 
                 }
 
                 else
                 {
-                    await RunOnDispatcher(action);
-
+                    RunOnDispatcher(action);
+                    return await taskComplet.Task;
                 }
 
 
-                return result;
+
             }
 
 
@@ -1729,13 +1729,27 @@ namespace MVVMSidekick
 
             public virtual async Task<Tout> ExecuteTask<Tout>(Func<Task<Tout>> taskBody, bool UIBusyWhenExecuting = true)
             {
-                return await ExecuteTask<object, Tout>(async (i, c) => await taskBody(), null, CancellationToken.None, UIBusyWhenExecuting);
+                return await ExecuteTask<object, Tout>(
+                    async (i, c) =>
+                    {
+                        return await taskBody();
+                    },
+                    null,
+                    CancellationToken.None,
+                    UIBusyWhenExecuting);
 
             }
 
             public virtual async Task ExecuteTask(Func<Task> taskBody, bool UIBusyWhenExecuting = true)
             {
-                await ExecuteTask<object, object>(async (i, c) => { await taskBody(); return null; }, null, CancellationToken.None, UIBusyWhenExecuting);
+                await ExecuteTask<object, object>(
+                    async (i, c) =>
+                    {
+                        await taskBody();
+                        return null;
+                    },
+                    null,
+                    CancellationToken.None, UIBusyWhenExecuting);
 
             }
 
