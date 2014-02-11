@@ -92,14 +92,35 @@ namespace MVVMSidekick
             /// <typeparam name="TEventArgs">事件数据类型</typeparam>
             /// <param name="sender">事件发送者</param>
             /// <param name="eventArgs">事件数据</param>
-            /// <param name="callerMemberName">发送事件名</param>
-            public virtual void RaiseEvent<TEventArgs>(object sender, TEventArgs eventArgs, string callerMemberName = "")
+            /// <param name="callerMemberNameOrEventName">发送事件名</param>
+            public virtual void RaiseEvent<TEventArgs>(object sender, TEventArgs eventArgs, string callerMemberNameOrEventName = "")
             //#if !NETFX_CORE
             //// where TEventArgs : EventArgs
             //#endif
             {
                 var eventObject = GetIEventObjectInstance(typeof(TEventArgs));
-                eventObject.RaiseEvent(sender, callerMemberName, eventArgs);
+                eventObject.RaiseEvent(sender, callerMemberNameOrEventName, eventArgs);
+
+                while (eventObject.BaseArgsTypeInstance != null)
+                {
+                    eventObject = eventObject.BaseArgsTypeInstance;
+                }
+            }
+
+            /// <summary>
+            /// 触发事件    
+            /// </summary>
+            /// <typeparam name="TEventArgs">事件数据类型</typeparam>
+            /// <param name="sender">事件发送者</param>
+            /// <param name="eventArgs">事件数据</param>
+            /// <param name="callerMemberNameOrEventName">发送事件名</param>
+            public virtual void RaiseEvent(object sender, object eventArgs, Type eventArgsType, string callerMemberNameOrEventName = "")
+            //#if !NETFX_CORE
+            //// where TEventArgs : EventArgs
+            //#endif
+            {
+                var eventObject = GetIEventObjectInstance(eventArgsType);
+                eventObject.RaiseEvent(sender, callerMemberNameOrEventName, eventArgs);
 
                 while (eventObject.BaseArgsTypeInstance != null)
                 {
@@ -128,14 +149,14 @@ namespace MVVMSidekick
             /// 事件来源的代理对象实例
             /// </summary>
 
-             protected readonly ConcurrentDictionary<Type, IEventObject> EventObjects
-     = new ConcurrentDictionary<Type, IEventObject>();
+            protected readonly ConcurrentDictionary<Type, IEventObject> EventObjects
+    = new ConcurrentDictionary<Type, IEventObject>();
             /// <summary>
             /// 创建事件代理对象
             /// </summary>
             /// <param name="argsType">事件数据类型</param>
             /// <returns>代理对象实例</returns>
-             protected IEventObject GetIEventObjectInstance(Type argsType)
+            protected IEventObject GetIEventObjectInstance(Type argsType)
             {
 
                 var rval = EventObjects.GetOrAdd(
@@ -152,7 +173,7 @@ namespace MVVMSidekick
 
                             throw;
                         }
-                 
+
                     }
                     );
 
