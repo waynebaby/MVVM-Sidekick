@@ -31,6 +31,8 @@
     <mvvm:MVVMPage.ApplicationBar >
         <shell:ApplicationBar IsVisible="True">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/back.png" IsEnabled="True" Text="xxx"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/back.png" IsEnabled="True" Text="xxx"/>
+
             <shell:ApplicationBar.MenuItems>
 
                 <shell:ApplicationBarMenuItem IsEnabled="True" Text="xxx"/>
@@ -103,6 +105,7 @@
         <Button   Grid.Row="3"  Command="{Binding CommandCommandBinding}">
             <i:Interaction.Behaviors>
                 <Behaviors:BindToAppliactionBarBehavior IconUri="/Assets/AppBar/cancel.png" Text="Behaviored"/>
+            
                 <Behaviors:BindToAppliactionBarBehavior  Text="Bind ToAppliactionBar Behavior Sample" TargetType="MenuItem"/>
 
             </i:Interaction.Behaviors>
@@ -112,7 +115,10 @@
             </Grid>
         </Button>
         <Button   Grid.Row="4"  Command="{Binding CommandNavigationSample}">
-            <Grid>
+            <i:Interaction.Behaviors>
+                <Behaviors:BindToAppliactionBarBehavior IconUri="/Assets/AppBar/add.png" Text="b2" IndexBindTo="1"/>
+                </i:Interaction.Behaviors> 
+                <Grid>
                 <TextBlock Text="{Binding CommandNavigationSample.Resource}" />
 
             </Grid>

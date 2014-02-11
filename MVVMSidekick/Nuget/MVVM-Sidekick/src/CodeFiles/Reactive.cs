@@ -288,6 +288,7 @@ namespace MVVMSidekick
             /// <typeparam name="TViewModel">The View Model type command wanna bind to</typeparam>
             /// <param name="command">Command itself</param>
             /// <param name="model">The View Model  command wanna bind to</param>
+            /// <param name="canExecuteWhenBusy">if can execute when ui busy , input true</param>
             /// <returns>command instance itself</returns>
             public static CommandModel<TCommand, TResource> ListenToIsUIBusy<TCommand, TResource, TViewModel>(this CommandModel<TCommand, TResource> command, ViewModelBase<TViewModel> model, bool canExecuteWhenBusy = false)
                 where TViewModel : ViewModelBase<TViewModel>
@@ -300,7 +301,7 @@ namespace MVVMSidekick
                         model.GetValueContainer(x => x.IsUIBusy)
                         .GetNewValueObservable()
                         .Select(e =>
-                             canExecuteWhenBusy? canExecuteWhenBusy:e.EventArgs 
+                             canExecuteWhenBusy ? canExecuteWhenBusy : (!e.EventArgs)
                         ))
                     .Subscribe(command.CommandCore.CanExecuteObserver)
                     .DisposeWith(model);
