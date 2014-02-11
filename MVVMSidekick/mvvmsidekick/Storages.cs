@@ -17,7 +17,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reactive;
 using MVVMSidekick.EventRouting;
-using MVVMSidekick.Utilities ;
+using MVVMSidekick.Utilities;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
@@ -630,6 +630,7 @@ namespace MVVMSidekick
                 var kts = _knownTypes;
                 return await await
                        Task.Factory.StartNew(
+                           new Func<Task<TValue>>(
                            async () =>
                            {
                                var ms = new MemoryStream();
@@ -649,9 +650,9 @@ namespace MVVMSidekick
                                Value = obj;
                                return obj;
 
-                           },
+                           }),
                             CancellationToken.None,
-                            TaskCreationOptions.AttachedToParent,
+                            TaskCreationOptions.None ,
 #if NET45
  _sch.ConcurrentScheduler
 #else
@@ -807,7 +808,7 @@ namespace MVVMSidekick
 
             }
 
-          
+
             public TValue Value
             {
                 get;
