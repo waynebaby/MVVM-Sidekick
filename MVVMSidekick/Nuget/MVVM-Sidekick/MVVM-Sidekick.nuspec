@@ -18,28 +18,30 @@
       A Modern light-weight MVVM framework based on RX and TPL await
 
       轻量级MVVM框架,基于RX与 await等新技术
-      09/05/2013 1.1.8.8: Enhanced "Navigate Back" behavior VM replacement logic, make the VM property change 100ms delay after load.
-      08/28/2013 1.1.8.4: Fixed Default View Model would execute OnBindedToView. This is just for newly set View Model instances.
-      08/20/2013 1.1.8.3: Add PropertyBridge to handle WinRT [Top|Bottom]AppBar Property no-datacontext-issue. see Sample "Index.xaml"
+
 
 
     </description>
     <summary>
       https://github.com/waynebaby/MVVM-Sidekick/
-      
+
       The aim of this project: Using new techs offered by .Net 4.5 and Windows Runtime, design a suitable foundation for new tech environment, based on a cool ViewModelBase and ReactiveCommand.
 
       目的是集合Reactive Command, Prism 等框架的优点，应对.Net 4.5 和 Windows Runtime带来的变化，为新技术环境量身打造一套以ViewModelBase/ReactiveCommand为核心的基础。
 
 
 
-    </summary>
-    <releaseNotes>
-
       [微博] [twitter] [Mail]
       [微博]: http://www.weibo.com/waynebabywang "WaynebabyWang"
       [twitter]: http://twitter.com/waynebaby "Waynebaby"
       [Mail]: mailto:blackshaman_wayne@hotmail.com "MSN Skype"
+
+    </summary>
+    <releaseNotes>
+      1.2.2.3
+      Bug fix: Fixed ExecuteTask cannot await deadlock.
+      Added a lazy load EventRouter to each BindableBase to support Event Routing behaviors.
+
     </releaseNotes>
     <tags>Rx Reactive Extensions MVVM Win8 Metro Modern UI</tags>
     <dependencies>
