@@ -243,7 +243,10 @@
                     .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()
                     .DisposeWith(vm);
-                return cmd.CreateCommandModel(resource);
+                    
+                var cmdmdl = cmd.CreateCommandModel(resource);
+                cmdmdl.ListenToIsUIBusy(model: vm, canExecuteWhenBusy: false);
+                return cmdmdl;
             };
         #endregion
 ]]>
