@@ -74,7 +74,7 @@ namespace Samples.ViewModels
 
                  );
 
-
+            Title  = "Hello Mvvm world2!";
 
         }
 
@@ -348,7 +348,7 @@ namespace Samples.ViewModels
                         vm,
                         async e =>
                         {
-                            await vm.StageManager.DefaultStage.Show<MultiLevelSelection_Model>();
+                            await vm.StageManager.DefaultStage.Show<MultiLevelSelection_Model>( );
                         }
                     )
                     .DoNotifyDefaultEventRouter(vm, commandId)
