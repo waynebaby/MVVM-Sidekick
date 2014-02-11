@@ -38,6 +38,9 @@
 
     </summary>
     <releaseNotes>
+      1.2.2.4
+      Fixed "ListenToUIBusy"  method logic.
+
       1.2.2.3
       Bug fix: Fixed ExecuteTask cannot await deadlock.
       Added a lazy load EventRouter to each BindableBase to support Event Routing behaviors.
@@ -47,7 +50,7 @@
     <dependencies>
 
       <dependency id="Rx-Main" version="[2.2.2,3.0)" />
-      <dependency id="Rx-PlatformServices" version="[2.2.2,3.0)" />
+      <dependency id="Rx-PlatformServices" version="[2.2.3,3.0)" />
       <dependency id="Rx-Interfaces" version="[2.2.2,3.0)" />
       <dependency id="Rx-Core" version="[2.2.2,3.0)" />
       <dependency id="Rx-Linq" version="[2.2.2,3.0)" />
