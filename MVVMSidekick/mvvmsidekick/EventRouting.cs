@@ -246,11 +246,11 @@ namespace MVVMSidekick
 
 
                     var a = args;
-                    if (a != null)
-                    {
+                    //if (a != null)
+                    //{
                         //   Event(sender, new DataEventArgs<RouterEventData<TEventArgs>>(new RouterEventData<TEventArgs>(sender, eventName, (TEventArgs)args)));
                         _core.OnNext(new RouterEventData<TEventArgs>(sender, eventName, args));
-                    }
+                    //}
                 }
 
                 //public event EventHandler<DataEventArgs<RouterEventData<TEventArgs>>> Event;
