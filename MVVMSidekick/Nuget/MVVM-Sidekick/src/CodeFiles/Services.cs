@@ -214,7 +214,6 @@ namespace MVVMSidekick
                 return dic[name] =
                         new ServiceLocatorEntryStruct<TService>(name)
                         {
-
                             CacheType = CacheType.Instance,
                             ServiceInstance = instance,
                         };
