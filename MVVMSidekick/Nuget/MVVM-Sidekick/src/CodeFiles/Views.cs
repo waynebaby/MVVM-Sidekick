@@ -188,7 +188,6 @@ namespace MVVMSidekick
             }
 
             public MVVMWindow(IViewModel viewModel)
-
             {
 
                 Unloaded += ViewHelper.ViewUnloadCallBack;
@@ -1275,6 +1274,14 @@ namespace MVVMSidekick
 
             private static void SetVMAfterLoad<TTarget>(TTarget targetViewModel, IView view) where TTarget : class, IViewModel
             {
+                if (view == null)
+                {
+                    throw new InvalidOperationException(
+                        string.Format(@"
+Cannot find ANY mapping from View Model [{0}] to ANY View.
+Please check startup function of this mapping is well configured and be proper called while application starting",
+                        targetViewModel.GetType().ToString()));
+                }
                 if (view.ViewType == ViewType.Page)
                 {
                     var pg = view as MVVMPage;
