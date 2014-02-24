@@ -17,11 +17,11 @@ namespace Samples.Startups
     {
         public static void ConfigViewNavigation()
         {
-            ViewModelLocator<ViewNavigation_Model>
-                .Instance
-                .Register(new ViewNavigation_Model())
-                .GetViewMapper()
-                .MapToDefault<ViewNavigation>();
+            //ViewModelLocator<ViewNavigation_Model>
+            //    .Instance
+            //    .Register(new ViewNavigation_Model())
+            //    .GetViewMapper()
+            //    .MapToDefault<ViewNavigation>();
 
         }
     }
