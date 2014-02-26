@@ -71,3 +71,5 @@ cd ..
 
 del src\MVVMSidekick.zip
 7z a src\MVVMSidekick.zip  MVVMSidekick
+
+
