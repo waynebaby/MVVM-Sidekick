@@ -68,15 +68,17 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>cd $(ProjectDir)
-laucher</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>set SolutionDir="$(SolutionDir)"
+    <PostBuildEvent>set SolutionDir="$(SolutionDir)"
 set ProjectDir="$(ProjectDir)"
 
 cd %25ProjectDir%25
-SourcePacking</PreBuildEvent>
+SourcePacking
+cd $(ProjectDir)
+laucher</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
