@@ -248,7 +248,11 @@
     </Reference>
     <Reference Include="MVVMSidekick.Behaviors_WP8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.2.5\lib\wp8\MVVMSidekick.Behaviors_WP8.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.2.6\lib\wp8\MVVMSidekick.Behaviors_WP8.dll</HintPath>
+    </Reference>
+    <Reference Include="MVVMSidekick_Wp8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MVVM-Sidekick.1.2.2.5\lib\wp8\MVVMSidekick_Wp8.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -271,12 +275,6 @@
       <HintPath>..\packages\Rx-XAML.2.2.2\lib\windowsphone8\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MVVMSidekick_Wp8\MVVMSidekick_Wp8.csproj">
-      <Project>{CC92E8D7-34E8-4A48-BE01-6F3F5C478604}</Project>
-      <Name>MVVMSidekick_Wp8</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
