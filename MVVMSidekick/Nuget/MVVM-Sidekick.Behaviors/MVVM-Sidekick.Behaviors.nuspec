@@ -51,7 +51,7 @@
       <dependency id="Rx-Core" version="[2.2.2,3.0)" />
       <dependency id="Rx-Linq" version="[2.2.2,3.0)" />
       <dependency id="Rx-Xaml" version="[2.2.2,3.0)" />
-      <dependency id="MVVM-Sidekick" version="[1.2.2.4,2.0)" />
+      <dependency id="MVVM-Sidekick" version="[1.2.2.5,2.0)" />
 
     </dependencies>
     <frameworkAssemblies>
