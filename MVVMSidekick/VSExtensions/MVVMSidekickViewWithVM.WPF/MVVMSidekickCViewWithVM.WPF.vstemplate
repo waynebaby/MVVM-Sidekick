@@ -24,7 +24,7 @@
     <ProjectItem ReplaceParameters="true" SubType="Designer"  TargetFileName="$fileinputname$.xaml">ViewC.xaml</ProjectItem>
     <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="$fileinputname$.xaml.cs">ViewC.xaml.cs</ProjectItem>
     <ProjectItem ReplaceParameters="true"  SubType="Code"  TargetFileName="ViewModels\$fileinputname$_Model.cs">View_Model.cs</ProjectItem>
-    <ProjectItem ReplaceParameters="true"  SubType="Code"  TargetFileName="\StartUps\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true"  SubType="Code"  TargetFileName="StartUps\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
   </TemplateContent>
 
 
@@ -40,7 +40,7 @@
       <package id="Rx-Interfaces" version="2.2.2"  />
       <package id="Rx-Linq" version="2.2.2"  />
       <package id="Rx-Main" version="2.2.2"  />
-      <package id="Rx-PlatformServices" version="2.2.2"  />
+      <package id="Rx-PlatformServices" version="2.2.3"  />
 
 
     </packages>
