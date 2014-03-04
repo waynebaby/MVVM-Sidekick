@@ -297,7 +297,8 @@ namespace MVVMSidekick
 
                 //See Test  CommandListenToUIBusy_Test
                 Observable.Range(0, 1)
-                    .Select(x => command.LastCanExecuteValue).Concat(
+                    .Select(x => (x == 0) ? !command.LastCanExecuteValue : command.LastCanExecuteValue)
+                    .Concat(
                         model.GetValueContainer(x => x.IsUIBusy)
                         .GetNewValueObservable()
                         .Select(e =>
