@@ -38,10 +38,15 @@
 
     </summary>
     <releaseNotes>
+      -----
+
+      1.2.2.6
+      Fixed a .ListenToIsUIBusy() Command Canexecute Refresh bug.  
+
       1.2.2.5
       Add a new exption throw point, that reports "You havn't mapped a VM to a View cause null reference" kinda bug.
       Add core lib code into nupkg. you can find MVVMSidekick.zip in src folder. Happy debugging!
-      
+
       1.2.2.4
       Fixed "ListenToUIBusy"  method logic.
 
