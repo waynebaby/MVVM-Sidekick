@@ -35,7 +35,7 @@
         <mvvm:PropertyBridge   Source="{Binding Mode=OneWay}" Target="{Binding DataContext, ElementName=stackPanel, Mode=TwoWay}" ></mvvm:PropertyBridge>
     </Grid>
     <Page.TopAppBar >
-        <AppBar   DataContext="{Binding DataContext, ElementName=LayoutRoot}">
+        <AppBar   DataContext="{Binding ViewModel, ElementName=layoutAwarePage}">
             <StackPanel x:Name="stackPanel" Orientation="Horizontal" >
                 <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" />
                 <Button Content="{Binding CommandListTest.Resource}" Grid.Column="1" Command="{Binding CommandListTest}" Margin="10" />
