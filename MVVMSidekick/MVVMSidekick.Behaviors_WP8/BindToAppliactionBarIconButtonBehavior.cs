@@ -154,71 +154,72 @@ namespace MVVMSidekick.Behaviors
                 TryLocatePageFromButton();
 
 
-                eventSubscribe = EventRouting.EventRouter.Instance
-                    .GetEventObject<IApplicationBarMenuItem>()
-                    .ObserveOn(System.Reactive.Concurrency.DispatcherScheduler.Current)
-                    .Where(_ => IsBindingActive)
-                    .Where(x => x.EventName == EventFilterName)
-                    .Where(x => BindToAppliactionBarBehavior.GetHasEventsWired(Page))
-                    .Select(ev =>
-                    {
-                        int idx = -1;
-                        if (ev.EventArgs != null)
-                        {
 
-                            InstanceToIndexDic.TryGetValue(ev.EventArgs, out idx);
-
-                        }
-                        return new { innerev = ev, idx };
-                    }
-                    )
-                    .Where(ev => ev.idx == IndexBindTo)
-                    .Subscribe(
-                        ev =>
+                if (!BindToAppliactionBarBehavior.GetHasEventsWired(Page))
+                {
+                    eventSubscribe = EventRouting.EventRouter.Instance
+                        .GetEventObject<IApplicationBarMenuItem>()
+                        .ObserveOn(System.Reactive.Concurrency.DispatcherScheduler.Current)
+                        .Where(_ => IsBindingActive)
+                        .Where(x => x.EventName == EventFilterName)
+                        .Where(x => BindToAppliactionBarBehavior.GetHasEventsWired(Page))
+                        .Select(ev =>
                         {
-                            if (AssociatedObject.Command != null)
+                            int idx = -1;
+                            if (ev.EventArgs != null)
                             {
-                                if (AssociatedObject.Command.CanExecute(AssociatedObject.CommandParameter))
-                                {
-                                    AssociatedObject.Command.Execute(AssociatedObject.CommandParameter);
-                                }
+
+                                InstanceToIndexDic.TryGetValue(ev.EventArgs, out idx);
+
                             }
+                            return new { innerev = ev, idx };
+                        }
+                        )
+                        .Where(ev => ev.idx == IndexBindTo)
+                        .Subscribe(
+                            ev =>
+                            {
+                                if (AssociatedObject.Command != null)
+                                {
+                                    if (AssociatedObject.Command.CanExecute(AssociatedObject.CommandParameter))
+                                    {
+                                        AssociatedObject.Command.Execute(AssociatedObject.CommandParameter);
+                                    }
+                                }
 
-                        });
-
-
-                var appb = GetApplicationBar(Page);
-                if (appb == null)
-                {
-                    return;
-                }
-
-                if (appb.Buttons != null)
-                {
-                    Buttons = appb.Buttons.OfType<IApplicationBarIconButton>().ToList();
-                    var i = 0;
-                    foreach (IApplicationBarIconButton btn in appb.Buttons)
+                            });
+                    var appb = GetApplicationBar(Page);
+                    if (appb == null)
                     {
-                        WireEventToItem(btn);
-                        InstanceToIndexDic[btn] = i;
-                        i++;
+                        return;
                     }
-                }
 
-                if (appb.MenuItems != null)
-                {
-                    MenuItems = appb.MenuItems.OfType<IApplicationBarMenuItem>().ToList();
-                    var i = 0;
-                    foreach (IApplicationBarMenuItem itm in appb.MenuItems)
+                    if (appb.Buttons != null)
                     {
-                        WireEventToItem(itm);
-                        InstanceToIndexDic[itm] = i;
-                        i++;
+                        Buttons = appb.Buttons.OfType<IApplicationBarIconButton>().ToList();
+                        var i = 0;
+                        foreach (IApplicationBarIconButton btn in appb.Buttons)
+                        {
+                            WireEventToItem(btn);
+                            InstanceToIndexDic[btn] = i;
+                            i++;
+                        }
                     }
-                }
-                RefreshApplicationBar(this);
-                BindToAppliactionBarBehavior.SetHasEventsWired(Page, true);
 
+                    if (appb.MenuItems != null)
+                    {
+                        MenuItems = appb.MenuItems.OfType<IApplicationBarMenuItem>().ToList();
+                        var i = 0;
+                        foreach (IApplicationBarMenuItem itm in appb.MenuItems)
+                        {
+                            WireEventToItem(itm);
+                            InstanceToIndexDic[itm] = i;
+                            i++;
+                        }
+                    }
+                    RefreshApplicationBar(this);
+                    BindToAppliactionBarBehavior.SetHasEventsWired(Page, true);
+                }
 
             };
 
