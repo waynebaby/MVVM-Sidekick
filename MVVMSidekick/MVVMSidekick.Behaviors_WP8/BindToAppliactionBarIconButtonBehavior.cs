@@ -10,6 +10,9 @@ using System.Windows.Controls;
 using System.Windows.Interactivity;
 using System.Reactive.Linq;
 using System.Windows.Data;
+using MVVMSidekick.Utilities;
+using MVVMSidekick.Commands.EventBinding;
+using MVVMSidekick.Commands;
 namespace MVVMSidekick.Behaviors
 {
 
@@ -21,7 +24,7 @@ namespace MVVMSidekick.Behaviors
     }
     public class BindToAppliactionBarBehavior : Behavior<Button>
     {
-        Dictionary<IApplicationBarMenuItem, int> InstanceToIndexDic = new Dictionary<IApplicationBarMenuItem, int>();
+
         List<IApplicationBarIconButton> Buttons;
         List<IApplicationBarMenuItem> MenuItems;
 
@@ -30,13 +33,10 @@ namespace MVVMSidekick.Behaviors
         public BindToAppliactionBarBehavior()
         {
 
-
         }
 
+
         private bool IsBindingActive = false;
-
-
-
 
         private static bool GetHasEventsWired(PhoneApplicationPage obj)
         {
@@ -124,14 +124,33 @@ namespace MVVMSidekick.Behaviors
 
 
         static readonly string EventFilterName = string.Intern("ApplicationBarItemClicked" + Guid.NewGuid().ToString());
-        static void WireEventToItem(IApplicationBarMenuItem item)
+        void WireEventToItem(IApplicationBarMenuItem item)
         {
-            item.Click += (o, e) =>
+            //if (commandSubscription != null)
+            //{
+            //    commandSubscription.Dispose();
+            //    commandSubscription = null;
+            //}
+
+            //commandSubscription =
+            Observable.FromEventPattern(
+                eh => item.Click += eh,
+                eh => item.Click -= eh)
+            .Subscribe(
+                ev =>
                 {
+                    var agg = EventCommandEventArgs.Create(AssociatedObject.CommandParameter, null, ev.Sender, ev.EventArgs, "Click", typeof(EventHandler));
+
                     EventRouting.EventRouter.Instance
-                        .RaiseEvent(o, item, EventFilterName);
-                };
+                        .RaiseEvent(item, agg, EventFilterName);
+                }
+            );
+
         }
+
+        //IDisposable commandSubscription;
+
+
 
         protected override void OnAttached()
         {
@@ -144,6 +163,7 @@ namespace MVVMSidekick.Behaviors
             binding.Path = new PropertyPath("IsEnabled");
             BindingOperations.SetBinding(this, IsEnabledProperty, binding);
 
+
             AssociatedObject.Loaded += (s, e) =>
             {
 
@@ -152,76 +172,126 @@ namespace MVVMSidekick.Behaviors
 
 
                 TryLocatePageFromButton();
-
-
-
-                if (!BindToAppliactionBarBehavior.GetHasEventsWired(Page))
+                var appb = GetApplicationBar(Page);
+                if (appb.Buttons != null)
                 {
-                    eventSubscribe = EventRouting.EventRouter.Instance
-                        .GetEventObject<IApplicationBarMenuItem>()
-                        .ObserveOn(System.Reactive.Concurrency.DispatcherScheduler.Current)
-                        .Where(_ => IsBindingActive)
-                        .Where(x => x.EventName == EventFilterName)
-                        .Where(x => BindToAppliactionBarBehavior.GetHasEventsWired(Page))
-                        .Select(ev =>
-                        {
-                            int idx = -1;
-                            if (ev.EventArgs != null)
-                            {
-
-                                InstanceToIndexDic.TryGetValue(ev.EventArgs, out idx);
-
-                            }
-                            return new { innerev = ev, idx };
-                        }
-                        )
-                        .Where(ev => ev.idx == IndexBindTo)
-                        .Subscribe(
-                            ev =>
-                            {
-                                if (AssociatedObject.Command != null)
-                                {
-                                    if (AssociatedObject.Command.CanExecute(AssociatedObject.CommandParameter))
-                                    {
-                                        AssociatedObject.Command.Execute(AssociatedObject.CommandParameter);
-                                    }
-                                }
-
-                            });
-                    var appb = GetApplicationBar(Page);
-                    if (appb == null)
-                    {
-                        return;
-                    }
-
-                    if (appb.Buttons != null)
-                    {
-                        Buttons = appb.Buttons.OfType<IApplicationBarIconButton>().ToList();
-                        var i = 0;
-                        foreach (IApplicationBarIconButton btn in appb.Buttons)
-                        {
-                            WireEventToItem(btn);
-                            InstanceToIndexDic[btn] = i;
-                            i++;
-                        }
-                    }
-
-                    if (appb.MenuItems != null)
-                    {
-                        MenuItems = appb.MenuItems.OfType<IApplicationBarMenuItem>().ToList();
-                        var i = 0;
-                        foreach (IApplicationBarMenuItem itm in appb.MenuItems)
-                        {
-                            WireEventToItem(itm);
-                            InstanceToIndexDic[itm] = i;
-                            i++;
-                        }
-                    }
-                    RefreshApplicationBar(this);
-                    BindToAppliactionBarBehavior.SetHasEventsWired(Page, true);
+                    Buttons = appb.Buttons.OfType<IApplicationBarIconButton>().ToList();
                 }
 
+                if (appb.MenuItems != null)
+                {
+                    MenuItems = appb.MenuItems.OfType<IApplicationBarMenuItem>().ToList();
+
+                }
+
+                RefreshApplicationBar(this);
+
+                eventSubscribe = EventRouting.EventRouter.Instance
+                       .GetEventObject<EventCommandEventArgs>()
+                       .ObserveOn(System.Reactive.Concurrency.DispatcherScheduler.Current)
+                       .Where(_ =>
+                           IsBindingActive)
+                       .Where(x =>
+                           x.EventName == EventFilterName)
+                       .Where(
+                            x =>
+                                (x.Sender is IApplicationBarIconButton && this.TargetType == BindToApplicationBarTarget.IconButton) || (!(x.Sender is IApplicationBarIconButton) && this.TargetType == BindToApplicationBarTarget.MenuItem))
+                       .Where(ev =>
+                       {
+
+                           if (ev.EventArgs != null)
+                           {
+
+                               switch (TargetType)
+                               {
+                                   case BindToApplicationBarTarget.IconButton:
+                                       return Page.ApplicationBar.Buttons.IndexOf(ev.Sender) == IndexBindTo;
+
+                                   case BindToApplicationBarTarget.MenuItem:
+                                       return Page.ApplicationBar.MenuItems.IndexOf(ev.Sender) == IndexBindTo;
+
+                                   default:
+                                       return false;
+                               }
+
+                           }
+                           return false;
+                       })
+
+                       .Subscribe(
+                           ev =>
+                           {
+                               var args = ev.EventArgs;
+                               var cb = new CommandBinding()
+                                {
+                                    EventName = args.EventName,
+                                    EventSource = Page,
+                                    Parameter = args.Parameter,
+                                    Command = AssociatedObject.Command,
+                                };
+
+                               cb.ExecuteFromEvent(args.ViewSender, args.EventArgs, args.EventName, args.EventHandlerType);
+
+                               //if (AssociatedObject.Command != null)
+                               //{
+                               //    if (AssociatedObject.Command.CanExecute(AssociatedObject.CommandParameter))
+                               //    {
+                               //        AssociatedObject.Command.Execute(AssociatedObject.CommandParameter);
+                               //    }
+                               //}
+
+                           });
+
+
+                if (!GetHasEventsWired(Page))
+                {
+                    PageSetup();
+                    SetHasEventsWired(Page, true);
+                }
+
+
+                return;
+
+
             };
+
+
+
+        }
+
+        private void PageSetup()
+        {
+            var appb = GetApplicationBar(Page);
+            if (appb == null)
+            {
+                return;
+            }
+
+
+            if (Buttons != null)
+            {
+
+                var i = 0;
+                foreach (IApplicationBarIconButton btn in appb.Buttons)
+                {
+                    WireEventToItem(btn);
+
+                    i++;
+                }
+            }
+
+
+            if (MenuItems != null)
+            {
+
+                var i = 0;
+                foreach (IApplicationBarMenuItem itm in appb.MenuItems)
+                {
+                    WireEventToItem(itm);
+
+                    i++;
+                }
+            }
 
 
 
@@ -249,10 +319,7 @@ namespace MVVMSidekick.Behaviors
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            if (InstanceToIndexDic != null)
-            {
-                InstanceToIndexDic.Clear();
-            }
+
             if (eventSubscribe != null)
             {
                 eventSubscribe.Dispose();
