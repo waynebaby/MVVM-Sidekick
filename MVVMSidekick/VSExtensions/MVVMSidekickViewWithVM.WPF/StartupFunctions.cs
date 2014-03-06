@@ -19,7 +19,8 @@ namespace $rootnamespace$.Startups
         {
             ViewModelLocator<$safeitemname$_Model>
                 .Instance
-                .Register(new $safeitemname$_Model())
+                .Register(context=>
+                    new $safeitemname$_Model())
                 .GetViewMapper()
                 .MapToDefault<$safeitemname$>();
 
