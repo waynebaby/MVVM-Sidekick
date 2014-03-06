@@ -134,11 +134,11 @@ namespace MVVMSidekick
 
 
 
-            /// <summary>
-            ///  <para>0 for not disposed, 1 for disposed</para>
-            ///  <para>0 表示没有被Dispose 1 反之</para>
-            /// </summary>
-            private int disposedFlag = 0;
+            ///// <summary>
+            /////  <para>0 for not disposed, 1 for disposed</para>
+            /////  <para>0 表示没有被Dispose 1 反之</para>
+            ///// </summary>
+            //private int disposedFlag = 0;
 
             #region  Index and property names/索引与字段名
             /// <summary>
@@ -242,44 +242,42 @@ namespace MVVMSidekick
             /// </summary>
             public void Dispose()
             {
-                if (Interlocked.Exchange(ref disposedFlag, 1) == 0)
+                var disposeList = Interlocked.Exchange(ref _disposeInfos, new List<DisposeInfo>());
+
+                if (disposeList != null)
                 {
-                    if (_disposeInfos != null)
-                    {
-                        var l = _disposeInfos.ToList()
-                            .Select
-                            (
-                                info =>
+                    var l = disposeList
+                        .Select
+                        (
+                            info =>
+                            {
+                                //Exception gotex = null;
+                                try
                                 {
-                                    //Exception gotex = null;
-                                    try
-                                    {
-                                        info.Action();
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        info.Exception = ex;
+                                    info.Action();
+                                }
+                                catch (Exception ex)
+                                {
+                                    info.Exception = ex;
 
-                                    }
-
-                                    return info;
                                 }
 
-                            )
-                            .Where(x => x.Exception != null)
-                            .ToArray();
-                        if (l.Length > 0)
-                        {
-                            OnDisposeExceptions(l);
-                        }
-                    }
+                                return info;
+                            }
 
-                    _disposeInfos = null;
-                    GC.SuppressFinalize(this);
+                        )
+                        .Where(x => x.Exception != null)
+                        .ToArray();
+                    if (l.Length > 0)
+                    {
+                        OnDisposeExceptions(l);
+                    }
                 }
 
+                _disposeInfos = null;
 
             }
+
 
             /// <summary>
             /// <para>If dispose actions got exceptions, will handled here. </para>
@@ -300,13 +298,14 @@ namespace MVVMSidekick
             #region Propery Changed Logic/ Propery Changed事件相关逻辑
 
 
-            internal void RaisePropertyChanged(Func<PropertyChangedEventArgs> lazyEAFactory, string propertyName)
+            protected internal void RaisePropertyChanged(Func<PropertyChangedEventArgs> lazyEAFactory)
             {
 
 
                 if (this.PropertyChanged != null)
                 {
-                    this.PropertyChanged(this, lazyEAFactory());
+                    var ea = lazyEAFactory();
+                    this.PropertyChanged(this, ea);
                 }
 
 
@@ -674,7 +673,7 @@ namespace MVVMSidekick
                         };
 
 
-                    objectInstance.RaisePropertyChanged(lzf, message);
+                    objectInstance.RaisePropertyChanged(lzf);
                     if (ValueChanged != null) ValueChanged(this, lzf() as ValueChangedEventArgs<TProperty>);
 
                 }
@@ -1329,6 +1328,9 @@ namespace MVVMSidekick
             Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue);
             Task OnBindedViewLoad(MVVMSidekick.Views.IView view);
             Task OnBindedViewUnload(MVVMSidekick.Views.IView view);
+
+
+
         }
         public partial interface IViewModel : IBindable, INotifyPropertyChanged, IViewModelLifetime
         {
@@ -1452,6 +1454,7 @@ namespace MVVMSidekick
         {
             public ViewModelBase()
             {
+
                 GetValueContainer(x => x.UIBusyTaskCount)
                     .GetNewValueObservable()
                     .Select(e =>
@@ -1480,6 +1483,10 @@ namespace MVVMSidekick
 
             Task IViewModelLifetime.OnBindedViewLoad(IView view)
             {
+                foreach (var item in GetFieldNames())
+                {
+                    RaisePropertyChanged(() => new PropertyChangedEventArgs(item));
+                }
                 return OnBindedViewLoad(view);
             }
             Task IViewModelLifetime.OnBindedViewUnload(IView view)
@@ -1666,13 +1673,13 @@ namespace MVVMSidekick
 
             public virtual async Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true)
             {
-                TaskCompletionSource<Tout> taskComplet = new TaskCompletionSource<Tout>();
+                //TaskCompletionSource<Tout> taskComplet = new TaskCompletionSource<Tout>();
                 //Tout result = default(Tout);
-                Action action =
-                  async () =>
-                  {
-                      taskComplet.SetResult(await taskBody(inputContext, cancellationToken));
-                  };
+                //Action action =
+                //  async () =>
+                //  {
+                //      taskComplet.SetResult();
+                //  };
 
 
                 if (UIBusyWhenExecuting)
@@ -1684,23 +1691,13 @@ namespace MVVMSidekick
                     {
                         UIBusyTaskCount++;
 
-                        RunOnDispatcher(
-                             () =>
-                             {
+                        return await taskBody(inputContext, cancellationToken);
 
-                                 action();
-                             }
-                           );
-                        return await taskComplet.Task;
                     }
-
-
                 }
-
                 else
                 {
-                    RunOnDispatcher(action);
-                    return await taskComplet.Task;
+                    return await taskBody(inputContext, cancellationToken);
                 }
 
 
