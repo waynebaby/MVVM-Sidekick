@@ -348,23 +348,20 @@ namespace MVVMSidekick
 
                 loadEvent = async (_1, _2) =>
                 {
-                    if (presetViewModel != null)
-                    {
+                    //if (presetViewModel != null)
+                    //{
 
-                        if (!object.ReferenceEquals(ViewModel, presetViewModel))
-                        {
-                            ViewModel = presetViewModel;
-                        }
-                    }
-                    else
-                    {
-                        var solveV = this.GetDefaultViewModel();
-                        if (solveV != null)
-                        {
+                    //    if (!object.ReferenceEquals(ViewModel, presetViewModel))
+                    //    {
+                    //        ViewModel = presetViewModel;
+                    //    }
+                    //}
+                    //else
+                    //{
 
-                            ViewModel = solveV;
-                        }
-                    }
+                    //}
+
+                    EventRouting.EventRouter.Instance.RaiseEvent(this, e);
 
                     if (ViewModel != null)
                     {
@@ -374,9 +371,9 @@ namespace MVVMSidekick
                     IsLoaded = true;
                     this.Loaded -= loadEvent;
 
-                    EventRouting.EventRouter.Instance.RaiseEvent(this, e);
 
-               
+
+
 
                 };
                 this.Loaded += loadEvent;
@@ -1206,7 +1203,17 @@ namespace MVVMSidekick
                             {
                                 page.ViewModel = targetViewModel;
                                 page.presetViewModel = targetViewModel;
-                            };
+                            }
+                            else
+                            {
+                                var solveV = page.GetDefaultViewModel();
+                                if (solveV != null)
+                                {
+
+                                    page.ViewModel = solveV;
+                                }
+
+                            }
 
                             targetViewModel = (TTarget)page.ViewModel;
                             NavigateRequestContexts[key] = targetViewModel;
