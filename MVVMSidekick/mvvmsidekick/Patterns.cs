@@ -450,7 +450,7 @@ namespace MVVMSidekick
                     set
                     {
                         _SelectedItemLocator(this).SetValueAndTryNotify(value);
-                        base.RaisePropertyChanged(() => new PropertyChangedEventArgs("SelectedItems"), "SelectedItems");
+                        base.RaisePropertyChanged(() => new PropertyChangedEventArgs("SelectedItems"));
                     }
                 }
                 #region Property T SelectedItem Setup
