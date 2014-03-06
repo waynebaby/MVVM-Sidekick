@@ -277,16 +277,7 @@ namespace Samples.ViewModels
                             //Todo: Add SomeCommand logic here, or
                             await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
                             await TaskExHelper.Yield(); 
-                            await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
-                            await TaskExHelper.Yield();
-                            await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
-                            await TaskExHelper.Yield();
-                            await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
-                            await TaskExHelper.Yield();
-                            await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
-                            await TaskExHelper.Yield();
-                            await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
-                            await TaskExHelper.Yield();
+                          
                    //         await vm.StageManager.DefaultStage.Show<ViewNavigation_Child_Model>();
 
                         }
