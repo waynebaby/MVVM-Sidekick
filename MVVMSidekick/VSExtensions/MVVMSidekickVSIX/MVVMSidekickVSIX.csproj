@@ -88,8 +88,8 @@
       <Link>Packages\Microsoft.Bcl.Build.1.0.13.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.2.2.8.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.2.2.8.nupkg</Link>
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.2.2.9.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.2.2.9.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\..\packages\Rx-Xaml.2.2.2\Rx-Xaml.2.2.2.nupkg">
