@@ -39,9 +39,11 @@
     </summary>
     <releaseNotes>
       -----
+      1.2.2.8
+      fixed bug: await vm.StageManager.Show()  cannot complete
 
       1.2.2.6
-      Fixed a .ListenToIsUIBusy() Command Canexecute Refresh bug.  
+      Fixed a .ListenToIsUIBusy() Command Canexecute Refresh bug.
 
       1.2.2.5
       Add a new exption throw point, that reports "You havn't mapped a VM to a View cause null reference" kinda bug.
