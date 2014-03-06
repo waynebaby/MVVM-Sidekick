@@ -348,9 +348,6 @@ namespace MVVMSidekick
 
                 loadEvent = async (_1, _2) =>
                 {
-                    EventRouting.EventRouter.Instance.RaiseEvent(this, e);
-
-                    await MVVMSidekick.Utilities.TaskExHelper.Yield();
                     if (presetViewModel != null)
                     {
 
@@ -377,7 +374,9 @@ namespace MVVMSidekick
                     IsLoaded = true;
                     this.Loaded -= loadEvent;
 
+                    EventRouting.EventRouter.Instance.RaiseEvent(this, e);
 
+               
 
                 };
                 this.Loaded += loadEvent;
