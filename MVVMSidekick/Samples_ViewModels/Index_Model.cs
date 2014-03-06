@@ -253,6 +253,7 @@ namespace Samples.ViewModels
 
 
 
+
         public CommandModel<ReactiveCommand, String> CommandCommandBinding
         {
             get { return _CommandCommandBindingLocator(this).Value; }
@@ -264,18 +265,42 @@ namespace Samples.ViewModels
         static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandCommandBindingDefaultValueFactory =
             model =>
             {
+                var resource = "CommandBinding";           // Command resource  
+                var commandId = "CommandBinding";
+                var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-                //Config it if you want
-                var vm = CastToCurrentType(model); //vm instance 
-                cmd.Subscribe(
-                  async _ =>
-                  {
-                      await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
-                  })
-                  .DisposeWith(vm);
-                return cmd.CreateCommandModel("CommandBinding").ListenToIsUIBusy(vm);
+                cmd
+                    .DoExecuteUIBusyTask(
+                        vm,
+                        async e =>
+                        {
+                            //Todo: Add SomeCommand logic here, or
+                            await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
+                            await TaskExHelper.Yield(); 
+                            await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
+                            await TaskExHelper.Yield();
+                            await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
+                            await TaskExHelper.Yield();
+                            await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
+                            await TaskExHelper.Yield();
+                            await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
+                            await TaskExHelper.Yield();
+                            await vm.StageManager.DefaultStage.Show<CommandBindingsSample_Model>();
+                            await TaskExHelper.Yield();
+                   //         await vm.StageManager.DefaultStage.Show<ViewNavigation_Child_Model>();
+
+                        }
+                    )
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+
+                var cmdmdl = cmd.CreateCommandModel(resource);
+                cmdmdl.ListenToIsUIBusy(model: vm, canExecuteWhenBusy: false);
+                return cmdmdl;
             };
         #endregion
+
 #if NETFX_CORE
         public override void LoadState(object navigationParameter, Dictionary<string, object> pageState)
         {
@@ -368,7 +393,7 @@ namespace Samples.ViewModels
         }
 
 
-
+       
 
     }
 
