@@ -35,9 +35,8 @@ using Windows.UI.Xaml.Controls.Primitives;
 
 #elif WPF
 using System.Windows.Controls;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
+
+
 using System.Collections.Concurrent;
 using System.Windows.Navigation;
 
