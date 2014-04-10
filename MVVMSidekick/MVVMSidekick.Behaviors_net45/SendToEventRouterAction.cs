@@ -1,6 +1,7 @@
-﻿#if ! NETFX_CORE
+﻿using System;
+#if ! NETFX_CORE
 using Microsoft.Expression.Interactivity.Core;
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ using System.Reflection;
 #endif
 using MVVMSidekick.EventRouting;
 using MVVMSidekick.Utilities;
-using System;
+
 
 namespace MVVMSidekick.Behaviors
 {
@@ -59,7 +60,7 @@ namespace MVVMSidekick.Behaviors
 
 
 
-        public Type EventObjectType
+        public System.Type EventObjectType
         {
             get { return (Type)GetValue(EventObjectTypeProperty); }
             set { SetValue(EventObjectTypeProperty, value); }
@@ -72,15 +73,15 @@ namespace MVVMSidekick.Behaviors
 
 
 
-        public Object EventObject
+        public System.Object EventObject
         {
-            get { return (Object)GetValue(EventObjectProperty); }
+            get { return (System.Object)GetValue(EventObjectProperty); }
             set { SetValue(EventObjectProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for EventObject.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EventObjectProperty =
-            DependencyProperty.Register("EventObject", typeof(Object), typeof(SendToEventRouterAction), new PropertyMetadata(null));
+            DependencyProperty.Register("EventObject", typeof(System.Object), typeof(SendToEventRouterAction), new PropertyMetadata(null));
 
 
 
@@ -89,7 +90,7 @@ namespace MVVMSidekick.Behaviors
 #if NETFX_CORE
         public object Execute(object sender, object parameter)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 #else
         
