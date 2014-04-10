@@ -316,6 +316,7 @@ namespace Samples.ViewModels
 
 
 
+        
         public CommandModel<ReactiveCommand, String> CommandNavigationSample
         {
             get { return _CommandNavigationSampleLocator(this).Value; }
@@ -327,18 +328,55 @@ namespace Samples.ViewModels
         static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNavigationSampleDefaultValueFactory =
             model =>
             {
+                var resource = "NavigationSample";           // Command resource  
+                var commandId = "NavigationSample";
+                var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-                //Config it if you want
-                var vm = CastToCurrentType(model); //vm instance 
-                cmd.Subscribe(
-                  async _ =>
-                  {
-                      await vm.StageManager.DefaultStage.Show(new ViewNavigation_Model());
-                  })
-                  .DisposeWith(vm);
-                return cmd.CreateCommandModel("NavigationSample");
+                cmd
+                    .DoExecuteUIBusyTask(
+                        vm,
+                        async e =>
+                        {
+                            //Todo: Add NavigationSample logic here, or
+                            await vm.StageManager.DefaultStage.Show(new ViewNavigation_Model());
+                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
+                        }
+                    )
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+
+                var cmdmdl = cmd.CreateCommandModel(resource);
+                cmdmdl.ListenToIsUIBusy(model: vm, canExecuteWhenBusy: false);
+                return cmdmdl;
             };
         #endregion
+
+
+
+        //public CommandModel<ReactiveCommand, String> CommandNavigationSample
+        //{
+        //    get { return _CommandNavigationSampleLocator(this).Value; }
+        //    set { _CommandNavigationSampleLocator(this).SetValueAndTryNotify(value); }
+        //}
+        //#region Property CommandModel<ReactiveCommand, String> CommandNavigationSample Setup
+        //protected Property<CommandModel<ReactiveCommand, String>> _CommandNavigationSample = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandNavigationSampleLocator };
+        //static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNavigationSampleLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandNavigationSample", model => model.Initialize("CommandNavigationSample", ref model._CommandNavigationSample, ref _CommandNavigationSampleLocator, _CommandNavigationSampleDefaultValueFactory));
+        //static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNavigationSampleDefaultValueFactory =
+        //    model =>
+        //    {
+        //        var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+        //        //Config it if you want
+        //        var vm = CastToCurrentType(model); //vm instance 
+        //        cmd.Subscribe(
+        //          async _ =>
+        //          {
+        //              await vm.StageManager.DefaultStage.Show(new ViewNavigation_Model());
+        //          })
+        //          .DisposeWith(vm);
+        //        return cmd.CreateCommandModel("NavigationSample");
+        //    };
+        //#endregion
 
 
 
