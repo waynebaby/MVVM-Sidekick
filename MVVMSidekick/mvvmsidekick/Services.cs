@@ -433,7 +433,7 @@ namespace MVVMSidekick
                 ServiceLocatorEntryStruct<TService> entry = null;
                 if (subdic.TryGetValue(name, out entry))
                 {
-                    return entry.GetService();
+                    return entry.GetService(paremeters);
                 }
                 else
                     return default(TService);

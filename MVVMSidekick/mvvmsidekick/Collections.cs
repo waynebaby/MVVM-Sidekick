@@ -69,7 +69,7 @@ namespace MVVMSidekick
 
 
 
-        public class DependencyObservableCollection<T> : DependencyObject , ICollection<T>, IList<T>, INotifyCollectionChanged, INotifyPropertyChanged
+        public class DependencyObservableCollection<T> : DependencyObject, ICollection<T>, IList<T>, INotifyCollectionChanged, INotifyPropertyChanged
         {
 
 
@@ -418,8 +418,20 @@ namespace MVVMSidekick
         }
 
 #endif
+        /// <summary>
+        /// <para > The extension method for collections </para>
+        /// <para>集合类型的扩展方法</para>
+        /// </summary>
         public static class CollectionExtensions
         {
+            /// <summary>
+            /// <para>Transform to a dictionary with INotifyCollectionChanged</para>
+            /// <para>生成一个带有集合变化通知的字典</para>
+            /// </summary>
+            /// <typeparam name="K"><para>Key Type</para><para>键类型</para></typeparam>
+            /// <typeparam name="V"><para>Value Type</para><para>值类型</para></typeparam>
+            /// <param name="items"><para>Source Dictionary</para><para>来源字典</para><para></para></param>
+            /// <returns></returns>
             public static KeyedObserableCollection<K, V> ToKeyedObserableCollection<K, V>(this IDictionary<K, V> items)
             {
                 return new KeyedObserableCollection<K, V>(items);
@@ -508,7 +520,7 @@ namespace MVVMSidekick
 
 #if SILVERLIGHT_5||NET40||WINDOWS_PHONE_7
             Dictionary<K, V> _shadowDictionary;
-            public IDictionary<K, V> Items
+            public IDictionary<K, V> DictionaryItems
             {
                 get
                 {
@@ -524,7 +536,7 @@ namespace MVVMSidekick
 
 #else
             ReadOnlyDictionary<K, V> _shadowDictionary;
-            public IDictionary<K, V> Items
+            public IDictionary<K, V> DictionaryItems
             {
                 get
                 {
@@ -713,9 +725,19 @@ namespace MVVMSidekick
 
             }
 
-
+            /// <summary>
+            /// <para>ICollectionView generic implmention</para>
+            /// <para>ICollectionView 的泛型实现</para>
+            /// </summary>
+            /// <typeparam name="T"><para>Content Type</para><para>内容类型</para> </typeparam>
             public class CollectionView<T> : ObservableVector<T>, ICollectionView
             {
+                /// <summary>
+                /// <para>Constructor of Collection View</para>
+                /// <para>构造函数</para>
+                /// </summary>
+                /// <param name="items"><para>Initialing Items</para><para>初始内容集合</para></param>
+                /// <param name="loader"><para>increanatal loader</para><para>自增加载器</para></param>
                 public CollectionView(
                             IEnumerable<T> items = null,
                             CollectionViewIncrementalLoader<T> loader = null)
@@ -732,7 +754,12 @@ namespace MVVMSidekick
 
                 }
 
-
+                /// <summary>
+                /// <para>Constructor of Collection View</para>
+                /// <para>构造函数</para>
+                /// </summary>
+                /// <param name="items"><para>Initialing Items</para><para>初始内容集合</para></param>
+                /// <param name="groupCollection"><para>Initaling Groups</para><para>初始分组</para></param>
                 public CollectionView(
                     IEnumerable<T> items,
                 CollectionViewGroupCollection<T> groupCollection)
@@ -750,7 +777,11 @@ namespace MVVMSidekick
                         }
                     }
                 }
-
+                /// <summary>
+                /// <para>Insert Item</para><para>插入</para>
+                /// </summary>
+                /// <param name="index"><para>targeting index</para><para>目标索引</para></param>
+                /// <param name="item"><para> Item inserting</para><para>插入项</para></param>
                 protected override void InsertItem(int index, T item)
                 {
                     base.InsertItem(index, item);
@@ -773,7 +804,10 @@ namespace MVVMSidekick
                         _group.AddItemToGroups(item);
                     }
                 }
-
+                /// <summary>
+                /// <para>Clear Items</para>
+                /// <para>清除内容</para>
+                /// </summary>
                 protected override void ClearItems()
                 {
                     base.ClearItems();
@@ -794,7 +828,10 @@ namespace MVVMSidekick
                     }
                 }
 
-
+                /// <summary>
+                /// <para>Incremental Loader</para>
+                /// <para>自增读取器</para>
+                /// </summary>
                 protected CollectionViewIncrementalLoader<T> _loader;
 
                 Windows.Foundation.Collections.IObservableVector<object> ThisVector { get { return this; } }
@@ -802,15 +839,29 @@ namespace MVVMSidekick
                 #region ICollectionView Members
 
                 private CollectionViewGroupCollection<T> _group;
+                /// <summary>
+                /// <para>Collection Groups</para>
+                /// <para>集合中的分组</para>
+                /// </summary>
                 public Windows.Foundation.Collections.IObservableVector<object> CollectionGroups
                 {
                     get { return _group; }
                 }
 
+                /// <summary>
+                /// <para>Fired when current Item has changed</para>
+                /// <para>当前项变化后触发</para>
+                /// </summary>
                 public event EventHandler<object> CurrentChanged;
-
+                /// <summary>
+                /// <para>Fired when current Item is changing</para>
+                /// <para>当前项变化前触发</para>
+                /// </summary>
                 public event CurrentChangingEventHandler CurrentChanging;
-
+                /// <summary>
+                /// <para>Current Item </para>
+                /// <para>当前项</para 
+                /// </summary>
                 public object CurrentItem
                 {
                     get
@@ -824,6 +875,9 @@ namespace MVVMSidekick
                 }
 
                 int _CurrentPosition = 0;
+                /// <summary>
+                /// <para>Current Item Index</para><para>当前项的索引</para>
+                /// </summary>
                 public int CurrentPosition
                 {
                     get { return _CurrentPosition; }
@@ -836,7 +890,9 @@ namespace MVVMSidekick
                 }
 
 
-
+                /// <summary>
+                /// <para>Has more items can loaded by loader</para><para>是否还有更多的数据</para>
+                /// </summary>
                 public bool HasMoreItems
                 {
                     get
@@ -852,16 +908,28 @@ namespace MVVMSidekick
                     }
                 }
 
+
+                /// <summary>
+                /// <para>Is Current Item is beyond  bound of collection</para><para>当前项目是否已经超出集合最大范围</para>
+                /// </summary>
                 public bool IsCurrentAfterLast
                 {
                     get { return _CurrentPosition >= this.Count; }
                 }
-
+                /// <summary>
+                /// <para>Is Current Item is before  bound of collection</para><para>当前项目是否已经在集合之前</para>
+                /// </summary>
+           
                 public bool IsCurrentBeforeFirst
                 {
                     get { return _CurrentPosition < 0; }
                 }
 
+              /// <summary>
+                /// <para>Load More Items</para><para>加载更多的项</para>
+              /// </summary>
+                /// <param name="count"><para>count of items</para><para>个数</para></param>
+              /// <returns></returns>
                 public Windows.Foundation.IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
                 {
                     if (_loader != null)
