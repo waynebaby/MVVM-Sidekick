@@ -606,13 +606,13 @@ namespace MVVMSidekick
             /// <summary> 
             /// Informs the ThreadPool that there's work to be executed for this scheduler. 
             /// </summary> 
-            private void NotifyThreadPoolOfPendingWork()
+            private async void NotifyThreadPoolOfPendingWork()
             {
 
 #if NETFX_CORE
-                ThreadPool.RunAsync((_1) =>
+                await ThreadPool.RunAsync((_1) =>
 #else
-
+                await TaskExHelper.Yield();
                 ThreadPool.QueueUserWorkItem(_ =>
 #endif
 
