@@ -919,17 +919,17 @@ namespace MVVMSidekick
                 /// <summary>
                 /// <para>Is Current Item is before  bound of collection</para><para>当前项目是否已经在集合之前</para>
                 /// </summary>
-           
+
                 public bool IsCurrentBeforeFirst
                 {
                     get { return _CurrentPosition < 0; }
                 }
 
-              /// <summary>
+                /// <summary>
                 /// <para>Load More Items</para><para>加载更多的项</para>
-              /// </summary>
+                /// </summary>
                 /// <param name="count"><para>count of items</para><para>个数</para></param>
-              /// <returns></returns>
+                /// <returns></returns>
                 public Windows.Foundation.IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
                 {
                     if (_loader != null)
