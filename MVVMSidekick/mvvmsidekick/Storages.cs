@@ -42,7 +42,7 @@ using System.Windows.Navigation;
 
 using MVVMSidekick.Views;
 using System.Windows.Controls.Primitives;
-using MVVMSidekick.Utilities;
+
 
 #elif SILVERLIGHT_5||SILVERLIGHT_4
 using System.Windows;

@@ -152,6 +152,7 @@ namespace MVVMSidekick.Test
 
         private async Task<bool> FileExists(string fileAName)
         {
+            await TaskExHelper.Yield();
             var iso = System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForApplication();
             return iso.FileExists(fileAName);
         }
