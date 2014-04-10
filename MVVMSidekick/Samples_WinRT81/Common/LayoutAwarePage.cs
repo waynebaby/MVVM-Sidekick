@@ -253,7 +253,7 @@ namespace Samples.Common
             this._layoutAwareControls.Add(control);
 
             // Set the initial visual state of the control
-            VisualStateManager.GoToState(control, DetermineVisualState(ApplicationView.Value), false);
+            //VisualStateManager.GoToState(control, DetermineVisualState(ApplicationView.Value), false);
         }
 
         private void WindowSizeChanged(object sender, WindowSizeChangedEventArgs e)
@@ -285,19 +285,7 @@ namespace Samples.Common
             }
         }
 
-        /// <summary>
-        /// Translates <see cref="ApplicationViewState"/> values into strings for visual state
-        /// management within the page.  The default implementation uses the names of enum values.
-        /// Subclasses may override this method to control the mapping scheme used.
-        /// </summary>
-        /// <param name="viewState">View state for which a visual state is desired.</param>
-        /// <returns>Visual state name used to drive the
-        /// <see cref="VisualStateManager"/></returns>
-        /// <seealso cref="InvalidateVisualState"/>
-        protected virtual string DetermineVisualState(ApplicationViewState viewState)
-        {
-            return viewState.ToString();
-        }
+
 
         /// <summary>
         /// Updates all controls that are listening for visual state changes with the correct
@@ -310,14 +298,14 @@ namespace Samples.Common
         /// </remarks>
         public void InvalidateVisualState()
         {
-            if (this._layoutAwareControls != null)
-            {
-                string visualState = DetermineVisualState(ApplicationView.Value);
-                foreach (var layoutAwareControl in this._layoutAwareControls)
-                {
-                    VisualStateManager.GoToState(layoutAwareControl, visualState, false);
-                }
-            }
+            //if (this._layoutAwareControls != null)
+            //{
+            //    string visualState = DetermineVisualState(ApplicationView.Value);
+            //    foreach (var layoutAwareControl in this._layoutAwareControls)
+            //    {
+            //        VisualStateManager.GoToState(layoutAwareControl, visualState, false);
+            //    }
+            //}
         }
 
         #endregion

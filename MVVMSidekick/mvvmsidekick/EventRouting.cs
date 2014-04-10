@@ -41,7 +41,7 @@ using System.Windows.Navigation;
 
 using MVVMSidekick.Views;
 using System.Windows.Controls.Primitives;
-using MVVMSidekick.Utilities;
+
 
 #elif SILVERLIGHT_5||SILVERLIGHT_4
 using System.Windows;
@@ -168,7 +168,7 @@ namespace MVVMSidekick
                             var t2 = typeof(EventObject<>).MakeGenericType(t);
                             return Activator.CreateInstance(t2) as IEventObject;
                         }
-                        catch (Exception ex)
+                        catch (Exception )
                         {
 
                             throw;
