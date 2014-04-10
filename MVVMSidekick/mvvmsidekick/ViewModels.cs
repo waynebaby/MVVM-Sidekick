@@ -1659,14 +1659,20 @@ namespace MVVMSidekick
             }
 
 
-            private void RunOnDispatcher(Action action)
+            private async void RunOnDispatcher(Action action)
             {
 
 
 #if NETFX_CORE
-                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,new Windows.UI.Core.DispatchedHandler (action));
+             await   Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,new Windows.UI.Core.DispatchedHandler (action));
+
+#elif NET45
+
+                await Dispatcher.BeginInvoke(action).Task; 
 #else
-                Dispatcher.BeginInvoke(action);
+                await TaskExHelper.Yield();
+                 Dispatcher.BeginInvoke(action);
+
 #endif
 
             }
