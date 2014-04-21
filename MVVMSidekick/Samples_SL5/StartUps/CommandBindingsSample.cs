@@ -19,7 +19,7 @@ namespace Samples.Startups
         {
             ViewModelLocator<CommandBindingsSample_Model>
                 .Instance
-                .Register(new CommandBindingsSample_Model())
+                .Register(_ => new CommandBindingsSample_Model())
                 .GetViewMapper()
                 .MapToDefault<CommandBindingsSample>(); ;
 

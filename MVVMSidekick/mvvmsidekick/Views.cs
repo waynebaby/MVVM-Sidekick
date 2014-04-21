@@ -193,24 +193,24 @@ namespace MVVMSidekick
                 Loaded += async (_1, _2) =>
                 {
 
-                    if (viewModel != null)
-                    {
-                        //   this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
-                        if (!object.ReferenceEquals(ViewModel, viewModel))
-                        {
-                            ViewModel = viewModel;
-                        }
-                    }
-                    else
-                    {
-                        var solveV = this.GetDefaultViewModel();
-                        if (solveV != null)
-                        {
-                            ViewModel = solveV;
-                        }
+                    //    if (viewModel != null)
+                    //    {
+                    //        //   this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
+                    //        if (!object.ReferenceEquals(ViewModel, viewModel))
+                    //        {
+                    //            ViewModel = viewModel;
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        var solveV = this.GetDefaultViewModel();
+                    //        if (solveV != null)
+                    //        {
+                    //            ViewModel = solveV;
+                    //        }
 
-                    }
-                    ////ViewModel = ViewModel ?? new DefaultViewModel();
+                    //    }
+                    //    ////ViewModel = ViewModel ?? new DefaultViewModel();
 
                     await ViewModel.OnBindedViewLoad(this);
                 };
@@ -312,15 +312,18 @@ namespace MVVMSidekick
                 }
             }
 #endif
-            internal IViewModel presetViewModel;
 
             public MVVMPage(IViewModel viewModel)
             {
-
-
-                presetViewModel = viewModel;
+                ViewModel = viewModel;
                 Unloaded += ViewHelper.ViewUnloadCallBack;
+#if WPF
+                Loaded += async (o, e) =>
+                    {
+                        await ViewModel.OnBindedViewLoad(this);
 
+                    };
+#endif
 
             }
 
@@ -347,18 +350,7 @@ namespace MVVMSidekick
 
                 loadEvent = async (_1, _2) =>
                 {
-                    //if (presetViewModel != null)
-                    //{
 
-                    //    if (!object.ReferenceEquals(ViewModel, presetViewModel))
-                    //    {
-                    //        ViewModel = presetViewModel;
-                    //    }
-                    //}
-                    //else
-                    //{
-
-                    //}
 
                     EventRouting.EventRouter.Instance.RaiseEvent(this, e);
 
@@ -532,24 +524,24 @@ namespace MVVMSidekick
                 Loaded += async (_1, _2) =>
                 {
 
-                    if (viewModel != null)
-                    {
-                        //this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
-                        if (!object.ReferenceEquals(ViewModel, viewModel))
-                        {
-                            ViewModel = viewModel;
+                    //if (viewModel != null)
+                    //{
+                    //    //this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
+                    //    if (!object.ReferenceEquals(ViewModel, viewModel))
+                    //    {
+                    //        ViewModel = viewModel;
 
-                        }
-                    }
-                    else
-                    {
-                        var solveV = this.GetDefaultViewModel();
-                        if (solveV != null)
-                        {
-                            ViewModel = solveV;
-                        }
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    var solveV = this.GetDefaultViewModel();
+                    //    if (solveV != null)
+                    //    {
+                    //        ViewModel = solveV;
+                    //    }
 
-                    }
+                    //}
                     //ViewModel = ViewModel ?? new DefaultViewModel();
 
 
@@ -1201,7 +1193,7 @@ namespace MVVMSidekick
                             if (targetViewModel != null)
                             {
                                 page.ViewModel = targetViewModel;
-                                page.presetViewModel = targetViewModel;
+               
                             }
                             else
                             {
@@ -1290,7 +1282,7 @@ Please check startup function of this mapping is well configured and be proper c
                 if (view.ViewType == ViewType.Page)
                 {
                     var pg = view as MVVMPage;
-                    pg.presetViewModel = targetViewModel;
+
                     pg.ViewModel = targetViewModel;
                 }
                 view.ViewModel = targetViewModel;
@@ -1374,8 +1366,7 @@ Please check startup function of this mapping is well configured and be proper c
                          }
 
 
-                         page.presetViewModel = targetViewModel;
-
+                        
 
 
                          parameter.ViewModel = targetViewModel;
