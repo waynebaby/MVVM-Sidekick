@@ -19,7 +19,7 @@ namespace Samples.ViewModels
         public static Index_Model Instance = new Index_Model();
         public Index_Model()
         {
-            IsDisposingWhenUnbind = false;
+            IsDisposingWhenUnbindRequired = false;
 
         }
 
@@ -169,29 +169,42 @@ namespace Samples.ViewModels
 
 #if !(NETFX_CORE||WINDOWS_PHONE_8)
 
+
         public CommandModel<ReactiveCommand, String> CommandStartTree
         {
             get { return _CommandStartTreeLocator(this).Value; }
             set { _CommandStartTreeLocator(this).SetValueAndTryNotify(value); }
         }
-        #region Property CommandModel<ReactiveCommand, String> CommandStartTree Setup
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandStartTree = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandStartTreeLocator };
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandStartTreeLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandStartTree", model => model.Initialize("CommandStartTree", ref model._CommandStartTree, ref _CommandStartTreeLocator, _CommandStartTreeDefaultValueFactory));
-        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandStartTreeDefaultValueFactory =
-            model =>
-            {
-                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+        #region Property CommandModel<ReactiveCommand, String> CommandStartTree Setup        
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandStartTree = new Property<CommandModel<ReactiveCommand, String>>{ LocatorFunc = _CommandStartTreeLocator};
+        static Func<BindableBase,ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandStartTreeLocator= RegisterContainerLocator<CommandModel<ReactiveCommand, String>>("CommandStartTree", model =>model.Initialize("CommandStartTree",ref model._CommandStartTree, ref _CommandStartTreeLocator,_CommandStartTreeDefaultValueFactory));         
+        static Func<BindableBase,CommandModel<ReactiveCommand, String>> _CommandStartTreeDefaultValueFactory =
+            model => {
+                var resource = "StartTree";           // Command resource  
+                var commandId = "StartTree";
                 var vm = CastToCurrentType(model);
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
                 cmd
-                    .Subscribe(
-                    async _ =>
-                    {
-                        await vm.StageManager.DefaultStage.Show<Tree_Model>();
-                    })
-                    .DisposeWith(model); //Config it if needed
-                return cmd.CreateCommandModel("StartTree");
+                    .DoExecuteUIBusyTask(
+                        vm,
+                        async e =>
+                        {
+                            //Todo: Add StartTree logic here, or
+                              await vm.StageManager.DefaultStage.Show<Tree_Model>();
+                              await TaskExHelper.Yield();
+                        }
+                    )
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+                    
+                var cmdmdl = cmd.CreateCommandModel(resource);
+                cmdmdl.ListenToIsUIBusy(model: vm, canExecuteWhenBusy: false);
+                return cmdmdl;
             };
         #endregion
+
+     
 #endif
 #if NETFX_CORE
 

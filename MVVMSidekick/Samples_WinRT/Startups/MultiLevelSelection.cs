@@ -19,7 +19,7 @@ namespace Samples.Startups
         {
             ViewModelLocator<MultiLevelSelection_Model>
                 .Instance
-                .Register(new MultiLevelSelection_Model())
+                .Register(_ => new MultiLevelSelection_Model())
                 .GetViewMapper()
                 .MapToDefault<MultiLevelSelection>();
 
