@@ -19,15 +19,15 @@ namespace Samples.Startups
         {
             ViewModelLocator<GroupViewSample_Model>
                 .Instance
-                .Register(new GroupViewSample_Model())
+                .Register(_=>new GroupViewSample_Model())
                 .GetViewMapper()
                 .MapToDefault<GroupViewSample>();
 
-            ViewModelLocator<GroupViewSample_Model>
-                .Instance
-                .Register("NewInstanceVM", o => new GroupViewSample_Model() { Title = "NewInstance" }, true) 
-                .GetViewMapper()
-                .MapToDefault<GroupViewSample>("NewInstanceVW");
+            //ViewModelLocator<GroupViewSample_Model>
+            //    .Instance
+            //    .Register("NewInstanceVM", o => new GroupViewSample_Model() { Title = "NewInstance" }, true) 
+            //    .GetViewMapper()
+            //    .MapToDefault<GroupViewSample>("NewInstanceVW");
 
 
         }
