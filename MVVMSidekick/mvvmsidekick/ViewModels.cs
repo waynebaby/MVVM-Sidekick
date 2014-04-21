@@ -1454,6 +1454,8 @@ namespace MVVMSidekick
         {
             public ViewModelBase()
             {
+                this.IsDisposingWhenUnloadRequired = true;
+                this.IsDisposingWhenUnbindRequired = false;
 
                 GetValueContainer(x => x.UIBusyTaskCount)
                     .GetNewValueObservable()
@@ -1524,7 +1526,7 @@ namespace MVVMSidekick
             /// <returns>Task awaiter</returns>
             protected virtual async Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue)
             {
-                if (IsDisposingWhenUnbind)
+                if (IsDisposingWhenUnbindRequired)
                 {
                     Dispose();
                 }
@@ -1551,14 +1553,17 @@ namespace MVVMSidekick
             /// <returns>Task awaiter</returns>
             protected virtual async Task OnBindedViewUnload(IView view)
             {
-
+                if (IsDisposingWhenUnloadRequired)
+                {
+                    this.Dispose();
+                }
                 await TaskExHelper.Yield();
             }
 
 
-            public bool IsDisposingWhenUnbind { get; protected set; }
+            public bool IsDisposingWhenUnbindRequired { get; protected set; }
 
-
+            public bool IsDisposingWhenUnloadRequired { get; protected set; }
 
 
 
@@ -1668,7 +1673,7 @@ namespace MVVMSidekick
 
 #elif NET45
 
-                await Dispatcher.BeginInvoke(action).Task; 
+                await Dispatcher.BeginInvoke(action).Task;
 #else
                 await TaskExHelper.Yield();
                  Dispatcher.BeginInvoke(action);
