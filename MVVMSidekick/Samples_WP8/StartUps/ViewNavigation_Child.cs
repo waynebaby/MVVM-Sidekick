@@ -19,7 +19,7 @@ namespace Samples.Startups
         {
             ViewModelLocator<ViewNavigation_Child_Model>
                 .Instance
-                .Register(new ViewNavigation_Child_Model())
+                .Register(_ => new ViewNavigation_Child_Model())
                 .GetViewMapper()
                 .MapToDefaultControl<ViewNavigation_Child>();
 
