@@ -33,7 +33,7 @@ namespace Samples.Startups
         {
             ViewModelLocator<Calculator_Model>
                 .Instance
-                .Register(new Calculator_Model())
+                .Register(_=>new Calculator_Model())
                 .GetViewMapper()
                 .MapToDefault<Calculator>();
 
@@ -41,24 +41,12 @@ namespace Samples.Startups
 
             ViewModelLocator<Tree_Model>
                 .Instance
-                .Register(new Tree_Model())
+                .Register(_=>new Tree_Model())
                 .GetViewMapper()
                 .MapToDefault<Tree>();
 #endif
 
-#if ! SILVERLIGHT_5
-            ViewModelLocator<Index_Model>
-                .Instance
-                .Register(new Index_Model())
-                .GetViewMapper()
-                .MapToDefault<Index>();
-#else
-            ViewModelLocator<Index_Model>
-                .Instance
-                .Register(new Index_Model())
-                .GetViewMapper()
-                .MapToDefaultControl<Index>();
-#endif
+
         }
 
 

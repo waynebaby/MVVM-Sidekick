@@ -19,7 +19,7 @@ namespace Samples.Startups
         {
             ViewModelLocator<ListsAndItemsPattern_Model>
                 .Instance
-                .Register(new ListsAndItemsPattern_Model())
+                .Register(_ => new ListsAndItemsPattern_Model())
                 .GetViewMapper()
                 .MapToDefault<ListsAndItemsPattern>(); ;
 
