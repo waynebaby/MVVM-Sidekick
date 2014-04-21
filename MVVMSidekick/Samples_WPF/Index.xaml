@@ -5,7 +5,7 @@
         xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"        
         xmlns:vm="clr-namespace:Samples.ViewModels" >
     <mvvm:MVVMWindow.Resources >
-        <vm:Index_Model x:Key="DesignVM" CommandListTest="{x:Null}" />
+        <vm:Index_Model x:Key="DesignVM"  />
     </mvvm:MVVMWindow.Resources>
 
     <StackPanel x:Name="grid" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding Mode=OneWay, Source={StaticResource DesignVM}}">
