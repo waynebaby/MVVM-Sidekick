@@ -19,7 +19,7 @@ namespace Samples.Startups
         {
             ViewModelLocator<GroupViewSample_Model>
                 .Instance
-                .Register(new GroupViewSample_Model())
+                .Register(_ => new GroupViewSample_Model())
                 .GetViewMapper()
                 .MapToDefault<GroupViewSample>();
 
