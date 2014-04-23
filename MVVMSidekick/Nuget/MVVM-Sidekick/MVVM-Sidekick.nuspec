@@ -39,8 +39,12 @@
     </summary>
     <releaseNotes>
       -----
+
+      1.2.3.0
+      fixed bug: await vm.StageManager.Show()  cannot complete in WPF MVVMWindow      
+      
       1.2.2.8
-      fixed bug: await vm.StageManager.Show()  cannot complete
+      fixed bug: await vm.StageManager.Show()  cannot complete in MVVMPage
 
       1.2.2.6
       Fixed a .ListenToIsUIBusy() Command Canexecute Refresh bug.
