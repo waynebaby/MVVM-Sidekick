@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Threading;
+using System.Reactive.Linq;
 namespace Samples.ViewModels
 {
 
