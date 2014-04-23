@@ -17,7 +17,7 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 #if NETFX_CORE
 using Windows.UI.Xaml.Controls;
-
+using System.Collections.Concurrent;
 
 
 #elif WPF
@@ -64,7 +64,7 @@ namespace MVVMSidekick
         /// <para>A ViewModel by default, with basic implement of name-value container.</para>
         /// <para>缺省的 ViewModel。可以用作最简单的字典绑定</para>
         /// </summary>
-        public class DefaultViewModel : ViewModelBase<DefaultViewModel>
+        public class ViewModel : ViewModelBase<ViewModel>
         {
 
         }
@@ -75,10 +75,13 @@ namespace MVVMSidekick
         /// </summary>
         [DataContract]
         public abstract class BindableBase
-            : IDisposable, INotifyPropertyChanged, IBindable
+            : DisposeGroupBase, IDisposable, INotifyPropertyChanged, IBindable
         {
 
-
+            ~BindableBase()
+            {
+                Dispose();
+            }
 
 
 
@@ -159,141 +162,7 @@ namespace MVVMSidekick
 
             #endregion
 
-            #region Disposing Logic/Disposing相关逻辑
-            /// <summary>
-            ///  <para>Dispose action infomation struct</para>
-            ///  <para>注册销毁方法时的相关信息</para>
-            /// </summary>
-            public struct DisposeInfo
-            {
-                /// <summary>
-                ///  <para>Code Context in this dispose action execution register .</para>
-                ///  <para>执行代码上下文</para> 
-                /// </summary>
-                public CallingCodeContext CallingCodeContext { get; set; }
 
-                /// <summary>
-                ///  <para>Exception thrown in this dispose action execution .</para>
-                ///  <para>执行此次Dispose动作产生的Exception</para>
-                /// </summary>
-                public Exception Exception { get; set; }
-                /// <summary>
-                ///  <para>Dispose action.</para>
-                ///  <para>Dispose动作</para>
-                /// </summary>
-
-                public Action Action { get; set; }
-            }
-
-            /// <summary>
-            /// <para>Logic actions need to be executed when the instance is disposing</para>
-            /// <para>销毁对象时 需要执行的操作</para>
-            /// </summary>
-            private List<DisposeInfo> _disposeInfos;
-            private static Func<BindableBase, List<DisposeInfo>> _locateDisposeInfos =
-                m =>
-                {
-                    if (m._disposeInfos == null)
-                    {
-                        Interlocked.CompareExchange(ref m._disposeInfos, new List<DisposeInfo>(), null);
-
-                    }
-                    return m._disposeInfos;
-
-                };
-
-            /// <summary>
-            /// <para>Register logic actions need to be executed when the instance is disposing</para>
-            /// <para>注册一个销毁对象时需要执行的操作</para>
-            /// </summary>
-            /// <param name="newAction">Disposing action/销毁操作</param>
-            public void AddDisposeAction(Action newAction, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
-            {
-
-                var di = new DisposeInfo
-                {
-                    CallingCodeContext = CallingCodeContext.Create(comment, caller, file, line),
-                    Action = newAction
-
-                };
-                _locateDisposeInfos(this).Add(di);
-
-            }
-
-
-            /// <summary>
-            /// <para>Register an object that need to be disposed when the instance is disposing</para>
-            /// <para>销毁对象时 需要一起销毁的对象</para>
-            /// </summary>
-            /// <param name="item">disposable object/需要一起销毁的对象</param>
-            public void AddDisposable(IDisposable item, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1)
-            {
-                AddDisposeAction(() => item.Dispose(), comment, caller, file, line);
-            }
-
-
-            ~BindableBase()
-            {
-                Dispose();
-            }
-            /// <summary>
-            /// <para>Do all the dispose </para>
-            /// <para>销毁，尝试运行所有注册的销毁操作</para>
-            /// </summary>
-            public void Dispose()
-            {
-                var disposeList = Interlocked.Exchange(ref _disposeInfos, new List<DisposeInfo>());
-
-                if (disposeList != null)
-                {
-                    var l = disposeList
-                        .Select
-                        (
-                            info =>
-                            {
-                                //Exception gotex = null;
-                                try
-                                {
-                                    info.Action();
-                                }
-                                catch (Exception ex)
-                                {
-                                    info.Exception = ex;
-
-                                }
-
-                                return info;
-                            }
-
-                        )
-                        .Where(x => x.Exception != null)
-                        .ToArray();
-                    if (l.Length > 0)
-                    {
-                        OnDisposeExceptions(l);
-                    }
-                }
-
-                _disposeInfos = null;
-
-            }
-
-
-            /// <summary>
-            /// <para>If dispose actions got exceptions, will handled here. </para>
-            /// <para>处理Dispose 时产生的Exception</para>
-            /// </summary>
-            /// <param name="exceptions">
-            /// <para>The exception and dispose infomation</para>
-            /// <para>需要处理的异常信息</para>
-            /// </param>
-
-            protected virtual void OnDisposeExceptions(IList<DisposeInfo> exceptions)
-            {
-
-            }
-
-            #endregion
 
             #region Propery Changed Logic/ Propery Changed事件相关逻辑
 
@@ -432,10 +301,10 @@ namespace MVVMSidekick
             /// <param name="item">IDisposable Inastance/IDisposable实例</param>
             /// <param name="vm">Model instance /Model 实例</param>
             /// <returns></returns>
-            public static T DisposeWith<T>(this T item, IBindable vm, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
+            public static T DisposeWith<T>(this T item, IDisposeGroup tg, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
             {
 
-                vm.AddDisposable(item, comment, caller, file, line);
+                tg.AddDisposable(item, comment, caller, file, line);
                 return item;
 
 
@@ -1273,15 +1142,229 @@ namespace MVVMSidekick
 
         }
 
-        public interface IBindable : INotifyPropertyChanged
+
+
+        public interface IDisposeGroup : IDisposable
+        {
+            /// <summary>
+            /// 增加一个一起Dispose的对象
+            /// </summary>
+            /// <param name="item"></param>
+            /// <param name="comment"></param>
+            /// <param name="member"></param>
+            /// <param name="file"></param>
+            /// <param name="line"></param>
+            void AddDisposable(IDisposable item, string comment = "", string member = "", string file = "", int line = -1);
+
+            /// <summary>
+            /// 增加一个Dispose的时候需要做的操作
+            /// </summary>
+            /// <param name="action"></param>
+            /// <param name="comment"></param>
+            /// <param name="member"></param>
+            /// <param name="file"></param>
+            /// <param name="line"></param>
+            void AddDisposeAction(Action action, string comment = "", string member = "", string file = "", int line = -1);
+
+
+            IList<DisposeEntry> DisposeInfoList { get; }
+
+            event EventHandler<DisposeEventArgs> DisposingEntry;
+            event EventHandler<DisposeEventArgs> DisposedEntry;
+
+
+        }
+
+
+
+
+        public class DisposeEventArgs : EventArgs
+        {
+            public static DisposeEventArgs Create(DisposeEntry info)
+            {
+                return new DisposeEventArgs(info);
+            }
+            public DisposeEventArgs(DisposeEntry info)
+            {
+                DisposeInfo = info;
+            }
+            public DisposeEntry DisposeInfo { get; private set; }
+        }
+
+        public abstract class DisposeGroupBase : IDisposeGroup
+        {
+            ~DisposeGroupBase()
+            {
+                Dispose();
+            }
+
+            #region Disposing Logic/Disposing相关逻辑
+
+            /// <summary>
+            /// <para>Logic actions need to be executed when the instance is disposing</para>
+            /// <para>销毁对象时 需要执行的操作</para>
+            /// </summary>
+            private Lazy<List<DisposeEntry>> _disposeInfoList = new Lazy<List<DisposeEntry>>(() => new List<DisposeEntry>(), true);
+
+            IList<DisposeEntry> IDisposeGroup.DisposeInfoList { get { return _disposeInfoList.Value; } }
+
+            //protected static Func<DisposeGroupBase, List<DisposeInfo>> _locateDisposeInfos =
+            //    m =>
+            //    {
+            //        if (m._disposeInfoList == null)
+            //        {
+            //            Interlocked.CompareExchange(ref m._disposeInfoList, new List<DisposeInfo>(), null);
+
+            //        }
+            //        return m._disposeInfoList;
+
+            //    };
+
+            /// <summary>
+            /// <para>Register logic actions need to be executed when the instance is disposing</para>
+            /// <para>注册一个销毁对象时需要执行的操作</para>
+            /// </summary>
+            /// <param name="newAction">Disposing action/销毁操作</param>
+            public void AddDisposeAction(Action newAction, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
+            {
+
+                var di = new DisposeEntry
+                {
+                    CallingCodeContext = CallingCodeContext.Create(comment, caller, file, line),
+                    Action = newAction
+
+                };
+                _disposeInfoList.Value.Add(di);
+
+            }
+
+
+            /// <summary>
+            /// <para>Register an object that need to be disposed when the instance is disposing</para>
+            /// <para>销毁对象时 需要一起销毁的对象</para>
+            /// </summary>
+            /// <param name="item">disposable object/需要一起销毁的对象</param>
+            public void AddDisposable(IDisposable item, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1)
+            {
+                AddDisposeAction(() => item.Dispose(), comment, caller, file, line);
+            }
+
+
+
+
+            /// <summary>
+            /// <para>Do all the dispose </para>
+            /// <para>销毁，尝试运行所有注册的销毁操作</para>
+            /// </summary>
+            public virtual void Dispose()
+            {
+                var disposeList = Interlocked.Exchange(ref _disposeInfoList, new Lazy<List<DisposeEntry>>(() => new List<DisposeEntry>(), true));
+
+                if (disposeList != null)
+                {
+                    var l = disposeList.Value
+                        .Select
+                        (
+                            info =>
+                            {
+                                var ea = DisposeEventArgs.Create(info);
+                                //Exception gotex = null;
+                                try
+                                {
+                                    if (DisposingEntry != null)
+                                    {
+                                        DisposingEntry(this, ea);
+                                    }
+                                    info.Action();
+                                }
+                                catch (Exception ex)
+                                {
+                                    info.Exception = ex;
+
+                                }
+                                finally
+                                {
+                                    if (DisposedEntry != null)
+                                    {
+                                        DisposedEntry(this, ea);
+                                    }
+                                }
+
+                                return info;
+                            }
+
+                        )
+                        .Where(x => x.Exception != null)
+                        .ToArray();
+                    if (l.Length > 0)
+                    {
+                        OnDisposeExceptions(l);
+                    }
+                }
+
+                _disposeInfoList = null;
+
+            }
+
+
+
+
+            /// <summary>
+            /// <para>If dispose actions got exceptions, will handled here. </para>
+            /// <para>处理Dispose 时产生的Exception</para>
+            /// </summary>
+            /// <param name="disposeInfoWithExceptions">
+            /// <para>The exception and dispose infomation</para>
+            /// <para>需要处理的异常信息</para>
+            /// </param>
+
+            protected virtual void OnDisposeExceptions(IList<DisposeEntry> disposeInfoWithExceptions)
+            {
+
+            }
+
+
+            #endregion
+
+
+            public event EventHandler<DisposeEventArgs> DisposingEntry;
+
+            public event EventHandler<DisposeEventArgs> DisposedEntry;
+        }
+
+        /// <summary>
+        ///  <para>Dispose action infomation struct</para>
+        ///  <para>注册销毁方法时的相关信息</para>
+        /// </summary>
+        public struct DisposeEntry
+        {
+            /// <summary>
+            ///  <para>Code Context in this dispose action execution register .</para>
+            ///  <para>执行代码上下文</para> 
+            /// </summary>
+            public CallingCodeContext CallingCodeContext { get; set; }
+
+            /// <summary>
+            ///  <para>Exception thrown in this dispose action execution .</para>
+            ///  <para>执行此次Dispose动作产生的Exception</para>
+            /// </summary>
+            public Exception Exception { get; set; }
+            /// <summary>
+            ///  <para>Dispose action.</para>
+            ///  <para>Dispose动作</para>
+            /// </summary>
+
+            public Action Action { get; set; }
+        }
+
+        public interface IBindable : INotifyPropertyChanged, IDisposable, IDisposeGroup
         {
 
             EventRouter EventRouter { get; set; }
             Guid BindableInstanceId { get; }
-            void AddDisposable(IDisposable item, string comment = "", string member = "", string file = "", int line = -1);
-            void AddDisposeAction(Action action, string comment = "", string member = "", string file = "", int line = -1);
+
             string Error { get; }
-            void Dispose();
+
             //IDictionary<string,object >  Values { get; }
             string[] GetFieldNames();
             object this[string name] { get; set; }
@@ -2141,9 +2224,45 @@ namespace MVVMSidekick
             }
         }
 
+        public class TaskExectionTokenPool : DisposeGroupBase, IDisposeGroup
+        {
+            ConcurrentDictionary<string, TaskExectionTokenPublisher> _TaskExectionTokenPublishers = new ConcurrentDictionary<string, TaskExectionTokenPublisher>();
+
+            public ConcurrentDictionary<string, TaskExectionTokenPublisher> TaskExectionTokenPublishers
+            {
+                get { return _TaskExectionTokenPublishers; }
+                
+            }
+
+
+            public string Name { get; private set; }
+
+        }
+
+        public class TaskExectionTokenPublisher 
+        { 
+        
+        }
+
+        public class TaskExectionToken : IDisposable
+        {
+            public TaskExectionToken(string name, CancellationToken cancellationToken)
+            {
+                Name = name;
+                CancellationToken = cancellationToken;
+            }
+
+            public string Name { get; private set; }
+
+            public CancellationToken CancellationToken { get; private set; }
 
 
 
-
+            public void Dispose()
+            {
+                
+            }
+        }
     }
+
 }
