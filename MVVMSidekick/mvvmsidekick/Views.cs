@@ -386,7 +386,7 @@ namespace MVVMSidekick
 
                 {
 
-                    if (ViewModel != null)
+                    if (ViewModel != null )
                     {
 
                         ViewModel.Dispose();

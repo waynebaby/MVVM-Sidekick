@@ -39,10 +39,15 @@
     </summary>
     <releaseNotes>
       -----
+      1.2.3.2
+      Fix Lost [DataContract]  attribute on disposing Group
+
+      1.2.3.1
+      Change default value of ViewModelBase(of TVM).IsDisposingWhenUnloadRequired, it should be false in most cases.
 
       1.2.3.0
-      fixed bug: await vm.StageManager.Show()  cannot complete in WPF MVVMWindow      
-      
+      fixed bug: await vm.StageManager.Show()  cannot complete in WPF MVVMWindow
+
       1.2.2.8
       fixed bug: await vm.StageManager.Show()  cannot complete in MVVMPage
 
