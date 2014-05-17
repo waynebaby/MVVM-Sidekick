@@ -78,11 +78,6 @@ namespace MVVMSidekick
 			: DisposeGroupBase, IDisposable, INotifyPropertyChanged, IBindable
 		{
 
-			~BindableBase()
-			{
-				Dispose();
-			}
-
 
 
 			protected event EventHandler<DataErrorsChangedEventArgs> _ErrorsChanged;
@@ -1196,7 +1191,7 @@ namespace MVVMSidekick
 		{
 			~DisposeGroupBase()
 			{
-				Dispose();
+				Dispose(false);
 			}
 
 			#region Disposing Logic/Disposing相关逻辑
@@ -1253,14 +1248,18 @@ namespace MVVMSidekick
 
 
 
+			public void Dispose()
+			{
+				Dispose(true);
+			}
+
 			/// <summary>
 			/// <para>Do all the dispose </para>
 			/// <para>销毁，尝试运行所有注册的销毁操作</para>
 			/// </summary>
-			public virtual void Dispose()
+			public virtual void Dispose(bool disposing)
 			{
 				var disposeList = Interlocked.Exchange(ref _disposeInfoList, new Lazy<List<DisposeEntry>>(() => new List<DisposeEntry>(), true));
-										
 				if (disposeList != null)
 				{
 					var l = disposeList.Value
@@ -1304,7 +1303,10 @@ namespace MVVMSidekick
 				}
 
 				_disposeInfoList = null;
-				GC.SuppressFinalize(this);
+				if (disposing)
+				{
+					GC.SuppressFinalize(this);
+				}
 			}
 
 
@@ -1548,7 +1550,7 @@ namespace MVVMSidekick
 			public ViewModelBase()
 			{
 #if WPF
-				this.IsDisposingWhenUnloadRequired = true;		 
+				this.IsDisposingWhenUnloadRequired = true;
 #endif
 
 				GetValueContainer(x => x.UIBusyTaskCount)
@@ -2239,45 +2241,45 @@ namespace MVVMSidekick
 			}
 		}
 
-		public class TaskExectionTokenPool : DisposeGroupBase, IDisposeGroup
-		{
-			ConcurrentDictionary<string, TaskExectionTokenPublisher> _TaskExectionTokenPublishers = new ConcurrentDictionary<string, TaskExectionTokenPublisher>();
+		//public class TaskExectionTokenPool : DisposeGroupBase, IDisposeGroup
+		//{
+		//	ConcurrentDictionary<string, TaskExectionTokenPublisher> _TaskExectionTokenPublishers = new ConcurrentDictionary<string, TaskExectionTokenPublisher>();
 
-			public ConcurrentDictionary<string, TaskExectionTokenPublisher> TaskExectionTokenPublishers
-			{
-				get { return _TaskExectionTokenPublishers; }
+		//	public ConcurrentDictionary<string, TaskExectionTokenPublisher> TaskExectionTokenPublishers
+		//	{
+		//		get { return _TaskExectionTokenPublishers; }
 
-			}
-
-
-			public string Name { get; private set; }
-
-		}
-
-		public class TaskExectionTokenPublisher
-		{
-
-		}
-
-		public class TaskExectionToken : IDisposable
-		{
-			public TaskExectionToken(string name, CancellationToken cancellationToken)
-			{
-				Name = name;
-				CancellationToken = cancellationToken;
-			}
-
-			public string Name { get; private set; }
-
-			public CancellationToken CancellationToken { get; private set; }
+		//	}
 
 
+		//	public string Name { get; private set; }
 
-			public void Dispose()
-			{
+		//}
 
-			}
-		}
+		//public class TaskExectionTokenPublisher
+		//{
+
+		//}
+
+		//public class TaskExectionToken : IDisposable
+		//{
+		//	public TaskExectionToken(string name, CancellationToken cancellationToken)
+		//	{
+		//		Name = name;
+		//		CancellationToken = cancellationToken;
+		//	}
+
+		//	public string Name { get; private set; }
+
+		//	public CancellationToken CancellationToken { get; private set; }
+
+
+
+		//	public void Dispose()
+		//	{
+
+		//	}
+		//}
 	}
 
 }
