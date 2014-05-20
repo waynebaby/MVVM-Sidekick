@@ -95,42 +95,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\MVVMSidekick\Collections.cs">
-      <Link>FileLinks\Collections.cs</Link>
-    </Compile>
-    <Compile Include="..\MVVMSidekick\Commands.cs">
-      <Link>FileLinks\Commands.cs</Link>
-    </Compile>
-    <Compile Include="..\MVVMSidekick\EventRouting.cs">
-      <Link>FileLinks\EventRouting.cs</Link>
-    </Compile>
-    <Compile Include="..\MVVMSidekick\Patterns.cs">
-      <Link>FileLinks\Patterns.cs</Link>
-    </Compile>
-    <Compile Include="..\MVVMSidekick\PlatformPatches.cs">
-      <Link>FileLinks\PlatformPatches.cs</Link>
-    </Compile>
-    <Compile Include="..\MVVMSidekick\Reactive.cs">
-      <Link>FileLinks\Reactive.cs</Link>
-    </Compile>
-    <Compile Include="..\MVVMSidekick\Services.cs">
-      <Link>FileLinks\Services.cs</Link>
-    </Compile>
-    <Compile Include="..\MVVMSidekick\Storages.cs">
-      <Link>FileLinks\Storages.cs</Link>
-    </Compile>
-    <Compile Include="..\MVVMSidekick\Utilities.cs">
-      <Link>FileLinks\Utilities.cs</Link>
-    </Compile>
-    <Compile Include="..\MVVMSidekick\ViewModels.cs">
-      <Link>FileLinks\ViewModels.cs</Link>
-    </Compile>
-    <Compile Include="..\MVVMSidekick\Views.cs">
-      <Link>FileLinks\Views.cs</Link>
-    </Compile>
-    <Compile Include="..\MVVMSidekick\VisualStates.cs">
-      <Link>FileLinks\VisualStates.cs</Link>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +111,7 @@
 
 xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\net40 /s  /i /y</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\MVVMSidekick.Shared\MVVMSidekick.Shared.projitems" Label="Shared" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
