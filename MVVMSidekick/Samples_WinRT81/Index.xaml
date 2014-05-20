@@ -33,9 +33,7 @@
 
         <ProgressBar Minimum="0" Maximum="5" Grid.ColumnSpan="2" Margin="175,178,112,330" Grid.Row="1" Height="199" Value="{Binding CountDown}" />
         <mvvm:PropertyBridge   Source="{Binding Mode=OneWay}" Target="{Binding DataContext, ElementName=stackPanel, Mode=TwoWay}" ></mvvm:PropertyBridge>
-    </Grid>
-    <Page.TopAppBar >
-        <AppBar   DataContext="{Binding ViewModel, ElementName=layoutAwarePage}">
+        <AppBar   DataContext="{Binding DataContext, ElementName=LayoutRoot}">
             <StackPanel x:Name="stackPanel" Orientation="Horizontal" >
                 <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" />
                 <Button Content="{Binding CommandListTest.Resource}" Grid.Column="1" Command="{Binding CommandListTest}" Margin="10" />
@@ -45,5 +43,7 @@
                 <Button Content="{Binding CommandMultiLevelSelection.Resource}" Grid.Column="1" Command="{Binding CommandMultiLevelSelection}" Margin="10" />
             </StackPanel>
         </AppBar>
-    </Page.TopAppBar>
+    </Grid>
+
+
 </common:LayoutAwarePage>

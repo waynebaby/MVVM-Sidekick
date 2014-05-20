@@ -43,11 +43,12 @@ rd MVVMSidekick /s /q
 md MVVMSidekick
 cd MVVMSidekick
 
-xcopy ..\..\..\MVVMSidekick			MVVMSidekick  /s  /i  /y
-xcopy ..\..\..\MVVMSidekick_Metro	MVVMSidekick_Metro  /s  /i  /y
-xcopy ..\..\..\MVVMSidekick_net40	MVVMSidekick_net40 /s  /i /y
-xcopy ..\..\..\MVVMSidekick_Sl		MVVMSidekick_Sl  /s  /i  /y
-xcopy ..\..\..\MVVMSidekick_Wp8		MVVMSidekick_Wp8  /s  /i /y
+xcopy ..\..\..\MVVMSidekick.Shared  MVVMSidekick.Shared     /s  /i  /y
+xcopy ..\..\..\MVVMSidekick			MVVMSidekick            /s  /i  /y
+xcopy ..\..\..\MVVMSidekick_Metro	MVVMSidekick_Metro      /s  /i  /y
+xcopy ..\..\..\MVVMSidekick_net40	MVVMSidekick_net40      /s  /i  /y
+xcopy ..\..\..\MVVMSidekick_Sl		MVVMSidekick_Sl         /s  /i  /y
+xcopy ..\..\..\MVVMSidekick_Wp8		MVVMSidekick_Wp8        /s  /i  /y
 
 
 
