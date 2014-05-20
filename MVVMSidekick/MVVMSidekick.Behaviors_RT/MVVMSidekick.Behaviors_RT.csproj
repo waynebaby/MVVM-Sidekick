@@ -169,7 +169,7 @@
 
 xcopy $(ProjectDir)*.cs Nuget\MVVM-Sidekick.Behaviors\src\CodeFiles   /i /y
 xcopy $(TargetDir)$(TargetName)*.* Bin /s  /i /y
-xcopy $(TargetDir)$(TargetName)*.* Nuget\MVVM-Sidekick.Behaviors\lib\netcore45 /s  /i /y</PostBuildEvent>
+xcopy $(TargetDir)$(TargetName)*.* Nuget\MVVM-Sidekick.Behaviors\lib\win8 /s  /i /y</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
