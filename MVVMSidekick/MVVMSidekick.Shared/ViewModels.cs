@@ -89,12 +89,7 @@ namespace MVVMSidekick
 				}
 			}
 
-			private Guid _BindableInstanceId = Guid.NewGuid();
-			public Guid BindableInstanceId
-			{
-				get { return _BindableInstanceId; }
-
-			}
+			abstract public String BindableInstanceId { get; }
 
 
 			public override string ToString()
@@ -588,7 +583,7 @@ namespace MVVMSidekick
 
 
 #if NETFX_CORE
-            bool _IsCopyToAllowed = !typeof(ICommand).GetTypeInfo().IsAssignableFrom(typeof(TProperty).GetTypeInfo());
+			bool _IsCopyToAllowed = !typeof(ICommand).GetTypeInfo().IsAssignableFrom(typeof(TProperty).GetTypeInfo());
 #else
 			bool _IsCopyToAllowed = !typeof(ICommand).IsAssignableFrom(typeof(TProperty));
 #endif
@@ -709,6 +704,21 @@ namespace MVVMSidekick
 		[DataContract]
 		public abstract class BindableBase<TSubClassType> : BindableBase, INotifyDataErrorInfo where TSubClassType : BindableBase<TSubClassType>
 		{
+			public BindableBase()
+			{
+				var meId = Interlocked.Increment(ref InstanceCount);
+				_BindableInstanceId = string.Format("{0}:{1}", typeof(TSubClassType).Name, meId);
+			}
+
+			string _BindableInstanceId;
+			public override string BindableInstanceId
+			{
+				get { return _BindableInstanceId; }
+			}
+
+
+			static int InstanceCount = -1;
+
 
 
 			/// <summary>
@@ -941,7 +951,7 @@ namespace MVVMSidekick
 					var error = string.Join(",", _plainPropertyContainerGetters[propertyName]((TSubClassType)this).Errors.Select(x => x.Message));
 					var propertyContainer = this.GetValueContainer(propertyName);
 #if NETFX_CORE
-                    if (propertyContainer != null && typeof(INotifyDataErrorInfo).GetTypeInfo().IsAssignableFrom(propertyContainer.PropertyType.GetTypeInfo()))
+					if (propertyContainer != null && typeof(INotifyDataErrorInfo).GetTypeInfo().IsAssignableFrom(propertyContainer.PropertyType.GetTypeInfo()))
 #else
 
 					if (propertyContainer != null && typeof(INotifyDataErrorInfo).IsAssignableFrom(propertyContainer.PropertyType))
@@ -1364,7 +1374,7 @@ namespace MVVMSidekick
 		{
 
 			EventRouter EventRouter { get; set; }
-			Guid BindableInstanceId { get; }
+			string BindableInstanceId { get; }
 
 			string Error { get; }
 
@@ -1421,7 +1431,7 @@ namespace MVVMSidekick
 		public partial interface IViewModel : IBindable, INotifyPropertyChanged, IViewModelLifetime
 		{
 #if NETFX_CORE
-            Windows.UI.Core.CoreDispatcher Dispatcher { get; }
+			Windows.UI.Core.CoreDispatcher Dispatcher { get; }
 #else
 			Dispatcher Dispatcher { get; }
 
@@ -1460,8 +1470,8 @@ namespace MVVMSidekick
 			bool IsDisposingWhenUnloadRequired { get; }
 
 #if NETFX_CORE
-            void LoadState(Object navigationParameter, Dictionary<String, Object> pageState);
-            void SaveState(Dictionary<String, Object> pageState);
+			void LoadState(Object navigationParameter, Dictionary<String, Object> pageState);
+			void SaveState(Dictionary<String, Object> pageState);
 #endif
 		}
 
@@ -1669,30 +1679,30 @@ namespace MVVMSidekick
 
 
 #if NETFX_CORE
-            /// <summary>
-            /// Populates the page with content passed during navigation.  Any saved state is also
-            /// provided when recreating a page from a prior session.
-            /// </summary>
-            /// <param name="navigationParameter">The parameter value passed to
-            /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
-            /// </param>
-            /// <param name="pageState">A dictionary of state preserved by this page during an earlier
-            /// session.  This will be null the first time a page is visited.</param>
-            public virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
-            {
+			/// <summary>
+			/// Populates the page with content passed during navigation.  Any saved state is also
+			/// provided when recreating a page from a prior session.
+			/// </summary>
+			/// <param name="navigationParameter">The parameter value passed to
+			/// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
+			/// </param>
+			/// <param name="pageState">A dictionary of state preserved by this page during an earlier
+			/// session.  This will be null the first time a page is visited.</param>
+			public virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+			{
 
-            }
+			}
 
-            /// <summary>
-            /// Preserves state associated with this page in case the application is suspended or the
-            /// page is discarded from the navigation cache.  Values must conform to the serialization
-            /// requirements of <see cref="SuspensionManager.SessionState"/>.
-            /// </summary>
-            /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
-            public virtual void SaveState(Dictionary<String, Object> pageState)
-            {
+			/// <summary>
+			/// Preserves state associated with this page in case the application is suspended or the
+			/// page is discarded from the navigation cache.  Values must conform to the serialization
+			/// requirements of <see cref="SuspensionManager.SessionState"/>.
+			/// </summary>
+			/// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
+			public virtual void SaveState(Dictionary<String, Object> pageState)
+			{
 
-            }
+			}
 #endif
 
 			MVVMSidekick.Views.StageManager _StageManager;
@@ -1769,7 +1779,7 @@ namespace MVVMSidekick
 
 
 #if NETFX_CORE
-             await   Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,new Windows.UI.Core.DispatchedHandler (action));
+				await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(action));
 
 #elif NET45
 
@@ -1862,20 +1872,20 @@ namespace MVVMSidekick
 			}
 
 #if NETFX_CORE
-            private Windows.UI.Core.CoreDispatcher GetCurrentViewDispatcher()
-            {
-                Windows.UI.Xaml.DependencyObject dp = null;
-                if (this.StageManager == null)
-                {
-                    return null;
-                }
-                else if ((dp = (this.StageManager.CurrentBindingView as Windows.UI.Xaml.DependencyObject)) == null)
-                {
-                    return null;
-                }
-                return dp.Dispatcher;
+			private Windows.UI.Core.CoreDispatcher GetCurrentViewDispatcher()
+			{
+				Windows.UI.Xaml.DependencyObject dp = null;
+				if (this.StageManager == null)
+				{
+					return null;
+				}
+				else if ((dp = (this.StageManager.CurrentBindingView as Windows.UI.Xaml.DependencyObject)) == null)
+				{
+					return null;
+				}
+				return dp.Dispatcher;
 
-            }
+			}
 #else
 
 			private Dispatcher GetCurrentViewDispatcher()
@@ -1894,25 +1904,25 @@ namespace MVVMSidekick
 			}
 #endif
 #if NETFX_CORE
-            public Windows.UI.Core.CoreDispatcher Dispatcher
-            {
-                get
-                {
+			public Windows.UI.Core.CoreDispatcher Dispatcher
+			{
+				get
+				{
 
-                    var current = GetCurrentViewDispatcher();
-                    if (current != null)
-                    {
-                        return current;
-                    }
-                    if (Windows.UI.Xaml.Window.Current == null)
-                    {
-                        return null;
-                    }
-                    return Windows.UI.Xaml.Window.Current.Dispatcher;
-                }
+					var current = GetCurrentViewDispatcher();
+					if (current != null)
+					{
+						return current;
+					}
+					if (Windows.UI.Xaml.Window.Current == null)
+					{
+						return null;
+					}
+					return Windows.UI.Xaml.Window.Current.Dispatcher;
+				}
 
 
-            }
+			}
 #elif WPF
 			public Dispatcher Dispatcher
 			{

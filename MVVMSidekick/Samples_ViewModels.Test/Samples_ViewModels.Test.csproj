@@ -48,7 +48,10 @@
     </Reference>
     <Reference Include="MVVMSidekick, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.2.3.2\lib\net45\MVVMSidekick.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.2.4.0\lib\net45\MVVMSidekick.dll</HintPath>
+    </Reference>
+    <Reference Include="MVVMSidekick.Behaviors_net45">
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.2.8\lib\net45\MVVMSidekick.Behaviors_net45.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -75,6 +78,7 @@
       <HintPath>..\packages\Rx-Xaml.2.2.4\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <Choose>
