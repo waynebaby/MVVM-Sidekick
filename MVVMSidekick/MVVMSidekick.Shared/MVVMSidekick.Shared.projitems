@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>713ce5f8-c071-4550-b6b1-7a2fd8e870df</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>MVVMSidekick</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Collections.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRouting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Patterns.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlatformPatches.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reactive.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Storages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VisualStates.cs" />
+  </ItemGroup>
+</Project>
