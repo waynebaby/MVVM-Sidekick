@@ -1158,10 +1158,8 @@ namespace MVVMSidekick
                     }
                 }
                 IView view = item as IView;
-                targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-
-                SetVMAfterLoad(targetViewModel, view);
-
+                targetViewModel = targetViewModel ?? view.ViewModel as TTarget;		
+                SetVMAfterLoad(targetViewModel, view);								
                 InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
                 return await targetViewModel.WaitForCloseWithResult();
             }
@@ -1350,7 +1348,7 @@ Please check startup function of this mapping is well configured and be proper c
 
                          if (parameter.ViewModel != null)
                          {
-                             targetViewModel = parameter.ViewModel;
+                             page.ViewModel  = parameter.ViewModel;
                          }
                          else
                          {
