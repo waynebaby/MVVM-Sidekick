@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+   <Name >MVVM-Sidekick Blank Windows Phone App 8.1(Windows Phone)</Name>
+    <Description>A Blank App template works with MVVM Sidekick</Description>
+    <Icon>MVVMSidekickWindowsPhoneApplication.WPA81.ico</Icon>
+    <TemplateID>Microsoft.CS.WinRTWPA81.MVVMSidekickBlankAppWPA81</TemplateID>
+    <RequiredFrameworkVersion>4.5.1</RequiredFrameworkVersion>
+    <SortOrder>1</SortOrder>
+  
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>App</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <TargetPlatformName>Windows</TargetPlatformName>
+    <CreateInPlace>true</CreateInPlace>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType></ProjectSubType>
+    <ShowByDefault>false</ShowByDefault>
+    <BuildProjectOnLoad>true</BuildProjectOnLoad>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="Application.csproj" ReplaceParameters="true">
+        <ProjectItem ReplaceParameters="true" TargetFileName="App.xaml">App.xaml</ProjectItem>
+        <ProjectItem ReplaceParameters="true" OpenInEditor="true" BlendOpenInEditor="false" TargetFileName="App.xaml.cs">App.xaml.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" BlendOpenInEditor="true" TargetFileName="MainPage.xaml">MainPage.xaml</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml.cs">MainPage.xaml.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Properties\AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Package.appxmanifest">Package-PhoneAppx.appxmanifest</ProjectItem>
+        <!--<Folder Name="Assets">-->
+            <ProjectItem ReplaceParameters="false" TargetFileName="Assets\Logo.scale-240.png">Phone.Logo.png</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="Assets\SmallLogo.scale-240.png">Phone.SmallLogo.png</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="Assets\SplashScreen.scale-240.png">Phone.SplashScreen.png</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="Assets\Square71x71Logo.scale-240.png">Phone.Square71x71Logo.png</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="Assets\StoreLogo.scale-240.png">Phone.StoreLogo.png</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="Assets\WideLogo.scale-240.png">Phone.WideLogo.png</ProjectItem>
+        <!--</Folder>-->
+	   <Folder Name="Startups" TargetFolderName="Startups">
+        <ProjectItem ReplaceParameters="true" TargetFileName="StartupFunctions.cs">StartupFunctions.cs</ProjectItem>
+      </Folder>
+      <Folder Name="ViewModels" TargetFolderName="ViewModels">
+        <ProjectItem ReplaceParameters="true" TargetFileName="MainPage_Model.cs">MainPage_Model.cs</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.VisualStudio.WinRT.TemplateWizards, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VisualStudio.WinRT.TemplateWizards.PhoneAppxWizard</FullClassName>
+  </WizardExtension>
+  
+  <WizardExtension>
+    <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    <packages repository="extension"
+          repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
+      <package id="Rx-Core" version="2.2.4"  />
+      <package id="Rx-Interfaces" version="2.2.4"  />
+      <package id="Rx-Linq" version="2.2.4"  />
+      <package id="Rx-Main" version="2.2.4"  />
+      <package id="Rx-PlatformServices" version="2.2.4"  />
+      <package id="Rx-Xaml" version="2.2.4"  />
+      <package id="MVVM-Sidekick" version="1.2.4.1"/>
+      <package id="MVVM-Sidekick.Behaviors" version="0.2.4.1"/>
+      
+    </packages>
+  </WizardData>
+</VSTemplate>
