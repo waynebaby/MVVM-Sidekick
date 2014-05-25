@@ -22,7 +22,7 @@
     <ProjectSubType></ProjectSubType>
     <ShowByDefault>false</ShowByDefault>
     <BuildProjectOnLoad>true</BuildProjectOnLoad>
-    <PreviewImage>BlankApp.png</PreviewImage>-->
+    <PreviewImage>BlankApp.png</PreviewImage>
   </TemplateData>
   <TemplateContent>
     <Project File="Application.csproj" ReplaceParameters="true">
@@ -58,14 +58,14 @@
   <WizardData>
     <packages repository="extension"
           repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
-      <package id="Rx-Core" version="2.2.2"  />
-      <package id="Rx-Interfaces" version="2.2.2"  />
-      <package id="Rx-Linq" version="2.2.2"  />
-      <package id="Rx-Main" version="2.2.2"  />
-      <package id="Rx-PlatformServices" version="2.2.3"  />
-      <package id="Rx-Xaml" version="2.2.2"  />
-      <package id="MVVM-Sidekick" version="1.2.2.9"/>
-      <package id="MVVM-Sidekick.Behaviors" version="0.2.2.8"/>
+      <package id="Rx-Core" version="2.2.4"  />
+      <package id="Rx-Interfaces" version="2.2.4"  />
+      <package id="Rx-Linq" version="2.2.4"  />
+      <package id="Rx-Main" version="2.2.4"  />
+      <package id="Rx-PlatformServices" version="2.2.4"  />
+      <package id="Rx-Xaml" version="2.2.4"  />
+      <package id="MVVM-Sidekick" version="1.2.4.1"/>
+      <package id="MVVM-Sidekick.Behaviors" version="0.2.4.1"/>
       
     </packages>
   </WizardData>
