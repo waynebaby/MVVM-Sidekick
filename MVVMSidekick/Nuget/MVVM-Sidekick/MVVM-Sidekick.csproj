@@ -89,7 +89,7 @@ laucher</PostBuildEvent>
 set ProjectDir="$(ProjectDir)"
 
 cd %25ProjectDir%25
-SourcePacking
+rem SourcePacking
 </PreBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
