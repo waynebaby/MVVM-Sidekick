@@ -1,4 +1,4 @@
-set ver=1.2.4.0
+set ver=1.2.4.1
 
 xcopy lib\*.*  ..\..\packages\MVVM-Sidekick.%ver%\lib  /s /i /y 
 BuildPublishPackage.cmd MVVM-Sidekick %ver%
