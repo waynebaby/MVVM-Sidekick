@@ -55,45 +55,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\packages\Microsoft.Bcl.Async.1.0.165\Microsoft.Bcl.Async.1.0.165.nupkg">
-      <Link>Packages\Microsoft.Bcl.Async.1.0.165.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="..\..\packages\Rx-Core.2.2.2\Rx-Core.2.2.2.nupkg">
-      <Link>Packages\Rx-Core.2.2.2.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="..\..\packages\Rx-Interfaces.2.2.2\Rx-Interfaces.2.2.2.nupkg">
-      <Link>Packages\Rx-Interfaces.2.2.2.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="..\..\packages\Rx-Linq.2.2.2\Rx-Linq.2.2.2.nupkg">
-      <Link>Packages\Rx-Linq.2.2.2.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="..\..\packages\Rx-Main.2.2.2\Rx-Main.2.2.2.nupkg">
-      <Link>Packages\Rx-Main.2.2.2.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="..\..\packages\Microsoft.Bcl.1.1.6\Microsoft.Bcl.1.1.6.nupkg">
-      <Link>Packages\Microsoft.Bcl.1.1.6.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="shot.png" />
     <Content Include="smaller.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="..\..\packages\Microsoft.Bcl.Build.1.0.13\Microsoft.Bcl.Build.1.0.13.nupkg">
-      <Link>Packages\Microsoft.Bcl.Build.1.0.13.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.2.2.9.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.2.2.9.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="..\..\packages\Rx-Xaml.2.2.2\Rx-Xaml.2.2.2.nupkg">
-      <Link>Packages\Rx-Xaml.2.2.2.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="license.rtf">
@@ -152,12 +116,52 @@
       <Link>ProjectTemplates\Windows Phone\MVVMSidekickWindowsPhoneApplication.WP8.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick.Behaviors\MVVM-Sidekick.Behaviors.0.2.2.8.nupkg">
-      <Link>Packages\MVVM-Sidekick.Behaviors.0.2.2.8.nupkg</Link>
+    <Content Include="..\..\packages\Microsoft.Bcl.1.1.9\Microsoft.Bcl.1.1.9.nupkg">
+      <Link>Packages\Microsoft.Bcl.1.1.9.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\packages\Rx-PlatformServices.2.2.3\Rx-PlatformServices.2.2.3.nupkg">
-      <Link>Packages\Rx-PlatformServices.2.2.3.nupkg</Link>
+    <Content Include="..\..\packages\Microsoft.Bcl.Async.1.0.168\Microsoft.Bcl.Async.1.0.168.nupkg">
+      <Link>Packages\Microsoft.Bcl.Async.1.0.168.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Microsoft.Bcl.Build.1.0.14\Microsoft.Bcl.Build.1.0.14.nupkg">
+      <Link>Packages\Microsoft.Bcl.Build.1.0.14.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Rx-Core.2.2.4\Rx-Core.2.2.4.nupkg">
+      <Link>Packages\Rx-Core.2.2.4.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Rx-Interfaces.2.2.4\Rx-Interfaces.2.2.4.nupkg">
+      <Link>Packages\Rx-Interfaces.2.2.4.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Rx-Linq.2.2.4\Rx-Linq.2.2.4.nupkg">
+      <Link>Packages\Rx-Linq.2.2.4.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Rx-Main.2.2.4\Rx-Main.2.2.4.nupkg">
+      <Link>Packages\Rx-Main.2.2.4.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Rx-PlatformServices.2.2.4\Rx-PlatformServices.2.2.4.nupkg">
+      <Link>Packages\Rx-PlatformServices.2.2.4.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Rx-Xaml.2.2.4\Rx-Xaml.2.2.4.nupkg">
+      <Link>Packages\Rx-Xaml.2.2.4.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\Nuget\MVVM-Sidekick.1.2.4.1.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.2.4.1.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\Nuget\MVVM-Sidekick.Behaviors.0.2.4.1.nupkg">
+      <Link>Packages\MVVM-Sidekick.Behaviors.0.2.4.1.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\MVVMSidekickWindowsPhoneApplication.WPA81\bin\ProjectTemplates\CSharp\1033\MVVMSidekickWindowsPhoneApplication.WPA81.zip">
+      <Link>ProjectTemplates\Windows Phone\MVVMSidekickWindowsPhoneApplication.WPA81</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
