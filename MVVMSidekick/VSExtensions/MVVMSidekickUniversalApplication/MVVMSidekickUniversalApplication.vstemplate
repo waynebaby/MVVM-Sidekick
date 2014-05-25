@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>MVVMSidekickUniversalApplication</Name>
+    <Description>MVVMSidekickUniversalApplication</Description>
+    <Icon>MVVMSidekickUniversalApplication.ico</Icon>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <SortOrder>1000</SortOrder>
+    <TemplateID>72044eb7-7703-4cd7-97c6-1dd0d37dbe81</TemplateID>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>MVVMSidekickUniversalApplication</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="Properties\AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+   </Project>
+  </TemplateContent>
+</VSTemplate>
