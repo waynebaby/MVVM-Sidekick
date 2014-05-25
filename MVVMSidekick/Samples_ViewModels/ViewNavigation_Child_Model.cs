@@ -23,7 +23,7 @@ namespace Samples.ViewModels
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性
 		public ViewNavigation_Child_Model()
 		{
-			Title = BindableInstanceId;
+			//Title = BindableInstanceId;
 		
 		}
         public String Title

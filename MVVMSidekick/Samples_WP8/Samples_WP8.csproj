@@ -251,11 +251,11 @@
     </Reference>
     <Reference Include="MVVMSidekick.Behaviors_WP8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.2.8\lib\wp8\MVVMSidekick.Behaviors_WP8.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.4.1\lib\wp8\MVVMSidekick.Behaviors_WP8.dll</HintPath>
     </Reference>
     <Reference Include="MVVMSidekick_Wp8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.2.4.0\lib\wp8\MVVMSidekick_Wp8.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.2.4.1\lib\wp8\MVVMSidekick_Wp8.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
