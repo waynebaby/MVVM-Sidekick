@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-    <Name >MVVM-Sidekick Blank Windows Phone 8 Application</Name>
-    <Description>A Blank Windows Phone Application template works with MVVM Sidekick</Description>
+    <Name >MVVM-Sidekick Phone App 8/8.1 (Silverlight)</Name>
+    <Description>A Blank Windows Phone Application  (Silverlight) template works with MVVM Sidekick</Description>
     <Icon>MVVMSidekickWindowsPhoneApplication.WP8.ico</Icon>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType>
