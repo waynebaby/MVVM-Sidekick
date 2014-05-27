@@ -85,6 +85,7 @@
     </Content>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Application.csproj" />
+    <None Include="MVVMSidekickWindowsPhoneApplication.WPA81.ico" />
     <Content Include="Phone.Logo.png" />
     <Content Include="Phone.SmallLogo.png" />
     <Content Include="Phone.SplashScreen.png" />
@@ -98,7 +99,6 @@
     <None Include="Package-PhoneAppx.appxmanifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="MVVMSidekickWindowsPhoneApplication.WPA81.ico" />
   </ItemGroup>
   <ItemGroup>
     <VSTemplate Include="MVVMSidekickWindowsPhoneApplication.WPA81.vstemplate">
