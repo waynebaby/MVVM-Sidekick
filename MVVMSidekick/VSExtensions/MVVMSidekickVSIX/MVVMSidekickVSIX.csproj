@@ -164,6 +164,10 @@
       <Link>ProjectTemplates\Windows Phone\MVVMSidekickWindowsPhoneApplication.WPA81</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="..\MVVMSidekickViewWithVM.WPA81\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM.WPA81.zip">
+      <Link>ItemTemplates\Windows Phone\MVVMSidekickViewWithVM.WPA81.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>

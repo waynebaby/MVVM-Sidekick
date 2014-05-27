@@ -15,7 +15,6 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  DataContext="{StaticResource DesignVM}">
-        <TextBlock x:Name="pageTitle" Grid.Column="1" Margin="100" Text="{Binding Title}" Style="{StaticResource HeaderTextBlockStyle}"/>
-
+        <TextBlock TextWrapping="Wrap" x:Name="pageTitle" Grid.Column="1"  Text="{Binding Title}" Style="{StaticResource HeaderTextBlockStyle}"/>
     </Grid>
 </mvvm:MVVMPage>
