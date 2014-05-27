@@ -2,8 +2,8 @@
 <VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
 
-    <Name>MVVM-Sidekick Page View for Windows Phone 8</Name>
-    <Description>MVVM-Sidekick Page View With VM for Windows Phone 8 Apps</Description>
+    <Name>MVVM-Sidekick Phone Page 8/8.1 (Silverlight)</Name>
+    <Description>MVVM-Sidekick Page View With VM for Windows Phone 8 Apps (Silverlight)</Description>
     <Icon>MVVMSidekickViewWithVM.WP8.ico</Icon>
     <TemplateID>Microsoft.WindowsPhone8.CSharp.MVVMSidekick.Page</TemplateID>
     <TemplateGroupID>Windows Phone</TemplateGroupID>

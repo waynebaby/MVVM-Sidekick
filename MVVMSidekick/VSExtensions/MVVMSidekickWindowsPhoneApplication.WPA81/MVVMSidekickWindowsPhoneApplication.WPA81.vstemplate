@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-   <Name >MVVM-Sidekick Blank Windows Phone App 8.1(Windows Phone)</Name>
+   <Name >MVVM-Sidekick Phone App 8.1 (Windows Phone)</Name>
     <Description>A Blank App template works with MVVM Sidekick</Description>
     <Icon>MVVMSidekickWindowsPhoneApplication.WPA81.ico</Icon>
     <TemplateID>Microsoft.CS.WinRTWPA81.MVVMSidekickBlankAppWPA81</TemplateID>
