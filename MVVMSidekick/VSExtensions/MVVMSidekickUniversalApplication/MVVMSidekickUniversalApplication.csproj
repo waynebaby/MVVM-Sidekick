@@ -51,7 +51,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -59,7 +59,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -75,14 +75,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Shared\ViewModels\MainPage_Model.cs" />
+    <None Include="Shared\Startups\StartupFunctions.cs" />
+    <None Include="Shared\Shared.App.xaml.cs">
+      <DependentUpon>Shared.App.xaml</DependentUpon>
+    </None>
+    <None Include="WindowsPhone\Properties\WindowsPhone.AssemblyInfo.cs" />
+    <None Include="WindowsPhone\WindowsPhone.MainPage.xaml.cs">
+      <DependentUpon>WindowsPhone.MainPage.xaml</DependentUpon>
+    </None>
+    <None Include="Windows\Properties\Windows.AssemblyInfo.cs" />
+    <None Include="Windows\Windows.MainPage.xaml.cs">
+      <DependentUpon>Windows.MainPage.xaml</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="AssemblyInfo.cs" />
-    <None Include="ProjectTemplate.csproj" />
-    <None Include="MVVMSidekickUniversalApplication.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <VSTemplate Include="MVVMSidekickUniversalApplication.vstemplate" />
+    <None Include="Shared\Shared.Application.Shared.projitems" />
+    <None Include="Shared\Shared.Application.shproj" />
+    <None Include="WindowsPhone\Package-PhoneAppx.appxmanifest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Windows\Package-managed.appxmanifest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Windows\Windows.TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
@@ -101,6 +118,45 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Shared\Shared.App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="WindowsPhone\WindowsPhone.MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Windows\Windows.MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <VSTemplate Include="SharedBlankApplication.vstemplate">
+      <SubType>Designer</SubType>
+    </VSTemplate>
+    <None Include="SharedBlankApplication.ico" />
+    <None Include="Shared\Shared.vstemplate" />
+    <None Include="WindowsPhone\Assets\Phone.Logo.png" />
+    <None Include="WindowsPhone\Assets\Phone.SmallLogo.png" />
+    <None Include="WindowsPhone\Assets\Phone.SplashScreen.png" />
+    <None Include="WindowsPhone\Assets\Phone.Square71x71Logo.png" />
+    <None Include="WindowsPhone\Assets\Phone.StoreLogo.png" />
+    <None Include="WindowsPhone\Assets\Phone.WideLogo.png" />
+    <None Include="WindowsPhone\WindowsPhone.Application.WindowsPhone.csproj" />
+    <None Include="WindowsPhone\WindowsPhone.vstemplate" />
+    <None Include="Windows\Assets\Logo.png" />
+    <None Include="Windows\Assets\SmallLogo.png" />
+    <None Include="Windows\Assets\SplashScreen.png" />
+    <None Include="Windows\Assets\StoreLogo.png" />
+    <None Include="Windows\Windows.Application.Windows.csproj" />
+    <None Include="Windows\Windows.vstemplate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BlankApp.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
