@@ -85,11 +85,11 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickBlankApp_RT\bin\ProjectTemplates\CSharp\1033\MVVMSidekickBlankApp_RT.zip">
-      <Link>ProjectTemplates\Windows Store\MVVMSidekickBlankApp_RT.zip</Link>
+      <Link>ProjectTemplates\Store Apps\Windows Apps\MVVMSidekickBlankApp_RT.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickBlankApp_RT_81\bin\ProjectTemplates\CSharp\1033\MVVMSidekickBlankApp_RT_81.zip">
-      <Link>ProjectTemplates\Windows Store\MVVMSidekickBlankApp_RT_81.zip</Link>
+      <Link>ProjectTemplates\Store Apps\Windows Apps\MVVMSidekickBlankApp_RT_81.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickViewWithVM.SL5\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM.SL5.zip">
@@ -105,15 +105,15 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickApplication.WPF\bin\ProjectTemplates\CSharp\1033\MVVMSidekickApplication.WPF.zip">
-      <Link>ProjectTemplates\Windows\MVVMSidekickApplication.WPF.zip</Link>
+      <Link>ProjectTemplates\Windows Desktop\MVVMSidekickApplication.WPF.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickApplication.WPF\bin\ProjectTemplates\CSharp\1033\MVVMSidekickApplication.WPF4.zip">
-      <Link>ProjectTemplates\Windows\MVVMSidekickApplication.WPF4.zip</Link>
+      <Link>ProjectTemplates\Windows Desktop\MVVMSidekickApplication.WPF4.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickWindowsPhoneApplication.WP8\bin\ProjectTemplates\CSharp\1033\MVVMSidekickWindowsPhoneApplication.WP8.zip">
-      <Link>ProjectTemplates\Windows Phone\MVVMSidekickWindowsPhoneApplication.WP8.zip</Link>
+      <Link>ProjectTemplates\Store Apps\Windows Phone Apps\MVVMSidekickWindowsPhoneApplication.WP8.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\..\packages\Microsoft.Bcl.1.1.9\Microsoft.Bcl.1.1.9.nupkg">
@@ -161,11 +161,15 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickWindowsPhoneApplication.WPA81\bin\ProjectTemplates\CSharp\1033\MVVMSidekickWindowsPhoneApplication.WPA81.zip">
-      <Link>ProjectTemplates\Windows Phone\MVVMSidekickWindowsPhoneApplication.WPA81</Link>
+      <Link>ProjectTemplates\Store Apps\Windows Phone Apps\MVVMSidekickWindowsPhoneApplication.WPA81.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickViewWithVM.WPA81\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM.WPA81.zip">
       <Link>ItemTemplates\Windows Phone\MVVMSidekickViewWithVM.WPA81.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\MVVMSidekickUniversalApplication\bin\ProjectTemplates\CSharp\1033\SharedBlankApplication.zip">
+      <Link>ProjectTemplates\Store Apps\Universal Apps\SharedBlankApplication.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
