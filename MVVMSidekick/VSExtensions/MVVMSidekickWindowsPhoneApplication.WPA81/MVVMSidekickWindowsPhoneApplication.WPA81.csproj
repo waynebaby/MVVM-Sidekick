@@ -101,7 +101,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <VSTemplate Include="MVVMSidekickWindowsPhoneApplication.WPA81.vstemplate">
+    <VSTemplate Include="MVVMSidekickWPA81.vstemplate">
       <SubType>Designer</SubType>
     </VSTemplate>
   </ItemGroup>
