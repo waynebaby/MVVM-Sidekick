@@ -10,7 +10,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="AppName">My Application</x:String>
+
         <vm:MainPage_Model x:Key="DesignVM"/>
     </Page.Resources>
 

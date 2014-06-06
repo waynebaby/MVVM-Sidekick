@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVVMSidekick.Views;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,14 +14,14 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
 namespace $ext_safeprojectname$
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : MVVMPage
     {
         public MainPage()
         {
@@ -36,6 +37,7 @@ namespace $ext_safeprojectname$
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+			base.OnNavigatedTo(e);
             // TODO: Prepare page for display here.
 
             // TODO: If your application contains multiple pages, ensure that you are
