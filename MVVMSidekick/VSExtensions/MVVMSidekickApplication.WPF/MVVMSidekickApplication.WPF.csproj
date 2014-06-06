@@ -68,7 +68,7 @@
     <None Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </None>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Properties\AssemblyInfo.cs" />
     <None Include="Resources.Designer.cs" />
     <None Include="Settings.Designer.cs" />
   </ItemGroup>
