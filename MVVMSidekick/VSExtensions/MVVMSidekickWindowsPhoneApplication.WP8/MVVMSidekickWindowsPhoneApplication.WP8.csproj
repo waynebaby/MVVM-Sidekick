@@ -37,7 +37,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>MVVMSidekickWindowsPhoneApplication.WP8\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -68,7 +68,7 @@
       <DependentUpon>Page.xaml</DependentUpon>
     </None>
     <None Include="LocalizedStrings.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Properties\AssemblyInfo.cs" />
     <None Include="ViewModels\MainPage_Model.cs" />
     <None Include="Startups\StartupFunctions.cs" />
   </ItemGroup>
@@ -79,7 +79,7 @@
     <None Include="MVVMSidekickWindowsPhoneApplication.WP8.ico" />
   </ItemGroup>
   <ItemGroup>
-    <VSTemplate Include="MVVMSidekickWindowsPhoneApplication.WP8.vstemplate" />
+    <VSTemplate Include="MVVMSidekickWP8.vstemplate" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\AlignmentGrid.png" />

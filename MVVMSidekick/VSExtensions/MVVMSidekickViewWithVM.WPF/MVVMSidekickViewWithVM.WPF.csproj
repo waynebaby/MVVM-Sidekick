@@ -63,7 +63,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Properties\AssemblyInfo.cs" />
     <None Include="ViewP.xaml.cs">
       <DependentUpon>ViewP.xaml</DependentUpon>
     </None>
