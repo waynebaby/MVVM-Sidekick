@@ -243,7 +243,7 @@
     </Reference>
     <Reference Include="MVVMSidekick.Behaviors_RT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.4.2\lib\netcore45\MVVMSidekick.Behaviors_RT.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.4.3\lib\netcore45\MVVMSidekick.Behaviors_RT.dll</HintPath>
     </Reference>
     <Reference Include="MVVMSidekick_Metro, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
