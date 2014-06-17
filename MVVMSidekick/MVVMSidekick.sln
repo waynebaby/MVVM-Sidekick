@@ -380,9 +380,9 @@ Global
 		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|ARM.ActiveCfg = Release|ARM
 		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|ARM.Build.0 = Release|ARM
 		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|ARM.Deploy.0 = Release|ARM
-		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
-		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|x64.ActiveCfg = Release|Any CPU
 		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|x86.ActiveCfg = Release|x86
 		{9C99A036-5EE4-4CB4-B25C-19C6D9E5D8E0}.Release|x86.Build.0 = Release|x86
