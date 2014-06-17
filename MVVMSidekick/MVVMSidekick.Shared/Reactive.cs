@@ -81,12 +81,6 @@ namespace MVVMSidekick
         public static class MVVMRxExtensions
         {
 
-            //public static IDisposable SubscribeToRouter(this IObservable<Task> executionSequence, BindableBase model, string eventName, CallingCodeContext callingCodeContext)
-            //{
-            //    EventRouting.EventRouter.Instance.GetEventObject<TaskExecutionWindowEventArg>().RaiseEvent(model, eventName, callingCodeContext);
-            //    return executionSequence.Subscribe();
-
-            //}
 
             /// <summary>
             /// Register a Do action to the observer, Notify the value in this sequence to EventRouter
@@ -334,7 +328,7 @@ namespace MVVMSidekick
             }
 
 
-            virtual protected void ConfigReactive()
+             protected void ConfigReactive()
             {
                 _LazyObservableExecute = new Lazy<IObservable<EventPattern<EventCommandEventArgs>>>
                 (
