@@ -249,9 +249,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
     </Reference>
-    <Reference Include="MVVMSidekick.Behaviors_WP8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.4.2\lib\wp8\MVVMSidekick.Behaviors_WP8.dll</HintPath>
+    <Reference Include="MVVMSidekick.Behaviors_WP8">
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.4.3\lib\wp8\MVVMSidekick.Behaviors_WP8.dll</HintPath>
     </Reference>
     <Reference Include="MVVMSidekick_Wp8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
