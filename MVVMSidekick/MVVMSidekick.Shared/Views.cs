@@ -75,198 +75,210 @@ namespace System.Windows
 namespace MVVMSidekick
 {
 
-    namespace Views
-    {
+	namespace Views
+	{
 
 
-        public static class ViewHelper
-        {
-            //public static readonly string DEFAULT_VM_NAME = "DesignVM";
-            internal static RoutedEventHandler ViewUnloadCallBack
-                = async (o, e) =>
-                {
-                    IView v = o as IView;
-                    if (v != null)
-                    {
-                        var m = v.ViewModel as IViewModelLifetime;
-                        if (m != null)
-                        {
-                            await m.OnBindedViewUnload(v);
-                        }
-                    }
-                };
+		public static class ViewHelper
+		{
+			//public static readonly string DEFAULT_VM_NAME = "DesignVM";
+			internal static RoutedEventHandler ViewUnloadCallBack
+				= async (o, e) =>
+				{
+					IView v = o as IView;
+					if (v != null)
+					{
+						var m = v.ViewModel as IViewModelLifetime;
+						if (m != null)
+						{
+							await m.OnBindedViewUnload(v);
+						}
+					}
+				};
 
-            internal static PropertyChangedCallback ViewModelChangedCallback
-                = (o, e) =>
-                {
-                    dynamic item = o;
-                    var fele = ((o as IView).Content as FrameworkElement);
-                    if (object.ReferenceEquals(fele.DataContext, e.NewValue))
-                    {
-                        return;
-                    }
-                    ((o as IView).Content as FrameworkElement).DataContext = e.NewValue;
-                    var nv = e.NewValue as IViewModel;
-                    var ov = e.OldValue as IViewModel;
-                    if (ov != null)
-                    {
-                        ov.OnUnbindedFromView(o as IView, nv);
-                    }
-                    if (nv != null)
-                    {
-                        nv.OnBindedToView(o as IView, ov);
-                    }
+			internal static PropertyChangedCallback ViewModelChangedCallback
+				= (o, e) =>
+				{
+					dynamic item = o;
+					var oiview = o as IView;
+					var fele = (oiview.ContentObject as FrameworkElement);
+					if (object.ReferenceEquals(fele.DataContext, e.NewValue))
+					{
+						return;
+					}
+					(oiview.ContentObject as FrameworkElement).DataContext = e.NewValue;
+					var nv = e.NewValue as IViewModel;
+					var ov = e.OldValue as IViewModel;
+					if (ov != null)
+					{
+						ov.OnUnbindedFromView(oiview, nv);
+					}
+					if (nv != null)
+					{
+						nv.OnBindedToView(oiview, ov);
+					}
 
-                };
+				};
 
-            internal static FrameworkElement CheckContent(this IView control)
-            {
-                var c = (control.Content as FrameworkElement);
-                if (c == null)
-                {
-                    control.Content = c = new Grid();
-                }
-                return c;
-            }
+			internal static FrameworkElement CheckContent(this IView control)
+			{
+				var c = (control.ContentObject as FrameworkElement);
+				if (c == null)
+				{
+					control.ContentObject = c = new Grid();
+				}
+				return c;
+			}
 
-            public static void SelfClose(this IView view)
-            {
-                view.ViewModel = null;
-                if (view is UserControl || view is Page)
-                {
-                    var viewElement = view as FrameworkElement;
-                    var parent = viewElement.Parent;
-                    if (parent is Panel)
-                    {
-                        (parent as Panel).Children.Remove(viewElement);
-                    }
-                    else if (parent is Frame)
-                    {
-                        var f = (parent as Frame);
-                        if (f.CanGoBack)
-                        {
-                            f.GoBack();
-                        }
-                        else
-                        {
-                            f.Content = null;
-                        }
-                    }
-                    else if (parent is ContentControl)
-                    {
-                        (parent as ContentControl).Content = null;
-                    }
-                    else if (parent is Page)
-                    {
-                        (parent as Page).Content = null;
-                    }
-                    else if (parent is UserControl)
-                    {
-                        (parent as UserControl).Content = null;
-                    }
+			public static void SelfClose(this IView view)
+			{
+				view.ViewModel = null;
+				if (view is UserControl || view is Page)
+				{
+					var viewElement = view as FrameworkElement;
+					var parent = viewElement.Parent;
+					if (parent is Panel)
+					{
+						(parent as Panel).Children.Remove(viewElement);
+					}
+					else if (parent is Frame)
+					{
+						var f = (parent as Frame);
+						if (f.CanGoBack)
+						{
+							f.GoBack();
+						}
+						else
+						{
+							f.Content = null;
+						}
+					}
+					else if (parent is ContentControl)
+					{
+						(parent as ContentControl).Content = null;
+					}
+					else if (parent is Page)
+					{
+						(parent as Page).Content = null;
+					}
+					else if (parent is UserControl)
+					{
+						(parent as UserControl).Content = null;
+					}
 
-                }
+				}
 #if WPF
-                else if (view is Window)
-                {
-                    (view as Window).Close();
-                }
+				else if (view is Window)
+				{
+					(view as Window).Close();
+				}
 #endif
 
 
-            }
+			}
 
-        }
+		}
 
 #if WPF
-        public class MVVMWindow : Window, IView
-        {
+		public class MVVMWindow : Window, IView
+		{
 
-            public MVVMWindow()
-                : this(null)
-            {
-            }
-
-            public MVVMWindow(IViewModel viewModel)
-            {
-
-                Unloaded += ViewHelper.ViewUnloadCallBack;
-                Loaded += async (_1, _2) =>
-                {
-
-                    //    if (viewModel != null)
-                    //    {
-                    //        //   this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
-                    //        if (!object.ReferenceEquals(ViewModel, viewModel))
-                    //        {
-                    //            ViewModel = viewModel;
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        var solveV = this.GetDefaultViewModel();
-                    //        if (solveV != null)
-                    //        {
-                    //            ViewModel = solveV;
-                    //        }
-
-                    //    }
-                    //    ////ViewModel = ViewModel ?? new DefaultViewModel();
-
-                    await ViewModel.OnBindedViewLoad(this);
-                };
-            }
+			public MVVMWindow()
+				: this(null)
+			{
+			}
 
 
+			public MVVMWindow(IViewModel viewModel)
+			{
 
-            public IViewModel ViewModel
-            {
-                get
-                {
-                    var rval = GetValue(ViewModelProperty) as IViewModel;
-                    var c = this.CheckContent();
-                    if (rval == null)
-                    {
+				Unloaded += ViewHelper.ViewUnloadCallBack;
+				Loaded += async (_1, _2) =>
+				{
 
-                        rval = c.DataContext as IViewModel;
-                        SetValue(ViewModelProperty, rval);
+					//    if (viewModel != null)
+					//    {
+					//        //   this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
+					//        if (!object.ReferenceEquals(ViewModel, viewModel))
+					//        {
+					//            ViewModel = viewModel;
+					//        }
+					//    }
+					//    else
+					//    {
+					//        var solveV = this.GetDefaultViewModel();
+					//        if (solveV != null)
+					//        {
+					//            ViewModel = solveV;
+					//        }
 
-                    }
-                    else
-                    {
+					//    }
+					//    ////ViewModel = ViewModel ?? new DefaultViewModel();
 
-                        if (!Object.ReferenceEquals(c.DataContext, rval))
-                        {
-                            c.DataContext = rval;
-                        }
-                    }
-                    return rval;
-                }
-                set
-                {
-                    SetValue(ViewModelProperty, value);
-                    var c = this.CheckContent();
-                    c.DataContext = value;
+					await ViewModel.OnBindedViewLoad(this);
+				};
+			}
 
-                }
-            }
+			public object ContentObject
+			{
+				get
+				{
+					return Content;
+				}
+				set
+				{
+					Content = value;
+				}
+			}
 
+			public IViewModel ViewModel
+			{
+				get
+				{
+					var rval = GetValue(ViewModelProperty) as IViewModel;
+					var c = this.CheckContent();
+					if (rval == null)
+					{
 
+						rval = c.DataContext as IViewModel;
+						SetValue(ViewModelProperty, rval);
 
-            // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
+					}
+					else
+					{
 
+						if (!Object.ReferenceEquals(c.DataContext, rval))
+						{
+							c.DataContext = rval;
+						}
+					}
+					return rval;
+				}
+				set
+				{
+					SetValue(ViewModelProperty, value);
+					var c = this.CheckContent();
+					c.DataContext = value;
 
-            public ViewType ViewType
-            {
-                get { return ViewType.Window; }
-            }
-
+				}
+			}
 
 
 
-        }
+			// Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty ViewModelProperty =
+				DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
+
+
+			public ViewType ViewType
+			{
+				get { return ViewType.Window; }
+			}
+
+
+
+
+		}
 
 
 
@@ -276,128 +288,139 @@ namespace MVVMSidekick
 #if WINDOWS_PHONE_7||WINDOWS_PHONE_8
         public partial class MVVMPage : PhoneApplicationPage, IView
 #else
-        public class MVVMPage : Page, IView
+		public class MVVMPage : Page, IView
 #endif
-        {
+		{
 
 
 
-            public MVVMPage()
-                : this(null)
-            {
+			public MVVMPage()
+				: this(null)
+			{
 
-            }
+			}
 
 
 
 #if WPF
 
 
-            public Frame Frame
-            {
-                get { return (Frame)GetValue(FrameProperty); }
-                set { SetValue(FrameProperty, value); }
-            }
+			public Frame Frame
+			{
+				get { return (Frame)GetValue(FrameProperty); }
+				set { SetValue(FrameProperty, value); }
+			}
 
-            // Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty FrameProperty =
-                DependencyProperty.Register("Frame", typeof(Frame), typeof(MVVMPage), new PropertyMetadata(null));
+			// Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty FrameProperty =
+				DependencyProperty.Register("Frame", typeof(Frame), typeof(MVVMPage), new PropertyMetadata(null));
 
 
-            DependencyObject IView.Parent
-            {
-                get
-                {
-                    return Frame;
+			DependencyObject IView.Parent
+			{
+				get
+				{
+					return Frame;
 
-                }
-            }
+				}
+			}
 #endif
 
-            public MVVMPage(IViewModel viewModel)
-            {
-                ViewModel = viewModel;
-                Unloaded += ViewHelper.ViewUnloadCallBack;
+			public MVVMPage(IViewModel viewModel)
+			{
+				ViewModel = viewModel;
+				Unloaded += ViewHelper.ViewUnloadCallBack;
 #if WPF
-                Loaded += async (o, e) =>
-                    {
-                        await ViewModel.OnBindedViewLoad(this);
+				Loaded += async (o, e) =>
+					{
+						await ViewModel.OnBindedViewLoad(this);
 
-                    };
+					};
 #endif
 
-            }
+			}
 
 
 
 
 #if ! WPF
-            //WPF Pages' Content are objects but others are FE .
-            object IView.Content
-            {
-                get { return Content; }
-                set { Content = value as FrameworkElement; }
+			//WPF Pages' Content are objects but others are FE .
+			public object ContentObject
+			{
+				get { return Content; }
+				set { Content = value as FrameworkElement; }
 
-            }
+			}
 
-            bool IsLoaded = false;
+			bool IsLoaded = false;
 
-            //WPF navigates page instances but other navgates with parameters
-            protected override void OnNavigatedTo(NavigationEventArgs e)
-            {
+			//WPF navigates page instances but other navgates with parameters
+			protected override void OnNavigatedTo(NavigationEventArgs e)
+			{
 
-                base.OnNavigatedTo(e);
-                RoutedEventHandler loadEvent = null;
+				base.OnNavigatedTo(e);
+				RoutedEventHandler loadEvent = null;
 
-                loadEvent = async (_1, _2) =>
-                {
-
-
-                    EventRouting.EventRouter.Instance.RaiseEvent(this, e);
-
-                    if (ViewModel != null)
-                    {
-                        await ViewModel.OnBindedViewLoad(this);
-                    }
-
-                    IsLoaded = true;
-                    this.Loaded -= loadEvent;
+				loadEvent = async (_1, _2) =>
+				{
 
 
+					EventRouting.EventRouter.Instance.RaiseEvent(this, e);
 
+					if (ViewModel != null)
+					{
+						await ViewModel.OnBindedViewLoad(this);
+					}
 
-
-                };
-                this.Loaded += loadEvent;
-
-            }
+					IsLoaded = true;
+					this.Loaded -= loadEvent;
 
 
 
 
-            protected override void OnNavigatedFrom(NavigationEventArgs e)
-            {
-                base.OnNavigatedFrom(e);
+
+				};
+				this.Loaded += loadEvent;
+
+			}
+
+
+
+
+			protected override void OnNavigatedFrom(NavigationEventArgs e)
+			{
+				base.OnNavigatedFrom(e);
 
 #if SILVERLIGHT_5
                 if (ViewModel.StageManager.DefaultStage.NavigateRequestContexts.ContainsKey(e.Uri.ToString()))
 #else
-                if (e.NavigationMode == NavigationMode.Back)
+				if (e.NavigationMode == NavigationMode.Back)
 #endif
 
-                {
+				{
 
-                    if (ViewModel != null )
-                    {
+					if (ViewModel != null)
+					{
 
-                        ViewModel.Dispose();
-                    }
+						ViewModel.Dispose();
+					}
 
 
-                }
+				}
 
-            }
-
+			}
+#else
+			public object ContentObject
+			{
+				get
+				{
+					return Content;
+				}
+				set
+				{
+					Content = value;
+				}
+			}
 #endif
 
 
@@ -405,359 +428,376 @@ namespace MVVMSidekick
 
 
 
-            public IViewModel ViewModel
-            {
-                get
-                {
-                    var rval = GetValue(ViewModelProperty) as IViewModel;
-                    var c = this.CheckContent();
-                    if (rval == null)
-                    {
+			public IViewModel ViewModel
+			{
+				get
+				{
+					var rval = GetValue(ViewModelProperty) as IViewModel;
+					var c = this.CheckContent();
+					if (rval == null)
+					{
 
-                        rval = c.DataContext as IViewModel;
-                        SetValue(ViewModelProperty, rval);
+						rval = c.DataContext as IViewModel;
+						SetValue(ViewModelProperty, rval);
 
-                    }
-                    else
-                    {
+					}
+					else
+					{
 
-                        if (!Object.ReferenceEquals(c.DataContext, rval))
-                        {
-                            c.DataContext = rval;
-                        }
-                    }
-                    return rval;
-                }
-                set
-                {
+						if (!Object.ReferenceEquals(c.DataContext, rval))
+						{
+							c.DataContext = rval;
+						}
+					}
+					return rval;
+				}
+				set
+				{
 
-                    SetValue(ViewModelProperty, value);
-                    var c = this.CheckContent();
-                    c.DataContext = value;
+					SetValue(ViewModelProperty, value);
+					var c = this.CheckContent();
+					c.DataContext = value;
 
-                }
-            }
+				}
+			}
 
-            // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,
-                    (o, e) =>
-                    {
-                        var p = o as MVVMPage;
+			// Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty ViewModelProperty =
+				DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,
+					(o, e) =>
+					{
+						var p = o as MVVMPage;
 #if !WPF
-                        if (p.IsLoaded)
-                        {
-                            ViewHelper.ViewModelChangedCallback(o, e);
-                        }
+						if (p.IsLoaded)
+						{
+							ViewHelper.ViewModelChangedCallback(o, e);
+						}
 #else
-                        ViewHelper.ViewModelChangedCallback(o, e);
+						ViewHelper.ViewModelChangedCallback(o, e);
 #endif
-                    }
+					}
 
-                    ));
+					));
 
 
 #if NETFX_CORE
 
-            /// <summary>
-            /// Populates the page with content passed during navigation.  Any saved state is also
-            /// provided when recreating a page from a prior session.
-            /// </summary>
-            /// <param name="navigationParameter">The parameter value passed to
-            /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
-            /// </param>
-            /// <param name="pageState">A dictionary of state preserved by this page during an earlier
-            /// session.  This will be null the first time a page is visited.</param>
-            protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
-            {
-                if (ViewModel != null)
-                {
-                    ViewModel.LoadState(navigationParameter, pageState);
-                }
-            }
+			/// <summary>
+			/// Populates the page with content passed during navigation.  Any saved state is also
+			/// provided when recreating a page from a prior session.
+			/// </summary>
+			/// <param name="navigationParameter">The parameter value passed to
+			/// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
+			/// </param>
+			/// <param name="pageState">A dictionary of state preserved by this page during an earlier
+			/// session.  This will be null the first time a page is visited.</param>
+			protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+			{
+				if (ViewModel != null)
+				{
+					ViewModel.LoadState(navigationParameter, pageState);
+				}
+			}
 
-            /// <summary>
-            /// Preserves state associated with this page in case the application is suspended or the
-            /// page is discarded from the navigation cache.  Values must conform to the serialization
-            /// requirements of <see cref="SuspensionManager.SessionState"/>.
-            /// </summary>
-            /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
-            protected virtual void SaveState(Dictionary<String, Object> pageState)
-            {
-                if (ViewModel != null)
-                {
-                    ViewModel.SaveState(pageState);
+			/// <summary>
+			/// Preserves state associated with this page in case the application is suspended or the
+			/// page is discarded from the navigation cache.  Values must conform to the serialization
+			/// requirements of <see cref="SuspensionManager.SessionState"/>.
+			/// </summary>
+			/// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
+			protected virtual void SaveState(Dictionary<String, Object> pageState)
+			{
+				if (ViewModel != null)
+				{
+					ViewModel.SaveState(pageState);
 
-                }
-            }
+				}
+			}
 #endif
 
 
-            public ViewType ViewType
-            {
-                get { return ViewType.Page; }
-            }
+			public ViewType ViewType
+			{
+				get { return ViewType.Page; }
+			}
 
-            public void Dispose()
-            {
+			public void Dispose()
+			{
 
-                this.SelfClose();
-
-
-            }
-        }
+				this.SelfClose();
 
 
-
-        public class MVVMControl : UserControl, IView
-        {
-
-            public MVVMControl()
-                : this(null)
-            {
-
-            }
-            public MVVMControl(IViewModel viewModel)
-            {
-
-                Unloaded += ViewHelper.ViewUnloadCallBack;
-                ////////// Unloaded += (_1, _2) => ViewModel = null;
-                Loaded += async (_1, _2) =>
-                {
-
-                    //if (viewModel != null)
-                    //{
-                    //    //this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
-                    //    if (!object.ReferenceEquals(ViewModel, viewModel))
-                    //    {
-                    //        ViewModel = viewModel;
-
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    var solveV = this.GetDefaultViewModel();
-                    //    if (solveV != null)
-                    //    {
-                    //        ViewModel = solveV;
-                    //    }
-
-                    //}
-                    //ViewModel = ViewModel ?? new DefaultViewModel();
+			}
 
 
-                    await ViewModel.OnBindedViewLoad(this);
-                };
-            }
-#if WINDOWS_PHONE_7||WINDOWS_PHONE_8||SILVERLIGHT_5||NETFX_CORE
-            object IView.Content
-            {
-                get { return Content; }
-                set { Content = value as FrameworkElement; }
 
-            }
+		}
+
+
+
+		public class MVVMControl : UserControl, IView
+		{
+
+			public MVVMControl()
+				: this(null)
+			{
+
+			}
+
+
+			public MVVMControl(IViewModel viewModel)
+			{
+
+				Unloaded += ViewHelper.ViewUnloadCallBack;
+				////////// Unloaded += (_1, _2) => ViewModel = null;
+				Loaded += async (_1, _2) =>
+				{
+
+					//if (viewModel != null)
+					//{
+					//    //this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
+					//    if (!object.ReferenceEquals(ViewModel, viewModel))
+					//    {
+					//        ViewModel = viewModel;
+
+					//    }
+					//}
+					//else
+					//{
+					//    var solveV = this.GetDefaultViewModel();
+					//    if (solveV != null)
+					//    {
+					//        ViewModel = solveV;
+					//    }
+
+					//}
+					//ViewModel = ViewModel ?? new DefaultViewModel();
+
+
+					await ViewModel.OnBindedViewLoad(this);
+				};
+			}
+#if !WPF
+			public object ContentObject
+			{
+				get { return Content; }
+				set { Content = value as FrameworkElement; }
+
+			}
+#else
+			public object ContentObject
+			{
+				get
+				{
+					return Content;
+				}
+				set
+				{
+					Content = value;
+				}
+			}
 #endif
 #if NETFX_CORE
 
-            /// <summary>
-            /// Populates the page with content passed during navigation.  Any saved state is also
-            /// provided when recreating a page from a prior session.
-            /// </summary>
-            /// <param name="navigationParameter">The parameter value passed to
-            /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
-            /// </param>
-            /// <param name="pageState">A dictionary of state preserved by this page during an earlier
-            /// session.  This will be null the first time a page is visited.</param>
-            protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
-            {
-                if (ViewModel != null)
-                {
-                    ViewModel.LoadState(navigationParameter, pageState);
-                }
-            }
+			/// <summary>
+			/// Populates the page with content passed during navigation.  Any saved state is also
+			/// provided when recreating a page from a prior session.
+			/// </summary>
+			/// <param name="navigationParameter">The parameter value passed to
+			/// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
+			/// </param>
+			/// <param name="pageState">A dictionary of state preserved by this page during an earlier
+			/// session.  This will be null the first time a page is visited.</param>
+			protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+			{
+				if (ViewModel != null)
+				{
+					ViewModel.LoadState(navigationParameter, pageState);
+				}
+			}
 
-            /// <summary>
-            /// Preserves state associated with this page in case the application is suspended or the
-            /// page is discarded from the navigation cache.  Values must conform to the serialization
-            /// requirements of <see cref="SuspensionManager.SessionState"/>.
-            /// </summary>
-            /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
-            protected virtual void SaveState(Dictionary<String, Object> pageState)
-            {
-                if (ViewModel != null)
-                {
-                    ViewModel.SaveState(pageState);
-                }
-            }
+			/// <summary>
+			/// Preserves state associated with this page in case the application is suspended or the
+			/// page is discarded from the navigation cache.  Values must conform to the serialization
+			/// requirements of <see cref="SuspensionManager.SessionState"/>.
+			/// </summary>
+			/// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
+			protected virtual void SaveState(Dictionary<String, Object> pageState)
+			{
+				if (ViewModel != null)
+				{
+					ViewModel.SaveState(pageState);
+				}
+			}
 #endif
 
 
-            public IViewModel ViewModel
-            {
-                get
-                {
-                    var rval = GetValue(ViewModelProperty) as IViewModel;
-                    var c = this.CheckContent();
-                    if (rval == null)
-                    {
+			public IViewModel ViewModel
+			{
+				get
+				{
+					var rval = GetValue(ViewModelProperty) as IViewModel;
+					var c = this.CheckContent();
+					if (rval == null)
+					{
 
-                        rval = c.DataContext as IViewModel;
-                        SetValue(ViewModelProperty, rval);
+						rval = c.DataContext as IViewModel;
+						SetValue(ViewModelProperty, rval);
 
-                    }
-                    else
-                    {
+					}
+					else
+					{
 
-                        if (!Object.ReferenceEquals(c.DataContext, rval))
-                        {
-                            c.DataContext = rval;
-                        }
-                    }
-                    return rval;
-                }
-                set
-                {
-                    SetValue(ViewModelProperty, value);
-                    var c = this.CheckContent();
-                    c.DataContext = value;
+						if (!Object.ReferenceEquals(c.DataContext, rval))
+						{
+							c.DataContext = rval;
+						}
+					}
+					return rval;
+				}
+				set
+				{
+					SetValue(ViewModelProperty, value);
+					var c = this.CheckContent();
+					c.DataContext = value;
 
-                }
-            }
+				}
+			}
 
-            // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty ViewModelProperty =
-                DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMControl), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
-
-
-            public ViewType ViewType
-            {
-                get { return ViewType.Control; }
-            }
-
-        }
-        public enum ViewType
-        {
-            Page,
-            Window,
-            Control
-        }
-
-        public interface IView
-        {
-            IViewModel ViewModel { get; set; }
-
-            ViewType ViewType { get; }
-
-            Object Content { get; set; }
-
-            DependencyObject Parent { get; }
-
-        }
+			// Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty ViewModelProperty =
+				DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMControl), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
 
 
-        public interface IView<TViewModel> : IView, IDisposable where TViewModel : IViewModel
-        {
-            TViewModel SpecificTypedViewModel { get; set; }
-        }
+			public ViewType ViewType
+			{
+				get { return ViewType.Control; }
+			}
 
-        public struct ViewModelToViewMapper<TModel>
-            where TModel : IViewModel
-        {
+		}
+		public enum ViewType
+		{
+			Page,
+			Window,
+			Control
+		}
 
-            public static void MapViewToViewModel<TView>()
-            {
-                Func<IViewModel> func;
-                if (!ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(typeof(TView), out func))
-                {
-                    ViewModelToViewMapperHelper.ViewToVMMapping.Add(typeof(TView), () => (ViewModelLocator<TModel>.Instance.Resolve()));
-                }
+		public interface IView
+		{
+			IViewModel ViewModel { get; set; }
+
+			ViewType ViewType { get; }
+
+			Object ContentObject { get; set; }
+
+			DependencyObject Parent { get; }
+
+		}
 
 
-            }
+		public interface IView<TViewModel> : IView, IDisposable where TViewModel : IViewModel
+		{
+			TViewModel SpecificTypedViewModel { get; set; }
+		}
+
+		public struct ViewModelToViewMapper<TModel>
+			where TModel : IViewModel
+		{
+
+			public static void MapViewToViewModel<TView>()
+			{
+				Func<IViewModel> func;
+				if (!ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(typeof(TView), out func))
+				{
+					ViewModelToViewMapperHelper.ViewToVMMapping.Add(typeof(TView), () => (ViewModelLocator<TModel>.Instance.Resolve()));
+				}
+
+
+			}
 #if WPF
-            public ViewModelToViewMapper<TModel> MapToDefault<TView>(TView instance) where TView : class,IView
-            {
-                MapViewToViewModel<TView>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(instance);
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapToDefault<TView>(TView instance) where TView : class,IView
+			{
+				MapViewToViewModel<TView>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(instance);
+				return this;
+			}
 
-            public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, TView instance) where TView : class,IView
-            {
-                MapViewToViewModel<TView>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, instance);
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, TView instance) where TView : class,IView
+			{
+				MapViewToViewModel<TView>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, instance);
+				return this;
+			}
 
 
-            public ViewModelToViewMapper<TModel> MapToDefault<TView>(bool alwaysNew = true) where TView : class,IView
-            {
-                MapViewToViewModel<TView>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
-                return this;
-            }
-            public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, bool alwaysNew = true) where TView : class,IView
-            {
-                MapViewToViewModel<TView>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapToDefault<TView>(bool alwaysNew = true) where TView : class,IView
+			{
+				MapViewToViewModel<TView>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
+				return this;
+			}
+			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, bool alwaysNew = true) where TView : class,IView
+			{
+				MapViewToViewModel<TView>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
+				return this;
+			}
 
-            public ViewModelToViewMapper<TModel> MapToDefault<TView>(Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
-            {
-                MapViewToViewModel<TView>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel)d), alwaysNew);
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapToDefault<TView>(Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
+			{
+				MapViewToViewModel<TView>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel)d), alwaysNew);
+				return this;
+			}
 
-            public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
-            {
-                MapViewToViewModel<TView>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel)d), alwaysNew);
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
+			{
+				MapViewToViewModel<TView>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel)d), alwaysNew);
+				return this;
+			}
 #else
-            public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(TControl instance) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(instance);
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(TControl instance) where TControl : MVVMControl
+			{
+				MapViewToViewModel<TControl>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(instance);
+				return this;
+			}
 
-            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, TControl instance) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, instance);
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, TControl instance) where TControl : MVVMControl
+			{
+				MapViewToViewModel<TControl>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, instance);
+				return this;
+			}
 
 
-            public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(bool alwaysNew = true) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
-                return this;
-            }
-            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, bool alwaysNew = true) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(bool alwaysNew = true) where TControl : MVVMControl
+			{
+				MapViewToViewModel<TControl>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
+				return this;
+			}
+			public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, bool alwaysNew = true) where TControl : MVVMControl
+			{
+				MapViewToViewModel<TControl>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
+				return this;
+			}
 
-            public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel)d), alwaysNew);
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
+			{
+				MapViewToViewModel<TControl>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel)d), alwaysNew);
+				return this;
+			}
 
-            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel)d), alwaysNew);
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
+			{
+				MapViewToViewModel<TControl>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel)d), alwaysNew);
+				return this;
+			}
 #endif
 
 #if WINDOWS_PHONE_8||WINDOWS_PHONE_7||SILVERLIGHT_5
@@ -823,254 +863,254 @@ namespace MVVMSidekick
 
 
 
-            public ViewModelToViewMapper<TModel> MapToDefault<TPage>() where TPage : MVVMPage
-            {
+			public ViewModelToViewMapper<TModel> MapToDefault<TPage>() where TPage : MVVMPage
+			{
 
-                MapViewToViewModel<TPage>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(typeof(TPage));
-                return this;
-            }
+				MapViewToViewModel<TPage>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(typeof(TPage));
+				return this;
+			}
 
 
-            public ViewModelToViewMapper<TModel> MapToDefault<TPage>(string viewMappingKey) where TPage : MVVMPage
-            {
-                MapViewToViewModel<TPage>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, typeof(TPage));
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapToDefault<TPage>(string viewMappingKey) where TPage : MVVMPage
+			{
+				MapViewToViewModel<TPage>();
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, typeof(TPage));
+				return this;
+			}
 
 
 
 #endif
 
 
-        }
+		}
 
-        public static class ViewModelToViewMapperHelper
-        {
+		public static class ViewModelToViewMapperHelper
+		{
 
-            internal static Dictionary<Type, Func<IViewModel>> ViewToVMMapping = new Dictionary<Type, Func<IViewModel>>();
+			internal static Dictionary<Type, Func<IViewModel>> ViewToVMMapping = new Dictionary<Type, Func<IViewModel>>();
 
-            public static IViewModel GetDefaultViewModel(this IView view)
-            {
-                Func<IViewModel> func;
-                var vt = view.GetType();
-                if (ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(vt, out func))
-                {
-                    return func();
-                }
-                return null;
-            }
+			public static IViewModel GetDefaultViewModel(this IView view)
+			{
+				Func<IViewModel> func;
+				var vt = view.GetType();
+				if (ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(vt, out func))
+				{
+					return func();
+				}
+				return null;
+			}
 
-            public static ViewModelToViewMapper<TViewModel> GetViewMapper<TViewModel>(this MVVMSidekick.Services.ServiceLocatorEntryStruct<TViewModel> vmRegisterEntry)
-                  where TViewModel : IViewModel
-            {
-                return new ViewModelToViewMapper<TViewModel>();
-            }
+			public static ViewModelToViewMapper<TViewModel> GetViewMapper<TViewModel>(this MVVMSidekick.Services.ServiceLocatorEntryStruct<TViewModel> vmRegisterEntry)
+				  where TViewModel : IViewModel
+			{
+				return new ViewModelToViewMapper<TViewModel>();
+			}
 
-        }
-        public class ViewModelToViewMapperServiceLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelToViewMapperServiceLocator<TViewModel>, object>
-        {
-            static ViewModelToViewMapperServiceLocator()
-            {
-                Instance = new ViewModelToViewMapperServiceLocator<TViewModel>();
-            }
-            public static ViewModelToViewMapperServiceLocator<TViewModel> Instance { get; set; }
-
-
-        }
-        public class ViewModelLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelLocator<TViewModel>, TViewModel>
-            where TViewModel : IViewModel
-        {
-            static ViewModelLocator()
-            {
-                Instance = new ViewModelLocator<TViewModel>();
-            }
-            public static ViewModelLocator<TViewModel> Instance { get; set; }
-
-        }
+		}
+		public class ViewModelToViewMapperServiceLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelToViewMapperServiceLocator<TViewModel>, object>
+		{
+			static ViewModelToViewMapperServiceLocator()
+			{
+				Instance = new ViewModelToViewMapperServiceLocator<TViewModel>();
+			}
+			public static ViewModelToViewMapperServiceLocator<TViewModel> Instance { get; set; }
 
 
-        public class Stage : DependencyObject
-        {
-            public Stage(FrameworkElement target, string beaconKey, StageManager navigator)
-            {
-                Target = target;
-                _navigator = navigator;
-                BeaconKey = beaconKey;
-                //SetupNavigateFrame();
-            }
+		}
+		public class ViewModelLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelLocator<TViewModel>, TViewModel>
+			where TViewModel : IViewModel
+		{
+			static ViewModelLocator()
+			{
+				Instance = new ViewModelLocator<TViewModel>();
+			}
+			public static ViewModelLocator<TViewModel> Instance { get; set; }
 
-            StageManager _navigator;
-            FrameworkElement _target;
-
+		}
 
 
+		public class Stage : DependencyObject
+		{
+			public Stage(FrameworkElement target, string beaconKey, StageManager navigator)
+			{
+				Target = target;
+				_navigator = navigator;
+				BeaconKey = beaconKey;
+				//SetupNavigateFrame();
+			}
 
-            public Frame Frame
-            {
-                get { return (Frame)GetValue(FrameProperty); }
-                private set { SetValue(FrameProperty, value); }
-            }
-
-            // Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty FrameProperty =
-                DependencyProperty.Register("Frame", typeof(Frame), typeof(Stage), new PropertyMetadata(null));
+			StageManager _navigator;
+			FrameworkElement _target;
 
 
 
-            public FrameworkElement Target
-            {
-                get { return _target; }
-                private set
-                {
-                    _target = value;
-                    Frame = _target as Frame;
+
+			public Frame Frame
+			{
+				get { return (Frame)GetValue(FrameProperty); }
+				private set { SetValue(FrameProperty, value); }
+			}
+
+			// Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty FrameProperty =
+				DependencyProperty.Register("Frame", typeof(Frame), typeof(Stage), new PropertyMetadata(null));
 
 
-                }
-            }
+
+			public FrameworkElement Target
+			{
+				get { return _target; }
+				private set
+				{
+					_target = value;
+					Frame = _target as Frame;
+
+
+				}
+			}
 #if WPF
-            public bool IsGoForwardSupported
-            {
-                get
-                {
-                    return Frame != null;
-                }
-            }
+			public bool IsGoForwardSupported
+			{
+				get
+				{
+					return Frame != null;
+				}
+			}
 
-            public bool CanGoForward
-            {
-                get
-                {
-                    return IsGoForwardSupported ? Frame.CanGoForward : false;
-                }
+			public bool CanGoForward
+			{
+				get
+				{
+					return IsGoForwardSupported ? Frame.CanGoForward : false;
+				}
 
-            }
+			}
 #else
-            public bool IsGoForwardSupported
-            {
-                get
-                {
-                    return false;
-                }
-            }
+			public bool IsGoForwardSupported
+			{
+				get
+				{
+					return false;
+				}
+			}
 
-            public bool CanGoForward
-            {
-                get
-                {
-                    return false;
-                }
+			public bool CanGoForward
+			{
+				get
+				{
+					return false;
+				}
 
-            }
+			}
 #endif
-            public bool IsGoBackSupported
-            {
-                get
-                {
-                    return Frame != null;
-                }
-            }
+			public bool IsGoBackSupported
+			{
+				get
+				{
+					return Frame != null;
+				}
+			}
 
 
-            public bool CanGoBack
-            {
-                get
-                {
-                    return IsGoBackSupported ? Frame.CanGoBack : false;
-                }
+			public bool CanGoBack
+			{
+				get
+				{
+					return IsGoBackSupported ? Frame.CanGoBack : false;
+				}
 
-            }
-
-
+			}
 
 
-            public string BeaconKey
-            {
-                get { return (string)GetValue(BeaconKeyProperty); }
-                private set { SetValue(BeaconKeyProperty, value); }
-            }
 
-            // Using a DependencyProperty as the backing store for BeaconKey.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty BeaconKeyProperty =
-                DependencyProperty.Register("BeaconKey", typeof(string), typeof(Stage), new PropertyMetadata(""));
+
+			public string BeaconKey
+			{
+				get { return (string)GetValue(BeaconKeyProperty); }
+				private set { SetValue(BeaconKeyProperty, value); }
+			}
+
+			// Using a DependencyProperty as the backing store for BeaconKey.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty BeaconKeyProperty =
+				DependencyProperty.Register("BeaconKey", typeof(string), typeof(Stage), new PropertyMetadata(""));
 
 
 #if WPF
-            private static IView InternalLocateViewIfNotSet<TTarget>(TTarget targetViewModel, string viewMappingKey, IView view) where TTarget : class, IViewModel
-            {
-                if (targetViewModel != null && targetViewModel.StageManager != null)
-                {
-                    view = targetViewModel.StageManager.CurrentBindingView as IView;
+			private static IView InternalLocateViewIfNotSet<TTarget>(TTarget targetViewModel, string viewMappingKey, IView view) where TTarget : class, IViewModel
+			{
+				if (targetViewModel != null && targetViewModel.StageManager != null)
+				{
+					view = targetViewModel.StageManager.CurrentBindingView as IView;
 
-                }
-                view = view ?? ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel) as IView;
-                return view;
-            }
-
-
+				}
+				view = view ?? ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel) as IView;
+				return view;
+			}
 
 
 
-            public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-                 where TTarget : class,IViewModel
-            {
-                IView view = null;
-                view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
-                targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                if (view.ViewType == ViewType.Page)
-                {
-                    var mvpg = view as MVVMPage;
-                    mvpg.Frame = Frame;
-                }
-
-                SetVMAfterLoad(targetViewModel, view);
-                InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-                await targetViewModel.WaitForClose();
-            }
 
 
-            public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
-                where TTarget : class,IViewModel<TResult>
-            {
-                IView view = null;
-                view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
-                targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+			public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
+				 where TTarget : class,IViewModel
+			{
+				IView view = null;
+				view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
+				targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+				if (view.ViewType == ViewType.Page)
+				{
+					var mvpg = view as MVVMPage;
+					mvpg.Frame = Frame;
+				}
 
-                if (view.ViewType == ViewType.Page)
-                {
-                    var mvpg = view as MVVMPage;
-                    mvpg.Frame = Frame;
-                }
-
-                SetVMAfterLoad(targetViewModel, view);
-
-                InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-                return await targetViewModel.WaitForCloseWithResult();
-            }
+				SetVMAfterLoad(targetViewModel, view);
+				InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+				await targetViewModel.WaitForClose();
+			}
 
 
+			public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
+				where TTarget : class,IViewModel<TResult>
+			{
+				IView view = null;
+				view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
+				targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
 
-            public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-                where TTarget : class,IViewModel
-            {
-                IView view = null;
-                view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
+				if (view.ViewType == ViewType.Page)
+				{
+					var mvpg = view as MVVMPage;
+					mvpg.Frame = Frame;
+				}
 
-                targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                if (view.ViewType == ViewType.Page)
-                {
-                    var mvpg = view as MVVMPage;
-                    mvpg.Frame = Frame;
-                }
+				SetVMAfterLoad(targetViewModel, view);
 
-                SetVMAfterLoad(targetViewModel, view);
-                InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+				InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+				return await targetViewModel.WaitForCloseWithResult();
+			}
 
 
-                return await TaskExHelper.FromResult(new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel });
-            }
+
+			public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
+				where TTarget : class,IViewModel
+			{
+				IView view = null;
+				view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
+
+				targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+				if (view.ViewType == ViewType.Page)
+				{
+					var mvpg = view as MVVMPage;
+					mvpg.Frame = Frame;
+				}
+
+				SetVMAfterLoad(targetViewModel, view);
+				InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+
+
+				return await TaskExHelper.FromResult(new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel });
+			}
 #endif
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||WINDOWS_PHONE_8
 
@@ -1268,520 +1308,515 @@ namespace MVVMSidekick
 #endif
 
 
-            private static void SetVMAfterLoad<TTarget>(TTarget targetViewModel, IView view) where TTarget : class, IViewModel
-            {
-                if (view == null)
-                {
-                    throw new InvalidOperationException(
-                        string.Format(@"
+			private static void SetVMAfterLoad<TTarget>(TTarget targetViewModel, IView view) where TTarget : class, IViewModel
+			{
+				if (view == null)
+				{
+					throw new InvalidOperationException(
+						string.Format(@"
 Cannot find ANY mapping from View Model [{0}] to ANY View.
 Please check startup function of this mapping is well configured and be proper called while application starting",
-                        targetViewModel.GetType().ToString()));
-                }
-                if (view.ViewType == ViewType.Page)
-                {
-                    var pg = view as MVVMPage;
+						targetViewModel.GetType().ToString()));
+				}
+				if (view.ViewType == ViewType.Page)
+				{
+					var pg = view as MVVMPage;
 
-                    pg.ViewModel = targetViewModel;
-                }
-                view.ViewModel = targetViewModel;
+					pg.ViewModel = targetViewModel;
+				}
+				view.ViewModel = targetViewModel;
 
-                //var frview = view as FrameworkElement;
-                //RoutedEventHandler loadEvent = null;
-                //loadEvent = (_1, _2) =>
-                //{
-                //    view.ViewModel = targetViewModel;
-                //    frview.Loaded -= loadEvent;
-                //};
-                //frview.Loaded += loadEvent;
+				//var frview = view as FrameworkElement;
+				//RoutedEventHandler loadEvent = null;
+				//loadEvent = (_1, _2) =>
+				//{
+				//    view.ViewModel = targetViewModel;
+				//    frview.Loaded -= loadEvent;
+				//};
+				//frview.Loaded += loadEvent;
 
-            }
+			}
 
 #if NETFX_CORE
 
 
 
 
-            public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-                 where TTarget : class,IViewModel
-            {
+			public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
+				 where TTarget : class,IViewModel
+			{
 
 
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-                Type type;
-                if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
-                {
+				var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
+				Type type;
+				if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
+				{
 
-                    var frame = Target as Frame;
-                    if (frame != null)
-                    {
-                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
+					var frame = Target as Frame;
+					if (frame != null)
+					{
+						targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
 
-                        await targetViewModel.WaitForClose();
-                        return;
-                    }
+						await targetViewModel.WaitForClose();
+						return;
+					}
 
-                }
+				}
 
-                IView view = item as IView;
-                targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                SetVMAfterLoad(targetViewModel, view);
-                InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-                await targetViewModel.WaitForClose();
-
-
-            }
-
-            private static async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Type type, Windows.UI.Xaml.Controls.Frame frame) where TTarget : class, IViewModel
-            {
-                var parameter = new StageNavigationContext<TTarget>() { ViewModel = targetViewModel };
-                var t = new TaskCompletionSource<object >();
-                var dip = EventRouting.EventRouter.Instance
-                     .GetEventObject<NavigationEventArgs>()
-    
-                     .Where(e =>
-                             object.ReferenceEquals(e.EventArgs.Parameter, parameter))
-                     .Subscribe(e =>
-                     {
-
-                         var page = e.Sender as MVVMPage;
-
-                         if (parameter.ViewModel != null)
-                         {
-                             page.ViewModel  = parameter.ViewModel;
-                         }
-                         else
-                         {
-                             var solveV = page.GetDefaultViewModel();
-                             if (solveV != null)
-                             {
-                                 targetViewModel = parameter.ViewModel = (TTarget)solveV;
-                             }
-                         }
-
-                         if (targetViewModel == null)
-                         {
-                             targetViewModel = (TTarget)page.ViewModel;
-                         }
+				IView view = item as IView;
+				targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+				SetVMAfterLoad(targetViewModel, view);
+				InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+				await targetViewModel.WaitForClose();
 
 
-                        
+			}
 
+			private static async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Type type, Windows.UI.Xaml.Controls.Frame frame) where TTarget : class, IViewModel
+			{
+				var parameter = new StageNavigationContext<TTarget>() { ViewModel = targetViewModel };
+				var t = new TaskCompletionSource<object>();
+				var dip = EventRouting.EventRouter.Instance
+					 .GetEventObject<NavigationEventArgs>()
 
-                         parameter.ViewModel = targetViewModel;
+					 .Where(e =>
+							 object.ReferenceEquals(e.EventArgs.Parameter, parameter))
+					 .Subscribe(e =>
+					 {
 
-                         if (!t.Task.IsCompleted)
-                         {
+						 var page = e.Sender as MVVMPage;
 
-                             t.SetResult(null); ;
-                         }
-                     });
+						 if (parameter.ViewModel != null)
+						 {
+							 page.ViewModel = parameter.ViewModel;
+						 }
+						 else
+						 {
+							 var solveV = page.GetDefaultViewModel();
+							 if (solveV != null)
+							 {
+								 targetViewModel = parameter.ViewModel = (TTarget)solveV;
+							 }
+						 }
 
-
-                frame.Navigate(type, parameter);
-                await t.Task;
-                dip.DisposeWith(targetViewModel);
-                return targetViewModel;
-            }
-            class StageNavigationContext<T> where T : IViewModel
-            {
-                public T ViewModel { get; set; }
-
-            }
-            public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
-                where TTarget : class,IViewModel<TResult>
-            {
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-                Type type;
-                if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
-                {
-                    Frame frame;
-                    if ((frame = Target as Frame) != null)
-                    {
-                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
+						 if (targetViewModel == null)
+						 {
+							 targetViewModel = (TTarget)page.ViewModel;
+						 }
 
 
 
 
-                        return await targetViewModel.WaitForCloseWithResult();
-                    }
 
-                }
+						 parameter.ViewModel = targetViewModel;
 
+						 if (!t.Task.IsCompleted)
+						 {
 
-                IView view = item as IView;
-                targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                SetVMAfterLoad(targetViewModel, view);
-                InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-                return await targetViewModel.WaitForCloseWithResult();
-            }
+							 t.SetResult(null); ;
+						 }
+					 });
 
 
+				frame.Navigate(type, parameter);
+				await t.Task;
+				dip.DisposeWith(targetViewModel);
+				return targetViewModel;
+			}
+			class StageNavigationContext<T> where T : IViewModel
+			{
+				public T ViewModel { get; set; }
 
-            public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-    where TTarget : class,IViewModel
-            {
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-                Type type;
-                if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
-                {
-                    Frame frame;
-                    if ((frame = Target as Frame) != null)
-                    {
-                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
-
-                        return new ShowAwaitableResult<TTarget>
-                        {
-                            Closing = targetViewModel.WaitForClose(),
-                            ViewModel = targetViewModel
-                        };
-                    }
-
-                }
+			}
+			public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
+				where TTarget : class,IViewModel<TResult>
+			{
+				var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
+				Type type;
+				if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
+				{
+					Frame frame;
+					if ((frame = Target as Frame) != null)
+					{
+						targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
 
 
-                IView view = item as IView;
 
-                targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                SetVMAfterLoad(targetViewModel, view);
-                InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
 
-                var tr = targetViewModel.WaitForClose();
-                return new ShowAwaitableResult<TTarget> { Closing = tr, ViewModel = targetViewModel };
-            }
+						return await targetViewModel.WaitForCloseWithResult();
+					}
+
+				}
+
+
+				IView view = item as IView;
+				targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+				SetVMAfterLoad(targetViewModel, view);
+				InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+				return await targetViewModel.WaitForCloseWithResult();
+			}
+
+
+
+			public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
+	where TTarget : class,IViewModel
+			{
+				var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
+				Type type;
+				if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
+				{
+					Frame frame;
+					if ((frame = Target as Frame) != null)
+					{
+						targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
+
+						return new ShowAwaitableResult<TTarget>
+						{
+							Closing = targetViewModel.WaitForClose(),
+							ViewModel = targetViewModel
+						};
+					}
+
+				}
+
+
+				IView view = item as IView;
+
+				targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+				SetVMAfterLoad(targetViewModel, view);
+				InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+
+				var tr = targetViewModel.WaitForClose();
+				return new ShowAwaitableResult<TTarget> { Closing = tr, ViewModel = targetViewModel };
+			}
 #endif
 
 
 
-            private void InternalShowView(IView view, FrameworkElement target, IViewModel sourceVM)
-            {
+			private void InternalShowView(IView view, FrameworkElement target, IViewModel sourceVM)
+			{
 
-                if (view is UserControl || view is Page)
-                {
+				if (view is UserControl || view is Page)
+				{
 
-                    if (target is ContentControl)
-                    {
-                        var targetCControl = target as ContentControl;
-                        var oldcontent = targetCControl.Content as IDisposable;
+					if (target is ContentControl)
+					{
+						var targetCControl = target as ContentControl;
+						var oldcontent = targetCControl.Content as IDisposable;
 
 
-                        targetCControl.Content = view;
-                    }
-                    else if (target is Panel)
-                    {
-                        var targetPanelControl = target as Panel;
+						targetCControl.Content = view;
+					}
+					else if (target is Panel)
+					{
+						var targetPanelControl = target as Panel;
 
-                        targetPanelControl.Children.Add(view as UIElement);
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException(string.Format("This view {0} is not support show in {1} ", view.GetType(), target.GetType()));
-                    }
-                }
+						targetPanelControl.Children.Add(view as UIElement);
+					}
+					else
+					{
+						throw new InvalidOperationException(string.Format("This view {0} is not support show in {1} ", view.GetType(), target.GetType()));
+					}
+				}
 #if WPF
-                else if (view is Window)
-                {
-                    var viewWindow = view as Window;
-                    viewWindow.HorizontalAlignment = HorizontalAlignment.Center;
-                    viewWindow.VerticalAlignment = VerticalAlignment.Center;
-                    var targetWindow = target as Window;
-                    if (targetWindow == null)
-                    {
-                        targetWindow = sourceVM.StageManager.CurrentBindingView as Window;
+				else if (view is Window)
+				{
+					var viewWindow = view as Window;
+					viewWindow.HorizontalAlignment = HorizontalAlignment.Center;
+					viewWindow.VerticalAlignment = VerticalAlignment.Center;
+					var targetWindow = target as Window;
+					if (targetWindow == null)
+					{
+						targetWindow = sourceVM.StageManager.CurrentBindingView as Window;
 
-                    }
+					}
 
-                    viewWindow.Owner = targetWindow;
-                    viewWindow.Show();
+					viewWindow.Owner = targetWindow;
+					viewWindow.Show();
 
-                }
+				}
 #endif
-            }
+			}
 
 
-        }
+		}
 
-        /// <summary>
-        /// The abstract  for frame/contentcontrol. VM can access this class to Show other vm and vm's mapped view.
-        /// </summary>
-        public class StageManager : DependencyObject, IDisposable
-        {
-            static StageManager()
-            {
-                NavigatorBeaconsKey = "NavigatorBeaconsKey";
-            }
-            public StageManager(IViewModel viewModel)
-            {
-                _ViewModel = viewModel;
+		/// <summary>
+		/// The abstract  for frame/contentcontrol. VM can access this class to Show other vm and vm's mapped view.
+		/// </summary>
+		public class StageManager : DependencyObject
+		{
 
 
-            }
-            IViewModel _ViewModel;
-
-            /// <summary>
-            /// This Key is a prefix for register keys. 
-            /// The stage registeration store the String-Element-Mapping in view's Resource Dictionary(Resource property). 
-            /// This can help not to overwrite the resources already defined.
-            /// </summary>
-            public static string NavigatorBeaconsKey;
+			static StageManager()
+			{
+				NavigatorBeaconsKey = "NavigatorBeaconsKey";
+			}
+			public StageManager(IViewModel viewModel)
+			{
+				_ViewModel = viewModel;
 
 
+			}
+			IViewModel _ViewModel;
 
-            IView _CurrentBindingView;
-            /// <summary>
-            /// Get the currently binded view of this stagemanager. A stagemanager is for a certain view. If viewmodel is not binded to a view, the whole thing cannot work.
-            /// </summary>
-            public IView CurrentBindingView
-            {
-                get
-                {
-
-                    return _CurrentBindingView;
-                }
-                internal set
-                {
-                    _CurrentBindingView = value;
-                }
-            }
+			/// <summary>
+			/// This Key is a prefix for register keys. 
+			/// The stage registeration store the String-Element-Mapping in view's Resource Dictionary(Resource property). 
+			/// This can help not to overwrite the resources already defined.
+			/// </summary>
+			public static string NavigatorBeaconsKey;
 
 
 
+			IView _CurrentBindingView;
+			/// <summary>
+			/// Get the currently binded view of this stagemanager. A stagemanager is for a certain view. If viewmodel is not binded to a view, the whole thing cannot work.
+			/// </summary>
+			public IView CurrentBindingView
+			{
+				get
+				{
+
+					return _CurrentBindingView;
+				}
+				internal set
+				{
+					_CurrentBindingView = value;
+				}
+			}
 
 
 
 
-            public void InitParent(Func<DependencyObject> parentLocator)
-            {
-                _parentLocator = parentLocator;
-                DefaultStage = this[""];
-            }
 
 
 
-            Func<DependencyObject> _parentLocator;
+			public void InitParent(Func<DependencyObject> parentLocator)
+			{
+				_parentLocator = parentLocator;
+				DefaultStage = this[""];
+			}
 
 
-            #region Attached Property
+
+			Func<DependencyObject> _parentLocator;
 
 
-#if WPF
-            [AttachedPropertyBrowsableForType(typeof(ContentControl))]
-            [AttachedPropertyBrowsableForType(typeof(Frame))]
-            [AttachedPropertyBrowsableForType(typeof(Window))]
-#endif
-            public static string GetBeacon(DependencyObject obj)
-            {
-                return (string)obj.GetValue(BeaconProperty);
-            }
+			#region Attached Property
+
 
 #if WPF
-            [AttachedPropertyBrowsableForType(typeof(ContentControl))]
-            [AttachedPropertyBrowsableForType(typeof(Frame))]
-            [AttachedPropertyBrowsableForType(typeof(Window))]
+			[AttachedPropertyBrowsableForType(typeof(ContentControl))]
+			[AttachedPropertyBrowsableForType(typeof(Frame))]
+			[AttachedPropertyBrowsableForType(typeof(Window))]
+#endif
+			public static string GetBeacon(DependencyObject obj)
+			{
+				return (string)obj.GetValue(BeaconProperty);
+			}
+
+#if WPF
+			[AttachedPropertyBrowsableForType(typeof(ContentControl))]
+			[AttachedPropertyBrowsableForType(typeof(Frame))]
+			[AttachedPropertyBrowsableForType(typeof(Window))]
 #endif
 
-            public static void SetBeacon(DependencyObject obj, string value)
-            {
-                obj.SetValue(BeaconProperty, value);
-            }
+			public static void SetBeacon(DependencyObject obj, string value)
+			{
+				obj.SetValue(BeaconProperty, value);
+			}
 
-            public static readonly DependencyProperty BeaconProperty =
-                DependencyProperty.RegisterAttached("Beacon", typeof(string), typeof(StageManager), new PropertyMetadata(null,
-                       (o, p) =>
-                       {
-                           var name = (p.NewValue as string);
-                           var target = o as FrameworkElement;
+			public static readonly DependencyProperty BeaconProperty =
+				DependencyProperty.RegisterAttached("Beacon", typeof(string), typeof(StageManager), new PropertyMetadata(null,
+					   (o, p) =>
+					   {
+						   var name = (p.NewValue as string);
+						   var target = o as FrameworkElement;
 
-                           target.Loaded +=
-                               (_1, _2)
-                               =>
-                               {
-                                   StageManager.RegisterTargetBeacon(name, target);
-                               };
-                       }
+						   target.Loaded +=
+							   (_1, _2)
+							   =>
+							   {
+								   StageManager.RegisterTargetBeacon(name, target);
+							   };
+					   }
 
-                       ));
-
-
-
-
-
-            #endregion
-
-
-            internal FrameworkElement LocateTargetContainer(IView view, ref string targetContainerName, IViewModel sourceVM)
-            {
-                targetContainerName = targetContainerName ?? "";
-                var viewele = view as FrameworkElement;
-                FrameworkElement target = null;
-
-
-
-                var dic = GetOrCreateBeacons(sourceVM.StageManager.CurrentBindingView as FrameworkElement);
-                dic.TryGetValue(targetContainerName, out target);
-
-
-                if (target == null)
-                {
-                    target = _parentLocator() as FrameworkElement;
-                }
-
-                if (target == null)
-                {
-                    var vieweleCt = viewele as ContentControl;
-                    if (vieweleCt != null)
-                    {
-                        target = vieweleCt.Content as FrameworkElement;
-                    }
-                }
-                return target;
-            }
-
-
-
-            public void Dispose()
-            {
-                _ViewModel = null;
-            }
+					   ));
 
 
 
 
-            private static Dictionary<string, FrameworkElement> GetOrCreateBeacons(FrameworkElement view)
-            {
-                Dictionary<string, FrameworkElement> dic;
+
+			#endregion
+
+
+			internal FrameworkElement LocateTargetContainer(IView view, ref string targetContainerName, IViewModel sourceVM)
+			{
+				targetContainerName = targetContainerName ?? "";
+				var viewele = view as FrameworkElement;
+				FrameworkElement target = null;
+
+
+
+				var dic = GetOrCreateBeacons(sourceVM.StageManager.CurrentBindingView as FrameworkElement);
+				dic.TryGetValue(targetContainerName, out target);
+
+
+				if (target == null)
+				{
+					target = _parentLocator() as FrameworkElement;
+				}
+
+				if (target == null)
+				{
+					var vieweleCt = viewele as ContentControl;
+					if (vieweleCt != null)
+					{
+						target = vieweleCt.Content as FrameworkElement;
+					}
+				}
+				return target;
+			}
+
+
+
+
+			private static Dictionary<string, FrameworkElement> GetOrCreateBeacons(FrameworkElement view)
+			{
+				Dictionary<string, FrameworkElement> dic;
 #if NETFX_CORE
-                if (!view.Resources.ContainsKey(NavigatorBeaconsKey))
+				if (!view.Resources.ContainsKey(NavigatorBeaconsKey))
 #else
-                if (!view.Resources.Contains(NavigatorBeaconsKey))
+				if (!view.Resources.Contains(NavigatorBeaconsKey))
 #endif
-                {
-                    dic = new Dictionary<string, FrameworkElement>();
-                    view.Resources.Add(NavigatorBeaconsKey, dic);
-                }
-                else
-                    dic = view.Resources[NavigatorBeaconsKey] as Dictionary<string, FrameworkElement>;
+				{
+					dic = new Dictionary<string, FrameworkElement>();
+					view.Resources.Add(NavigatorBeaconsKey, dic);
+				}
+				else
+					dic = view.Resources[NavigatorBeaconsKey] as Dictionary<string, FrameworkElement>;
 
-                return dic;
-            }
+				return dic;
+			}
 
-            public static void RegisterTargetBeacon(string name, FrameworkElement target)
-            {
-                var view = LocateIView(target);
-                var beacons = GetOrCreateBeacons(view);
-
-
-                beacons[name] = target;
+			public static void RegisterTargetBeacon(string name, FrameworkElement target)
+			{
+				var view = LocateIView(target);
+				var beacons = GetOrCreateBeacons(view);
 
 
-            }
-
-            private static FrameworkElement LocateIView(FrameworkElement target)
-            {
-
-                var view = target;
-
-                while (view != null)
-                {
-                    if (view is IView)
-                    {
-                        break;
-                    }
-                    view = view.Parent as FrameworkElement;
-
-                }
-                return view;
-            }
+				beacons[name] = target;
 
 
+			}
+
+			private static FrameworkElement LocateIView(FrameworkElement target)
+			{
+
+				var view = target;
+
+				while (view != null)
+				{
+					if (view is IView)
+					{
+						break;
+					}
+					view = view.Parent as FrameworkElement;
+
+				}
+				return view;
+			}
 
 
 
 
 
-            public Stage DefaultStage
-            {
-                get { return (Stage)GetValue(DefaultTargetProperty); }
-                set { SetValue(DefaultTargetProperty, value); }
-            }
-
-            // Using a DependencyProperty as the backing store for DefaultTarget.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty DefaultTargetProperty =
-                DependencyProperty.Register("DefaultTarget", typeof(Stage), typeof(StageManager), new PropertyMetadata(null));
 
 
+			public Stage DefaultStage
+			{
+				get { return (Stage)GetValue(DefaultTargetProperty); }
+				set { SetValue(DefaultTargetProperty, value); }
+			}
 
-            public Stage this[string beaconKey]
-            {
-                get
-                {
-                    var fr = LocateTargetContainer(CurrentBindingView, ref beaconKey, _ViewModel);
-                    if (fr != null)
-                    {
-                        return new Stage(fr, beaconKey, this);
-                    }
-                    else
-                        return null;
-                }
-            }
-        }
+			// Using a DependencyProperty as the backing store for DefaultTarget.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty DefaultTargetProperty =
+				DependencyProperty.Register("DefaultTarget", typeof(Stage), typeof(StageManager), new PropertyMetadata(null));
 
 
 
-
-        public class PropertyBridge : FrameworkElement
-        {
-            public PropertyBridge()
-            {
-                base.Width = 0;
-                base.Height = 0;
-                base.Visibility = Visibility.Collapsed;
-
-            }
+			public Stage this[string beaconKey]
+			{
+				get
+				{
+					var fr = LocateTargetContainer(CurrentBindingView, ref beaconKey, _ViewModel);
+					if (fr != null)
+					{
+						return new Stage(fr, beaconKey, this);
+					}
+					else
+						return null;
+				}
+			}
+		}
 
 
 
 
-            public object Source
-            {
-                private get { return (object)GetValue(SourceProperty); }
-                set { SetValue(SourceProperty, value); }
-            }
+		public class PropertyBridge : FrameworkElement
+		{
+			public PropertyBridge()
+			{
+				base.Width = 0;
+				base.Height = 0;
+				base.Visibility = Visibility.Collapsed;
 
-            // Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty SourceProperty =
-                DependencyProperty.Register("Source", typeof(object), typeof(PropertyBridge), new PropertyMetadata(null,
-
-                    (o, a) =>
-                    {
-                        var pb = o as PropertyBridge;
-                        if (pb != null)
-                        {
-                            pb.Target = a.NewValue;
-                        }
-                    }
-                    ));
+			}
 
 
 
 
-            public object Target
-            {
-                get { return (object)GetValue(TargetProperty); }
-                set { SetValue(TargetProperty, value); }
-            }
+			public object Source
+			{
+				private get { return (object)GetValue(SourceProperty); }
+				set { SetValue(SourceProperty, value); }
+			}
 
-            // Using a DependencyProperty as the backing store for Target.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty TargetProperty =
-                DependencyProperty.Register("Target", typeof(object), typeof(PropertyBridge), new PropertyMetadata(null));
+			// Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty SourceProperty =
+				DependencyProperty.Register("Source", typeof(object), typeof(PropertyBridge), new PropertyMetadata(null,
+
+					(o, a) =>
+					{
+						var pb = o as PropertyBridge;
+						if (pb != null)
+						{
+							pb.Target = a.NewValue;
+						}
+					}
+					));
+
+
+
+
+			public object Target
+			{
+				get { return (object)GetValue(TargetProperty); }
+				set { SetValue(TargetProperty, value); }
+			}
+
+			// Using a DependencyProperty as the backing store for Target.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty TargetProperty =
+				DependencyProperty.Register("Target", typeof(object), typeof(PropertyBridge), new PropertyMetadata(null));
 
 
 
 
 
-        }
+		}
 
 
 
-    }
+	}
 }

@@ -58,6 +58,7 @@ namespace MVVMSidekick
 		using MVVMSidekick.Utilities;
 		using MVVMSidekick.Views;
 		using MVVMSidekick.EventRouting;
+		using System.Reactive.Disposables;
 
 
 		/// <summary>
@@ -75,9 +76,12 @@ namespace MVVMSidekick
 		/// </summary>
 		[DataContract]
 		public abstract class BindableBase
-			: DisposeGroupBase, IDisposable, INotifyPropertyChanged, IBindable
+			: DisposeGroupBase, INotifyPropertyChanged, IBindable
 		{
-
+			protected override void Dispose(bool disposing)
+			{
+				base.Dispose(disposing);
+			}
 
 
 			protected event EventHandler<DataErrorsChangedEventArgs> _ErrorsChanged;
@@ -1069,7 +1073,7 @@ namespace MVVMSidekick
 			}
 
 
-			event EventHandler<DataErrorsChangedEventArgs> INotifyDataErrorInfo.ErrorsChanged
+			public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged
 			{
 				add { _ErrorsChanged += value; }
 				remove { _ErrorsChanged -= value; }
@@ -1077,7 +1081,7 @@ namespace MVVMSidekick
 
 
 
-			System.Collections.IEnumerable INotifyDataErrorInfo.GetErrors(string propertyName)
+			public System.Collections.IEnumerable GetErrors(string propertyName)
 			{
 				if (this.GetFieldNames().Contains(propertyName))
 				{
@@ -1091,7 +1095,7 @@ namespace MVVMSidekick
 			}
 
 
-			bool INotifyDataErrorInfo.HasErrors
+			public bool HasErrors
 			{
 				get
 				{
@@ -1199,12 +1203,13 @@ namespace MVVMSidekick
 		[DataContract]
 		public abstract class DisposeGroupBase : IDisposeGroup
 		{
+			#region Disposing Logic/Disposing相关逻辑
 			~DisposeGroupBase()
 			{
 				Dispose(false);
 			}
 
-			#region Disposing Logic/Disposing相关逻辑
+
 
 			/// <summary>
 			/// <para>Logic actions need to be executed when the instance is disposing</para>
@@ -1212,7 +1217,7 @@ namespace MVVMSidekick
 			/// </summary>
 			private Lazy<List<DisposeEntry>> _disposeInfoList = new Lazy<List<DisposeEntry>>(() => new List<DisposeEntry>(), true);
 
-			IList<DisposeEntry> IDisposeGroup.DisposeInfoList { get { return _disposeInfoList.Value; } }
+			public IList<DisposeEntry> DisposeInfoList { get { return _disposeInfoList.Value; } }
 
 			//protected static Func<DisposeGroupBase, List<DisposeInfo>> _locateDisposeInfos =
 			//    m =>
@@ -1261,13 +1266,14 @@ namespace MVVMSidekick
 			public void Dispose()
 			{
 				Dispose(true);
+				GC.SuppressFinalize(this);
 			}
 
 			/// <summary>
 			/// <para>Do all the dispose </para>
 			/// <para>销毁，尝试运行所有注册的销毁操作</para>
 			/// </summary>
-			public virtual void Dispose(bool disposing)
+			protected virtual void Dispose(bool disposing)
 			{
 				var disposeList = Interlocked.Exchange(ref _disposeInfoList, new Lazy<List<DisposeEntry>>(() => new List<DisposeEntry>(), true));
 				if (disposeList != null)
@@ -1315,7 +1321,7 @@ namespace MVVMSidekick
 				_disposeInfoList = null;
 				if (disposing)
 				{
-					GC.SuppressFinalize(this);
+
 				}
 			}
 
@@ -1498,6 +1504,11 @@ namespace MVVMSidekick
 			where TViewModel : ViewModelBase<TViewModel, TResult>, IViewModel<TResult>
 		{
 
+			protected override void Dispose(bool disposing)
+			{
+				base.Dispose(disposing);
+			}
+
 			public override bool HaveReturnValue { get { return true; } }
 
 			public async Task<TResult> WaitForCloseWithResult(Action closingCallback = null)
@@ -1557,6 +1568,10 @@ namespace MVVMSidekick
 
 		public abstract partial class ViewModelBase<TViewModel> : BindableBase<TViewModel>, IViewModel where TViewModel : ViewModelBase<TViewModel>
 		{
+			protected override void Dispose(bool disposing)
+			{
+				base.Dispose(disposing);
+			}
 			public ViewModelBase()
 			{
 #if WPF
@@ -1620,7 +1635,7 @@ namespace MVVMSidekick
 
 				StageManager = new StageManager(this) { CurrentBindingView = view };
 				StageManager.InitParent(() => view.Parent);
-				StageManager.DisposeWith(this);
+				//StageManager.DisposeWith(this);
 				await TaskExHelper.Yield();
 			}
 
@@ -1649,7 +1664,7 @@ namespace MVVMSidekick
 			{
 				StageManager = new StageManager(this) { CurrentBindingView = view };
 				StageManager.InitParent(() => view.Parent);
-				StageManager.DisposeWith(this);
+				//StageManager.DisposeWith(this);
 				await TaskExHelper.Yield();
 			}
 
@@ -1806,7 +1821,7 @@ namespace MVVMSidekick
 				if (UIBusyWhenExecuting)
 				{
 					using (
-						new Disposable(
+						Disposable.Create(
 							() =>
 								UIBusyTaskCount--))
 					{
