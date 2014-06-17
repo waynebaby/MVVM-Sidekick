@@ -64,7 +64,7 @@ namespace MVVMSidekick
 
     namespace Services
     {
-        public interface IServiceLocator : IDisposable
+        public interface IServiceLocator 
         {
             bool HasInstance<TService>(string name = "");
             bool IsAsync<TService>(string name = "");
@@ -80,7 +80,7 @@ namespace MVVMSidekick
 
         }
 
-        public interface IServiceLocator<TService> : IDisposable
+        public interface IServiceLocator<TService> 
         {
             bool HasInstance(string name = "");
             bool IsAsync(string name = "");
@@ -264,10 +264,7 @@ namespace MVVMSidekick
                     return default(TService);
             }
 
-            public void Dispose()
-            {
-                dic.Clear();
-            }
+
 
 
             static Dictionary<string, ServiceLocatorEntryStruct<TService>> dic

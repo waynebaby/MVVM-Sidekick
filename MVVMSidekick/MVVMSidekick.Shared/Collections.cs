@@ -381,7 +381,7 @@ namespace MVVMSidekick
             #region ICollection<object> Members
 
 
-            bool ICollection<Object>.IsReadOnly
+     public       bool IsReadOnly
             {
                 get { return false; }
             }

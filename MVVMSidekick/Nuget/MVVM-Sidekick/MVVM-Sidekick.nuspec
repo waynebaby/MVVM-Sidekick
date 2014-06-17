@@ -70,11 +70,11 @@
     <dependencies>
 
       <dependency id="Rx-Main" version="[2.2.2,3.0)" />
-      <dependency id="Rx-PlatformServices" version="[2.2.3,3.0)" />
-      <dependency id="Rx-Interfaces" version="[2.2.2,3.0)" />
-      <dependency id="Rx-Core" version="[2.2.2,3.0)" />
-      <dependency id="Rx-Linq" version="[2.2.2,3.0)" />
-      <dependency id="Rx-Xaml" version="[2.2.2,3.0)" />
+      <dependency id="Rx-PlatformServices" version="[2.2.4,3.0)" />
+      <dependency id="Rx-Interfaces" version="[2.2.4,3.0)" />
+      <dependency id="Rx-Core" version="[2.2.4,3.0)" />
+      <dependency id="Rx-Linq" version="[2.2.4,3.0)" />
+      <dependency id="Rx-Xaml" version="[2.2.4,3.0)" />
       
     </dependencies>
   </metadata>
