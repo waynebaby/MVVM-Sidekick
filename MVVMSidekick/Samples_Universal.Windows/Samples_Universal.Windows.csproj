@@ -179,13 +179,12 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\win8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="MVVMSidekick.Behaviors_RT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.4.1\lib\netcore45\MVVMSidekick.Behaviors_RT.dll</HintPath>
+    <Reference Include="MVVMSidekick.Behaviors_RT">
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.2.4.2\lib\netcore45\MVVMSidekick.Behaviors_RT.dll</HintPath>
     </Reference>
     <Reference Include="MVVMSidekick_Metro, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.2.4.1\lib\win8\MVVMSidekick_Metro.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.2.4.3\lib\win8\MVVMSidekick_Metro.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\packages\Rx-Core.2.2.4\lib\windows8\System.Reactive.Core.dll</HintPath>
