@@ -140,12 +140,12 @@
       <Link>Packages\Rx-Xaml.2.2.4.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick.1.2.4.1.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.2.4.1.nupkg</Link>
+    <Content Include="..\..\Nuget\MVVM-Sidekick.1.3.0.0.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.3.0.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick.Behaviors.0.2.4.1.nupkg">
-      <Link>Packages\MVVM-Sidekick.Behaviors.0.2.4.1.nupkg</Link>
+    <Content Include="..\..\Nuget\MVVM-Sidekick.Behaviors.0.3.0.0.nupkg">
+      <Link>Packages\MVVM-Sidekick.Behaviors.0.3.0.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickViewWithVM.WPA81\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM.WPA81.zip">
