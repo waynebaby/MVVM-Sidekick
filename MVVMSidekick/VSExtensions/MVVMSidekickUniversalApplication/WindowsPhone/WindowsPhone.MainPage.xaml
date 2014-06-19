@@ -13,7 +13,21 @@
 
         <vm:MainPage_Model x:Key="DesignVM"/>
     </Page.Resources>
-
+    <!--Begin App Bar Binding Patch. If you don't need Binding Top/Bottom Appbar please ignore these code -->
+    <!--
+    <Page.DataContext>
+        <Binding  RelativeSource="{RelativeSource Mode=Self}" Path="ViewModel"/>
+    </Page.DataContext>
+    <mvvm:MVVMPage.ViewModel>
+        <Binding Source="{StaticResource DesignVM}" />
+    </mvvm:MVVMPage.ViewModel>
+    <mvvm:MVVMPage.BottomAppBar>
+        <CommandBar d:DataContext="{StaticResource DesignVM }">
+            <AppBarButton Icon="AllApps" Label="{Binding BindableInstanceId, Mode=OneWay}" />
+        </CommandBar>
+    </mvvm:MVVMPage.BottomAppBar>
+    -->
+    <!--End App Bar Binding Patch. If you don't need Binding  Top/Bottom Appbar please ignore these code -->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  DataContext="{StaticResource DesignVM}">
         <TextBlock TextWrapping="Wrap" x:Name="pageTitle" Grid.Column="1"  Text="{Binding Title}" Style="{StaticResource HeaderTextBlockStyle}"/>
     </Grid>
