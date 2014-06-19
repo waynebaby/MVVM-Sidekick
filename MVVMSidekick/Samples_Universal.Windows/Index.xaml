@@ -8,13 +8,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cmd="using:MVVMSidekick.Commands.EventBinding"
-    mc:Ignorable="d" xmlns:vm="using:Samples.ViewModels" >
-    <common:LayoutAwarePage.Resources >
-        <local:AppBarDataContextValueConverter x:Key="AppBarDataContextValueConverter"/>
+    mc:Ignorable="d" xmlns:vm="using:Samples.ViewModels">
+    <Page.Resources >
         <vm:Index_Model x:Key="DesignVM"  />
-
-    </common:LayoutAwarePage.Resources>
-    <Grid x:Name="LayoutRoot" DataContext="{StaticResource DesignVM}"    >
+    </Page.Resources>
+    <!--Begin App Bar Binding Patch. If you Don't need Binding Top/Bottom Appbar please ignore these code -->
+    <!--<Page.DataContext>
+        <Binding  RelativeSource="{RelativeSource Mode=Self}" Path="ViewModel"/>
+    </Page.DataContext>
+    <mvvm:MVVMPage.ViewModel>
+        <Binding Source="{StaticResource DesignVM}" />
+    </mvvm:MVVMPage.ViewModel>-->
+    <!--End App Bar Binding Patch. If you Don't need Binding  Top/Bottom Appbar please ignore these code -->
+    <Grid x:Name="LayoutRoot"  DataContext="{StaticResource DesignVM}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}"   >
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="117*"/>
@@ -34,8 +40,8 @@
         <ProgressBar Minimum="0" Maximum="5" Grid.ColumnSpan="2" Margin="175,178,112,330" Grid.Row="1" Height="199" Value="{Binding CountDown}" />
         <mvvm:PropertyBridge   Source="{Binding Mode=OneWay}" Target="{Binding DataContext, ElementName=stackPanel, Mode=TwoWay}" ></mvvm:PropertyBridge>
     </Grid>
-    <Page.TopAppBar >
-        <AppBar   DataContext="{Binding ViewModel, ElementName=layoutAwarePage}">
+    <Page.BottomAppBar >
+        <AppBar   >
             <StackPanel x:Name="stackPanel" Orientation="Horizontal" >
                 <Button Content="{Binding CommandStartCalculator.Resource}" Grid.Column="1" Command="{Binding CommandStartCalculator}" />
                 <Button Content="{Binding CommandListTest.Resource}" Grid.Column="1" Command="{Binding CommandListTest}" Margin="10" />
@@ -45,5 +51,5 @@
                 <Button Content="{Binding CommandMultiLevelSelection.Resource}" Grid.Column="1" Command="{Binding CommandMultiLevelSelection}" Margin="10" />
             </StackPanel>
         </AppBar>
-    </Page.TopAppBar>
+    </Page.BottomAppBar>
 </common:LayoutAwarePage>
