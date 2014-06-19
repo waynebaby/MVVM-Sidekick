@@ -64,976 +64,976 @@ namespace MVVMSidekick
 
 
 
-    namespace Collections
-    {
+	namespace Collections
+	{
 
 
 
-        public class DependencyObservableCollection<T> : DependencyObject, ICollection<T>, IList<T>, INotifyCollectionChanged, INotifyPropertyChanged
-        {
-
-
-
-
-            protected ObservableCollection<T> _core = new ObservableCollection<T>();
-            public DependencyObservableCollection()
-            {
-
-                var countBinding = new Binding();
-                countBinding.Path = new PropertyPath("Count");
-                countBinding.Mode = BindingMode.OneWay;
-                countBinding.Source = _core;
-                BindingOperations.SetBinding(this, CountProperty, countBinding);
-
-            }
+		public class DependencyObservableCollection<T> : DependencyObject, ICollection<T>, IList<T>, INotifyCollectionChanged, INotifyPropertyChanged
+		{
 
 
 
 
-            public void Add(T item)
-            {
-                _core.Add(item);
-            }
+			protected ObservableCollection<T> _core = new ObservableCollection<T>();
+			public DependencyObservableCollection()
+			{
 
-            public void Clear()
-            {
-                _core.Clear();
-            }
+				var countBinding = new Binding();
+				countBinding.Path = new PropertyPath("Count");
+				countBinding.Mode = BindingMode.OneWay;
+				countBinding.Source = _core;
+				BindingOperations.SetBinding(this, CountProperty, countBinding);
 
-            public bool Contains(T item)
-            {
-                return _core.Contains(item);
-            }
-
-            public void CopyTo(T[] array, int arrayIndex)
-            {
-                _core.CopyTo(array, arrayIndex);
-            }
+			}
 
 
 
 
+			public void Add(T item)
+			{
+				_core.Add(item);
+			}
 
-            public virtual int Count
-            {
-                get { return (int)GetValue(CountProperty); }
-                protected set { SetValue(CountProperty, value); }
-            }
+			public void Clear()
+			{
+				_core.Clear();
+			}
 
-            // Using a DependencyProperty as the backing store for Count.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty CountProperty =
-                DependencyProperty.Register("Count", typeof(int), typeof(DependencyObservableCollection<T>), new PropertyMetadata(0));
+			public bool Contains(T item)
+			{
+				return _core.Contains(item);
+			}
 
-
-
-
-            public bool IsReadOnly
-            {
-                get { return false; }
-            }
-
-            public bool Remove(T item)
-            {
-                return _core.Remove(item);
-            }
-
-            public IEnumerator<T> GetEnumerator()
-            {
-                return _core.GetEnumerator();
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return _core.GetEnumerator();
-            }
-
-            public event NotifyCollectionChangedEventHandler CollectionChanged
-            {
-                add { _core.CollectionChanged += value; }
-                remove { _core.CollectionChanged -= value; }
-            }
-
-            public event PropertyChangedEventHandler PropertyChanged
-            {
-                add { ((INotifyPropertyChanged)_core).PropertyChanged += value; }
-                remove { ((INotifyPropertyChanged)_core).PropertyChanged -= value; }
-            }
+			public void CopyTo(T[] array, int arrayIndex)
+			{
+				_core.CopyTo(array, arrayIndex);
+			}
 
 
-            public int IndexOf(T item)
-            {
-                return _core.IndexOf(item);
-            }
 
-            public void Insert(int index, T item)
-            {
-                _core.Insert(index, item);
-            }
 
-            public void RemoveAt(int index)
-            {
-                _core.RemoveAt(index);
-            }
 
-            public T this[int index]
-            {
-                get
-                {
-                    return _core[index];
-                }
-                set
-                {
-                    _core[index] = value;
-                }
-            }
-        }
+			public virtual int Count
+			{
+				get { return (int)GetValue(CountProperty); }
+				protected set { SetValue(CountProperty, value); }
+			}
+
+			// Using a DependencyProperty as the backing store for Count.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty CountProperty =
+				DependencyProperty.Register("Count", typeof(int), typeof(DependencyObservableCollection<T>), new PropertyMetadata(0));
+
+
+
+
+			public bool IsReadOnly
+			{
+				get { return false; }
+			}
+
+			public bool Remove(T item)
+			{
+				return _core.Remove(item);
+			}
+
+			public IEnumerator<T> GetEnumerator()
+			{
+				return _core.GetEnumerator();
+			}
+
+			IEnumerator IEnumerable.GetEnumerator()
+			{
+				return _core.GetEnumerator();
+			}
+
+			public event NotifyCollectionChangedEventHandler CollectionChanged
+			{
+				add { _core.CollectionChanged += value; }
+				remove { _core.CollectionChanged -= value; }
+			}
+
+			public event PropertyChangedEventHandler PropertyChanged
+			{
+				add { ((INotifyPropertyChanged)_core).PropertyChanged += value; }
+				remove { ((INotifyPropertyChanged)_core).PropertyChanged -= value; }
+			}
+
+
+			public int IndexOf(T item)
+			{
+				return _core.IndexOf(item);
+			}
+
+			public void Insert(int index, T item)
+			{
+				_core.Insert(index, item);
+			}
+
+			public void RemoveAt(int index)
+			{
+				_core.RemoveAt(index);
+			}
+
+			public T this[int index]
+			{
+				get
+				{
+					return _core[index];
+				}
+				set
+				{
+					_core[index] = value;
+				}
+			}
+		}
 
 
 
 #if NETFX_CORE
 
-        //public 
-        /// <summary>
-        /// ObservableVector that raises events for IObservableCollection and IObservableVector
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public class ObservableVector<T> : ObservableCollection<T>, Windows.Foundation.Collections.IObservableVector<object>
-        {
+		//public 
+		/// <summary>
+		/// ObservableVector that raises events for IObservableCollection and IObservableVector
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		public class ObservableVector<T> : ObservableCollection<T>, Windows.Foundation.Collections.IObservableVector<object>
+		{
 
 
 
-            //// *** Constants ***
+			//// *** Constants ***
 
-            //private const string PropertyNameCount = "Count";
-            //private const string PropertyNameIndexer = "Item[]";
+			//private const string PropertyNameCount = "Count";
+			//private const string PropertyNameIndexer = "Item[]";
 
-            //// *** Events ***
+			//// *** Events ***
 
-            //public event PropertyChangedEventHandler PropertyChanged;
-            //public event NotifyCollectionChangedEventHandler CollectionChanged;
+			//public event PropertyChangedEventHandler PropertyChanged;
+			//public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-            // *** Constructors ***
+			// *** Constructors ***
 
-            public ObservableVector()
-                : base()
-            {
-            }
+			public ObservableVector()
+				: base()
+			{
+			}
 
-            public ObservableVector(IList<T> list)
-                : base(list)
-            {
-            }
+			public ObservableVector(IList<T> list)
+				: base(list)
+			{
+			}
 
-            // *** Protected Methods ***   
+			// *** Protected Methods ***   
 
-            protected override void ClearItems()
-            {
+			protected override void ClearItems()
+			{
 
-                base.ClearItems();
-                //OnPropertyChanged(PropertyNameCount);
-                //OnPropertyChanged(PropertyNameIndexer);
-                //OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-                if (VectorChanged != null)
-                {
-                    VectorChanged(this, new VectorChangedEventArgs { CollectionChange = Windows.Foundation.Collections.CollectionChange.Reset });
-                }
-            }
+				base.ClearItems();
+				//OnPropertyChanged(PropertyNameCount);
+				//OnPropertyChanged(PropertyNameIndexer);
+				//OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+				if (VectorChanged != null)
+				{
+					VectorChanged(this, new VectorChangedEventArgs { CollectionChange = Windows.Foundation.Collections.CollectionChange.Reset });
+				}
+			}
 
-            protected override void InsertItem(int index, T item)
-            {
-                base.InsertItem(index, item);
-                //OnPropertyChanged(PropertyNameCount);
-                //OnPropertyChanged(PropertyNameIndexer);
-                //OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index));
-                if (VectorChanged != null)
-                {
-                    VectorChanged(this, new VectorChangedEventArgs { CollectionChange = Windows.Foundation.Collections.CollectionChange.ItemInserted, Index = (uint)index });
-                }
-            }
+			protected override void InsertItem(int index, T item)
+			{
+				base.InsertItem(index, item);
+				//OnPropertyChanged(PropertyNameCount);
+				//OnPropertyChanged(PropertyNameIndexer);
+				//OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index));
+				if (VectorChanged != null)
+				{
+					VectorChanged(this, new VectorChangedEventArgs { CollectionChange = Windows.Foundation.Collections.CollectionChange.ItemInserted, Index = (uint)index });
+				}
+			}
 
-            protected override void RemoveItem(int index)
-            {
-                T oldItem = base[index];
-                base.RemoveItem(index);
-                //OnPropertyChanged(PropertyNameCount);
-                //OnPropertyChanged(PropertyNameIndexer);
-                //OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, oldItem, index));
-                if (VectorChanged != null)
-                {
-                    VectorChanged(this, new VectorChangedEventArgs { CollectionChange = Windows.Foundation.Collections.CollectionChange.ItemRemoved, Index = (uint)index });
-                }
-            }
+			protected override void RemoveItem(int index)
+			{
+				T oldItem = base[index];
+				base.RemoveItem(index);
+				//OnPropertyChanged(PropertyNameCount);
+				//OnPropertyChanged(PropertyNameIndexer);
+				//OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, oldItem, index));
+				if (VectorChanged != null)
+				{
+					VectorChanged(this, new VectorChangedEventArgs { CollectionChange = Windows.Foundation.Collections.CollectionChange.ItemRemoved, Index = (uint)index });
+				}
+			}
 
-            protected override void SetItem(int index, T item)
-            {
-                T oldItem = base[index];
-                base.SetItem(index, item);
-                //OnPropertyChanged(PropertyNameIndexer);
-                //OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, item, oldItem, index));
-                if (VectorChanged != null)
-                {
-                    VectorChanged(this, new VectorChangedEventArgs { CollectionChange = Windows.Foundation.Collections.CollectionChange.ItemChanged, Index = (uint)index });
-                }
-            }
+			protected override void SetItem(int index, T item)
+			{
+				T oldItem = base[index];
+				base.SetItem(index, item);
+				//OnPropertyChanged(PropertyNameIndexer);
+				//OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, item, oldItem, index));
+				if (VectorChanged != null)
+				{
+					VectorChanged(this, new VectorChangedEventArgs { CollectionChange = Windows.Foundation.Collections.CollectionChange.ItemChanged, Index = (uint)index });
+				}
+			}
 
-            protected void OnPropertyChanged(string propertyName)
-            {
-                OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
-            }
+			protected void OnPropertyChanged(string propertyName)
+			{
+				OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+			}
 
-            // *** Event Handlers ***
+			// *** Event Handlers ***
 
-            //protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
-            //{
-            //    if (PropertyChanged != null)
-            //        PropertyChanged(this, e);
-            //}
+			//protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+			//{
+			//    if (PropertyChanged != null)
+			//        PropertyChanged(this, e);
+			//}
 
-            //protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-            //{
-            //    if (CollectionChanged != null)
-            //        CollectionChanged(this, e);
-            //}
+			//protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+			//{
+			//    if (CollectionChanged != null)
+			//        CollectionChanged(this, e);
+			//}
 
-            public event Windows.Foundation.Collections.VectorChangedEventHandler<object> VectorChanged;
-
-
-
-            #region IList<object> Members
-
-            int IList<object>.IndexOf(object item)
-            {
-                return IndexOf((T)item);
-            }
-
-            void IList<object>.Insert(int index, object item)
-            {
-                Insert(index, (T)item);
-            }
+			public event Windows.Foundation.Collections.VectorChangedEventHandler<object> VectorChanged;
 
 
 
-            object IList<object>.this[int index]
-            {
-                get
-                {
-                    return this[index];
-                }
-                set
-                {
-                    this[index] = (T)value;
-                }
-            }
+			#region IList<object> Members
 
-            #endregion
+			int IList<object>.IndexOf(object item)
+			{
+				return IndexOf((T)item);
+			}
 
-            #region ICollection<object> Members
-
-            void ICollection<object>.Add(object item)
-            {
-                Add((T)item);
-            }
-
-
-            bool ICollection<object>.Contains(object item)
-            {
-                return Contains((T)item);
-            }
-
-            void ICollection<object>.CopyTo(object[] array, int arrayIndex)
-            {
-
-                for (int i = 0; i < Count; i++)
-                {
-                    var idx = arrayIndex + i;
-                    array[idx] = this[i];
-
-                }
-            }
+			void IList<object>.Insert(int index, object item)
+			{
+				Insert(index, (T)item);
+			}
 
 
 
-            bool ICollection<object>.Remove(object item)
-            {
-                return Remove((T)item);
-            }
+			object IList<object>.this[int index]
+			{
+				get
+				{
+					return this[index];
+				}
+				set
+				{
+					this[index] = (T)value;
+				}
+			}
 
-            #endregion
+			#endregion
 
-            #region IEnumerable<object> Members
+			#region ICollection<object> Members
 
-            IEnumerator<object> IEnumerable<object>.GetEnumerator()
-            {
-                return this.OfType<Object>().GetEnumerator();
-            }
-
-            #endregion
-
-            #region IEnumerable Members
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return this.GetEnumerator();
-            }
-
-            #endregion
-
-            #region ICollection<object> Members
+			void ICollection<object>.Add(object item)
+			{
+				Add((T)item);
+			}
 
 
-     public       bool IsReadOnly
-            {
-                get { return false; }
-            }
+			bool ICollection<object>.Contains(object item)
+			{
+				return Contains((T)item);
+			}
 
-            #endregion
-        }
+			void ICollection<object>.CopyTo(object[] array, int arrayIndex)
+			{
+
+				for (int i = 0; i < Count; i++)
+				{
+					var idx = arrayIndex + i;
+					array[idx] = this[i];
+
+				}
+			}
+
+
+
+			bool ICollection<object>.Remove(object item)
+			{
+				return Remove((T)item);
+			}
+
+			#endregion
+
+			#region IEnumerable<object> Members
+
+			IEnumerator<object> IEnumerable<object>.GetEnumerator()
+			{
+				return this.OfType<Object>().GetEnumerator();
+			}
+
+			#endregion
+
+			#region IEnumerable Members
+
+			IEnumerator IEnumerable.GetEnumerator()
+			{
+				return this.GetEnumerator();
+			}
+
+			#endregion
+
+			#region ICollection<object> Members
+
+
+			public bool IsReadOnly
+			{
+				get { return false; }
+			}
+
+			#endregion
+		}
 
 
 
 
-        /// <summary>
-        /// Provides data for the changed events of a vector
-        ///// </summary>
-        public class VectorChangedEventArgs : Windows.Foundation.Collections.IVectorChangedEventArgs
-        {
-            #region IVectorChangedEventArgs Members
-            /// <summary>
-            /// Describes the change that caused the change
-            /// </summary>
-            public Windows.Foundation.Collections.CollectionChange CollectionChange
-            {
-                get;
-                set;
-            }
-            /// <summary>
-            /// The index of the item changed
-            /// </summary>
-            public uint Index
-            {
-                get;
-                set;
-            }
-            #endregion
-        }
+		/// <summary>
+		/// Provides data for the changed events of a vector
+		///// </summary>
+		public class VectorChangedEventArgs : Windows.Foundation.Collections.IVectorChangedEventArgs
+		{
+			#region IVectorChangedEventArgs Members
+			/// <summary>
+			/// Describes the change that caused the change
+			/// </summary>
+			public Windows.Foundation.Collections.CollectionChange CollectionChange
+			{
+				get;
+				set;
+			}
+			/// <summary>
+			/// The index of the item changed
+			/// </summary>
+			public uint Index
+			{
+				get;
+				set;
+			}
+			#endregion
+		}
 
 #endif
-        /// <summary>
-        /// <para > The extension method for collections </para>
-        /// <para>集合类型的扩展方法</para>
-        /// </summary>
-        public static class CollectionExtensions
-        {
-            /// <summary>
-            /// <para>Transform to a dictionary with INotifyCollectionChanged</para>
-            /// <para>生成一个带有集合变化通知的字典</para>
-            /// </summary>
-            /// <typeparam name="K"><para>Key Type</para><para>键类型</para></typeparam>
-            /// <typeparam name="V"><para>Value Type</para><para>值类型</para></typeparam>
-            /// <param name="items"><para>Source Dictionary</para><para>来源字典</para><para></para></param>
-            /// <returns></returns>
-            public static KeyedObserableCollection<K, V> ToKeyedObserableCollection<K, V>(this IDictionary<K, V> items)
-            {
-                return new KeyedObserableCollection<K, V>(items);
+		/// <summary>
+		/// <para > The extension method for collections </para>
+		/// <para>集合类型的扩展方法</para>
+		/// </summary>
+		public static class CollectionExtensions
+		{
+			/// <summary>
+			/// <para>Transform to a dictionary with INotifyCollectionChanged</para>
+			/// <para>生成一个带有集合变化通知的字典</para>
+			/// </summary>
+			/// <typeparam name="K"><para>Key Type</para><para>键类型</para></typeparam>
+			/// <typeparam name="V"><para>Value Type</para><para>值类型</para></typeparam>
+			/// <param name="items"><para>Source Dictionary</para><para>来源字典</para><para></para></param>
+			/// <returns></returns>
+			public static KeyedObserableCollection<K, V> ToKeyedObserableCollection<K, V>(this IDictionary<K, V> items)
+			{
+				return new KeyedObserableCollection<K, V>(items);
 
-            }
-
-
-        }
-
-        public class KeyedObserableCollection<K, V> : ObservableCollection<KeyValuePair<K, V>>
-        {
-
-            public KeyedObserableCollection(IDictionary<K, V> items)
-            {
-                if (items == null)
-                {
-                    throw new ArgumentException("items could not be null.");
-                }
-                var bak = items.ToList();
-                _coreDictionary = items;
-                items.Clear();
-                foreach (var item in bak)
-                {
-                    base.Add(item);
-                }
-            }
+			}
 
 
+		}
 
-            IDictionary<K, V> _coreDictionary;
-            int _coreVersion;
-            int _shadowVersion;
-            private void IncVer()
-            {
-                _coreVersion++;
-                if (_coreVersion >= 1024 * 1024 * 1024)
-                {
-                    _coreVersion = 0;
-                }
-            }
+		public class KeyedObserableCollection<K, V> : ObservableCollection<KeyValuePair<K, V>>
+		{
+
+			public KeyedObserableCollection(IDictionary<K, V> items)
+			{
+				if (items == null)
+				{
+					throw new ArgumentException("items could not be null.");
+				}
+				var bak = items.ToList();
+				_coreDictionary = items;
+				items.Clear();
+				foreach (var item in bak)
+				{
+					base.Add(item);
+				}
+			}
 
 
 
-            protected override void ClearItems()
-            {
-                base.ClearItems();
-                _coreDictionary.Clear();
-                IncVer();
-            }
+			IDictionary<K, V> _coreDictionary;
+			int _coreVersion;
+			int _shadowVersion;
+			private void IncVer()
+			{
+				_coreVersion++;
+				if (_coreVersion >= 1024 * 1024 * 1024)
+				{
+					_coreVersion = 0;
+				}
+			}
 
 
-            protected override void InsertItem(int index, KeyValuePair<K, V> item)
-            {
-                _coreDictionary.Add(item.Key, item.Value);
-                base.InsertItem(index, item);
-                IncVer();
-            }
 
-            protected override void SetItem(int index, KeyValuePair<K, V> item)
-            {
+			protected override void ClearItems()
+			{
+				base.ClearItems();
+				_coreDictionary.Clear();
+				IncVer();
+			}
 
-                _coreDictionary.Add(item.Key, item.Value);
-                RemoveFromDic(index);
 
-                base.SetItem(index, item);
-                IncVer();
-            }
+			protected override void InsertItem(int index, KeyValuePair<K, V> item)
+			{
+				_coreDictionary.Add(item.Key, item.Value);
+				base.InsertItem(index, item);
+				IncVer();
+			}
 
-            private void RemoveFromDic(int index)
-            {
-                var rem = base[index];
-                if (rem.Key != null)
-                {
-                    _coreDictionary.Remove(rem.Key);
-                }
-                IncVer();
-            }
+			protected override void SetItem(int index, KeyValuePair<K, V> item)
+			{
 
-            protected override void RemoveItem(int index)
-            {
-                RemoveFromDic(index);
-                base.RemoveItem(index);
-                IncVer();
-            }
+				_coreDictionary.Add(item.Key, item.Value);
+				RemoveFromDic(index);
+
+				base.SetItem(index, item);
+				IncVer();
+			}
+
+			private void RemoveFromDic(int index)
+			{
+				var rem = base[index];
+				if (rem.Key != null)
+				{
+					_coreDictionary.Remove(rem.Key);
+				}
+				IncVer();
+			}
+
+			protected override void RemoveItem(int index)
+			{
+				RemoveFromDic(index);
+				base.RemoveItem(index);
+				IncVer();
+			}
 
 
 #if SILVERLIGHT_5||NET40||WINDOWS_PHONE_7
-            Dictionary<K, V> _shadowDictionary;
-            public IDictionary<K, V> DictionaryItems
-            {
-                get
-                {
-                    if (_shadowDictionary == null || _shadowVersion != _coreVersion)
-                    {
-                        _shadowDictionary = new Dictionary<K, V>(_coreDictionary);
-                        _shadowVersion = _coreVersion;
-                    }
-                    return _shadowDictionary;
+			Dictionary<K, V> _shadowDictionary;
+			public IDictionary<K, V> DictionaryItems
+			{
+				get
+				{
+					if (_shadowDictionary == null || _shadowVersion != _coreVersion)
+					{
+						_shadowDictionary = new Dictionary<K, V>(_coreDictionary);
+						_shadowVersion = _coreVersion;
+					}
+					return _shadowDictionary;
 
-                }
-            }
+				}
+			}
 
 #else
-            ReadOnlyDictionary<K, V> _shadowDictionary;
-            public IDictionary<K, V> DictionaryItems
-            {
-                get
-                {
-                    if (_shadowDictionary == null || _shadowVersion != _coreVersion)
-                    {
-                        _shadowDictionary = new ReadOnlyDictionary<K, V>(_coreDictionary);
-                        _shadowVersion = _coreVersion;
-                    }
-                    return _shadowDictionary;
+			ReadOnlyDictionary<K, V> _shadowDictionary;
+			public IDictionary<K, V> DictionaryItems
+			{
+				get
+				{
+					if (_shadowDictionary == null || _shadowVersion != _coreVersion)
+					{
+						_shadowDictionary = new ReadOnlyDictionary<K, V>(_coreDictionary);
+						_shadowVersion = _coreVersion;
+					}
+					return _shadowDictionary;
 
-                }
-            }
+				}
+			}
 
 
 #endif
 
 
 
-        }
+		}
 
 
 
 #if NETFX_CORE
 
-        namespace CollectionView
-        {
+		namespace CollectionView
+		{
 
 
 
 
 
-            public class CollectionViewIncrementalLoader<T> : ISupportIncrementalLoading
-            {
-                private Func<CollectionView<T>, int, Task<IncrementalLoadResult<T>>> _loadMore;
-                private Func<CollectionView<T>, bool> _hasMore;
-                bool _hasNoMore = false;
-                public CollectionViewIncrementalLoader(Func<CollectionView<T>, int, Task<IncrementalLoadResult<T>>> loadMore = null, Func<CollectionView<T>, bool> hasMore = null)
-                {
-                    var canlm = (loadMore != null);
-                    var canhm = (hasMore != null);
+			public class CollectionViewIncrementalLoader<T> : ISupportIncrementalLoading
+			{
+				private Func<CollectionView<T>, int, Task<IncrementalLoadResult<T>>> _loadMore;
+				private Func<CollectionView<T>, bool> _hasMore;
+				bool _hasNoMore = false;
+				public CollectionViewIncrementalLoader(Func<CollectionView<T>, int, Task<IncrementalLoadResult<T>>> loadMore = null, Func<CollectionView<T>, bool> hasMore = null)
+				{
+					var canlm = (loadMore != null);
+					var canhm = (hasMore != null);
 
-                    if (canlm && canhm)
-                    {
+					if (canlm && canhm)
+					{
 
-                        _loadMore = loadMore;
-                        _hasMore = hasMore;
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("need both loadMore and hasMore have value ");
-                    }
-                }
+						_loadMore = loadMore;
+						_hasMore = hasMore;
+					}
+					else
+					{
+						throw new InvalidOperationException("need both loadMore and hasMore have value ");
+					}
+				}
 
-                public CollectionView<T> CollectionView { get; set; }
+				public CollectionView<T> CollectionView { get; set; }
 
-                #region ISupportIncrementalLoading Members
+				#region ISupportIncrementalLoading Members
 
 
 
-                public bool HasMoreItems
-                {
-                    get
-                    {
-                        if (!_hasNoMore)
-                        {
-                            _hasNoMore = !_hasMore(CollectionView);
-                        }
-                        return !_hasNoMore;
+				public bool HasMoreItems
+				{
+					get
+					{
+						if (!_hasNoMore)
+						{
+							_hasNoMore = !_hasMore(CollectionView);
+						}
+						return !_hasNoMore;
 
-                    }
-                }
+					}
+				}
 
-                async Task<LoadMoreItemsResult> InternalLoadMoreItemsAsync(uint count)
-                {
-                    var rval = await _loadMore(CollectionView, (int)count);
+				async Task<LoadMoreItemsResult> InternalLoadMoreItemsAsync(uint count)
+				{
+					var rval = await _loadMore(CollectionView, (int)count);
 
-                    _hasNoMore = !rval.HaveMore;
+					_hasNoMore = !rval.HaveMore;
 
-                    foreach (var x in rval.NewItems)
-                    {
-                        CollectionView.Add(x);
+					foreach (var x in rval.NewItems)
+					{
+						CollectionView.Add(x);
 
-                    }
-                    return new LoadMoreItemsResult { Count = count };
-                }
+					}
+					return new LoadMoreItemsResult { Count = count };
+				}
 
-                #endregion
+				#endregion
 
-                #region ISupportIncrementalLoading Members
+				#region ISupportIncrementalLoading Members
 
 
-                public Windows.Foundation.IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
-                {
-                    return InternalLoadMoreItemsAsync(count).AsAsyncOperation();
-                }
+				public Windows.Foundation.IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
+				{
+					return InternalLoadMoreItemsAsync(count).AsAsyncOperation();
+				}
 
-                #endregion
-            }
+				#endregion
+			}
 
-            public struct IncrementalLoadResult<T>
-            {
-                public IList<T> NewItems { get; set; }
-                public bool HaveMore { get; set; }
-            }
+			public struct IncrementalLoadResult<T>
+			{
+				public IList<T> NewItems { get; set; }
+				public bool HaveMore { get; set; }
+			}
 
-            public class CollectionViewGroupCollectionItem : ICollectionViewGroup
-            {
+			public class CollectionViewGroupCollectionItem : ICollectionViewGroup
+			{
 
-                public static CollectionViewGroupCollectionItem Create(object group, IObservableVector<object> items)
-                {
-                    return new CollectionViewGroupCollectionItem(group, items);
-                }
+				public static CollectionViewGroupCollectionItem Create(object group, IObservableVector<object> items)
+				{
+					return new CollectionViewGroupCollectionItem(group, items);
+				}
 
-                public CollectionViewGroupCollectionItem(object group, IObservableVector<object> items)
-                {
-                    Group = group;
-                    GroupItems = items;
-                }
+				public CollectionViewGroupCollectionItem(object group, IObservableVector<object> items)
+				{
+					Group = group;
+					GroupItems = items;
+				}
 
-                public object Group { get; private set; }
-                public IObservableVector<object> GroupItems { get; private set; }
-
-
-
-            }
-
-            public abstract class CollectionViewGroupCollection<TItem> : ObservableVector<CollectionViewGroupCollectionItem>
-            {
-                public static CollectionViewGroupCollection<TItem, TGroupKey, TGroup> Create<TGroupKey, TGroup>(Func<TItem, TGroupKey> groupKeyGetter, Func<TItem, TGroup> groupFactory, Dictionary<TGroupKey, CollectionViewGroupCollectionItem> index = null)
-                {
-                    return new CollectionViewGroupCollection<TItem, TGroupKey, TGroup>(groupKeyGetter, groupFactory, index);
-
-                }
-
-                public abstract void AddItemToGroups(object item);
-
-
-                public abstract void RemoveItemFromGroups(object item);
-            }
-            public class CollectionViewGroupCollection<TItem, TGroupKey, TGroup> : CollectionViewGroupCollection<TItem>
-            {
-                public CollectionViewGroupCollection(Func<TItem, TGroupKey> groupKeyGetter, Func<TItem, TGroup> groupFactory, Dictionary<TGroupKey, CollectionViewGroupCollectionItem> index = null)
-                {
-                    _groupKeyGetter = groupKeyGetter;
-                    _groupFactory = groupFactory;
-
-                    _index = index ?? new Dictionary<TGroupKey, CollectionViewGroupCollectionItem>();
-                }
-                Func<TItem, TGroupKey> _groupKeyGetter;
-
-                Dictionary<TGroupKey, CollectionViewGroupCollectionItem> _index;
-                private Func<TItem, TGroup> _groupFactory;
-
-
-                public override void AddItemToGroups(object item)
-                {
-                    var itm = (TItem)item;
-                    var key = _groupKeyGetter(itm);
-                    CollectionViewGroupCollectionItem grp;
-                    if (!_index.TryGetValue(key, out grp))
-                    {
-                        grp = CollectionViewGroupCollectionItem.Create(_groupFactory(itm), new ObservableVector<TItem>());
-                        _index.Add(key, grp);
-                        Add(grp);
-                    }
-
-                    grp.GroupItems.Add(item);
-
-                }
-
-                public override void RemoveItemFromGroups(object item)
-                {
-                    var key = _groupKeyGetter((TItem)item);
-                    CollectionViewGroupCollectionItem grp;
-                    if (_index.TryGetValue(key, out grp))
-                    {
-                        grp.GroupItems.Remove(item);
-                        if (grp.GroupItems.Count == 0)
-                        {
-                            _index.Remove(key);
-                            Remove(grp);
-                        }
-                    }
-
-                }
-
-            }
-
-            /// <summary>
-            /// <para>ICollectionView generic implmention</para>
-            /// <para>ICollectionView 的泛型实现</para>
-            /// </summary>
-            /// <typeparam name="T"><para>Content Type</para><para>内容类型</para> </typeparam>
-            public class CollectionView<T> : ObservableVector<T>, ICollectionView
-            {
-                /// <summary>
-                /// <para>Constructor of Collection View</para>
-                /// <para>构造函数</para>
-                /// </summary>
-                /// <param name="items"><para>Initialing Items</para><para>初始内容集合</para></param>
-                /// <param name="loader"><para>increanatal loader</para><para>自增加载器</para></param>
-                public CollectionView(
-                            IEnumerable<T> items = null,
-                            CollectionViewIncrementalLoader<T> loader = null)
-                    : base(items.ToArray())
-                {
-
-                    items = items ?? new T[0];
-
-                    _loader = loader;
-                    if (loader != null)
-                    {
-                        loader.CollectionView = this;
-                    }
-
-                }
-
-                /// <summary>
-                /// <para>Constructor of Collection View</para>
-                /// <para>构造函数</para>
-                /// </summary>
-                /// <param name="items"><para>Initialing Items</para><para>初始内容集合</para></param>
-                /// <param name="groupCollection"><para>Initaling Groups</para><para>初始分组</para></param>
-                public CollectionView(
-                    IEnumerable<T> items,
-                CollectionViewGroupCollection<T> groupCollection)
-                    : base(items.ToArray())
-                {
-
-                    _group = groupCollection;
-
-
-                    if (_group != null && items != null)
-                    {
-                        foreach (var item in items)
-                        {
-                            _group.AddItemToGroups(item);
-                        }
-                    }
-                }
-                /// <summary>
-                /// <para>Insert Item</para><para>插入</para>
-                /// </summary>
-                /// <param name="index"><para>targeting index</para><para>目标索引</para></param>
-                /// <param name="item"><para> Item inserting</para><para>插入项</para></param>
-                protected override void InsertItem(int index, T item)
-                {
-                    base.InsertItem(index, item);
-                    if (_group != null)
-                    {
-                        _group.AddItemToGroups(item);
-                    }
-                }
-
-                protected override void SetItem(int index, T item)
-                {
-                    var oldItem = base.Items[index];
-                    if (_group != null)
-                    {
-                        _group.RemoveItemFromGroups(item);
-                    }
-                    base.SetItem(index, item);
-                    if (_group != null)
-                    {
-                        _group.AddItemToGroups(item);
-                    }
-                }
-                /// <summary>
-                /// <para>Clear Items</para>
-                /// <para>清除内容</para>
-                /// </summary>
-                protected override void ClearItems()
-                {
-                    base.ClearItems();
-                    if (_group != null)
-                    {
-                        _group.Clear();
-                    }
-                }
-
-                protected override void RemoveItem(int index)
-                {
-                    var olditem = base.Items[index];
-                    base.RemoveItem(index);
-
-                    if (_group != null)
-                    {
-                        _group.RemoveItemFromGroups(olditem);
-                    }
-                }
-
-                /// <summary>
-                /// <para>Incremental Loader</para>
-                /// <para>自增读取器</para>
-                /// </summary>
-                protected CollectionViewIncrementalLoader<T> _loader;
-
-                Windows.Foundation.Collections.IObservableVector<object> ThisVector { get { return this; } }
-
-                #region ICollectionView Members
-
-                private CollectionViewGroupCollection<T> _group;
-                /// <summary>
-                /// <para>Collection Groups</para>
-                /// <para>集合中的分组</para>
-                /// </summary>
-                public Windows.Foundation.Collections.IObservableVector<object> CollectionGroups
-                {
-                    get { return _group; }
-                }
-
-                /// <summary>
-                /// <para>Fired when current Item has changed</para>
-                /// <para>当前项变化后触发</para>
-                /// </summary>
-                public event EventHandler<object> CurrentChanged;
-                /// <summary>
-                /// <para>Fired when current Item is changing</para>
-                /// <para>当前项变化前触发</para>
-                /// </summary>
-                public event CurrentChangingEventHandler CurrentChanging;
-                /// <summary>
-                /// <para>Current Item </para>
-                /// <para>当前项</para 
-                /// </summary>
-                public object CurrentItem
-                {
-                    get
-                    {
-                        if (Count > _CurrentPosition && _CurrentPosition >= 0)
-                        {
-                            return Items[_CurrentPosition];
-                        }
-                        return null;
-                    }
-                }
-
-                int _CurrentPosition = 0;
-                /// <summary>
-                /// <para>Current Item Index</para><para>当前项的索引</para>
-                /// </summary>
-                public int CurrentPosition
-                {
-                    get { return _CurrentPosition; }
-                    set
-                    {
-                        _CurrentPosition = value;
-                        base.OnPropertyChanged("CurrentPosition");
-                        base.OnPropertyChanged("CurrentItem");
-                    }
-                }
-
-
-                /// <summary>
-                /// <para>Has more items can loaded by loader</para><para>是否还有更多的数据</para>
-                /// </summary>
-                public bool HasMoreItems
-                {
-                    get
-                    {
-                        if (_loader == null)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            return _loader.HasMoreItems;
-                        }
-                    }
-                }
-
-
-                /// <summary>
-                /// <para>Is Current Item is beyond  bound of collection</para><para>当前项目是否已经超出集合最大范围</para>
-                /// </summary>
-                public bool IsCurrentAfterLast
-                {
-                    get { return _CurrentPosition >= this.Count; }
-                }
-                /// <summary>
-                /// <para>Is Current Item is before  bound of collection</para><para>当前项目是否已经在集合之前</para>
-                /// </summary>
-
-                public bool IsCurrentBeforeFirst
-                {
-                    get { return _CurrentPosition < 0; }
-                }
-
-                /// <summary>
-                /// <para>Load More Items</para><para>加载更多的项</para>
-                /// </summary>
-                /// <param name="count"><para>count of items</para><para>个数</para></param>
-                /// <returns></returns>
-                public Windows.Foundation.IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
-                {
-                    if (_loader != null)
-                    {
-                        return _loader.LoadMoreItemsAsync(count);
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("this instance does not support load More Items");
-                    }
-                }
-
-                bool RaiseCurrentChangingAndReturnCanceled(object newValue)
-                {
-                    if (CurrentChanging != null)
-                    {
-                        var e = new CurrentChangingEventArgs(true);
-
-                        CurrentChanging(this, e);
-                        return e.Cancel;
-                    }
-                    return false;
-                }
-                void RaiseCurrentChanged(object newValue)
-                {
-                    if (CurrentChanged != null)
-                    {
-                        CurrentChanged(this, newValue);
-                    }
-                    base.OnPropertyChanged("CurrentItem");
-                }
-
-
-                public bool MoveCurrentToFirst()
-                {
-                    var newIndex = 0;
-                    return MoveCurrentToPosition(newIndex);
-
-                }
-
-
-
-                public bool MoveCurrentToLast()
-                {
-                    var newIndex = Count - 1;
-                    return MoveCurrentToPosition(newIndex);
-                }
-
-                public bool MoveCurrentToNext()
-                {
-                    var newIndex = CurrentPosition + 1;
-                    return MoveCurrentToPosition(newIndex);
-                }
-
-                public bool MoveCurrentToPosition(int index)
-                {
-
-                    if (Count > 0 && index >= 0 && index < Count)
-                    {
-
-                        var newVal = Items[index];
-                        if (RaiseCurrentChangingAndReturnCanceled(newVal))
-                        {
-                            CurrentPosition = index;
-                        }
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-
-                }
-
-                public bool MoveCurrentToPrevious()
-                {
-                    var newIndex = CurrentPosition - 1;
-                    return MoveCurrentToPosition(newIndex);
-                }
-
-
-
-                public bool MoveCurrentTo(object item)
-                {
-                    var index = IndexOf((T)item);
-                    return MoveCurrentToPosition(index);
-                }
-
-                #endregion
-
-            }
-
-            //public class GroupedCollectionView<TGroup, TItem> : ObservableVector<TItem>
-            //{
-            //    public GroupedCollectionView(IEnumerable<TGroup> groups, Func<IEnumerable<TGroup>, IEnumerable<TItem>> itemSelector) :
-            //        base(itemSelector(groups).ToArray())
-            //    {
-
-            //    }
-            //}
-        }
+				public object Group { get; private set; }
+				public IObservableVector<object> GroupItems { get; private set; }
+
+
+
+			}
+
+			public abstract class CollectionViewGroupCollection<TItem> : ObservableVector<CollectionViewGroupCollectionItem>
+			{
+				public static CollectionViewGroupCollection<TItem, TGroupKey, TGroup> Create<TGroupKey, TGroup>(Func<TItem, TGroupKey> groupKeyGetter, Func<TItem, TGroup> groupFactory, Dictionary<TGroupKey, CollectionViewGroupCollectionItem> index = null)
+				{
+					return new CollectionViewGroupCollection<TItem, TGroupKey, TGroup>(groupKeyGetter, groupFactory, index);
+
+				}
+
+				public abstract void AddItemToGroups(object item);
+
+
+				public abstract void RemoveItemFromGroups(object item);
+			}
+			public class CollectionViewGroupCollection<TItem, TGroupKey, TGroup> : CollectionViewGroupCollection<TItem>
+			{
+				public CollectionViewGroupCollection(Func<TItem, TGroupKey> groupKeyGetter, Func<TItem, TGroup> groupFactory, Dictionary<TGroupKey, CollectionViewGroupCollectionItem> index = null)
+				{
+					_groupKeyGetter = groupKeyGetter;
+					_groupFactory = groupFactory;
+
+					_index = index ?? new Dictionary<TGroupKey, CollectionViewGroupCollectionItem>();
+				}
+				Func<TItem, TGroupKey> _groupKeyGetter;
+
+				Dictionary<TGroupKey, CollectionViewGroupCollectionItem> _index;
+				private Func<TItem, TGroup> _groupFactory;
+
+
+				public override void AddItemToGroups(object item)
+				{
+					var itm = (TItem)item;
+					var key = _groupKeyGetter(itm);
+					CollectionViewGroupCollectionItem grp;
+					if (!_index.TryGetValue(key, out grp))
+					{
+						grp = CollectionViewGroupCollectionItem.Create(_groupFactory(itm), new ObservableVector<TItem>());
+						_index.Add(key, grp);
+						Add(grp);
+					}
+
+					grp.GroupItems.Add(item);
+
+				}
+
+				public override void RemoveItemFromGroups(object item)
+				{
+					var key = _groupKeyGetter((TItem)item);
+					CollectionViewGroupCollectionItem grp;
+					if (_index.TryGetValue(key, out grp))
+					{
+						grp.GroupItems.Remove(item);
+						if (grp.GroupItems.Count == 0)
+						{
+							_index.Remove(key);
+							Remove(grp);
+						}
+					}
+
+				}
+
+			}
+
+			/// <summary>
+			/// <para>ICollectionView generic implmention</para>
+			/// <para>ICollectionView 的泛型实现</para>
+			/// </summary>
+			/// <typeparam name="T"><para>Content Type</para><para>内容类型</para> </typeparam>
+			public class CollectionView<T> : ObservableVector<T>, ICollectionView
+			{
+				/// <summary>
+				/// <para>Constructor of Collection View</para>
+				/// <para>构造函数</para>
+				/// </summary>
+				/// <param name="items"><para>Initialing Items</para><para>初始内容集合</para></param>
+				/// <param name="loader"><para>increanatal loader</para><para>自增加载器</para></param>
+				public CollectionView(
+							IEnumerable<T> items = null,
+							CollectionViewIncrementalLoader<T> loader = null)
+					: base(items.ToArray())
+				{
+
+					items = items ?? new T[0];
+
+					_loader = loader;
+					if (loader != null)
+					{
+						loader.CollectionView = this;
+					}
+
+				}
+
+				/// <summary>
+				/// <para>Constructor of Collection View</para>
+				/// <para>构造函数</para>
+				/// </summary>
+				/// <param name="items"><para>Initialing Items</para><para>初始内容集合</para></param>
+				/// <param name="groupCollection"><para>Initaling Groups</para><para>初始分组</para></param>
+				public CollectionView(
+					IEnumerable<T> items,
+				CollectionViewGroupCollection<T> groupCollection)
+					: base(items.ToArray())
+				{
+
+					_group = groupCollection;
+
+
+					if (_group != null && items != null)
+					{
+						foreach (var item in items)
+						{
+							_group.AddItemToGroups(item);
+						}
+					}
+				}
+				/// <summary>
+				/// <para>Insert Item</para><para>插入</para>
+				/// </summary>
+				/// <param name="index"><para>targeting index</para><para>目标索引</para></param>
+				/// <param name="item"><para> Item inserting</para><para>插入项</para></param>
+				protected override void InsertItem(int index, T item)
+				{
+					base.InsertItem(index, item);
+					if (_group != null)
+					{
+						_group.AddItemToGroups(item);
+					}
+				}
+
+				protected override void SetItem(int index, T item)
+				{
+					var oldItem = base.Items[index];
+					if (_group != null)
+					{
+						_group.RemoveItemFromGroups(item);
+					}
+					base.SetItem(index, item);
+					if (_group != null)
+					{
+						_group.AddItemToGroups(item);
+					}
+				}
+				/// <summary>
+				/// <para>Clear Items</para>
+				/// <para>清除内容</para>
+				/// </summary>
+				protected override void ClearItems()
+				{
+					base.ClearItems();
+					if (_group != null)
+					{
+						_group.Clear();
+					}
+				}
+
+				protected override void RemoveItem(int index)
+				{
+					var olditem = base.Items[index];
+					base.RemoveItem(index);
+
+					if (_group != null)
+					{
+						_group.RemoveItemFromGroups(olditem);
+					}
+				}
+
+				/// <summary>
+				/// <para>Incremental Loader</para>
+				/// <para>自增读取器</para>
+				/// </summary>
+				protected CollectionViewIncrementalLoader<T> _loader;
+
+				Windows.Foundation.Collections.IObservableVector<object> ThisVector { get { return this; } }
+
+				#region ICollectionView Members
+
+				private CollectionViewGroupCollection<T> _group;
+				/// <summary>
+				/// <para>Collection Groups</para>
+				/// <para>集合中的分组</para>
+				/// </summary>
+				public Windows.Foundation.Collections.IObservableVector<object> CollectionGroups
+				{
+					get { return _group; }
+				}
+
+				/// <summary>
+				/// <para>Fired when current Item has changed</para>
+				/// <para>当前项变化后触发</para>
+				/// </summary>
+				public event EventHandler<object> CurrentChanged;
+				/// <summary>
+				/// <para>Fired when current Item is changing</para>
+				/// <para>当前项变化前触发</para>
+				/// </summary>
+				public event CurrentChangingEventHandler CurrentChanging;
+				/// <summary>
+				/// <para>Current Item </para>
+				/// <para>当前项</para 
+				/// </summary>
+				public object CurrentItem
+				{
+					get
+					{
+						if (Count > _CurrentPosition && _CurrentPosition >= 0)
+						{
+							return Items[_CurrentPosition];
+						}
+						return null;
+					}
+				}
+
+				int _CurrentPosition = 0;
+				/// <summary>
+				/// <para>Current Item Index</para><para>当前项的索引</para>
+				/// </summary>
+				public int CurrentPosition
+				{
+					get { return _CurrentPosition; }
+					set
+					{
+						_CurrentPosition = value;
+						base.OnPropertyChanged("CurrentPosition");
+						base.OnPropertyChanged("CurrentItem");
+					}
+				}
+
+
+				/// <summary>
+				/// <para>Has more items can loaded by loader</para><para>是否还有更多的数据</para>
+				/// </summary>
+				public bool HasMoreItems
+				{
+					get
+					{
+						if (_loader == null)
+						{
+							return false;
+						}
+						else
+						{
+							return _loader.HasMoreItems;
+						}
+					}
+				}
+
+
+				/// <summary>
+				/// <para>Is Current Item is beyond  bound of collection</para><para>当前项目是否已经超出集合最大范围</para>
+				/// </summary>
+				public bool IsCurrentAfterLast
+				{
+					get { return _CurrentPosition >= this.Count; }
+				}
+				/// <summary>
+				/// <para>Is Current Item is before  bound of collection</para><para>当前项目是否已经在集合之前</para>
+				/// </summary>
+
+				public bool IsCurrentBeforeFirst
+				{
+					get { return _CurrentPosition < 0; }
+				}
+
+				/// <summary>
+				/// <para>Load More Items</para><para>加载更多的项</para>
+				/// </summary>
+				/// <param name="count"><para>count of items</para><para>个数</para></param>
+				/// <returns></returns>
+				public Windows.Foundation.IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
+				{
+					if (_loader != null)
+					{
+						return _loader.LoadMoreItemsAsync(count);
+					}
+					else
+					{
+						throw new InvalidOperationException("this instance does not support load More Items");
+					}
+				}
+
+				bool RaiseCurrentChangingAndReturnCanceled(object newValue)
+				{
+					if (CurrentChanging != null)
+					{
+						var e = new CurrentChangingEventArgs(true);
+
+						CurrentChanging(this, e);
+						return e.Cancel;
+					}
+					return false;
+				}
+				void RaiseCurrentChanged(object newValue)
+				{
+					if (CurrentChanged != null)
+					{
+						CurrentChanged(this, newValue);
+					}
+					base.OnPropertyChanged("CurrentItem");
+				}
+
+
+				public bool MoveCurrentToFirst()
+				{
+					var newIndex = 0;
+					return MoveCurrentToPosition(newIndex);
+
+				}
+
+
+
+				public bool MoveCurrentToLast()
+				{
+					var newIndex = Count - 1;
+					return MoveCurrentToPosition(newIndex);
+				}
+
+				public bool MoveCurrentToNext()
+				{
+					var newIndex = CurrentPosition + 1;
+					return MoveCurrentToPosition(newIndex);
+				}
+
+				public bool MoveCurrentToPosition(int index)
+				{
+
+					if (Count > 0 && index >= 0 && index < Count)
+					{
+
+						var newVal = Items[index];
+						if (RaiseCurrentChangingAndReturnCanceled(newVal))
+						{
+							CurrentPosition = index;
+						}
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+
+				}
+
+				public bool MoveCurrentToPrevious()
+				{
+					var newIndex = CurrentPosition - 1;
+					return MoveCurrentToPosition(newIndex);
+				}
+
+
+
+				public bool MoveCurrentTo(object item)
+				{
+					var index = IndexOf((T)item);
+					return MoveCurrentToPosition(index);
+				}
+
+				#endregion
+
+			}
+
+			//public class GroupedCollectionView<TGroup, TItem> : ObservableVector<TItem>
+			//{
+			//    public GroupedCollectionView(IEnumerable<TGroup> groups, Func<IEnumerable<TGroup>, IEnumerable<TItem>> itemSelector) :
+			//        base(itemSelector(groups).ToArray())
+			//    {
+
+			//    }
+			//}
+		}
 
 #endif
 
-    }
+	}
 
 }
