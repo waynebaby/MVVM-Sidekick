@@ -17,7 +17,19 @@
         <x:String x:Key="AppName">My Application</x:String>
         <vm:$safeitemname$_Model x:Key="DesignVM"/>
     </Page.Resources>
-
+    <!--Begin App Bar Binding Patch. If you don't need Binding Top/Bottom Appbar please ignore these code -->
+    <!--
+    <Page.DataContext>
+        <Binding  RelativeSource="{RelativeSource Mode=Self}" Path="ViewModel"/>
+    </Page.DataContext>
+    <mvvm:MVVMPage.ViewModel>
+        <Binding Source="{StaticResource DesignVM}" />
+    </mvvm:MVVMPage.ViewModel>
+	<mvvm:MVVMPage.BottomAppBar>
+		<AppBar d:DataContext="{StaticResource DesignVM}"><TextBlock TextWrapping="Wrap" Text="{Binding BindableInstanceId, Mode=OneWay}"/></AppBar>
+	</mvvm:MVVMPage.BottomAppBar>    
+    -->
+    <!--End App Bar Binding Patch. If you don't need Binding  Top/Bottom Appbar please ignore these code -->
     <!--
         This grid acts as a root panel for the page that defines two rows:
         * Row 0 contains the back button and page title
