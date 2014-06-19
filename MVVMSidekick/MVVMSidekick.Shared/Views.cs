@@ -81,7 +81,26 @@ namespace MVVMSidekick
 
 		public static class ViewHelper
 		{
-			//public static readonly string DEFAULT_VM_NAME = "DesignVM";
+			public static readonly string DEFAULT_VM_NAME = "DesignVM";
+			public static object GetDefaultDesigningViewModel(this IView view)
+			{
+				var f = view as FrameworkElement;
+				object rval = null;
+#if NETFX_CORE
+				if (!f.Resources.ContainsKey(DEFAULT_VM_NAME))
+#else
+				if (!f.Resources.Contains(DEFAULT_VM_NAME))
+#endif
+				{
+					return null;
+				}
+				else
+				{
+					rval = f.Resources[DEFAULT_VM_NAME];
+				}
+				return rval;
+			}
+
 			internal static RoutedEventHandler ViewUnloadCallBack
 				= async (o, e) =>
 				{
@@ -95,6 +114,17 @@ namespace MVVMSidekick
 						}
 					}
 				};
+			internal static PropertyChangedCallback DesigningViewModelChangedCallBack
+				= (o, e) =>
+					  {
+						  var oiview = o as IView;
+						  if (Utilities.Runtime.IsInDesignMode)
+						  {
+							  oiview.ViewModel = e.NewValue as IViewModel;
+						  }
+					  };
+
+
 
 			internal static PropertyChangedCallback ViewModelChangedCallback
 				= (o, e) =>
@@ -102,6 +132,10 @@ namespace MVVMSidekick
 					dynamic item = o;
 					var oiview = o as IView;
 					var fele = (oiview.ContentObject as FrameworkElement);
+					if (fele==null)
+					{
+						return;
+					}
 					if (object.ReferenceEquals(fele.DataContext, e.NewValue))
 					{
 						return;
@@ -120,7 +154,7 @@ namespace MVVMSidekick
 
 				};
 
-			internal static FrameworkElement CheckContent(this IView control)
+			internal static FrameworkElement GetContentAndCreateIfNull(this IView control)
 			{
 				var c = (control.ContentObject as FrameworkElement);
 				if (c == null)
@@ -231,12 +265,27 @@ namespace MVVMSidekick
 				}
 			}
 
+
+
+
+			//public IViewModel DesigningViewModel
+			//{
+			//	get { return (IViewModel)GetValue(DesigningViewModelProperty); }
+			//	set { SetValue(DesigningViewModelProperty, value); }
+			//}
+
+			//// Using a DependencyProperty as the backing store for DesigningViewModel.  This enables animation, styling, binding, etc...
+			//public static readonly DependencyProperty DesigningViewModelProperty =
+			//	DependencyProperty.Register("DesigningViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, ViewHelper.DesigningViewModelChangedCallBack));
+
+
+
 			public IViewModel ViewModel
 			{
 				get
 				{
 					var rval = GetValue(ViewModelProperty) as IViewModel;
-					var c = this.CheckContent();
+					var c = this.GetContentAndCreateIfNull();
 					if (rval == null)
 					{
 
@@ -257,8 +306,11 @@ namespace MVVMSidekick
 				set
 				{
 					SetValue(ViewModelProperty, value);
-					var c = this.CheckContent();
-					c.DataContext = value;
+					var c = this.GetContentAndCreateIfNull();
+					if (!Object.ReferenceEquals(c.DataContext, value))
+					{
+						c.DataContext = value;
+					}
 
 				}
 			}
@@ -425,7 +477,15 @@ namespace MVVMSidekick
 
 
 
+			//public IViewModel DesigningViewModel
+			//{
+			//	get { return (IViewModel)GetValue(DesigningViewModelProperty); }
+			//	set { SetValue(DesigningViewModelProperty, value); }
+			//}
 
+			//// Using a DependencyProperty as the backing store for DesigningViewModel.  This enables animation, styling, binding, etc...
+			//public static readonly DependencyProperty DesigningViewModelProperty =
+			//	DependencyProperty.Register("DesigningViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null, ViewHelper.DesigningViewModelChangedCallBack));
 
 
 			public IViewModel ViewModel
@@ -433,7 +493,7 @@ namespace MVVMSidekick
 				get
 				{
 					var rval = GetValue(ViewModelProperty) as IViewModel;
-					var c = this.CheckContent();
+					var c = this.GetContentAndCreateIfNull();
 					if (rval == null)
 					{
 
@@ -455,8 +515,11 @@ namespace MVVMSidekick
 				{
 
 					SetValue(ViewModelProperty, value);
-					var c = this.CheckContent();
-					c.DataContext = value;
+					var c = this.GetContentAndCreateIfNull();
+					if (!Object.ReferenceEquals(c.DataContext, value))
+					{
+						c.DataContext = value;
+					}
 
 				}
 			}
@@ -631,35 +694,49 @@ namespace MVVMSidekick
 			}
 #endif
 
+			//public IViewModel DesigningViewModel
+			//{
+			//	get { return (IViewModel)GetValue(DesigningViewModelProperty); }
+			//	set { SetValue(DesigningViewModelProperty, value); }
+			//}
 
+			//// Using a DependencyProperty as the backing store for DesigningViewModel.  This enables animation, styling, binding, etc...
+			//public static readonly DependencyProperty DesigningViewModelProperty =
+			//	DependencyProperty.Register("DesigningViewModel", typeof(IViewModel), typeof(MVVMControl), new PropertyMetadata(null, ViewHelper.DesigningViewModelChangedCallBack));
 			public IViewModel ViewModel
 			{
 				get
 				{
-					var rval = GetValue(ViewModelProperty) as IViewModel;
-					var c = this.CheckContent();
-					if (rval == null)
+					var vm = GetValue(ViewModelProperty) as IViewModel;
+					var content = this.GetContentAndCreateIfNull();
+					if (vm == null)
 					{
 
-						rval = c.DataContext as IViewModel;
-						SetValue(ViewModelProperty, rval);
+						vm = content.DataContext as IViewModel;
+						SetValue(ViewModelProperty, vm);
 
 					}
 					else
 					{
+						IView view = this;
 
-						if (!Object.ReferenceEquals(c.DataContext, rval))
+
+						if (!Object.ReferenceEquals(content.DataContext, vm))
 						{
-							c.DataContext = rval;
+
+							content.DataContext = vm;
 						}
 					}
-					return rval;
+					return vm;
 				}
 				set
 				{
 					SetValue(ViewModelProperty, value);
-					var c = this.CheckContent();
-					c.DataContext = value;
+					var c = this.GetContentAndCreateIfNull();
+					if (!Object.ReferenceEquals(c.DataContext, value))
+					{
+						c.DataContext = value;
+					}
 
 				}
 			}

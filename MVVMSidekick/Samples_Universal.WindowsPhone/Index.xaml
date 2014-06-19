@@ -7,14 +7,22 @@
     xmlns:local="using:Samples"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:cmd="using:MVVMSidekick.Commands.EventBinding"
-    mc:Ignorable="d" xmlns:vm="using:Samples.ViewModels" >
-    <common:LayoutAwarePage.Resources >
-        <local:AppBarDataContextValueConverter x:Key="AppBarDataContextValueConverter"/>
+    xmlns:cmd="using:MVVMSidekick.Commands.EventBinding"    Background="Black" 
+    mc:Ignorable="d" xmlns:vm="using:Samples.ViewModels"  >
+    <Page.Resources >
         <vm:Index_Model x:Key="DesignVM"  />
+    </Page.Resources>
+    <!--Begin App Bar Binding Patch. If you Don't need Binding Top/Bottom Appbar please ignore these code -->
+    <Page.DataContext>
+        <Binding  RelativeSource="{RelativeSource Mode=Self}" Path="ViewModel"/>
+    </Page.DataContext>
 
-    </common:LayoutAwarePage.Resources>
-    <Grid x:Name="LayoutRoot" DataContext="{StaticResource DesignVM}"    >
+    <mvvm:MVVMPage.ViewModel>
+        <Binding Source="{StaticResource DesignVM}" />
+    </mvvm:MVVMPage.ViewModel>
+    <!--End App Bar Binding Patch. If you Don't need Binding  Top/Bottom Appbar please ignore these code -->
+
+    <Grid x:Name="LayoutRoot"  DataContext="{StaticResource DesignVM}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}" >
 
         <Grid.ColumnDefinitions>
 
@@ -43,9 +51,15 @@
         </ListBox>
 
     </Grid>
-    <!--<Page.TopAppBar >
-        <AppBar   DataContext="{Binding ViewModel, ElementName=layoutAwarePage}">
-          
-        </AppBar>
-    </Page.TopAppBar>-->
+    <Page.BottomAppBar >
+        <CommandBar IsSticky="True"   >
+            <AppBarButton Label="{Binding CommandStartCalculator.Resource}"
+            Command="{Binding CommandStartCalculator}"
+             >
+                <AppBarButton.Icon>
+                    <SymbolIcon/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
 </common:LayoutAwarePage>
