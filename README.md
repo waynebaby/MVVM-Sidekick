@@ -1,8 +1,5 @@
-      ***Warning: If you are developing WPF4 application, you need VS2012 with Update 3 or later installed， or a clean Vs2012 without any Update (not recommended)***
-> 
-> ***注意：如果您要开发WPF4程序，您需要安装 VS2012 Update 3 以上的版本， 或者卸载所有Update(不推荐)***
- 
- 
+
+
  ------------------
 
 MVVM-Sidekick
@@ -13,8 +10,7 @@ MVVM-Sidekick
 
 
 
-
-- A Modern light-weight MVVM framework based on RX and TAP await. The CORE of this framework is ViewModelBase Type which you can use it with this framework, or use it with other framework, as well.
+- MVVM-Sidekick: A Modern light-weight MVVM framework based on RX and TAP await. The CORE of this framework is ViewModelBase Type which you can use it with this framework, or use it with other framework, as well.
 > 本项目是一个基于RX与 await等新技术的轻量级MVVM框架。其核心是ViewModelBase类型，你甚至可以把它拿出去和别的框架一起使用。
 
 
@@ -26,6 +22,23 @@ MVVM-Sidekick
 > 本框架从设计开始就以Windows 8 Style App作为运行环境进行测试，野心覆盖所有XAML运行环境。
 
 
+---
+
+Resources
+=========
+
+- F.A.Q. goes [HERE]
+[HERE]:    https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/0.FAQ.md
+	>F.A.Q. 请戳 [这边]
+[这边]:  https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/0.FAQ.md
+
+- [Chinese course] provided by community  - Thanks [@黑芝麻的糊] for your contribution.
+	>[中文教程]感谢[@黑芝麻的糊] 的贡献
+
+
+[@黑芝麻的糊]: http://weibo.com/yanxiaodi1983
+[中文教程]: http://www.cnblogs.com/yanxiaodi/p/3800767.html
+[Chinese course]: http://www.cnblogs.com/yanxiaodi/p/3800767.html
 ----------
 
 
