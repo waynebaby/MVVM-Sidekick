@@ -40,6 +40,7 @@
     <None Include="..\..\README.md">
       <Link>README.md</Link>
     </None>
+    <None Include="0.FAQ.md" />
     <None Include="1.HelloWorld.md" />
     <None Include="2.ViewModels.md" />
     <None Include="3.ViewModels_2.md" />
