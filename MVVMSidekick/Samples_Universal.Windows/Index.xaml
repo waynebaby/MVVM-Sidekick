@@ -12,14 +12,14 @@
     <Page.Resources >
         <vm:Index_Model x:Key="DesignVM"  />
     </Page.Resources>
-    <!--Begin App Bar Binding Patch. If you Don't need Binding Top/Bottom Appbar please ignore these code -->
+    <!--Begin App Bar Binding Patch. If you don't need Binding Top/Bottom Appbar please ignore these code -->
     <!--<Page.DataContext>
         <Binding  RelativeSource="{RelativeSource Mode=Self}" Path="ViewModel"/>
     </Page.DataContext>
     <mvvm:MVVMPage.ViewModel>
         <Binding Source="{StaticResource DesignVM}" />
     </mvvm:MVVMPage.ViewModel>-->
-    <!--End App Bar Binding Patch. If you Don't need Binding  Top/Bottom Appbar please ignore these code -->
+    <!--End App Bar Binding Patch. If you don't need Binding  Top/Bottom Appbar please ignore these code -->
     <Grid x:Name="LayoutRoot"  DataContext="{StaticResource DesignVM}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}"   >
 
         <Grid.ColumnDefinitions>
