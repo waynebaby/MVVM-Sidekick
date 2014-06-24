@@ -41,6 +41,12 @@ Resources
 [Chinese course]: http://www.cnblogs.com/yanxiaodi/p/3800767.html
 ----------
 
+- Projects in Real-World
+[WP-ShanghaiFilmCenters]  by  [Edi_Wang]
+
+[WP-ShanghaiFilmCenters]: https://github.com/EdiWang/WP-ShanghaiFilmCenters
+[Edi_Wang]:      http://diaosbook.com/
+
 
 What make difference?
 ============
