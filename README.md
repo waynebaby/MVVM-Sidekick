@@ -8,7 +8,7 @@ MVVM-Sidekick, You play the hero, and I play cute!
 > MVVM跟班儿,你英雄酷霸,我总萌萌哒
 > ===================
 
-![MVVM-Sidekick！ You play the hero, and I play cute!](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/icon.png)
+![MVVM-Sidekick！ You play the hero, and I play cute!](https://github.com/waynebaby/MVVM-Sidekick/raw/master/MVVMSidekick/Documents/icon.png)
 
 
 - MVVM-Sidekick: A Modern light-weight MVVM framework based on RX and TAP await. The CORE of this framework is ViewModelBase Type which you can use it with this framework, or use it with other framework, as well.
