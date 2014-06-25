@@ -27,28 +27,43 @@ MVVM-Sidekick
 Resources
 =========
 
-- F.A.Q. goes [HERE]
+### F.A.Q. goes [HERE]
 [HERE]:    https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/0.FAQ.md
-	>F.A.Q. 请戳 [这边]
+>### F.A.Q. 请戳 [这边]
 [这边]:  https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/0.FAQ.md
 
-- [Chinese course] provided by community  - Thanks [@黑芝麻的糊] for your contribution.
-	>[中文教程]感谢[@黑芝麻的糊] 的贡献
+---
+###[Chinese course] provided by community  - Thanks [@黑芝麻的糊] for your contribution.
+>###[中文教程]感谢[@黑芝麻的糊] 的贡献
 
 
 [@黑芝麻的糊]: http://weibo.com/yanxiaodi1983
 [中文教程]: http://www.cnblogs.com/yanxiaodi/p/3800767.html
 [Chinese course]: http://www.cnblogs.com/yanxiaodi/p/3800767.html
 
+---
+### Projects in Real-World
+>###案例
 
-- Projects in Real-World
-    - [WP-ShanghaiFilmCenters]  by  [Edi_Wang]
+
+
+ - Open source projects
+	>开源项目
+
+   	[WP-ShanghaiFilmCenters]  by  [Edi_Wang] 		
+	>上海影城查询
+ 		
+ - Close source projects
+  	>闭源项目
+	
+	
+	[百思不得姐] by [mohoo-cc]
 
 [WP-ShanghaiFilmCenters]: https://github.com/EdiWang/WP-ShanghaiFilmCenters
 [Edi_Wang]:      http://diaosbook.com/
 
-
-
+[百思不得姐]:http://www.windowsphone.com/en-us/store/app/百思不得姐/c7725093-2b0b-4765-9df8-9214b1e3e12d
+[mohoo-cc]:http://weibo.com/mohoostudio
 
 ----------
 

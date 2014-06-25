@@ -52,6 +52,9 @@
     <Content Include="HelloWorldSample\propcmd.png" />
     <Content Include="HelloWorldSample\propvm.png" />
     <Content Include="HelloWorldSample\VSIX.png" />
+    <Content Include="icon.png" />
+    <Content Include="ViewModels\D.V.M.DesignTimePropertyValue.png" />
+    <Content Include="ViewModels\GetVmFlowChart.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Threading.Tasks">
