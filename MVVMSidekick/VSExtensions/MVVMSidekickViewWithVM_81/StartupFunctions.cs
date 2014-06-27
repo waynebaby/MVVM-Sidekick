@@ -15,7 +15,10 @@ namespace $rootnamespace$.Startups
 {
     public static partial class StartupFunctions
     {
-        public static void Config$safeitemname$()
+ 		static Action $safeitemname$Config =
+			CreateAndAddToAllConfig(Config$safeitemname$);
+
+		public static void Config$safeitemname$()
         {
             ViewModelLocator<$safeitemname$_Model>
                 .Instance
