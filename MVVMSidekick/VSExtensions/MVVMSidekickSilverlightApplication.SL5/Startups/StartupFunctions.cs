@@ -16,17 +16,28 @@ namespace $safeprojectname$.Startups
     public static partial class StartupFunctions
     {
         
-        public static void RunAllConfig()
-        {
-            typeof(StartupFunctions)
-                    .GetMethods()
-                    .Where(m => m.Name.StartsWith("Config") && m.IsStatic)
-                    .Select(                      
-                        m => m.Invoke(null, Enumerable.Empty<object>().ToArray()))
-                    .ToArray();
+      
+      	static List<Action> AllConfig ;
 
-            
-        }
+		public static Action CreateAndAddToAllConfig(this Action action)
+		{
+			if (AllConfig == null)
+			{
+				AllConfig = new List<Action>();
+			}
+			AllConfig.Add(action);
+			return action;
+		}
+		public static void RunAllConfig()
+		{
+			if (AllConfig==null) return;
+			foreach (var item in AllConfig)
+			{
+				item();
+			}
+
+		}
+
 
     }
 }
