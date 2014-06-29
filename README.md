@@ -54,6 +54,8 @@ Resources
 
    	[WP-ShanghaiFilmCenters]  by  [Edi_Wang] 		
 	>上海影城查询
+
+    Nuget search  ([Store](http://www.windowsphone.com/en-us/store/app/nuget-search/6b9ce273-d161-42aa-97bc-56e964e987c0 "Store")  [Github](https://github.com/EdiWang/WP-NuGetSearch "Github")） By [Edi_Wang] 
  		
  - Close source projects
   	>闭源项目
