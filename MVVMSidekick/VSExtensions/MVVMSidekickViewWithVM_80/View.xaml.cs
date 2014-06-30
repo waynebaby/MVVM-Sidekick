@@ -19,7 +19,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using $rootnamespace$.Common;
-using $rootnamespace$.ViewModels;
+using $rootnamespace$;
+using $rootnamespace$.ViewModels;  
 
 
 namespace $rootnamespace$

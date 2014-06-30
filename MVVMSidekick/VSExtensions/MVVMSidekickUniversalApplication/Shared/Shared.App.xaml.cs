@@ -54,7 +54,7 @@ namespace $ext_safeprojectname$
             }
 #endif
             //Init MVVM-Sidekick Navigations:
-            Startups.StartupFunctions.RunAllConfig();
+            MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
 
             Frame rootFrame = Window.Current.Content as Frame;
 
