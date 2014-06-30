@@ -35,7 +35,7 @@ namespace $safeprojectname$
             // Language display initialization
             InitializeLanguage();
 
-            StartupFunctions.RunAllConfig();
+            MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
 
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)

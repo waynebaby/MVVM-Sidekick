@@ -5,13 +5,14 @@ using MVVMSidekick.Views;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.Services;
 using MVVMSidekick.Commands;
-using $rootnamespace$.ViewModels;
+using $rootnamespace$;
+using $rootnamespace$.ViewModels;  
 using System;
 using System.Net;
 using System.Windows;
 
 
-namespace $rootnamespace$.Startups
+namespace MVVMSidekick.Startups
 {
     public static partial class StartupFunctions
     {
