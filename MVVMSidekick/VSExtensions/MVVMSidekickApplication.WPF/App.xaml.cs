@@ -22,7 +22,7 @@ namespace $safeprojectname$
     {
         static App()
         {
-            Startups.StartupFunctions.RunAllConfig(); 
+            MVVMSidekick.Startups.StartupFunctions.RunAllConfig(); 
         }
     }
 }
