@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection ;
-namespace $safeprojectname$.Startups
+namespace MVVMSidekick.Startups
 {
     public static partial class StartupFunctions
     {
