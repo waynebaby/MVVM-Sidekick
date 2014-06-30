@@ -21,7 +21,7 @@ namespace $safeprojectname$
             this.Exit += this.Application_Exit;
             this.UnhandledException += this.Application_UnhandledException;
             InitializeComponent();
-            StartupFunctions.RunAllConfig();
+            MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
         }
 
         private void Application_Startup(object sender, StartupEventArgs e) 
