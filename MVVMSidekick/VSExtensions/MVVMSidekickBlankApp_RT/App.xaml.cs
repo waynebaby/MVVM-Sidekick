@@ -45,7 +45,7 @@ namespace $safeprojectname$
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             //Init MVVM-Sidekick Navigations Here:
-            Startups.StartupFunctions.RunAllConfig();
+            MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
 
             Frame rootFrame = Window.Current.Content as Frame;
 
