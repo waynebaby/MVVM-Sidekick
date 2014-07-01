@@ -7,7 +7,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using $safeprojectname$.Resources;
-using $safeprojectname$.Startups;
+
 namespace $safeprojectname$
 {
     public partial class App : Application
