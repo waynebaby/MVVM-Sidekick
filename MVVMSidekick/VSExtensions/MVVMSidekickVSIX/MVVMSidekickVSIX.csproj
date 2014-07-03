@@ -65,15 +65,15 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickViewWithVM.WPF\bin\ItemTemplates\CSharp\1033\MVVMSidekickCViewWithVM.WPF.zip">
-      <Link>ItemTemplates\XAML\MVVMSidekickCViewWithVM.WPF.zip</Link>
+      <Link>ItemTemplates\WPF\MVVMSidekickCViewWithVM.WPF.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickViewWithVM.WPF\bin\ItemTemplates\CSharp\1033\MVVMSidekickPViewWithVM.WPF.zip">
-      <Link>ItemTemplates\XAML\MVVMSidekickPViewWithVM.WPF.zip</Link>
+      <Link>ItemTemplates\WPF\MVVMSidekickPViewWithVM.WPF.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickViewWithVM.WPF\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM.WPF.zip">
-      <Link>ItemTemplates\XAML\MVVMSidekickViewWithVM.WPF.zip</Link>
+      <Link>ItemTemplates\WPF\MVVMSidekickViewWithVM.WPF.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickViewWithVM_81\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM_81.zip">
@@ -85,11 +85,11 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickViewWithVM.SL5\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM.SL5.zip">
-      <Link>ItemTemplates\XAML\MVVMSidekickViewWithVM.SL5.zip</Link>
+      <Link>ItemTemplates\Silverlight\MVVMSidekickViewWithVM.SL5.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickViewWithVM.WP8\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM.WP8.zip">
-      <Link>ItemTemplates\XAML\MVVMSidekickViewWithVM.WP8.zip</Link>
+      <Link>ItemTemplates\Windows Phone\MVVMSidekickViewWithVM.WP8.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\MVVMSidekickSilverlightApplication.SL5\bin\ProjectTemplates\CSharp\1033\MVVMSidekickSilverlightApplication.SL5.zip">
