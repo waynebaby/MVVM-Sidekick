@@ -801,10 +801,10 @@ namespace MVVMSidekick
 				Func<TSubClassType, IValueContainer> pf;
 				if (!_plainPropertyContainerGetters.TryGetValue(colName, out pf))
 				{
-					var p = new ValueContainer<object>(colName, viewModel);		 			
-					
+					var p = new ValueContainer<object>(colName, viewModel);
+
 					Func<TSubClassType, ValueContainer<object>> tpf = _ => p;
-					//pf = tpf;
+					pf = tpf;
 					_plainPropertyContainerGetters[colName] = pf;
 					//TypeDic<object>._propertyContainerGetters[colName] = tpf;
 				}
@@ -905,9 +905,9 @@ namespace MVVMSidekick
 				}
 
 				containerGetterCreater = contPlanGetter as Func<TSubClassType, ValueContainer<TProperty>>;
-				if (containerGetterCreater==null)
+				if (containerGetterCreater == null)
 				{
-						throw new Exception("Found this  Property but it does not  return Type '" + typeof(TProperty ).Name   + "'!");
+					throw new Exception("Property '" + propertyName + "' is found but it does not match the property type '" + typeof(TProperty).Name + "'!");
 				}
 
 				return containerGetterCreater((TSubClassType)(Object)this);
