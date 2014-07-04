@@ -16,10 +16,14 @@ namespace Samples.ViewModels
 
     public class Index_Model : ViewModelBase<Index_Model>
     {
+		
+
+
 
         public static Index_Model Instance = new Index_Model();
         public Index_Model()
         {
+		
             IsDisposingWhenUnbindRequired = false;
 
         }
