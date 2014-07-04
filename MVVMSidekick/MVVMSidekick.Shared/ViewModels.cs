@@ -765,16 +765,16 @@ namespace MVVMSidekick
 				return (TSubClassType)model;
 
 			}
-			/// <summary>
-			/// <para>Type cache of container getter</para>
-			/// <para>每个属性类型独占的一个专门的类型缓存。</para>
-			/// </summary>
-			/// <typeparam name="TProperty"></typeparam>
-			protected static class TypeDic<TProperty>
-			{
-				public static Dictionary<string, Func<TSubClassType, ValueContainer<TProperty>>> _propertyContainerGetters = new Dictionary<string, Func<TSubClassType, ValueContainer<TProperty>>>();
+			///// <summary>
+			///// <para>Type cache of container getter</para>
+			///// <para>每个属性类型独占的一个专门的类型缓存。</para>
+			///// </summary>
+			///// <typeparam name="TProperty"></typeparam>
+			//protected static class TypeDic<TProperty>
+			//{
+			//	public static Dictionary<string, Func<TSubClassType, ValueContainer<TProperty>>> _propertyContainerGetters = new Dictionary<string, Func<TSubClassType, ValueContainer<TProperty>>>();
 
-			}
+			//}
 
 			/// <summary>
 			/// 根据索引获取属性值
@@ -801,9 +801,12 @@ namespace MVVMSidekick
 				Func<TSubClassType, IValueContainer> pf;
 				if (!_plainPropertyContainerGetters.TryGetValue(colName, out pf))
 				{
-					var p = new ValueContainer<object>(colName, viewModel);
-					pf = _ => p;
+					var p = new ValueContainer<object>(colName, viewModel);		 			
+					
+					Func<TSubClassType, ValueContainer<object>> tpf = _ => p;
+					//pf = tpf;
 					_plainPropertyContainerGetters[colName] = pf;
+					//TypeDic<object>._propertyContainerGetters[colName] = tpf;
 				}
 				return pf;
 			}
@@ -877,8 +880,8 @@ namespace MVVMSidekick
 			protected static Func<BindableBase, ValueContainer<TProperty>> RegisterContainerLocator<TProperty>(string propertyName, Func<TSubClassType, ValueContainer<TProperty>> getOrCreateLocatorMethod)
 			{
 
-				TypeDic<TProperty>._propertyContainerGetters[propertyName] = getOrCreateLocatorMethod;
-				_plainPropertyContainerGetters[propertyName] = (v) => getOrCreateLocatorMethod(v) as IValueContainer;
+				//TypeDic<TProperty>._propertyContainerGetters[propertyName] = getOrCreateLocatorMethod;
+				_plainPropertyContainerGetters[propertyName] = getOrCreateLocatorMethod;
 				return o => getOrCreateLocatorMethod((TSubClassType)o);
 
 
@@ -893,14 +896,21 @@ namespace MVVMSidekick
 			/// <returns>值容器</returns>
 			public ValueContainer<TProperty> GetValueContainer<TProperty>(string propertyName)
 			{
-				Func<TSubClassType, ValueContainer<TProperty>> contianerGetterCreater;
-				if (!TypeDic<TProperty>._propertyContainerGetters.TryGetValue(propertyName, out contianerGetterCreater))
+				Func<TSubClassType, ValueContainer<TProperty>> containerGetterCreater;
+				Func<TSubClassType, IValueContainer> contPlanGetter;
+				if (!_plainPropertyContainerGetters.TryGetValue(propertyName, out contPlanGetter))
 				{
 					throw new Exception("Property Not Exists!");
 
 				}
 
-				return contianerGetterCreater((TSubClassType)(Object)this);
+				containerGetterCreater = contPlanGetter as Func<TSubClassType, ValueContainer<TProperty>>;
+				if (containerGetterCreater==null)
+				{
+						throw new Exception("Found this  Property but it does not  return Type '" + typeof(TProperty ).Name   + "'!");
+				}
+
+				return containerGetterCreater((TSubClassType)(Object)this);
 
 			}
 
@@ -933,6 +943,7 @@ namespace MVVMSidekick
 					return null;
 
 				}
+
 
 				return contianerGetterCreater((TSubClassType)(Object)this);
 
