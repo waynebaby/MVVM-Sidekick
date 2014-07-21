@@ -815,9 +815,9 @@ namespace MVVMSidekick
 
 
 #if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
-            protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
-             _plainPropertyContainerGetters =
-             new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
+			protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
+			 _plainPropertyContainerGetters =
+			 new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
 #else
 
 			protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
@@ -1214,6 +1214,31 @@ namespace MVVMSidekick
 		[DataContract]
 		public abstract class DisposeGroupBase : IDisposeGroup
 		{
+			public DisposeGroupBase()
+			{
+				CreateDisposeList();
+
+						}
+
+			private void CreateDisposeList()
+			{
+				_disposeInfoList = new Lazy<List<DisposeEntry>>(() => new List<DisposeEntry>(), true);
+
+			}
+
+			[OnDeserializing]
+			private   void OnDeserializing(System.Runtime.Serialization.StreamingContext context)
+			{
+				OnDeserializingActions();
+			}
+
+			protected  virtual void OnDeserializingActions()
+			{
+
+				CreateDisposeList();
+			}
+
+
 			#region Disposing Logic/Disposing相关逻辑
 			~DisposeGroupBase()
 			{
@@ -1226,7 +1251,7 @@ namespace MVVMSidekick
 			/// <para>Logic actions need to be executed when the instance is disposing</para>
 			/// <para>销毁对象时 需要执行的操作</para>
 			/// </summary>
-			private Lazy<List<DisposeEntry>> _disposeInfoList = new Lazy<List<DisposeEntry>>(() => new List<DisposeEntry>(), true);
+			private Lazy<List<DisposeEntry>> _disposeInfoList;
 
 			public IList<DisposeEntry> DisposeInfoList { get { return _disposeInfoList.Value; } }
 
@@ -1249,7 +1274,7 @@ namespace MVVMSidekick
 			/// <param name="newAction">Disposing action/销毁操作</param>
 			public void AddDisposeAction(Action newAction, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
 			{
-
+					
 				var di = new DisposeEntry
 				{
 					CallingCodeContext = CallingCodeContext.Create(comment, caller, file, line),
@@ -1811,8 +1836,8 @@ namespace MVVMSidekick
 
 				await Dispatcher.BeginInvoke(action).Task;
 #else
-                await TaskExHelper.Yield();
-                 Dispatcher.BeginInvoke(action);
+				await TaskExHelper.Yield();
+				Dispatcher.BeginInvoke(action);
 
 #endif
 
@@ -1970,28 +1995,28 @@ namespace MVVMSidekick
 
 			}
 #elif SILVERLIGHT_5||WINDOWS_PHONE_8
-            public Dispatcher Dispatcher
-            {
-                get
-                {
-                    var current = GetCurrentViewDispatcher();
-                    if (current != null)
-                    {
-                        return current;
-                    }
-                    if (Application.Current == null)
-                    {
-                        return null;
-                    }
-                    else if (Application.Current.RootVisual == null)
-                    {
-                        return null;
-                    }
-                    else return Application.Current.RootVisual.Dispatcher;
-                }
+			public Dispatcher Dispatcher
+			{
+				get
+				{
+					var current = GetCurrentViewDispatcher();
+					if (current != null)
+					{
+						return current;
+					}
+					if (Application.Current == null)
+					{
+						return null;
+					}
+					else if (Application.Current.RootVisual == null)
+					{
+						return null;
+					}
+					else return Application.Current.RootVisual.Dispatcher;
+				}
 
 
-            }
+			}
 #endif
 		}
 
