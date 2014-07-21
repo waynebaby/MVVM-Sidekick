@@ -1227,7 +1227,7 @@ namespace MVVMSidekick
 			}
 
 			[OnDeserializing]
-			private   void OnDeserializing(System.Runtime.Serialization.StreamingContext context)
+			public   void OnDeserializing(System.Runtime.Serialization.StreamingContext context)
 			{
 				OnDeserializingActions();
 			}
