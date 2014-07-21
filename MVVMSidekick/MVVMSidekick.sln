@@ -99,9 +99,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples_WinRT81", "Samples_WinRT81\Samples_WinRT81.csproj", "{8E8E8A7C-1FC8-4F57-BE72-172E4865C729}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70F41F44-7B0A-4F65-8070-2C552D82681F}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMSidekick_Wpa81", "MVVMSidekick_Wpa81\MVVMSidekick_Wpa81.csproj", "{A9F83747-322A-44A8-86DF-44BDFDE0E0F5}"
 EndProject
@@ -669,8 +666,5 @@ Global
 		{33E88C16-3898-4E2D-933D-AB159C750F17} = {4BFB20FA-7B02-4B64-96FA-93940A4370DB}
 		{F05637F1-93B8-42B0-9AA2-FAB45EEF9A1A} = {C01F9355-8161-4C87-9CF0-4933D27929B7}
 		{9BEDDDF7-26E8-4854-884B-01691C9A7E14} = {4BFB20FA-7B02-4B64-96FA-93940A4370DB}
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
