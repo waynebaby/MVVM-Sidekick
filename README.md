@@ -52,22 +52,30 @@ Resources
  - Open source projects
 	>开源项目
 
-   	[WP-ShanghaiFilmCenters]  by  [Edi_Wang] 		
+   	- [WP-ShanghaiFilmCenters]  by  [Edi_Wang] 		
 	>上海影城查询
 
-    Nuget search  ([Store](http://www.windowsphone.com/en-us/store/app/nuget-search/6b9ce273-d161-42aa-97bc-56e964e987c0 "Store")  [Github](https://github.com/EdiWang/WP-NuGetSearch "Github")） By [Edi_Wang] 
+    - Nuget search  ([Store](http://www.windowsphone.com/en-us/store/app/nuget-search/6b9ce273-d161-42aa-97bc-56e964e987c0 "Store")  [Github](https://github.com/EdiWang/WP-NuGetSearch "Github")） By [Edi_Wang] 
+    >Nuget 搜索
+
+    - [OrangeEndless] *Universal* by  [38d285a8d928ad60]
+    >无尽的橘子
+    ([Windows Phone Store](http://www.windowsphone.com/zh-cn/store/app/%e6%97%a0%e5%b0%bd%e7%9a%84%e6%a9%98%e5%ad%90/0fb32986-2963-4d8a-878b-a143915d40bb "Windows Phone 8.1") 
+ /    [Windows Store](http://apps.microsoft.com/windows/zh-cn/app/c8caec38-257d-4c77-a6c0-e619f704118e "Windows 8.1"))
  		
  - Close source projects
-  	>闭源项目
+  	>闭源项目    	
 	
+	- [百思不得姐] by [mohoo-cc]
 	
-	[百思不得姐] by [mohoo-cc]
 
 [WP-ShanghaiFilmCenters]: https://github.com/EdiWang/WP-ShanghaiFilmCenters
 [Edi_Wang]:      http://diaosbook.com/
 
 [百思不得姐]:http://www.windowsphone.com/en-us/store/app/百思不得姐/c7725093-2b0b-4765-9df8-9214b1e3e12d
+[OrangeEndless]: https://github.com/OrangeEndless/OrangeEndless 
 [mohoo-cc]:http://weibo.com/mohoostudio
+[38d285a8d928ad60]: http://weibo.com/hengzichao 
 
 ----------
 
