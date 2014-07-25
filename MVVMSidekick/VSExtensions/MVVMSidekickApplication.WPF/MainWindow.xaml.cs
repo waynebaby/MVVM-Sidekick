@@ -5,7 +5,7 @@ using MVVMSidekick.Views;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.Services;
 using MVVMSidekick.Commands;
-using $safeprojectname$.ViewModels;
+using $rootnamespace$.ViewModels;
 using System;
 using System.Collections.Generic;
 $if$ ($targetframeworkversion$ >= 3.5)using System.Linq;
