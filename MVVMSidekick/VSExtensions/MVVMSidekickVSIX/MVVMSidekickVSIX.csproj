@@ -140,10 +140,6 @@
       <Link>Packages\Rx-Xaml.2.2.4.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick.1.3.0.0.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.3.0.0.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="..\..\Nuget\MVVM-Sidekick.Behaviors.0.3.0.0.nupkg">
       <Link>Packages\MVVM-Sidekick.Behaviors.0.3.0.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -162,6 +158,10 @@
     </Content>
     <Content Include="..\MVVMSidekickWindowsPhoneApplication.WPA81\bin\ProjectTemplates\CSharp\1033\MVVMSidekickWPA81.zip">
       <Link>ProjectTemplates\Store Apps\Windows Phone Apps\MVVMSidekickWPA81.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.3.0.2.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.3.0.2.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
