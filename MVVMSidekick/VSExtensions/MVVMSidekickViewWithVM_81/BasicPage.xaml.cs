@@ -1,5 +1,5 @@
 ﻿using $safeprojectname$.Common;
-using $safeprojectname$.ViewModels;
+using $rootnamespace$.ViewModels;
 using System.Reactive;
 using System.Reactive.Linq;
 using MVVMSidekick.ViewModels;

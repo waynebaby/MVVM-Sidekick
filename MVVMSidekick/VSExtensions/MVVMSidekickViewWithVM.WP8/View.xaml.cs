@@ -18,7 +18,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
 using $rootnamespace$;
-using $rootnamespace$.ViewModels;  
+BasicPage1_Model
 namespace $rootnamespace$
 {
     public partial class $safeitemname$ : MVVMPage
