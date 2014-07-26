@@ -66,9 +66,23 @@ Resources
  - Close source projects
   	>闭源项目    	
 	
-	- [百思不得姐] by [mohoo-cc]
-	
+	- [百思不得姐] by [mohoo-cc]     
+    - [极品写真PRO](http://www.windowsphone.com/s?appid=e4af00da-a2d4-40c2-b796-1feae655d22b)        by  [黑芝麻的糊]
+    - [极品写真](http://www.windowsphone.com/s?appid=23c54cad-14ef-4292-b658-ce2c73c59d93)           by  [黑芝麻的糊]
+    - [每日一文WP](http://www.windowsphone.com/s?appid=85a05b80-b057-4211-a125-7961836bee27)         by  [黑芝麻的糊]
+    - [Ting+](http://www.windowsphone.com/s?appid=01e3bc61-72ce-4609-a944-3a89760eaffa)             by  [黑芝麻的糊]
+    - [和谐漫画](http://www.windowsphone.com/s?appid=0ec41027-66cc-4724-9cbe-aa575d873940)           by  [黑芝麻的糊]
+    - [萌宠大全](http://www.windowsphone.com/s?appid=76767f95-0ef1-406a-a63d-33ad76734c74)           by  [黑芝麻的糊]
+    - [看图知世界](http://www.windowsphone.com/s?appid=9e34cebd-017e-40a5-8abe-b6d350ae6efb)         by  [黑芝麻的糊]
+    - [美人天下](http://www.windowsphone.com/s?appid=d0fe7a07-7a71-4902-a4a4-c0347afec51e)           by  [黑芝麻的糊]
+    - [微疯客手机助手](http://www.windowsphone.com/s?appid=86f26f7d-c4de-4a49-ac51-9ae63fc334f6)     by  [黑芝麻的糊]
+    - [酷七手机助手](http://www.windowsphone.com/s?9d22d8a7-0910-4cfb-b5e2-c2ea63ca63bc)             by  [黑芝麻的糊]
+    - [爱应用](http://www.windowsphone.com/s?bf473405-9319-44bb-a947-96e169fadbfe)                   by  [黑芝麻的糊]
+    - [掌中汇率](http://www.windowsphone.com/s?appid=84e93a20-cefb-460f-b0d9-a57689b33c10)           by  [黑芝麻的糊]
+    - [掌中汇率捐助版](http://www.windowsphone.com/s?appid=b115cbd9-4c24-4d4c-8c4b-e1881960bba5)     by  [黑芝麻的糊]
 
+	
+[黑芝麻的糊]: http://weibo.com/yanxiaodi1983
 [WP-ShanghaiFilmCenters]: https://github.com/EdiWang/WP-ShanghaiFilmCenters
 [Edi_Wang]:      http://diaosbook.com/
 
