@@ -1226,7 +1226,7 @@ namespace MVVMSidekick
 
 			}
 
-			[OnDeserializing]
+			[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly"), OnDeserializing]
 			public   void OnDeserializing(System.Runtime.Serialization.StreamingContext context)
 			{
 				OnDeserializingActions();
