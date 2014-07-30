@@ -178,9 +178,14 @@ Ping Me：
 
 [Mail]: mailto:blackshaman_wayne@hotmail.com "MSN Skype"
 
+----------------------------------
+###ChangeLog:
 
+####1.3.0.3 
 
+Fix an exception happend with Rx 2.2.5 running on Windows phone 8.1 dev preview  
 
+> 解决了个在 Winphone 8.1 开发者预览上触电的 Rx 2.2.5异常
 -----------------------------
 
 
