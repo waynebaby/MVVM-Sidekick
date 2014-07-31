@@ -59,9 +59,9 @@ Resources
     >Nuget 搜索
 
     - [OrangeEndless] *Universal* by  [38d285a8d928ad60]
-    >无尽的橘子
+    >无尽的橘子   
     ([Windows Phone Store](http://www.windowsphone.com/zh-cn/store/app/%e6%97%a0%e5%b0%bd%e7%9a%84%e6%a9%98%e5%ad%90/0fb32986-2963-4d8a-878b-a143915d40bb "Windows Phone 8.1") 
- /    [Windows Store](http://apps.microsoft.com/windows/zh-cn/app/c8caec38-257d-4c77-a6c0-e619f704118e "Windows 8.1"))
+ /    [Windows Store](http://apps.microsoft.com/windows/zh-cn/app/c8caec38-257d-4c77-a6c0-e619f704118e "Windows 8.1"))/ [Github]  (https://github.com/OrangeEndless/OrangeEndless/blob/master/LICENSE)
  		
  - Close source projects
   	>闭源项目    	
