@@ -9,7 +9,7 @@ MVVM-Sidekick
 > ===================
 >### *你作英雄炫酷霸,我在一旁萌萌哒*
 
-![MVVM-Sidekick！ You play the hero, and I play cute!](https://github.com/waynebaby/MVVM-Sidekick/raw/master/MVVMSidekick/Documents/icon.png)
+![MVVM-Sidekick！ You play the hero, and I play cute!](https://github.com/waynebaby/MVVM-Sidekick/raw/master/MVVMSidekick/Documents/hammer.png)
 
 
 - MVVM-Sidekick: A Modern light-weight MVVM framework based on RX and TAP await. The CORE of this framework is ViewModelBase Type which you can use it with this framework, or use it with other framework, as well.
@@ -75,7 +75,8 @@ Resources
     - [萌宠大全](http://www.windowsphone.com/s?appid=76767f95-0ef1-406a-a63d-33ad76734c74)           by  [黑芝麻的糊]
     - [看图知世界](http://www.windowsphone.com/s?appid=9e34cebd-017e-40a5-8abe-b6d350ae6efb)         by  [黑芝麻的糊]
     - [美人天下](http://www.windowsphone.com/s?appid=d0fe7a07-7a71-4902-a4a4-c0347afec51e)           by  [黑芝麻的糊]
-  
+    - [豆妹](http://www.windowsphone.com/s?appid=8824a04b-c1db-4d9d-9ed7-2f15fcb1ac94)            by  [黑芝麻的糊]  (2014/8/19 New!)
+    - [上海市邮编查询](http://www.windowsphone.com/s?appid=33ba84a8-64e7-4083-a97a-6bf1e540f944)  by  [Edi_Wang] 	 (2014/8/19 New!)	           
 	
 [黑芝麻的糊]: http://weibo.com/yanxiaodi1983
 [WP-ShanghaiFilmCenters]: https://github.com/EdiWang/WP-ShanghaiFilmCenters
