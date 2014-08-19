@@ -181,7 +181,7 @@ Ping Me：
 
 Fix an exception happend with Rx 2.2.5 running on Windows phone 8.1 dev preview  
 
-> 解决了个在 Winphone 8.1 开发者预览上触电的 Rx 2.2.5异常
+> 解决了一个在 Winphone 8.1 开发者预览上出现的 Rx 2.2.5异常
 -----------------------------
 
 
