@@ -47,6 +47,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Hammer.png" />
     <Content Include="HelloWorldSample\DefaultMainPage.png" />
     <Content Include="HelloWorldSample\NewProject.png" />
     <Content Include="HelloWorldSample\propcmd.png" />
