@@ -124,3 +124,7 @@ UpgradeLog*.XML
 
 
 
+/MVVMSidekick/VSExtensions/extension.vsixmanifest
+/MVVMSidekick/VSExtensions/license.rtf
+/MVVMSidekick/VSExtensions/Preview.png
+/MVVMSidekick/VSExtensions/smaller.png
