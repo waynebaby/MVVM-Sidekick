@@ -119,11 +119,9 @@ Generated_Code #added for RIA/Silverlight projects
 # Visual Studio version. Backup files are not needed, because we have git ;-)
 _UpgradeReport_Files/
 Backup*/
+*.nupkg
 UpgradeLog*.XML
 /MVVMSidekick/Nuget/MVVM-Sidekick.Behaviors/src/CodeFiles/*.*
-
-
-
 /MVVMSidekick/VSExtensions/extension.vsixmanifest
 /MVVMSidekick/VSExtensions/license.rtf
 /MVVMSidekick/VSExtensions/Preview.png
