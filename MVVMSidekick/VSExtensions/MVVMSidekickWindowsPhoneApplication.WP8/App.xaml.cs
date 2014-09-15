@@ -17,6 +17,10 @@ namespace $safeprojectname$
         /// </summary>
         /// <returns>The root frame of the Phone Application.</returns>
         public static PhoneApplicationFrame RootFrame { get; private set; }
+		public static void InitNavigationConfigurationInThisAssembly()
+		{
+			MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
+		}
 
         /// <summary>
         /// Constructor for the Application object.
@@ -35,8 +39,7 @@ namespace $safeprojectname$
             // Language display initialization
             InitializeLanguage();
 
-            MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
-
+       
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
             {
@@ -63,6 +66,7 @@ namespace $safeprojectname$
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+			InitNavigationConfigurationInThisAssembly();
         }
 
         // Code to execute when the application is activated (brought to foreground)

@@ -34,6 +34,10 @@ namespace $safeprojectname$
             this.Suspending += OnSuspending;
         }
 
+		public static void InitNavigationConfigurationInThisAssembly()
+		{
+			MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
+		}
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -49,7 +53,7 @@ namespace $safeprojectname$
             }
 #endif
             //Init MVVM-Sidekick Navigations:
-            MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
+            InitNavigationConfigurationInThisAssembly();
 
             Frame rootFrame = Window.Current.Content as Frame;
 

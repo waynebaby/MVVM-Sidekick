@@ -20,9 +20,14 @@ namespace $safeprojectname$
     /// </summary>
     public partial class App : Application
     {
-        static App()
-        {
-            MVVMSidekick.Startups.StartupFunctions.RunAllConfig(); 
-        }
+        public static void InitNavigationConfigurationInThisAssembly()
+		{
+			MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
+		}
+
+		private void Application_Startup(object sender, StartupEventArgs e)
+		{
+			InitNavigationConfigurationInThisAssembly();
+		}
     }
 }
