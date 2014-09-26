@@ -380,7 +380,7 @@ namespace MVVMSidekick
 		/// <para>值容器</para>
 		/// </summary>
 		/// <typeparam name="TProperty">Type of the property value /属性的类型</typeparam>
-		public class ValueContainer<TProperty> : IErrorInfo, IValueCanSet<TProperty>, IValueCanGet<TProperty>, IValueContainer
+		public class ValueContainer<TProperty> : IErrorInfo, IValueCanSet<TProperty>, IValueCanGet<TProperty>, IValueContainer, INotifyChanges<TProperty>
 		{
 
 
@@ -537,8 +537,10 @@ namespace MVVMSidekick
 
 
 					objectInstance.RaisePropertyChanged(lzf);
-					if (ValueChanged != null) ValueChanged(this, lzf() as ValueChangedEventArgs<TProperty>);
 
+					if (ValueChanged != null) ValueChanged(this, lzf() as ValueChangedEventArgs<TProperty>);
+					if (ValueChangedWithNameOnly != null) ValueChangedWithNameOnly(this, new PropertyChangedEventArgs(message));
+					if (ValueChangedWithNothing != null) ValueChangedWithNothing(this, EventArgs.Empty);
 				}
 			}
 
@@ -600,6 +602,12 @@ namespace MVVMSidekick
 				get { return _IsCopyToAllowed; }
 				set { _IsCopyToAllowed = value; }
 			}
+
+
+
+			public event PropertyChangedEventHandler ValueChangedWithNameOnly;
+
+			public event EventHandler ValueChangedWithNothing;
 		}
 
 
@@ -940,13 +948,45 @@ namespace MVVMSidekick
 				Func<TSubClassType, IValueContainer> contianerGetterCreater;
 				if (!_plainPropertyContainerGetters.TryGetValue(propertyName, out contianerGetterCreater))
 				{
-					return null;
-
+					this[propertyName] = null;
+					if (!_plainPropertyContainerGetters.TryGetValue(propertyName, out contianerGetterCreater))
+					{
+						throw new NotImplementedException(string.Format("Current property \"{0}\" is not implemented", propertyName));
+					}
 				}
-
-
 				return contianerGetterCreater((TSubClassType)(Object)this);
 
+			}
+
+
+			/// <summary>
+			/// 根据属性名取得多个值容器
+			/// </summary>
+			/// <param name="propertyName">属性名</param>
+			/// <returns>值容器</returns>
+			public IValueContainer[] GetValueContainers(params string[] propertyNames)
+			{
+				return propertyNames.Select(pn => GetValueContainer(pn)).ToArray();
+
+			}
+
+			/// <summary>
+			/// 根据表达式树取得多个值容器
+			/// </summary>
+			/// <typeparam name="TProperty">属性类型</typeparam>
+			/// <param name="expression">表达式树</param>
+			/// <returns>值容器</returns>
+			public IValueContainer[] GetValueContainers(params Expression<Func<TSubClassType, object>>[] expressions)
+			{
+
+				var names = expressions.Select(expression =>
+					  MVVMSidekick
+						.Utilities
+						.ExpressionHelper
+						.GetPropertyName<TSubClassType>(expression)
+					).ToArray();
+
+				return GetValueContainers(names);
 			}
 
 
@@ -1218,7 +1258,7 @@ namespace MVVMSidekick
 			{
 				CreateDisposeList();
 
-						}
+			}
 
 			private void CreateDisposeList()
 			{
@@ -1227,12 +1267,12 @@ namespace MVVMSidekick
 			}
 
 			[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly"), OnDeserializing]
-			public   void OnDeserializing(System.Runtime.Serialization.StreamingContext context)
+			public void OnDeserializing(System.Runtime.Serialization.StreamingContext context)
 			{
 				OnDeserializingActions();
 			}
 
-			protected  virtual void OnDeserializingActions()
+			protected virtual void OnDeserializingActions()
 			{
 
 				CreateDisposeList();
@@ -1274,7 +1314,7 @@ namespace MVVMSidekick
 			/// <param name="newAction">Disposing action/销毁操作</param>
 			public void AddDisposeAction(Action newAction, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
 			{
-					
+
 				var di = new DisposeEntry
 				{
 					CallingCodeContext = CallingCodeContext.Create(comment, caller, file, line),
@@ -1622,8 +1662,6 @@ namespace MVVMSidekick
 					.Subscribe(isBusy =>
 						IsUIBusy = isBusy)
 					.DisposeWith(this);
-
-
 			}
 
 
@@ -2047,7 +2085,20 @@ namespace MVVMSidekick
 			T Value { get; }
 		}
 
-		public interface IValueContainer : IErrorInfo
+
+
+		public interface INotifyChanges
+		{
+			event PropertyChangedEventHandler ValueChangedWithNameOnly;
+			event EventHandler ValueChangedWithNothing;
+
+		}
+		public interface INotifyChanges<T> : INotifyChanges
+		{
+			event EventHandler<ValueChangedEventArgs<T>> ValueChanged;
+
+		}
+		public interface IValueContainer : IErrorInfo, INotifyChanges
 		{
 			Type PropertyType { get; }
 			Object Value { get; set; }

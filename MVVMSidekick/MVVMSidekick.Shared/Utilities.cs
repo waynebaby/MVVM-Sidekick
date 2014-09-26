@@ -94,7 +94,7 @@ namespace MVVMSidekick
 #if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
  DesignerProperties.IsInDesignTool
 #elif NETFX_CORE
-                                Windows.ApplicationModel.DesignMode.DesignModeEnabled
+ Windows.ApplicationModel.DesignMode.DesignModeEnabled
 #else
  (bool)System.ComponentModel.DependencyPropertyDescriptor
                                 .FromProperty(
@@ -195,7 +195,7 @@ namespace MVVMSidekick
 				await TaskEx.Yield();
 
 #else
-                await Task.Yield();
+				await Task.Yield();
 #endif
 
 			}
@@ -206,7 +206,7 @@ namespace MVVMSidekick
 				return await TaskEx.FromResult(result);
 
 #else
-                return await Task.FromResult(result);
+				return await Task.FromResult(result);
 #endif
 
 			}
@@ -220,7 +220,7 @@ namespace MVVMSidekick
 
 #else
 
-                await Task.Delay(ms);
+				await Task.Delay(ms);
 #endif
 
 			}
@@ -232,11 +232,11 @@ namespace MVVMSidekick
 		public static class TypeInfoHelper
 		{
 #if NETFX_CORE
-            public static TypeInfo GetTypeOrTypeInfo(this Type type)
-            {
-                return type.GetTypeInfo();
+			public static TypeInfo GetTypeOrTypeInfo(this Type type)
+			{
+				return type.GetTypeInfo();
 
-            }
+			}
 #else
 			public static Type GetTypeOrTypeInfo(this Type type)
 			{
@@ -264,7 +264,7 @@ namespace MVVMSidekick
 			public static Dictionary<string, MethodInfo> GetMethodsFromCache(this Type type)
 			{
 #if NETFX_CORE
-                return ReflectInfoCache<MethodInfo>.GetCache(type, x => x.GetRuntimeMethods().ToArray());
+				return ReflectInfoCache<MethodInfo>.GetCache(type, x => x.GetRuntimeMethods().ToArray());
 #else
 				return ReflectInfoCache<MethodInfo>.GetCache(type, x => x.GetMethods());
 #endif
@@ -273,7 +273,7 @@ namespace MVVMSidekick
 			public static Dictionary<string, EventInfo> GetEventsFromCache(this Type type)
 			{
 #if NETFX_CORE
-                return ReflectInfoCache<EventInfo>.GetCache(type, x => x.GetRuntimeEvents().ToArray());
+				return ReflectInfoCache<EventInfo>.GetCache(type, x => x.GetRuntimeEvents().ToArray());
 #else
 				return ReflectInfoCache<EventInfo>.GetCache(type, x => x.GetEvents());
 #endif
@@ -339,20 +339,20 @@ namespace MVVMSidekick
 											   );
 
 #if NETFX_CORE ||WINDOWS_PHONE_8
-                            var etmodule = sender.GetType().GetTypeOrTypeInfo().Module;
-                            try
-                            {
-                                return DoNetEventBind(sender, ei, newHandler);
-                            }
-                            catch (InvalidOperationException ex)
-                            {
-                                var newMI = WinRTEventBindMethodInfo.MakeGenericMethod(newHandler.GetType());
+							var etmodule = sender.GetType().GetTypeOrTypeInfo().Module;
+							try
+							{
+								return DoNetEventBind(sender, ei, newHandler);
+							}
+							catch (InvalidOperationException ex)
+							{
+								var newMI = WinRTEventBindMethodInfo.MakeGenericMethod(newHandler.GetType());
 
-                                var rval = newMI.Invoke(null, new object[] { sender, ei, newHandler }) as IDisposable;
+								var rval = newMI.Invoke(null, new object[] { sender, ei, newHandler }) as IDisposable;
 
 
-                                return rval;
-                            }
+								return rval;
+							}
 
 
 #else
@@ -374,37 +374,37 @@ namespace MVVMSidekick
 
 
 #if NETFX_CORE||WINDOWS_PHONE_8
-            static MethodInfo WinRTEventBindMethodInfo = typeof(EventHandlerHelper).GetTypeInfo().GetDeclaredMethod("WinRTEventBind");
-            private static IDisposable WinRTEventBind<THandler>(object sender, EventInfo ei, object handler)
-            {
-                System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken tk = default(System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken);
+			static MethodInfo WinRTEventBindMethodInfo = typeof(EventHandlerHelper).GetTypeInfo().GetDeclaredMethod("WinRTEventBind");
+			private static IDisposable WinRTEventBind<THandler>(object sender, EventInfo ei, object handler)
+			{
+				System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken tk = default(System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken);
 
-                Action<System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken> remove
-                    = et =>
-                    {
-                        ei.RemoveMethod.Invoke(sender, new object[] { et });
-                    };
+				Action<System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken> remove
+					= et =>
+					{
+						ei.RemoveMethod.Invoke(sender, new object[] { et });
+					};
 
-                System.Runtime.InteropServices.WindowsRuntime.WindowsRuntimeMarshal.AddEventHandler<THandler>(
-                    ev =>
-                    {
-                        tk = (System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken)ei.AddMethod.Invoke(sender, new object[] { ev });
-                        return tk;
-                    },
-                    remove,
-                    (THandler)handler);
+				System.Runtime.InteropServices.WindowsRuntime.WindowsRuntimeMarshal.AddEventHandler<THandler>(
+					ev =>
+					{
+						tk = (System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken)ei.AddMethod.Invoke(sender, new object[] { ev });
+						return tk;
+					},
+					remove,
+					(THandler)handler);
 
-                return  Disposable.Create(() =>
-                    {
-                        System.Runtime.InteropServices.WindowsRuntime.WindowsRuntimeMarshal.RemoveEventHandler<THandler>(
-                           remove,
-                        (THandler)handler);
+				return Disposable.Create(() =>
+					{
+						System.Runtime.InteropServices.WindowsRuntime.WindowsRuntimeMarshal.RemoveEventHandler<THandler>(
+						   remove,
+						(THandler)handler);
 
 
-                    }
-                );
+					}
+				);
 
-            }
+			}
 #endif
 			private static IDisposable DoNetEventBind(object sender, EventInfo ei, Delegate newHandler)
 			{
@@ -505,7 +505,7 @@ namespace MVVMSidekick
 				else
 				{
 
-					throw new Exception();
+					throw new InvalidOperationException("The expression inputed should be like \"x=>x.PropertyName\" but currently is not:" + expression.ToString());
 				}
 
 			}
@@ -594,7 +594,7 @@ namespace MVVMSidekick
 			{
 
 #if NETFX_CORE
-                await ThreadPool.RunAsync((_1) =>
+				await ThreadPool.RunAsync((_1) =>
 #else
 				await TaskExHelper.Yield();
 				ThreadPool.QueueUserWorkItem(_ =>
@@ -634,7 +634,7 @@ namespace MVVMSidekick
 						finally { _currentThreadIsProcessingItems = false; }
 
 #if NETFX_CORE
-                    });
+					});
 #else
 
 					}, null);
