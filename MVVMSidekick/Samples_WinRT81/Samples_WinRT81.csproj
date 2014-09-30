@@ -247,7 +247,7 @@
     </Reference>
     <Reference Include="MVVMSidekick_Metro, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.3.0.3\lib\win8\MVVMSidekick_Metro.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.3.20140906.16302610\lib\win8\MVVMSidekick_Metro.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
