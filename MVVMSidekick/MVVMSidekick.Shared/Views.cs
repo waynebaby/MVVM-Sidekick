@@ -166,7 +166,7 @@ namespace MVVMSidekick
 
 			public static void SelfClose(this IView view)
 			{
-				view.ViewModel = null;
+			
 				if (view is UserControl || view is Page)
 				{
 					var viewElement = view as FrameworkElement;
@@ -208,7 +208,7 @@ namespace MVVMSidekick
 				}
 #endif
 
-
+			
 			}
 
 		}
@@ -584,14 +584,7 @@ namespace MVVMSidekick
 				get { return ViewType.Page; }
 			}
 
-			public void Dispose()
-			{
-
-				this.SelfClose();
-
-
-			}
-
+	
 
 
 		}

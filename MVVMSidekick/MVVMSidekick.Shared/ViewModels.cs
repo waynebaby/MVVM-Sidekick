@@ -1521,7 +1521,7 @@ namespace MVVMSidekick
 			Task WaitForClose(Action closingCallback = null);
 			bool IsUIBusy { get; }
 			bool HaveReturnValue { get; }
-			void Close();
+			void CloseViewAndDispose();
 			MVVMSidekick.Views.StageManager StageManager { get; set; }
 			Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true);
 
@@ -1853,13 +1853,14 @@ namespace MVVMSidekick
 
 				await t.Task;
 			}
-			public void Close()
+			public void CloseViewAndDispose()
 			{
 				if (StageManager != null)
 				{
 
 					this.StageManager.CurrentBindingView.SelfClose();
 				}
+				Dispose();
 			}
 
 
