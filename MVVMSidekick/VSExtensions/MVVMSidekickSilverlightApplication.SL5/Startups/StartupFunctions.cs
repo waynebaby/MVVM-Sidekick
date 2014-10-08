@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Reflection ;
 namespace MVVMSidekick.Startups
 {
-    public static partial class StartupFunctions
+    internal static partial class StartupFunctions
     {
         
       

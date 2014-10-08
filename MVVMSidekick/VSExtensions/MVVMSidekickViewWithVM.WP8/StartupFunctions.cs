@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace MVVMSidekick.Startups
 {
-    public static partial class StartupFunctions
+    internal static partial class StartupFunctions
     {
 		static Action $safeitemname$Config =
 			CreateAndAddToAllConfig(Config$safeitemname$);
