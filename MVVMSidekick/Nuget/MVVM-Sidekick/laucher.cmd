@@ -3,7 +3,7 @@ set sver=%time%
 set "sver=%sver::=%"
 set "sver=%sver:.=%"
 
-set bver=%~t0
+set bver=%date%
 set "bver=%bver::=%"
 set "bver=%bver:/=%"
 set "bver=%bver:.=%"
