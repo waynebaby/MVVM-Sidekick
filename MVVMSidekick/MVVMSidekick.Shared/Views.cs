@@ -132,7 +132,7 @@ namespace MVVMSidekick
 					dynamic item = o;
 					var oiview = o as IView;
 					var fele = (oiview.ContentObject as FrameworkElement);
-					if (fele==null)
+					if (fele == null)
 					{
 						return;
 					}
@@ -166,7 +166,7 @@ namespace MVVMSidekick
 
 			public static void SelfClose(this IView view)
 			{
-			
+
 				if (view is UserControl || view is Page)
 				{
 					var viewElement = view as FrameworkElement;
@@ -208,7 +208,7 @@ namespace MVVMSidekick
 				}
 #endif
 
-			
+
 			}
 
 		}
@@ -221,6 +221,19 @@ namespace MVVMSidekick
 				: this(null)
 			{
 			}
+
+
+
+			public bool IsAutoOwnerSetNeeded
+			{
+				get { return (bool)GetValue(IsAutoOwnerSetNeededProperty); }
+				set { SetValue(IsAutoOwnerSetNeededProperty, value); }
+			}
+
+			// Using a DependencyProperty as the backing store for IsAutoOwnerSetNeeded.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty IsAutoOwnerSetNeededProperty =
+				DependencyProperty.Register("IsAutoOwnerSetNeeded", typeof(bool), typeof(MVVMWindow), new PropertyMetadata(true));
+
 
 
 			public MVVMWindow(IViewModel viewModel)
@@ -584,7 +597,7 @@ namespace MVVMSidekick
 				get { return ViewType.Page; }
 			}
 
-	
+
 
 
 		}
@@ -1589,19 +1602,22 @@ Please check startup function of this mapping is well configured and be proper c
 					}
 				}
 #if WPF
-				else if (view is Window)
+				else if (view is MVVMWindow)
 				{
-					var viewWindow = view as Window;
-					viewWindow.HorizontalAlignment = HorizontalAlignment.Center;
-					viewWindow.VerticalAlignment = VerticalAlignment.Center;
+					var viewWindow = view as MVVMWindow;
+
+					//viewWindow.HorizontalAlignment = HorizontalAlignment.Center;
+					//viewWindow.VerticalAlignment = VerticalAlignment.Center;
 					var targetWindow = target as Window;
 					if (targetWindow == null)
 					{
 						targetWindow = sourceVM.StageManager.CurrentBindingView as Window;
 
 					}
-
-					viewWindow.Owner = targetWindow;
+					if (viewWindow.IsAutoOwnerSetNeeded)
+					{
+						viewWindow.Owner = targetWindow;
+					}	  
 					viewWindow.Show();
 
 				}
