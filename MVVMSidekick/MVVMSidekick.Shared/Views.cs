@@ -1259,33 +1259,33 @@ namespace MVVMSidekick
             }
 
 
-            public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
-                where TTarget : class,IViewModel<TResult>
-            {
+			//public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
+			//	where TTarget : class,IViewModel<TResult>
+			//{
 
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
+			//	var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
 
-                Tuple<Uri, Func<IView>> uriData;
-                if ((uriData = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
-                {
-                    Frame frame;
-                    if ((frame = Target as Frame) != null)
-                    {
-                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
+			//	Tuple<Uri, Func<IView>> uriData;
+			//	if ((uriData = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
+			//	{
+			//		Frame frame;
+			//		if ((frame = Target as Frame) != null)
+			//		{
+			//			targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
 
-                        return await targetViewModel.WaitForCloseWithResult();
-                    }
-                    else
-                    {
-                        item = uriData.Item2();
-                    }
-                }
-                IView view = item as IView;
-                targetViewModel = targetViewModel ?? view.ViewModel as TTarget;		
-                SetVMAfterLoad(targetViewModel, view);								
-                InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-                return await targetViewModel.WaitForCloseWithResult();
-            }
+			//			return await targetViewModel.WaitForCloseWithResult();
+			//		}
+			//		else
+			//		{
+			//			item = uriData.Item2();
+			//		}
+			//	}
+			//	IView view = item as IView;
+			//	targetViewModel = targetViewModel ?? view.ViewModel as TTarget;		
+			//	SetVMAfterLoad(targetViewModel, view);								
+			//	InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+			//	return await targetViewModel.WaitForCloseWithResult();
+			//}
 
             private async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Tuple<Uri, Func<IView>> uriData, Frame frame) where TTarget : class,IViewModel
             {
@@ -1357,36 +1357,36 @@ namespace MVVMSidekick
 
 
 
-            public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-                where TTarget : class,IViewModel
-            {
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-                Tuple<Uri, Func<IView>> uriData;
-                if ((uriData = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
-                {
-                    Frame frame;
-                    if ((frame = Target as Frame) != null)
-                    {
-                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
+			//public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
+			//	where TTarget : class,IViewModel
+			//{
+			//	var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
+			//	Tuple<Uri, Func<IView>> uriData;
+			//	if ((uriData = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
+			//	{
+			//		Frame frame;
+			//		if ((frame = Target as Frame) != null)
+			//		{
+			//			targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
 
-                        return new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel };
+			//			return new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel };
 
-                    }
-                    else
-                    {
-                        item = uriData.Item2();
+			//		}
+			//		else
+			//		{
+			//			item = uriData.Item2();
 
-                    }
-                }
+			//		}
+			//	}
 
 
-                IView view = item as IView;
-                targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                SetVMAfterLoad(targetViewModel, view);
-                InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-                var tr = targetViewModel.WaitForClose();
-                return new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel };
-            }
+			//	IView view = item as IView;
+			//	targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+			//	SetVMAfterLoad(targetViewModel, view);
+			//	InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+			//	var tr = targetViewModel.WaitForClose();
+			//	return new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel };
+			//}
 
 #endif
 
