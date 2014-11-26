@@ -295,10 +295,10 @@ namespace MVVMSidekick
 			/// <param name="item">IDisposable Inastance/IDisposable实例</param>
 			/// <param name="vm">Model instance /Model 实例</param>
 			/// <returns></returns>
-			public static T DisposeWith<T>(this T item, IDisposeGroup tg, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
+			public static T DisposeWith<T>(this T item, IDisposeGroup tg, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
 			{
 
-				tg.AddDisposable(item, comment, caller, file, line);
+				tg.AddDisposable(item, needCheckInFinalizer, comment, caller, file, line);
 				return item;
 
 
@@ -1214,7 +1214,7 @@ namespace MVVMSidekick
 			/// <param name="member"></param>
 			/// <param name="file"></param>
 			/// <param name="line"></param>
-			void AddDisposable(IDisposable item, string comment = "", string member = "", string file = "", int line = -1);
+			void AddDisposable(IDisposable item, bool needCheckInFinalizer = false, string comment = "", string member = "", string file = "", int line = -1);
 
 			/// <summary>
 			/// 增加一个Dispose的时候需要做的操作
@@ -1224,7 +1224,7 @@ namespace MVVMSidekick
 			/// <param name="member"></param>
 			/// <param name="file"></param>
 			/// <param name="line"></param>
-			void AddDisposeAction(Action action, string comment = "", string member = "", string file = "", int line = -1);
+			void AddDisposeAction(Action action, bool needCheckInFinalizer = false, string comment = "", string member = "", string file = "", int line = -1);
 
 
 			IList<DisposeEntry> DisposeInfoList { get; }
@@ -1312,13 +1312,14 @@ namespace MVVMSidekick
 			/// <para>注册一个销毁对象时需要执行的操作</para>
 			/// </summary>
 			/// <param name="newAction">Disposing action/销毁操作</param>
-			public void AddDisposeAction(Action newAction, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
+			public void AddDisposeAction(Action newAction, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
 			{
 
 				var di = new DisposeEntry
 				{
 					CallingCodeContext = CallingCodeContext.Create(comment, caller, file, line),
-					Action = newAction
+					Action = newAction,
+					IsNeedCheckOnFinalizer = needCheckInFinalizer
 
 				};
 				_disposeInfoList.Value.Add(di);
@@ -1331,9 +1332,9 @@ namespace MVVMSidekick
 			/// <para>销毁对象时 需要一起销毁的对象</para>
 			/// </summary>
 			/// <param name="item">disposable object/需要一起销毁的对象</param>
-			public void AddDisposable(IDisposable item, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1)
+			public void AddDisposable(IDisposable item, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1)
 			{
-				AddDisposeAction(() => item.Dispose(), comment, caller, file, line);
+				AddDisposeAction(() => item.Dispose(), needCheckInFinalizer, comment, caller, file, line);
 			}
 
 
@@ -1367,7 +1368,12 @@ namespace MVVMSidekick
 									{
 										DisposingEntry(this, ea);
 									}
-									info.Action();
+									if (disposing || info.IsNeedCheckOnFinalizer)
+									{
+										info.Action();
+									}
+
+
 								}
 								catch (Exception ex)
 								{
@@ -1395,10 +1401,7 @@ namespace MVVMSidekick
 				}
 
 				_disposeInfoList = null;
-				if (disposing)
-				{
 
-				}
 			}
 
 
@@ -1438,6 +1441,11 @@ namespace MVVMSidekick
 			///  <para>执行代码上下文</para> 
 			/// </summary>
 			public CallingCodeContext CallingCodeContext { get; set; }
+
+			/// <summary>
+			/// 是否为托管资源，需要在析构器强制检查
+			/// </summary>
+			public bool IsNeedCheckOnFinalizer { get; set; }
 
 			/// <summary>
 			///  <para>Exception thrown in this dispose action execution .</para>

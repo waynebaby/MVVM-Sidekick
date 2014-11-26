@@ -78,9 +78,8 @@
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="MVVMSidekick.Behaviors_SL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.3.20141013.20294968\lib\sl50\MVVMSidekick.Behaviors_SL.dll</HintPath>
+    <Reference Include="MVVMSidekick.Behaviors_SL">
+      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.3.20141126.13073127\lib\sl50\MVVMSidekick.Behaviors_SL.dll</HintPath>
     </Reference>
     <Reference Include="MVVMSidekick_Sl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

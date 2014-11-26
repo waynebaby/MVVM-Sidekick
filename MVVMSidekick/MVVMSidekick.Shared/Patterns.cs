@@ -154,37 +154,41 @@ namespace MVVMSidekick
 				GC.SuppressFinalize(this);
 			}
 
-			virtual protected  void Dispose(bool disposing)
+			virtual protected void Dispose(bool disposing)
 			{
-				var v = Interlocked.Exchange(ref _Disposed, 1);
-				if (v == 0)
+				if (disposing)
 				{
-					try
+					var v = Interlocked.Exchange(ref _Disposed, 1);
+					if (v == 0)
 					{
-						if (_disposeAction != null)
+						try
 						{
-							_disposeAction(this as TSubType);
+							if (_disposeAction != null)
+							{
+								_disposeAction(this as TSubType);
+
+							}
+						}
+						catch (Exception ex)
+						{
+							Debug.WriteLine(ex);
+						}
+						finally
+						{
+							_disposeAction = null;
 
 						}
-					}
-					catch (Exception ex)
-					{
-						Debug.WriteLine(ex);
-					}
-					finally
-					{
 						_disposeAction = null;
-
+						_bindingAction = null;
 					}
-					_disposeAction = null;
-					_bindingAction = null;
 				}
-
 			}
 
 
 
 			#endregion
+
+		
 		}
 
 		namespace ItemsAndSelection
