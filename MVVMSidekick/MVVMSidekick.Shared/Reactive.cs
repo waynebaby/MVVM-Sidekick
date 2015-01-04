@@ -87,15 +87,15 @@ namespace MVVMSidekick
 			/// </summary>
 			/// <typeparam name="T">Sequence Value Type</typeparam>
 			/// <param name="sequence">value sequence</param>
-			/// <param name="eventRounter"> target </param>
+			/// <param name="eventRouter"> target </param>
 			/// <param name="source">value source</param>
 			/// <param name="registerName">log name</param>
 			/// <returns>same value sequence inputed</returns>
-			public static IObservable<T> DoNotifyEventRouter<T>(this IObservable<T> sequence, EventRouter eventRounter, object source = null, [CallerMemberName] string registerName = null)
+			public static IObservable<T> DoNotifyEventRouter<T>(this IObservable<T> sequence, EventRouter eventRouter, object source = null, [CallerMemberName] string registerName = null)
 			{
 				return
 					sequence.Do(
-							v => eventRounter.RaiseEvent(source, v, registerName)
+							v => eventRouter.RaiseEvent(source, v, registerName)
 
 						);
 

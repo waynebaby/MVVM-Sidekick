@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : MVVMSidekick_Wp8
+// Author           : waywa
+// Created          : 05-17-2014
+//
+// Last Modified By : waywa
+// Last Modified On : 01-04-2015
+// ***********************************************************************
+// <copyright file="Patterns.cs" company="">
+//     Copyright ©  2012
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,12 +77,22 @@ using System.Windows.Data;
 using System.Windows.Controls.Primitives;
 #endif
 
+/// <summary>
+/// The MVVMSidekick namespace.
+/// </summary>
 namespace MVVMSidekick
 {
 
+	/// <summary>
+	/// The Patterns namespace.
+	/// </summary>
 	namespace Patterns
 	{
 
+		/// <summary>
+		/// Class ElementBinderBase.
+		/// </summary>
+		/// <typeparam name="TService">The type of the t service.</typeparam>
 		public class ElementBinderBase<TSubType> : DependencyObject, IDisposable where
 			TSubType : ElementBinderBase<TSubType>
 		{

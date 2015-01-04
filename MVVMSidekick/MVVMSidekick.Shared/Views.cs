@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : MVVMSidekick_Wp8
+// Author           : waywa
+// Created          : 05-17-2014
+//
+// Last Modified By : waywa
+// Last Modified On : 01-04-2015
+// ***********************************************************************
+// <copyright file="Views.cs" company="">
+//     Copyright ©  2012
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,6 +74,9 @@ using System.Windows.Controls.Primitives;
 #endif
 
 #if (! WPF) && (! NETFX_CORE)
+/// <summary>
+/// The Windows namespace.
+/// </summary>
 namespace System.Windows
 {
 
@@ -72,16 +88,33 @@ namespace System.Windows
 
 #endif
 
+/// <summary>
+/// The MVVMSidekick namespace.
+/// </summary>
 namespace MVVMSidekick
 {
 
+	/// <summary>
+	/// The Views namespace.
+	/// </summary>
 	namespace Views
 	{
 
 
+		/// <summary>
+		/// Class ViewHelper.
+		/// </summary>
 		public static class ViewHelper
 		{
+			/// <summary>
+			/// The defaul t_ v m_ name
+			/// </summary>
 			public static readonly string DEFAULT_VM_NAME = "DesignVM";
+			/// <summary>
+			/// Gets the default designing view model.
+			/// </summary>
+			/// <param name="view">The view.</param>
+			/// <returns>System.Object.</returns>
 			public static object GetDefaultDesigningViewModel(this IView view)
 			{
 				var f = view as FrameworkElement;
@@ -101,6 +134,9 @@ namespace MVVMSidekick
 				return rval;
 			}
 
+			/// <summary>
+			/// The view unload call back
+			/// </summary>
 			internal static RoutedEventHandler ViewUnloadCallBack
 				= async (o, e) =>
 				{
@@ -114,6 +150,9 @@ namespace MVVMSidekick
 						}
 					}
 				};
+			/// <summary>
+			/// The designing view model changed call back
+			/// </summary>
 			internal static PropertyChangedCallback DesigningViewModelChangedCallBack
 				= (o, e) =>
 					  {
@@ -126,6 +165,9 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// The view model changed callback
+			/// </summary>
 			internal static PropertyChangedCallback ViewModelChangedCallback
 				= (o, e) =>
 				{
@@ -154,6 +196,11 @@ namespace MVVMSidekick
 
 				};
 
+			/// <summary>
+			/// Gets the content and create if null.
+			/// </summary>
+			/// <param name="control">The control.</param>
+			/// <returns>FrameworkElement.</returns>
 			internal static FrameworkElement GetContentAndCreateIfNull(this IView control)
 			{
 				var c = (control.ContentObject as FrameworkElement);
@@ -164,6 +211,10 @@ namespace MVVMSidekick
 				return c;
 			}
 
+			/// <summary>
+			/// Selfs the close.
+			/// </summary>
+			/// <param name="view">The view.</param>
 			public static void SelfClose(this IView view)
 			{
 
@@ -351,6 +402,9 @@ namespace MVVMSidekick
 #endif
 
 #if WINDOWS_PHONE_7||WINDOWS_PHONE_8
+		/// <summary>
+		/// Class MVVMPage.
+		/// </summary>
         public partial class MVVMPage : PhoneApplicationPage, IView
 #else
 		public class MVVMPage : Page, IView
@@ -359,6 +413,9 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="MVVMPage"/> class.
+			/// </summary>
 			public MVVMPage()
 				: this(null)
 			{
@@ -391,6 +448,10 @@ namespace MVVMSidekick
 			}
 #endif
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="MVVMPage"/> class.
+			/// </summary>
+			/// <param name="viewModel">The view model.</param>
 			public MVVMPage(IViewModel viewModel)
 			{
 				ViewModel = viewModel;
@@ -410,6 +471,10 @@ namespace MVVMSidekick
 
 #if ! WPF
 			//WPF Pages' Content are objects but others are FE .
+			/// <summary>
+			/// Gets or sets the content object.
+			/// </summary>
+			/// <value>The content object.</value>
 			public object ContentObject
 			{
 				get { return Content; }
@@ -417,9 +482,16 @@ namespace MVVMSidekick
 
 			}
 
+			/// <summary>
+			/// The is loaded
+			/// </summary>
 			bool IsLoaded = false;
 
 			//WPF navigates page instances but other navgates with parameters
+			/// <summary>
+			/// Handles the <see cref="E:NavigatedTo" /> event.
+			/// </summary>
+			/// <param name="e">The <see cref="NavigationEventArgs"/> instance containing the event data.</param>
 			protected override void OnNavigatedTo(NavigationEventArgs e)
 			{
 
@@ -452,6 +524,10 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Handles the <see cref="E:NavigatedFrom" /> event.
+			/// </summary>
+			/// <param name="e">The <see cref="NavigationEventArgs"/> instance containing the event data.</param>
 			protected override void OnNavigatedFrom(NavigationEventArgs e)
 			{
 				base.OnNavigatedFrom(e);
@@ -501,6 +577,10 @@ namespace MVVMSidekick
 			//	DependencyProperty.Register("DesigningViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null, ViewHelper.DesigningViewModelChangedCallBack));
 
 
+			/// <summary>
+			/// Gets or sets the view model.
+			/// </summary>
+			/// <value>The view model.</value>
 			public IViewModel ViewModel
 			{
 				get
@@ -538,6 +618,9 @@ namespace MVVMSidekick
 			}
 
 			// Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
+			/// <summary>
+			/// The view model property
+			/// </summary>
 			public static readonly DependencyProperty ViewModelProperty =
 				DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMPage), new PropertyMetadata(null,
 					(o, e) =>
@@ -592,6 +675,10 @@ namespace MVVMSidekick
 #endif
 
 
+			/// <summary>
+			/// Gets the type of the view.
+			/// </summary>
+			/// <value>The type of the view.</value>
 			public ViewType ViewType
 			{
 				get { return ViewType.Page; }
@@ -604,9 +691,15 @@ namespace MVVMSidekick
 
 
 
+		/// <summary>
+		/// Class MVVMControl.
+		/// </summary>
 		public class MVVMControl : UserControl, IView
 		{
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="MVVMControl"/> class.
+			/// </summary>
 			public MVVMControl()
 				: this(null)
 			{
@@ -614,6 +707,10 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="MVVMControl"/> class.
+			/// </summary>
+			/// <param name="viewModel">The view model.</param>
 			public MVVMControl(IViewModel viewModel)
 			{
 
@@ -647,6 +744,10 @@ namespace MVVMSidekick
 				};
 			}
 #if !WPF
+			/// <summary>
+			/// Gets or sets the content object.
+			/// </summary>
+			/// <value>The content object.</value>
 			public object ContentObject
 			{
 				get { return Content; }
@@ -709,6 +810,10 @@ namespace MVVMSidekick
 			//// Using a DependencyProperty as the backing store for DesigningViewModel.  This enables animation, styling, binding, etc...
 			//public static readonly DependencyProperty DesigningViewModelProperty =
 			//	DependencyProperty.Register("DesigningViewModel", typeof(IViewModel), typeof(MVVMControl), new PropertyMetadata(null, ViewHelper.DesigningViewModelChangedCallBack));
+			/// <summary>
+			/// Gets or sets the view model.
+			/// </summary>
+			/// <value>The view model.</value>
 			public IViewModel ViewModel
 			{
 				get
@@ -748,10 +853,17 @@ namespace MVVMSidekick
 			}
 
 			// Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
+			/// <summary>
+			/// The view model property
+			/// </summary>
 			public static readonly DependencyProperty ViewModelProperty =
 				DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMControl), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
 
 
+			/// <summary>
+			/// Gets the type of the view.
+			/// </summary>
+			/// <value>The type of the view.</value>
 			public ViewType ViewType
 			{
 				get { return ViewType.Control; }
@@ -760,33 +872,77 @@ namespace MVVMSidekick
 		}
 		public enum ViewType
 		{
+			/// <summary>
+			/// The page
+			/// </summary>
 			Page,
+			/// <summary>
+			/// The window
+			/// </summary>
 			Window,
+			/// <summary>
+			/// The control
+			/// </summary>
 			Control
 		}
 
+		/// <summary>
+		/// Interface IView
+		/// </summary>
 		public interface IView
 		{
+			/// <summary>
+			/// Gets or sets the view model.
+			/// </summary>
+			/// <value>The view model.</value>
 			IViewModel ViewModel { get; set; }
 
+			/// <summary>
+			/// Gets the type of the view.
+			/// </summary>
+			/// <value>The type of the view.</value>
 			ViewType ViewType { get; }
 
+			/// <summary>
+			/// Gets or sets the content object.
+			/// </summary>
+			/// <value>The content object.</value>
 			Object ContentObject { get; set; }
 
+			/// <summary>
+			/// Gets the parent.
+			/// </summary>
+			/// <value>The parent.</value>
 			DependencyObject Parent { get; }
 
 		}
 
 
+		/// <summary>
+		/// Interface IView
+		/// </summary>
+		/// <typeparam name="TViewModel">The type of the t view model.</typeparam>
 		public interface IView<TViewModel> : IView, IDisposable where TViewModel : IViewModel
 		{
+			/// <summary>
+			/// Gets or sets the specific typed view model.
+			/// </summary>
+			/// <value>The specific typed view model.</value>
 			TViewModel SpecificTypedViewModel { get; set; }
 		}
 
+		/// <summary>
+		/// Struct ViewModelToViewMapper
+		/// </summary>
+		/// <typeparam name="TModel">The type of the t model.</typeparam>
 		public struct ViewModelToViewMapper<TModel>
 			where TModel : IViewModel
 		{
 
+			/// <summary>
+			/// Maps the view to view model.
+			/// </summary>
+			/// <typeparam name="TView">The type of the t view.</typeparam>
 			public static void MapViewToViewModel<TView>()
 			{
 				Func<IViewModel> func;
@@ -908,19 +1064,31 @@ namespace MVVMSidekick
 
             public ViewModelToViewMapper<TModel> MapToDefault<TPage>(Uri baseUri = null) where TPage : MVVMPage
             {
+				/// <summary>
+				/// Enum ViewType
+				/// </summary>
                 MapViewToViewModel<TPage>();
                 var pageUri = GuessViewUri<TPage>(baseUri);
                 ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(
                     Tuple.Create<Uri, Func<IView>>(pageUri,
                     () => Activator.CreateInstance(typeof(TPage)) as IView
+					/// <summary>
+					/// The page
+					/// </summary>
                     ));
                 return this;
             }
 
+			/// <summary>
+			/// The window
+			/// </summary>
 
 
 
             public ViewModelToViewMapper<TModel> MapTo<TPage>(string viewMappingKey, Uri baseUri = null) where TPage : MVVMPage
+			/// <summary>
+			/// The control
+			/// </summary>
             {
                 MapViewToViewModel<TPage>();
                 var pageUri = GuessViewUri<TPage>(baseUri);
@@ -932,14 +1100,23 @@ namespace MVVMSidekick
 
             //public ViewModelToViewMapper<TModel> MapToDefault(Uri pageUri)
             //{
+			/// <summary>
+			/// The page
+			/// </summary>
             //    ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(pageUri);
             //    return this;
             //}
 
+			/// <summary>
+			/// The window
+			/// </summary>
             //public ViewModelToViewMapper<TModel> MapTo(string viewMappingKey, Uri pageUri)
             //{
             //    ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, pageUri);
             //    return this;
+			/// <summary>
+			/// The control
+			/// </summary>
             //}
 #endif
 #if NETFX_CORE
@@ -950,6 +1127,9 @@ namespace MVVMSidekick
 			{
 
 				MapViewToViewModel<TPage>();
+				/// <summary>
+				/// The page
+				/// </summary>
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(typeof(TPage));
 				return this;
 			}
@@ -957,6 +1137,9 @@ namespace MVVMSidekick
 
 			public ViewModelToViewMapper<TModel> MapToDefault<TPage>(string viewMappingKey) where TPage : MVVMPage
 			{
+				/// <summary>
+				/// The window
+				/// </summary>
 				MapViewToViewModel<TPage>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, typeof(TPage));
 				return this;
@@ -964,6 +1147,9 @@ namespace MVVMSidekick
 
 
 
+/// <summary>
+/// The control
+/// </summary>
 #endif
 
 
@@ -980,6 +1166,9 @@ namespace MVVMSidekick
 				var vt = view.GetType();
 				if (ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(vt, out func))
 				{
+					/// <summary>
+					/// The page
+					/// </summary>
 					return func();
 				}
 				return null;
@@ -990,6 +1179,9 @@ namespace MVVMSidekick
 			{
 				return new ViewModelToViewMapper<TViewModel>();
 			}
+			/// <summary>
+			/// The window
+			/// </summary>
 
 		}
 		public class ViewModelToViewMapperServiceLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelToViewMapperServiceLocator<TViewModel>, object>
@@ -1000,6 +1192,9 @@ namespace MVVMSidekick
 			}
 			public static ViewModelToViewMapperServiceLocator<TViewModel> Instance { get; set; }
 
+			/// <summary>
+			/// The control
+			/// </summary>
 
 		}
 		public class ViewModelLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelLocator<TViewModel>, TViewModel>

@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : MVVMSidekick_Wp8
+// Author           : waywa
+// Created          : 05-17-2014
+//
+// Last Modified By : waywa
+// Last Modified On : 01-04-2015
+// ***********************************************************************
+// <copyright file="Commands.cs" company="">
+//     Copyright ©  2012
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,22 +75,62 @@ using System.Windows.Controls.Primitives;
 
 
 
+/// <summary>
+/// The MVVMSidekick namespace.
+/// </summary>
 namespace MVVMSidekick
 {
 
+	/// <summary>
+	/// The Commands namespace.
+	/// </summary>
     namespace Commands
     {
-        /// <summary>
-        /// Command被运行触发的事件数据类型
-        /// </summary>
+		/// <summary>
+		/// Command被运行触发的事件数据类型
+		/// </summary>
         public class EventCommandEventArgs : EventArgs
         {
+			/// <summary>
+			/// Gets or sets the parameter.
+			/// </summary>
+			/// <value>The parameter.</value>
             public Object Parameter { get; set; }
+			/// <summary>
+			/// Gets or sets the view model.
+			/// </summary>
+			/// <value>The view model.</value>
             public Object ViewModel { get; set; }
+			/// <summary>
+			/// Gets or sets the view sender.
+			/// </summary>
+			/// <value>The view sender.</value>
             public Object ViewSender { get; set; }
+			/// <summary>
+			/// Gets or sets the event arguments.
+			/// </summary>
+			/// <value>The event arguments.</value>
             public Object EventArgs { get; set; }
+			/// <summary>
+			/// Gets or sets the name of the event.
+			/// </summary>
+			/// <value>The name of the event.</value>
             public string EventName { get; set; }
+			/// <summary>
+			/// Gets or sets the type of the event handler.
+			/// </summary>
+			/// <value>The type of the event handler.</value>
             public Type EventHandlerType { get; set; }
+			/// <summary>
+			/// Creates the specified parameter.
+			/// </summary>
+			/// <param name="parameter">The parameter.</param>
+			/// <param name="viewModel">The view model.</param>
+			/// <param name="viewSender">The view sender.</param>
+			/// <param name="eventArgs">The event arguments.</param>
+			/// <param name="eventName">Name of the event.</param>
+			/// <param name="eventHandlerType">Type of the event handler.</param>
+			/// <returns>EventCommandEventArgs.</returns>
             public static EventCommandEventArgs Create(
                 Object parameter = null,
                 Object viewModel = null,
@@ -91,9 +144,9 @@ namespace MVVMSidekick
             }
         }
 
-        /// <summary>
-        /// 事件Command的助手类
-        /// </summary>
+		/// <summary>
+		/// 事件Command的助手类
+		/// </summary>
         public static class EventCommandHelper
         {
             /// <summary>

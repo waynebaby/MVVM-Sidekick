@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : MVVMSidekick_Wp8
+// Author           : waywa
+// Created          : 05-17-2014
+//
+// Last Modified By : waywa
+// Last Modified On : 01-04-2015
+// ***********************************************************************
+// <copyright file="ViewModels.cs" company="">
+//     Copyright ©  2012
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,8 +64,14 @@ using System.Windows.Threading;
 
 
 
+/// <summary>
+/// The MVVMSidekick namespace.
+/// </summary>
 namespace MVVMSidekick
 {
+	/// <summary>
+	/// The ViewModels namespace.
+	/// </summary>
 	namespace ViewModels
 	{
 		using MVVMSidekick.Utilities;
@@ -78,13 +97,24 @@ namespace MVVMSidekick
 		public abstract class BindableBase
 			: DisposeGroupBase, INotifyPropertyChanged, IBindable
 		{
+			/// <summary>
+			/// Releases unmanaged and - optionally - managed resources.
+			/// </summary>
+			/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
 			protected override void Dispose(bool disposing)
 			{
 				base.Dispose(disposing);
 			}
 
 
+			/// <summary>
+			/// Occurs when [_ errors changed].
+			/// </summary>
 			protected event EventHandler<DataErrorsChangedEventArgs> _ErrorsChanged;
+			/// <summary>
+			/// Raises the errors changed.
+			/// </summary>
+			/// <param name="propertName">Name of the propert.</param>
 			protected internal void RaiseErrorsChanged(string propertName)
 			{
 				if (_ErrorsChanged != null)
@@ -93,37 +123,57 @@ namespace MVVMSidekick
 				}
 			}
 
+			/// <summary>
+			/// Gets the bindable instance identifier.
+			/// </summary>
+			/// <value>The bindable instance identifier.</value>
 			abstract public String BindableInstanceId { get; }
 
 
+			/// <summary>
+			/// Returns a <see cref="System.String" /> that represents this instance.
+			/// </summary>
+			/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
 			public override string ToString()
 			{
 				return string.Format("Id {0} of {1} ({2})", BindableInstanceId, base.GetType().Name, base.ToString());
 			}
 
 
+			/// <summary>
+			/// The _ is validation activated
+			/// </summary>
 			private bool _IsValidationActivated = false;
 			/// <summary>
 			/// <para>Gets ot sets if the validation is activatied. This is a flag only， internal logic is not depend on this.</para>
 			/// <para>读取/设置 此模型是否激活验证。这只是一个标记，内部逻辑并没有参考这个值</para>
 			/// </summary>
+			/// <value><c>true</c> if this instance is validation activated; otherwise, <c>false</c>.</value>
 			public bool IsValidationActivated
 			{
 				get { return _IsValidationActivated; }
 				set { _IsValidationActivated = value; }
 			}
 
+			/// <summary>
+			/// The _ is notification activated
+			/// </summary>
 			private bool _IsNotificationActivated = true;
 			/// <summary>
 			/// <para>Gets ot sets if the property change notification is activatied. </para>
 			/// <para>读取/设置 此模型是否激活变化通知</para>
 			/// </summary>
+			/// <value><c>true</c> if this instance is notification activated; otherwise, <c>false</c>.</value>
 			public bool IsNotificationActivated
 			{
 				get { return (!IsInDesignMode) ? _IsNotificationActivated : false; }
 				set { _IsNotificationActivated = value; }
 			}
 
+			/// <summary>
+			/// Gets a value indicating whether this instance is in design mode.
+			/// </summary>
+			/// <value><c>true</c> if this instance is in design mode; otherwise, <c>false</c>.</value>
 			public static bool IsInDesignMode { get { return Utilities.Runtime.IsInDesignMode; } }
 
 
@@ -142,7 +192,7 @@ namespace MVVMSidekick
 			/// <para>Get all property names that were defined in subtype, or added objectly in runtime</para>
 			/// <para>取得本VM实例已经定义的所有字段名。其中包括静态声明的和动态添加的。</para>
 			/// </summary>
-			/// <returns>String[]  Property names/字段名数组 </returns>
+			/// <returns>String[]  Property names/字段名数组</returns>
 			public abstract string[] GetFieldNames();
 
 			///// <summary>
@@ -151,6 +201,11 @@ namespace MVVMSidekick
 			///// </summary>
 			///// <param name="name">Property name/字段名</param>
 			///// <returns>Property value/字段值</returns>
+			/// <summary>
+			/// Gets or sets the <see cref="System.Object"/> with the specified name.
+			/// </summary>
+			/// <param name="name">The name.</param>
+			/// <returns>System.Object.</returns>
 			public abstract object this[string name] { get; set; }
 
 
@@ -161,6 +216,10 @@ namespace MVVMSidekick
 			#region Propery Changed Logic/ Propery Changed事件相关逻辑
 
 
+			/// <summary>
+			/// Raises the property changed.
+			/// </summary>
+			/// <param name="lazyEAFactory">The lazy ea factory.</param>
 			protected internal void RaisePropertyChanged(Func<PropertyChangedEventArgs> lazyEAFactory)
 			{
 
@@ -175,8 +234,8 @@ namespace MVVMSidekick
 			}
 
 			/// <summary>
-			///<para>Event that raised when properties were changed and Notification was activited</para>
-			///<para> VM属性任何绑定用值被修改后,在启用通知情况下触发此事件</para>
+			/// <para>Event that raised when properties were changed and Notification was activited</para>
+			/// <para> VM属性任何绑定用值被修改后,在启用通知情况下触发此事件</para>
 			/// </summary>
 			public event PropertyChangedEventHandler PropertyChanged;
 
@@ -190,6 +249,12 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Checks the error.
+			/// </summary>
+			/// <param name="test">The test.</param>
+			/// <param name="errorMessage">The error message.</param>
+			/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
 			protected bool CheckError(Func<Boolean> test, string errorMessage)
 			{
 
@@ -219,12 +284,13 @@ namespace MVVMSidekick
 			/// <para>Gets the validate error of this model </para>
 			/// <para>取得错误内容</para>
 			/// </summary>
-			/// <returns>Error string/错误内容字符串</returns>
+			/// <value>The error.</value>
 			public abstract string Error { get; }
 			/// <summary>
 			/// <para>Sets the validate error of this model </para>
 			/// <para>设置错误内容</para>
 			/// </summary>
+			/// <param name="value">The value.</param>
 			/// <returns>Error string/错误内容字符串</returns>
 			protected abstract void SetError(string value);
 
@@ -232,6 +298,7 @@ namespace MVVMSidekick
 			/// <para>Sets the validate error of this model and notify </para>
 			/// <para>设置错误内容并且尝试用事件通知</para>
 			/// </summary>
+			/// <param name="value">The value.</param>
 			/// <returns>Error string/错误内容字符串</returns>
 			protected abstract void SetErrorAndTryNotify(string value);
 
@@ -260,6 +327,10 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Gets or sets the event router.
+			/// </summary>
+			/// <value>The event router.</value>
 			public abstract EventRouter EventRouter { get; set; }
 
 		}
@@ -275,7 +346,7 @@ namespace MVVMSidekick
 
 			/// <summary>
 			/// <para>Config Value Container with delegate</para>
-			/// <para>使用连续的API设置ValueContainer的一些参数</para>            
+			/// <para>使用连续的API设置ValueContainer的一些参数</para>
 			/// </summary>
 			/// <typeparam name="TProperty">ValueContainer内容的类型</typeparam>
 			/// <param name="target">ValueContainer的配置目标实例</param>
@@ -293,8 +364,13 @@ namespace MVVMSidekick
 			/// </summary>
 			/// <typeparam name="T">Type of Model /Model的类型</typeparam>
 			/// <param name="item">IDisposable Inastance/IDisposable实例</param>
-			/// <param name="vm">Model instance /Model 实例</param>
-			/// <returns></returns>
+			/// <param name="tg">The tg.</param>
+			/// <param name="needCheckInFinalizer">if set to <c>true</c> [need check in finalizer].</param>
+			/// <param name="comment">The comment.</param>
+			/// <param name="caller">The caller.</param>
+			/// <param name="file">The file.</param>
+			/// <param name="line">The line.</param>
+			/// <returns>T.</returns>
 			public static T DisposeWith<T>(this T item, IDisposeGroup tg, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
 			{
 
@@ -304,6 +380,16 @@ namespace MVVMSidekick
 
 			}
 
+			/// <summary>
+			/// Initializes the specified property name.
+			/// </summary>
+			/// <typeparam name="T"></typeparam>
+			/// <param name="model">The model.</param>
+			/// <param name="propertyName">Name of the property.</param>
+			/// <param name="reference">The reference.</param>
+			/// <param name="locator">The locator.</param>
+			/// <param name="defaultValueFactory">The default value factory.</param>
+			/// <returns>ValueContainer&lt;T&gt;.</returns>
 			public static ValueContainer<T> Initialize<T>(this BindableBase model, string propertyName, ref Property<T> reference, ref Func<BindableBase, ValueContainer<T>> locator, Func<T> defaultValueFactory = null)
 			{
 				if (reference == null)
@@ -319,6 +405,16 @@ namespace MVVMSidekick
 				return reference.Container;
 			}
 
+			/// <summary>
+			/// Initializes the specified property name.
+			/// </summary>
+			/// <typeparam name="T"></typeparam>
+			/// <param name="model">The model.</param>
+			/// <param name="propertyName">Name of the property.</param>
+			/// <param name="reference">The reference.</param>
+			/// <param name="locator">The locator.</param>
+			/// <param name="defaultValueFactory">The default value factory.</param>
+			/// <returns>ValueContainer&lt;T&gt;.</returns>
 			public static ValueContainer<T> Initialize<T>(this BindableBase model, string propertyName, ref Property<T> reference, ref Func<BindableBase, ValueContainer<T>> locator, Func<BindableBase, T> defaultValueFactory = null)
 			{
 				return Initialize(model, propertyName, ref reference, ref locator, () => (defaultValueFactory != null) ? defaultValueFactory(model) : default(T));
@@ -333,6 +429,9 @@ namespace MVVMSidekick
 		/// <typeparam name="TProperty">Type of the property value /属性的类型</typeparam>
 		public class Property<TProperty>
 		{
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Property{TProperty}"/> class.
+			/// </summary>
 			public Property()
 			{
 
@@ -341,7 +440,6 @@ namespace MVVMSidekick
 			/// <summary>
 			/// <para>Locate or create the value container of this model intances</para>
 			/// <para>通过定位方法定位本Model实例中的值容器</para>
-
 			/// </summary>
 			/// <param name="model">Model intances/model 实例</param>
 			/// <returns>Value Container of this property/值容器</returns>
@@ -356,6 +454,7 @@ namespace MVVMSidekick
 			/// <para>Gets sets the factory to locate/create value container of this model instance</para>
 			/// <para>读取/设置定位值容器用的方法。</para>
 			/// </summary>
+			/// <value>The locator function.</value>
 			public Func<BindableBase, ValueContainer<TProperty>> LocatorFunc
 			{
 				internal get;
@@ -366,6 +465,7 @@ namespace MVVMSidekick
 			/// <para>Gets or sets Value Container, it can be recently create and cached here，by LocatorFunc </para>
 			/// <para>读取/设置值容器,这事值容器LocatorFunc创建值容器并且缓存的位置 </para>
 			/// </summary>
+			/// <value>The container.</value>
 			public ValueContainer<TProperty> Container
 			{
 				get;
@@ -389,11 +489,9 @@ namespace MVVMSidekick
 			/// <para>Create a new Value Container</para>
 			/// <para>创建属性值容器</para>
 			/// </summary>
-			/// <param name="model">
-			/// <para>The model that Value Container will be held with.</para>
-			/// <para>所属的model实例</para>
-			/// </param>
 			/// <param name="info">Property name/属性名</param>
+			/// <param name="model"><para>The model that Value Container will be held with.</para>
+			/// <para>所属的model实例</para></param>
 			/// <param name="initValue">The first value of this container/初始值</param>
 			public ValueContainer(string info, BindableBase model, TProperty initValue = default (TProperty ))
 				: this(info, model, (v1, v2) =>
@@ -430,15 +528,11 @@ namespace MVVMSidekick
 			/// <para>Create a new Value Container</para>
 			/// <para>创建属性值容器</para>
 			/// </summary>
-			/// <param name="model">
-			/// <para>The model that Value Container will be held with.</para>
-			/// <para>所属的model实例</para>
-			/// </param>
 			/// <param name="info">Property name/属性名</param>
-			/// <param name="equalityComparer">
-			/// <para>Comparer of new/old value, for notifition.</para>
-			/// <para>判断两个值是否相等的比较器,用于判断是否通知变更</para>
-			/// </param>
+			/// <param name="model"><para>The model that Value Container will be held with.</para>
+			/// <para>所属的model实例</para></param>
+			/// <param name="equalityComparer"><para>Comparer of new/old value, for notifition.</para>
+			/// <para>判断两个值是否相等的比较器,用于判断是否通知变更</para></param>
 			/// <param name="initValue">The first value of this container/初始值</param>
 			public ValueContainer(string info, BindableBase model, Func<TProperty, TProperty, bool> equalityComparer, TProperty initValue = default (TProperty))
 			{
@@ -472,18 +566,24 @@ namespace MVVMSidekick
 			/// <para>Gets comparer instance of new/old value, for notifition.</para>
 			/// <para>读取判断两个值是否相等的比较器,用于判断是否通知变更</para>
 			/// </summary>
+			/// <value>The equality comparer.</value>
 			public Func<TProperty, TProperty, bool> EqualityComparer { get; private set; }
 
 			/// <summary>
 			/// Property name /属性名
 			/// </summary>
+			/// <value>The name of the property.</value>
 			public string PropertyName { get; private set; }
 
+			/// <summary>
+			/// The _value
+			/// </summary>
 			TProperty _value;
 
 			/// <summary>
-			/// Value/值 
+			/// Value/值
 			/// </summary>
+			/// <value>The value.</value>
 			public TProperty Value
 			{
 				get { return _value; }
@@ -495,6 +595,7 @@ namespace MVVMSidekick
 			/// <para>保存值并且尝试触发更改事件</para>
 			/// </summary>
 			/// <param name="value">New value/属性值</param>
+			/// <returns>ValueContainer&lt;TProperty&gt;.</returns>
 			public ValueContainer<TProperty> SetValueAndTryNotify(TProperty value)
 			{
 				InternalPropertyChange(this.Model, value, ref _value, PropertyName);
@@ -506,6 +607,7 @@ namespace MVVMSidekick
 			/// <para>仅保存值 不尝试触发更改事件</para>
 			/// </summary>
 			/// <param name="value">New value/属性值</param>
+			/// <returns>ValueContainer&lt;TProperty&gt;.</returns>
 			public ValueContainer<TProperty> SetValue(TProperty value)
 			{
 				_value = value;
@@ -513,6 +615,13 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Internals the property change.
+			/// </summary>
+			/// <param name="objectInstance">The object instance.</param>
+			/// <param name="newValue">The new value.</param>
+			/// <param name="currentValue">The current value.</param>
+			/// <param name="message">The message.</param>
 			private void InternalPropertyChange(BindableBase objectInstance, TProperty newValue, ref TProperty currentValue, string message)
 			{
 				var changing = (this.EqualityComparer != null) ?
@@ -549,12 +658,17 @@ namespace MVVMSidekick
 			/// <para>The model instance that Value Container was held.</para>
 			/// <para>此值容器所在的Model</para>
 			/// </summary>
+			/// <value>The model.</value>
 			public BindableBase Model { get; internal set; }
 
 
 
 
 
+			/// <summary>
+			/// Gets or sets the value.
+			/// </summary>
+			/// <value>The value.</value>
 			object IValueContainer.Value
 			{
 				get
@@ -571,6 +685,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Gets the type of property/读取值类型
 			/// </summary>
+			/// <value>The type of the property.</value>
 			public Type PropertyType
 			{
 				get;
@@ -578,8 +693,15 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// The _ errors
+			/// </summary>
 			ObservableCollection<ErrorEntity> _Errors;
 
+			/// <summary>
+			/// Gets the errors.
+			/// </summary>
+			/// <value>The errors.</value>
 			public ObservableCollection<ErrorEntity> Errors
 			{
 				get { return _Errors; }
@@ -591,12 +713,16 @@ namespace MVVMSidekick
 #if NETFX_CORE
 			bool _IsCopyToAllowed = !typeof(ICommand).GetTypeInfo().IsAssignableFrom(typeof(TProperty).GetTypeInfo());
 #else
+			/// <summary>
+			/// The _ is copy to allowed
+			/// </summary>
 			bool _IsCopyToAllowed = !typeof(ICommand).IsAssignableFrom(typeof(TProperty));
 #endif
 			/// <summary>
 			/// <para>Can be copied by CopyTo method</para>
 			/// <para>是否可以被 `Copyto` 复制到另外一个属性</para>
 			/// </summary>
+			/// <value><c>true</c> if this instance is copy to allowed; otherwise, <c>false</c>.</value>
 			public bool IsCopyToAllowed
 			{
 				get { return _IsCopyToAllowed; }
@@ -605,8 +731,14 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Occurs when [value changed with name only].
+			/// </summary>
 			public event PropertyChangedEventHandler ValueChangedWithNameOnly;
 
+			/// <summary>
+			/// Occurs when [value changed with nothing].
+			/// </summary>
 			public event EventHandler ValueChangedWithNothing;
 		}
 
@@ -621,6 +753,9 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Constructor of ValueChangedEventArgs
 			/// </summary>
+			/// <param name="propertyName">Name of the property.</param>
+			/// <param name="oldValue">The old value.</param>
+			/// <param name="newValue">The new value.</param>
 			public ValueChangedEventArgs(string propertyName, TProperty oldValue, TProperty newValue)
 				: base(propertyName)
 			{
@@ -631,10 +766,12 @@ namespace MVVMSidekick
 			/// <summary>
 			/// New Value
 			/// </summary>
+			/// <value>The new value.</value>
 			public TProperty NewValue { get; private set; }
 			/// <summary>
 			/// Old Value
 			/// </summary>
+			/// <value>The old value.</value>
 			public TProperty OldValue { get; private set; }
 		}
 
@@ -648,6 +785,11 @@ namespace MVVMSidekick
 		[DataContract]
 		public class BindableTuple<TItem1, TItem2> : BindableBase<BindableTuple<TItem1, TItem2>>
 		{
+			/// <summary>
+			/// Initializes a new instance of the <see cref="BindableTuple{TItem1, TItem2}"/> class.
+			/// </summary>
+			/// <param name="item1">The item1.</param>
+			/// <param name="item2">The item2.</param>
 			public BindableTuple(TItem1 item1, TItem2 item2)
 			{
 				this.IsNotificationActivated = false;
@@ -658,6 +800,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 第一个元素
 			/// </summary>
+			/// <value>The item1.</value>
 
 			public TItem1 Item1
 			{
@@ -665,14 +808,24 @@ namespace MVVMSidekick
 				set { _Item1Locator(this).SetValueAndTryNotify(value); }
 			}
 			#region Property TItem1 Item1 Setup
+			/// <summary>
+			/// The _ item1
+			/// </summary>
 			protected Property<TItem1> _Item1 = new Property<TItem1> { LocatorFunc = _Item1Locator };
+			/// <summary>
+			/// The _ item1 locator
+			/// </summary>
 			static Func<BindableBase, ValueContainer<TItem1>> _Item1Locator = RegisterContainerLocator<TItem1>("Item1", model => model.Initialize("Item1", ref model._Item1, ref _Item1Locator, _Item1DefaultValueFactory));
+			/// <summary>
+			/// The _ item1 default value factory
+			/// </summary>
 			static Func<BindableBase, TItem1> _Item1DefaultValueFactory = null;
 			#endregion
 
 			/// <summary>
 			/// 第二个元素
 			/// </summary>
+			/// <value>The item2.</value>
 
 			public TItem2 Item2
 			{
@@ -680,8 +833,17 @@ namespace MVVMSidekick
 				set { _Item2Locator(this).SetValueAndTryNotify(value); }
 			}
 			#region Property TItem2 Item2 Setup
+			/// <summary>
+			/// The _ item2
+			/// </summary>
 			protected Property<TItem2> _Item2 = new Property<TItem2> { LocatorFunc = _Item2Locator };
+			/// <summary>
+			/// The _ item2 locator
+			/// </summary>
 			static Func<BindableBase, ValueContainer<TItem2>> _Item2Locator = RegisterContainerLocator<TItem2>("Item2", model => model.Initialize("Item2", ref model._Item2, ref _Item2Locator, _Item2DefaultValueFactory));
+			/// <summary>
+			/// The _ item2 default value factory
+			/// </summary>
 			static Func<BindableBase, TItem2> _Item2DefaultValueFactory = null;
 			#endregion
 
@@ -696,6 +858,11 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Create a Tuple
 			/// </summary>
+			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <param name="item1">The item1.</param>
+			/// <param name="item2">The item2.</param>
+			/// <returns>BindableTuple&lt;TItem1, TItem2&gt;.</returns>
 
 			public static BindableTuple<TItem1, TItem2> Create<TItem1, TItem2>(TItem1 item1, TItem2 item2)
 			{
@@ -712,23 +879,36 @@ namespace MVVMSidekick
 		/// public class Class1:BindableBase&lt;Class1&gt;  {}
 		/// </example>
 		/// </summary>
-		/// <typeparam name="TSubClassType"> Sub Type / 子类类型</typeparam>
+		/// <typeparam name="TSubClassType">Sub Type / 子类类型</typeparam>
 		[DataContract]
 		public abstract class BindableBase<TSubClassType> : BindableBase, INotifyDataErrorInfo where TSubClassType : BindableBase<TSubClassType>
 		{
+			/// <summary>
+			/// Initializes a new instance of the <see cref="BindableBase{TSubClassType}"/> class.
+			/// </summary>
 			public BindableBase()
 			{
 				var meId = Interlocked.Increment(ref InstanceCount);
 				_BindableInstanceId = string.Format("{0}:{1}", typeof(TSubClassType).Name, meId);
 			}
 
+			/// <summary>
+			/// The _ bindable instance identifier
+			/// </summary>
 			string _BindableInstanceId;
+			/// <summary>
+			/// Gets the bindable instance identifier.
+			/// </summary>
+			/// <value>The bindable instance identifier.</value>
 			public override string BindableInstanceId
 			{
 				get { return _BindableInstanceId; }
 			}
 
 
+			/// <summary>
+			/// The instance count
+			/// </summary>
 			static int InstanceCount = -1;
 
 
@@ -736,6 +916,8 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 清除值
 			/// </summary>
+			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <param name="property">The property.</param>
 			public void ResetPropertyValue<T>(Property<T> property)
 			{
 				if (property != null)
@@ -766,7 +948,7 @@ namespace MVVMSidekick
 			/// <para>Cast a model instance to current model subtype</para>
 			/// <para>将一个 model 引用特化为本子类型的引用</para>
 			/// </summary>
-			/// <param name="model"> some bindable model/某种可绑定model</param>
+			/// <param name="model">some bindable model/某种可绑定model</param>
 			/// <returns>Current sub type instance/本类型引用</returns>
 			public static TSubClassType CastToCurrentType(BindableBase model)
 			{
@@ -787,7 +969,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 根据索引获取属性值
 			/// </summary>
-			/// <param name="colName">属性名</param>
+			/// <param name="colName">Name of the col.</param>
 			/// <returns>属性值</returns>
 			public override object this[string colName]
 			{
@@ -804,6 +986,12 @@ namespace MVVMSidekick
 				}
 			}
 
+			/// <summary>
+			/// Gets the or create plain locator.
+			/// </summary>
+			/// <param name="colName">Name of the col.</param>
+			/// <param name="viewModel">The view model.</param>
+			/// <returns>Func&lt;TSubClassType, IValueContainer&gt;.</returns>
 			private static Func<TSubClassType, IValueContainer> GetOrCreatePlainLocator(string colName, BindableBase viewModel)
 			{
 				Func<TSubClassType, IValueContainer> pf;
@@ -823,6 +1011,9 @@ namespace MVVMSidekick
 
 
 #if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
+			/// <summary>
+			/// The _plain property container getters
+			/// </summary>
 			protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
 			 _plainPropertyContainerGetters =
 			 new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
@@ -835,16 +1026,28 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Gets the error.
+			/// </summary>
+			/// <value>The error.</value>
 			public override string Error
 			{
 				get { return _ErrorLocator(this).Value; }
 			}
 
+			/// <summary>
+			/// Sets the error.
+			/// </summary>
+			/// <param name="value">The value.</param>
 			protected override void SetError(string value)
 			{
 				_ErrorLocator(this).SetValue(value);
 			}
 
+			/// <summary>
+			/// Sets the error and try notify.
+			/// </summary>
+			/// <param name="value">The value.</param>
 			protected override void SetErrorAndTryNotify(string value)
 			{
 				_ErrorLocator(this).SetValueAndTryNotify(value);
@@ -853,8 +1056,14 @@ namespace MVVMSidekick
 
 			#region Property string Error Setup
 
+			/// <summary>
+			/// The _ error
+			/// </summary>
 			protected Property<string> _Error =
 			  new Property<string> { LocatorFunc = _ErrorLocator };
+			/// <summary>
+			/// The _ error locator
+			/// </summary>
 			[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 			static Func<BindableBase, ValueContainer<string>> _ErrorLocator =
 				RegisterContainerLocator<string>(
@@ -881,7 +1090,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 注册一个属性容器的定位器。
 			/// </summary>
-			/// <typeparam name="TProperty">属性类型</typeparam>
+			/// <typeparam name="TService">The type of the t service.</typeparam>
 			/// <param name="propertyName">属性名</param>
 			/// <param name="getOrCreateLocatorMethod">属性定位/创建方法 也就是定位器</param>
 			/// <returns>注册后的定位器</returns>
@@ -899,9 +1108,14 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 根据属性名取得一个值容器
 			/// </summary>
-			/// <typeparam name="TProperty">属性类型</typeparam>
+			/// <typeparam name="TService">The type of the t service.</typeparam>
 			/// <param name="propertyName">属性名</param>
 			/// <returns>值容器</returns>
+			/// <exception cref="System.Exception">
+			/// Property Not Exists!
+			/// or
+			/// Property ' + propertyName + ' is found but it does not match the property type ' + typeof(TProperty).Name + '!
+			/// </exception>
 			public ValueContainer<TProperty> GetValueContainer<TProperty>(string propertyName)
 			{
 				Func<TSubClassType, ValueContainer<TProperty>> containerGetterCreater;
@@ -925,7 +1139,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 根据表达式树取得一个值容器
 			/// </summary>
-			/// <typeparam name="TProperty">属性类型</typeparam>
+			/// <typeparam name="TService">The type of the t service.</typeparam>
 			/// <param name="expression">表达式树</param>
 			/// <returns>值容器</returns>
 			public ValueContainer<TProperty> GetValueContainer<TProperty>(Expression<Func<TSubClassType, TProperty>> expression)
@@ -943,6 +1157,7 @@ namespace MVVMSidekick
 			/// </summary>
 			/// <param name="propertyName">属性名</param>
 			/// <returns>值容器</returns>
+			/// <exception cref="System.NotImplementedException"></exception>
 			public IValueContainer GetValueContainer(string propertyName)
 			{
 				Func<TSubClassType, IValueContainer> contianerGetterCreater;
@@ -962,7 +1177,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 根据属性名取得多个值容器
 			/// </summary>
-			/// <param name="propertyName">属性名</param>
+			/// <param name="propertyNames">The property names.</param>
 			/// <returns>值容器</returns>
 			public IValueContainer[] GetValueContainers(params string[] propertyNames)
 			{
@@ -973,8 +1188,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 根据表达式树取得多个值容器
 			/// </summary>
-			/// <typeparam name="TProperty">属性类型</typeparam>
-			/// <param name="expression">表达式树</param>
+			/// <param name="expressions">The expressions.</param>
 			/// <returns>值容器</returns>
 			public IValueContainer[] GetValueContainers(params Expression<Func<TSubClassType, object>>[] expressions)
 			{
@@ -1029,7 +1243,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 获取所有属性名，包括静态声明和动态添加的
 			/// </summary>
-			/// <returns></returns>
+			/// <returns>System.String[].</returns>
 			public override string[] GetFieldNames()
 			{
 				return _plainPropertyContainerGetters.Keys.ToArray();
@@ -1047,6 +1261,12 @@ namespace MVVMSidekick
 				return x;
 			}
 
+			/// <summary>
+			/// Copyrefs the specified source.
+			/// </summary>
+			/// <typeparam name="TToken">The type of the t token.</typeparam>
+			/// <param name="source">The source.</param>
+			/// <param name="target">The target.</param>
 			static void Copyref<T>(T source, ref T target)
 			{
 
@@ -1106,6 +1326,10 @@ namespace MVVMSidekick
 				}
 			}
 
+			/// <summary>
+			/// Copies to.
+			/// </summary>
+			/// <param name="target">The target.</param>
 			public void CopyTo(TSubClassType target)
 			{
 				foreach (var item in GetFieldNames())
@@ -1124,6 +1348,9 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Occurs when [errors changed].
+			/// </summary>
 			public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged
 			{
 				add { _ErrorsChanged += value; }
@@ -1132,6 +1359,11 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Gets the errors.
+			/// </summary>
+			/// <param name="propertyName">Name of the property.</param>
+			/// <returns>System.Collections.IEnumerable.</returns>
 			public System.Collections.IEnumerable GetErrors(string propertyName)
 			{
 				if (this.GetFieldNames().Contains(propertyName))
@@ -1146,6 +1378,10 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Gets a value indicating whether this instance has errors.
+			/// </summary>
+			/// <value><c>true</c> if this instance has errors; otherwise, <c>false</c>.</value>
 			public bool HasErrors
 			{
 				get
@@ -1157,6 +1393,9 @@ namespace MVVMSidekick
 				}
 			}
 
+			/// <summary>
+			/// Refreshes the errors.
+			/// </summary>
 			private void RefreshErrors()
 			{
 				var sb = new StringBuilder();
@@ -1171,6 +1410,10 @@ namespace MVVMSidekick
 
 			}
 
+			/// <summary>
+			/// Gets all errors.
+			/// </summary>
+			/// <returns>ErrorEntity[].</returns>
 			public ErrorEntity[] GetAllErrors()
 			{
 				var errors = GetFieldNames()
@@ -1187,14 +1430,24 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 给这个模型分配的消息路由引用（延迟加载）
 			/// </summary>
+			/// <value>The event router.</value>
 			public override EventRouter EventRouter
 			{
 				get { return _EventRouterLocator(this).Value; }
 				set { _EventRouterLocator(this).SetValueAndTryNotify(value); }
 			}
 			#region Property EventRouter EventRouter Setup
+			/// <summary>
+			/// The _ event router
+			/// </summary>
 			protected Property<EventRouter> _EventRouter = new Property<EventRouter> { LocatorFunc = _EventRouterLocator };
+			/// <summary>
+			/// The _ event router locator
+			/// </summary>
 			static Func<BindableBase, ValueContainer<EventRouter>> _EventRouterLocator = RegisterContainerLocator<EventRouter>("EventRouter", model => model.Initialize("EventRouter", ref model._EventRouter, ref _EventRouterLocator, _EventRouterDefaultValueFactory));
+			/// <summary>
+			/// The _ event router default value factory
+			/// </summary>
 			static Func<EventRouter> _EventRouterDefaultValueFactory = () => { return new EventRouter(); };
 			#endregion
 
@@ -1204,32 +1457,47 @@ namespace MVVMSidekick
 
 
 
+		/// <summary>
+		/// Interface IDisposeGroup
+		/// </summary>
 		public interface IDisposeGroup : IDisposable
 		{
 			/// <summary>
 			/// 增加一个一起Dispose的对象
 			/// </summary>
-			/// <param name="item"></param>
-			/// <param name="comment"></param>
-			/// <param name="member"></param>
-			/// <param name="file"></param>
-			/// <param name="line"></param>
+			/// <param name="item">The item.</param>
+			/// <param name="needCheckInFinalizer">if set to <c>true</c> [need check in finalizer].</param>
+			/// <param name="comment">The comment.</param>
+			/// <param name="member">The member.</param>
+			/// <param name="file">The file.</param>
+			/// <param name="line">The line.</param>
 			void AddDisposable(IDisposable item, bool needCheckInFinalizer = false, string comment = "", string member = "", string file = "", int line = -1);
 
 			/// <summary>
 			/// 增加一个Dispose的时候需要做的操作
 			/// </summary>
-			/// <param name="action"></param>
-			/// <param name="comment"></param>
-			/// <param name="member"></param>
-			/// <param name="file"></param>
-			/// <param name="line"></param>
+			/// <param name="action">The action.</param>
+			/// <param name="needCheckInFinalizer">if set to <c>true</c> [need check in finalizer].</param>
+			/// <param name="comment">The comment.</param>
+			/// <param name="member">The member.</param>
+			/// <param name="file">The file.</param>
+			/// <param name="line">The line.</param>
 			void AddDisposeAction(Action action, bool needCheckInFinalizer = false, string comment = "", string member = "", string file = "", int line = -1);
 
 
+			/// <summary>
+			/// Gets the dispose information list.
+			/// </summary>
+			/// <value>The dispose information list.</value>
 			IList<DisposeEntry> DisposeInfoList { get; }
 
+			/// <summary>
+			/// Occurs when [disposing entry].
+			/// </summary>
 			event EventHandler<DisposeEventArgs> DisposingEntry;
+			/// <summary>
+			/// Occurs when [disposed entry].
+			/// </summary>
 			event EventHandler<DisposeEventArgs> DisposedEntry;
 
 
@@ -1238,40 +1506,72 @@ namespace MVVMSidekick
 
 
 
+		/// <summary>
+		/// Class DisposeEventArgs.
+		/// </summary>
 		public class DisposeEventArgs : EventArgs
 		{
+			/// <summary>
+			/// Creates the specified information.
+			/// </summary>
+			/// <param name="info">The information.</param>
+			/// <returns>DisposeEventArgs.</returns>
 			public static DisposeEventArgs Create(DisposeEntry info)
 			{
 				return new DisposeEventArgs(info);
 			}
+			/// <summary>
+			/// Initializes a new instance of the <see cref="DisposeEventArgs"/> class.
+			/// </summary>
+			/// <param name="info">The information.</param>
 			public DisposeEventArgs(DisposeEntry info)
 			{
 				DisposeEntry = info;
 			}
+			/// <summary>
+			/// Gets the dispose entry.
+			/// </summary>
+			/// <value>The dispose entry.</value>
 			public DisposeEntry DisposeEntry { get; private set; }
 		}
 
+		/// <summary>
+		/// Class DisposeGroupBase.
+		/// </summary>
 		[DataContract]
 		public abstract class DisposeGroupBase : IDisposeGroup
 		{
+			/// <summary>
+			/// Initializes a new instance of the <see cref="DisposeGroupBase"/> class.
+			/// </summary>
 			public DisposeGroupBase()
 			{
 				CreateDisposeList();
 
 			}
 
+			/// <summary>
+			/// Creates the dispose list.
+			/// </summary>
 			private void CreateDisposeList()
 			{
 				_disposeInfoList = new Lazy<List<DisposeEntry>>(() => new List<DisposeEntry>(), true);
 
 			}
 
+			/// <summary>
+			/// Called when [deserializing].
+			/// </summary>
+			/// <param name="context">The context.</param>
 			[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2238:ImplementSerializationMethodsCorrectly"), OnDeserializing]
 			public void OnDeserializing(System.Runtime.Serialization.StreamingContext context)
 			{
 				OnDeserializingActions();
 			}
 
+			/// <summary>
+			/// Called when [deserializing actions].
+			/// </summary>
 			protected virtual void OnDeserializingActions()
 			{
 
@@ -1280,6 +1580,9 @@ namespace MVVMSidekick
 
 
 			#region Disposing Logic/Disposing相关逻辑
+			/// <summary>
+			/// Finalizes an instance of the <see cref="DisposeGroupBase"/> class.
+			/// </summary>
 			~DisposeGroupBase()
 			{
 				Dispose(false);
@@ -1293,6 +1596,10 @@ namespace MVVMSidekick
 			/// </summary>
 			private Lazy<List<DisposeEntry>> _disposeInfoList;
 
+			/// <summary>
+			/// Gets the dispose information list.
+			/// </summary>
+			/// <value>The dispose information list.</value>
 			public IList<DisposeEntry> DisposeInfoList { get { return _disposeInfoList.Value; } }
 
 			//protected static Func<DisposeGroupBase, List<DisposeInfo>> _locateDisposeInfos =
@@ -1312,6 +1619,11 @@ namespace MVVMSidekick
 			/// <para>注册一个销毁对象时需要执行的操作</para>
 			/// </summary>
 			/// <param name="newAction">Disposing action/销毁操作</param>
+			/// <param name="needCheckInFinalizer">if set to <c>true</c> [need check in finalizer].</param>
+			/// <param name="comment">The comment.</param>
+			/// <param name="caller">The caller.</param>
+			/// <param name="file">The file.</param>
+			/// <param name="line">The line.</param>
 			public void AddDisposeAction(Action newAction, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
 			{
 
@@ -1332,6 +1644,11 @@ namespace MVVMSidekick
 			/// <para>销毁对象时 需要一起销毁的对象</para>
 			/// </summary>
 			/// <param name="item">disposable object/需要一起销毁的对象</param>
+			/// <param name="needCheckInFinalizer">if set to <c>true</c> [need check in finalizer].</param>
+			/// <param name="comment">The comment.</param>
+			/// <param name="caller">The caller.</param>
+			/// <param name="file">The file.</param>
+			/// <param name="line">The line.</param>
 			public void AddDisposable(IDisposable item, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1)
 			{
 				AddDisposeAction(() => item.Dispose(), needCheckInFinalizer, comment, caller, file, line);
@@ -1340,6 +1657,9 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Disposes this instance.
+			/// </summary>
 			public void Dispose()
 			{
 				Dispose(true);
@@ -1350,6 +1670,7 @@ namespace MVVMSidekick
 			/// <para>Do all the dispose </para>
 			/// <para>销毁，尝试运行所有注册的销毁操作</para>
 			/// </summary>
+			/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
 			protected virtual void Dispose(bool disposing)
 			{
 				var disposeList = Interlocked.Exchange(ref _disposeInfoList, new Lazy<List<DisposeEntry>>(() => new List<DisposeEntry>(), true));
@@ -1411,10 +1732,8 @@ namespace MVVMSidekick
 			/// <para>If dispose actions got exceptions, will handled here. </para>
 			/// <para>处理Dispose 时产生的Exception</para>
 			/// </summary>
-			/// <param name="disposeInfoWithExceptions">
-			/// <para>The exception and dispose infomation</para>
-			/// <para>需要处理的异常信息</para>
-			/// </param>
+			/// <param name="disposeInfoWithExceptions"><para>The exception and dispose infomation</para>
+			/// <para>需要处理的异常信息</para></param>
 
 			protected virtual void OnDisposeExceptions(IList<DisposeEntry> disposeInfoWithExceptions)
 			{
@@ -1425,51 +1744,85 @@ namespace MVVMSidekick
 			#endregion
 
 
+			/// <summary>
+			/// Occurs when [disposing entry].
+			/// </summary>
 			public event EventHandler<DisposeEventArgs> DisposingEntry;
 
+			/// <summary>
+			/// Occurs when [disposed entry].
+			/// </summary>
 			public event EventHandler<DisposeEventArgs> DisposedEntry;
 		}
 
 		/// <summary>
-		///  <para>Dispose action infomation struct</para>
-		///  <para>注册销毁方法时的相关信息</para>
+		/// <para>Dispose action infomation struct</para>
+		/// <para>注册销毁方法时的相关信息</para>
 		/// </summary>
 		public struct DisposeEntry
 		{
 			/// <summary>
-			///  <para>Code Context in this dispose action execution register .</para>
-			///  <para>执行代码上下文</para> 
+			/// <para>Code Context in this dispose action execution register .</para>
+			/// <para>执行代码上下文</para>
 			/// </summary>
+			/// <value>The calling code context.</value>
 			public CallingCodeContext CallingCodeContext { get; set; }
 
 			/// <summary>
 			/// 是否为托管资源，需要在析构器强制检查
 			/// </summary>
+			/// <value><c>true</c> if this instance is need check on finalizer; otherwise, <c>false</c>.</value>
 			public bool IsNeedCheckOnFinalizer { get; set; }
 
 			/// <summary>
-			///  <para>Exception thrown in this dispose action execution .</para>
-			///  <para>执行此次Dispose动作产生的Exception</para>
+			/// <para>Exception thrown in this dispose action execution .</para>
+			/// <para>执行此次Dispose动作产生的Exception</para>
 			/// </summary>
+			/// <value>The exception.</value>
 			public Exception Exception { get; set; }
 			/// <summary>
-			///  <para>Dispose action.</para>
-			///  <para>Dispose动作</para>
+			/// <para>Dispose action.</para>
+			/// <para>Dispose动作</para>
 			/// </summary>
+			/// <value>The action.</value>
 
 			public Action Action { get; set; }
 		}
 
+		/// <summary>
+		/// Interface IBindable
+		/// </summary>
 		public interface IBindable : INotifyPropertyChanged, IDisposable, IDisposeGroup
 		{
 
+			/// <summary>
+			/// Gets or sets the event router.
+			/// </summary>
+			/// <value>The event router.</value>
 			EventRouter EventRouter { get; set; }
+			/// <summary>
+			/// Gets the bindable instance identifier.
+			/// </summary>
+			/// <value>The bindable instance identifier.</value>
 			string BindableInstanceId { get; }
 
+			/// <summary>
+			/// Gets the error.
+			/// </summary>
+			/// <value>The error.</value>
 			string Error { get; }
 
 			//IDictionary<string,object >  Values { get; }
+			/// <summary>
+			/// Gets the field names.
+			/// </summary>
+			/// <returns>System.String[].</returns>
 			string[] GetFieldNames();
+			/// <summary>
+			/// Gets or sets the <see cref="System.Object"/> with the specified name.
+			/// </summary>
+			/// <param name="name">The name.</param>
+			/// <returns>System.Object.</returns>
 			object this[string name] { get; set; }
 		}
 
@@ -1508,41 +1861,142 @@ namespace MVVMSidekick
 		//        [TypeConverter(typeof(StringToViewModelInstanceConverter))]
 		//#endif
 
+		/// <summary>
+		/// Interface IViewModelLifetime
+		/// </summary>
 		public interface IViewModelLifetime
 		{
+			/// <summary>
+			/// Called when [binded to view].
+			/// </summary>
+			/// <param name="view">The view.</param>
+			/// <param name="oldValue">The old value.</param>
+			/// <returns>Task.</returns>
 			Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue);
+			/// <summary>
+			/// Called when [unbinded from view].
+			/// </summary>
+			/// <param name="view">The view.</param>
+			/// <param name="newValue">The new value.</param>
+			/// <returns>Task.</returns>
 			Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue);
+			/// <summary>
+			/// Called when [binded view load].
+			/// </summary>
+			/// <param name="view">The view.</param>
+			/// <returns>Task.</returns>
 			Task OnBindedViewLoad(MVVMSidekick.Views.IView view);
+			/// <summary>
+			/// Called when [binded view unload].
+			/// </summary>
+			/// <param name="view">The view.</param>
+			/// <returns>Task.</returns>
 			Task OnBindedViewUnload(MVVMSidekick.Views.IView view);
 
 
 
 		}
+		/// <summary>
+		/// Interface IViewModel
+		/// </summary>
 		public partial interface IViewModel : IBindable, INotifyPropertyChanged, IViewModelLifetime
 		{
 #if NETFX_CORE
 			Windows.UI.Core.CoreDispatcher Dispatcher { get; }
 #else
+			/// <summary>
+			/// Gets the dispatcher.
+			/// </summary>
+			/// <value>The dispatcher.</value>
 			Dispatcher Dispatcher { get; }
 
 #endif
+			/// <summary>
+			/// Waits for close.
+			/// </summary>
+			/// <param name="closingCallback">The closing callback.</param>
+			/// <returns>Task.</returns>
 			Task WaitForClose(Action closingCallback = null);
+			/// <summary>
+			/// Gets a value indicating whether this instance is UI busy.
+			/// </summary>
+			/// <value><c>true</c> if this instance is UI busy; otherwise, <c>false</c>.</value>
 			bool IsUIBusy { get; }
+			/// <summary>
+			/// Gets a value indicating whether [have return value].
+			/// </summary>
+			/// <value><c>true</c> if [have return value]; otherwise, <c>false</c>.</value>
 			bool HaveReturnValue { get; }
+			/// <summary>
+			/// Closes the view and dispose.
+			/// </summary>
 			void CloseViewAndDispose();
+			/// <summary>
+			/// Gets or sets the stage manager.
+			/// </summary>
+			/// <value>The stage manager.</value>
 			MVVMSidekick.Views.StageManager StageManager { get; set; }
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <typeparam name="TValue">The type of the t value.</typeparam>
+			/// <typeparam name="TValue">The type of the t value.</typeparam>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="inputContext">The input context.</param>
+			/// <param name="cancellationToken">The cancellation token.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task&lt;Tout&gt;.</returns>
 			Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true);
 
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <typeparam name="TSubType">The type of the t sub type.</typeparam>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="inputContext">The input context.</param>
+			/// <param name="cancellationToken">The cancellation token.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task.</returns>
 			Task ExecuteTask<Tin>(Func<Tin, CancellationToken, Task> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true);
 
 
 
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <typeparam name="TValue">The type of the t value.</typeparam>
+			/// <typeparam name="TValue">The type of the t value.</typeparam>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="inputContext">The input context.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task&lt;Tout&gt;.</returns>
 			Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true);
 
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <typeparam name="TSubType">The type of the t sub type.</typeparam>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="inputContext">The input context.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task.</returns>
 			Task ExecuteTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true);
 
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <typeparam name="TCollection">The type of the t collection.</typeparam>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task&lt;Tout&gt;.</returns>
 			Task<Tout> ExecuteTask<Tout>(Func<Task<Tout>> taskBody, bool UIBusyWhenExecuting = true);
 
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task.</returns>
 			Task ExecuteTask(Func<Task> taskBody, bool UIBusyWhenExecuting = true);
 
 			//IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence,IViewModel , Func<Tin, Task<Tout>> taskBody);
@@ -1550,13 +2004,15 @@ namespace MVVMSidekick
 
 
 			/// <summary>
-			/// Set: Will VM be Disposed when unbind from View. 
+			/// Set: Will VM be Disposed when unbind from View.
 			/// </summary>
+			/// <value><c>true</c> if this instance is disposing when unbind required; otherwise, <c>false</c>.</value>
 			bool IsDisposingWhenUnbindRequired { get; }
 
 			/// <summary>
-			/// Set: Will VM be Disposed when unload from View. 
+			/// Set: Will VM be Disposed when unload from View.
 			/// </summary>
+			/// <value><c>true</c> if this instance is disposing when unload required; otherwise, <c>false</c>.</value>
 			bool IsDisposingWhenUnloadRequired { get; }
 
 #if NETFX_CORE
@@ -1565,36 +2021,82 @@ namespace MVVMSidekick
 #endif
 		}
 
+		/// <summary>
+		/// Interface IViewModel
+		/// </summary>
+		/// <typeparam name="TResult">The type of the t result.</typeparam>
 		public partial interface IViewModel<TResult> : IViewModel
 		{
+			/// <summary>
+			/// Waits for close with result.
+			/// </summary>
+			/// <param name="closingCallback">The closing callback.</param>
+			/// <returns>Task&lt;TResult&gt;.</returns>
 			Task<TResult> WaitForCloseWithResult(Action closingCallback = null);
+			/// <summary>
+			/// Gets or sets the result.
+			/// </summary>
+			/// <value>The result.</value>
 			TResult Result { get; set; }
 		}
 
 
+		/// <summary>
+		/// Struct NoResult
+		/// </summary>
 		[DataContract]
 		public struct NoResult
 		{
 
 		}
 
+		/// <summary>
+		/// Struct ShowAwaitableResult
+		/// </summary>
+		/// <typeparam name="TViewModel">The type of the t view model.</typeparam>
 		public struct ShowAwaitableResult<TViewModel>
 		{
+			/// <summary>
+			/// Gets or sets the view model.
+			/// </summary>
+			/// <value>The view model.</value>
 			public TViewModel ViewModel { get; set; }
+			/// <summary>
+			/// Gets or sets the closing.
+			/// </summary>
+			/// <value>The closing.</value>
 			public Task Closing { get; set; }
 
 		}
+		/// <summary>
+		/// Class ViewModelBase.
+		/// </summary>
+		/// <typeparam name="TViewModel">The type of the t view model.</typeparam>
+		/// <typeparam name="TResult">The type of the t result.</typeparam>
 		public partial class ViewModelBase<TViewModel, TResult> : ViewModelBase<TViewModel>, IViewModel<TResult>
 			where TViewModel : ViewModelBase<TViewModel, TResult>, IViewModel<TResult>
 		{
 
+			/// <summary>
+			/// Releases unmanaged and - optionally - managed resources.
+			/// </summary>
+			/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
 			protected override void Dispose(bool disposing)
 			{
 				base.Dispose(disposing);
 			}
 
+			/// <summary>
+			/// Gets a value indicating whether [have return value].
+			/// </summary>
+			/// <value><c>true</c> if [have return value]; otherwise, <c>false</c>.</value>
 			public override bool HaveReturnValue { get { return true; } }
 
+			/// <summary>
+			/// Waits for close with result.
+			/// </summary>
+			/// <param name="closingCallback">The closing callback.</param>
+			/// <returns>Task&lt;TResult&gt;.</returns>
 			public async Task<TResult> WaitForCloseWithResult(Action closingCallback = null)
 			{
 				var t = new TaskCompletionSource<TResult>();
@@ -1615,6 +2117,10 @@ namespace MVVMSidekick
 				return Result;
 			}
 
+			/// <summary>
+			/// Gets or sets the result.
+			/// </summary>
+			/// <value>The result.</value>
 			public TResult Result
 			{
 				get { return _ResultLocator(this).Value; }
@@ -1622,8 +2128,14 @@ namespace MVVMSidekick
 			}
 
 			#region Property TResult Result Setup
+			/// <summary>
+			/// The _ result
+			/// </summary>
 			protected Property<TResult> _Result =
 			  new Property<TResult> { LocatorFunc = _ResultLocator };
+			/// <summary>
+			/// The _ result locator
+			/// </summary>
 			[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 			static Func<BindableBase, ValueContainer<TResult>> _ResultLocator =
 				RegisterContainerLocator<TResult>(
@@ -1652,10 +2164,17 @@ namespace MVVMSidekick
 
 		public abstract partial class ViewModelBase<TViewModel> : BindableBase<TViewModel>, IViewModel where TViewModel : ViewModelBase<TViewModel>
 		{
+			/// <summary>
+			/// Releases unmanaged and - optionally - managed resources.
+			/// </summary>
+			/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
 			protected override void Dispose(bool disposing)
 			{
 				base.Dispose(disposing);
 			}
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ViewModelBase{TViewModel}" /> class.
+			/// </summary>
 			public ViewModelBase()
 			{
 #if WPF
@@ -1676,17 +2195,34 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Called when [binded to view].
+			/// </summary>
+			/// <param name="view">The view.</param>
+			/// <param name="oldValue">The old value.</param>
+			/// <returns>Task.</returns>
 			Task IViewModelLifetime.OnBindedToView(IView view, IViewModel oldValue)
 			{
 
 				return OnBindedToView(view, oldValue);
 			}
 
+			/// <summary>
+			/// Called when [unbinded from view].
+			/// </summary>
+			/// <param name="view">The view.</param>
+			/// <param name="newValue">The new value.</param>
+			/// <returns>Task.</returns>
 			Task IViewModelLifetime.OnUnbindedFromView(IView view, IViewModel newValue)
 			{
 				return OnUnbindedFromView(view, newValue);
 			}
 
+			/// <summary>
+			/// Called when [binded view load].
+			/// </summary>
+			/// <param name="view">The view.</param>
+			/// <returns>Task.</returns>
 			Task IViewModelLifetime.OnBindedViewLoad(IView view)
 			{
 				foreach (var item in GetFieldNames())
@@ -1695,6 +2231,11 @@ namespace MVVMSidekick
 				}
 				return OnBindedViewLoad(view);
 			}
+			/// <summary>
+			/// Called when [binded view unload].
+			/// </summary>
+			/// <param name="view">The view.</param>
+			/// <returns>Task.</returns>
 			Task IViewModelLifetime.OnBindedViewUnload(IView view)
 			{
 				return OnBindedViewUnload(view);
@@ -1702,7 +2243,7 @@ namespace MVVMSidekick
 
 
 			/// <summary>
-			/// This will be invoked by view when this viewmodel is set to view's ViewModel property. 
+			/// This will be invoked by view when this viewmodel is set to view's ViewModel property.
 			/// </summary>
 			/// <param name="view">Set target view</param>
 			/// <param name="oldValue">Value before set.</param>
@@ -1726,7 +2267,7 @@ namespace MVVMSidekick
 			/// This will be invoked by view when this instance of viewmodel in ViewModel property is overwritten.
 			/// </summary>
 			/// <param name="view">Overwrite target view.</param>
-			/// <param name="newValue">The value replacing </param>
+			/// <param name="newValue">The value replacing</param>
 			/// <returns>Task awaiter</returns>
 			protected virtual async Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue)
 			{
@@ -1765,13 +2306,15 @@ namespace MVVMSidekick
 			}
 
 			/// <summary>
-			/// Set: Will VM be Disposed when unbind from View. 
+			/// Set: Will VM be Disposed when unbind from View.
 			/// </summary>
+			/// <value><c>true</c> if this instance is disposing when unbind required; otherwise, <c>false</c>.</value>
 			public bool IsDisposingWhenUnbindRequired { get; protected set; }
 
 			/// <summary>
-			/// Set: Will VM be Disposed when unload from View. 
+			/// Set: Will VM be Disposed when unload from View.
 			/// </summary>
+			/// <value><c>true</c> if this instance is disposing when unload required; otherwise, <c>false</c>.</value>
 			public bool IsDisposingWhenUnloadRequired { get; protected set; }
 
 
@@ -1802,8 +2345,15 @@ namespace MVVMSidekick
 			}
 #endif
 
+			/// <summary>
+			/// The _ stage manager
+			/// </summary>
 			MVVMSidekick.Views.StageManager _StageManager;
 
+			/// <summary>
+			/// Gets or sets the stage manager.
+			/// </summary>
+			/// <value>The stage manager.</value>
 			public MVVMSidekick.Views.StageManager StageManager
 			{
 				get { return _StageManager; }
@@ -1813,10 +2363,12 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 是否有返回值
 			/// </summary>
+			/// <value><c>true</c> if [have return value]; otherwise, <c>false</c>.</value>
 			public virtual bool HaveReturnValue { get { return false; } }
 			/// <summary>
 			/// 本UI是否处于忙状态
 			/// </summary>
+			/// <value><c>true</c> if this instance is UI busy; otherwise, <c>false</c>.</value>
 
 			public bool IsUIBusy
 			{
@@ -1824,25 +2376,52 @@ namespace MVVMSidekick
 				set { _IsUIBusyLocator(this).SetValueAndTryNotify(value); }
 			}
 			#region Property bool IsUIBusy Setup
+			/// <summary>
+			/// The _ is UI busy
+			/// </summary>
 			protected Property<bool> _IsUIBusy = new Property<bool> { LocatorFunc = _IsUIBusyLocator };
+			/// <summary>
+			/// The _ is UI busy locator
+			/// </summary>
 			static Func<BindableBase, ValueContainer<bool>> _IsUIBusyLocator = RegisterContainerLocator<bool>("IsUIBusy", model => model.Initialize("IsUIBusy", ref model._IsUIBusy, ref _IsUIBusyLocator, _IsUIBusyDefaultValueFactory));
+			/// <summary>
+			/// The _ is UI busy default value factory
+			/// </summary>
 			static Func<bool> _IsUIBusyDefaultValueFactory = null;
 			#endregion
 
 
 
+			/// <summary>
+			/// Gets or sets the UI busy task count.
+			/// </summary>
+			/// <value>The UI busy task count.</value>
 			private int UIBusyTaskCount
 			{
 				get { return _UIBusyTaskCountLocator(this).Value; }
 				set { _UIBusyTaskCountLocator(this).SetValueAndTryNotify(value); }
 			}
 			#region Property int UIBusyTaskCount Setup
+			/// <summary>
+			/// The _ UI busy task count
+			/// </summary>
 			private Property<int> _UIBusyTaskCount = new Property<int> { LocatorFunc = _UIBusyTaskCountLocator };
+			/// <summary>
+			/// The _ UI busy task count locator
+			/// </summary>
 			private static Func<BindableBase, ValueContainer<int>> _UIBusyTaskCountLocator = RegisterContainerLocator<int>("UIBusyTaskCount", model => model.Initialize("UIBusyTaskCount", ref model._UIBusyTaskCount, ref _UIBusyTaskCountLocator, _UIBusyTaskCountDefaultValueFactory));
+			/// <summary>
+			/// The _ UI busy task count default value factory
+			/// </summary>
 			private static Func<int> _UIBusyTaskCountDefaultValueFactory = null;
 			#endregion
 
 
+			/// <summary>
+			/// Waits for close.
+			/// </summary>
+			/// <param name="closingCallback">The closing callback.</param>
+			/// <returns>Task.</returns>
 			public async Task WaitForClose(Action closingCallback = null)
 			{
 				var t = new TaskCompletionSource<object>();
@@ -1861,6 +2440,9 @@ namespace MVVMSidekick
 
 				await t.Task;
 			}
+			/// <summary>
+			/// Closes the view and dispose.
+			/// </summary>
 			public void CloseViewAndDispose()
 			{
 				if (StageManager != null)
@@ -1872,6 +2454,10 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Runs the on dispatcher.
+			/// </summary>
+			/// <param name="action">The action.</param>
 			private async void RunOnDispatcher(Action action)
 			{
 
@@ -1890,6 +2476,16 @@ namespace MVVMSidekick
 
 			}
 
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <typeparam name="Tin">The type of the tin.</typeparam>
+			/// <typeparam name="Tout">The type of the tout.</typeparam>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="inputContext">The input context.</param>
+			/// <param name="cancellationToken">The cancellation token.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task&lt;Tout&gt;.</returns>
 			public virtual async Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true)
 			{
 				//TaskCompletionSource<Tout> taskComplet = new TaskCompletionSource<Tout>();
@@ -1924,6 +2520,15 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <typeparam name="TNodeValue">The type of the t node value.</typeparam>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="inputContext">The input context.</param>
+			/// <param name="cancellationToken">The cancellation token.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task.</returns>
 			public virtual async Task ExecuteTask<Tin>(Func<Tin, CancellationToken, Task> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true)
 			{
 
@@ -1931,18 +2536,42 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <typeparam name="Tin">The type of the tin.</typeparam>
+			/// <typeparam name="Tout">The type of the tout.</typeparam>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="inputContext">The input context.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task&lt;Tout&gt;.</returns>
 			public virtual async Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true)
 			{
 				return await ExecuteTask<Tin, Tout>(async (i, c) => await taskBody(i), inputContext, CancellationToken.None, UIBusyWhenExecuting);
 
 			}
 
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <typeparam name="TNodeValue">The type of the t node value.</typeparam>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="inputContext">The input context.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task.</returns>
 			public virtual async Task ExecuteTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true)
 			{
 				await ExecuteTask<Tin, object>(async (i, c) => { await taskBody(i); return null; }, inputContext, CancellationToken.None, UIBusyWhenExecuting);
 
 			}
 
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <typeparam name="TState">The type of the t state.</typeparam>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task&lt;Tout&gt;.</returns>
 			public virtual async Task<Tout> ExecuteTask<Tout>(Func<Task<Tout>> taskBody, bool UIBusyWhenExecuting = true)
 			{
 				return await ExecuteTask<object, Tout>(
@@ -1956,6 +2585,12 @@ namespace MVVMSidekick
 
 			}
 
+			/// <summary>
+			/// Executes the task.
+			/// </summary>
+			/// <param name="taskBody">The task body.</param>
+			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
+			/// <returns>Task.</returns>
 			public virtual async Task ExecuteTask(Func<Task> taskBody, bool UIBusyWhenExecuting = true)
 			{
 				await ExecuteTask<object, object>(
@@ -1986,6 +2621,10 @@ namespace MVVMSidekick
 			}
 #else
 
+			/// <summary>
+			/// Gets the current view dispatcher.
+			/// </summary>
+			/// <returns>Dispatcher.</returns>
 			private Dispatcher GetCurrentViewDispatcher()
 			{
 				DependencyObject dp = null;
@@ -2042,6 +2681,10 @@ namespace MVVMSidekick
 
 			}
 #elif SILVERLIGHT_5||WINDOWS_PHONE_8
+			/// <summary>
+			/// Gets the dispatcher.
+			/// </summary>
+			/// <value>The dispatcher.</value>
 			public Dispatcher Dispatcher
 			{
 				get
@@ -2068,59 +2711,152 @@ namespace MVVMSidekick
 		}
 
 
+		/// <summary>
+		/// Class ErrorEntity.
+		/// </summary>
 		public class ErrorEntity
 		{
+			/// <summary>
+			/// Gets or sets the message.
+			/// </summary>
+			/// <value>The message.</value>
 			public string Message { get; set; }
+			/// <summary>
+			/// Gets or sets the exception.
+			/// </summary>
+			/// <value>The exception.</value>
 			public Exception Exception { get; set; }
+			/// <summary>
+			/// Gets or sets the inner error information source.
+			/// </summary>
+			/// <value>The inner error information source.</value>
 			public IErrorInfo InnerErrorInfoSource { get; set; }
+			/// <summary>
+			/// Returns a <see cref="System.String" /> that represents this instance.
+			/// </summary>
+			/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
 			public override string ToString()
 			{
 
 				return null;// string.Format("{0}，{1}，{2}", Message, Exception, InnerErrorInfoSource);
 			}
 		}
+		/// <summary>
+		/// Interface IErrorInfo
+		/// </summary>
 		public interface IErrorInfo
 		{
+			/// <summary>
+			/// Gets the errors.
+			/// </summary>
+			/// <value>The errors.</value>
 			ObservableCollection<ErrorEntity> Errors { get; }
 		}
 
+		/// <summary>
+		/// Interface IValueCanSet
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
 		public interface IValueCanSet<in T>
 		{
+			/// <summary>
+			/// Sets the value.
+			/// </summary>
+			/// <value>The value.</value>
 			T Value { set; }
 		}
 
+		/// <summary>
+		/// Interface IValueCanGet
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
 		public interface IValueCanGet<out T>
 		{
+			/// <summary>
+			/// Gets the value.
+			/// </summary>
+			/// <value>The value.</value>
 			T Value { get; }
 		}
 
 
 
+		/// <summary>
+		/// Interface INotifyChanges
+		/// </summary>
 		public interface INotifyChanges
 		{
+			/// <summary>
+			/// Occurs when [value changed with name only].
+			/// </summary>
 			event PropertyChangedEventHandler ValueChangedWithNameOnly;
+			/// <summary>
+			/// Occurs when [value changed with nothing].
+			/// </summary>
 			event EventHandler ValueChangedWithNothing;
 
 		}
+		/// <summary>
+		/// Interface INotifyChanges
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
 		public interface INotifyChanges<T> : INotifyChanges
 		{
+			/// <summary>
+			/// Occurs when [value changed].
+			/// </summary>
 			event EventHandler<ValueChangedEventArgs<T>> ValueChanged;
 
 		}
+		/// <summary>
+		/// Interface IValueContainer
+		/// </summary>
 		public interface IValueContainer : IErrorInfo, INotifyChanges
 		{
+			/// <summary>
+			/// Gets the type of the property.
+			/// </summary>
+			/// <value>The type of the property.</value>
 			Type PropertyType { get; }
+			/// <summary>
+			/// Gets or sets the value.
+			/// </summary>
+			/// <value>The value.</value>
 			Object Value { get; set; }
+			/// <summary>
+			/// Gets or sets a value indicating whether this instance is copy to allowed.
+			/// </summary>
+			/// <value><c>true</c> if this instance is copy to allowed; otherwise, <c>false</c>.</value>
 			bool IsCopyToAllowed { get; set; }
 		}
 
+		/// <summary>
+		/// Interface ICommandModel
+		/// </summary>
+		/// <typeparam name="TCommand">The type of the t command.</typeparam>
+		/// <typeparam name="TResource">The type of the t resource.</typeparam>
 		public interface ICommandModel<TCommand, TResource> : ICommand
 		{
+			/// <summary>
+			/// Gets the command core.
+			/// </summary>
+			/// <value>The command core.</value>
 			TCommand CommandCore { get; }
+			/// <summary>
+			/// Gets or sets a value indicating whether [last can execute value].
+			/// </summary>
+			/// <value><c>true</c> if [last can execute value]; otherwise, <c>false</c>.</value>
 			bool LastCanExecuteValue { get; set; }
+			/// <summary>
+			/// Gets or sets the resource.
+			/// </summary>
+			/// <value>The resource.</value>
 			TResource Resource { get; set; }
 		}
 
+		/// <summary>
+		/// Class StringResourceReactiveCommandModel.
+		/// </summary>
 		public class StringResourceReactiveCommandModel : CommandModel<ReactiveCommand, string>
 		{
 
@@ -2134,11 +2870,18 @@ namespace MVVMSidekick
 		public class CommandModel<TCommand, TResource> : BindableBase<CommandModel<TCommand, TResource>>, ICommandModel<TCommand, TResource>, ICommandWithViewModel
 			where TCommand : ICommand
 		{
+			/// <summary>
+			/// Returns a <see cref="System.String" /> that represents this instance.
+			/// </summary>
+			/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
 			public override string ToString()
 			{
 				return Resource.ToString();
 			}
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="CommandModel{TCommand, TResource}"/> class.
+			/// </summary>
 			public CommandModel()
 			{ }
 			/// <summary>
@@ -2153,6 +2896,11 @@ namespace MVVMSidekick
 				Resource = resource;
 			}
 
+			/// <summary>
+			/// Handles the CanExecuteChanged event of the commandCore control.
+			/// </summary>
+			/// <param name="sender">The source of the event.</param>
+			/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 			void commandCore_CanExecuteChanged(object sender, EventArgs e)
 			{
 				if (CanExecuteChanged != null)
@@ -2166,6 +2914,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// ICommand核心
 			/// </summary>
+			/// <value>The command core.</value>
 			public TCommand CommandCore
 			{
 				get;
@@ -2183,6 +2932,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 上一次是否能够运行的值
 			/// </summary>
+			/// <value><c>true</c> if [last can execute value]; otherwise, <c>false</c>.</value>
 			public bool LastCanExecuteValue
 			{
 				get { return _LastCanExecuteValueLocator(this).Value; }
@@ -2192,8 +2942,14 @@ namespace MVVMSidekick
 
 			#region Property bool LastCanExecuteValue Setup
 
+			/// <summary>
+			/// The _ last can execute value
+			/// </summary>
 			protected Property<bool> _LastCanExecuteValue =
 			  new Property<bool> { LocatorFunc = _LastCanExecuteValueLocator };
+			/// <summary>
+			/// The _ last can execute value locator
+			/// </summary>
 			[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 			static Func<BindableBase, ValueContainer<bool>> _LastCanExecuteValueLocator =
 				RegisterContainerLocator<bool>(
@@ -2217,6 +2973,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 资源
 			/// </summary>
+			/// <value>The resource.</value>
 			public TResource Resource
 			{
 				get { return _ResourceLocator(this).Value; }
@@ -2226,8 +2983,14 @@ namespace MVVMSidekick
 
 			#region Property TResource Resource Setup
 
+			/// <summary>
+			/// The _ resource
+			/// </summary>
 			protected Property<TResource> _Resource =
 			  new Property<TResource> { LocatorFunc = _ResourceLocator };
+			/// <summary>
+			/// The _ resource locator
+			/// </summary>
 			[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 			static Func<BindableBase, ValueContainer<TResource>> _ResourceLocator =
 				RegisterContainerLocator<TResource>(
@@ -2260,7 +3023,7 @@ namespace MVVMSidekick
 			/// 判断是否可执行
 			/// </summary>
 			/// <param name="parameter">指定参数</param>
-			/// <returns></returns>
+			/// <returns><c>true</c> if this instance can execute the specified parameter; otherwise, <c>false</c>.</returns>
 			public bool CanExecute(object parameter)
 			{
 				var s = CommandCore.CanExecute(parameter);
@@ -2268,6 +3031,9 @@ namespace MVVMSidekick
 				return s;
 			}
 
+			/// <summary>
+			/// Occurs when [can execute changed].
+			/// </summary>
 			public event EventHandler CanExecuteChanged;
 
 			/// <summary>
@@ -2286,6 +3052,10 @@ namespace MVVMSidekick
 					CommandCore.Execute(parameter);
 			}
 
+			/// <summary>
+			/// Gets or sets the view model.
+			/// </summary>
+			/// <value>The view model.</value>
 			public BindableBase ViewModel
 			{
 				get
@@ -2348,7 +3118,7 @@ namespace MVVMSidekick
 			/// <typeparam name="TResource">附加资源类型</typeparam>
 			/// <param name="cmdModel">CommandModel具体实例</param>
 			/// <param name="viewModel">ViewModel具体实例</param>
-			/// <returns></returns>
+			/// <returns>CommandModel&lt;TCommand, TResource&gt;.</returns>
 			public static CommandModel<TCommand, TResource> WithViewModel<TCommand, TResource>(this CommandModel<TCommand, TResource> cmdModel, BindableBase viewModel)
 				where TCommand : ICommand
 			{

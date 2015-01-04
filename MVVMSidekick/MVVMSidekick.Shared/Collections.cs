@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : MVVMSidekick_Wp8
+// Author           : waywa
+// Created          : 05-17-2014
+//
+// Last Modified By : waywa
+// Last Modified On : 01-04-2015
+// ***********************************************************************
+// <copyright file="Collections.cs" company="">
+//     Copyright ©  2012
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,23 +72,39 @@ using System.Windows.Controls.Primitives;
 #endif
 
 
+/// <summary>
+/// The MVVMSidekick namespace.
+/// </summary>
 namespace MVVMSidekick
 {
 
 
 
+	/// <summary>
+	/// The Collections namespace.
+	/// </summary>
 	namespace Collections
 	{
 
 
 
+		/// <summary>
+		/// Class DependencyObservableCollection.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
 		public class DependencyObservableCollection<T> : DependencyObject, ICollection<T>, IList<T>, INotifyCollectionChanged, INotifyPropertyChanged
 		{
 
 
 
 
+			/// <summary>
+			/// The _core
+			/// </summary>
 			protected ObservableCollection<T> _core = new ObservableCollection<T>();
+			/// <summary>
+			/// Initializes a new instance of the <see cref="DependencyObservableCollection{T}"/> class.
+			/// </summary>
 			public DependencyObservableCollection()
 			{
 
@@ -90,21 +119,38 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Adds the specified item.
+			/// </summary>
+			/// <param name="item">The item.</param>
 			public void Add(T item)
 			{
 				_core.Add(item);
 			}
 
+			/// <summary>
+			/// Clears this instance.
+			/// </summary>
 			public void Clear()
 			{
 				_core.Clear();
 			}
 
+			/// <summary>
+			/// Determines whether [contains] [the specified item].
+			/// </summary>
+			/// <param name="item">The item.</param>
+			/// <returns><c>true</c> if [contains] [the specified item]; otherwise, <c>false</c>.</returns>
 			public bool Contains(T item)
 			{
 				return _core.Contains(item);
 			}
 
+			/// <summary>
+			/// Copies to.
+			/// </summary>
+			/// <param name="array">The array.</param>
+			/// <param name="arrayIndex">Index of the array.</param>
 			public void CopyTo(T[] array, int arrayIndex)
 			{
 				_core.CopyTo(array, arrayIndex);
@@ -114,6 +160,10 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Gets or sets the count.
+			/// </summary>
+			/// <value>The count.</value>
 			public virtual int Count
 			{
 				get { return (int)GetValue(CountProperty); }
@@ -121,38 +171,64 @@ namespace MVVMSidekick
 			}
 
 			// Using a DependencyProperty as the backing store for Count.  This enables animation, styling, binding, etc...
+			/// <summary>
+			/// The count property
+			/// </summary>
 			public static readonly DependencyProperty CountProperty =
 				DependencyProperty.Register("Count", typeof(int), typeof(DependencyObservableCollection<T>), new PropertyMetadata(0));
 
 
 
 
+			/// <summary>
+			/// Gets a value indicating whether this instance is read only.
+			/// </summary>
+			/// <value><c>true</c> if this instance is read only; otherwise, <c>false</c>.</value>
 			public bool IsReadOnly
 			{
 				get { return false; }
 			}
 
+			/// <summary>
+			/// Removes the specified item.
+			/// </summary>
+			/// <param name="item">The item.</param>
+			/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
 			public bool Remove(T item)
 			{
 				return _core.Remove(item);
 			}
 
+			/// <summary>
+			/// Gets the enumerator.
+			/// </summary>
+			/// <returns>IEnumerator&lt;T&gt;.</returns>
 			public IEnumerator<T> GetEnumerator()
 			{
 				return _core.GetEnumerator();
 			}
 
+			/// <summary>
+			/// Gets the enumerator.
+			/// </summary>
+			/// <returns>IEnumerator.</returns>
 			IEnumerator IEnumerable.GetEnumerator()
 			{
 				return _core.GetEnumerator();
 			}
 
+			/// <summary>
+			/// Occurs when [collection changed].
+			/// </summary>
 			public event NotifyCollectionChangedEventHandler CollectionChanged
 			{
 				add { _core.CollectionChanged += value; }
 				remove { _core.CollectionChanged -= value; }
 			}
 
+			/// <summary>
+			/// Occurs when [property changed].
+			/// </summary>
 			public event PropertyChangedEventHandler PropertyChanged
 			{
 				add { ((INotifyPropertyChanged)_core).PropertyChanged += value; }
@@ -160,21 +236,40 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Indexes the of.
+			/// </summary>
+			/// <param name="item">The item.</param>
+			/// <returns>System.Int32.</returns>
 			public int IndexOf(T item)
 			{
 				return _core.IndexOf(item);
 			}
 
+			/// <summary>
+			/// Inserts the specified index.
+			/// </summary>
+			/// <param name="index">The index.</param>
+			/// <param name="item">The item.</param>
 			public void Insert(int index, T item)
 			{
 				_core.Insert(index, item);
 			}
 
+			/// <summary>
+			/// Removes at.
+			/// </summary>
+			/// <param name="index">The index.</param>
 			public void RemoveAt(int index)
 			{
 				_core.RemoveAt(index);
 			}
 
+			/// <summary>
+			/// Gets or sets the <see cref="T"/> at the specified index.
+			/// </summary>
+			/// <param name="index">The index.</param>
+			/// <returns>T.</returns>
 			public T this[int index]
 			{
 				get
@@ -419,7 +514,7 @@ namespace MVVMSidekick
 
 #endif
 		/// <summary>
-		/// <para > The extension method for collections </para>
+		/// <para> The extension method for collections </para>
 		/// <para>集合类型的扩展方法</para>
 		/// </summary>
 		public static class CollectionExtensions
@@ -428,23 +523,33 @@ namespace MVVMSidekick
 			/// <para>Transform to a dictionary with INotifyCollectionChanged</para>
 			/// <para>生成一个带有集合变化通知的字典</para>
 			/// </summary>
-			/// <typeparam name="K"><para>Key Type</para><para>键类型</para></typeparam>
+			/// <typeparam name="TGroup">The type of the t group.</typeparam>
 			/// <typeparam name="V"><para>Value Type</para><para>值类型</para></typeparam>
 			/// <param name="items"><para>Source Dictionary</para><para>来源字典</para><para></para></param>
-			/// <returns></returns>
-			public static KeyedObserableCollection<K, V> ToKeyedObserableCollection<K, V>(this IDictionary<K, V> items)
+			/// <returns>KeyedObservableCollection&lt;K, V&gt;.</returns>
+			public static KeyedObservableCollection<K, V> ToKeyedObservableCollection<K, V>(this IDictionary<K, V> items)
 			{
-				return new KeyedObserableCollection<K, V>(items);
+				return new KeyedObservableCollection<K, V>(items);
 
 			}
 
 
 		}
 
-		public class KeyedObserableCollection<K, V> : ObservableCollection<KeyValuePair<K, V>>
+		/// <summary>
+		/// Class KeyedObservableCollection.
+		/// </summary>
+		/// <typeparam name="K"></typeparam>
+		/// <typeparam name="V"></typeparam>
+		public class KeyedObservableCollection<K, V> : ObservableCollection<KeyValuePair<K, V>>
 		{
 
-			public KeyedObserableCollection(IDictionary<K, V> items)
+			/// <summary>
+			/// Initializes a new instance of the <see cref="KeyedObservableCollection{K, V}"/> class.
+			/// </summary>
+			/// <param name="items">The items.</param>
+			/// <exception cref="System.ArgumentException">items could not be null.</exception>
+			public KeyedObservableCollection(IDictionary<K, V> items)
 			{
 				if (items == null)
 				{
@@ -461,9 +566,21 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// The _core dictionary
+			/// </summary>
 			IDictionary<K, V> _coreDictionary;
+			/// <summary>
+			/// The _core version
+			/// </summary>
 			int _coreVersion;
+			/// <summary>
+			/// The _shadow version
+			/// </summary>
 			int _shadowVersion;
+			/// <summary>
+			/// Incs the ver.
+			/// </summary>
 			private void IncVer()
 			{
 				_coreVersion++;
@@ -475,6 +592,9 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Clears the items.
+			/// </summary>
 			protected override void ClearItems()
 			{
 				base.ClearItems();
@@ -483,6 +603,11 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Inserts the item.
+			/// </summary>
+			/// <param name="index">The index.</param>
+			/// <param name="item">The item.</param>
 			protected override void InsertItem(int index, KeyValuePair<K, V> item)
 			{
 				_coreDictionary.Add(item.Key, item.Value);
@@ -490,6 +615,11 @@ namespace MVVMSidekick
 				IncVer();
 			}
 
+			/// <summary>
+			/// Sets the item.
+			/// </summary>
+			/// <param name="index">The index.</param>
+			/// <param name="item">The item.</param>
 			protected override void SetItem(int index, KeyValuePair<K, V> item)
 			{
 
@@ -500,6 +630,10 @@ namespace MVVMSidekick
 				IncVer();
 			}
 
+			/// <summary>
+			/// Removes from dic.
+			/// </summary>
+			/// <param name="index">The index.</param>
 			private void RemoveFromDic(int index)
 			{
 				var rem = base[index];
@@ -510,6 +644,10 @@ namespace MVVMSidekick
 				IncVer();
 			}
 
+			/// <summary>
+			/// Removes the item.
+			/// </summary>
+			/// <param name="index">The index.</param>
 			protected override void RemoveItem(int index)
 			{
 				RemoveFromDic(index);
@@ -535,7 +673,14 @@ namespace MVVMSidekick
 			}
 
 #else
+			/// <summary>
+			/// The _shadow dictionary
+			/// </summary>
 			ReadOnlyDictionary<K, V> _shadowDictionary;
+			/// <summary>
+			/// Gets the dictionary items.
+			/// </summary>
+			/// <value>The dictionary items.</value>
 			public IDictionary<K, V> DictionaryItems
 			{
 				get
