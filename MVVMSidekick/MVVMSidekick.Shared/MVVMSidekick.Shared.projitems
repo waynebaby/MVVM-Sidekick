@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Patterns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlatformPatches.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactiveExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Storages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />

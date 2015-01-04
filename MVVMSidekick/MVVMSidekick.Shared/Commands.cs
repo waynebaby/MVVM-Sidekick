@@ -144,53 +144,38 @@ namespace MVVMSidekick
             }
         }
 
+
 		/// <summary>
-		/// 事件Command的助手类
+		/// 带有VM的Command接口
 		/// </summary>
-        public static class EventCommandHelper
-        {
-            /// <summary>
-            /// 为一个事件Command制定一个VM
-            /// </summary>
-            /// <typeparam name="TCommand">事件Command具体类型</typeparam>
-            /// <param name="cmd">事件Command实例</param>
-            /// <param name="viewModel">VM实例</param>
-            /// <returns>事件Command实例本身</returns>
-            public static TCommand WithViewModel<TCommand>(this TCommand cmd, BindableBase viewModel)
-                where TCommand : EventCommandBase
-            {
-                cmd.ViewModel = viewModel;
-                return cmd;
-            }
-
-        }
-
-        /// <summary>
-        /// 带有VM的Command接口
-        /// </summary>
         public interface ICommandWithViewModel : ICommand
         {
+			/// <summary>
+			/// Gets or sets the view model.
+			/// </summary>
+			/// <value>The view model.</value>
             BindableBase ViewModel { get; set; }
         }
 
-        /// <summary>
-        /// 事件Command,运行后马上触发一个事件，事件中带有Command实例和VM实例属性
-        /// </summary>
+		/// <summary>
+		/// 事件Command,运行后马上触发一个事件，事件中带有Command实例和VM实例属性
+		/// </summary>
         public abstract class EventCommandBase : ICommandWithViewModel
         {
-            /// <summary>
-            /// VM
-            /// </summary>
+			/// <summary>
+			/// VM
+			/// </summary>
+			/// <value>The view model.</value>
             public BindableBase ViewModel { get; set; }
 
-            /// <summary>
-            /// 运行时触发的事件
-            /// </summary>
+			/// <summary>
+			/// 运行时触发的事件
+			/// </summary>
             public event EventHandler<EventCommandEventArgs> CommandExecute;
-            /// <summary>
-            /// 执行时的逻辑
-            /// </summary>
-            /// <param name="args">执行时的事件数据</param>
+			/// <summary>
+			/// 执行时的逻辑
+			/// </summary>
+			/// <param name="args">执行时的事件数据</param>
             internal protected virtual void OnCommandExecute(EventCommandEventArgs args)
             {
                 if (CommandExecute != null)
@@ -200,21 +185,21 @@ namespace MVVMSidekick
             }
 
 
-            /// <summary>
-            /// 该Command是否能执行
-            /// </summary>
-            /// <param name="parameter">判断参数</param>
-            /// <returns>是否</returns>
+			/// <summary>
+			/// 该Command是否能执行
+			/// </summary>
+			/// <param name="parameter">判断参数</param>
+			/// <returns>是否</returns>
             public abstract bool CanExecute(object parameter);
 
-            /// <summary>
-            /// 是否能执行的值产生变化的事件
-            /// </summary>
+			/// <summary>
+			/// 是否能执行的值产生变化的事件
+			/// </summary>
             public event EventHandler CanExecuteChanged;
 
-            /// <summary>
-            /// 是否能执行变化时触发事件的逻辑
-            /// </summary>
+			/// <summary>
+			/// 是否能执行变化时触发事件的逻辑
+			/// </summary>
             protected void OnCanExecuteChanged()
             {
                 if (CanExecuteChanged != null)
@@ -223,10 +208,10 @@ namespace MVVMSidekick
                 }
             }
 
-            /// <summary>
-            /// 执行Command
-            /// </summary>
-            /// <param name="parameter">参数条件</param>
+			/// <summary>
+			/// 执行Command
+			/// </summary>
+			/// <param name="parameter">参数条件</param>
             public virtual void Execute(object parameter)
             {
                 if (CanExecute(parameter))
@@ -241,6 +226,9 @@ namespace MVVMSidekick
 
 
 
+		/// <summary>
+		/// The EventBinding namespace.
+		/// </summary>
         namespace EventBinding
         {
 
@@ -249,10 +237,16 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Class CommandBinding.
+			/// </summary>
             public class CommandBinding : FrameworkElement
 
             {
 
+				/// <summary>
+				/// Initializes a new instance of the <see cref="CommandBinding"/> class.
+				/// </summary>
                 public CommandBinding()
                 {
                     base.Width = 0;
@@ -262,14 +256,22 @@ namespace MVVMSidekick
 
 
 
-             
 
 
 
 
+
+				/// <summary>
+				/// Gets or sets the name of the event.
+				/// </summary>
+				/// <value>The name of the event.</value>
                 public string EventName { get; set; }
 
 
+				/// <summary>
+				/// Gets or sets the event source.
+				/// </summary>
+				/// <value>The event source.</value>
                 public FrameworkElement EventSource
                 {
                     get { return (FrameworkElement)GetValue(EventSourceProperty); }
@@ -277,6 +279,9 @@ namespace MVVMSidekick
                 }
 
                 // Using a DependencyProperty as the backing store for EventSource.  This enables animation, styling, binding, etc...
+				/// <summary>
+				/// The event source property
+				/// </summary>
                 public static readonly DependencyProperty EventSourceProperty =
                     DependencyProperty.Register("EventSource", typeof(FrameworkElement), typeof(CommandBinding), new PropertyMetadata(null,
                         (dobj, arg) =>
@@ -309,8 +314,15 @@ namespace MVVMSidekick
                         ));
 
 
+				/// <summary>
+				/// The old event dispose
+				/// </summary>
                 IDisposable oldEventDispose;
 
+				/// <summary>
+				/// Gets or sets the command.
+				/// </summary>
+				/// <value>The command.</value>
                 public ICommand Command
                 {
                     get { return (ICommand)GetValue(CommandProperty); }
@@ -318,12 +330,19 @@ namespace MVVMSidekick
                 }
 
                 // Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
+				/// <summary>
+				/// The command property
+				/// </summary>
                 public static readonly DependencyProperty CommandProperty =
                     DependencyProperty.Register("Command", typeof(ICommand), typeof(CommandBinding), new PropertyMetadata(null));
 
 
 
 
+				/// <summary>
+				/// Gets or sets the parameter.
+				/// </summary>
+				/// <value>The parameter.</value>
                 public Object Parameter
                 {
                     get { return (Object)GetValue(ParameterProperty); }
@@ -331,11 +350,21 @@ namespace MVVMSidekick
                 }
 
                 // Using a DependencyProperty as the backing store for Parameter.  This enables animation, styling, binding, etc...
+				/// <summary>
+				/// The parameter property
+				/// </summary>
                 public static readonly DependencyProperty ParameterProperty =
                     DependencyProperty.Register("Parameter", typeof(Object), typeof(CommandBinding), new PropertyMetadata(null));
 
 
 
+				/// <summary>
+				/// Executes from event.
+				/// </summary>
+				/// <param name="sender">The sender.</param>
+				/// <param name="eventArgs">The event arguments.</param>
+				/// <param name="eventName">Name of the event.</param>
+				/// <param name="eventHandlerType">Type of the event handler.</param>
                 public void ExecuteFromEvent(object sender, object eventArgs, string eventName, Type eventHandlerType)
                 {
                     object vm = null;
@@ -388,6 +417,26 @@ namespace MVVMSidekick
 
 
         }
+		/// <summary>
+		/// 事件Command的助手类
+		/// </summary>
+		public static class EventCommandHelper
+		{
+			/// <summary>
+			/// 为一个事件Command制定一个VM
+			/// </summary>
+			/// <typeparam name="TCommand">事件Command具体类型</typeparam>
+			/// <param name="cmd">事件Command实例</param>
+			/// <param name="viewModel">VM实例</param>
+			/// <returns>事件Command实例本身</returns>
+			public static TCommand WithViewModel<TCommand>(this TCommand cmd, BindableBase viewModel)
+				where TCommand : EventCommandBase
+			{
+				cmd.ViewModel = viewModel;
+				return cmd;
+			}
+
+		}
 
 
     }

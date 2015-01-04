@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : MVVMSidekick_Wp8
+// Author           : waywa
+// Created          : 05-17-2014
+//
+// Last Modified By : waywa
+// Last Modified On : 01-04-2015
+// ***********************************************************************
+// <copyright file="Storages.cs" company="">
+//     Copyright ©  2012
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,67 +75,91 @@ using System.IO.IsolatedStorage;
 #endif
 
 
+/// <summary>
+/// The MVVMSidekick namespace.
+/// </summary>
 namespace MVVMSidekick
 {
 
+	/// <summary>
+	/// The Storages namespace.
+	/// </summary>
     namespace Storages
     {
-        /// <summary>
-        /// <para>Simple storage interface, for persistence.</para>
-        /// <para>简单的持久化存储类型接口</para>
-        /// </summary>
-        /// <typeparam name="T">
-        /// <para>The Type needs to be save/load</para>
-        /// <para>需要存取的类型</para>
-        /// </typeparam>
+		/// <summary>
+		/// <para>Simple storage interface, for persistence.</para>
+		/// <para>简单的持久化存储类型接口</para>
+		/// </summary>
+		/// <typeparam name="T"><para>The Type needs to be save/load</para>
+		/// <para>需要存取的类型</para></typeparam>
         public interface IStorage<T>
         {
-            /// <summary>
-            /// <para>Ignore current changes, load from storage</para>
-            /// <para>忽略当前值的变化，从持久化存储中读取</para>
-            /// </summary>
-            /// <returns>Async Task</returns>
+			/// <summary>
+			/// <para>Ignore current changes, load from storage</para>
+			/// <para>忽略当前值的变化，从持久化存储中读取</para>
+			/// </summary>
+			/// <returns>Async Task</returns>
             System.Threading.Tasks.Task<T> RefreshAsync();
-            /// <summary>
-            /// <para>Save current changes to storage</para>
-            /// <para>把当前值的变化写入持久化存储中</para>
-            /// </summary>
-            /// <returns>Async Task</returns>
+			/// <summary>
+			/// <para>Save current changes to storage</para>
+			/// <para>把当前值的变化写入持久化存储中</para>
+			/// </summary>
+			/// <param name="value">The value.</param>
+			/// <returns>Async Task</returns>
             System.Threading.Tasks.Task SaveAsync(T value);
 
-            /// <summary>
-            /// <para>Current value</para>
-            /// <para>当前值</para>
-            /// </summary>
+			/// <summary>
+			/// <para>Current value</para>
+			/// <para>当前值</para>
+			/// </summary>
+			/// <value>The value.</value>
             T Value { get; }
         }
 
 
 
 
-        /// <summary>
-        /// <para>Simple storage interface, for persistence.</para>
-        /// <para>简单的持久化存储类型接口</para>
-        /// </summary>
-        /// <typeparam name="TToken">
-        /// <para>The Token/token Type needs to be save/load</para>
-        /// <para>需要存取的凭据类型</para>
-        /// </typeparam>
-        /// <typeparam name="TValue">
-        /// <para>The Value Type needs to be save/load</para>
-        /// <para>需要存取的类型</para>
-        /// </typeparam>
+		/// <summary>
+		/// <para>Simple storage interface, for persistence.</para>
+		/// <para>简单的持久化存储类型接口</para>
+		/// </summary>
+		/// <typeparam name="TToken"><para>The Token/token Type needs to be save/load</para>
+		/// <para>需要存取的凭据类型</para></typeparam>
+		/// <typeparam name="TValue"><para>The Value Type needs to be save/load</para>
+		/// <para>需要存取的类型</para></typeparam>
         public interface IStorageHub<TToken, TValue>
         {
 
+			/// <summary>
+			/// Loads the asynchronous.
+			/// </summary>
+			/// <param name="token">The token.</param>
+			/// <param name="forceRefresh">if set to <c>true</c> [force refresh].</param>
+			/// <returns>System.Threading.Tasks.Task&lt;TValue&gt;.</returns>
             System.Threading.Tasks.Task<TValue> LoadAsync(TToken token, bool forceRefresh);
 
+			/// <summary>
+			/// Saves the asynchronous.
+			/// </summary>
+			/// <param name="token">The token.</param>
+			/// <param name="value">The value.</param>
+			/// <returns>System.Threading.Tasks.Task.</returns>
             System.Threading.Tasks.Task SaveAsync(TToken token, TValue value);
 
         }
 
+		/// <summary>
+		/// Class StorageHub.
+		/// </summary>
+		/// <typeparam name="TToken">The type of the t token.</typeparam>
+		/// <typeparam name="TValue">The type of the t value.</typeparam>
         public class StorageHub<TToken, TValue> : IStorageHub<TToken, TValue>
         {
+			/// <summary>
+			/// Initializes a new instance of the <see cref="StorageHub{TToken, TValue}"/> class.
+			/// </summary>
+			/// <param name="storageFactory">The storage factory.</param>
+			/// <param name="storageTokensSelector">The storage tokens selector.</param>
             public StorageHub(Func<TToken, IStorage<TValue>> storageFactory, Func<Task<TToken[]>> storageTokensSelector = null)
             {
                 _storageFactory = storageFactory;
@@ -130,6 +167,11 @@ namespace MVVMSidekick
             }
 
 
+			/// <summary>
+			/// Gets the or creat storage.
+			/// </summary>
+			/// <param name="token">The token.</param>
+			/// <returns>IStorage&lt;TValue&gt;.</returns>
             IStorage<TValue> GetOrCreatStorage(TToken token)
             {
 
@@ -137,9 +179,20 @@ namespace MVVMSidekick
             }
 
 
+			/// <summary>
+			/// The _storage factory
+			/// </summary>
             Func<TToken, IStorage<TValue>> _storageFactory;
+			/// <summary>
+			/// The _storage tokens selector
+			/// </summary>
             Func<Task<TToken[]>> _storageTokensSelector;
 
+			/// <summary>
+			/// Gets the exists tokens.
+			/// </summary>
+			/// <returns>Task&lt;TToken[]&gt;.</returns>
+			/// <exception cref="System.NotImplementedException">Current storageTokensSelector is not set in constructor. </exception>
             public async Task<TToken[]> GetExistsTokens()
             {
                 if (_storageTokensSelector != null)
@@ -155,8 +208,17 @@ namespace MVVMSidekick
             }
 
 
+			/// <summary>
+			/// The _dic
+			/// </summary>
             ConcurrentDictionary<TToken, IStorage<TValue>> _dic = new ConcurrentDictionary<TToken, IStorage<TValue>>();
 
+			/// <summary>
+			/// load as an asynchronous operation.
+			/// </summary>
+			/// <param name="token">The token.</param>
+			/// <param name="forceRefresh">if set to <c>true</c> [force refresh].</param>
+			/// <returns>Task&lt;TValue&gt;.</returns>
             public async Task<TValue> LoadAsync(TToken token, bool forceRefresh)
             {
                 var storage = GetOrCreatStorage(token);
@@ -171,6 +233,12 @@ namespace MVVMSidekick
 
             }
 
+			/// <summary>
+			/// save as an asynchronous operation.
+			/// </summary>
+			/// <param name="token">The token.</param>
+			/// <param name="value">The value.</param>
+			/// <returns>Task.</returns>
             public async Task SaveAsync(TToken token, TValue value)
             {
                 var storage = GetOrCreatStorage(token);
@@ -261,6 +329,13 @@ namespace MVVMSidekick
 
             }
 #elif WINDOWS_PHONE_8|| WINDOWS_PHONE_7
+			/// <summary>
+			/// Creates the json datacontract isolated storage hub.
+			/// </summary>
+			/// <param name="fileNameFactory">The file name factory.</param>
+			/// <param name="folder">The folder.</param>
+			/// <param name="storageTokensSelector">The storage tokens selector.</param>
+			/// <returns>StorageHub&lt;TToken, TValue&gt;.</returns>
               public static StorageHub<TToken, TValue> CreateJsonDatacontractIsolatedStorageHub(
                 Func<TToken, string> fileNameFactory,
                 IsolatedStorageFile folder = null,
@@ -461,6 +536,13 @@ namespace MVVMSidekick
 
             }
 #elif WINDOWS_PHONE_8|| WINDOWS_PHONE_7
+			  /// <summary>
+			  /// Creates the XML datacontract isolated storage hub.
+			  /// </summary>
+			  /// <param name="fileNameFactory">The file name factory.</param>
+			  /// <param name="folder">The folder.</param>
+			  /// <param name="storageTokensSelector">The storage tokens selector.</param>
+			  /// <returns>StorageHub&lt;TToken, TValue&gt;.</returns>
               public static StorageHub<TToken, TValue> CreateXmlDatacontractIsolatedStorageHub(
                 Func<TToken, string> fileNameFactory,
                 IsolatedStorageFile folder = null,
@@ -584,14 +666,33 @@ namespace MVVMSidekick
         }
 
 
+		/// <summary>
+		/// Enum StreamOpenType
+		/// </summary>
         public enum StreamOpenType
         {
+			/// <summary>
+			/// The read
+			/// </summary>
             Read,
+			/// <summary>
+			/// The write
+			/// </summary>
             Write
         }
 
+		/// <summary>
+		/// Class JsonDataContractStreamStorageHub.
+		/// </summary>
+		/// <typeparam name="TToken">The type of the t token.</typeparam>
+		/// <typeparam name="TValue">The type of the t value.</typeparam>
         public class JsonDataContractStreamStorageHub<TToken, TValue> : StorageHub<TToken, TValue>
         {
+			/// <summary>
+			/// Initializes a new instance of the <see cref="JsonDataContractStreamStorageHub{TToken, TValue}"/> class.
+			/// </summary>
+			/// <param name="streamOpener">The stream opener.</param>
+			/// <param name="storageTokensSelector">The storage tokens selector.</param>
             public JsonDataContractStreamStorageHub(Func<StreamOpenType, TToken, Task<Stream>> streamOpener, Func<Task<TToken[]>> storageTokensSelector = null)
                 : base
                     (tk => new JsonDataContractStreamStorage<TValue>(async tp => await streamOpener(tp, tk)), storageTokensSelector)
@@ -602,29 +703,55 @@ namespace MVVMSidekick
         }
 
 
+		/// <summary>
+		/// Class JsonDataContractStreamStorage.
+		/// </summary>
+		/// <typeparam name="TValue">The type of the t value.</typeparam>
         public class JsonDataContractStreamStorage<TValue> : IStorage<TValue>
         {
 #if NET45
             ConcurrentExclusiveSchedulerPair _sch = new ConcurrentExclusiveSchedulerPair();
 #else
+			/// <summary>
+			/// The _SCH
+			/// </summary>
             TaskScheduler _sch = new LimitedConcurrencyLevelTaskScheduler(1);
 #endif
+			/// <summary>
+			/// Initializes a new instance of the <see cref="JsonDataContractStreamStorage{TValue}"/> class.
+			/// </summary>
+			/// <param name="streamOpener">The stream opener.</param>
+			/// <param name="knownTypes">The known types.</param>
             public JsonDataContractStreamStorage(Func<StreamOpenType, Task<Stream>> streamOpener, params Type[] knownTypes)
             {
                 _streamOpener = streamOpener;
                 _knownTypes = knownTypes;
             }
 
+			/// <summary>
+			/// The _stream opener
+			/// </summary>
             Func<StreamOpenType, Task<Stream>> _streamOpener;
 
+			/// <summary>
+			/// The _known types
+			/// </summary>
             Type[] _knownTypes;
 
+			/// <summary>
+			/// Gets or sets the known types.
+			/// </summary>
+			/// <value>The known types.</value>
             public Type[] KnownTypes
             {
                 get { return _knownTypes; }
                 set { _knownTypes = value; }
             }
 
+			/// <summary>
+			/// refresh as an asynchronous operation.
+			/// </summary>
+			/// <returns>Task&lt;TValue&gt;.</returns>
             public async Task<TValue> RefreshAsync()
             {
                 var kts = _knownTypes;
@@ -665,6 +792,11 @@ namespace MVVMSidekick
 
             }
 
+			/// <summary>
+			/// save as an asynchronous operation.
+			/// </summary>
+			/// <param name="value">The value.</param>
+			/// <returns>Task.</returns>
             public async Task SaveAsync(TValue value)
             {
                 var kts = _knownTypes;
@@ -697,14 +829,28 @@ namespace MVVMSidekick
             }
 
 
+			/// <summary>
+			/// Gets the value.
+			/// </summary>
+			/// <value>The value.</value>
             public TValue Value
             {
                 get;
                 private set;
             }
         }
+		/// <summary>
+		/// Class XmlDataContractStreamStorageHub.
+		/// </summary>
+		/// <typeparam name="TToken">The type of the t token.</typeparam>
+		/// <typeparam name="TValue">The type of the t value.</typeparam>
         public class XmlDataContractStreamStorageHub<TToken, TValue> : StorageHub<TToken, TValue>
         {
+			/// <summary>
+			/// Initializes a new instance of the <see cref="XmlDataContractStreamStorageHub{TToken, TValue}"/> class.
+			/// </summary>
+			/// <param name="streamOpener">The stream opener.</param>
+			/// <param name="storageTokensSelector">The storage tokens selector.</param>
             public XmlDataContractStreamStorageHub(Func<StreamOpenType, TToken, Task<Stream>> streamOpener, Func<Task<TToken[]>> storageTokensSelector = null)
                 : base
                     (tk => new XmlDataContractStreamStorage<TValue>(async tp => await streamOpener(tp, tk)), storageTokensSelector)
@@ -715,29 +861,55 @@ namespace MVVMSidekick
         }
 
 
+		/// <summary>
+		/// Class XmlDataContractStreamStorage.
+		/// </summary>
+		/// <typeparam name="TValue">The type of the t value.</typeparam>
         public class XmlDataContractStreamStorage<TValue> : IStorage<TValue>
         {
 #if NET45
             ConcurrentExclusiveSchedulerPair _sch = new ConcurrentExclusiveSchedulerPair();
 #else
+			/// <summary>
+			/// The _SCH
+			/// </summary>
             TaskScheduler _sch = new LimitedConcurrencyLevelTaskScheduler(1);
 #endif
+			/// <summary>
+			/// Initializes a new instance of the <see cref="XmlDataContractStreamStorage{TValue}"/> class.
+			/// </summary>
+			/// <param name="streamOpener">The stream opener.</param>
+			/// <param name="knownTypes">The known types.</param>
             public XmlDataContractStreamStorage(Func<StreamOpenType, Task<Stream>> streamOpener, params Type[] knownTypes)
             {
                 _streamOpener = streamOpener;
                 _knownTypes = knownTypes;
             }
 
+			/// <summary>
+			/// The _stream opener
+			/// </summary>
             Func<StreamOpenType, Task<Stream>> _streamOpener;
 
+			/// <summary>
+			/// The _known types
+			/// </summary>
             Type[] _knownTypes;
 
+			/// <summary>
+			/// Gets or sets the known types.
+			/// </summary>
+			/// <value>The known types.</value>
             public Type[] KnownTypes
             {
                 get { return _knownTypes; }
                 set { _knownTypes = value; }
             }
 
+			/// <summary>
+			/// refresh as an asynchronous operation.
+			/// </summary>
+			/// <returns>Task&lt;TValue&gt;.</returns>
             public async Task<TValue> RefreshAsync()
             {
                 var kts = _knownTypes;
@@ -777,6 +949,11 @@ namespace MVVMSidekick
 
             }
 
+			/// <summary>
+			/// save as an asynchronous operation.
+			/// </summary>
+			/// <param name="value">The value.</param>
+			/// <returns>Task.</returns>
             public async Task SaveAsync(TValue value)
             {
                 var kts = _knownTypes;
@@ -809,6 +986,10 @@ namespace MVVMSidekick
             }
 
 
+			/// <summary>
+			/// Gets the value.
+			/// </summary>
+			/// <value>The value.</value>
             public TValue Value
             {
                 get;

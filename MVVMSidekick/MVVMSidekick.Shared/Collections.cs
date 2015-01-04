@@ -489,7 +489,7 @@ namespace MVVMSidekick
 
 		/// <summary>
 		/// Provides data for the changed events of a vector
-		///// </summary>
+		///</summary>
 		public class VectorChangedEventArgs : Windows.Foundation.Collections.IVectorChangedEventArgs
 		{
 			#region IVectorChangedEventArgs Members

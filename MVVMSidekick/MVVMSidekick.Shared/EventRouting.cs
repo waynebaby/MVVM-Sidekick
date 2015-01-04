@@ -92,14 +92,14 @@ namespace MVVMSidekick
 		public class EventRouter
 		{
 			/// <summary>
-			/// Initializes a new instance of the <see cref="EventRouter"/> class.
+			/// Initializes a new instance of the <see cref="EventRouter" /> class.
 			/// </summary>
 			public EventRouter()
 			{
 
 			}
 			/// <summary>
-			/// Initializes static members of the <see cref="EventRouter"/> class.
+			/// Initializes static members of the <see cref="EventRouter" /> class.
 			/// </summary>
 			static EventRouter()
 			{
@@ -118,7 +118,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 触发事件
 			/// </summary>
-			/// <typeparam name="TViewModel">The type of the t view model.</typeparam>
+			/// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
 			/// <param name="sender">事件发送者</param>
 			/// <param name="eventArgs">事件数据</param>
 			/// <param name="callerMemberNameOrEventName">发送事件名</param>
@@ -161,7 +161,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 取得独立事件类
 			/// </summary>
-			/// <typeparam name="TItem">The type of the t item.</typeparam>
+			/// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
 			/// <returns>事件独立类</returns>
 			public virtual EventObject<TEventArgs> GetEventObject<TEventArgs>()
 #if !NETFX_CORE
@@ -209,8 +209,8 @@ namespace MVVMSidekick
 				if (rval.BaseArgsTypeInstance == null)
 				{
 #if NETFX_CORE
-                    var baseT = argsType.GetTypeInfo().BaseType;
-                    if (baseT != typeof(object) && baseT.Name != "RuntimeClass" && baseT != null )
+					var baseT = argsType.GetTypeInfo().BaseType;
+					if (baseT != typeof(object) && baseT.Name != "RuntimeClass" && baseT != null )
 #else
 					var baseT = argsType.BaseType;
 					if (baseT != typeof(object) && baseT != null)
@@ -326,7 +326,7 @@ namespace MVVMSidekick
 				/// </summary>
 				int _Disposed = 0;
 				/// <summary>
-				/// Finalizes an instance of the <see cref="EventObject{TEventArgs}"/> class.
+				/// Finalizes an instance of the <see cref="EventObject{TEventArgs}" /> class.
 				/// </summary>
 				~EventObject()
 				{
@@ -383,14 +383,14 @@ namespace MVVMSidekick
 		public class NavigateCommandEventArgs : EventArgs
 		{
 			/// <summary>
-			/// Initializes a new instance of the <see cref="NavigateCommandEventArgs"/> class.
+			/// Initializes a new instance of the <see cref="NavigateCommandEventArgs" /> class.
 			/// </summary>
 			public NavigateCommandEventArgs()
 			{
 				ParameterDictionary = new Dictionary<string, object>();
 			}
 			/// <summary>
-			/// Initializes a new instance of the <see cref="NavigateCommandEventArgs"/> class.
+			/// Initializes a new instance of the <see cref="NavigateCommandEventArgs" /> class.
 			/// </summary>
 			/// <param name="dic">The dic.</param>
 			public NavigateCommandEventArgs(IDictionary<string, object> dic)
@@ -459,7 +459,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 触发事件
 			/// </summary>
-			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
 			/// <param name="source">事件来源</param>
 			/// <param name="eventArgs">事件数据</param>
 			/// <param name="callerMemberName">事件名</param>
@@ -489,11 +489,11 @@ namespace MVVMSidekick
 
 		{
 			/// <summary>
-			/// Initializes a new instance of the <see cref="RouterEventData{TEventArgs}"/> struct.
+			/// Initializes a new instance of the <see cref="RouterEventData{TEventArgs}" /> struct.
 			/// </summary>
 			/// <param name="sender">The sender.</param>
 			/// <param name="eventName">Name of the event.</param>
-			/// <param name="eventArgs">The <see cref="TEventArgs"/> instance containing the event data.</param>
+			/// <param name="eventArgs">The <see cref="TEventArgs" /> instance containing the event data.</param>
 			public RouterEventData(object sender, string eventName, TEventArgs eventArgs)
 			{
 
@@ -553,7 +553,7 @@ namespace MVVMSidekick
 		public class DataEventArgs<TData> : EventArgs
 		{
 			/// <summary>
-			/// Initializes a new instance of the <see cref="DataEventArgs{TData}"/> class.
+			/// Initializes a new instance of the <see cref="DataEventArgs{TData}" /> class.
 			/// </summary>
 			/// <param name="data">The data.</param>
 			public DataEventArgs(TData data)

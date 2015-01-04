@@ -407,6 +407,9 @@ namespace MVVMSidekick
 		/// </summary>
         public partial class MVVMPage : PhoneApplicationPage, IView
 #else
+		/// <summary>
+		/// Class MVVMPage.
+		/// </summary>
 		public class MVVMPage : Page, IView
 #endif
 		{
@@ -414,7 +417,7 @@ namespace MVVMSidekick
 
 
 			/// <summary>
-			/// Initializes a new instance of the <see cref="MVVMPage"/> class.
+			/// Initializes a new instance of the <see cref="MVVMPage" /> class.
 			/// </summary>
 			public MVVMPage()
 				: this(null)
@@ -449,7 +452,7 @@ namespace MVVMSidekick
 #endif
 
 			/// <summary>
-			/// Initializes a new instance of the <see cref="MVVMPage"/> class.
+			/// Initializes a new instance of the <see cref="MVVMPage" /> class.
 			/// </summary>
 			/// <param name="viewModel">The view model.</param>
 			public MVVMPage(IViewModel viewModel)
@@ -491,7 +494,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Handles the <see cref="E:NavigatedTo" /> event.
 			/// </summary>
-			/// <param name="e">The <see cref="NavigationEventArgs"/> instance containing the event data.</param>
+			/// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
 			protected override void OnNavigatedTo(NavigationEventArgs e)
 			{
 
@@ -527,7 +530,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Handles the <see cref="E:NavigatedFrom" /> event.
 			/// </summary>
-			/// <param name="e">The <see cref="NavigationEventArgs"/> instance containing the event data.</param>
+			/// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
 			protected override void OnNavigatedFrom(NavigationEventArgs e)
 			{
 				base.OnNavigatedFrom(e);
@@ -698,7 +701,7 @@ namespace MVVMSidekick
 		{
 
 			/// <summary>
-			/// Initializes a new instance of the <see cref="MVVMControl"/> class.
+			/// Initializes a new instance of the <see cref="MVVMControl" /> class.
 			/// </summary>
 			public MVVMControl()
 				: this(null)
@@ -708,7 +711,7 @@ namespace MVVMSidekick
 
 
 			/// <summary>
-			/// Initializes a new instance of the <see cref="MVVMControl"/> class.
+			/// Initializes a new instance of the <see cref="MVVMControl" /> class.
 			/// </summary>
 			/// <param name="viewModel">The view model.</param>
 			public MVVMControl(IViewModel viewModel)
@@ -870,8 +873,14 @@ namespace MVVMSidekick
 			}
 
 		}
+		/// <summary>
+		/// Enum ViewType
+		/// </summary>
 		public enum ViewType
 		{
+			/// <summary>
+			/// The page
+			/// </summary>
 			/// <summary>
 			/// The page
 			/// </summary>
@@ -879,7 +888,13 @@ namespace MVVMSidekick
 			/// <summary>
 			/// The window
 			/// </summary>
+			/// <summary>
+			/// The window
+			/// </summary>
 			Window,
+			/// <summary>
+			/// The control
+			/// </summary>
 			/// <summary>
 			/// The control
 			/// </summary>
@@ -942,7 +957,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Maps the view to view model.
 			/// </summary>
-			/// <typeparam name="TView">The type of the t view.</typeparam>
+			/// <typeparam name="TControl">The type of the t control.</typeparam>
 			public static void MapViewToViewModel<TView>()
 			{
 				Func<IViewModel> func;

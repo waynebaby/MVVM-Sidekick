@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : MVVMSidekick_Wp8
+// Author           : waywa
+// Created          : 05-17-2014
+//
+// Last Modified By : waywa
+// Last Modified On : 01-04-2015
+// ***********************************************************************
+// <copyright file="Utilities.cs" company="">
+//     Copyright ©  2012
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,14 +78,26 @@ using Microsoft.Phone.Reactive;
 #endif
 
 
+/// <summary>
+/// The MVVMSidekick namespace.
+/// </summary>
 namespace MVVMSidekick
 {
+	/// <summary>
+	/// The Utilities namespace.
+	/// </summary>
 	namespace Utilities
 	{
 
+		/// <summary>
+		/// Class Runtime.
+		/// </summary>
 		public static class Runtime
 		{
 
+			/// <summary>
+			/// The _ is in design mode
+			/// </summary>
 			static bool? _IsInDesignMode;
 
 
@@ -80,6 +105,7 @@ namespace MVVMSidekick
 			/// <para>Gets if the code is running in design time. </para>
 			/// <para>读取目前是否在设计时状态。</para>
 			/// </summary>
+			/// <value><c>true</c> if this instance is in design mode; otherwise, <c>false</c>.</value>
 			public static bool IsInDesignMode
 			{
 				get
@@ -113,13 +139,14 @@ namespace MVVMSidekick
 
 		/// <summary>
 		/// 代码调用上下文
-		///  Calling code-context
+		/// Calling code-context
 		/// </summary>
 		public struct CallingCodeContext
 		{
 			/// <summary>
 			/// 创建一个当前调用上下文数据
 			/// </summary>
+			/// <param name="autoFillProperties">if set to <c>true</c> [automatic fill properties].</param>
 			/// <param name="comment">注释</param>
 			/// <param name="caller">调用者</param>
 			/// <param name="file">文件</param>
@@ -154,24 +181,28 @@ namespace MVVMSidekick
 			}
 
 			/// <summary>
-			///  <para>Comment of this Calling .</para>
-			///  <para>对此次Calling 的附加说明</para>
+			/// <para>Comment of this Calling .</para>
+			/// <para>对此次Calling 的附加说明</para>
 			/// </summary>
+			/// <value>The comment.</value>
 			public string Comment { get; private set; }
 			/// <summary>
-			///  <para>Caller Member Name of this Calling  registeration.</para>
-			///  <para>此次Calling 注册的来源</para>
+			/// <para>Caller Member Name of this Calling  registeration.</para>
+			/// <para>此次Calling 注册的来源</para>
 			/// </summary>
+			/// <value>The caller.</value>
 			public string Caller { get; private set; }
 			/// <summary>
-			///  <para>Code file path of this Calling  registeration.</para>
-			///  <para>注册此次Calling 注册的代码文件</para>
+			/// <para>Code file path of this Calling  registeration.</para>
+			/// <para>注册此次Calling 注册的代码文件</para>
 			/// </summary>
+			/// <value>The file.</value>
 			public string File { get; private set; }
 			/// <summary>
-			///  <para>Code line number of this Calling  registeration.</para>
-			///  <para>注册此次Calling 注册的代码行</para>
+			/// <para>Code line number of this Calling  registeration.</para>
+			/// <para>注册此次Calling 注册的代码行</para>
 			/// </summary>
+			/// <value>The line.</value>
 			public int Line { get; private set; }
 
 		}
@@ -189,6 +220,10 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Yields this instance.
+			/// </summary>
+			/// <returns>Task.</returns>
 			public static async Task Yield()
 			{
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||NET40
@@ -200,6 +235,12 @@ namespace MVVMSidekick
 
 			}
 
+			/// <summary>
+			/// Froms the result.
+			/// </summary>
+			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <param name="result">The result.</param>
+			/// <returns>Task&lt;T&gt;.</returns>
 			public static async Task<T> FromResult<T>(T result)
 			{
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||NET40
@@ -211,6 +252,11 @@ namespace MVVMSidekick
 
 			}
 
+			/// <summary>
+			/// Delays the specified ms.
+			/// </summary>
+			/// <param name="ms">The ms.</param>
+			/// <returns>Task.</returns>
 			public static async Task Delay(int ms)
 			{
 
@@ -227,7 +273,7 @@ namespace MVVMSidekick
 
 		}
 		/// <summary>
-		/// Unify Type(4.5 SL & WP) and TypeInfo (Windows Runtime) class in this helper
+		/// Class TypeInfoHelper.
 		/// </summary>
 		public static class TypeInfoHelper
 		{
@@ -238,6 +284,11 @@ namespace MVVMSidekick
 
 			}
 #else
+			/// <summary>
+			/// Gets the type or type information.
+			/// </summary>
+			/// <param name="type">The type.</param>
+			/// <returns>Type.</returns>
 			public static Type GetTypeOrTypeInfo(this Type type)
 			{
 				return type;
@@ -247,13 +298,29 @@ namespace MVVMSidekick
 
 		}
 
+		/// <summary>
+		/// Class ReflectionCache.
+		/// </summary>
 		public static class ReflectionCache
 		{
+			/// <summary>
+			/// Class ReflectInfoCache.
+			/// </summary>
+			/// <typeparam name="T"></typeparam>
 			static class ReflectInfoCache<T> where T : MemberInfo
 			{
+				/// <summary>
+				/// The cache
+				/// </summary>
 				static ConcurrentDictionary<Type, Dictionary<string, T>> cache
 					= new ConcurrentDictionary<Type, Dictionary<string, T>>();
 
+				/// <summary>
+				/// Gets the cache.
+				/// </summary>
+				/// <param name="type">The type.</param>
+				/// <param name="dataGetter">The data getter.</param>
+				/// <returns>Dictionary&lt;System.String, T&gt;.</returns>
 				static public Dictionary<string, T> GetCache(Type type, Func<Type, T[]> dataGetter)
 				{
 					return cache.GetOrAdd(type, s => dataGetter(s).ToDictionary(x => x.Name, x => x));
@@ -261,6 +328,11 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Gets the methods from cache.
+			/// </summary>
+			/// <param name="type">The type.</param>
+			/// <returns>Dictionary&lt;System.String, MethodInfo&gt;.</returns>
 			public static Dictionary<string, MethodInfo> GetMethodsFromCache(this Type type)
 			{
 #if NETFX_CORE
@@ -270,6 +342,11 @@ namespace MVVMSidekick
 #endif
 			}
 
+			/// <summary>
+			/// Gets the events from cache.
+			/// </summary>
+			/// <param name="type">The type.</param>
+			/// <returns>Dictionary&lt;System.String, EventInfo&gt;.</returns>
 			public static Dictionary<string, EventInfo> GetEventsFromCache(this Type type)
 			{
 #if NETFX_CORE
@@ -284,8 +361,19 @@ namespace MVVMSidekick
 		}
 
 		public delegate void EventHandlerInvoker(object sender, object eventArgs, string eventName, Type eventHandlerType);
+		/// <summary>
+		/// Class EventHandlerHelper.
+		/// </summary>
 		public static class EventHandlerHelper
 		{
+			/// <summary>
+			/// Creates the handler.
+			/// </summary>
+			/// <param name="bind">The bind.</param>
+			/// <param name="eventName">Name of the event.</param>
+			/// <param name="delegateType">Type of the delegate.</param>
+			/// <param name="eventParametersTypes">The event parameters types.</param>
+			/// <returns>Delegate.</returns>
 			private static Delegate CreateHandler(
 				Expression<EventHandlerInvoker> bind,
 				string eventName,
@@ -308,7 +396,21 @@ namespace MVVMSidekick
 				return compiled;
 			}
 
+			/// <summary>
+			/// Binds the event.
+			/// </summary>
+			/// <param name="sender">The sender.</param>
+			/// <param name="eventName">Name of the event.</param>
+			/// <param name="executeAction">The execute action.</param>
+			/// <returns>IDisposable.</returns>
 			public static IDisposable BindEvent(this object sender, string eventName, EventHandlerInvoker executeAction)
+			/// <summary>
+			/// Delegate EventHandlerInvoker
+			/// </summary>
+			/// <param name="sender">The sender.</param>
+			/// <param name="eventArgs">The event arguments.</param>
+			/// <param name="eventName">Name of the event.</param>
+			/// <param name="eventHandlerType">Type of the event handler.</param>
 			{
 
 
@@ -374,7 +476,18 @@ namespace MVVMSidekick
 
 
 #if NETFX_CORE||WINDOWS_PHONE_8
+			/// <summary>
+			/// The win rt event bind method information
+			/// </summary>
 			static MethodInfo WinRTEventBindMethodInfo = typeof(EventHandlerHelper).GetTypeInfo().GetDeclaredMethod("WinRTEventBind");
+			/// <summary>
+			/// Wins the rt event bind.
+			/// </summary>
+			/// <typeparam name="TProperty">The type of the t property.</typeparam>
+			/// <param name="sender">The sender.</param>
+			/// <param name="ei">The ei.</param>
+			/// <param name="handler">The handler.</param>
+			/// <returns>IDisposable.</returns>
 			private static IDisposable WinRTEventBind<THandler>(object sender, EventInfo ei, object handler)
 			{
 				System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken tk = default(System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken);
@@ -406,6 +519,13 @@ namespace MVVMSidekick
 
 			}
 #endif
+			/// <summary>
+			/// Does the net event bind.
+			/// </summary>
+			/// <param name="sender">The sender.</param>
+			/// <param name="ei">The ei.</param>
+			/// <param name="newHandler">The new handler.</param>
+			/// <returns>IDisposable.</returns>
 			private static IDisposable DoNetEventBind(object sender, EventInfo ei, Delegate newHandler)
 			{
 				ei.AddEventHandler(sender, newHandler);
@@ -414,10 +534,19 @@ namespace MVVMSidekick
 
 		}
 
+		/// <summary>
+		/// Class ColllectionHelper.
+		/// </summary>
 		public static class ColllectionHelper
 		{
 
 
+			/// <summary>
+			/// To the observable collection.
+			/// </summary>
+			/// <typeparam name="T"></typeparam>
+			/// <param name="items">The items.</param>
+			/// <returns>ObservableCollection&lt;T&gt;.</returns>
 			public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> items)
 			{
 
@@ -425,6 +554,14 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Matches the or default.
+			/// </summary>
+			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="T"></typeparam>
+			/// <param name="dic">The dic.</param>
+			/// <param name="key">The key.</param>
+			/// <returns>TValue.</returns>
 			public static TValue MatchOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dic, TKey key)
 			{
 				TValue val = default(TValue);
@@ -475,8 +612,18 @@ namespace MVVMSidekick
 
 #endif
 
+		/// <summary>
+		/// Class ExpressionHelper.
+		/// </summary>
 		public class ExpressionHelper
 		{
+			/// <summary>
+			/// Gets the name of the property.
+			/// </summary>
+			/// <typeparam name="TSource">The type of the t source.</typeparam>
+			/// <typeparam name="TProperty">The type of the t property.</typeparam>
+			/// <param name="expression">The expression.</param>
+			/// <returns>System.String.</returns>
 			public static string GetPropertyName<TSubClassType, TProperty>(Expression<Func<TSubClassType, TProperty>> expression)
 			{
 				MemberExpression body = expression.Body as MemberExpression;
@@ -486,6 +633,13 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Gets the name of the property.
+			/// </summary>
+			/// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
+			/// <param name="expression">The expression.</param>
+			/// <returns>System.String.</returns>
+			/// <exception cref="System.InvalidOperationException">The expression inputed should be like \x=>x.PropertyName\ but currently is not: + expression.ToString()</exception>
 			public static string GetPropertyName<TSubClassType>(Expression<Func<TSubClassType, object>> expression)
 			{
 				MemberExpression body = expression.Body as MemberExpression;
@@ -517,8 +671,19 @@ namespace MVVMSidekick
 		}
 
 #if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
+		/// <summary>
+		/// Class ConcurrentDictionary.
+		/// </summary>
+		/// <typeparam name="TProperty">The type of the t property.</typeparam>
+		/// <typeparam name="TV">The type of the tv.</typeparam>
 		public class ConcurrentDictionary<TK, TV> : Dictionary<TK, TV>
 		{
+			/// <summary>
+			/// Gets the or add.
+			/// </summary>
+			/// <param name="key">The key.</param>
+			/// <param name="factory">The factory.</param>
+			/// <returns>TV.</returns>
 			public TV GetOrAdd(TK key, Func<TK, TV> factory)
 			{
 				TV rval = default(TV);
@@ -542,34 +707,45 @@ namespace MVVMSidekick
 		}
 #endif
 
-		/// <summary> 
-		/// Provides a task scheduler that ensures a maximum concurrency level while 
-		/// running on top of the ThreadPool. 
-		/// </summary> 
+		/// <summary>
+		/// Provides a task scheduler that ensures a maximum concurrency level while
+		/// running on top of the ThreadPool.
+		/// </summary>
 		public class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
 		{
-			/// <summary>Whether the current thread is processing work items.</summary>
+			/// <summary>
+			/// Whether the current thread is processing work items.
+			/// </summary>
 			[ThreadStatic]
 			private static bool _currentThreadIsProcessingItems;
-			/// <summary>The list of tasks to be executed.</summary> 
+			/// <summary>
+			/// The list of tasks to be executed.
+			/// </summary>
 			private readonly LinkedList<Task> _tasks = new LinkedList<Task>(); // protected by lock(_tasks) 
-			/// <summary>The maximum concurrency level allowed by this scheduler.</summary> 
+			/// <summary>
+			/// The maximum concurrency level allowed by this scheduler.
+			/// </summary>
 			private readonly int _maxDegreeOfParallelism;
-			/// <summary>Whether the scheduler is currently processing work items.</summary> 
+			/// <summary>
+			/// Whether the scheduler is currently processing work items.
+			/// </summary>
 			private int _delegatesQueuedOrRunning = 0; // protected by lock(_tasks) 
 
-			/// <summary> 
-			/// Initializes an instance of the LimitedConcurrencyLevelTaskScheduler class with the 
-			/// specified degree of parallelism. 
-			/// </summary> 
+			/// <summary>
+			/// Initializes an instance of the LimitedConcurrencyLevelTaskScheduler class with the
+			/// specified degree of parallelism.
+			/// </summary>
 			/// <param name="maxDegreeOfParallelism">The maximum degree of parallelism provided by this scheduler.</param>
+			/// <exception cref="System.ArgumentOutOfRangeException">maxDegreeOfParallelism</exception>
 			public LimitedConcurrencyLevelTaskScheduler(int maxDegreeOfParallelism)
 			{
 				if (maxDegreeOfParallelism < 1) throw new ArgumentOutOfRangeException("maxDegreeOfParallelism");
 				_maxDegreeOfParallelism = maxDegreeOfParallelism;
 			}
 
-			/// <summary>Queues a task to the scheduler.</summary> 
+			/// <summary>
+			/// Queues a task to the scheduler.
+			/// </summary>
 			/// <param name="task">The task to be queued.</param>
 			[SecurityCritical]
 			protected sealed override void QueueTask(Task task)
@@ -587,9 +763,9 @@ namespace MVVMSidekick
 				}
 			}
 
-			/// <summary> 
-			/// Informs the ThreadPool that there's work to be executed for this scheduler. 
-			/// </summary> 
+			/// <summary>
+			/// Informs the ThreadPool that there's work to be executed for this scheduler.
+			/// </summary>
 			private async void NotifyThreadPoolOfPendingWork()
 			{
 
@@ -642,10 +818,12 @@ namespace MVVMSidekick
 
 			}
 
-			/// <summary>Attempts to execute the specified task on the current thread.</summary> 
+			/// <summary>
+			/// Attempts to execute the specified task on the current thread.
+			/// </summary>
 			/// <param name="task">The task to be executed.</param>
-			/// <param name="taskWasPreviouslyQueued"></param>
-			/// <returns>Whether the task could be executed on the current thread.</returns> 
+			/// <param name="taskWasPreviouslyQueued">if set to <c>true</c> [task was previously queued].</param>
+			/// <returns>Whether the task could be executed on the current thread.</returns>
 			[SecurityCritical]
 			protected sealed override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
 			{
@@ -659,20 +837,28 @@ namespace MVVMSidekick
 				return base.TryExecuteTask(task);
 			}
 
-			/// <summary>Attempts to remove a previously scheduled task from the scheduler.</summary> 
+			/// <summary>
+			/// Attempts to remove a previously scheduled task from the scheduler.
+			/// </summary>
 			/// <param name="task">The task to be removed.</param>
-			/// <returns>Whether the task could be found and removed.</returns> 
+			/// <returns>Whether the task could be found and removed.</returns>
 			[SecurityCritical]
 			protected sealed override bool TryDequeue(Task task)
 			{
 				lock (_tasks) return _tasks.Remove(task);
 			}
 
-			/// <summary>Gets the maximum concurrency level supported by this scheduler.</summary> 
+			/// <summary>
+			/// Gets the maximum concurrency level supported by this scheduler.
+			/// </summary>
+			/// <value>The maximum concurrency level.</value>
 			public sealed override int MaximumConcurrencyLevel { get { return _maxDegreeOfParallelism; } }
 
-			/// <summary>Gets an enumerable of the tasks currently scheduled on this scheduler.</summary> 
-			/// <returns>An enumerable of the tasks currently scheduled.</returns> 
+			/// <summary>
+			/// Gets an enumerable of the tasks currently scheduled on this scheduler.
+			/// </summary>
+			/// <returns>An enumerable of the tasks currently scheduled.</returns>
+			/// <exception cref="System.NotSupportedException"></exception>
 			[SecurityCritical]
 			protected sealed override IEnumerable<Task> GetScheduledTasks()
 			{

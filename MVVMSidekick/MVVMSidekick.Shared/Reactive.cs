@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : MVVMSidekick_Wp8
+// Author           : waywa
+// Created          : 05-17-2014
+//
+// Last Modified By : waywa
+// Last Modified On : 01-04-2015
+// ***********************************************************************
+// <copyright file="Reactive.cs" company="">
+//     Copyright ©  2012
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,306 +72,91 @@ using System.Windows.Controls.Primitives;
 #endif
 
 
+/// <summary>
+/// The MVVMSidekick namespace.
+/// </summary>
 namespace MVVMSidekick
 {
+	/// <summary>
+	/// The Reactive namespace.
+	/// </summary>
 	namespace Reactive
 	{
 
+		/// <summary>
+		/// Class EventTuple.
+		/// </summary>
 		public static class EventTuple
 		{
+			/// <summary>
+			/// Creates the specified source.
+			/// </summary>
+			/// <typeparam name="TSource">The type of the t source.</typeparam>
+			/// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
+			/// <param name="source">The source.</param>
+			/// <param name="eventArgs">The <see cref="TEventArgs" /> instance containing the event data.</param>
+			/// <returns>EventTuple&lt;TSource, TEventArgs&gt;.</returns>
 			public static EventTuple<TSource, TEventArgs> Create<TSource, TEventArgs>(TSource source, TEventArgs eventArgs)
 			{
 				return new EventTuple<TSource, TEventArgs> { Source = source, EventArgs = eventArgs };
 			}
 
 		}
+		/// <summary>
+		/// Struct EventTuple
+		/// </summary>
+		/// <typeparam name="TSource">The type of the t source.</typeparam>
+		/// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
 		public struct EventTuple<TSource, TEventArgs>
 		{
+			/// <summary>
+			/// Gets or sets the source.
+			/// </summary>
+			/// <value>The source.</value>
 			public TSource Source { get; set; }
+			/// <summary>
+			/// Gets or sets the event arguments.
+			/// </summary>
+			/// <value>The event arguments.</value>
 			public TEventArgs EventArgs { get; set; }
 		}
 
-		public static class MVVMRxExtensions
-		{
 
 
-			/// <summary>
-			/// Register a Do action to the observer, Notify the value in this sequence to EventRouter
-			/// </summary>
-			/// <typeparam name="T">Sequence Value Type</typeparam>
-			/// <param name="sequence">value sequence</param>
-			/// <param name="eventRouter"> target </param>
-			/// <param name="source">value source</param>
-			/// <param name="registerName">log name</param>
-			/// <returns>same value sequence inputed</returns>
-			public static IObservable<T> DoNotifyEventRouter<T>(this IObservable<T> sequence, EventRouter eventRouter, object source = null, [CallerMemberName] string registerName = null)
-			{
-				return
-					sequence.Do(
-							v => eventRouter.RaiseEvent(source, v, registerName)
-
-						);
-
-			}
-
-			/// <summary>
-			/// Register a Do action to the observer, Notify the value in this sequence to EventRouter
-			/// </summary>
-			/// <typeparam name="T">Sequence Value Type</typeparam>
-			/// <param name="sequence">value sequence</param>
-			/// <param name="source">value source</param>
-			/// <param name="registerName">log name</param>
-			/// <returns>same value sequence inputed</returns>
-			public static IObservable<T> DoNotifyDefaultEventRouter<T>(this IObservable<T> sequence, object source = null, [CallerMemberName] string registerName = null)
-			{
-				return DoNotifyEventRouter(sequence, EventRouter.Instance, source, registerName);
-			}
-
-
-
-			public static IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task<Tout>> taskBody, CancellationToken cancellationToken)
-			{
-				return sequence.Select
-					(
-						inContext => vm.ExecuteTask(taskBody, inContext, cancellationToken, true)
-					);
-			}
-
-			public static IObservable<Task<Tout>> DoExecuteUITask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task<Tout>> taskBody, CancellationToken cancellationToken)
-			{
-				return sequence.Select
-					(
-						inContext => vm.ExecuteTask(taskBody, inContext, cancellationToken, false)
-					);
-			}
-			public static IObservable<Task> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken)
-			{
-				return sequence.Select
-				(
-					inContext => vm.ExecuteTask(taskBody, inContext, cancellationToken, true)
-				);
-			}
-
-			public static IObservable<Task> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken)
-			{
-				return sequence.Select
-			   (
-				   inContext => vm.ExecuteTask(taskBody, inContext, cancellationToken, false)
-			   );
-			}
-
-
-
-
-
-			public static IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task<Tout>> taskBody)
-			{
-				return sequence.Select
-					(
-						inContext => vm.ExecuteTask(taskBody, inContext, true)
-					);
-			}
-
-			public static IObservable<Task<Tout>> DoExecuteUITask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task<Tout>> taskBody)
-			{
-				return sequence.Select
-					(
-						inContext => vm.ExecuteTask(taskBody, inContext, false)
-					);
-			}
-			public static IObservable<Task> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
-			{
-				return sequence.Select
-				(
-					inContext => vm.ExecuteTask(taskBody, inContext, true)
-				);
-			}
-
-			public static IObservable<Task> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
-			{
-				return sequence.Select
-			   (
-				   inContext => vm.ExecuteTask(taskBody, inContext, false)
-			   );
-			}
-
-			/// <summary>
-			/// <para>Create a instance of IObservable that fires when property changed event is raised.</para>
-			/// <para>创建一个监视属性变化事件观察者IObservable实例。</para>
-			/// </summary>
-			/// <returns></returns>
-			public static IObservable<EventPattern<PropertyChangedEventArgs>> CreatePropertyChangedObservable(this BindableBase bindable)
-			{
-				return Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
-						eh => bindable.PropertyChanged += eh,
-						eh => bindable.PropertyChanged -= eh
-					)
-					.Where(_ => bindable.IsNotificationActivated);
-			}
-
-
-			public static IObservable<EventPattern<NotifyCollectionChangedEventArgs>> GetEventObservable<T>(this ObservableCollection<T> source, BindableBase model)
-			{
-				var rval = Observable
-				  .FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>
-					  (
-						  ev => source.CollectionChanged += ev,
-						  ev => source.CollectionChanged -= ev
-					  ).Where(_ => model.IsNotificationActivated);
-				return rval;
-			}
-			public static IObservable<EventTuple<ValueContainer<TValue>, TValue>> GetNewValueObservable<TValue>
-				(
-					this ValueContainer<TValue> source
-
-				)
-			{
-
-				return Observable.FromEventPattern<EventHandler<ValueChangedEventArgs<TValue>>, ValueChangedEventArgs<TValue>>(
-						eh => source.ValueChanged += eh,
-						eh => source.ValueChanged -= eh)
-						.Select(
-							x => EventTuple.Create(source, x.EventArgs.NewValue)
-
-						);
-
-			}
-
-			public static IObservable<EventTuple<ValueContainer<TValue>, ValueChangedEventArgs<TValue>>>
-				GetEventObservable<TValue>(this ValueContainer<TValue> source)
-			{
-
-				var eventArgSeq = Observable.FromEventPattern<EventHandler<ValueChangedEventArgs<TValue>>, ValueChangedEventArgs<TValue>>(
-						eh => source.ValueChanged += eh,
-						eh => source.ValueChanged -= eh);
-				return eventArgSeq.Select(
-							x => EventTuple.Create(source, x.EventArgs)
-						);
-				;
-			}
-			public static IObservable<object> GetNullObservable(this INotifyChanges source)
-			{
-
-				var eventArgSeq = Observable.FromEventPattern(
-						eh => source.ValueChangedWithNothing += eh,
-						eh => source.ValueChangedWithNothing -= eh);
-				return eventArgSeq.Select(
-							x => null as object
-						);
-				;
-			}
-			public static IObservable<string> GetNamedObservable(this INotifyChanges source)
-			{
-
-				var eventArgSeq = Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
-						eh => source.ValueChangedWithNameOnly += eh,
-						eh => source.ValueChangedWithNameOnly -= eh);
-				return eventArgSeq.Select(
-							x => x.EventArgs.PropertyName
-						);
-				;
-			}
-
-
-			public static IObservable<EventTuple<object, string>> ListenChanged<TModel>(this TModel source,
-					params 	Expression<Func<TModel, object>>[] properties
-				) where TModel : BindableBase<TModel>
-			{
-
-				return source.GetValueContainers(properties)
-					.ToObservable()
-					.SelectMany(x => x.GetNamedObservable().Select(y =>
-						new EventTuple<object, string>()
-					{
-						Source = source,
-						EventArgs = y
-					}));
-
-
-			}
-
-
-			public static IObservable<EventTuple<object, string>> AlsoListenChangedWith<TModel>(this  IObservable<EventTuple<object, string>> sequence,
-				TModel secondSource,
-				params 	Expression<Func<TModel, object>>[] properties
-				) where TModel : BindableBase<TModel>
-			{
-
-				var another = ListenChanged(secondSource);
-				return Observable.Merge(sequence, another);
-
-			}
-
-			public static IObserver<TValue> AsObserver<TValue>(this ValueContainer<TValue> source)
-			{
-				return Observer.Create<TValue>(v => source.SetValueAndTryNotify(v));
-
-			}
-			/// <summary>
-			/// 转化
-			/// </summary>
-			/// <typeparam name="TEventArgs"></typeparam>
-			/// <param name="source"></param>
-			/// <returns></returns>
-			[Obsolete("The source is already  IObservable<RouterEventData<TEventArgs>>")]
-			public static IObservable<RouterEventData<TEventArgs>>
-				GetRouterEventObservable<TEventArgs>(this MVVMSidekick.EventRouting.EventRouter.EventObject<TEventArgs> source)
-#if !NETFX_CORE
- where TEventArgs : EventArgs
-#endif
-			{
-
-
-				return source;
-
-			}
-			/// <summary>
-			/// Bind Command to IsUIBusy property.
-			/// </summary>
-			/// <typeparam name="TCommand">A sub class of ReactiveCommand</typeparam>
-			/// <typeparam name="TResource">The resource type of CommandModel</typeparam>
-			/// <typeparam name="TViewModel">The View Model type command wanna bind to</typeparam>
-			/// <param name="command">Command itself</param>
-			/// <param name="model">The View Model  command wanna bind to</param>
-			/// <param name="canExecuteWhenBusy">if can execute when ui busy , input true</param>
-			/// <returns>command instance itself</returns>
-			public static CommandModel<TCommand, TResource> ListenToIsUIBusy<TCommand, TResource, TViewModel>(this CommandModel<TCommand, TResource> command, ViewModelBase<TViewModel> model, bool canExecuteWhenBusy = false)
-				where TViewModel : ViewModelBase<TViewModel>
-				where TCommand : ReactiveCommand
-			{
-
-				//See Test  CommandListenToUIBusy_Test
-				Observable.Range(0, 1)
-					.Select(x => (x == 0) ? !command.LastCanExecuteValue : command.LastCanExecuteValue)
-					.Concat(
-						model.GetValueContainer(x => x.IsUIBusy)
-						.GetNewValueObservable()
-						.Select(e =>
-							 canExecuteWhenBusy ? canExecuteWhenBusy : (!e.EventArgs)
-						))
-					.Subscribe(command.CommandCore.CanExecuteObserver)
-					.DisposeWith(model);
-
-				return command;
-			}
-
-		}
-
+		/// <summary>
+		/// Class ReactiveCommand.
+		/// </summary>
 		public class ReactiveCommand : EventCommandBase, ICommand, IObservable<EventPattern<EventCommandEventArgs>>
 		{
 
 
 
+			/// <summary>
+			/// The _ lazy observable execute
+			/// </summary>
 			protected Lazy<IObservable<EventPattern<EventCommandEventArgs>>> _LazyObservableExecute;
+			/// <summary>
+			/// The _ lazy observer can execute
+			/// </summary>
 			protected Lazy<IObserver<bool>> _LazyObserverCanExecute;
+			/// <summary>
+			/// The _ current can execute observer value
+			/// </summary>
 			protected bool _CurrentCanExecuteObserverValue;
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ReactiveCommand"/> class.
+			/// </summary>
 			protected ReactiveCommand()
 			{
 				ConfigReactive();
 
 			}
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ReactiveCommand"/> class.
+			/// </summary>
+			/// <param name="canExecute">if set to <c>true</c> [can execute].</param>
 			public ReactiveCommand(bool canExecute = false)
 				: this()
 			{
@@ -366,6 +164,9 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Configurations the reactive.
+			/// </summary>
 			protected void ConfigReactive()
 			{
 				_LazyObservableExecute = new Lazy<IObservable<EventPattern<EventCommandEventArgs>>>
@@ -405,8 +206,17 @@ namespace MVVMSidekick
 
 				);
 			}
+			/// <summary>
+			/// Gets the can execute observer.
+			/// </summary>
+			/// <value>The can execute observer.</value>
 			public IObserver<bool> CanExecuteObserver { get { return _LazyObserverCanExecute.Value; } }
 
+			/// <summary>
+			/// Determines whether this instance can execute the specified parameter.
+			/// </summary>
+			/// <param name="parameter">The parameter.</param>
+			/// <returns><c>true</c> if this instance can execute the specified parameter; otherwise, <c>false</c>.</returns>
 			public override bool CanExecute(object parameter)
 			{
 				return _CurrentCanExecuteObserverValue;
@@ -417,6 +227,11 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Subscribes the specified observer.
+			/// </summary>
+			/// <param name="observer">The observer.</param>
+			/// <returns>IDisposable.</returns>
 			public IDisposable Subscribe(IObserver<EventPattern<EventCommandEventArgs>> observer)
 			{
 				return _LazyObservableExecute
@@ -426,16 +241,32 @@ namespace MVVMSidekick
 		}
 
 
+		/// <summary>
+		/// Class TaskExecutionWindowEventArg.
+		/// </summary>
 		public class TaskExecutionWindowEventArg : EventArgs
 		{
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="TaskExecutionWindowEventArg"/> class.
+			/// </summary>
+			/// <param name="executedTask">The executed task.</param>
+			/// <param name="callingContext">The calling context.</param>
 			public TaskExecutionWindowEventArg(Task executedTask, CallingCodeContext callingContext)
 			{
 				TaskWindow = executedTask.ToObservable();
 				CallingCodeContext = callingContext;
 			}
 
+			/// <summary>
+			/// Gets the task window.
+			/// </summary>
+			/// <value>The task window.</value>
 			public IObservable<Unit> TaskWindow { get; private set; }
+			/// <summary>
+			/// Gets the calling code context.
+			/// </summary>
+			/// <value>The calling code context.</value>
 			public CallingCodeContext CallingCodeContext { get; private set; }
 
 		}
