@@ -88,15 +88,11 @@ namespace System.Windows
 
 #endif
 
-/// <summary>
-/// The MVVMSidekick namespace.
-/// </summary>
+
 namespace MVVMSidekick
 {
 
-	/// <summary>
-	/// The Views namespace.
-	/// </summary>
+	
 	namespace Views
 	{
 
@@ -107,7 +103,7 @@ namespace MVVMSidekick
 		public static class ViewHelper
 		{
 			/// <summary>
-			/// The defaul t_ v m_ name
+			/// The default vm name
 			/// </summary>
 			public static readonly string DEFAULT_VM_NAME = "DesignVM";
 			/// <summary>
@@ -663,8 +659,7 @@ namespace MVVMSidekick
 
 			/// <summary>
 			/// Preserves state associated with this page in case the application is suspended or the
-			/// page is discarded from the navigation cache.  Values must conform to the serialization
-			/// requirements of <see cref="SuspensionManager.SessionState"/>.
+			/// page is discarded from the navigation cache.
 			/// </summary>
 			/// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
 			protected virtual void SaveState(Dictionary<String, Object> pageState)
@@ -791,8 +786,7 @@ namespace MVVMSidekick
 
 			/// <summary>
 			/// Preserves state associated with this page in case the application is suspended or the
-			/// page is discarded from the navigation cache.  Values must conform to the serialization
-			/// requirements of <see cref="SuspensionManager.SessionState"/>.
+			/// page is discarded from the navigation cache. 
 			/// </summary>
 			/// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
 			protected virtual void SaveState(Dictionary<String, Object> pageState)
@@ -957,7 +951,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Maps the view to view model.
 			/// </summary>
-			/// <typeparam name="TControl">The type of the t control.</typeparam>
+			/// <typeparam name="TView">The type of the t view.</typeparam>
 			public static void MapViewToViewModel<TView>()
 			{
 				Func<IViewModel> func;
@@ -1207,9 +1201,7 @@ namespace MVVMSidekick
 			}
 			public static ViewModelToViewMapperServiceLocator<TViewModel> Instance { get; set; }
 
-			/// <summary>
-			/// The control
-			/// </summary>
+		
 
 		}
 		public class ViewModelLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelLocator<TViewModel>, TViewModel>

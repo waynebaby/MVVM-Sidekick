@@ -25,14 +25,10 @@ using Windows.UI.Xaml.Controls;
 using System.Windows;
 using System.Windows.Controls;
 #endif
-/// <summary>
-/// The MVVMSidekick namespace.
-/// </summary>
+
 namespace MVVMSidekick
 {
-	/// <summary>
-	/// The VisualStates namespace.
-	/// </summary>
+
     namespace VisualStates
     {
 		/// <summary>

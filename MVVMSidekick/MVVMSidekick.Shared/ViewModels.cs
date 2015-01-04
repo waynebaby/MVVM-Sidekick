@@ -1108,13 +1108,13 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 根据属性名取得一个值容器
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="TProperty">The type of the property.</typeparam>
 			/// <param name="propertyName">属性名</param>
 			/// <returns>值容器</returns>
 			/// <exception cref="System.Exception">
 			/// Property Not Exists!
 			/// or
-			/// Property ' + propertyName + ' is found but it does not match the property type ' + typeof(TProperty).Name + '!
+			/// Property ' + propertyName + ' is found but it does not match the property type ' + type of(TProperty).Name + '!
 			/// </exception>
 			public ValueContainer<TProperty> GetValueContainer<TProperty>(string propertyName)
 			{

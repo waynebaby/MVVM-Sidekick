@@ -195,13 +195,13 @@ namespace MVVMSidekick
 
 
 
-
+		
 
 			/// <summary>
 			/// Does the execute UI busy task.
 			/// </summary>
-			/// <typeparam name="TViewModel">The type of the t view model.</typeparam>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="Tin">The type of the tin.</typeparam>
+			/// <typeparam name="Tout">The type of the tout.</typeparam>
 			/// <param name="sequence">The sequence.</param>
 			/// <param name="vm">The vm.</param>
 			/// <param name="taskBody">The task body.</param>
@@ -217,8 +217,8 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Does the execute UI task.
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="Tin">The type of the tin.</typeparam>
+			/// <typeparam name="Tout">The type of the tout.</typeparam>
 			/// <param name="sequence">The sequence.</param>
 			/// <param name="vm">The vm.</param>
 			/// <param name="taskBody">The task body.</param>
@@ -230,10 +230,12 @@ namespace MVVMSidekick
 						inContext => vm.ExecuteTask(taskBody, inContext, false)
 					);
 			}
+
+
 			/// <summary>
 			/// Does the execute UI busy task.
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="Tin">The type of the tin.</typeparam>
 			/// <param name="sequence">The sequence.</param>
 			/// <param name="vm">The vm.</param>
 			/// <param name="taskBody">The task body.</param>

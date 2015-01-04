@@ -72,14 +72,10 @@ using System.Windows.Controls.Primitives;
 #endif
 
 
-/// <summary>
-/// The MVVMSidekick namespace.
-/// </summary>
+
 namespace MVVMSidekick
 {
-	/// <summary>
-	/// The Reactive namespace.
-	/// </summary>
+
 	namespace Reactive
 	{
 
