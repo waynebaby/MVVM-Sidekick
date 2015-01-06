@@ -84,9 +84,7 @@ namespace MVVMSidekick
 		/// </summary>
 		public static class EventTuple
 		{
-			/// <summary>
-			/// Creates the specified source.
-			/// </summary>
+			/// <summary>Creates the specified source.</summary>
 			/// <typeparam name="TSource">The type of the t source.</typeparam>
 			/// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
 			/// <param name="source">The source.</param>

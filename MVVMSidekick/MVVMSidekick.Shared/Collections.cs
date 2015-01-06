@@ -72,17 +72,13 @@ using System.Windows.Controls.Primitives;
 #endif
 
 
-/// <summary>
-/// The MVVMSidekick namespace.
-/// </summary>
+
 namespace MVVMSidekick
 {
 
 
 
-	/// <summary>
-	/// The Collections namespace.
-	/// </summary>
+
 	namespace Collections
 	{
 
@@ -265,9 +261,8 @@ namespace MVVMSidekick
 				_core.RemoveAt(index);
 			}
 
-			/// <summary>
-			/// Gets or sets the <see cref="T"/> at the specified index.
-			/// </summary>
+			/// <summary>Gets or sets the <see cref="T" /> at the specified index.</summary>
+			/// <value>The <see cref="T"/>.</value>
 			/// <param name="index">The index.</param>
 			/// <returns>T.</returns>
 			public T this[int index]
@@ -321,6 +316,10 @@ namespace MVVMSidekick
 
 			// *** Protected Methods ***   
 
+
+			/// <summary>
+			/// 	 Clear Items
+			/// </summary>
 			protected override void ClearItems()
 			{
 
@@ -523,7 +522,7 @@ namespace MVVMSidekick
 			/// <para>Transform to a dictionary with INotifyCollectionChanged</para>
 			/// <para>生成一个带有集合变化通知的字典</para>
 			/// </summary>
-			/// <typeparam name="TGroup">The type of the t group.</typeparam>
+			/// <typeparam name="K">The type of the t group.</typeparam>
 			/// <typeparam name="V"><para>Value Type</para><para>值类型</para></typeparam>
 			/// <param name="items"><para>Source Dictionary</para><para>来源字典</para><para></para></param>
 			/// <returns>KeyedObservableCollection&lt;K, V&gt;.</returns>
@@ -658,6 +657,10 @@ namespace MVVMSidekick
 
 #if SILVERLIGHT_5||NET40||WINDOWS_PHONE_7
 			Dictionary<K, V> _shadowDictionary;
+
+
+			/// <summary>Gets the dictionary items.</summary>
+			/// <value>The dictionary items.</value>
 			public IDictionary<K, V> DictionaryItems
 			{
 				get
@@ -706,169 +709,14 @@ namespace MVVMSidekick
 
 #if NETFX_CORE
 
+
+
+
 		namespace CollectionView
 		{
 
 
 
-
-
-			public class CollectionViewIncrementalLoader<T> : ISupportIncrementalLoading
-			{
-				private Func<CollectionView<T>, int, Task<IncrementalLoadResult<T>>> _loadMore;
-				private Func<CollectionView<T>, bool> _hasMore;
-				bool _hasNoMore = false;
-				public CollectionViewIncrementalLoader(Func<CollectionView<T>, int, Task<IncrementalLoadResult<T>>> loadMore = null, Func<CollectionView<T>, bool> hasMore = null)
-				{
-					var canlm = (loadMore != null);
-					var canhm = (hasMore != null);
-
-					if (canlm && canhm)
-					{
-
-						_loadMore = loadMore;
-						_hasMore = hasMore;
-					}
-					else
-					{
-						throw new InvalidOperationException("need both loadMore and hasMore have value ");
-					}
-				}
-
-				public CollectionView<T> CollectionView { get; set; }
-
-				#region ISupportIncrementalLoading Members
-
-
-
-				public bool HasMoreItems
-				{
-					get
-					{
-						if (!_hasNoMore)
-						{
-							_hasNoMore = !_hasMore(CollectionView);
-						}
-						return !_hasNoMore;
-
-					}
-				}
-
-				async Task<LoadMoreItemsResult> InternalLoadMoreItemsAsync(uint count)
-				{
-					var rval = await _loadMore(CollectionView, (int)count);
-
-					_hasNoMore = !rval.HaveMore;
-
-					foreach (var x in rval.NewItems)
-					{
-						CollectionView.Add(x);
-
-					}
-					return new LoadMoreItemsResult { Count = count };
-				}
-
-				#endregion
-
-				#region ISupportIncrementalLoading Members
-
-
-				public Windows.Foundation.IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
-				{
-					return InternalLoadMoreItemsAsync(count).AsAsyncOperation();
-				}
-
-				#endregion
-			}
-
-			public struct IncrementalLoadResult<T>
-			{
-				public IList<T> NewItems { get; set; }
-				public bool HaveMore { get; set; }
-			}
-
-			public class CollectionViewGroupCollectionItem : ICollectionViewGroup
-			{
-
-				public static CollectionViewGroupCollectionItem Create(object group, IObservableVector<object> items)
-				{
-					return new CollectionViewGroupCollectionItem(group, items);
-				}
-
-				public CollectionViewGroupCollectionItem(object group, IObservableVector<object> items)
-				{
-					Group = group;
-					GroupItems = items;
-				}
-
-				public object Group { get; private set; }
-				public IObservableVector<object> GroupItems { get; private set; }
-
-
-
-			}
-
-			public abstract class CollectionViewGroupCollection<TItem> : ObservableVector<CollectionViewGroupCollectionItem>
-			{
-				public static CollectionViewGroupCollection<TItem, TGroupKey, TGroup> Create<TGroupKey, TGroup>(Func<TItem, TGroupKey> groupKeyGetter, Func<TItem, TGroup> groupFactory, Dictionary<TGroupKey, CollectionViewGroupCollectionItem> index = null)
-				{
-					return new CollectionViewGroupCollection<TItem, TGroupKey, TGroup>(groupKeyGetter, groupFactory, index);
-
-				}
-
-				public abstract void AddItemToGroups(object item);
-
-
-				public abstract void RemoveItemFromGroups(object item);
-			}
-			public class CollectionViewGroupCollection<TItem, TGroupKey, TGroup> : CollectionViewGroupCollection<TItem>
-			{
-				public CollectionViewGroupCollection(Func<TItem, TGroupKey> groupKeyGetter, Func<TItem, TGroup> groupFactory, Dictionary<TGroupKey, CollectionViewGroupCollectionItem> index = null)
-				{
-					_groupKeyGetter = groupKeyGetter;
-					_groupFactory = groupFactory;
-
-					_index = index ?? new Dictionary<TGroupKey, CollectionViewGroupCollectionItem>();
-				}
-				Func<TItem, TGroupKey> _groupKeyGetter;
-
-				Dictionary<TGroupKey, CollectionViewGroupCollectionItem> _index;
-				private Func<TItem, TGroup> _groupFactory;
-
-
-				public override void AddItemToGroups(object item)
-				{
-					var itm = (TItem)item;
-					var key = _groupKeyGetter(itm);
-					CollectionViewGroupCollectionItem grp;
-					if (!_index.TryGetValue(key, out grp))
-					{
-						grp = CollectionViewGroupCollectionItem.Create(_groupFactory(itm), new ObservableVector<TItem>());
-						_index.Add(key, grp);
-						Add(grp);
-					}
-
-					grp.GroupItems.Add(item);
-
-				}
-
-				public override void RemoveItemFromGroups(object item)
-				{
-					var key = _groupKeyGetter((TItem)item);
-					CollectionViewGroupCollectionItem grp;
-					if (_index.TryGetValue(key, out grp))
-					{
-						grp.GroupItems.Remove(item);
-						if (grp.GroupItems.Count == 0)
-						{
-							_index.Remove(key);
-							Remove(grp);
-						}
-					}
-
-				}
-
-			}
 
 			/// <summary>
 			/// <para>ICollectionView generic implmention</para>
@@ -936,6 +784,11 @@ namespace MVVMSidekick
 					}
 				}
 
+				/// <summary>
+				/// 	  Set Item
+				/// </summary>
+				/// <param name="index">index</param>
+				/// <param name="item">item </param>
 				protected override void SetItem(int index, T item)
 				{
 					var oldItem = base.Items[index];
@@ -961,7 +814,11 @@ namespace MVVMSidekick
 						_group.Clear();
 					}
 				}
-
+				/// <summary>
+				/// <para>Clear Items</para>
+				/// <para>清除内容</para>
+				/// </summary>
+				/// <param name="index"></param>
 				protected override void RemoveItem(int index)
 				{
 					var olditem = base.Items[index];
@@ -1108,6 +965,8 @@ namespace MVVMSidekick
 				}
 
 
+				/// <summary>Moves the current to first.</summary>
+				/// <returns></returns>
 				public bool MoveCurrentToFirst()
 				{
 					var newIndex = 0;
@@ -1117,18 +976,25 @@ namespace MVVMSidekick
 
 
 
+				/// <summary>Moves the current to last.</summary>
+				/// <returns></returns>
 				public bool MoveCurrentToLast()
 				{
 					var newIndex = Count - 1;
 					return MoveCurrentToPosition(newIndex);
 				}
 
+				/// <summary>Moves the current to next.</summary>
+				/// <returns></returns>
 				public bool MoveCurrentToNext()
 				{
 					var newIndex = CurrentPosition + 1;
 					return MoveCurrentToPosition(newIndex);
 				}
 
+				/// <summary>Moves the current to position.</summary>
+				/// <param name="index">The index.</param>
+				/// <returns></returns>
 				public bool MoveCurrentToPosition(int index)
 				{
 
@@ -1149,6 +1015,8 @@ namespace MVVMSidekick
 
 				}
 
+				/// <summary>Moves the current to previous.</summary>
+				/// <returns></returns>
 				public bool MoveCurrentToPrevious()
 				{
 					var newIndex = CurrentPosition - 1;
@@ -1157,6 +1025,9 @@ namespace MVVMSidekick
 
 
 
+				/// <summary>Moves the current to.</summary>
+				/// <param name="item">The item.</param>
+				/// <returns></returns>
 				public bool MoveCurrentTo(object item)
 				{
 					var index = IndexOf((T)item);
@@ -1166,6 +1037,246 @@ namespace MVVMSidekick
 				#endregion
 
 			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <typeparam name="T"></typeparam>
+			public class CollectionViewIncrementalLoader<T> : ISupportIncrementalLoading
+			{
+				private Func<CollectionView<T>, int, Task<IncrementalLoadResult<T>>> _loadMore;
+				private Func<CollectionView<T>, bool> _hasMore;
+				bool _hasNoMore = false;
+				/// <summary>
+				/// 
+				/// </summary>
+				/// <param name="loadMore"></param>
+				/// <param name="hasMore"></param>
+				public CollectionViewIncrementalLoader(Func<CollectionView<T>, int, Task<IncrementalLoadResult<T>>> loadMore = null, Func<CollectionView<T>, bool> hasMore = null)
+				{
+					var canlm = (loadMore != null);
+					var canhm = (hasMore != null);
+
+					if (canlm && canhm)
+					{
+
+						_loadMore = loadMore;
+						_hasMore = hasMore;
+					}
+					else
+					{
+						throw new InvalidOperationException("need both loadMore and hasMore have value ");
+					}
+				}
+
+				/// <summary>
+				/// Collection View
+				/// </summary>
+
+				public CollectionView<T> CollectionView { get; set; }
+
+				#region ISupportIncrementalLoading Members
+
+
+
+				/// <summary>Gets a value indicating whether this instance has more items.</summary>
+				/// <value>
+				/// <c>true</c> if this instance has more items; otherwise, <c>false</c>.
+				/// </value>
+				public bool HasMoreItems
+				{
+					get
+					{
+						if (!_hasNoMore)
+						{
+							_hasNoMore = !_hasMore(CollectionView);
+						}
+						return !_hasNoMore;
+
+					}
+				}
+
+				/// <summary>Internals the load more items asynchronous.</summary>
+				/// <param name="count">The count.</param>
+				/// <returns></returns>
+				async Task<LoadMoreItemsResult> InternalLoadMoreItemsAsync(uint count)
+				{
+					var rval = await _loadMore(CollectionView, (int)count);
+
+					_hasNoMore = !rval.HaveMore;
+
+					foreach (var x in rval.NewItems)
+					{
+						CollectionView.Add(x);
+
+					}
+					return new LoadMoreItemsResult { Count = count };
+				}
+
+				#endregion
+
+				#region ISupportIncrementalLoading Members
+
+
+				/// <summary>Loads the more items asynchronous.</summary>
+				/// <param name="count">The count.</param>
+				/// <returns></returns>
+				public Windows.Foundation.IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
+				{
+					return InternalLoadMoreItemsAsync(count).AsAsyncOperation();
+				}
+
+				#endregion
+			}
+
+			/// <summary>
+			/// 	  IncrementalLoadResult
+			/// </summary>
+			/// <typeparam name="T"></typeparam>
+			public struct IncrementalLoadResult<T>
+			{
+				/// <summary>
+				/// NewItems
+				/// </summary>
+				public IList<T> NewItems { get; set; }
+				/// <summary>
+				/// HaveMore
+				/// </summary>
+				public bool HaveMore { get; set; }
+			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			public class CollectionViewGroupCollectionItem : ICollectionViewGroup
+			{
+
+				/// <summary>
+				/// Crewate a new 	 CollectionViewGroupCollectionItem
+				/// </summary>
+				/// <param name="group"></param>
+				/// <param name="items"></param>
+				/// <returns></returns>
+				public static CollectionViewGroupCollectionItem Create(object group, IObservableVector<object> items)
+				{
+					return new CollectionViewGroupCollectionItem(group, items);
+				}
+
+				/// <summary>
+				/// Initializes a new instance of the <see cref="CollectionViewGroupCollectionItem"/> class.
+				/// </summary>
+				/// <param name="group">The group.</param>
+				/// <param name="items">The items.</param>
+				public CollectionViewGroupCollectionItem(object group, IObservableVector<object> items)
+				{
+					Group = group;
+					GroupItems = items;
+				}
+
+				/// <summary>Gets the group.</summary>
+				/// <value>The group.</value>
+				public object Group { get; private set; }
+				/// <summary>Gets the group items.</summary>
+				/// <value>The group items.</value>
+				public IObservableVector<object> GroupItems { get; private set; }
+
+
+
+			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <typeparam name="TItem">The type of the item.</typeparam>
+			public abstract class CollectionViewGroupCollection<TItem> : ObservableVector<CollectionViewGroupCollectionItem>
+			{
+				/// <summary>Creates the specified group key getter.</summary>
+				/// <typeparam name="TGroupKey">The type of the group key.</typeparam>
+				/// <typeparam name="TGroup">The type of the group.</typeparam>
+				/// <param name="groupKeyGetter">The group key getter.</param>
+				/// <param name="groupFactory">The group factory.</param>
+				/// <param name="index">The index.</param>
+				/// <returns></returns>
+				public static CollectionViewGroupCollection<TItem, TGroupKey, TGroup> Create<TGroupKey, TGroup>(Func<TItem, TGroupKey> groupKeyGetter, Func<TItem, TGroup> groupFactory, Dictionary<TGroupKey, CollectionViewGroupCollectionItem> index = null)
+				{
+					return new CollectionViewGroupCollection<TItem, TGroupKey, TGroup>(groupKeyGetter, groupFactory, index);
+
+				}
+
+				/// <summary>Adds the item to groups.</summary>
+				/// <param name="item">The item.</param>
+				public abstract void AddItemToGroups(object item);
+
+
+				/// <summary>Removes the item from groups.</summary>
+				/// <param name="item">The item.</param>
+				public abstract void RemoveItemFromGroups(object item);
+			}
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <typeparam name="TItem">The type of the item.</typeparam>
+			/// <typeparam name="TGroupKey">The type of the group key.</typeparam>
+			/// <typeparam name="TGroup">The type of the group.</typeparam>
+			public class CollectionViewGroupCollection<TItem, TGroupKey, TGroup> : CollectionViewGroupCollection<TItem>
+			{
+				/// <summary>
+				/// Initializes a new instance of the <see cref="CollectionViewGroupCollection{TItem, TGroupKey, TGroup}"/> class.
+				/// </summary>
+				/// <param name="groupKeyGetter">The group key getter.</param>
+				/// <param name="groupFactory">The group factory.</param>
+				/// <param name="index">The index.</param>
+				public CollectionViewGroupCollection(Func<TItem, TGroupKey> groupKeyGetter, Func<TItem, TGroup> groupFactory, Dictionary<TGroupKey, CollectionViewGroupCollectionItem> index = null)
+				{
+					_groupKeyGetter = groupKeyGetter;
+					_groupFactory = groupFactory;
+
+					_index = index ?? new Dictionary<TGroupKey, CollectionViewGroupCollectionItem>();
+				}
+				Func<TItem, TGroupKey> _groupKeyGetter;
+
+				Dictionary<TGroupKey, CollectionViewGroupCollectionItem> _index;
+				private Func<TItem, TGroup> _groupFactory;
+
+
+				/// <summary>Adds the item to groups.</summary>
+				/// <param name="item">The item.</param>
+				public override void AddItemToGroups(object item)
+				{
+					var itm = (TItem)item;
+					var key = _groupKeyGetter(itm);
+					CollectionViewGroupCollectionItem grp;
+					if (!_index.TryGetValue(key, out grp))
+					{
+						grp = CollectionViewGroupCollectionItem.Create(_groupFactory(itm), new ObservableVector<TItem>());
+						_index.Add(key, grp);
+						Add(grp);
+					}
+
+					grp.GroupItems.Add(item);
+
+				}
+
+				/// <summary>Removes the item from groups.</summary>
+				/// <param name="item">The item.</param>
+				public override void RemoveItemFromGroups(object item)
+				{
+					var key = _groupKeyGetter((TItem)item);
+					CollectionViewGroupCollectionItem grp;
+					if (_index.TryGetValue(key, out grp))
+					{
+						grp.GroupItems.Remove(item);
+						if (grp.GroupItems.Count == 0)
+						{
+							_index.Remove(key);
+							Remove(grp);
+						}
+					}
+
+				}
+
+			}
+
 
 			//public class GroupedCollectionView<TGroup, TItem> : ObservableVector<TItem>
 			//{
@@ -1178,7 +1289,6 @@ namespace MVVMSidekick
 		}
 
 #endif
-
 	}
 
 }

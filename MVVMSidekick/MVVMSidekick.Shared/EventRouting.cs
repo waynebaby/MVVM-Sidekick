@@ -75,14 +75,9 @@ using System.Windows.Controls.Primitives;
 
 
 
-/// <summary>
-/// The MVVMSidekick namespace.
-/// </summary>
 namespace MVVMSidekick
 {
-	/// <summary>
-	/// The EventRouting namespace.
-	/// </summary>
+	
 	namespace EventRouting
 	{
 

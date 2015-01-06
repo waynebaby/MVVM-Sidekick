@@ -72,15 +72,11 @@ using System.Windows.Controls.Primitives;
 
 #endif
 
-/// <summary>
-/// The MVVMSidekick namespace.
-/// </summary>
+
 namespace MVVMSidekick
 {
 
-	/// <summary>
-	/// The Services namespace.
-	/// </summary>
+	
     namespace Services
     {
 		/// <summary>
@@ -163,7 +159,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Resolves the asynchronous.
 			/// </summary>
-			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="TService"></typeparam>
 			/// <param name="name">The name.</param>
 			/// <param name="paremeter">The paremeter.</param>
 			/// <returns>Task&lt;TService&gt;.</returns>
@@ -644,9 +640,11 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Registers the specified instance.
 			/// </summary>
-			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="TService">The type of the service.</typeparam>
 			/// <param name="instance">The instance.</param>
-			/// <returns>ServiceLocatorEntryStruct&lt;TService&gt;.</returns>
+			/// <returns>
+			/// ServiceLocatorEntryStruct&lt;TService&gt;.
+			/// </returns>
             public ServiceLocatorEntryStruct<TService> Register<TService>(TService instance)
             {
 
@@ -656,10 +654,12 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Registers the specified name.
 			/// </summary>
-			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="TService">The type of the service.</typeparam>
 			/// <param name="name">The name.</param>
 			/// <param name="instance">The instance.</param>
-			/// <returns>ServiceLocatorEntryStruct&lt;TService&gt;.</returns>
+			/// <returns>
+			/// ServiceLocatorEntryStruct&lt;TService&gt;.
+			/// </returns>
             public ServiceLocatorEntryStruct<TService> Register<TService>(string name, TService instance)
             {
                 name = name ?? "";
@@ -678,10 +678,12 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Registers the specified factory.
 			/// </summary>
-			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="TService">The type of the service.</typeparam>
 			/// <param name="factory">The factory.</param>
 			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
-			/// <returns>ServiceLocatorEntryStruct&lt;TService&gt;.</returns>
+			/// <returns>
+			/// ServiceLocatorEntryStruct&lt;TService&gt;.
+			/// </returns>
             public ServiceLocatorEntryStruct<TService> Register<TService>(Func<object, TService> factory, bool alwaysNew = true)
             {
                 return Register<TService>(null, factory, alwaysNew);
@@ -690,11 +692,13 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Registers the specified name.
 			/// </summary>
-			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="TService">The type of the service.</typeparam>
 			/// <param name="name">The name.</param>
 			/// <param name="factory">The factory.</param>
 			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
-			/// <returns>ServiceLocatorEntryStruct&lt;TService&gt;.</returns>
+			/// <returns>
+			/// ServiceLocatorEntryStruct&lt;TService&gt;.
+			/// </returns>
             public ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<object, TService> factory, bool alwaysNew = true)
             {
                 name = name ?? "";
@@ -729,10 +733,12 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Resolves the specified name.
 			/// </summary>
-			/// <typeparam name="TItem1">The type of the t item1.</typeparam>
+			/// <typeparam name="TService">The type of the service.</typeparam>
 			/// <param name="name">The name.</param>
 			/// <param name="paremeters">The paremeters.</param>
-			/// <returns>TService.</returns>
+			/// <returns>
+			/// TService.
+			/// </returns>
             public TService Resolve<TService>(string name = null, object paremeters = null)
             {
                 name = name ?? "";
@@ -809,9 +815,11 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Determines whether the specified name is asynchronous.
 			/// </summary>
-			/// <typeparam name="TProperty">The type of the t property.</typeparam>
+			/// <typeparam name="TService">The type of the service.</typeparam>
 			/// <param name="name">The name.</param>
-			/// <returns><c>true</c> if the specified name is asynchronous; otherwise, <c>false</c>.</returns>
+			/// <returns>
+			///   <c>true</c> if the specified name is asynchronous; otherwise, <c>false</c>.
+			/// </returns>
 			/// <exception cref="System.ArgumentException">No such key</exception>
             public bool IsAsync<TService>(string name = "")
             {
@@ -832,10 +840,12 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Registers the specified asynchronous factory.
 			/// </summary>
-			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="TService">The type of the service.</typeparam>
 			/// <param name="asyncFactory">The asynchronous factory.</param>
 			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
-			/// <returns>ServiceLocatorEntryStruct&lt;TService&gt;.</returns>
+			/// <returns>
+			/// ServiceLocatorEntryStruct&lt;TService&gt;.
+			/// </returns>
             public ServiceLocatorEntryStruct<TService> Register<TService>(Func<object, Task<TService>> asyncFactory, bool alwaysNew = true)
             {
                 return Register(null, asyncFactory, alwaysNew);
@@ -844,7 +854,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Registers the specified name.
 			/// </summary>
-			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="TService"></typeparam>
 			/// <param name="name">The name.</param>
 			/// <param name="asyncFactory">The asynchronous factory.</param>
 			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>

@@ -77,22 +77,13 @@ using System.Windows.Data;
 using System.Windows.Controls.Primitives;
 #endif
 
-/// <summary>
-/// The MVVMSidekick namespace.
-/// </summary>
+
 namespace MVVMSidekick
 {
 
-	/// <summary>
-	/// The Patterns namespace.
-	/// </summary>
+
 	namespace Patterns
 	{
-
-		/// <summary>
-		/// Class ElementBinderBase.
-		/// </summary>
-		/// <typeparam name="TService">The type of the t service.</typeparam>
 	
 		namespace ItemsAndSelection
 		{
@@ -562,9 +553,7 @@ namespace MVVMSidekick
 		}
 
 
-		/// <summary>
-		/// The Tree namespace.
-		/// </summary>
+
 		namespace Tree
 		{
 			/// <summary>

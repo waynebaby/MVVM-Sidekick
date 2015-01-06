@@ -73,20 +73,7 @@ using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #endif
 
-#if (! WPF) && (! NETFX_CORE)
-/// <summary>
-/// The Windows namespace.
-/// </summary>
-namespace System.Windows
-{
 
-
-
-}
-
-
-
-#endif
 
 
 namespace MVVMSidekick
@@ -286,6 +273,10 @@ namespace MVVMSidekick
 			}
 
 			// Using a DependencyProperty as the backing store for IsAutoOwnerSetNeeded.  This enables animation, styling, binding, etc...
+
+			/// <summary>
+			/// Is auto owner set needed property
+			/// </summary>
 			public static readonly DependencyProperty IsAutoOwnerSetNeededProperty =
 				DependencyProperty.Register("IsAutoOwnerSetNeeded", typeof(bool), typeof(MVVMWindow), new PropertyMetadata(true));
 
@@ -395,6 +386,10 @@ namespace MVVMSidekick
 
 
 			// Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
+
+			/// <summary>
+			/// View Model Property
+			/// </summary>
 			public static readonly DependencyProperty ViewModelProperty =
 				DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
 
@@ -557,7 +552,7 @@ namespace MVVMSidekick
 				base.OnNavigatedFrom(e);
 
 #if SILVERLIGHT_5
-                if (ViewModel.StageManager.DefaultStage.NavigateRequestContexts.ContainsKey(e.Uri.ToString()))
+				if (ViewModel.StageManager.DefaultStage.NavigateRequestContexts.ContainsKey(e.Uri.ToString()))
 #else
 				if (e.NavigationMode == NavigationMode.Back)
 #endif
@@ -994,6 +989,12 @@ namespace MVVMSidekick
 
 			}
 #if WPF
+			/// <summary>
+			/// Maps to default.
+			/// </summary>
+			/// <typeparam name="TView">The type of the view.</typeparam>
+			/// <param name="instance">The instance.</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToDefault<TView>(TView instance) where TView : class,IView
 			{
 				MapViewToViewModel<TView>();
@@ -1001,6 +1002,13 @@ namespace MVVMSidekick
 				return this;
 			}
 
+			/// <summary>
+			/// Maps to.
+			/// </summary>
+			/// <typeparam name="TView">The type of the view.</typeparam>
+			/// <param name="viewMappingKey">The view mapping key.</param>
+			/// <param name="instance">The instance.</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, TView instance) where TView : class,IView
 			{
 				MapViewToViewModel<TView>();
@@ -1009,12 +1017,25 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Maps to default.
+			/// </summary>
+			/// <typeparam name="TView">The type of the view.</typeparam>
+			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToDefault<TView>(bool alwaysNew = true) where TView : class,IView
 			{
 				MapViewToViewModel<TView>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
 				return this;
 			}
+			/// <summary>
+			/// Maps to.
+			/// </summary>
+			/// <typeparam name="TView">The type of the view.</typeparam>
+			/// <param name="viewMappingKey">The view mapping key.</param>
+			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, bool alwaysNew = true) where TView : class,IView
 			{
 				MapViewToViewModel<TView>();
@@ -1022,6 +1043,13 @@ namespace MVVMSidekick
 				return this;
 			}
 
+			/// <summary>
+			/// Maps to default.
+			/// </summary>
+			/// <typeparam name="TView">The type of the view.</typeparam>
+			/// <param name="factory">The factory.</param>
+			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToDefault<TView>(Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
 			{
 				MapViewToViewModel<TView>();
@@ -1029,6 +1057,14 @@ namespace MVVMSidekick
 				return this;
 			}
 
+			/// <summary>
+			/// Maps to.
+			/// </summary>
+			/// <typeparam name="TView">The type of the view.</typeparam>
+			/// <param name="viewMappingKey">The view mapping key.</param>
+			/// <param name="factory">The factory.</param>
+			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
 			{
 				MapViewToViewModel<TView>();
@@ -1036,6 +1072,12 @@ namespace MVVMSidekick
 				return this;
 			}
 #else
+			/// <summary>
+			/// Maps to default control.
+			/// </summary>
+			/// <typeparam name="TControl">The type of the control.</typeparam>
+			/// <param name="instance">The instance.</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(TControl instance) where TControl : MVVMControl
 			{
 				MapViewToViewModel<TControl>();
@@ -1043,6 +1085,13 @@ namespace MVVMSidekick
 				return this;
 			}
 
+			/// <summary>
+			/// Maps to control.
+			/// </summary>
+			/// <typeparam name="TControl">The type of the control.</typeparam>
+			/// <param name="viewMappingKey">The view mapping key.</param>
+			/// <param name="instance">The instance.</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, TControl instance) where TControl : MVVMControl
 			{
 				MapViewToViewModel<TControl>();
@@ -1051,12 +1100,25 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Maps to default control.
+			/// </summary>
+			/// <typeparam name="TControl">The type of the control.</typeparam>
+			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(bool alwaysNew = true) where TControl : MVVMControl
 			{
 				MapViewToViewModel<TControl>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
 				return this;
 			}
+			/// <summary>
+			/// Maps to control.
+			/// </summary>
+			/// <typeparam name="TControl">The type of the control.</typeparam>
+			/// <param name="viewMappingKey">The view mapping key.</param>
+			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, bool alwaysNew = true) where TControl : MVVMControl
 			{
 				MapViewToViewModel<TControl>();
@@ -1064,6 +1126,13 @@ namespace MVVMSidekick
 				return this;
 			}
 
+			/// <summary>
+			/// Maps to default control.
+			/// </summary>
+			/// <typeparam name="TControl">The type of the control.</typeparam>
+			/// <param name="factory">The factory.</param>
+			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
 			{
 				MapViewToViewModel<TControl>();
@@ -1071,6 +1140,14 @@ namespace MVVMSidekick
 				return this;
 			}
 
+			/// <summary>
+			/// Maps to control.
+			/// </summary>
+			/// <typeparam name="TControl">The type of the control.</typeparam>
+			/// <param name="viewMappingKey">The view mapping key.</param>
+			/// <param name="factory">The factory.</param>
+			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
 			{
 				MapViewToViewModel<TControl>();
@@ -1080,84 +1157,55 @@ namespace MVVMSidekick
 #endif
 
 #if WINDOWS_PHONE_8||WINDOWS_PHONE_7||SILVERLIGHT_5
-            private static Uri GuessViewUri<TPage>(Uri baseUri) where TPage : MVVMPage
-            {
-                MapViewToViewModel<TPage>();
+			private static Uri GuessViewUri<TPage>(Uri baseUri) where TPage : MVVMPage
+			{
+				MapViewToViewModel<TPage>();
 
-                baseUri = baseUri ?? new Uri("/", UriKind.Relative);
+				baseUri = baseUri ?? new Uri("/", UriKind.Relative);
 
 
-                if (baseUri.IsAbsoluteUri)
-                {
-                    var path = Path.Combine(baseUri.LocalPath, typeof(TPage).Name + ".xaml");
-                    UriBuilder ub = new UriBuilder(baseUri);
-                    ub.Path = path;
-                    return ub.Uri;
-                }
-                else
-                {
-                    var path = Path.Combine(baseUri.OriginalString, typeof(TPage).Name + ".xaml");
-                    var pageUri = new Uri(path, UriKind.Relative);
-                    return pageUri;
-                }
-            }
+				if (baseUri.IsAbsoluteUri)
+				{
+					var path = Path.Combine(baseUri.LocalPath, typeof(TPage).Name + ".xaml");
+					UriBuilder ub = new UriBuilder(baseUri);
+					ub.Path = path;
+					return ub.Uri;
+				}
+				else
+				{
+					var path = Path.Combine(baseUri.OriginalString, typeof(TPage).Name + ".xaml");
+					var pageUri = new Uri(path, UriKind.Relative);
+					return pageUri;
+				}
+			}
 
-            public ViewModelToViewMapper<TModel> MapToDefault<TPage>(Uri baseUri = null) where TPage : MVVMPage
-            {
-				/// <summary>
-				/// Enum ViewType
-				/// </summary>
-                MapViewToViewModel<TPage>();
-                var pageUri = GuessViewUri<TPage>(baseUri);
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(
-                    Tuple.Create<Uri, Func<IView>>(pageUri,
-                    () => Activator.CreateInstance(typeof(TPage)) as IView
-					/// <summary>
-					/// The page
-					/// </summary>
-                    ));
-                return this;
-            }
+			public ViewModelToViewMapper<TModel> MapToDefault<TPage>(Uri baseUri = null) where TPage : MVVMPage
+			{
 
-			/// <summary>
-			/// The window
-			/// </summary>
+				MapViewToViewModel<TPage>();
+				var pageUri = GuessViewUri<TPage>(baseUri);
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(
+					Tuple.Create<Uri, Func<IView>>(pageUri,
+					() => Activator.CreateInstance(typeof(TPage)) as IView));
+
+				return this;
+			}
 
 
 
-            public ViewModelToViewMapper<TModel> MapTo<TPage>(string viewMappingKey, Uri baseUri = null) where TPage : MVVMPage
-			/// <summary>
-			/// The control
-			/// </summary>
-            {
-                MapViewToViewModel<TPage>();
-                var pageUri = GuessViewUri<TPage>(baseUri);
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(Tuple.Create<Uri, Func<IView>>(pageUri,
-                        () => Activator.CreateInstance(typeof(TPage)) as IView
-                        ));
-                return this;
-            }
 
-            //public ViewModelToViewMapper<TModel> MapToDefault(Uri pageUri)
-            //{
-			/// <summary>
-			/// The page
-			/// </summary>
-            //    ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(pageUri);
-            //    return this;
-            //}
 
-			/// <summary>
-			/// The window
-			/// </summary>
-            //public ViewModelToViewMapper<TModel> MapTo(string viewMappingKey, Uri pageUri)
-            //{
-            //    ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, pageUri);
-            //    return this;
-			/// <summary>
-			/// The control
-			/// </summary>
-            //}
+			public ViewModelToViewMapper<TModel> MapTo<TPage>(string viewMappingKey, Uri baseUri = null) where TPage : MVVMPage
+			{
+				MapViewToViewModel<TPage>();
+				var pageUri = GuessViewUri<TPage>(baseUri);
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(Tuple.Create<Uri, Func<IView>>(pageUri,
+						() => Activator.CreateInstance(typeof(TPage)) as IView
+						));
+				return this;
+			}
+
+
 #endif
 #if NETFX_CORE
 
@@ -1195,46 +1243,73 @@ namespace MVVMSidekick
 
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public static class ViewModelToViewMapperHelper
 		{
 
 			internal static Dictionary<Type, Func<IViewModel>> ViewToVMMapping = new Dictionary<Type, Func<IViewModel>>();
 
+			/// <summary>
+			/// Gets the default view model.
+			/// </summary>
+			/// <param name="view">The view.</param>
+			/// <returns></returns>
 			public static IViewModel GetDefaultViewModel(this IView view)
 			{
 				Func<IViewModel> func;
 				var vt = view.GetType();
 				if (ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(vt, out func))
 				{
-					/// <summary>
-					/// The page
-					/// </summary>
+
 					return func();
 				}
 				return null;
 			}
 
+			/// <summary>
+			/// Gets the view mapper.
+			/// </summary>
+			/// <typeparam name="TViewModel">The type of the view model.</typeparam>
+			/// <param name="vmRegisterEntry">The vm register entry.</param>
+			/// <returns></returns>
 			public static ViewModelToViewMapper<TViewModel> GetViewMapper<TViewModel>(this MVVMSidekick.Services.ServiceLocatorEntryStruct<TViewModel> vmRegisterEntry)
 				  where TViewModel : IViewModel
 			{
 				return new ViewModelToViewMapper<TViewModel>();
 			}
-			/// <summary>
-			/// The window
-			/// </summary>
+
 
 		}
+		/// <summary>
+		/// View model to view service locator
+		/// </summary>
+		/// <typeparam name="TViewModel">The type of the view model.</typeparam>
 		public class ViewModelToViewMapperServiceLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelToViewMapperServiceLocator<TViewModel>, object>
 		{
+			/// <summary>
+			/// Constuctor
+			/// </summary>
 			static ViewModelToViewMapperServiceLocator()
 			{
 				Instance = new ViewModelToViewMapperServiceLocator<TViewModel>();
 			}
+
+
+			/// <summary>
+			/// Instance
+			/// </summary>
+
 			public static ViewModelToViewMapperServiceLocator<TViewModel> Instance { get; set; }
 
 
 
 		}
+		/// <summary>
+		/// Locator of view model class
+		/// </summary>
+		/// <typeparam name="TViewModel">The type of the view model.</typeparam>
 		public class ViewModelLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelLocator<TViewModel>, TViewModel>
 			where TViewModel : IViewModel
 		{
@@ -1242,17 +1317,31 @@ namespace MVVMSidekick
 			{
 				Instance = new ViewModelLocator<TViewModel>();
 			}
+			/// <summary>
+			/// Gets or sets the instance.
+			/// </summary>
+			/// <value>
+			/// The instance.
+			/// </value>
 			public static ViewModelLocator<TViewModel> Instance { get; set; }
 
 		}
 
-
+		/// <summary>
+		/// Stage class
+		/// </summary>
 		public class Stage : DependencyObject
 		{
-			public Stage(FrameworkElement target, string beaconKey, StageManager navigator)
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Stage"/> class.
+			/// </summary>
+			/// <param name="target">The target.</param>
+			/// <param name="beaconKey">The beacon key.</param>
+			/// <param name="stageManager">The stageManager.</param>
+			public Stage(FrameworkElement target, string beaconKey, StageManager stageManager)
 			{
 				Target = target;
-				_navigator = navigator;
+				_navigator = stageManager;
 				BeaconKey = beaconKey;
 				//SetupNavigateFrame();
 			}
@@ -1263,6 +1352,12 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Gets the frame.
+			/// </summary>
+			/// <value>
+			/// The frame.
+			/// </value>
 			public Frame Frame
 			{
 				get { return (Frame)GetValue(FrameProperty); }
@@ -1270,11 +1365,20 @@ namespace MVVMSidekick
 			}
 
 			// Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
+			/// <summary>
+			/// The frame property
+			/// </summary>
 			public static readonly DependencyProperty FrameProperty =
 				DependencyProperty.Register("Frame", typeof(Frame), typeof(Stage), new PropertyMetadata(null));
 
 
 
+			/// <summary>
+			/// Gets the target.
+			/// </summary>
+			/// <value>
+			/// The target.
+			/// </value>
 			public FrameworkElement Target
 			{
 				get { return _target; }
@@ -1287,6 +1391,9 @@ namespace MVVMSidekick
 				}
 			}
 #if WPF
+			/// <summary>
+			/// Is go forward supported
+			/// </summary>
 			public bool IsGoForwardSupported
 			{
 				get
@@ -1295,6 +1402,9 @@ namespace MVVMSidekick
 				}
 			}
 
+			/// <summary>
+			/// Can go forward
+			/// </summary>
 			public bool CanGoForward
 			{
 				get
@@ -1304,6 +1414,10 @@ namespace MVVMSidekick
 
 			}
 #else
+
+			/// <summary>
+			/// Is go forward supported
+			/// </summary>
 			public bool IsGoForwardSupported
 			{
 				get
@@ -1311,7 +1425,9 @@ namespace MVVMSidekick
 					return false;
 				}
 			}
-
+			/// <summary>
+			/// Can go forward
+			/// </summary>
 			public bool CanGoForward
 			{
 				get
@@ -1321,6 +1437,13 @@ namespace MVVMSidekick
 
 			}
 #endif
+
+			/// <summary>
+			/// Gets a value indicating whether this instance is go back supported.
+			/// </summary>
+			/// <value>
+			/// <c>true</c> if this instance is go back supported; otherwise, <c>false</c>.
+			/// </value>
 			public bool IsGoBackSupported
 			{
 				get
@@ -1330,6 +1453,12 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Gets a value indicating whether this instance can go back.
+			/// </summary>
+			/// <value>
+			/// <c>true</c> if this instance can go back; otherwise, <c>false</c>.
+			/// </value>
 			public bool CanGoBack
 			{
 				get
@@ -1341,19 +1470,28 @@ namespace MVVMSidekick
 
 
 
-
+			/// <summary>
+			/// Gets the beacon key.
+			/// </summary>
+			/// <value>
+			/// The beacon key.
+			/// </value>
 			public string BeaconKey
 			{
 				get { return (string)GetValue(BeaconKeyProperty); }
 				private set { SetValue(BeaconKeyProperty, value); }
 			}
 
-			// Using a DependencyProperty as the backing store for BeaconKey.  This enables animation, styling, binding, etc...
+			// Using a DependencyProperty as the backing store for BeaconKey.  This enables animation, styling, binding, etc...			
+			/// <summary>
+			/// The beacon key property
+			/// </summary>
 			public static readonly DependencyProperty BeaconKeyProperty =
 				DependencyProperty.Register("BeaconKey", typeof(string), typeof(Stage), new PropertyMetadata(""));
 
 
 #if WPF
+
 			private static IView InternalLocateViewIfNotSet<TTarget>(TTarget targetViewModel, string viewMappingKey, IView view) where TTarget : class, IViewModel
 			{
 				if (targetViewModel != null && targetViewModel.StageManager != null)
@@ -1368,7 +1506,13 @@ namespace MVVMSidekick
 
 
 
-
+			/// <summary>
+			/// Show a view model with mapped view
+			/// </summary>
+			/// <typeparam name="TTarget"></typeparam>
+			/// <param name="targetViewModel"></param>
+			/// <param name="viewMappingKey"></param>
+			/// <returns></returns>
 			public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
 				 where TTarget : class,IViewModel
 			{
@@ -1387,6 +1531,14 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Show a view for view model and return a result when leave view
+			/// </summary>
+			/// <typeparam name="TTarget">View Model Type</typeparam>
+			/// <typeparam name="TResult">result Type</typeparam>
+			/// <param name="targetViewModel">View Model instance</param>
+			/// <param name="viewMappingKey">mapping key</param>
+			/// <returns></returns>
 			public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
 				where TTarget : class,IViewModel<TResult>
 			{
@@ -1407,7 +1559,13 @@ namespace MVVMSidekick
 			}
 
 
-
+			/// <summary>
+			/// Show a view model and return the view model after leave view.
+			/// </summary>
+			/// <typeparam name="TTarget">view model type</typeparam>
+			/// <param name="targetViewModel">view model instance</param>
+			/// <param name="viewMappingKey">mapping key</param>
+			/// <returns></returns>
 			public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
 				where TTarget : class,IViewModel
 			{
@@ -1430,66 +1588,66 @@ namespace MVVMSidekick
 #endif
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||WINDOWS_PHONE_8
 
-            internal Dictionary<string, IViewModel> NavigateRequestContexts
-            {
-                get
-                {
+			internal Dictionary<string, IViewModel> NavigateRequestContexts
+			{
+				get
+				{
 
-                    return GetNavigateRequestContexts(Frame);
-                }
+					return GetNavigateRequestContexts(Frame);
+				}
 
-                set
-                {
-                    SetNavigateRequestContexts(Frame, value);
-                }
+				set
+				{
+					SetNavigateRequestContexts(Frame, value);
+				}
 
-            }
+			}
 
-            public static Dictionary<string, IViewModel> GetNavigateRequestContexts(DependencyObject obj)
-            {
-                return (Dictionary<string, IViewModel>)obj.GetValue(NavigateRequestContextsProperty);
-            }
+			public static Dictionary<string, IViewModel> GetNavigateRequestContexts(DependencyObject obj)
+			{
+				return (Dictionary<string, IViewModel>)obj.GetValue(NavigateRequestContextsProperty);
+			}
 
-            public static void SetNavigateRequestContexts(DependencyObject obj, Dictionary<string, IViewModel> value)
-            {
-                obj.SetValue(NavigateRequestContextsProperty, value);
-            }
+			public static void SetNavigateRequestContexts(DependencyObject obj, Dictionary<string, IViewModel> value)
+			{
+				obj.SetValue(NavigateRequestContextsProperty, value);
+			}
 
-            // Using a DependencyProperty as the backing store for NavigateRequestContexts.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty NavigateRequestContextsProperty =
-                DependencyProperty.RegisterAttached("NavigateRequestContexts", typeof(Dictionary<string, IViewModel>), typeof(Stage), new PropertyMetadata(new Dictionary<string, IViewModel>()));
+			// Using a DependencyProperty as the backing store for NavigateRequestContexts.  This enables animation, styling, binding, etc...
+			public static readonly DependencyProperty NavigateRequestContextsProperty =
+				DependencyProperty.RegisterAttached("NavigateRequestContexts", typeof(Dictionary<string, IViewModel>), typeof(Stage), new PropertyMetadata(new Dictionary<string, IViewModel>()));
 
-            public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-                 where TTarget : class,IViewModel
-            {
+			public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
+				 where TTarget : class,IViewModel
+			{
 
-                var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
+				var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
 
 
 
-                Tuple<Uri, Func<IView>> uriData;
-                uriData = item as Tuple<Uri, Func<IView>>;
-                if (uriData != null) //only sl like page Can be registered as uri
-                {
-                    Frame frame;
-                    if ((frame = Target as Frame) != null)
-                    {
-                        targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
-                        await targetViewModel.WaitForClose();
-                        return;
-                    }
-                    else
-                    {
-                        item = uriData.Item2();
-                    }
-                }
+				Tuple<Uri, Func<IView>> uriData;
+				uriData = item as Tuple<Uri, Func<IView>>;
+				if (uriData != null) //only sl like page Can be registered as uri
+				{
+					Frame frame;
+					if ((frame = Target as Frame) != null)
+					{
+						targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
+						await targetViewModel.WaitForClose();
+						return;
+					}
+					else
+					{
+						item = uriData.Item2();
+					}
+				}
 
-                IView view = item as IView;
-                targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-                SetVMAfterLoad(targetViewModel, view);
-                InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-                await targetViewModel.WaitForClose();
-            }
+				IView view = item as IView;
+				targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+				SetVMAfterLoad(targetViewModel, view);
+				InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+				await targetViewModel.WaitForClose();
+			}
 
 
 			//public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
@@ -1520,73 +1678,73 @@ namespace MVVMSidekick
 			//	return await targetViewModel.WaitForCloseWithResult();
 			//}
 
-            private async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Tuple<Uri, Func<IView>> uriData, Frame frame) where TTarget : class,IViewModel
-            {
-                var t = new TaskCompletionSource<object>();
-                var guid = Guid.NewGuid();
-                var newUriWithParameter = new Uri(uriData.Item1.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
+			private async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Tuple<Uri, Func<IView>> uriData, Frame frame) where TTarget : class,IViewModel
+			{
+				var t = new TaskCompletionSource<object>();
+				var guid = Guid.NewGuid();
+				var newUriWithParameter = new Uri(uriData.Item1.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
 
-                var dis = EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
+				var dis = EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
 
-                    .Where(e =>
-                            e.EventArgs.Uri == newUriWithParameter)
-                    .Subscribe(e =>
-                    {
-                        var key = newUriWithParameter.ToString();
+					.Where(e =>
+							e.EventArgs.Uri == newUriWithParameter)
+					.Subscribe(e =>
+					{
+						var key = newUriWithParameter.ToString();
 
-                        lock (NavigateRequestContexts)
-                        {
-                            IViewModel vm = null;
+						lock (NavigateRequestContexts)
+						{
+							IViewModel vm = null;
 
-                            if (NavigateRequestContexts.TryGetValue(key, out vm))
-                            {
-                                targetViewModel = vm as TTarget;
-                            }
+							if (NavigateRequestContexts.TryGetValue(key, out vm))
+							{
+								targetViewModel = vm as TTarget;
+							}
 
-                            var page = e.Sender as MVVMPage;
+							var page = e.Sender as MVVMPage;
 
-                            if (targetViewModel != null)
-                            {
-                                page.ViewModel = targetViewModel;
-               
-                            }
-                            else
-                            {
-                                var solveV = page.GetDefaultViewModel();
-                                if (solveV != null)
-                                {
+							if (targetViewModel != null)
+							{
+								page.ViewModel = targetViewModel;
 
-                                    page.ViewModel = solveV;
-                                }
+							}
+							else
+							{
+								var solveV = page.GetDefaultViewModel();
+								if (solveV != null)
+								{
 
-                            }
+									page.ViewModel = solveV;
+								}
 
-                            targetViewModel = (TTarget)page.ViewModel;
-                            NavigateRequestContexts[key] = targetViewModel;
-                        }
-                        if (!t.Task.IsCompleted)
-                        {
+							}
 
-                            targetViewModel.AddDisposeAction(() =>
-                            {
-                                lock (NavigateRequestContexts)
-                                {
-                                    NavigateRequestContexts.Remove(key);
-                                }
+							targetViewModel = (TTarget)page.ViewModel;
+							NavigateRequestContexts[key] = targetViewModel;
+						}
+						if (!t.Task.IsCompleted)
+						{
 
-                            });
-                            t.SetResult(null);
-                        }
-                    }
-                    );
+							targetViewModel.AddDisposeAction(() =>
+							{
+								lock (NavigateRequestContexts)
+								{
+									NavigateRequestContexts.Remove(key);
+								}
+
+							});
+							t.SetResult(null);
+						}
+					}
+					);
 
 
 
-                frame.Navigate(newUriWithParameter);
-                await t.Task;
-                dis.DisposeWith(targetViewModel);
-                return targetViewModel;
-            }
+				frame.Navigate(newUriWithParameter);
+				await t.Task;
+				dis.DisposeWith(targetViewModel);
+				return targetViewModel;
+			}
 
 
 
@@ -1871,6 +2029,10 @@ Please check startup function of this mapping is well configured and be proper c
 			{
 				NavigatorBeaconsKey = "NavigatorBeaconsKey";
 			}
+			/// <summary>
+			/// Initializes a new instance of the <see cref="StageManager"/> class.
+			/// </summary>
+			/// <param name="viewModel">The view model.</param>
 			public StageManager(IViewModel viewModel)
 			{
 				_ViewModel = viewModel;
@@ -1911,6 +2073,10 @@ Please check startup function of this mapping is well configured and be proper c
 
 
 
+			/// <summary>
+			/// Initializes the parent.
+			/// </summary>
+			/// <param name="parentLocator">The parent locator.</param>
 			public void InitParent(Func<DependencyObject> parentLocator)
 			{
 				_parentLocator = parentLocator;
@@ -1930,6 +2096,11 @@ Please check startup function of this mapping is well configured and be proper c
 			[AttachedPropertyBrowsableForType(typeof(Frame))]
 			[AttachedPropertyBrowsableForType(typeof(Window))]
 #endif
+			/// <summary>
+			/// Gets the beacon.
+			/// </summary>
+			/// <param name="obj">The object.</param>
+			/// <returns></returns>
 			public static string GetBeacon(DependencyObject obj)
 			{
 				return (string)obj.GetValue(BeaconProperty);
@@ -1941,11 +2112,18 @@ Please check startup function of this mapping is well configured and be proper c
 			[AttachedPropertyBrowsableForType(typeof(Window))]
 #endif
 
+
+			/// <summary>Sets the beacon.</summary>
+			/// <param name="obj">The object.</param>
+			/// <param name="value">The value.</param>
 			public static void SetBeacon(DependencyObject obj, string value)
 			{
 				obj.SetValue(BeaconProperty, value);
 			}
 
+			/// <summary>
+			/// The beacon property
+			/// </summary>
 			public static readonly DependencyProperty BeaconProperty =
 				DependencyProperty.RegisterAttached("Beacon", typeof(string), typeof(StageManager), new PropertyMetadata(null,
 					   (o, p) =>
@@ -2019,6 +2197,11 @@ Please check startup function of this mapping is well configured and be proper c
 				return dic;
 			}
 
+			/// <summary>
+			/// Registers the target beacon.
+			/// </summary>
+			/// <param name="name">The name.</param>
+			/// <param name="target">The target.</param>
 			public static void RegisterTargetBeacon(string name, FrameworkElement target)
 			{
 				var view = LocateIView(target);
@@ -2053,6 +2236,12 @@ Please check startup function of this mapping is well configured and be proper c
 
 
 
+			/// <summary>
+			/// Gets or sets the default stage.
+			/// </summary>
+			/// <value>
+			/// The default stage.
+			/// </value>
 			public Stage DefaultStage
 			{
 				get { return (Stage)GetValue(DefaultTargetProperty); }
@@ -2060,11 +2249,22 @@ Please check startup function of this mapping is well configured and be proper c
 			}
 
 			// Using a DependencyProperty as the backing store for DefaultTarget.  This enables animation, styling, binding, etc...
+			/// <summary>
+			/// The default target property
+			/// </summary>
 			public static readonly DependencyProperty DefaultTargetProperty =
 				DependencyProperty.Register("DefaultTarget", typeof(Stage), typeof(StageManager), new PropertyMetadata(null));
 
 
 
+			/// <summary>
+			/// Gets the <see cref="Stage"/> with the specified beacon key.
+			/// </summary>
+			/// <value>
+			/// The <see cref="Stage"/>.
+			/// </value>
+			/// <param name="beaconKey">The beacon key.</param>
+			/// <returns></returns>
 			public Stage this[string beaconKey]
 			{
 				get
@@ -2082,9 +2282,14 @@ Please check startup function of this mapping is well configured and be proper c
 
 
 
-
+		/// <summary>
+		///  A bridge binds two Dependency property
+		/// </summary>
 		public class PropertyBridge : FrameworkElement
 		{
+			/// <summary>
+			/// Initializes a new instance of the <see cref="PropertyBridge"/> class.
+			/// </summary>
 			public PropertyBridge()
 			{
 				base.Width = 0;

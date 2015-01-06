@@ -1,4 +1,4 @@
-﻿using MVVMSidekick.EventRouting;
+﻿
 // ***********************************************************************
 // Assembly         : MVVMSidekick
 // Author           : waywa
@@ -73,18 +73,14 @@ using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #endif
 
-/// <summary>
-/// The MVVMSidekick namespace.
-/// </summary>
+
 namespace MVVMSidekick
 {
-	/// <summary>
-	/// The Reactive namespace.
-	/// </summary>
-    namespace  Reactive
-    {
+
+	namespace Reactive
+	{
 		/// <summary>
-		/// Class MVVMRxExtensions.
+		/// 		 MVVMRxExtensions
 		/// </summary>
 		public static class MVVMRxExtensions
 		{
@@ -93,12 +89,14 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Register a Do action to the observer, Notify the value in this sequence to EventRouter
 			/// </summary>
-			/// <typeparam name="TCommand">The type of the t command.</typeparam>
+			/// <typeparam name="T"></typeparam>
 			/// <param name="sequence">value sequence</param>
 			/// <param name="eventRouter">target</param>
 			/// <param name="source">value source</param>
 			/// <param name="registerName">log name</param>
-			/// <returns>same value sequence inputed</returns>
+			/// <returns>
+			/// same value sequence inputed
+			/// </returns>
 			public static IObservable<T> DoNotifyEventRouter<T>(this IObservable<T> sequence, EventRouter eventRouter, object source = null, [CallerMemberName] string registerName = null)
 			{
 				return
@@ -112,11 +110,13 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Register a Do action to the observer, Notify the value in this sequence to EventRouter
 			/// </summary>
-			/// <typeparam name="TResource">The type of the t resource.</typeparam>
+			/// <typeparam name="T"></typeparam>
 			/// <param name="sequence">value sequence</param>
 			/// <param name="source">value source</param>
 			/// <param name="registerName">log name</param>
-			/// <returns>same value sequence inputed</returns>
+			/// <returns>
+			/// same value sequence inputed
+			/// </returns>
 			public static IObservable<T> DoNotifyDefaultEventRouter<T>(this IObservable<T> sequence, object source = null, [CallerMemberName] string registerName = null)
 			{
 				return DoNotifyEventRouter(sequence, EventRouter.Instance, source, registerName);
@@ -127,13 +127,15 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Does the execute UI busy task.
 			/// </summary>
-			/// <typeparam name="TViewModel">The type of the t view model.</typeparam>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="Tin">The type of the in.</typeparam>
+			/// <typeparam name="Tout">The type of the out.</typeparam>
 			/// <param name="sequence">The sequence.</param>
 			/// <param name="vm">The vm.</param>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="cancellationToken">The cancellation token.</param>
-			/// <returns>IObservable&lt;Task&lt;Tout&gt;&gt;.</returns>
+			/// <returns>
+			/// IObservable&lt;Task&lt;Tout&gt;&gt;.
+			/// </returns>
 			public static IObservable<Task<Tout>> DoExecuteUIBusyTask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task<Tout>> taskBody, CancellationToken cancellationToken)
 			{
 				return sequence.Select
@@ -145,13 +147,15 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Does the execute UI task.
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="Tin">The type of the in.</typeparam>
+			/// <typeparam name="Tout">The type of the out.</typeparam>
 			/// <param name="sequence">The sequence.</param>
 			/// <param name="vm">The vm.</param>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="cancellationToken">The cancellation token.</param>
-			/// <returns>IObservable&lt;Task&lt;Tout&gt;&gt;.</returns>
+			/// <returns>
+			/// IObservable&lt;Task&lt;Tout&gt;&gt;.
+			/// </returns>
 			public static IObservable<Task<Tout>> DoExecuteUITask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task<Tout>> taskBody, CancellationToken cancellationToken)
 			{
 				return sequence.Select
@@ -162,12 +166,14 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Does the execute UI busy task.
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="Tin">The type of the in.</typeparam>
 			/// <param name="sequence">The sequence.</param>
 			/// <param name="vm">The vm.</param>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="cancellationToken">The cancellation token.</param>
-			/// <returns>IObservable&lt;Task&gt;.</returns>
+			/// <returns>
+			/// IObservable&lt;Task&gt;.
+			/// </returns>
 			public static IObservable<Task> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken)
 			{
 				return sequence.Select
@@ -179,12 +185,14 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Does the execute UI task.
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="Tin">The type of the in.</typeparam>
 			/// <param name="sequence">The sequence.</param>
 			/// <param name="vm">The vm.</param>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="cancellationToken">The cancellation token.</param>
-			/// <returns>IObservable&lt;Task&gt;.</returns>
+			/// <returns>
+			/// IObservable&lt;Task&gt;.
+			/// </returns>
 			public static IObservable<Task> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken)
 			{
 				return sequence.Select
@@ -195,7 +203,7 @@ namespace MVVMSidekick
 
 
 
-		
+
 
 			/// <summary>
 			/// Does the execute UI busy task.
@@ -239,7 +247,9 @@ namespace MVVMSidekick
 			/// <param name="sequence">The sequence.</param>
 			/// <param name="vm">The vm.</param>
 			/// <param name="taskBody">The task body.</param>
-			/// <returns>IObservable&lt;Task&gt;.</returns>
+			/// <returns>
+			/// IObservable&lt;Task&gt;.
+			/// </returns>
 			public static IObservable<Task> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
 			{
 				return sequence.Select
@@ -248,10 +258,8 @@ namespace MVVMSidekick
 				);
 			}
 
-			/// <summary>
-			/// Does the execute UI task.
-			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <summary>Does the execute UI task.</summary>
+			/// <typeparam name="Tin">The type of the in.</typeparam>
 			/// <param name="sequence">The sequence.</param>
 			/// <param name="vm">The vm.</param>
 			/// <param name="taskBody">The task body.</param>
@@ -283,10 +291,12 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Gets the event observable.
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="T"></typeparam>
 			/// <param name="source">The source.</param>
 			/// <param name="model">The model.</param>
-			/// <returns>IObservable&lt;EventPattern&lt;NotifyCollectionChangedEventArgs&gt;&gt;.</returns>
+			/// <returns>
+			/// IObservable&lt;EventPattern&lt;NotifyCollectionChangedEventArgs&gt;&gt;.
+			/// </returns>
 			public static IObservable<EventPattern<NotifyCollectionChangedEventArgs>> GetEventObservable<T>(this ObservableCollection<T> source, BindableBase model)
 			{
 				var rval = Observable
@@ -297,12 +307,12 @@ namespace MVVMSidekick
 					  ).Where(_ => model.IsNotificationActivated);
 				return rval;
 			}
-			/// <summary>
-			/// Gets the new value observable.
-			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <summary>Gets the new value observable.</summary>
+			/// <typeparam name="TValue">The type of the value.</typeparam>
 			/// <param name="source">The source.</param>
-			/// <returns>IObservable&lt;EventTuple&lt;ValueContainer&lt;TValue&gt;, TValue&gt;&gt;.</returns>
+			/// <returns>
+			/// IObservable&lt;EventTuple&lt;ValueContainer&lt;TValue&gt;, TValue&gt;&gt;.
+			/// </returns>
 			public static IObservable<EventTuple<ValueContainer<TValue>, TValue>> GetNewValueObservable<TValue>
 				(
 					this ValueContainer<TValue> source
@@ -320,12 +330,12 @@ namespace MVVMSidekick
 
 			}
 
-			/// <summary>
-			/// Gets the event observable.
-			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <summary>Gets the event observable.</summary>
+			/// <typeparam name="TValue">The type of the t service.</typeparam>
 			/// <param name="source">The source.</param>
-			/// <returns>IObservable&lt;EventTuple&lt;ValueContainer&lt;TValue&gt;, ValueChangedEventArgs&lt;TValue&gt;&gt;&gt;.</returns>
+			/// <returns>
+			/// IObservable&lt;EventTuple&lt;ValueContainer&lt;TValue&gt;, ValueChangedEventArgs&lt;TValue&gt;&gt;&gt;.
+			/// </returns>
 			public static IObservable<EventTuple<ValueContainer<TValue>, ValueChangedEventArgs<TValue>>>
 				GetEventObservable<TValue>(this ValueContainer<TValue> source)
 			{
@@ -475,5 +485,5 @@ namespace MVVMSidekick
 			}
 
 		}
-    }
+	}
 }

@@ -75,15 +75,10 @@ using System.Windows.Controls.Primitives;
 
 
 
-/// <summary>
-/// The MVVMSidekick namespace.
-/// </summary>
+
 namespace MVVMSidekick
 {
 
-	/// <summary>
-	/// The Commands namespace.
-	/// </summary>
     namespace Commands
     {
 		/// <summary>
@@ -226,9 +221,7 @@ namespace MVVMSidekick
 
 
 
-		/// <summary>
-		/// The EventBinding namespace.
-		/// </summary>
+		
         namespace EventBinding
         {
 

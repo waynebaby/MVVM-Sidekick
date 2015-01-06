@@ -64,14 +64,10 @@ using System.Windows.Threading;
 
 
 
-/// <summary>
-/// The MVVMSidekick namespace.
-/// </summary>
+
 namespace MVVMSidekick
 {
-	/// <summary>
-	/// The ViewModels namespace.
-	/// </summary>
+	
 	namespace ViewModels
 	{
 		using MVVMSidekick.Utilities;
@@ -858,11 +854,13 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Create a Tuple
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="TItem1">The type of the item1.</typeparam>
+			/// <typeparam name="TItem2">The type of the item2.</typeparam>
 			/// <param name="item1">The item1.</param>
 			/// <param name="item2">The item2.</param>
-			/// <returns>BindableTuple&lt;TItem1, TItem2&gt;.</returns>
+			/// <returns>
+			/// BindableTuple&lt;TItem1, TItem2&gt;.
+			/// </returns>
 
 			public static BindableTuple<TItem1, TItem2> Create<TItem1, TItem2>(TItem1 item1, TItem2 item2)
 			{
@@ -916,7 +914,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 清除值
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="T"></typeparam>
 			/// <param name="property">The property.</param>
 			public void ResetPropertyValue<T>(Property<T> property)
 			{
@@ -1092,10 +1090,12 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 注册一个属性容器的定位器。
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="TProperty">The type of the property.</typeparam>
 			/// <param name="propertyName">属性名</param>
 			/// <param name="getOrCreateLocatorMethod">属性定位/创建方法 也就是定位器</param>
-			/// <returns>注册后的定位器</returns>
+			/// <returns>
+			/// 注册后的定位器
+			/// </returns>
 			protected static Func<BindableBase, ValueContainer<TProperty>> RegisterContainerLocator<TProperty>(string propertyName, Func<TSubClassType, ValueContainer<TProperty>> getOrCreateLocatorMethod)
 			{
 
@@ -1141,9 +1141,11 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 根据表达式树取得一个值容器
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="TProperty">The type of the property.</typeparam>
 			/// <param name="expression">表达式树</param>
-			/// <returns>值容器</returns>
+			/// <returns>
+			/// 值容器
+			/// </returns>
 			public ValueContainer<TProperty> GetValueContainer<TProperty>(Expression<Func<TSubClassType, TProperty>> expression)
 			{
 				var propName = MVVMSidekick.Utilities.ExpressionHelper.GetPropertyName<TSubClassType, TProperty>(expression);
@@ -1266,7 +1268,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Copyrefs the specified source.
 			/// </summary>
-			/// <typeparam name="TToken">The type of the t token.</typeparam>
+			/// <typeparam name="T"></typeparam>
 			/// <param name="source">The source.</param>
 			/// <param name="target">The target.</param>
 			static void Copyref<T>(T source, ref T target)
@@ -2338,8 +2340,7 @@ namespace MVVMSidekick
 
 			/// <summary>
 			/// Preserves state associated with this page in case the application is suspended or the
-			/// page is discarded from the navigation cache.  Values must conform to the serialization
-			/// requirements of <see cref="SuspensionManager.SessionState"/>.
+			/// page is discarded from the navigation cache. 
 			/// </summary>
 			/// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
 			public virtual void SaveState(Dictionary<String, Object> pageState)
@@ -2526,12 +2527,14 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Executes the task.
 			/// </summary>
-			/// <typeparam name="TNodeValue">The type of the t node value.</typeparam>
+			/// <typeparam name="Tin">The type of the in.</typeparam>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="inputContext">The input context.</param>
 			/// <param name="cancellationToken">The cancellation token.</param>
 			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
-			/// <returns>Task.</returns>
+			/// <returns>
+			/// Task.
+			/// </returns>
 			public virtual async Task ExecuteTask<Tin>(Func<Tin, CancellationToken, Task> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true)
 			{
 
@@ -2557,11 +2560,13 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Executes the task.
 			/// </summary>
-			/// <typeparam name="TNodeValue">The type of the t node value.</typeparam>
+			/// <typeparam name="Tin">The type of the in.</typeparam>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="inputContext">The input context.</param>
 			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
-			/// <returns>Task.</returns>
+			/// <returns>
+			/// Task.
+			/// </returns>
 			public virtual async Task ExecuteTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true)
 			{
 				await ExecuteTask<Tin, object>(async (i, c) => { await taskBody(i); return null; }, inputContext, CancellationToken.None, UIBusyWhenExecuting);
@@ -2571,10 +2576,12 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Executes the task.
 			/// </summary>
-			/// <typeparam name="TState">The type of the t state.</typeparam>
+			/// <typeparam name="Tout">The type of the out.</typeparam>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
-			/// <returns>Task&lt;Tout&gt;.</returns>
+			/// <returns>
+			/// Task&lt;Tout&gt;.
+			/// </returns>
 			public virtual async Task<Tout> ExecuteTask<Tout>(Func<Task<Tout>> taskBody, bool UIBusyWhenExecuting = true)
 			{
 				return await ExecuteTask<object, Tout>(

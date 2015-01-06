@@ -78,14 +78,10 @@ using Microsoft.Phone.Reactive;
 #endif
 
 
-/// <summary>
-/// The MVVMSidekick namespace.
-/// </summary>
+
 namespace MVVMSidekick
 {
-	/// <summary>
-	/// The Utilities namespace.
-	/// </summary>
+
 	namespace Utilities
 	{
 
@@ -238,9 +234,11 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Froms the result.
 			/// </summary>
-			/// <typeparam name="TService">The type of the t service.</typeparam>
+			/// <typeparam name="T"></typeparam>
 			/// <param name="result">The result.</param>
-			/// <returns>Task&lt;T&gt;.</returns>
+			/// <returns>
+			/// Task&lt;T&gt;.
+			/// </returns>
 			public static async Task<T> FromResult<T>(T result)
 			{
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||NET40
@@ -412,13 +410,7 @@ namespace MVVMSidekick
 			/// <param name="executeAction">The execute action.</param>
 			/// <returns>IDisposable.</returns>
 			public static IDisposable BindEvent(this object sender, string eventName, EventHandlerInvoker executeAction)
-			/// <summary>
-			/// Delegate EventHandlerInvoker
-			/// </summary>
-			/// <param name="sender">The sender.</param>
-			/// <param name="eventArgs">The event arguments.</param>
-			/// <param name="eventName">Name of the event.</param>
-			/// <param name="eventHandlerType">Type of the event handler.</param>
+		
 			{
 
 
@@ -491,7 +483,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Wins the rt event bind.
 			/// </summary>
-			/// <typeparam name="TProperty">The type of the t property.</typeparam>
+			/// <typeparam name="THandler">The type of the t property.</typeparam>
 			/// <param name="sender">The sender.</param>
 			/// <param name="ei">The ei.</param>
 			/// <param name="handler">The handler.</param>
@@ -565,11 +557,13 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Matches the or default.
 			/// </summary>
-			/// <typeparam name="T"></typeparam>
-			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="TKey">The type of the key.</typeparam>
+			/// <typeparam name="TValue">The type of the value.</typeparam>
 			/// <param name="dic">The dic.</param>
 			/// <param name="key">The key.</param>
-			/// <returns>TValue.</returns>
+			/// <returns>
+			/// TValue.
+			/// </returns>
 			public static TValue MatchOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dic, TKey key)
 			{
 				TValue val = default(TValue);
@@ -628,10 +622,12 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Gets the name of the property.
 			/// </summary>
-			/// <typeparam name="TSource">The type of the t source.</typeparam>
+			/// <typeparam name="TSubClassType">The type of the sub class type.</typeparam>
 			/// <typeparam name="TProperty">The type of the t property.</typeparam>
 			/// <param name="expression">The expression.</param>
-			/// <returns>System.String.</returns>
+			/// <returns>
+			/// System.String.
+			/// </returns>
 			public static string GetPropertyName<TSubClassType, TProperty>(Expression<Func<TSubClassType, TProperty>> expression)
 			{
 				MemberExpression body = expression.Body as MemberExpression;
@@ -644,10 +640,12 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Gets the name of the property.
 			/// </summary>
-			/// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
+			/// <typeparam name="TSubClassType">The type of the sub class type.</typeparam>
 			/// <param name="expression">The expression.</param>
-			/// <returns>System.String.</returns>
-			/// <exception cref="System.InvalidOperationException">The expression inputed should be like \x=>x.PropertyName\ but currently is not: + expression.ToString()</exception>
+			/// <returns>
+			/// System.String.
+			/// </returns>
+			/// <exception cref="System.InvalidOperationException">The expression inputed should be like \x=&gt;x.PropertyName\ but currently is not: + expression.ToString()</exception>
 			public static string GetPropertyName<TSubClassType>(Expression<Func<TSubClassType, object>> expression)
 			{
 				MemberExpression body = expression.Body as MemberExpression;
@@ -682,7 +680,7 @@ namespace MVVMSidekick
 		/// <summary>
 		/// Class ConcurrentDictionary.
 		/// </summary>
-		/// <typeparam name="TProperty">The type of the t property.</typeparam>
+		/// <typeparam name="TK">The type of the t property.</typeparam>
 		/// <typeparam name="TV">The type of the tv.</typeparam>
 		public class ConcurrentDictionary<TK, TV> : Dictionary<TK, TV>
 		{
