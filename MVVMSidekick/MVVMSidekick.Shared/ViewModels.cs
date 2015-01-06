@@ -1018,7 +1018,9 @@ namespace MVVMSidekick
 			 _plainPropertyContainerGetters =
 			 new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
 #else
-
+			/// <summary>
+			/// The _plain property container getters
+			/// </summary>
 			protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
 				_plainPropertyContainerGetters =
 				new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
@@ -1936,59 +1938,60 @@ namespace MVVMSidekick
 			/// </summary>
 			/// <value>The stage manager.</value>
 			MVVMSidekick.Views.StageManager StageManager { get; set; }
+
+
 			/// <summary>
 			/// Executes the task.
 			/// </summary>
-			/// <typeparam name="TValue">The type of the t value.</typeparam>
-			/// <typeparam name="TValue">The type of the t value.</typeparam>
+			/// <typeparam name="Tin">The type of the in.</typeparam>
+			/// <typeparam name="Tout">The type of the out.</typeparam>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="inputContext">The input context.</param>
 			/// <param name="cancellationToken">The cancellation token.</param>
 			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
-			/// <returns>Task&lt;Tout&gt;.</returns>
+			/// <returns></returns>
 			Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true);
 
 			/// <summary>
 			/// Executes the task.
 			/// </summary>
-			/// <typeparam name="TSubType">The type of the t sub type.</typeparam>
+			/// <typeparam name="Tin">The type of the in.</typeparam>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="inputContext">The input context.</param>
 			/// <param name="cancellationToken">The cancellation token.</param>
 			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
-			/// <returns>Task.</returns>
+			/// <returns>in value</returns>
 			Task ExecuteTask<Tin>(Func<Tin, CancellationToken, Task> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true);
-
 
 
 			/// <summary>
 			/// Executes the task.
 			/// </summary>
-			/// <typeparam name="TValue">The type of the t value.</typeparam>
-			/// <typeparam name="TValue">The type of the t value.</typeparam>
+			/// <typeparam name="Tin">The type of the in.</typeparam>
+			/// <typeparam name="Tout">The type of the out.</typeparam>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="inputContext">The input context.</param>
 			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
-			/// <returns>Task&lt;Tout&gt;.</returns>
+			/// <returns>out value</returns>
 			Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true);
 
 			/// <summary>
 			/// Executes the task.
 			/// </summary>
-			/// <typeparam name="TSubType">The type of the t sub type.</typeparam>
+			/// <typeparam name="Tin">The type of the in.</typeparam>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="inputContext">The input context.</param>
 			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
-			/// <returns>Task.</returns>
+			/// <returns></returns>
 			Task ExecuteTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true);
 
 			/// <summary>
 			/// Executes the task.
 			/// </summary>
-			/// <typeparam name="TCollection">The type of the t collection.</typeparam>
+			/// <typeparam name="Tout">The type of the out.</typeparam>
 			/// <param name="taskBody">The task body.</param>
 			/// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
-			/// <returns>Task&lt;Tout&gt;.</returns>
+			/// <returns></returns>
 			Task<Tout> ExecuteTask<Tout>(Func<Task<Tout>> taskBody, bool UIBusyWhenExecuting = true);
 
 			/// <summary>
@@ -2661,6 +2664,9 @@ namespace MVVMSidekick
 
 			}
 #elif WPF
+			/// <summary>
+			/// Explode the dispatcher of current view.
+			/// </summary>
 			public Dispatcher Dispatcher
 			{
 				get

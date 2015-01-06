@@ -371,7 +371,13 @@ namespace MVVMSidekick
 				;
 			}
 
-
+			/// <summary>
+			/// Listens to the changed properties and merge the event to a sequence.
+			/// </summary>
+			/// <typeparam name="TModel">The type of the source model.</typeparam>
+			/// <param name="source">The source model.</param>
+			/// <param name="properties">The properties expressions.</param>
+			/// <returns>Event sequence</returns>
 			public static IObservable<EventTuple<object, string>> ListenChanged<TModel>(this TModel source,
 					params 	Expression<Func<TModel, object>>[] properties
 				) where TModel : BindableBase<TModel>
@@ -390,6 +396,14 @@ namespace MVVMSidekick
 			}
 
 
+			/// <summary>
+			/// Alsoes the listen changed with.
+			/// </summary>
+			/// <typeparam name="TModel">The type of the model.</typeparam>
+			/// <param name="sequence">The event sequence.</param>
+			/// <param name="secondSource">The second source.</param>
+			/// <param name="properties">The properties.</param>
+			/// <returns>Merged event Sequence</returns>
 			public static IObservable<EventTuple<object, string>> AlsoListenChangedWith<TModel>(this  IObservable<EventTuple<object, string>> sequence,
 				TModel secondSource,
 				params 	Expression<Func<TModel, object>>[] properties
@@ -401,6 +415,12 @@ namespace MVVMSidekick
 
 			}
 
+			/// <summary>
+			/// Cast a value container as a observer.
+			/// </summary>
+			/// <typeparam name="TValue">The type of the value container's value.</typeparam>
+			/// <param name="source">The source.</param>
+			/// <returns></returns>
 			public static IObserver<TValue> AsObserver<TValue>(this ValueContainer<TValue> source)
 			{
 				return Observer.Create<TValue>(v => source.SetValueAndTryNotify(v));
@@ -412,7 +432,7 @@ namespace MVVMSidekick
 			/// <typeparam name="TEventArgs"></typeparam>
 			/// <param name="source"></param>
 			/// <returns></returns>
-			[Obsolete("The source is already  IObservable<RouterEventData<TEventArgs>>")]
+			[Obsolete("The source is already moved to  IObservable<RouterEventData<TEventArgs>>")]
 			public static IObservable<RouterEventData<TEventArgs>>
 				GetRouterEventObservable<TEventArgs>(this MVVMSidekick.EventRouting.EventRouter.EventObject<TEventArgs> source)
 #if !NETFX_CORE

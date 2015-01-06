@@ -360,6 +360,14 @@ namespace MVVMSidekick
 
 		}
 
+
+		/// <summary>
+		/// Inveoker of event handler
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="eventArgs">The event arguments.</param>
+		/// <param name="eventName">Name of the event.</param>
+		/// <param name="eventHandlerType">Type of the event handler.</param>
 		public delegate void EventHandlerInvoker(object sender, object eventArgs, string eventName, Type eventHandlerType);
 		/// <summary>
 		/// Class EventHandlerHelper.

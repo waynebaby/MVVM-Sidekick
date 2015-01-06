@@ -92,7 +92,7 @@ namespace System.Windows
 namespace MVVMSidekick
 {
 
-	
+
 	namespace Views
 	{
 
@@ -261,16 +261,24 @@ namespace MVVMSidekick
 		}
 
 #if WPF
+		/// <summary>
+		///  MVVM Window  class
+		/// </summary>
 		public class MVVMWindow : Window, IView
 		{
 
+			/// <summary>
+			///    MVVM Window constructor
+			/// </summary>
 			public MVVMWindow()
 				: this(null)
 			{
 			}
 
 
-
+			/// <summary>
+			/// Is auto owner set needed.  if true, set window's owner to parent view window.
+			/// </summary>
 			public bool IsAutoOwnerSetNeeded
 			{
 				get { return (bool)GetValue(IsAutoOwnerSetNeededProperty); }
@@ -283,6 +291,10 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			///  MVVM Window constructor
+			/// </summary>
+			/// <param name="viewModel"> view model</param>
 			public MVVMWindow(IViewModel viewModel)
 			{
 
@@ -313,6 +325,9 @@ namespace MVVMSidekick
 				};
 			}
 
+			/// <summary>
+			/// the first content object of view.
+			/// </summary>
 			public object ContentObject
 			{
 				get
@@ -339,7 +354,9 @@ namespace MVVMSidekick
 			//	DependencyProperty.Register("DesigningViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, ViewHelper.DesigningViewModelChangedCallBack));
 
 
-
+			/// <summary>
+			/// View Model
+			/// </summary>
 			public IViewModel ViewModel
 			{
 				get
@@ -381,7 +398,9 @@ namespace MVVMSidekick
 			public static readonly DependencyProperty ViewModelProperty =
 				DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
 
-
+			/// <summary>
+			/// Type of View
+			/// </summary>
 			public ViewType ViewType
 			{
 				get { return ViewType.Window; }
@@ -424,7 +443,9 @@ namespace MVVMSidekick
 
 
 #if WPF
-
+			/// <summary>
+			/// Frame of this view
+			/// </summary>
 
 			public Frame Frame
 			{
@@ -432,7 +453,11 @@ namespace MVVMSidekick
 				set { SetValue(FrameProperty, value); }
 			}
 
+
 			// Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
+			/// <summary>
+			/// Frame Property
+			/// </summary>
 			public static readonly DependencyProperty FrameProperty =
 				DependencyProperty.Register("Frame", typeof(Frame), typeof(MVVMPage), new PropertyMetadata(null));
 
@@ -550,6 +575,9 @@ namespace MVVMSidekick
 
 			}
 #else
+			/// <summary>
+			/// the first object of view content.
+			/// </summary>
 			public object ContentObject
 			{
 				get
@@ -753,6 +781,9 @@ namespace MVVMSidekick
 
 			}
 #else
+			/// <summary>
+			/// the first object of view content.
+			/// </summary>
 			public object ContentObject
 			{
 				get
@@ -1201,7 +1232,7 @@ namespace MVVMSidekick
 			}
 			public static ViewModelToViewMapperServiceLocator<TViewModel> Instance { get; set; }
 
-		
+
 
 		}
 		public class ViewModelLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelLocator<TViewModel>, TViewModel>
@@ -1819,7 +1850,7 @@ Please check startup function of this mapping is well configured and be proper c
 					if (viewWindow.IsAutoOwnerSetNeeded)
 					{
 						viewWindow.Owner = targetWindow;
-					}	  
+					}
 					viewWindow.Show();
 
 				}
@@ -2064,14 +2095,22 @@ Please check startup function of this mapping is well configured and be proper c
 
 
 
-
+			/// <summary>
+			/// Gets or sets the source.
+			/// </summary>
+			/// <value>
+			/// The source.
+			/// </value>
 			public object Source
 			{
 				private get { return (object)GetValue(SourceProperty); }
 				set { SetValue(SourceProperty, value); }
 			}
 
-			// Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
+			// Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...			
+			/// <summary>
+			/// The source property
+			/// </summary>
 			public static readonly DependencyProperty SourceProperty =
 				DependencyProperty.Register("Source", typeof(object), typeof(PropertyBridge), new PropertyMetadata(null,
 
@@ -2087,7 +2126,12 @@ Please check startup function of this mapping is well configured and be proper c
 
 
 
-
+			/// <summary>
+			/// Gets or sets the target.
+			/// </summary>
+			/// <value>
+			/// The target.
+			/// </value>
 			public object Target
 			{
 				get { return (object)GetValue(TargetProperty); }
@@ -2095,6 +2139,11 @@ Please check startup function of this mapping is well configured and be proper c
 			}
 
 			// Using a DependencyProperty as the backing store for Target.  This enables animation, styling, binding, etc...
+
+
+			/// <summary>
+			/// The target property
+			/// </summary>
 			public static readonly DependencyProperty TargetProperty =
 				DependencyProperty.Register("Target", typeof(object), typeof(PropertyBridge), new PropertyMetadata(null));
 
