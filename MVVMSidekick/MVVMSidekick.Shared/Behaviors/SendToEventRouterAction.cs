@@ -33,6 +33,12 @@ namespace MVVMSidekick.Behaviors
 
 
 
+		/// <summary>
+		/// Gets or sets the name of the event routing.
+		/// </summary>
+		/// <value>
+		/// The name of the event routing.
+		/// </value>
         public string EventRoutingName
         {
             get { return (string)GetValue(EventRoutingNameProperty); }
@@ -60,6 +66,12 @@ namespace MVVMSidekick.Behaviors
 
 
 
+		/// <summary>
+		/// Gets or sets the type of the event object.
+		/// </summary>
+		/// <value>
+		/// The type of the event object.
+		/// </value>
         public System.Type EventObjectType
         {
             get { return (Type)GetValue(EventObjectTypeProperty); }
@@ -73,6 +85,12 @@ namespace MVVMSidekick.Behaviors
 
 
 
+		/// <summary>
+		/// Gets or sets the event object.
+		/// </summary>
+		/// <value>
+		/// The event object.
+		/// </value>
         public System.Object EventObject
         {
             get { return (System.Object)GetValue(EventObjectProperty); }
@@ -93,7 +111,11 @@ namespace MVVMSidekick.Behaviors
             throw new System.NotImplementedException();
         }
 #else
-        
+
+		/// <summary>
+		/// Invokes the specified parameter.
+		/// </summary>
+		/// <param name="parameter">The parameter.</param>
         protected override void Invoke(object parameter)
         {
             if (EventObject != null)

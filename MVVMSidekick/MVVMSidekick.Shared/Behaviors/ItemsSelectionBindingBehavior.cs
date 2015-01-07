@@ -39,6 +39,9 @@ namespace MVVMSidekick.Behaviors
         }
 
         // Using a DependencyProperty as the backing store for BindingTarget.  This enables animation, styling, binding, etc...
+		/// <summary>
+		/// The binding target property
+		/// </summary>
         public static readonly DependencyProperty BindingTargetProperty =
             DependencyProperty.Register("BindingTarget", typeof(IItemsAndSelectionGroupBinding), typeof(ItemsSelectionBindingBehavior), new PropertyMetadata(null));
 
