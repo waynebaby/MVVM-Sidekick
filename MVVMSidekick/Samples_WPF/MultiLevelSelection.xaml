@@ -10,7 +10,7 @@
         <vm:MultiLevelSelection_Model x:Key="DesignVM" />
     </mvvm:MVVMWindow.Resources>
     <Grid x:Name="grid" DataContext="{StaticResource DesignVM}"
-           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:Behaviors="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick.Behaviors_net45" 
+           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:Behaviors="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick" 
           >
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="1*"/>

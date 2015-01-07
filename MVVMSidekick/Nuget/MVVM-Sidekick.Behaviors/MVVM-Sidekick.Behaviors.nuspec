@@ -34,26 +34,7 @@
     </summary>
     <releaseNotes>
 ---
-      0.2.4.1
-      Try support wpa81  
-
-
-      0.2.3.1
-      update with main lib
-
-      0.2.2.8
-      Fixed WP8 AppBar behavior： multi behaviors in a page would register multiple time appbar click event bug.
-
-      0.2.2.6
-      Update with Main Lib
-
-
-      0.2.2.5
-      Update with Main Lib
-
-      0.2.2.4
-      Add Application Bar Item binding Action
-      Add SendToEventRouterAction to wire a Event to ViewModel's EventRouter or the Public static EventRouter
+    merge to MVVM-Sidekick Main package
 
 
     </releaseNotes>
@@ -78,10 +59,7 @@
 
   </metadata>
   <files>
-    <file src="tools\" target="tools" />
-    <file src="content\" target="content" />         
-    <file src="src\" target="src" />
-    <file src="lib\" target="lib" />
+  
   
   </files>
 </package>

@@ -48,10 +48,7 @@
     </Reference>
     <Reference Include="MVVMSidekick, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.3.20141026.4090168\lib\net45\MVVMSidekick.dll</HintPath>
-    </Reference>
-    <Reference Include="MVVMSidekick.Behaviors_net45">
-      <HintPath>..\packages\MVVM-Sidekick.Behaviors.0.3.20141126.13073127\lib\net45\MVVMSidekick.Behaviors_net45.dll</HintPath>
+      <HintPath>..\packages\MVVM-Sidekick.1.4.20150107.1523451\lib\net45\MVVMSidekick.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -75,7 +72,7 @@
     </Reference>
     <Reference Include="System.Reactive.Windows.Threading, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Xaml.2.2.5\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
+      <HintPath>..\packages\Rx-XAML.2.2.5\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />

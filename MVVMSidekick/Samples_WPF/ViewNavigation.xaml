@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"
-        xmlns:vm="clr-namespace:Samples.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:Behaviors="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick.Behaviors_net45" x:Class="Samples.ViewNavigation"
+        xmlns:vm="clr-namespace:Samples.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:Behaviors="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick" x:Class="Samples.ViewNavigation"
         Title="ViewNavigation" Height="350" Width="525"
         >
     <mvvm:MVVMWindow.Resources >

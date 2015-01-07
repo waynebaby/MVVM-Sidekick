@@ -9,7 +9,7 @@ set "bver=%bver:/=%"
 set "bver=%bver:.=%"
 set "bver=%bver:~0,8%"
 
-set ver=0.3.%bver%.%sver%
+set ver=0.4.0.0
 xcopy lib\*.*  ..\..\packages\MVVM-Sidekick.Behaviors.%ver%\lib  /s /i /y 
 BuildPublishPackage.cmd MVVM-Sidekick.Behaviors %ver%
 

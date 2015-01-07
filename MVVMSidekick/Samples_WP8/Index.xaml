@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
         xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Wp8"
-    xmlns:vm="clr-namespace:Samples.ViewModels" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:Behaviors="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick.Behaviors_WP8" x:Name="mVVMPage"
+    xmlns:vm="clr-namespace:Samples.ViewModels" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:Behaviors="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick_Wp8"  x:Name="mVVMPage"
     x:Class="Samples.Index"
 
     mc:Ignorable="d"

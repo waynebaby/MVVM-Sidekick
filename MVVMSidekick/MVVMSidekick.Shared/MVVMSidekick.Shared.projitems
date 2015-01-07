@@ -9,6 +9,12 @@
     <Import_RootNamespace>MVVMSidekick</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BaeconBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BehaviorBaseForWinRT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BehaviorHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BindToAppliactionBarIconButtonBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ItemsSelectionBindingBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\SendToEventRouterAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EventRouting.cs" />

@@ -15,7 +15,7 @@
 
     <Grid Background="Black" x:Name="LayoutRoot"  DataContext="{StaticResource DesignVM}" 
               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-          xmlns:Behaviors="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick.Behaviors_WP8"
+          xmlns:Behaviors="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick_Wp8"
           >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>

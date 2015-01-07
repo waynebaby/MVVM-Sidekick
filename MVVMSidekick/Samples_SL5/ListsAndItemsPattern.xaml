@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:patItems="clr-namespace:MVVMSidekick.Patterns.ItemsAndSelection;assembly=MVVMSidekick_Sl"
     xmlns:vm="clr-namespace:Samples.ViewModels" 
-    xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Sl" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:Behaviors="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick.Behaviors_SL" x:Class="Samples.ListsAndItemsPattern"
+    xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Sl" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:Behaviors="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick_Sl" x:Class="Samples.ListsAndItemsPattern"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     >
