@@ -59,13 +59,13 @@ using System.Windows.Controls.Primitives;
 using MVVMSidekick.Utilities;
 
 #elif SILVERLIGHT_5||SILVERLIGHT_4
-using System.Windows;
+
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #elif WINDOWS_PHONE_8||WINDOWS_PHONE_7
-using System.Windows;
+
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using System.Windows.Data;
@@ -1178,7 +1178,12 @@ namespace MVVMSidekick
 					return pageUri;
 				}
 			}
-
+			/// <summary>
+			/// Maps to default.
+			/// </summary>
+			/// <typeparam name="TPage">The type of the page.</typeparam>
+			/// <param name="baseUri">The base URI.</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToDefault<TPage>(Uri baseUri = null) where TPage : MVVMPage
 			{
 
@@ -1194,7 +1199,13 @@ namespace MVVMSidekick
 
 
 
-
+			/// <summary>
+			/// Maps to.
+			/// </summary>
+			/// <typeparam name="TPage">The type of the page.</typeparam>
+			/// <param name="viewMappingKey">The view mapping key.</param>
+			/// <param name="baseUri">The base URI.</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapTo<TPage>(string viewMappingKey, Uri baseUri = null) where TPage : MVVMPage
 			{
 				MapViewToViewModel<TPage>();
@@ -1210,24 +1221,28 @@ namespace MVVMSidekick
 #if NETFX_CORE
 
 
-
+			/// <summary>
+			///    Map to default constructor
+			/// </summary>
+			/// <typeparam name="TPage"></typeparam>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToDefault<TPage>() where TPage : MVVMPage
 			{
 
 				MapViewToViewModel<TPage>();
-				/// <summary>
-				/// The page
-				/// </summary>
+			
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(typeof(TPage));
 				return this;
 			}
 
-
+			/// <summary>
+			///   Map to   default constructor with mapping key
+			/// </summary>
+			/// <param name="viewMappingKey">mapping key</param>
+			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToDefault<TPage>(string viewMappingKey) where TPage : MVVMPage
 			{
-				/// <summary>
-				/// The window
-				/// </summary>
+				
 				MapViewToViewModel<TPage>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, typeof(TPage));
 				return this;
@@ -1235,16 +1250,13 @@ namespace MVVMSidekick
 
 
 
-/// <summary>
-/// The control
-/// </summary>
 #endif
 
 
 		}
 
 		/// <summary>
-		/// 
+		/// 		 class ViewModelToViewMapperHelper
 		/// </summary>
 		public static class ViewModelToViewMapperHelper
 		{
@@ -1588,6 +1600,7 @@ namespace MVVMSidekick
 #endif
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||WINDOWS_PHONE_8
 
+			
 			internal Dictionary<string, IViewModel> NavigateRequestContexts
 			{
 				get
@@ -1603,20 +1616,40 @@ namespace MVVMSidekick
 
 			}
 
+			/// <summary>
+			/// Gets the navigate request contexts.
+			/// </summary>
+			/// <param name="obj">The object.</param>
+			/// <returns></returns>
 			public static Dictionary<string, IViewModel> GetNavigateRequestContexts(DependencyObject obj)
 			{
 				return (Dictionary<string, IViewModel>)obj.GetValue(NavigateRequestContextsProperty);
 			}
 
+			/// <summary>
+			/// Sets the navigate request contexts.
+			/// </summary>
+			/// <param name="obj">The object.</param>
+			/// <param name="value">The value.</param>
 			public static void SetNavigateRequestContexts(DependencyObject obj, Dictionary<string, IViewModel> value)
 			{
 				obj.SetValue(NavigateRequestContextsProperty, value);
 			}
 
 			// Using a DependencyProperty as the backing store for NavigateRequestContexts.  This enables animation, styling, binding, etc...
+			/// <summary>
+			/// The navigate request contexts property
+			/// </summary>
 			public static readonly DependencyProperty NavigateRequestContextsProperty =
 				DependencyProperty.RegisterAttached("NavigateRequestContexts", typeof(Dictionary<string, IViewModel>), typeof(Stage), new PropertyMetadata(new Dictionary<string, IViewModel>()));
 
+			/// <summary>
+			/// Shows the specified target view model.
+			/// </summary>
+			/// <typeparam name="TTarget">The type of the target.</typeparam>
+			/// <param name="targetViewModel">The target view model.</param>
+			/// <param name="viewMappingKey">The view mapping key.</param>
+			/// <returns></returns>
 			public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
 				 where TTarget : class,IViewModel
 			{
@@ -1815,7 +1848,13 @@ Please check startup function of this mapping is well configured and be proper c
 
 
 
-
+			/// <summary>
+			/// Show a view model mapped view.
+			/// </summary>
+			/// <typeparam name="TTarget"></typeparam>
+			/// <param name="targetViewModel"></param>
+			/// <param name="viewMappingKey"></param>
+			/// <returns></returns>
 			public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
 				 where TTarget : class,IViewModel
 			{
@@ -1902,6 +1941,15 @@ Please check startup function of this mapping is well configured and be proper c
 				public T ViewModel { get; set; }
 
 			}
+
+			/// <summary>
+			/// Show a viewmodel and return a result when leave.
+			/// </summary>
+			/// <typeparam name="TTarget"></typeparam>
+			/// <typeparam name="TResult"></typeparam>
+			/// <param name="targetViewModel"></param>
+			/// <param name="viewMappingKey"></param>
+			/// <returns></returns>
 			public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
 				where TTarget : class,IViewModel<TResult>
 			{
@@ -1930,7 +1978,13 @@ Please check startup function of this mapping is well configured and be proper c
 				return await targetViewModel.WaitForCloseWithResult();
 			}
 
-
+			/// <summary>
+			/// show a view model mapped view and return the viewmodel 
+			/// </summary>
+			/// <typeparam name="TTarget"></typeparam>
+			/// <param name="targetViewModel"></param>
+			/// <param name="viewMappingKey"></param>
+			/// <returns></returns>
 
 			public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
 	where TTarget : class,IViewModel
@@ -2090,22 +2144,11 @@ Please check startup function of this mapping is well configured and be proper c
 
 			#region Attached Property
 
-
-#if WPF
-			[AttachedPropertyBrowsableForType(typeof(ContentControl))]
-			[AttachedPropertyBrowsableForType(typeof(Frame))]
-			[AttachedPropertyBrowsableForType(typeof(Window))]
-#endif
 			/// <summary>
 			/// Gets the beacon.
 			/// </summary>
 			/// <param name="obj">The object.</param>
 			/// <returns></returns>
-			public static string GetBeacon(DependencyObject obj)
-			{
-				return (string)obj.GetValue(BeaconProperty);
-			}
-
 #if WPF
 			[AttachedPropertyBrowsableForType(typeof(ContentControl))]
 			[AttachedPropertyBrowsableForType(typeof(Frame))]
@@ -2113,9 +2156,22 @@ Please check startup function of this mapping is well configured and be proper c
 #endif
 
 
+
+			public static string GetBeacon(DependencyObject obj)
+			{
+				return (string)obj.GetValue(BeaconProperty);
+			}
+
 			/// <summary>Sets the beacon.</summary>
 			/// <param name="obj">The object.</param>
 			/// <param name="value">The value.</param>
+#if WPF
+			[AttachedPropertyBrowsableForType(typeof(ContentControl))]
+			[AttachedPropertyBrowsableForType(typeof(Frame))]
+			[AttachedPropertyBrowsableForType(typeof(Window))]
+#endif
+
+
 			public static void SetBeacon(DependencyObject obj, string value)
 			{
 				obj.SetValue(BeaconProperty, value);

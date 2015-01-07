@@ -23,62 +23,83 @@ using System.Threading.Tasks;
 
 namespace System.ComponentModel
 {
-    // Summary:
-    //     Defines members that data entity classes can implement to provide custom
-    //     synchronous and asynchronous validation support.
-    public interface INotifyDataErrorInfo
-    {
-        // Summary:
-        //     Gets a value that indicates whether the entity has validation errors.
-        //
-        // Returns:
-        //     true if the entity currently has validation errors; otherwise, false.
-        bool HasErrors { get; }
 
-        // Summary:
-        //     Occurs when the validation errors have changed for a property or for the
-        //     entire entity.
-        event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+	/// <summary>
+	/// Defines members that data entity classes can implement to provide custom
+	/// synchronous and asynchronous validation support.
+	/// </summary>
+	public interface INotifyDataErrorInfo
+	{
+		// Summary:
+		//     Gets a value that indicates whether the entity has validation errors.
+		//
+		// Returns:
+		//     true if the entity currently has validation errors; otherwise, false.
+		/// <summary>
+		/// Gets a value that indicates whether the entity has validation errors.
+		/// </summary>
+		/// <value>
+		/// true if the entity currently has validation errors; otherwise, false.
+		/// </value>
+		bool HasErrors { get; }
 
-        // Summary:
-        //     Gets the validation errors for a specified property or for the entire entity.
-        //
-        // Parameters:
-        //   propertyName:
-        //     The name of the property to retrieve validation errors for; or null or System.String.Empty,
-        //     to retrieve entity-level errors.
-        //
-        // Returns:
-        //     The validation errors for the property or entity.
-        IEnumerable GetErrors(string propertyName);
-    }
+		// Summary:
+		//     Occurs when the validation errors have changed for a property or for the
+		//     entire entity.
+		/// <summary>
+		///  Occurs when the validation errors have changed for a property or for the
+		///  entire entity.
+		/// </summary>
+		event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-    // Summary:
-    //     Provides data for the System.ComponentModel.INotifyDataErrorInfo.ErrorsChanged
-    //     event.
-    public class DataErrorsChangedEventArgs : EventArgs
-    {
-        // Summary:
-        //     Initializes a new instance of the System.ComponentModel.DataErrorsChangedEventArgs
-        //     class.
-        //
-        // Parameters:
-        //   propertyName:
-        //     The name of the property that has an error. null or System.String.Empty if
-        //     the error is object-level.
-        public DataErrorsChangedEventArgs(string propertyName)
-        {
-            PropertyName = propertyName;
-        }
+		/// <summary>
+		/// The name of the property to retrieve validation errors for; or null or System.String.Empty,
+		/// to retrieve entity-level errors.
+		/// </summary>
+		/// <param name="propertyName">The validation errors for the property or entity.</param>
+		/// <returns></returns>
 
-        // Summary:
-        //     Gets the name of the property that has an error.
-        //
-        // Returns:
-        //     The name of the property that has an error. null or System.String.Empty if
-        //     the error is object-level.
-        public virtual string PropertyName { get; private set; }
-    }
+		IEnumerable GetErrors(string propertyName);
+	}
+
+	/// <summary>
+	///   Provides data for the System.ComponentModel.INotifyDataErrorInfo.ErrorsChanged
+	///    event.
+	/// </summary>
+	public class DataErrorsChangedEventArgs : EventArgs
+	{
+		// Summary:
+		//     Initializes a new instance of the System.ComponentModel.DataErrorsChangedEventArgs
+		//     class.
+		//
+		// Parameters:
+		//   propertyName:
+		//     The name of the property that has an error. null or System.String.Empty if
+		//     the error is object-level.
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DataErrorsChangedEventArgs"/> class.
+		/// </summary>
+		/// <param name="propertyName"> The name of the property that has an error. null or System.String.Empty if  the error is object-level.</param>
+		public DataErrorsChangedEventArgs(string propertyName)
+		{
+			PropertyName = propertyName;
+		}
+
+		// Summary:
+		//     Gets the name of the property that has an error.
+		//
+		// Returns:
+		//     The name of the property that has an error. null or System.String.Empty if
+		//     the error is object-level.
+		/// <summary>
+		/// Gets the name of the property that has an error.
+		/// </summary>
+		/// <value>
+		/// 	The name of the property that has an error. null or System.String.Empty if
+		///     the error is object-level.
+		/// </value>
+		public virtual string PropertyName { get; private set; }
+	}
 
 }
 #endif

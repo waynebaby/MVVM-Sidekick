@@ -276,6 +276,11 @@ namespace MVVMSidekick
 		public static class TypeInfoHelper
 		{
 #if NETFX_CORE
+			/// <summary>
+			/// Gets the type or type information.
+			/// </summary>
+			/// <param name="type">The type.</param>
+			/// <returns>TypeInfo.</returns>
 			public static TypeInfo GetTypeOrTypeInfo(this Type type)
 			{
 				return type.GetTypeInfo();
@@ -446,7 +451,7 @@ namespace MVVMSidekick
 							{
 								return DoNetEventBind(sender, ei, newHandler);
 							}
-							catch (InvalidOperationException ex)
+							catch (InvalidOperationException )
 							{
 								var newMI = WinRTEventBindMethodInfo.MakeGenericMethod(newHandler.GetType());
 

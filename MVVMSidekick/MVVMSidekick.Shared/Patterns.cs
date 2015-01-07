@@ -61,19 +61,15 @@ using System.Windows.Controls.Primitives;
 
 
 #elif SILVERLIGHT_5||SILVERLIGHT_4
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #elif WINDOWS_PHONE_8||WINDOWS_PHONE_7
-using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Controls.Primitives;
 #endif
 

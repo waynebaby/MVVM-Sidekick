@@ -488,7 +488,7 @@ namespace MVVMSidekick
 			/// </summary>
 			/// <param name="sender">The sender.</param>
 			/// <param name="eventName">Name of the event.</param>
-			/// <param name="eventArgs">The <see cref="TEventArgs" /> instance containing the event data.</param>
+			/// <param name="eventArgs">The instance containing the event data.</param>
 			public RouterEventData(object sender, string eventName, TEventArgs eventArgs)
 			{
 

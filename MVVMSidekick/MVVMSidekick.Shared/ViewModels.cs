@@ -67,7 +67,7 @@ using System.Windows.Threading;
 
 namespace MVVMSidekick
 {
-	
+
 	namespace ViewModels
 	{
 		using MVVMSidekick.Utilities;
@@ -1906,10 +1906,13 @@ namespace MVVMSidekick
 		public partial interface IViewModel : IBindable, INotifyPropertyChanged, IViewModelLifetime
 		{
 #if NETFX_CORE
+			/// <summary>
+			/// Gets the dispatcher of view.
+			/// </summary>
 			Windows.UI.Core.CoreDispatcher Dispatcher { get; }
 #else
 			/// <summary>
-			/// Gets the dispatcher.
+			/// Gets the dispatcher of view.
 			/// </summary>
 			/// <value>The dispatcher.</value>
 			Dispatcher Dispatcher { get; }
@@ -2021,7 +2024,18 @@ namespace MVVMSidekick
 			bool IsDisposingWhenUnloadRequired { get; }
 
 #if NETFX_CORE
+
+			/// <summary>
+			/// Load state of this view
+			/// </summary>
+			/// <param name="navigationParameter"></param>
+			/// <param name="pageState"></param>
 			void LoadState(Object navigationParameter, Dictionary<String, Object> pageState);
+
+			/// <summary>
+			/// Save state of this view
+			/// </summary>
+			/// <param name="pageState"></param>
 			void SaveState(Dictionary<String, Object> pageState);
 #endif
 		}
@@ -2651,6 +2665,9 @@ namespace MVVMSidekick
 			}
 #endif
 #if NETFX_CORE
+			/// <summary>
+			/// Gets the current view dispatcher.	
+			/// </summary>
 			public Windows.UI.Core.CoreDispatcher Dispatcher
 			{
 				get

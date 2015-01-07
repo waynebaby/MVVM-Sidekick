@@ -128,15 +128,19 @@ namespace MVVMSidekick
 			/// <param name="name">The name.</param>
 			/// <param name="factory">The factory.</param>
 			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
-			/// <returns>ServiceLocatorEntryStruct&lt;TService&gt;.</returns>
+			/// <returns>
+			/// ServiceLocatorEntryStruct&lt;TService&gt;.
+			/// </returns>
             ServiceLocatorEntryStruct<TService> Register<TService>(string name, Func<object, TService> factory, bool alwaysNew = true);
 			/// <summary>
 			/// Resolves the specified name.
 			/// </summary>
-			/// <typeparam name="TProperty">The type of the t property.</typeparam>
+			/// <typeparam name="TService">The type of the service.</typeparam>
 			/// <param name="name">The name.</param>
 			/// <param name="paremeter">The paremeter.</param>
-			/// <returns>TService.</returns>
+			/// <returns>
+			/// TService.
+			/// </returns>
             TService Resolve<TService>(string name = null, object paremeter = null);
 
 			/// <summary>
@@ -789,9 +793,11 @@ namespace MVVMSidekick
 			/// <summary>
 			/// Determines whether the specified name has instance.
 			/// </summary>
-			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="TService">The type of the service.</typeparam>
 			/// <param name="name">The name.</param>
-			/// <returns><c>true</c> if the specified name has instance; otherwise, <c>false</c>.</returns>
+			/// <returns>
+			///   <c>true</c> if the specified name has instance; otherwise, <c>false</c>.
+			/// </returns>
             public bool HasInstance<TService>(string name = "")
             {
                 name = name ?? "";

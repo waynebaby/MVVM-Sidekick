@@ -261,8 +261,8 @@ namespace MVVMSidekick
 				_core.RemoveAt(index);
 			}
 
-			/// <summary>Gets or sets the <see cref="T" /> at the specified index.</summary>
-			/// <value>The <see cref="T"/>.</value>
+			/// <summary>Gets or sets the item at the specified index.</summary>
+			/// <value>The item.</value>
 			/// <param name="index">The index.</param>
 			/// <returns>T.</returns>
 			public T this[int index]
@@ -304,11 +304,18 @@ namespace MVVMSidekick
 
 			// *** Constructors ***
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ObservableVector{T}"/> class.
+			/// </summary>
 			public ObservableVector()
 				: base()
 			{
 			}
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ObservableVector{T}"/> class.
+			/// </summary>
+			/// <param name="list">The list.</param>
 			public ObservableVector(IList<T> list)
 				: base(list)
 			{
@@ -318,7 +325,7 @@ namespace MVVMSidekick
 
 
 			/// <summary>
-			/// 	 Clear Items
+			/// Clear Items
 			/// </summary>
 			protected override void ClearItems()
 			{
@@ -333,6 +340,11 @@ namespace MVVMSidekick
 				}
 			}
 
+			/// <summary>
+			/// Inserts the item.
+			/// </summary>
+			/// <param name="index">The index.</param>
+			/// <param name="item">The item.</param>
 			protected override void InsertItem(int index, T item)
 			{
 				base.InsertItem(index, item);
@@ -345,6 +357,10 @@ namespace MVVMSidekick
 				}
 			}
 
+			/// <summary>
+			/// Removes the item.
+			/// </summary>
+			/// <param name="index">The index.</param>
 			protected override void RemoveItem(int index)
 			{
 				T oldItem = base[index];
@@ -358,6 +374,11 @@ namespace MVVMSidekick
 				}
 			}
 
+			/// <summary>
+			/// Sets the item.
+			/// </summary>
+			/// <param name="index">The index.</param>
+			/// <param name="item">The item.</param>
 			protected override void SetItem(int index, T item)
 			{
 				T oldItem = base[index];
@@ -370,6 +391,10 @@ namespace MVVMSidekick
 				}
 			}
 
+			/// <summary>
+			/// Called when [property changed].
+			/// </summary>
+			/// <param name="propertyName">Name of the property.</param>
 			protected void OnPropertyChanged(string propertyName)
 			{
 				OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
@@ -389,17 +414,30 @@ namespace MVVMSidekick
 			//        CollectionChanged(this, e);
 			//}
 
+			/// <summary>
+			/// Occurs when [vector changed].
+			/// </summary>
 			public event Windows.Foundation.Collections.VectorChangedEventHandler<object> VectorChanged;
 
 
 
 			#region IList<object> Members
 
+			/// <summary>
+			/// Indexes the of.
+			/// </summary>
+			/// <param name="item">The item.</param>
+			/// <returns></returns>
 			int IList<object>.IndexOf(object item)
 			{
 				return IndexOf((T)item);
 			}
 
+			/// <summary>
+			/// Inserts the specified index.
+			/// </summary>
+			/// <param name="index">The index.</param>
+			/// <param name="item">The item.</param>
 			void IList<object>.Insert(int index, object item)
 			{
 				Insert(index, (T)item);
@@ -407,6 +445,14 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Gets or sets the <see cref="System.Object"/> at the specified index.
+			/// </summary>
+			/// <value>
+			/// The <see cref="System.Object"/>.
+			/// </value>
+			/// <param name="index">The index.</param>
+			/// <returns></returns>
 			object IList<object>.this[int index]
 			{
 				get
@@ -423,17 +469,31 @@ namespace MVVMSidekick
 
 			#region ICollection<object> Members
 
+			/// <summary>
+			/// Adds the specified item.
+			/// </summary>
+			/// <param name="item">The item.</param>
 			void ICollection<object>.Add(object item)
 			{
 				Add((T)item);
 			}
 
 
+			/// <summary>
+			/// Determines whether [contains] [the specified item].
+			/// </summary>
+			/// <param name="item">The item.</param>
+			/// <returns></returns>
 			bool ICollection<object>.Contains(object item)
 			{
 				return Contains((T)item);
 			}
 
+			/// <summary>
+			/// Copies to.
+			/// </summary>
+			/// <param name="array">The array.</param>
+			/// <param name="arrayIndex">Index of the array.</param>
 			void ICollection<object>.CopyTo(object[] array, int arrayIndex)
 			{
 
@@ -447,6 +507,11 @@ namespace MVVMSidekick
 
 
 
+			/// <summary>
+			/// Removes the specified item.
+			/// </summary>
+			/// <param name="item">The item.</param>
+			/// <returns></returns>
 			bool ICollection<object>.Remove(object item)
 			{
 				return Remove((T)item);
@@ -456,6 +521,10 @@ namespace MVVMSidekick
 
 			#region IEnumerable<object> Members
 
+			/// <summary>
+			/// Gets the enumerator.
+			/// </summary>
+			/// <returns></returns>
 			IEnumerator<object> IEnumerable<object>.GetEnumerator()
 			{
 				return this.OfType<Object>().GetEnumerator();
@@ -465,6 +534,10 @@ namespace MVVMSidekick
 
 			#region IEnumerable Members
 
+			/// <summary>
+			/// Gets the enumerator.
+			/// </summary>
+			/// <returns></returns>
 			IEnumerator IEnumerable.GetEnumerator()
 			{
 				return this.GetEnumerator();
@@ -475,6 +548,12 @@ namespace MVVMSidekick
 			#region ICollection<object> Members
 
 
+			/// <summary>
+			/// Gets a value indicating whether this instance is read only.
+			/// </summary>
+			/// <value>
+			/// <c>true</c> if this instance is read only; otherwise, <c>false</c>.
+			/// </value>
 			public bool IsReadOnly
 			{
 				get { return false; }
@@ -860,9 +939,11 @@ namespace MVVMSidekick
 				/// <para>当前项变化前触发</para>
 				/// </summary>
 				public event CurrentChangingEventHandler CurrentChanging;
+
+
 				/// <summary>
 				/// <para>Current Item </para>
-				/// <para>当前项</para 
+				/// <para>当前项</para>
 				/// </summary>
 				public object CurrentItem
 				{
