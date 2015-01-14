@@ -112,8 +112,8 @@
       <Link>Packages\Microsoft.Bcl.Async.1.0.168.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\packages\Microsoft.Bcl.Build.1.0.14\Microsoft.Bcl.Build.1.0.14.nupkg">
-      <Link>Packages\Microsoft.Bcl.Build.1.0.14.nupkg</Link>
+    <Content Include="..\..\packages\Microsoft.Bcl.Build.1.0.21\Microsoft.Bcl.Build.1.0.21.nupkg">
+      <Link>Packages\Microsoft.Bcl.Build.1.0.21.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\..\packages\Rx-Core.2.2.5\Rx-Core.2.2.5.nupkg">
@@ -140,10 +140,6 @@
       <Link>Packages\Rx-Xaml.2.2.5.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick.Behaviors.0.3.0.3.nupkg">
-      <Link>Packages\MVVM-Sidekick.Behaviors.0.3.0.3.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="..\MVVMSidekickViewWithVM.WPA81\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM.WPA81.zip">
       <Link>ItemTemplates\XAML\MVVMSidekickViewWithVM.WPA81.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -160,8 +156,8 @@
       <Link>ProjectTemplates\Store Apps\Windows Phone Apps\MVVMSidekickWPA81.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick.1.3.20141002.15415636.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.3.20141002.15415636.nupkg</Link>
+    <Content Include="..\..\Nuget\MVVM-Sidekick.1.4.20150114.0.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.4.20150114.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
