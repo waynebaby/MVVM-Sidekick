@@ -60,6 +60,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\AppResources.Designer.cs" />
     <None Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
