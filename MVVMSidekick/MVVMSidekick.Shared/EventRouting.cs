@@ -205,7 +205,9 @@ namespace MVVMSidekick
 				{
 #if NETFX_CORE
 					var baseT = argsType.GetTypeInfo().BaseType;
-					if (baseT != typeof(object) && baseT.Name != "RuntimeClass" && baseT != null )
+					
+					if (baseT != null  )
+						if (baseT != typeof(object) && baseT.Name != "RuntimeClass"  )
 #else
 					var baseT = argsType.BaseType;
 					if (baseT != typeof(object) && baseT != null)

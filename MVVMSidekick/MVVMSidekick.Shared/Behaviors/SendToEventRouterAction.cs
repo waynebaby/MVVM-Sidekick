@@ -108,7 +108,18 @@ namespace MVVMSidekick.Behaviors
 #if NETFX_CORE
         public object Execute(object sender, object parameter)
         {
-            throw new System.NotImplementedException();
+           if (EventObject != null)
+			{
+				if (!EventObjectType.GetTypeOrTypeInfo().IsAssignableFrom(EventObject.GetType().GetTypeInfo ()))
+				{
+					return null;
+				}
+			}
+
+			var targetEventRouter = EventRouter ?? EventRouter.Instance;
+
+			targetEventRouter.RaiseEvent(this, EventObject, EventObjectType, EventRoutingName);
+			return null;
         }
 #else
 
