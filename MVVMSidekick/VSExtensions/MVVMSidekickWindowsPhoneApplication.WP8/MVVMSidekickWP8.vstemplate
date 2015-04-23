@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-    <Name >MVVM-Sidekick Phone Silverlight App 8.1</Name>
-    <Description>A Blank Windows Phone Application  (Silverlight) template works with MVVM Sidekick</Description>
+    <Name >MVVM-Sidekick Phone Silverlight App 8.0 /8.1</Name>
+    <Description>A Blank Windows Phone Application  (Silverlight) template works with MVVM Sidekick. If 8.0 have error update it to 8.1</Description>
     <Icon>MVVMSidekickWindowsPhoneApplication.WP8.ico</Icon>
     <TemplateID>MVVM-Sidekick.Phone.Silverlight.App.8.1</TemplateID>
     <ProjectType>CSharp</ProjectType>
@@ -54,7 +54,6 @@
         </Folder>
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="App.xaml">App.xaml</ProjectItem>
-      <ProjectItem ReplaceParameters="true" TargetFileName="Package.appxmanifest">Package.appxmanifest</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="App.xaml.cs">App.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="LocalizedStrings.cs">LocalizedStrings.cs</ProjectItem>
     </Project>
@@ -74,7 +73,7 @@
       <package id="Rx-Main" version="2.2.5"  />
       <package id="Rx-PlatformServices" version="2.2.5"  />
       <package id="Rx-Xaml" version="2.2.5"  />
-      <package id="MVVM-Sidekick"  version="1.4.20150114.0"/>
+      <package id="MVVM-Sidekick"  version="1.4.20150423.13300000"/>
       
     </packages>
   </WizardData>

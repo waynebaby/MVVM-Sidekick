@@ -12,7 +12,7 @@
     <RootNamespace>MVVMSidekick_Wp8</RootNamespace>
     <AssemblyName>MVVMSidekick_Wp8</AssemblyName>
     <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <SilverlightVersion>
     </SilverlightVersion>
     <SilverlightApplication>false</SilverlightApplication>
