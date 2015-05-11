@@ -269,9 +269,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
     </Reference>
-    <Reference Include="MVVMSidekick_Wp8, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.4.20150302.17300000\lib\wp8\MVVMSidekick_Wp8.dll</HintPath>
+    <Reference Include="MVVMSidekick_Wp8">
+      <HintPath>..\packages\MVVM-Sidekick.1.4.20150512.00020000\lib\wp8\MVVMSidekick_Wp8.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

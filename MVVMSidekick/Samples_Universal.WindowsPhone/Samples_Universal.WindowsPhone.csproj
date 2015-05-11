@@ -157,9 +157,9 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="MVVMSidekick_Wpa81, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MVVM-Sidekick.1.4.20150302.17300000\lib\wpa81\MVVMSidekick_Wpa81.dll</HintPath>
+    <Reference Include="MVVMSidekick_Wpa81">
+      <HintPath>..\packages\MVVM-Sidekick.1.4.20150512.00020000\lib\wpa81\MVVMSidekick_Wpa81.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
