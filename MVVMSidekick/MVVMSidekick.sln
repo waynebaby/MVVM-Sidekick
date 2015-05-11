@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonCode", "CommonCode\CommonCode.csproj", "{4D755FF7-84F5-4D29-A771-55F520F87814}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -42,6 +42,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM-Sidekick", "Nuget\MVVM-Sidekick\MVVM-Sidekick.csproj", "{DC5113AC-E6A3-4BA1-92A0-E6981563AB7A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CE6F8C18-0894-4F12-A9BF-FD82A1D210F9} = {CE6F8C18-0894-4F12-A9BF-FD82A1D210F9}
+		{A9F83747-322A-44A8-86DF-44BDFDE0E0F5} = {A9F83747-322A-44A8-86DF-44BDFDE0E0F5}
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A} = {C4888D4F-3C47-4E6C-B271-B41F2B307D4A}
 		{F69407B0-9503-4242-85C4-C0B9BE28A73F} = {F69407B0-9503-4242-85C4-C0B9BE28A73F}
 		{CC92E8D7-34E8-4A48-BE01-6F3F5C478604} = {CC92E8D7-34E8-4A48-BE01-6F3F5C478604}
 		{4D755FF7-84F5-4D29-A771-55F520F87814} = {4D755FF7-84F5-4D29-A771-55F520F87814}
@@ -85,7 +87,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples_Universal", "Sample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples_Wp8RT", "Samples_Wp8RT\Samples_Wp8RT.csproj", "{9BEDDDF7-26E8-4854-884B-01691C9A7E14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM-Sidekick.Behaviors", "Nuget\MVVM-Sidekick.Behaviors\MVVM-Sidekick.Behaviors.csproj", "{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMSidekick_win81", "MVVMSidekick_win81\MVVMSidekick_win81.csproj", "{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -97,6 +99,7 @@ Global
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{a9f83747-322a-44a8-86df-44bdfde0e0f5}*SharedItemsImports = 4
 		Samples_Universal.Shared\Samples_Universal.Shared.projitems*{03323b1e-0feb-4a5d-9f82-0a79ef2d813d}*SharedItemsImports = 13
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{ce6f8c18-0894-4f12-a9bf-fd82a1d210f9}*SharedItemsImports = 4
+		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{c4888d4f-3c47-4e6c-b271-b41f2b307d4a}*SharedItemsImports = 4
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{c7b975fc-9323-4e05-af3d-194c63af8d34}*SharedItemsImports = 4
 		Samples_Universal.Shared\Samples_Universal.Shared.projitems*{7bf504a2-eb34-46b4-ab1f-fc8aa4cababd}*SharedItemsImports = 4
 	EndGlobalSection
@@ -461,20 +464,26 @@ Global
 		{9BEDDDF7-26E8-4854-884B-01691C9A7E14}.Release|x86.ActiveCfg = Release|x86
 		{9BEDDDF7-26E8-4854-884B-01691C9A7E14}.Release|x86.Build.0 = Release|x86
 		{9BEDDDF7-26E8-4854-884B-01691C9A7E14}.Release|x86.Deploy.0 = Release|x86
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Release|ARM.ActiveCfg = Release|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Release|x64.ActiveCfg = Release|Any CPU
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25}.Release|x86.ActiveCfg = Release|Any CPU
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Debug|ARM.Build.0 = Debug|ARM
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Debug|x64.ActiveCfg = Debug|x64
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Debug|x64.Build.0 = Debug|x64
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Debug|x86.ActiveCfg = Debug|x86
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Debug|x86.Build.0 = Debug|x86
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Release|ARM.ActiveCfg = Release|ARM
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Release|ARM.Build.0 = Release|ARM
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Release|x64.ActiveCfg = Release|x64
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Release|x64.Build.0 = Release|x64
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Release|x86.ActiveCfg = Release|x86
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -505,6 +514,6 @@ Global
 		{03323B1E-0FEB-4A5D-9F82-0A79EF2D813D} = {33E88C16-3898-4E2D-933D-AB159C750F17}
 		{33E88C16-3898-4E2D-933D-AB159C750F17} = {4BFB20FA-7B02-4B64-96FA-93940A4370DB}
 		{9BEDDDF7-26E8-4854-884B-01691C9A7E14} = {4BFB20FA-7B02-4B64-96FA-93940A4370DB}
-		{BC6D2F87-8BEC-46DF-940E-3CE1086FEE25} = {517E25E4-E92C-4E76-8C58-79FB130B6CD4}
+		{C4888D4F-3C47-4E6C-B271-B41F2B307D4A} = {C2833223-E4B1-418D-9668-D8DC53213FCA}
 	EndGlobalSection
 EndGlobal
