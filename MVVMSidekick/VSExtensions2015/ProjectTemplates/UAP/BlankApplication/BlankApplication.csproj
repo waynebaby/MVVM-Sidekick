@@ -35,7 +35,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -43,7 +43,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -87,7 +87,9 @@
   <ItemGroup>
     <Content Include="Application.csproj" />
     <Content Include="BlankApp.png" />
-    <VSTemplate Include="BlankApplication.vstemplate" />
+    <VSTemplate Include="BlankApplication.vstemplate">
+      <SubType>Designer</SubType>
+    </VSTemplate>
     <Content Include="Default.rd.xml" />
     <Content Include="Logo.scale-100.png" />
     <Content Include="SmallLogo.scale-100.png" />

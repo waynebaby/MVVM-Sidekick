@@ -7,7 +7,7 @@
     <TemplateID>Microsoft.CS.UAP.BlankPage</TemplateID>
     <TemplateGroupID>WinRT-Managed-UAP</TemplateGroupID>
     <ProjectType>CSharp</ProjectType>
-    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <NumberOfParentCategoriesToRollUp>10</NumberOfParentCategoriesToRollUp>
     <DefaultName>BlankPage.xaml</DefaultName>
     <ShowByDefault>false</ShowByDefault>
     <SortOrder>40</SortOrder>

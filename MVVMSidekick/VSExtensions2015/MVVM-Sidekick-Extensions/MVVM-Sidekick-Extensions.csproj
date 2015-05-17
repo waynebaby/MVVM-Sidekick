@@ -84,25 +84,19 @@
       <Link>Packages\Rx-Xaml.2.2.5.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="..\ProjectTemplates\UAP\BlankApplication\bin\ProjectTemplates\CSharp\1033\BlankApplication.zip">
+      <Link>ProjectTemplates\Windows\Windows Universal\BlankApplication.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ItemTemplates\UAP\MVVMSidekickViewWithVM\bin\ItemTemplates\CSharp\1033\BlankPage.zip">
+      <Link>ItemTemplates\XAML\BlankPage.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ItemTemplates\MVVMSidekickViewWithVM\MVVMSidekickViewWithVM.csproj">
-      <Project>{776099A3-B775-4795-A5DB-7A2730E94875}</Project>
-      <Name>MVVMSidekickViewWithVM</Name>
-      <VSIXSubPath>ItemTemplates</VSIXSubPath>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-    </ProjectReference>
-    <ProjectReference Include="..\ProjectTemplates\UAP\BlankApplication\BlankApplication.csproj">
-      <Project>{F6B722E8-1E1E-4A00-A6AC-5BB4FB10E679}</Project>
-      <Name>BlankApplication</Name>
-      <VSIXSubPath>ProjectTemplates</VSIXSubPath>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

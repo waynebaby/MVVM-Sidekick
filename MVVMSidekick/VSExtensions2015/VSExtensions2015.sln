@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VSIX", "VSIX", "{F419F5EA-5DED-481A-ABE7-E63DF46CC459}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM-Sidekick-Extensions", "MVVM-Sidekick-Extensions\MVVM-Sidekick-Extensions.csproj", "{BB8EF43D-70B5-4FEE-9ECD-3D98B4DEC231}"
+	ProjectSection(ProjectDependencies) = postProject
+		{776099A3-B775-4795-A5DB-7A2730E94875} = {776099A3-B775-4795-A5DB-7A2730E94875}
+		{F6B722E8-1E1E-4A00-A6AC-5BB4FB10E679} = {F6B722E8-1E1E-4A00-A6AC-5BB4FB10E679}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UAP", "UAP", "{8CE280D1-9A5A-4B53-913B-0BCB5ED22889}"
 EndProject
@@ -17,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Item Templates", "Item Temp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Templates", "Project Templates", "{D9D19BB9-D77E-4987-953C-8FDAF0EE488C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMSidekickViewWithVM", "ItemTemplates\MVVMSidekickViewWithVM\MVVMSidekickViewWithVM.csproj", "{776099A3-B775-4795-A5DB-7A2730E94875}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMSidekickViewWithVM", "ItemTemplates\UAP\MVVMSidekickViewWithVM\MVVMSidekickViewWithVM.csproj", "{776099A3-B775-4795-A5DB-7A2730E94875}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
