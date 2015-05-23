@@ -44,10 +44,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.4.20150517.08200000.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.4.20150517.08200000.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="..\..\packages\Microsoft.Bcl.1.1.9\Microsoft.Bcl.1.1.9.nupkg">
       <Link>Packages\Microsoft.Bcl.1.1.9.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -93,6 +89,30 @@
       <Link>ItemTemplates\XAML\BlankPage.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\ItemTemplates\Windows Desktop\MVVMSidekickViewWithVM.WPF\bin\ItemTemplates\CSharp\1033\MVVMSidekickCViewWithVM.WPF.zip">
+      <Link>ItemTemplates\XAML\MVVMSidekickCViewWithVM.WPF.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\ItemTemplates\Windows Desktop\MVVMSidekickViewWithVM.WPF\bin\ItemTemplates\CSharp\1033\MVVMSidekickPViewWithVM.WPF.zip">
+      <Link>ItemTemplates\XAML\MVVMSidekickPViewWithVM.WPF.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\ItemTemplates\Windows Desktop\MVVMSidekickViewWithVM.WPF\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM.WPF.zip">
+      <Link>ItemTemplates\XAML\MVVMSidekickViewWithVM.WPF.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\ProjectTemplates\Windows Desktop\MVVMSidekickApplication.WPF\bin\ProjectTemplates\CSharp\1033\MVVMSidekickApplication.WPF.zip">
+      <Link>ProjectTemplates\Windows\Windows Desktop\MVVMSidekickApplication.WPF.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\ProjectTemplates\Windows Desktop\MVVMSidekickApplication.WPF\bin\ProjectTemplates\CSharp\1033\MVVMSidekickApplication.WPF4.zip">
+      <Link>ProjectTemplates\Windows\Windows Desktop\MVVMSidekickApplication.WPF4.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\Nuget\MVVM-Sidekick.1.4.20150519.14200000.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.4.20150519.14200000.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
