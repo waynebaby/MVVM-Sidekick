@@ -14,35 +14,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.ComponentModel;
 using System.Linq.Expressions;
-using System.Runtime.Serialization;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Windows.Input;
-using MVVMSidekick.ViewModels;
-using MVVMSidekick.Commands;
 using System.Runtime.CompilerServices;
-using MVVMSidekick.Reactive;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using System.Reactive;
-using MVVMSidekick.EventRouting;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.IO;
-using System.Collections;
 using System.Security;
+using System.ComponentModel;
 #if NETFX_CORE
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Controls;
 using System.Collections.Concurrent;
-using Windows.UI.Xaml.Navigation;
-
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.System.Threading;
 using System.Reactive.Disposables;
 
@@ -59,7 +41,7 @@ using MVVMSidekick.Services;
 using System.Reactive.Disposables;
 
 
-#elif SILVERLIGHT_5||SILVERLIGHT_4
+#elif SILVERLIGHT_5 || SILVERLIGHT_4
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -67,7 +49,7 @@ using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 using System.Reactive.Disposables;
 
-#elif WINDOWS_PHONE_8||WINDOWS_PHONE_7
+#elif WINDOWS_PHONE_8 || WINDOWS_PHONE_7
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;

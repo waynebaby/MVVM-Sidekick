@@ -1,5 +1,5 @@
 ﻿using System;
-#if ! NETFX_CORE
+#if !NETFX_CORE
 using Microsoft.Expression.Interactivity.Core;
 
 using System.Collections.Generic;
@@ -11,10 +11,7 @@ using System.Windows.Data;
 using System.Windows.Interactivity;
 
 #else
-using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Controls;
 using System.Reflection;
 #endif
 using MVVMSidekick.EventRouting;
@@ -25,7 +22,7 @@ namespace MVVMSidekick.Behaviors
 {
 
 #if NETFX_CORE
-    public class SendToEventRouterAction :DependencyObject , Microsoft.Xaml.Interactivity.IAction
+	public class SendToEventRouterAction :DependencyObject , Microsoft.Xaml.Interactivity.IAction
 #else
     public class SendToEventRouterAction : TriggerAction<DependencyObject>
 #endif

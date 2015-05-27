@@ -27,10 +27,8 @@ using System.Runtime.CompilerServices;
 using MVVMSidekick.Reactive;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
-using System.Reactive.Threading.Tasks;
 #if NETFX_CORE
 using Windows.UI.Xaml.Controls;
-using System.Collections.Concurrent;
 
 
 #elif WPF
@@ -70,9 +68,9 @@ namespace MVVMSidekick
 
 	namespace ViewModels
 	{
-		using MVVMSidekick.Utilities;
-		using MVVMSidekick.Views;
-		using MVVMSidekick.EventRouting;
+		using Utilities;
+		using Views;
+		using EventRouting;
 		using System.Reactive.Disposables;
 
 
@@ -360,17 +358,36 @@ namespace MVVMSidekick
 			/// </summary>
 			/// <typeparam name="T">Type of Model /Model的类型</typeparam>
 			/// <param name="item">IDisposable Inastance/IDisposable实例</param>
-			/// <param name="tg">The tg.</param>
+			/// <param name="targetGroup">The tg.</param>
 			/// <param name="needCheckInFinalizer">if set to <c>true</c> [need check in finalizer].</param>
 			/// <param name="comment">The comment.</param>
 			/// <param name="caller">The caller.</param>
 			/// <param name="file">The file.</param>
 			/// <param name="line">The line.</param>
 			/// <returns>T.</returns>
-			public static T DisposeWith<T>(this T item, IDisposeGroup tg, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
+			public static T DisposeWith<T>(this T item, IDisposeGroup targetGroup, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
 			{
 
-				tg.AddDisposable(item, needCheckInFinalizer, comment, caller, file, line);
+				targetGroup.AddDisposable(item, needCheckInFinalizer, comment, caller, file, line);
+				return item;
+
+
+			}
+
+
+
+			public static T DisposeWhenUnload<T>(this T item, IViewModelLifetime viewModel, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
+			{
+
+				viewModel.UnloadDisposeGroup.AddDisposable(item, needCheckInFinalizer, comment, caller, file, line);
+				return item;
+
+
+			}
+			public static T DisposeWhenUnbind<T>(this T item, IViewModelLifetime viewModel, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
+			{
+
+				viewModel.UnbindDisposeGroup.AddDisposable(item, needCheckInFinalizer, comment, caller, file, line);
 				return item;
 
 
@@ -1678,7 +1695,7 @@ namespace MVVMSidekick
 			protected virtual void Dispose(bool disposing)
 			{
 				var disposeList = Interlocked.Exchange(ref _disposeInfoList, new Lazy<List<DisposeEntry>>(() => new List<DisposeEntry>(), true));
-				if (disposeList != null)
+				if (disposeList != null && disposeList.IsValueCreated)
 				{
 					var l = disposeList.Value
 						.Select
@@ -1757,6 +1774,15 @@ namespace MVVMSidekick
 			/// Occurs when [disposed entry].
 			/// </summary>
 			public event EventHandler<DisposeEventArgs> DisposedEntry;
+		}
+
+
+		/// <summary>
+		/// 默认的实现
+		/// </summary>
+		public class DisposeGroup : DisposeGroupBase
+		{
+
 		}
 
 		/// <summary>
@@ -1868,7 +1894,7 @@ namespace MVVMSidekick
 		/// <summary>
 		/// Interface IViewModelLifetime
 		/// </summary>
-		public interface IViewModelLifetime
+		public interface IViewModelLifetime : IDisposeGroup
 		{
 			/// <summary>
 			/// Called when [binded to view].
@@ -1898,6 +1924,14 @@ namespace MVVMSidekick
 			Task OnBindedViewUnload(MVVMSidekick.Views.IView view);
 
 
+			/// <summary>
+			/// the group that would dispose when Unbind
+			/// </summary>
+			IDisposeGroup UnbindDisposeGroup { get; }
+			/// <summary>
+			///  the group that would dispose when Unload
+			/// </summary>
+			IDisposeGroup UnloadDisposeGroup { get; }
 
 		}
 		/// <summary>
@@ -2184,6 +2218,17 @@ namespace MVVMSidekick
 		public abstract partial class ViewModelBase<TViewModel> : BindableBase<TViewModel>, IViewModel where TViewModel : ViewModelBase<TViewModel>
 		{
 			/// <summary>
+			/// Resource Group that need dispose when Unbind from UI;
+			/// </summary>
+			public IDisposeGroup UnbindDisposeGroup { get; } = new DisposeGroup();
+
+			/// <summary>
+			/// Resource Group that need dispose when Unload from UI;
+			/// </summary>											   
+			public IDisposeGroup UnloadDisposeGroup { get; } = new DisposeGroup();
+
+
+			/// <summary>
 			/// Releases unmanaged and - optionally - managed resources.
 			/// </summary>
 			/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
@@ -2290,6 +2335,8 @@ namespace MVVMSidekick
 			/// <returns>Task awaiter</returns>
 			protected virtual async Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue)
 			{
+				UnbindDisposeGroup.Dispose();
+
 				if (IsDisposingWhenUnbindRequired)
 				{
 					Dispose();
@@ -2317,6 +2364,7 @@ namespace MVVMSidekick
 			/// <returns>Task awaiter</returns>
 			protected virtual async Task OnBindedViewUnload(IView view)
 			{
+				UnloadDisposeGroup.Dispose();
 				if (IsDisposingWhenUnloadRequired)
 				{
 					this.Dispose();
@@ -2471,7 +2519,7 @@ namespace MVVMSidekick
 				Dispose();
 			}
 
-		  
+
 
 			/// <summary>
 			/// Runs the on dispatcher.
@@ -2688,6 +2736,9 @@ namespace MVVMSidekick
 
 
 			}
+
+		
+
 #elif WPF
 			/// <summary>
 			/// Explode the dispatcher of current view.
@@ -3163,45 +3214,6 @@ namespace MVVMSidekick
 			}
 		}
 
-		//public class TaskExectionTokenPool : DisposeGroupBase, IDisposeGroup
-		//{
-		//	ConcurrentDictionary<string, TaskExectionTokenPublisher> _TaskExectionTokenPublishers = new ConcurrentDictionary<string, TaskExectionTokenPublisher>();
-
-		//	public ConcurrentDictionary<string, TaskExectionTokenPublisher> TaskExectionTokenPublishers
-		//	{
-		//		get { return _TaskExectionTokenPublishers; }
-
-		//	}
-
-
-		//	public string Name { get; private set; }
-
-		//}
-
-		//public class TaskExectionTokenPublisher
-		//{
-
-		//}
-
-		//public class TaskExectionToken : IDisposable
-		//{
-		//	public TaskExectionToken(string name, CancellationToken cancellationToken)
-		//	{
-		//		Name = name;
-		//		CancellationToken = cancellationToken;
-		//	}
-
-		//	public string Name { get; private set; }
-
-		//	public CancellationToken CancellationToken { get; private set; }
-
-
-
-		//	public void Dispose()
-		//	{
-
-		//	}
-		//}
 	}
 
 }

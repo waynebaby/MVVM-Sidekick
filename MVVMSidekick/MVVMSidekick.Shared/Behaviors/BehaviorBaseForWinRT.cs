@@ -1,18 +1,13 @@
 ﻿#if NETFX_CORE
 using Microsoft.Xaml.Interactivity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace MVVMSidekick.Behaviors
 {
 
-/// <summary>
-/// 	Behavior Base
-/// </summary>
+	/// <summary>
+	/// 	Behavior Base
+	/// </summary>
 	public class BehaviorBase : DependencyObject, IBehavior
 	{
 

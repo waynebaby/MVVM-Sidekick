@@ -1,25 +1,8 @@
-﻿// ***********************************************************************
-// Assembly         : MVVMSidekick_Wp8
-// Author           : waywa
-// Created          : 05-17-2014
-//
-// Last Modified By : waywa
-// Last Modified On : 01-04-2015
-// ***********************************************************************
-// <copyright file="PlatformPatches.cs" company="">
-//     Copyright ©  2012
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 
 #if NET40
+
+using System.Collections;
 
 namespace System.ComponentModel
 {

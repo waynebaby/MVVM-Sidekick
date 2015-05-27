@@ -12,12 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using MVVMSidekick.Patterns;
-using MVVMSidekick.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 #if NETFX_CORE
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -29,12 +24,12 @@ using System.Windows.Controls;
 namespace MVVMSidekick
 {
 
-    namespace VisualStates
-    {
+	namespace VisualStates
+	{
 		/// <summary>
 		/// Class VisualStateProxyBinder.
 		/// </summary>
-        public class VisualStateProxyBinder : ElementBinderBase<VisualStateProxyBinder>
+		public class VisualStateProxyBinder : ElementBinderBase<VisualStateProxyBinder>
         {
 
             //static Action <VisualStateProxyBinder > binding

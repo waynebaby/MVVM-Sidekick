@@ -1,4 +1,4 @@
-﻿#if ! NETFX_CORE
+﻿#if !NETFX_CORE
 using Microsoft.Expression.Interactivity.Core;
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,11 @@ using System.Windows.Data;
 using System.Windows.Interactivity;
 using MVVMSidekick.Patterns.ItemsAndSelection;
 using MVVMSidekick.ViewModels;
-#else 
+#else
 using Microsoft.Xaml.Interactivity;
 using MVVMSidekick.Patterns.ItemsAndSelection;
 using System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 #endif
 
@@ -23,7 +22,7 @@ using Windows.UI.Xaml.Data;
 namespace MVVMSidekick.Behaviors
 {
 #if NETFX_CORE
-    public class ItemsSelectionBindingBehavior : BehaviorBase, IBehavior
+	public class ItemsSelectionBindingBehavior : BehaviorBase, IBehavior
 #else
     public class ItemsSelectionBindingBehavior : Behavior<DependencyObject>
 
