@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BehaviorHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BindToAppliactionBarIconButtonBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ItemsSelectionBindingBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListenToEventRouterTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\SendToEventRouterAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands.cs" />

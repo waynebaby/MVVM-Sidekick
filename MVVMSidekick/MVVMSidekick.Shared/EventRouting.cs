@@ -169,6 +169,9 @@ namespace MVVMSidekick
 
 			}
 
+
+
+
 			/// <summary>
 			/// 事件来源的代理对象实例
 			/// </summary>

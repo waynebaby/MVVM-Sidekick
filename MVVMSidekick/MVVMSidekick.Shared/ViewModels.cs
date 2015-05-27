@@ -43,14 +43,14 @@ using MVVMSidekick.Views;
 using System.Windows.Controls.Primitives;
 using MVVMSidekick.Utilities;
 using System.Windows.Threading;
-#elif SILVERLIGHT_5||SILVERLIGHT_4
+#elif SILVERLIGHT_5 || SILVERLIGHT_4
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
-#elif WINDOWS_PHONE_8||WINDOWS_PHONE_7
+#elif WINDOWS_PHONE_8 || WINDOWS_PHONE_7
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
@@ -489,7 +489,7 @@ namespace MVVMSidekick
 			/// <param name="model"><para>The model that Value Container will be held with.</para>
 			/// <para>所属的model实例</para></param>
 			/// <param name="initValue">The first value of this container/初始值</param>
-			public ValueContainer(string info, BindableBase model, TProperty initValue = default (TProperty ))
+			public ValueContainer(string info, BindableBase model, TProperty initValue = default(TProperty))
 				: this(info, model, (v1, v2) =>
 					{
 						if (v1 == null)
@@ -530,7 +530,7 @@ namespace MVVMSidekick
 			/// <param name="equalityComparer"><para>Comparer of new/old value, for notifition.</para>
 			/// <para>判断两个值是否相等的比较器,用于判断是否通知变更</para></param>
 			/// <param name="initValue">The first value of this container/初始值</param>
-			public ValueContainer(string info, BindableBase model, Func<TProperty, TProperty, bool> equalityComparer, TProperty initValue = default (TProperty))
+			public ValueContainer(string info, BindableBase model, Func<TProperty, TProperty, bool> equalityComparer, TProperty initValue = default(TProperty))
 			{
 				EqualityComparer = equalityComparer;
 				PropertyName = info;
@@ -1008,7 +1008,7 @@ namespace MVVMSidekick
 
 
 
-#if SILVERLIGHT_5||WINDOWS_PHONE_8||WINDOWS_PHONE_7
+#if SILVERLIGHT_5 || WINDOWS_PHONE_8 || WINDOWS_PHONE_7
 			/// <summary>
 			/// The _plain property container getters
 			/// </summary>
@@ -1286,7 +1286,7 @@ namespace MVVMSidekick
 				{
 					target = source;
 				}
-#if ! (SILVERLIGHT_5 || WINDOWS_PHONE_8|| WINDOWS_PHONE_7 || NETFX_CORE)
+#if !(SILVERLIGHT_5 || WINDOWS_PHONE_8 || WINDOWS_PHONE_7 || NETFX_CORE)
 
 				else if (typeof(ICloneable).IsAssignableFrom(sourcetype))
 				{
@@ -2471,6 +2471,7 @@ namespace MVVMSidekick
 				Dispose();
 			}
 
+		  
 
 			/// <summary>
 			/// Runs the on dispatcher.
@@ -2710,7 +2711,7 @@ namespace MVVMSidekick
 
 
 			}
-#elif SILVERLIGHT_5||WINDOWS_PHONE_8
+#elif SILVERLIGHT_5 || WINDOWS_PHONE_8
 			/// <summary>
 			/// Gets the dispatcher.
 			/// </summary>
