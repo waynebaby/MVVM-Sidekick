@@ -68,10 +68,10 @@ namespace MVVMSidekick
 
 	namespace ViewModels
 	{
-		using Utilities;
-		using Views;
 		using EventRouting;
 		using System.Reactive.Disposables;
+		using Utilities;
+		using Views;
 
 
 		/// <summary>
@@ -325,7 +325,7 @@ namespace MVVMSidekick
 			/// Gets or sets the event router.
 			/// </summary>
 			/// <value>The event router.</value>
-			public abstract EventRouter EventRouter { get; set; }
+			public abstract EventRouter LocalEventRouter { get; set; }
 
 		}
 
@@ -375,7 +375,19 @@ namespace MVVMSidekick
 			}
 
 
-
+			/// <summary>
+			/// <para>注册在目标VM绑定的视图Unload的时候Dispose </para>
+			/// <para>Register a dispose object that would dispose when target viewmodel's view unload</para>
+			/// </summary>
+			/// <typeparam name="T"><para>任意IDisposable对象类型</para><para>some IDisposable Type</para></typeparam>
+			/// <param name="item"><para>注册的Disposeable对象</para><para>Disposable instance that would be registered</para></param>
+			/// <param name="viewModel">注册到的View Model</param>
+			/// <param name="needCheckInFinalizer">if set to <c>true</c> [need check in finalizer].</param>
+			/// <param name="comment">The comment.</param>
+			/// <param name="caller">The caller.</param>
+			/// <param name="file">The file.</param>
+			/// <param name="line">The line.</param>
+			/// <returns>T.</returns>
 			public static T DisposeWhenUnload<T>(this T item, IViewModelLifetime viewModel, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
 			{
 
@@ -384,6 +396,18 @@ namespace MVVMSidekick
 
 
 			}
+			/// <summary>
+			/// <para>注册在目标VM绑定的视图与VM解除绑定的的时候Dispose </para>
+			/// <para>Register a dispose object that would dispose when target viewmodel's view unbind with the viewmodel</para>
+			/// </summary>
+			/// <typeparam name="T"></typeparam>
+			/// <param name="item"></param>
+			/// <param name="needCheckInFinalizer">if set to <c>true</c> [need check in finalizer].</param>
+			/// <param name="comment">The comment.</param>
+			/// <param name="caller">The caller.</param>
+			/// <param name="file">The file.</param>
+			/// <param name="line">The line.</param>
+			/// <returns>T.</returns>
 			public static T DisposeWhenUnbind<T>(this T item, IViewModelLifetime viewModel, bool needCheckInFinalizer = false, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = -1) where T : IDisposable
 			{
 
@@ -1452,26 +1476,18 @@ namespace MVVMSidekick
 			/// 给这个模型分配的消息路由引用（延迟加载）
 			/// </summary>
 			/// <value>The event router.</value>
-			public override EventRouter EventRouter
-			{
-				get { return _EventRouterLocator(this).Value; }
-				set { _EventRouterLocator(this).SetValueAndTryNotify(value); }
-			}
-			#region Property EventRouter EventRouter Setup
-			/// <summary>
-			/// The _ event router
-			/// </summary>
-			protected Property<EventRouter> _EventRouter = new Property<EventRouter> { LocatorFunc = _EventRouterLocator };
-			/// <summary>
-			/// The _ event router locator
-			/// </summary>
-			static Func<BindableBase, ValueContainer<EventRouter>> _EventRouterLocator = RegisterContainerLocator<EventRouter>("EventRouter", model => model.Initialize("EventRouter", ref model._EventRouter, ref _EventRouterLocator, _EventRouterDefaultValueFactory));
-			/// <summary>
-			/// The _ event router default value factory
-			/// </summary>
-			static Func<EventRouter> _EventRouterDefaultValueFactory = () => { return new EventRouter(); };
-			#endregion
 
+
+			public override EventRouter LocalEventRouter
+			{
+				get { return _LocalEventRouterLocator(this).Value; }
+				set { _LocalEventRouterLocator(this).SetValueAndTryNotify(value); }
+			}
+			#region Property EventRouter LocalEventRouter Setup        
+			protected Property<EventRouter> _LocalEventRouter = new Property<EventRouter> { LocatorFunc = _LocalEventRouterLocator };
+			static Func<BindableBase, ValueContainer<EventRouter>> _LocalEventRouterLocator = RegisterContainerLocator<EventRouter>("LocalEventRouter", model => model.Initialize("LocalEventRouter", ref model._LocalEventRouter, ref _LocalEventRouterLocator, _LocalEventRouterDefaultValueFactory));
+			static Func<EventRouter> _LocalEventRouterDefaultValueFactory = () => { return new EventRouter(); };
+			#endregion
 
 
 		}
@@ -1829,7 +1845,7 @@ namespace MVVMSidekick
 			/// Gets or sets the event router.
 			/// </summary>
 			/// <value>The event router.</value>
-			EventRouter EventRouter { get; set; }
+			EventRouter LocalEventRouter { get; set; }
 			/// <summary>
 			/// Gets the bindable instance identifier.
 			/// </summary>
@@ -2760,7 +2776,7 @@ namespace MVVMSidekick
 					return Application.Current.Dispatcher;
 				}
 
-
+							
 			}
 #elif SILVERLIGHT_5 || WINDOWS_PHONE_8
 			/// <summary>

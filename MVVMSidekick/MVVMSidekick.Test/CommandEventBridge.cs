@@ -26,13 +26,13 @@ namespace MVVMSidekick.Test
 {
     public class AnyObjectWithEvent
     {
-        public event EventHandler<DataEventArgs<string>> SampleEvent;
+        public event EventHandler<string> SampleEvent;
 
         public void RaiseEvent(string data)
         {
             if (SampleEvent != null)
             {
-                SampleEvent(this, new DataEventArgs<string>(data));
+                SampleEvent(this, data);
             }
 
         }
@@ -56,7 +56,8 @@ namespace MVVMSidekick.Test
             string expected = "Mydata";
 
             var bind = MVVMSidekick.Utilities.EventHandlerHelper.BindEvent(eobj, "SampleEvent", (o, e,en,eht) => {
-                data = ((DataEventArgs<string>)e).Data; });
+				data = (string)e;
+			});
             eobj.RaiseEvent(expected);
             Assert.AreEqual(data, expected);
 

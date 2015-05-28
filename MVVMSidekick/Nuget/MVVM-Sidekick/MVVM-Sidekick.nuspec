@@ -38,7 +38,11 @@
 
     </summary>
     <releaseNotes>
-      1.4.20150512.00020000 : Try Support Universal for Win10 (VS2015 RC)
+      1.4.20150527.x : 
+      - Add ListenEventRouterTrigger for event routing on view
+      - Add DisposeWhenUnload  and DisposeWhenUnbind Extension Methods for IDisposable Objects
+      - Change EventRouter Default Event args to any type instead of eventargs
+      - Rename EventRouter Property to LocalEventRouter  
 
     </releaseNotes>
     <tags>Rx Reactive Extensions MVVM Win8 Metro Modern UI</tags>

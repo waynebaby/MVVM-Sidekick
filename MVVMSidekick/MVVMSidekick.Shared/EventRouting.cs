@@ -133,14 +133,11 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 取得独立事件类
 			/// </summary>
-			/// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
+			/// <typeparam name="TEventData">The type of the t event arguments.</typeparam>
 			/// <returns>事件独立类</returns>
-			public virtual EventObject<TEventArgs> GetEventObject<TEventArgs>()
-#if !NETFX_CORE
-			// where TEventArgs : EventArgs
-#endif
+			public virtual EventObject<TEventData> GetEventObject<TEventData>()
 			{
-				var eventObject = (EventObject<TEventArgs>)GetIEventObjectInstance(typeof(TEventArgs));
+				var eventObject = (EventObject<TEventData>)GetIEventObjectInstance(typeof(TEventData));
 
 				return eventObject;
 
@@ -227,19 +224,15 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 事件对象
 			/// </summary>
-			/// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
-			public class EventObject<TEventArgs> : IEventObject, IObservable<RouterEventData<TEventArgs>>, IDisposable
-#if !NETFX_CORE
-			// where TEventArgs : EventArgs
-#endif
-
+			/// <typeparam name="TEventData">The type of the t event arguments.</typeparam>
+			public class EventObject<TEventData> : IEventObject, IObservable<RouterEventData<TEventData>>, IDisposable
 			{
 
 
 				/// <summary>
 				/// The _core
 				/// </summary>
-				private Subject<RouterEventData<TEventArgs>> _core = new Subject<RouterEventData<TEventArgs>>();
+				private Subject<RouterEventData<TEventData>> _core = new Subject<RouterEventData<TEventData>>();
 
 
 
@@ -261,7 +254,7 @@ namespace MVVMSidekick
 				/// <param name="args">The arguments.</param>
 				void IEventObject.RaiseEvent(object sender, string eventName, object args)
 				{
-					RaiseEvent(sender, eventName, (TEventArgs)args);
+					RaiseEvent(sender, eventName, (TEventData)args);
 				}
 
 				/// <summary>
@@ -270,7 +263,7 @@ namespace MVVMSidekick
 				/// <param name="sender">发送者</param>
 				/// <param name="eventName">事件名</param>
 				/// <param name="args">参数</param>
-				public void RaiseEvent(object sender, string eventName, TEventArgs args)
+				public void RaiseEvent(object sender, string eventName, TEventData args)
 				{
 
 
@@ -278,7 +271,7 @@ namespace MVVMSidekick
 					//if (a != null)
 					//{
 					//   Event(sender, new DataEventArgs<RouterEventData<TEventArgs>>(new RouterEventData<TEventArgs>(sender, eventName, (TEventArgs)args)));
-					_core.OnNext(new RouterEventData<TEventArgs>(sender, eventName, args));
+					_core.OnNext(new RouterEventData<TEventData>(sender, eventName, args));
 					//}
 				}
 
@@ -291,7 +284,7 @@ namespace MVVMSidekick
 				/// </summary>
 				/// <param name="observer">The observer.</param>
 				/// <returns>IDisposable.</returns>
-				public IDisposable Subscribe(IObserver<RouterEventData<TEventArgs>> observer)
+				public IDisposable Subscribe(IObserver<RouterEventData<TEventData>> observer)
 				{
 					return _core.Subscribe(observer);
 
@@ -327,9 +320,9 @@ namespace MVVMSidekick
 					var v = Interlocked.Exchange(ref _Disposed, 1);
 					if (v == 0)
 					{
-						var cbak=Interlocked.Exchange(ref _core, null);
+						var cbak = Interlocked.Exchange(ref _core, null);
 
-						if (cbak!=null)
+						if (cbak != null)
 						{
 							try
 							{
@@ -337,9 +330,9 @@ namespace MVVMSidekick
 							}
 							catch (Exception)
 							{
-								
-								
-							} 
+
+
+							}
 						}
 
 						if (disposing)
@@ -411,22 +404,22 @@ namespace MVVMSidekick
 			public Object TargetFrame { get; set; }
 		}
 
-		/// <summary>
-		/// 保存状态事件数据
-		/// </summary>
-		public class SaveStateEventArgs : EventArgs
-		{
-			/// <summary>
-			/// Gets or sets the view key identifier.
-			/// </summary>
-			/// <value>The view key identifier.</value>
-			public string ViewKeyId { get; set; }
-			/// <summary>
-			/// Gets or sets the state.
-			/// </summary>
-			/// <value>The state.</value>
-			public Dictionary<string, object> State { get; set; }
-		}
+		///// <summary>
+		///// 保存状态事件数据
+		///// </summary>
+		//public class SaveStateEventArgs : EventArgs
+		//{
+		//	/// <summary>
+		//	/// Gets or sets the view key identifier.
+		//	/// </summary>
+		//	/// <value>The view key identifier.</value>
+		//	public string ViewKeyId { get; set; }
+		//	/// <summary>
+		//	/// Gets or sets the state.
+		//	/// </summary>
+		//	/// <value>The state.</value>
+		//	public Dictionary<string, object> State { get; set; }
+		//}
 
 		/// <summary>
 		/// 事件路由的扩展方法集合
@@ -459,7 +452,7 @@ namespace MVVMSidekick
 		/// </summary>
 		/// <typeparam name="TEventArgs">事件数据类型</typeparam>
 		public struct RouterEventData<TEventArgs>
-#if ! NETFX_CORE
+#if !NETFX_CORE
 		//: EventArgs
 		// where TEventArgs : EventArgs
 #endif
@@ -523,27 +516,33 @@ namespace MVVMSidekick
 
 
 
-		/// <summary>
-		/// Class DataEventArgs.
-		/// </summary>
-		/// <typeparam name="TData">The type of the t data.</typeparam>
-		public class DataEventArgs<TData> : EventArgs
-		{
-			/// <summary>
-			/// Initializes a new instance of the <see cref="DataEventArgs{TData}" /> class.
-			/// </summary>
-			/// <param name="data">The data.</param>
-			public DataEventArgs(TData data)
-			{
+//#if !NETFX_CORE
 
-				Data = data;
-			}
+//		/// <summary>
+//		/// Class DataEventArgs.
+//		/// </summary>
+//		/// <typeparam name="TData">The type of the t data.</typeparam>
+//		public class DataEventArgs<TData> : EventArgs
+//		{
+//			/// <summary>
+//			/// Initializes a new instance of the <see cref="DataEventArgs{TData}" /> class.
+//			/// </summary>
+//			/// <param name="data">The data.</param>
+//			public DataEventArgs(TData data)
+//			{
 
-			/// <summary>
-			/// Gets or sets the data.
-			/// </summary>
-			/// <value>The data.</value>
-			public TData Data { get; protected set; }
-		}
+//				Data = data;
+//			}
+
+//			/// <summary>
+//			/// Gets or sets the data.
+//			/// </summary>
+//			/// <value>The data.</value>
+//			public TData Data { get; protected set; }
+
+//		}
+//#endif
 	}
+
+
 }
