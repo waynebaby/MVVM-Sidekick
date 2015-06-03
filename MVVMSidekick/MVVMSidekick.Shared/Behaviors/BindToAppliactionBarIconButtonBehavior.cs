@@ -268,7 +268,7 @@ namespace MVVMSidekick.Behaviors
 					   .Where(ev =>
 					   {
 
-						   if (ev.EventArgs != null)
+						   if (ev.EventData != null)
 						   {
 
 							   switch (TargetType)
@@ -290,7 +290,7 @@ namespace MVVMSidekick.Behaviors
 					   .Subscribe(
 						   ev =>
 						   {
-							   var args = ev.EventArgs;
+							   var args = ev.EventData;
 							   var cb = new CommandBinding()
 							   {
 								   EventName = args.EventName,

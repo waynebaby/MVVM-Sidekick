@@ -1700,7 +1700,7 @@ namespace MVVMSidekick
 				var dis = EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
 
 					.Where(e =>
-							e.EventArgs.Uri == newUriWithParameter)
+							e.EventData.Uri == newUriWithParameter)
 					.Subscribe(e =>
 					{
 						var key = newUriWithParameter.ToString();
@@ -1873,7 +1873,7 @@ Please check startup function of this mapping is well configured and be proper c
 					 .GetEventObject<NavigationEventArgs>()
 
 					 .Where(e =>
-							 object.ReferenceEquals(e.EventArgs.Parameter, parameter))
+							 object.ReferenceEquals(e.EventData.Parameter, parameter))
 					 .Subscribe(e =>
 					 {
 

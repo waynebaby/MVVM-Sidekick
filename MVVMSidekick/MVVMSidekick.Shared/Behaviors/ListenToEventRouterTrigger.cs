@@ -23,7 +23,7 @@ namespace MVVMSidekick.Behaviors
 {
 
 #if NETFX_CORE
-	public class ListenToEventRouterTriggerBehavior : DependencyObject, IBehavior
+	public class ListenToEventRouterTriggerBehavior : BehaviorBase
 
 	{
 
@@ -55,29 +55,28 @@ namespace MVVMSidekick.Behaviors
 
 
 
+	
 
+	
 
-		public DependencyObject AssociatedObject
-		{
-			get; private set;
-		}
-
-
-		public void Attach(DependencyObject associatedObject)
+		public override void Attach(DependencyObject associatedObject)
 		{
 			ExchangeTheSubscribedRouter(this, EventRouter);
 
+			base.Attach(associatedObject);
 		}
 
-		public void Detach()
+
+		
+		public override void Detach()
 		{
+			base.Detach();
 			if (_oldSubscrption != null)
 			{
 				_oldSubscrption.Dispose();
 				_oldSubscrption = null;
 			}
 		}
-
 
 
 		public EventRouter EventRouter
@@ -155,7 +154,102 @@ namespace MVVMSidekick.Behaviors
 		}
 
 	}
-#else
-
 #endif
+
+#if NETFX_CORE
+    public class ListenToEventRouterDataBehavior : BehaviorBase
+#else 
+	public class ListenToEventRouterDataBehavior : Behavior<FrameworkElement>
+#endif 
+	{
+
+
+
+		public Object LastDataReceived
+		{
+			get { return (Object)GetValue(LastDataReceivedProperty); }
+			set { SetValue(LastDataReceivedProperty, value); }
+		}
+
+		// Using a DependencyProperty as the backing store for LastDataReceived.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty LastDataReceivedProperty =
+			DependencyProperty.Register("LastDataReceived", typeof(Object), typeof(ListenToEventRouterDataBehavior), new PropertyMetadata(0));
+
+
+		/// <summary>
+		/// Gets or sets the type of the event object.
+		/// </summary>
+		/// <value>
+		/// The type of the event object.
+		/// </value>
+		public System.Type EventObjectType
+		{
+			get { return (Type)GetValue(EventObjectTypeProperty); }
+			set { SetValue(EventObjectTypeProperty, value); }
+		}
+
+		// Using a DependencyProperty as the backing store for EventObjectType.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty EventObjectTypeProperty =
+			DependencyProperty.Register("EventObjectType", typeof(Type), typeof(ListenToEventRouterDataBehavior), new PropertyMetadata(typeof(object)));
+
+
+		public EventRouter EventRouter
+		{
+			get { return (EventRouter)GetValue(EventRouterProperty); }
+			set { SetValue(EventRouterProperty, value); }
+		}
+
+		// Using a DependencyProperty as the backing store for EventRouter.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty EventRouterProperty =
+			DependencyProperty.Register("EventRouter", typeof(EventRouter), typeof(ListenToEventRouterDataBehavior), new PropertyMetadata(null,
+				(o, e) =>
+				{
+					var t = o as ListenToEventRouterDataBehavior;
+					ExchangeTheSubscribedRouter(t, e.NewValue as EventRouter);
+				}));
+
+
+
+
+		IDisposable _oldSubscrption;
+
+		static void ExchangeTheSubscribedRouter(ListenToEventRouterDataBehavior bhv, EventRouter newRouter)
+		{
+
+			var targetEventRouter = newRouter ?? EventRouter.Instance;
+			var query = targetEventRouter.GetEventObject<object>()
+				.Where(x => string.IsNullOrEmpty(bhv.EventRoutingName) || bhv.EventRoutingName == x.EventName);
+
+
+			var old = Interlocked.Exchange(
+				ref bhv._oldSubscrption,
+				query.Subscribe(e => bhv.LastDataReceived = e.EventData));
+
+			old.Dispose();
+
+		}
+
+
+
+		/// <summary>
+		/// Gets or sets the name of the event routing.
+		/// </summary>
+		/// <value>
+		/// The name of the event routing.
+		/// </value>
+		public string EventRoutingName
+		{
+			get { return (string)GetValue(EventRoutingNameProperty); }
+			set { SetValue(EventRoutingNameProperty, value); }
+		}
+
+
+		// Using a DependencyProperty as the backing store for EventRoutingName.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty EventRoutingNameProperty =
+			DependencyProperty.Register("EventRoutingName", typeof(string), typeof(ListenToEventRouterDataBehavior), new PropertyMetadata(null));
+
+
+
+	}
+
 }

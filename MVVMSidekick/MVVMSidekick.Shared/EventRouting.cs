@@ -508,7 +508,7 @@ namespace MVVMSidekick
 			/// 事件数据
 			/// </summary>
 			/// <value>The event arguments.</value>
-			public TEventArgs EventArgs
+			public TEventArgs EventData
 			{
 				get { return _EventArgs; }
 			}
