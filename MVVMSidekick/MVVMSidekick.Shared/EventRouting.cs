@@ -161,7 +161,10 @@ namespace MVVMSidekick
 			/// <returns>代理对象实例</returns>
 			public IEventChannel GetEventChannel(Type argsType)
 			{
-
+				if (argsType == null)
+				{
+					return null;
+				}
 				var rval = EventChannels.GetOrAdd(
 					argsType,
 					t =>

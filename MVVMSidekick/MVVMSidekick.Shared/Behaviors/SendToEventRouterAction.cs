@@ -117,7 +117,7 @@ namespace MVVMSidekick.Behaviors
 
 		// Using a DependencyProperty as the backing store for IsEventFiringToAllImplementedInterfacesChannels.  This enables animation, styling, binding, etc...
 		public static readonly DependencyProperty IsEventFiringToAllImplementedInterfacesChannelsProperty =
-			DependencyProperty.Register("IsEventFiringToAllImplementedInterfacesChannels", typeof(bool), typeof(SendToEventRouterAction), new PropertyMetadata(0));
+			DependencyProperty.Register("IsEventFiringToAllImplementedInterfacesChannels", typeof(bool), typeof(SendToEventRouterAction), new PropertyMetadata(false ));
 
 
 
@@ -157,9 +157,15 @@ namespace MVVMSidekick.Behaviors
 #if NETFX_CORE
 		public object Execute(object sender, object parameter)
 		{
+			var et = EventDataType;
+
 			if (EventData != null)
 			{
-				if (!EventDataType.GetTypeOrTypeInfo().IsAssignableFrom(EventData.GetType().GetTypeInfo()))
+				if (et == null)
+				{
+					et = EventData.GetType();
+				}
+				else if (!et.GetTypeOrTypeInfo().IsAssignableFrom(EventData.GetType().GetTypeInfo()))
 				{
 					return null;
 				}
@@ -167,7 +173,7 @@ namespace MVVMSidekick.Behaviors
 
 			var targetEventRouter = EventRouter ?? EventRouter.Instance;
 
-			targetEventRouter.RaiseEvent(this, EventData, EventDataType, EventRoutingName);
+			targetEventRouter.GetEventChannel(et).RaiseEvent(sender, this.EventRoutingName, EventData, IsEventFiringToAllBaseClassesChannels, IsEventFiringToAllImplementedInterfacesChannels);
 			return null;
 		}
 #else
@@ -180,7 +186,14 @@ namespace MVVMSidekick.Behaviors
 		{
 			if (EventData != null)
 			{
-				if (!EventDataType.GetTypeOrTypeInfo().IsAssignableFrom(EventDataType.GetType()))
+				var et = EventDataType;
+
+				if (et == null)
+				{
+					et = typeof(object);
+				}
+
+				if (!et.GetTypeOrTypeInfo().IsAssignableFrom(EventDataType.GetType()))
 				{
 					return;
 				}
