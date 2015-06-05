@@ -1,0 +1,40 @@
+﻿<mvvm:MVVMPage
+    x:Class="SubFrameSample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SubFrameSample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="using:MVVMSidekick.Views"
+    xmlns:vm="using:SubFrameSample.ViewModels"
+    mc:Ignorable="d" x:Name="pageRoot">
+    <Page.Resources>
+        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
+        <x:String x:Key="AppName">My Application</x:String>
+        <vm:MainPage_Model x:Key="DesignVM"/>
+    </Page.Resources>
+    <!--Begin App Bar Binding Patch. If you don't need Binding Top/Bottom Appbar please ignore these code -->
+    <!--<Page.DataContext>
+        <Binding  RelativeSource="{RelativeSource Mode=Self}" Path="ViewModel"/>
+    </Page.DataContext>
+    <mvvm:MVVMPage.ViewModel>
+        <Binding Source="{StaticResource DesignVM}" />
+    </mvvm:MVVMPage.ViewModel>
+    <mvvm:MVVMPage.BottomAppBar>
+		<AppBar d:DataContext="{StaticResource DesignVM}"><TextBlock TextWrapping="Wrap" Text="{Binding BindableInstanceId, Mode=OneWay}"/></AppBar>
+	</mvvm:MVVMPage.BottomAppBar>-->
+    <!--End App Bar Binding Patch. If you don't need Binding  Top/Bottom Appbar please ignore these code -->
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  DataContext="{StaticResource DesignVM}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="31*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="pageTitle" Grid.Column="1" Margin="50.249,100,100,100" Text="{Binding Title}" />
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Command="{Binding CommandNavi}" Grid.ColumnSpan="2"/>
+        <SplitView >
+
+            <Frame mvvm:StageManager.Beacon="WOKAO"  Grid.Column="1" >
+            </Frame>
+        </SplitView>
+    </Grid>
+</mvvm:MVVMPage>
