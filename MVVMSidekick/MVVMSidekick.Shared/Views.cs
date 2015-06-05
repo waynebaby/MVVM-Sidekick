@@ -26,10 +26,12 @@ using System.IO;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Media;
+
 
 #elif WPF
 using System.Windows.Controls;
-
+using System.Windows.Media;
 
 using System.Collections.Concurrent;
 using System.Windows.Navigation;
@@ -37,15 +39,14 @@ using System.Windows.Navigation;
 using MVVMSidekick.Views;
 using System.Windows.Controls.Primitives;
 using MVVMSidekick.Utilities;
-
 #elif SILVERLIGHT_5 || SILVERLIGHT_4
-
+						   using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #elif WINDOWS_PHONE_8 || WINDOWS_PHONE_7
-
+													  using System.Windows.Media;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using System.Windows.Data;
@@ -391,7 +392,7 @@ namespace MVVMSidekick
 
 #endif
 
-#if WINDOWS_PHONE_7||WINDOWS_PHONE_8
+#if WINDOWS_PHONE_7 || WINDOWS_PHONE_8
 		/// <summary>
 		/// Class MVVMPage.
 		/// </summary>
@@ -468,7 +469,7 @@ namespace MVVMSidekick
 
 
 
-#if ! WPF
+#if !WPF
 			//WPF Pages' Content are objects but others are FE .
 			/// <summary>
 			/// Gets or sets the content object.
@@ -975,7 +976,7 @@ namespace MVVMSidekick
 			/// <typeparam name="TView">The type of the view.</typeparam>
 			/// <param name="instance">The instance.</param>
 			/// <returns></returns>
-			public ViewModelToViewMapper<TModel> MapToDefault<TView>(TView instance) where TView : class,IView
+			public ViewModelToViewMapper<TModel> MapToDefault<TView>(TView instance) where TView : class, IView
 			{
 				MapViewToViewModel<TView>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(instance);
@@ -989,7 +990,7 @@ namespace MVVMSidekick
 			/// <param name="viewMappingKey">The view mapping key.</param>
 			/// <param name="instance">The instance.</param>
 			/// <returns></returns>
-			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, TView instance) where TView : class,IView
+			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, TView instance) where TView : class, IView
 			{
 				MapViewToViewModel<TView>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, instance);
@@ -1003,7 +1004,7 @@ namespace MVVMSidekick
 			/// <typeparam name="TView">The type of the view.</typeparam>
 			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
 			/// <returns></returns>
-			public ViewModelToViewMapper<TModel> MapToDefault<TView>(bool alwaysNew = true) where TView : class,IView
+			public ViewModelToViewMapper<TModel> MapToDefault<TView>(bool alwaysNew = true) where TView : class, IView
 			{
 				MapViewToViewModel<TView>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
@@ -1016,7 +1017,7 @@ namespace MVVMSidekick
 			/// <param name="viewMappingKey">The view mapping key.</param>
 			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
 			/// <returns></returns>
-			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, bool alwaysNew = true) where TView : class,IView
+			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, bool alwaysNew = true) where TView : class, IView
 			{
 				MapViewToViewModel<TView>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
@@ -1030,7 +1031,7 @@ namespace MVVMSidekick
 			/// <param name="factory">The factory.</param>
 			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
 			/// <returns></returns>
-			public ViewModelToViewMapper<TModel> MapToDefault<TView>(Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
+			public ViewModelToViewMapper<TModel> MapToDefault<TView>(Func<TModel, TView> factory, bool alwaysNew = true) where TView : class, IView
 			{
 				MapViewToViewModel<TView>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel)d), alwaysNew);
@@ -1045,7 +1046,7 @@ namespace MVVMSidekick
 			/// <param name="factory">The factory.</param>
 			/// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
 			/// <returns></returns>
-			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, Func<TModel, TView> factory, bool alwaysNew = true) where TView : class,IView
+			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, Func<TModel, TView> factory, bool alwaysNew = true) where TView : class, IView
 			{
 				MapViewToViewModel<TView>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel)d), alwaysNew);
@@ -1136,7 +1137,7 @@ namespace MVVMSidekick
 			}
 #endif
 
-#if WINDOWS_PHONE_8||WINDOWS_PHONE_7||SILVERLIGHT_5
+#if WINDOWS_PHONE_8 || WINDOWS_PHONE_7 || SILVERLIGHT_5
 			private static Uri GuessViewUri<TPage>(Uri baseUri) where TPage : MVVMPage
 			{
 				MapViewToViewModel<TPage>();
@@ -1210,7 +1211,7 @@ namespace MVVMSidekick
 			{
 
 				MapViewToViewModel<TPage>();
-			
+
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(typeof(TPage));
 				return this;
 			}
@@ -1222,7 +1223,7 @@ namespace MVVMSidekick
 			/// <returns></returns>
 			public ViewModelToViewMapper<TModel> MapToDefault<TPage>(string viewMappingKey) where TPage : MVVMPage
 			{
-				
+
 				MapViewToViewModel<TPage>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, typeof(TPage));
 				return this;
@@ -1506,7 +1507,7 @@ namespace MVVMSidekick
 			/// <param name="viewMappingKey"></param>
 			/// <returns></returns>
 			public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-				 where TTarget : class,IViewModel
+				 where TTarget : class, IViewModel
 			{
 				IView view = null;
 				view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
@@ -1532,7 +1533,7 @@ namespace MVVMSidekick
 			/// <param name="viewMappingKey">mapping key</param>
 			/// <returns></returns>
 			public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
-				where TTarget : class,IViewModel<TResult>
+				where TTarget : class, IViewModel<TResult>
 			{
 				IView view = null;
 				view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
@@ -1559,7 +1560,7 @@ namespace MVVMSidekick
 			/// <param name="viewMappingKey">mapping key</param>
 			/// <returns></returns>
 			public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-				where TTarget : class,IViewModel
+				where TTarget : class, IViewModel
 			{
 				IView view = null;
 				view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
@@ -1578,7 +1579,7 @@ namespace MVVMSidekick
 				return await TaskExHelper.FromResult(new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel });
 			}
 #endif
-#if SILVERLIGHT_5||WINDOWS_PHONE_7||WINDOWS_PHONE_8
+#if SILVERLIGHT_5 || WINDOWS_PHONE_7 || WINDOWS_PHONE_8
 
 			
 			internal Dictionary<string, IViewModel> NavigateRequestContexts
@@ -1697,7 +1698,7 @@ namespace MVVMSidekick
 				var guid = Guid.NewGuid();
 				var newUriWithParameter = new Uri(uriData.Item1.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
 
-				var dis = EventRouting.EventRouter.Instance.GetEventObject<System.Windows.Navigation.NavigationEventArgs>()
+				var dis = EventRouting.EventRouter.Instance.GetEventChannel<System.Windows.Navigation.NavigationEventArgs>()
 
 					.Where(e =>
 							e.EventData.Uri == newUriWithParameter)
@@ -1836,7 +1837,7 @@ Please check startup function of this mapping is well configured and be proper c
 			/// <param name="viewMappingKey"></param>
 			/// <returns></returns>
 			public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-				 where TTarget : class,IViewModel
+				 where TTarget : class, IViewModel
 			{
 
 
@@ -1870,7 +1871,7 @@ Please check startup function of this mapping is well configured and be proper c
 				var parameter = new StageNavigationContext<TTarget>() { ViewModel = targetViewModel };
 				var t = new TaskCompletionSource<object>();
 				var dip = EventRouting.EventRouter.Instance
-					 .GetEventObject<NavigationEventArgs>()
+					 .GetEventChannel<NavigationEventArgs>()
 
 					 .Where(e =>
 							 object.ReferenceEquals(e.EventData.Parameter, parameter))
@@ -1931,7 +1932,7 @@ Please check startup function of this mapping is well configured and be proper c
 			/// <param name="viewMappingKey"></param>
 			/// <returns></returns>
 			public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
-				where TTarget : class,IViewModel<TResult>
+				where TTarget : class, IViewModel<TResult>
 			{
 				var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
 				Type type;
@@ -1967,7 +1968,7 @@ Please check startup function of this mapping is well configured and be proper c
 			/// <returns></returns>
 
 			public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-	where TTarget : class,IViewModel
+	where TTarget : class, IViewModel
 			{
 				var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
 				Type type;
@@ -2107,6 +2108,24 @@ Please check startup function of this mapping is well configured and be proper c
 
 
 
+			//public static IView GetViewOfStage(DependencyObject obj)
+			//{
+			//	return (IView)obj.GetValue(ViewOfStageProperty);
+			//}
+
+			//public static void SetViewOfStage(DependencyObject obj, IView value)
+			//{
+			//	obj.SetValue(ViewOfStageProperty, value);
+			//}
+
+			//// Using a DependencyProperty as the backing store for ViewOfStage.  This enables animation, styling, binding, etc...
+			//public static readonly DependencyProperty ViewOfStageProperty =
+			//	DependencyProperty.RegisterAttached("ViewOfStage", typeof(IView), typeof(StageManager), new PropertyMetadata(null));
+
+
+
+
+
 			/// <summary>
 			/// Initializes the parent.
 			/// </summary>
@@ -2241,9 +2260,8 @@ Please check startup function of this mapping is well configured and be proper c
 			public static void RegisterTargetBeacon(string name, FrameworkElement target)
 			{
 				var view = LocateIView(target);
+
 				var beacons = GetOrCreateBeacons(view);
-
-
 				beacons[name] = target;
 
 
@@ -2251,17 +2269,31 @@ Please check startup function of this mapping is well configured and be proper c
 
 			private static FrameworkElement LocateIView(FrameworkElement target)
 			{
-
 				var view = target;
 
 				while (view != null)
 				{
+					//	var tryView = GetViewOfStage(target) as FrameworkElement;
+					//	if (tryView != null)
+					//	{
+					//		return tryView;
+					//	}
+
+					var tryView = view.Parent as FrameworkElement;
+
+					if (tryView != null)
+					{
+						view = tryView;
+					}
+					else
+					{
+						tryView = VisualTreeHelper.GetParent(view) as FrameworkElement;
+						view = tryView;
+					}
 					if (view is IView)
 					{
 						break;
 					}
-					view = view.Parent as FrameworkElement;
-
 				}
 				return view;
 			}

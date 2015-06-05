@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
@@ -99,13 +100,7 @@ namespace MVVMSidekick
 			//// where TEventArgs : EventArgs
 			//#endif
 			{
-				var eventObject = GetIEventObjectInstance(typeof(TEventArgs));
-				eventObject.RaiseEvent(sender, callerMemberNameOrEventName, eventArgs);
-
-				while (eventObject.BaseArgsTypeInstance != null)
-				{
-					eventObject = eventObject.BaseArgsTypeInstance;
-				}
+				RaiseEvent(sender, eventArgs, typeof(TEventArgs), callerMemberNameOrEventName);
 			}
 
 			/// <summary>
@@ -120,13 +115,20 @@ namespace MVVMSidekick
 			//// where TEventArgs : EventArgs
 			//#endif
 			{
-				var eventObject = GetIEventObjectInstance(eventArgsType);
-				eventObject.RaiseEvent(sender, callerMemberNameOrEventName, eventArgs);
+				var channel = GetEventChannel(eventArgsType);
+				channel.RaiseEvent(sender, callerMemberNameOrEventName, eventArgs);
 
-				while (eventObject.BaseArgsTypeInstance != null)
-				{
-					eventObject = eventObject.BaseArgsTypeInstance;
-				}
+				//while (channel.BaseArgsTypeInstance != null)
+				//{
+				//	channel = channel.BaseArgsTypeInstance;
+				//	channel.RaiseEvent(sender, callerMemberNameOrEventName, eventArgs);
+				//}
+				////if (eventArgsType != typeof(object))
+				//{
+				//	channel.RaiseEvent(sender, callerMemberNameOrEventName, eventArgs);
+				//	channel = GetEventChannelInstance(typeof(object));
+				//}
+
 			}
 
 
@@ -135,11 +137,11 @@ namespace MVVMSidekick
 			/// </summary>
 			/// <typeparam name="TEventData">The type of the t event arguments.</typeparam>
 			/// <returns>事件独立类</returns>
-			public virtual EventObject<TEventData> GetEventObject<TEventData>()
+			public virtual EventChannel<TEventData> GetEventChannel<TEventData>()
 			{
-				var eventObject = (EventObject<TEventData>)GetIEventObjectInstance(typeof(TEventData));
+				var channel = (EventChannel<TEventData>)GetEventChannel(typeof(TEventData));
 
-				return eventObject;
+				return channel;
 
 			}
 
@@ -150,50 +152,36 @@ namespace MVVMSidekick
 			/// 事件来源的代理对象实例
 			/// </summary>
 
-			protected readonly ConcurrentDictionary<Type, IEventObject> EventObjects
-	= new ConcurrentDictionary<Type, IEventObject>();
+			protected readonly ConcurrentDictionary<Type, IEventChannel> EventChannels
+	= new ConcurrentDictionary<Type, IEventChannel>();
 			/// <summary>
 			/// 创建事件代理对象
 			/// </summary>
 			/// <param name="argsType">事件数据类型</param>
 			/// <returns>代理对象实例</returns>
-			protected IEventObject GetIEventObjectInstance(Type argsType)
+			public IEventChannel GetEventChannel(Type argsType)
 			{
 
-				var rval = EventObjects.GetOrAdd(
+				var rval = EventChannels.GetOrAdd(
 					argsType,
 					t =>
 					{
 						try
 						{
-							var t2 = typeof(EventObject<>).MakeGenericType(t);
-							return Activator.CreateInstance(t2) as IEventObject;
+							var t2 = typeof(EventChannel<>).MakeGenericType(t);
+							return Activator.CreateInstance(t2) as IEventChannel;
 						}
-						catch (Exception)
+						catch (Exception ex)
 						{
+							//EventRouter.Instance.GetEventChannel<Exception>().RaiseEvent(this, ex.Message, ex, false, false);
 
-							throw;
+							//throw;
 						}
-
+						return null;
 					}
 					);
 
-				if (rval.BaseArgsTypeInstance == null)
-				{
-#if NETFX_CORE
-					var baseT = argsType.GetTypeInfo().BaseType;
-					
-					if (baseT != null  )
-						if (baseT != typeof(object) && baseT.Name != "RuntimeClass"  )
-#else
-					var baseT = argsType.BaseType;
-					if (baseT != typeof(object) && baseT != null)
-#endif
-					{
-						rval.BaseArgsTypeInstance = GetIEventObjectInstance(baseT);
-					}
 
-				}
 
 				return rval;
 			}
@@ -202,20 +190,29 @@ namespace MVVMSidekick
 			/// <summary>
 			/// 事件对象接口
 			/// </summary>
-			public interface IEventObject
+			public interface IEventChannel
 			{
 				/// <summary>
 				/// Gets or sets the base arguments type instance.
 				/// </summary>
-				/// <value>The base arguments type instance.</value>
-				IEventObject BaseArgsTypeInstance { get; set; }
+				/// <value>The base classes type instances.</value>
+				IList<IEventChannel> BaseClassTypeChannels { get; set; }
+
+
+				/// <summary>
+				/// Gets or sets the base arguments type instance.
+				/// </summary>
+				/// <value>The base classes type instances.</value>
+				IList<IEventChannel> ImplementedInterfaceTypeInstances { get; set; }
+
+
 				/// <summary>
 				/// Raises the event.
 				/// </summary>
 				/// <param name="sender">The sender.</param>
 				/// <param name="eventName">Name of the event.</param>
 				/// <param name="args">The arguments.</param>
-				void RaiseEvent(object sender, string eventName, object args);
+				void RaiseEvent(object sender, string eventName, object args, bool isFiringToAllBaseClassChannels = false, bool isFiringToAllImplementedInterfaceChannels = false);
 			}
 
 
@@ -225,9 +222,92 @@ namespace MVVMSidekick
 			/// 事件对象
 			/// </summary>
 			/// <typeparam name="TEventData">The type of the t event arguments.</typeparam>
-			public class EventObject<TEventData> : IEventObject, IObservable<RouterEventData<TEventData>>, IDisposable
+			public class EventChannel<TEventData> : IEventChannel, IObservable<RouterEventData<TEventData>>, IDisposable
 			{
+				public EventChannel()
+				{
+					var current = this;
+					var argsType = typeof(TEventData);
+					var basetypes = new List<Type>()
+					{
+						//argsType
+					};
 
+#if NETFX_CORE
+
+					for (; ;)
+					{
+
+
+						argsType = argsType.GetTypeInfo().BaseType;
+						if (argsType != typeof(object) && argsType != null)
+						{
+							if (argsType.Name != "RuntimeClass")
+							{
+
+								basetypes.Add(argsType);
+							}
+							else
+							{
+								break;
+
+							}
+
+							//rval.BaseArgsTypeInstance = EventRouter.Instance.GetEventChannel(baseT);
+						}
+						else
+						{
+							break;
+						}
+					}
+#else
+					for (; ;)
+					{
+
+
+						argsType = argsType.BaseType;
+						if (argsType != typeof(object) && argsType != null)
+						{
+							basetypes.Add(argsType);
+							//rval.BaseArgsTypeInstance = EventRouter.Instance.GetEventChannel(baseT);
+						}
+						else
+						{
+							break;
+						}
+					}
+#endif
+					if (typeof(TEventData) != typeof(Object))
+					{
+						basetypes.Add(typeof(object));
+
+					}
+
+
+					BaseClassTypeChannels = basetypes.Select
+						(x => EventRouter.Instance.GetEventChannel(x))
+						.Where(x => x != null)
+						.ToList();
+
+
+#if NETFX_CORE
+					ImplementedInterfaceTypeInstances = typeof(TEventData)
+						.GetTypeOrTypeInfo()
+						.ImplementedInterfaces
+						.Select(x =>
+								EventRouter.Instance.GetEventChannel(x))
+						.Where(x => x != null)
+						.ToList();
+#else
+					ImplementedInterfaceTypeInstances = typeof(TEventData)
+						.GetInterfaces()
+						.Select(x =>
+								EventRouter.Instance.GetEventChannel(x))
+						.Where(x => x != null)
+						.ToList();
+#endif
+
+				}
 
 				/// <summary>
 				/// The _core
@@ -236,44 +316,44 @@ namespace MVVMSidekick
 
 
 
-				/// <summary>
-				/// Gets or sets the base arguments type instance.
-				/// </summary>
-				/// <value>The base arguments type instance.</value>
-				public virtual IEventObject BaseArgsTypeInstance
+
+				public IList<IEventChannel> BaseClassTypeChannels
 				{
-					get;
-					set;
+					get; set;
 				}
 
-				/// <summary>
-				/// Raises the event.
-				/// </summary>
-				/// <param name="sender">The sender.</param>
-				/// <param name="eventName">Name of the event.</param>
-				/// <param name="args">The arguments.</param>
-				void IEventObject.RaiseEvent(object sender, string eventName, object args)
+				public IList<IEventChannel> ImplementedInterfaceTypeInstances
 				{
-					RaiseEvent(sender, eventName, (TEventData)args);
+					get; set;
 				}
 
-				/// <summary>
-				/// 发起事件
-				/// </summary>
-				/// <param name="sender">发送者</param>
-				/// <param name="eventName">事件名</param>
-				/// <param name="args">参数</param>
-				public void RaiseEvent(object sender, string eventName, TEventData args)
-				{
 
 
-					var a = args;
-					//if (a != null)
-					//{
-					//   Event(sender, new DataEventArgs<RouterEventData<TEventArgs>>(new RouterEventData<TEventArgs>(sender, eventName, (TEventArgs)args)));
-					_core.OnNext(new RouterEventData<TEventData>(sender, eventName, args));
-					//}
-				}
+
+
+				///// <summary>
+				///// Raises the event.
+				///// </summary>
+				///// <param name="sender">The sender.</param>
+				///// <param name="eventName">Name of the event.</param>
+				///// <param name="args">The arguments.</param>
+				//void IEventChannel.RaiseEvent(object sender, string eventName, object args)
+				//{
+				//	RaiseEvent(sender, eventName, (TEventData)args);
+				//}
+
+				///// <summary>
+				///// 发起事件
+				///// </summary>
+				///// <param name="sender">发送者</param>
+				///// <param name="eventName">事件名</param>
+				///// <param name="args">参数</param>
+				//public void RaiseEvent(object sender, string eventName, TEventData args)
+				//{
+
+
+
+				//}
 
 				//public event EventHandler<DataEventArgs<RouterEventData<TEventArgs>>> Event;
 
@@ -296,9 +376,9 @@ namespace MVVMSidekick
 				/// </summary>
 				int _Disposed = 0;
 				/// <summary>
-				/// Finalizes an instance of the <see cref="EventObject{TEventArgs}" /> class.
+				/// Finalizes an instance of the <see cref="EventChannel{TEventArgs}" /> class.
 				/// </summary>
-				~EventObject()
+				~EventChannel()
 				{
 					Dispose(false);
 				}
@@ -342,7 +422,30 @@ namespace MVVMSidekick
 					}
 				}
 
+				public void RaiseEvent(object sender, string eventName, object args, bool isFiringToAllBaseClassChannels = false, bool isFiringToAllImplementedInterfaceChannels = false)
+				{
+					var a = args;
+					_core.OnNext(new RouterEventData<TEventData>(sender, eventName, (TEventData)args));
 
+					if (isFiringToAllBaseClassChannels)
+					{
+						foreach (var item in BaseClassTypeChannels)
+						{
+							item.RaiseEvent(sender, eventName, args, false, false);
+						}
+
+					}
+
+					if (isFiringToAllImplementedInterfaceChannels)
+					{
+
+						foreach (var item in ImplementedInterfaceTypeInstances)
+						{
+							item.RaiseEvent(sender, eventName, args, false, false);
+						}
+					}
+
+				}
 			}
 
 
@@ -516,32 +619,32 @@ namespace MVVMSidekick
 
 
 
-//#if !NETFX_CORE
+		//#if !NETFX_CORE
 
-//		/// <summary>
-//		/// Class DataEventArgs.
-//		/// </summary>
-//		/// <typeparam name="TData">The type of the t data.</typeparam>
-//		public class DataEventArgs<TData> : EventArgs
-//		{
-//			/// <summary>
-//			/// Initializes a new instance of the <see cref="DataEventArgs{TData}" /> class.
-//			/// </summary>
-//			/// <param name="data">The data.</param>
-//			public DataEventArgs(TData data)
-//			{
+		//		/// <summary>
+		//		/// Class DataEventArgs.
+		//		/// </summary>
+		//		/// <typeparam name="TData">The type of the t data.</typeparam>
+		//		public class DataEventArgs<TData> : EventArgs
+		//		{
+		//			/// <summary>
+		//			/// Initializes a new instance of the <see cref="DataEventArgs{TData}" /> class.
+		//			/// </summary>
+		//			/// <param name="data">The data.</param>
+		//			public DataEventArgs(TData data)
+		//			{
 
-//				Data = data;
-//			}
+		//				Data = data;
+		//			}
 
-//			/// <summary>
-//			/// Gets or sets the data.
-//			/// </summary>
-//			/// <value>The data.</value>
-//			public TData Data { get; protected set; }
+		//			/// <summary>
+		//			/// Gets or sets the data.
+		//			/// </summary>
+		//			/// <value>The data.</value>
+		//			public TData Data { get; protected set; }
 
-//		}
-//#endif
+		//		}
+		//#endif
 	}
 
 

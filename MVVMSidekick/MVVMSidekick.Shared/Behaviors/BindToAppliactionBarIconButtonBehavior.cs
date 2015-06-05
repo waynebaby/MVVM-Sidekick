@@ -256,7 +256,7 @@ namespace MVVMSidekick.Behaviors
 				RefreshApplicationBar(this);
 
 				eventSubscribe = EventRouting.EventRouter.Instance
-					   .GetEventObject<EventCommandEventArgs>()
+					   .GetEventChannel<EventCommandEventArgs>()
 					   .ObserveOn(System.Reactive.Concurrency.DispatcherScheduler.Current)
 					   .Where(_ =>
 						   IsBindingActive)

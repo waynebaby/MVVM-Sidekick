@@ -141,7 +141,7 @@ namespace MVVMSidekick.Behaviors
 		{
 
 			var targetEventRouter = newRouter ?? EventRouter.Instance;
-			var query = targetEventRouter.GetEventObject<object>()
+			var query = targetEventRouter.GetEventChannel<object>()
 				.Where(x => string.IsNullOrEmpty(trigger.EventRoutingName) || trigger.EventRoutingName == x.EventName);
 
 
@@ -217,7 +217,7 @@ namespace MVVMSidekick.Behaviors
 		{
 
 			var targetEventRouter = newRouter ?? EventRouter.Instance;
-			var query = targetEventRouter.GetEventObject<object>()
+			var query = targetEventRouter.GetEventChannel<object>()
 				.Where(x => string.IsNullOrEmpty(bhv.EventRoutingName) || bhv.EventRoutingName == x.EventName);
 
 

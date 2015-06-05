@@ -427,7 +427,7 @@ namespace MVVMSidekick
 			/// <returns></returns>
 			[Obsolete("The source is already moved to  IObservable<RouterEventData<TEventArgs>>")]
 			public static IObservable<RouterEventData<TEventArgs>>
-				GetRouterEventObservable<TEventArgs>(this MVVMSidekick.EventRouting.EventRouter.EventObject<TEventArgs> source)
+				GetRouterEventObservable<TEventArgs>(this MVVMSidekick.EventRouting.EventRouter.EventChannel<TEventArgs> source)
 #if !NETFX_CORE
  where TEventArgs : EventArgs
 #endif
