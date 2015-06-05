@@ -95,40 +95,25 @@ namespace MVVMSidekick
 			/// <param name="sender">事件发送者</param>
 			/// <param name="eventArgs">事件数据</param>
 			/// <param name="callerMemberNameOrEventName">发送事件名</param>
-			public virtual void RaiseEvent<TEventArgs>(object sender, TEventArgs eventArgs, string callerMemberNameOrEventName = "")
+			public virtual void RaiseEvent<TEventArgs>(object sender, TEventArgs eventArgs, string callerMemberNameOrEventName = "", bool isFiringToAllBaseClassChannels = false, bool isFiringToAllImplementedInterfaceChannels = false)
 			//#if !NETFX_CORE
 			//// where TEventArgs : EventArgs
 			//#endif
 			{
-				RaiseEvent(sender, eventArgs, typeof(TEventArgs), callerMemberNameOrEventName);
+				RaiseEvent(sender, eventArgs, typeof(TEventArgs), callerMemberNameOrEventName, isFiringToAllBaseClassChannels, isFiringToAllImplementedInterfaceChannels);
 			}
 
 			/// <summary>
 			/// 触发事件
 			/// </summary>
 			/// <param name="sender">事件发送者</param>
-			/// <param name="eventArgs">事件数据</param>
+			/// <param name="args">事件数据</param>
 			/// <param name="eventArgsType">Type of the event arguments.</param>
 			/// <param name="callerMemberNameOrEventName">发送事件名</param>
-			public virtual void RaiseEvent(object sender, object eventArgs, Type eventArgsType, string callerMemberNameOrEventName = "")
-			//#if !NETFX_CORE
-			//// where TEventArgs : EventArgs
-			//#endif
+			public virtual void RaiseEvent(object sender, object args, Type eventArgsType, string callerMemberNameOrEventName = "", bool isFiringToAllBaseClassChannels = false, bool isFiringToAllImplementedInterfaceChannels = false)
 			{
 				var channel = GetEventChannel(eventArgsType);
-				channel.RaiseEvent(sender, callerMemberNameOrEventName, eventArgs);
-
-				//while (channel.BaseArgsTypeInstance != null)
-				//{
-				//	channel = channel.BaseArgsTypeInstance;
-				//	channel.RaiseEvent(sender, callerMemberNameOrEventName, eventArgs);
-				//}
-				////if (eventArgsType != typeof(object))
-				//{
-				//	channel.RaiseEvent(sender, callerMemberNameOrEventName, eventArgs);
-				//	channel = GetEventChannelInstance(typeof(object));
-				//}
-
+				channel.RaiseEvent(sender, callerMemberNameOrEventName, args, isFiringToAllBaseClassChannels, isFiringToAllImplementedInterfaceChannels);
 			}
 
 

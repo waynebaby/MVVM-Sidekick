@@ -18,9 +18,9 @@ using MVVMSidekick.Commands;
 namespace MVVMSidekick.Behaviors
 {
 
-/// <summary>
-/// 	   Bind To ApplicationBar Target
-/// </summary>
+	/// <summary>
+	/// 	   Bind To ApplicationBar Target
+	/// </summary>
 	public enum BindToApplicationBarTarget
 	{
 		/// <summary>
@@ -33,9 +33,9 @@ namespace MVVMSidekick.Behaviors
 		MenuItem
 
 	}
-/// <summary>
-/// 	 Bind To AppliactionBar Behavior
-/// </summary>
+	/// <summary>
+	/// 	 Bind To AppliactionBar Behavior
+	/// </summary>
 	public class BindToAppliactionBarBehavior : Behavior<Button>
 	{
 
@@ -109,7 +109,9 @@ namespace MVVMSidekick.Behaviors
 		public static readonly DependencyProperty IndexBindToProperty =
 			DependencyProperty.Register("IndexBindTo", typeof(int), typeof(BindToAppliactionBarBehavior), new PropertyMetadata(0));
 
-
+		/// <summary>
+		/// Target type
+		/// </summary>
 		public BindToApplicationBarTarget TargetType
 		{
 			get { return (BindToApplicationBarTarget)GetValue(TargetTypeProperty); }
@@ -117,6 +119,9 @@ namespace MVVMSidekick.Behaviors
 		}
 
 		// Using a DependencyProperty as the backing store for TargetType.  This enables animation, styling, binding, etc...
+		/// <summary>
+		/// Target Type Property
+		/// </summary>
 		public static readonly DependencyProperty TargetTypeProperty =
 			DependencyProperty.Register("TargetType", typeof(BindToApplicationBarTarget), typeof(BindToAppliactionBarBehavior), new PropertyMetadata(BindToApplicationBarTarget.IconButton, (o, v) => RefreshApplicationBar(o as BindToAppliactionBarBehavior)));
 
@@ -176,6 +181,9 @@ namespace MVVMSidekick.Behaviors
 			set { SetValue(IconUriProperty, value); }
 		}
 
+		/// <summary>
+		///  Icon Uri Property
+		/// </summary>
 		// Using a DependencyProperty as the backing store for IconUri.  This enables animation, styling, binding, etc...
 		public static readonly DependencyProperty IconUriProperty =
 			DependencyProperty.Register("IconUri", typeof(Uri), typeof(BindToAppliactionBarBehavior), new PropertyMetadata(null, (o, v) => RefreshApplicationBar(o as BindToAppliactionBarBehavior)));

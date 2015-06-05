@@ -38,11 +38,10 @@
 
     </summary>
     <releaseNotes>
-      1.4.20150527.x : 
-      - Add ListenEventRouterTrigger for event routing on view
-      - Add DisposeWhenUnload  and DisposeWhenUnbind Extension Methods for IDisposable Objects
-      - Change EventRouter Default Event args to any type instead of eventargs
-      - Rename EventRouter Property to LocalEventRouter  
+      1.4.20150605.x : 
+      - Add ListenEventRouterDataTrigger for event routing on view
+      - Rename Event Object to Event Channel.
+
 
     </releaseNotes>
     <tags>Rx Reactive Extensions MVVM Win8 Metro Modern UI</tags>

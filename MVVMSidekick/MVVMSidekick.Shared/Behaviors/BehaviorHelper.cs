@@ -12,9 +12,4 @@ namespace MVVMSidekick.Behaviors
 
 
 
-	public static class BehaviorHelper
-    {
-
-   
-    }
 }
