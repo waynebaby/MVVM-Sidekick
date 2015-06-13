@@ -813,102 +813,102 @@ namespace MVVMSidekick
 		}
 
 
-		/// <summary>
-		/// <para>A Bindebale Tuple</para>
-		/// <para>一个可绑定的Tuple实现</para>
-		/// </summary>
-		/// <typeparam name="TItem1">Type of first item/第一个元素的类型</typeparam>
-		/// <typeparam name="TItem2">Type of second item/第二个元素的类型</typeparam>
-		[DataContract]
-		public class BindableTuple<TItem1, TItem2> : BindableBase<BindableTuple<TItem1, TItem2>>
-		{
-			/// <summary>
-			/// Initializes a new instance of the <see cref="BindableTuple{TItem1, TItem2}"/> class.
-			/// </summary>
-			/// <param name="item1">The item1.</param>
-			/// <param name="item2">The item2.</param>
-			public BindableTuple(TItem1 item1, TItem2 item2)
-			{
-				this.IsNotificationActivated = false;
-				Item1 = item1;
-				Item2 = item2;
-				this.IsNotificationActivated = true;
-			}
-			/// <summary>
-			/// 第一个元素
-			/// </summary>
-			/// <value>The item1.</value>
+		///// <summary>
+		///// <para>A Bindebale Tuple</para>
+		///// <para>一个可绑定的Tuple实现</para>
+		///// </summary>
+		///// <typeparam name="TItem1">Type of first item/第一个元素的类型</typeparam>
+		///// <typeparam name="TItem2">Type of second item/第二个元素的类型</typeparam>
+		//[DataContract]
+		//public class BindableTuple<TItem1, TItem2> : BindableBase<BindableTuple<TItem1, TItem2>>
+		//{
+		//	/// <summary>
+		//	/// Initializes a new instance of the <see cref="BindableTuple{TItem1, TItem2}"/> class.
+		//	/// </summary>
+		//	/// <param name="item1">The item1.</param>
+		//	/// <param name="item2">The item2.</param>
+		//	public BindableTuple(TItem1 item1, TItem2 item2)
+		//	{
+		//		this.IsNotificationActivated = false;
+		//		Item1 = item1;
+		//		Item2 = item2;
+		//		this.IsNotificationActivated = true;
+		//	}
+		//	/// <summary>
+		//	/// 第一个元素
+		//	/// </summary>
+		//	/// <value>The item1.</value>
 
-			public TItem1 Item1
-			{
-				get { return _Item1Locator(this).Value; }
-				set { _Item1Locator(this).SetValueAndTryNotify(value); }
-			}
-			#region Property TItem1 Item1 Setup
-			/// <summary>
-			/// The _ item1
-			/// </summary>
-			protected Property<TItem1> _Item1 = new Property<TItem1> { LocatorFunc = _Item1Locator };
-			/// <summary>
-			/// The _ item1 locator
-			/// </summary>
-			static Func<BindableBase, ValueContainer<TItem1>> _Item1Locator = RegisterContainerLocator<TItem1>("Item1", model => model.Initialize("Item1", ref model._Item1, ref _Item1Locator, _Item1DefaultValueFactory));
-			/// <summary>
-			/// The _ item1 default value factory
-			/// </summary>
-			static Func<BindableBase, TItem1> _Item1DefaultValueFactory = null;
-			#endregion
+		//	public TItem1 Item1
+		//	{
+		//		get { return _Item1Locator(this).Value; }
+		//		set { _Item1Locator(this).SetValueAndTryNotify(value); }
+		//	}
+		//	#region Property TItem1 Item1 Setup
+		//	/// <summary>
+		//	/// The _ item1
+		//	/// </summary>
+		//	protected Property<TItem1> _Item1 = new Property<TItem1> { LocatorFunc = _Item1Locator };
+		//	/// <summary>
+		//	/// The _ item1 locator
+		//	/// </summary>
+		//	static Func<BindableBase, ValueContainer<TItem1>> _Item1Locator = RegisterContainerLocator<TItem1>("Item1", model => model.Initialize("Item1", ref model._Item1, ref _Item1Locator, _Item1DefaultValueFactory));
+		//	/// <summary>
+		//	/// The _ item1 default value factory
+		//	/// </summary>
+		//	static Func<BindableBase, TItem1> _Item1DefaultValueFactory = null;
+		//	#endregion
 
-			/// <summary>
-			/// 第二个元素
-			/// </summary>
-			/// <value>The item2.</value>
+		//	/// <summary>
+		//	/// 第二个元素
+		//	/// </summary>
+		//	/// <value>The item2.</value>
 
-			public TItem2 Item2
-			{
-				get { return _Item2Locator(this).Value; }
-				set { _Item2Locator(this).SetValueAndTryNotify(value); }
-			}
-			#region Property TItem2 Item2 Setup
-			/// <summary>
-			/// The _ item2
-			/// </summary>
-			protected Property<TItem2> _Item2 = new Property<TItem2> { LocatorFunc = _Item2Locator };
-			/// <summary>
-			/// The _ item2 locator
-			/// </summary>
-			static Func<BindableBase, ValueContainer<TItem2>> _Item2Locator = RegisterContainerLocator<TItem2>("Item2", model => model.Initialize("Item2", ref model._Item2, ref _Item2Locator, _Item2DefaultValueFactory));
-			/// <summary>
-			/// The _ item2 default value factory
-			/// </summary>
-			static Func<BindableBase, TItem2> _Item2DefaultValueFactory = null;
-			#endregion
+		//	public TItem2 Item2
+		//	{
+		//		get { return _Item2Locator(this).Value; }
+		//		set { _Item2Locator(this).SetValueAndTryNotify(value); }
+		//	}
+		//	#region Property TItem2 Item2 Setup
+		//	/// <summary>
+		//	/// The _ item2
+		//	/// </summary>
+		//	protected Property<TItem2> _Item2 = new Property<TItem2> { LocatorFunc = _Item2Locator };
+		//	/// <summary>
+		//	/// The _ item2 locator
+		//	/// </summary>
+		//	static Func<BindableBase, ValueContainer<TItem2>> _Item2Locator = RegisterContainerLocator<TItem2>("Item2", model => model.Initialize("Item2", ref model._Item2, ref _Item2Locator, _Item2DefaultValueFactory));
+		//	/// <summary>
+		//	/// The _ item2 default value factory
+		//	/// </summary>
+		//	static Func<BindableBase, TItem2> _Item2DefaultValueFactory = null;
+		//	#endregion
 
 
-		}
-		/// <summary>
-		/// <para>Fast create Bindable Tuple </para>
-		/// <para>帮助快速创建BindableTuple的帮助类</para>
-		/// </summary>
-		public static class BindableTuple
-		{
-			/// <summary>
-			/// Create a Tuple
-			/// </summary>
-			/// <typeparam name="TItem1">The type of the item1.</typeparam>
-			/// <typeparam name="TItem2">The type of the item2.</typeparam>
-			/// <param name="item1">The item1.</param>
-			/// <param name="item2">The item2.</param>
-			/// <returns>
-			/// BindableTuple&lt;TItem1, TItem2&gt;.
-			/// </returns>
+		//}
+		///// <summary>
+		///// <para>Fast create Bindable Tuple </para>
+		///// <para>帮助快速创建BindableTuple的帮助类</para>
+		///// </summary>
+		//public static class BindableTuple
+		//{
+		//	/// <summary>
+		//	/// Create a Tuple
+		//	/// </summary>
+		//	/// <typeparam name="TItem1">The type of the item1.</typeparam>
+		//	/// <typeparam name="TItem2">The type of the item2.</typeparam>
+		//	/// <param name="item1">The item1.</param>
+		//	/// <param name="item2">The item2.</param>
+		//	/// <returns>
+		//	/// BindableTuple&lt;TItem1, TItem2&gt;.
+		//	/// </returns>
 
-			public static BindableTuple<TItem1, TItem2> Create<TItem1, TItem2>(TItem1 item1, TItem2 item2)
-			{
-				return new BindableTuple<TItem1, TItem2>(item1, item2);
-			}
+		//	public static BindableTuple<TItem1, TItem2> Create<TItem1, TItem2>(TItem1 item1, TItem2 item2)
+		//	{
+		//		return new BindableTuple<TItem1, TItem2>(item1, item2);
+		//	}
 
-		}
+		//}
 
 
 		/// <summary>
@@ -1483,7 +1483,7 @@ namespace MVVMSidekick
 				get { return _LocalEventRouterLocator(this).Value; }
 				set { _LocalEventRouterLocator(this).SetValueAndTryNotify(value); }
 			}
-			#region Property EventRouter LocalEventRouter Setup        
+			#region Property EventRouter LocalEventRouter Setup
 			protected Property<EventRouter> _LocalEventRouter = new Property<EventRouter> { LocatorFunc = _LocalEventRouterLocator };
 			static Func<BindableBase, ValueContainer<EventRouter>> _LocalEventRouterLocator = RegisterContainerLocator<EventRouter>("LocalEventRouter", model => model.Initialize("LocalEventRouter", ref model._LocalEventRouter, ref _LocalEventRouterLocator, _LocalEventRouterDefaultValueFactory));
 			static Func<EventRouter> _LocalEventRouterDefaultValueFactory = () => { return new EventRouter(); };
@@ -2233,15 +2233,28 @@ namespace MVVMSidekick
 
 		public abstract partial class ViewModelBase<TViewModel> : BindableBase<TViewModel>, IViewModel where TViewModel : ViewModelBase<TViewModel>
 		{
+			IDisposeGroup _UnbindDisposeGroup = new DisposeGroup();
+
+			IDisposeGroup _UnloadDisposeGroup = new DisposeGroup();
 			/// <summary>
 			/// Resource Group that need dispose when Unbind from UI;
 			/// </summary>
-			public IDisposeGroup UnbindDisposeGroup { get; } = new DisposeGroup();
+
+			public IDisposeGroup UnbindDisposeGroup
+			{
+				get { return _UnbindDisposeGroup; }
+				//set { _UnbindDisposeGroup = value; }
+			}
 
 			/// <summary>
 			/// Resource Group that need dispose when Unload from UI;
 			/// </summary>											   
-			public IDisposeGroup UnloadDisposeGroup { get; } = new DisposeGroup();
+
+			public IDisposeGroup UnloadDisposeGroup
+			{
+				get { return _UnloadDisposeGroup; }
+				//set { _UnloadDisposeGroup = value; }
+			}
 
 
 			/// <summary>

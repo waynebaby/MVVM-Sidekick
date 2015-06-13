@@ -19,6 +19,7 @@ using MVVMSidekick.ViewModels;
 using System.Reactive.Linq;
 using System.Windows;
 using System.IO;
+using MVVMSidekick.Services;
 
 
 
@@ -46,7 +47,7 @@ using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #elif WINDOWS_PHONE_8 || WINDOWS_PHONE_7
-													  using System.Windows.Media;
+using System.Windows.Media;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using System.Windows.Data;
@@ -396,7 +397,7 @@ namespace MVVMSidekick
 		/// <summary>
 		/// Class MVVMPage.
 		/// </summary>
-        public partial class MVVMPage : PhoneApplicationPage, IView
+		public partial class MVVMPage : PhoneApplicationPage, IView
 #else
 		/// <summary>
 		/// Class MVVMPage.
@@ -1275,27 +1276,46 @@ namespace MVVMSidekick
 
 
 		}
+
+		public interface IViewModelToViewMapperServiceLocator : ITypeSpecifiedServiceLocator<object>
+		{
+
+		}
 		/// <summary>
 		/// View model to view service locator
 		/// </summary>
 		/// <typeparam name="TViewModel">The type of the view model.</typeparam>
-		public class ViewModelToViewMapperServiceLocator<TViewModel> : MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelToViewMapperServiceLocator<TViewModel>, object>
+		public class ViewModelToViewMapperServiceLocator<TViewModel> :
+			MVVMSidekick.Services.TypeSpecifiedServiceLocatorBase<ViewModelToViewMapperServiceLocator<TViewModel>, object>,
+			IViewModelToViewMapperServiceLocator
 		{
 			/// <summary>
 			/// Constuctor
 			/// </summary>
 			static ViewModelToViewMapperServiceLocator()
 			{
-				Instance = new ViewModelToViewMapperServiceLocator<TViewModel>();
+				//Instance = new ViewModelToViewMapperServiceLocator<TViewModel>();
+
 			}
 
+			static Lazy<IViewModelToViewMapperServiceLocator> _Instance = new Lazy<IViewModelToViewMapperServiceLocator>
+				(() => new ViewModelToViewMapperServiceLocator<TViewModel>(), true);
 
 			/// <summary>
 			/// Instance
 			/// </summary>
 
-			public static ViewModelToViewMapperServiceLocator<TViewModel> Instance { get; set; }
-
+			public static IViewModelToViewMapperServiceLocator Instance
+			{
+				get
+				{
+					return _Instance.Value;
+				}
+				set
+				{
+					_Instance = new Lazy<IViewModelToViewMapperServiceLocator>(() => value);
+				}
+			}
 
 
 		}
@@ -1581,7 +1601,7 @@ namespace MVVMSidekick
 #endif
 #if SILVERLIGHT_5 || WINDOWS_PHONE_7 || WINDOWS_PHONE_8
 
-			
+
 			internal Dictionary<string, IViewModel> NavigateRequestContexts
 			{
 				get
@@ -1632,7 +1652,7 @@ namespace MVVMSidekick
 			/// <param name="viewMappingKey">The view mapping key.</param>
 			/// <returns></returns>
 			public async Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-				 where TTarget : class,IViewModel
+				 where TTarget : class, IViewModel
 			{
 
 				var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
@@ -1692,7 +1712,7 @@ namespace MVVMSidekick
 			//	return await targetViewModel.WaitForCloseWithResult();
 			//}
 
-			private async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Tuple<Uri, Func<IView>> uriData, Frame frame) where TTarget : class,IViewModel
+			private async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Tuple<Uri, Func<IView>> uriData, Frame frame) where TTarget : class, IViewModel
 			{
 				var t = new TaskCompletionSource<object>();
 				var guid = Guid.NewGuid();
