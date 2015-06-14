@@ -63,7 +63,7 @@
       <package id="Rx-Main" version="2.2.5"  />
       <package id="Rx-PlatformServices" version="2.2.5"  />
       <package id="Rx-Xaml" version="2.2.5"  />
-      <package id="MVVM-Sidekick" version="1.4.20150423.13300000"/>
+      <package id="MVVM-Sidekick" version="1.4.20150605.16300000"/>
       <!--<package id="MVVM-Sidekick.Behaviors" version="0.3.0.3"/>-->
       
     </packages>
