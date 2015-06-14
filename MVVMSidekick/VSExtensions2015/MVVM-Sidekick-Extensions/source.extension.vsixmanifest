@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="MVVM_Sidekick_Extensions.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24" Version="1.0" Language="en-US" Publisher="waywa msft" />
+    <Identity Id="MVVM_Sidekick_Extensions.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24" Version="1.0.1" Language="en-US" Publisher="waywa msft" />
     <DisplayName>MVVM-Sidekick Extensions For VS 2015</DisplayName>
     <Description xml:space="preserve">MVVM-Sidekick Extensions For VS 2015</Description>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[14.0]" />
+    <InstallationTarget Version="[14.0]" Id="Microsoft.VisualStudio.Community" />
+    <InstallationTarget Version="[14.0]" Id="Microsoft.VisualStudio.Enterprise" />
+    <InstallationTarget Version="[14.0]" Id="Microsoft.VisualStudio.VSWinExpress" />
+    <InstallationTarget Version="[14.0]" Id="Microsoft.VisualStudio.VSWinDesktopExpress" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
