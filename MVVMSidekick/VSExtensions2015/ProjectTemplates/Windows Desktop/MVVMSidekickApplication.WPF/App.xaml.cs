@@ -25,9 +25,10 @@ namespace $safeprojectname$
 			MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
 		}
 
-		private void Application_Startup(object sender, StartupEventArgs e)
+  		protected override void OnStartup(StartupEventArgs e)
 		{
 			InitNavigationConfigurationInThisAssembly();
+			base.OnStartup(e);
 		}
     }
 }
