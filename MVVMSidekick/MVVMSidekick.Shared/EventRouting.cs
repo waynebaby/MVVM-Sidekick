@@ -69,7 +69,6 @@ namespace MVVMSidekick
 			/// </summary>
 			public EventRouter()
 			{
-
 			}
 			/// <summary>
 			/// Initializes static members of the <see cref="EventRouter" /> class.
@@ -138,7 +137,7 @@ namespace MVVMSidekick
 			/// </summary>
 
 			protected readonly ConcurrentDictionary<Type, IEventChannel> EventChannels
-	= new ConcurrentDictionary<Type, IEventChannel>();
+				= new ConcurrentDictionary<Type, IEventChannel>();
 			/// <summary>
 			/// 创建事件代理对象
 			/// </summary>
@@ -157,7 +156,7 @@ namespace MVVMSidekick
 						try
 						{
 							var t2 = typeof(EventChannel<>).MakeGenericType(t);
-							return Activator.CreateInstance(t2) as IEventChannel;
+							return Activator.CreateInstance(t2, this) as IEventChannel;
 						}
 						catch (Exception ex)
 						{
@@ -212,7 +211,7 @@ namespace MVVMSidekick
 			/// <typeparam name="TEventData">The type of the t event arguments.</typeparam>
 			public class EventChannel<TEventData> : IEventChannel, IObservable<RouterEventData<TEventData>>, IDisposable
 			{
-				public EventChannel()
+				public EventChannel(EventRouter router)
 				{
 					var current = this;
 					var argsType = typeof(TEventData);
@@ -223,7 +222,7 @@ namespace MVVMSidekick
 
 #if NETFX_CORE
 
-					for (; ;)
+					for (; ; )
 					{
 
 
@@ -273,7 +272,7 @@ namespace MVVMSidekick
 
 
 					BaseClassTypeChannels = basetypes.Select
-						(x => EventRouter.Instance.GetEventChannel(x))
+						(x => router.GetEventChannel(x))
 						.Where(x => x != null)
 						.ToList();
 
@@ -307,12 +306,14 @@ namespace MVVMSidekick
 
 				public IList<IEventChannel> BaseClassTypeChannels
 				{
-					get; set;
+					get;
+					set;
 				}
 
 				public IList<IEventChannel> ImplementedInterfaceTypeInstances
 				{
-					get; set;
+					get;
+					set;
 				}
 
 
