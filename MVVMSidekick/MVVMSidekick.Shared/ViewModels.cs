@@ -72,6 +72,7 @@ namespace MVVMSidekick
 		using System.Reactive.Disposables;
 		using Utilities;
 		using Views;
+		using MVVMSidekick.Common;
 
 
 		/// <summary>
@@ -927,28 +928,29 @@ namespace MVVMSidekick
 			/// </summary>
 			public BindableBase()
 			{
-				var meId = Interlocked.Increment(ref InstanceCount);
-				_BindableInstanceId = string.Format("{0}:{1}", typeof(TSubClassType).Name, meId);
+
+				BindableInstanceId = string.Format("{0}:{1}", this.GetType().Name, _BindableInstanceId);
 			}
 
-			/// <summary>
-			/// The _ bindable instance identifier
-			/// </summary>
-			string _BindableInstanceId;
+
 			/// <summary>
 			/// Gets the bindable instance identifier.
 			/// </summary>
 			/// <value>The bindable instance identifier.</value>
-			public override string BindableInstanceId
+			
+			public string BindableInstanceId
 			{
-				get { return _BindableInstanceId; }
+				get { return _BindableInstanceIdLocator(this).Value; }
+				set { _BindableInstanceIdLocator(this).SetValueAndTryNotify(value); }
 			}
+			#region Property string BindableInstanceId Setup
+			protected Property<string> _BindableInstanceId = new Property<string> { LocatorFunc = _BindableInstanceIdLocator };
+			static Func<BindableBase, ValueContainer<string>> _BindableInstanceIdLocator = RegisterContainerLocator<string>("BindableInstanceId", model => model.Initialize("BindableInstanceId", ref model._BindableInstanceId, ref _BindableInstanceIdLocator, _BindableInstanceIdDefaultValueFactory));
+			static Func<string> _BindableInstanceIdDefaultValueFactory = () => { return default(string); };
+			#endregion
 
 
-			/// <summary>
-			/// The instance count
-			/// </summary>
-			static int InstanceCount = -1;
+
 
 
 
@@ -1576,7 +1578,7 @@ namespace MVVMSidekick
 		/// Class DisposeGroupBase.
 		/// </summary>
 		[DataContract]
-		public abstract class DisposeGroupBase : IDisposeGroup
+		public abstract class DisposeGroupBase :InstanceCounableBase, IDisposeGroup
 		{
 			/// <summary>
 			/// Initializes a new instance of the <see cref="DisposeGroupBase"/> class.

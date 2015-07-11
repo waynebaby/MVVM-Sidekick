@@ -117,7 +117,7 @@ namespace MVVMSidekick.Behaviors
 
 		// Using a DependencyProperty as the backing store for IsEventFiringToAllImplementedInterfacesChannels.  This enables animation, styling, binding, etc...
 		public static readonly DependencyProperty IsEventFiringToAllImplementedInterfacesChannelsProperty =
-			DependencyProperty.Register("IsEventFiringToAllImplementedInterfacesChannels", typeof(bool), typeof(SendToEventRouterAction), new PropertyMetadata(false ));
+			DependencyProperty.Register("IsEventFiringToAllImplementedInterfacesChannels", typeof(bool), typeof(SendToEventRouterAction), new PropertyMetadata(false));
 
 
 
@@ -184,9 +184,11 @@ namespace MVVMSidekick.Behaviors
 		/// <param name="parameter">The parameter.</param>
 		protected override void Invoke(object parameter)
 		{
+			var et = EventDataType;
+
 			if (EventData != null)
 			{
-				var et = EventDataType;
+
 
 				if (et == null)
 				{
@@ -201,7 +203,9 @@ namespace MVVMSidekick.Behaviors
 
 			var targetEventRouter = EventRouter ?? EventRouter.Instance;
 
-			targetEventRouter.RaiseEvent(this, EventData, EventDataType, EventRoutingName);
+			targetEventRouter.GetEventChannel(et).RaiseEvent(this.AssociatedObject, this.EventRoutingName, EventData, IsEventFiringToAllBaseClassesChannels, IsEventFiringToAllImplementedInterfacesChannels);
+
+			//targetEventRouter.RaiseEvent(this, EventData, EventDataType, EventRoutingName);
 
 		}
 #endif
