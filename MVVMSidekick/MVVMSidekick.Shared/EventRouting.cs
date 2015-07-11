@@ -19,6 +19,7 @@ using System.Threading;
 using MVVMSidekick.ViewModels;
 using System.Reactive.Subjects;
 using MVVMSidekick.Utilities;
+using MVVMSidekick.Common;
 
 #if NETFX_CORE
 using System.Collections.Concurrent;
@@ -62,7 +63,7 @@ namespace MVVMSidekick
 		/// <summary>
 		/// 全局事件根
 		/// </summary>
-		public class EventRouter
+		public class EventRouter    :InstanceCounableBase
 		{
 			/// <summary>
 			/// Initializes a new instance of the <see cref="EventRouter" /> class.
@@ -209,7 +210,7 @@ namespace MVVMSidekick
 			/// 事件对象
 			/// </summary>
 			/// <typeparam name="TEventData">The type of the t event arguments.</typeparam>
-			public class EventChannel<TEventData> : IEventChannel, IObservable<RouterEventData<TEventData>>, IDisposable
+			public class EventChannel<TEventData> : InstanceCounableBase,IEventChannel, IObservable<RouterEventData<TEventData>>, IDisposable
 			{
 				public EventChannel(EventRouter router)
 				{
