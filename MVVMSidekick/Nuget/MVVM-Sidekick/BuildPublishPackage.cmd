@@ -17,7 +17,7 @@ IF EXIST *.nupkg (
 
 echo.
 echo Updating NuGet...
-rem cmd /c nuget.exe update -Self
+cmd /c nuget.exe update -Self
 
 echo.
 echo Creating package...

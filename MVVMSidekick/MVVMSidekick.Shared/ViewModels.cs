@@ -913,7 +913,7 @@ namespace MVVMSidekick
 
 
 		/// <summary>
-		/// <para>Model type with detail subtype type paremeter.</para>
+		/// <para>Model type with detail subtype type parameter.</para>
 		/// <para>具有子类详细类型定义的model </para>
 		/// <example>
 		/// public class Class1:BindableBase&lt;Class1&gt;  {}
@@ -923,13 +923,29 @@ namespace MVVMSidekick
 		[DataContract]
 		public abstract class BindableBase<TSubClassType> : BindableBase, INotifyDataErrorInfo where TSubClassType : BindableBase<TSubClassType>
 		{
+			protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
+				_plainPropertyContainerGetters =
+				  new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
+
+			static BindableBase()
+			{
+
+			}
+
+			/// <summary>
+			/// The _plain property container getters
+			/// </summary>
+			
+
+
+
 			/// <summary>
 			/// Initializes a new instance of the <see cref="BindableBase{TSubClassType}"/> class.
 			/// </summary>
 			public BindableBase()
 			{
 
-				BindableInstanceId = string.Format("{0}:{1}", this.GetType().Name, _BindableInstanceId);
+				//_BindableInstanceIdLocator(this).SetValueAndTryNotify( string.Format("{0}:{1}", this.GetType().Name, base._instanceIdOfThisType));
 			}
 
 
@@ -937,15 +953,16 @@ namespace MVVMSidekick
 			/// Gets the bindable instance identifier.
 			/// </summary>
 			/// <value>The bindable instance identifier.</value>
-			
-			public string BindableInstanceId
+
+			public override string BindableInstanceId
 			{
 				get { return _BindableInstanceIdLocator(this).Value; }
-				set { _BindableInstanceIdLocator(this).SetValueAndTryNotify(value); }
+				//set { _BindableInstanceIdLocator(this).SetValueAndTryNotify(value); }
 			}
 			#region Property string BindableInstanceId Setup
 			protected Property<string> _BindableInstanceId = new Property<string> { LocatorFunc = _BindableInstanceIdLocator };
-			static Func<BindableBase, ValueContainer<string>> _BindableInstanceIdLocator = RegisterContainerLocator<string>("BindableInstanceId", model => model.Initialize("BindableInstanceId", ref model._BindableInstanceId, ref _BindableInstanceIdLocator, _BindableInstanceIdDefaultValueFactory));
+			static Func<BindableBase, ValueContainer<string>> _BindableInstanceIdLocator =
+				RegisterContainerLocator<string>("BindableInstanceId", model => model.Initialize("BindableInstanceId", ref model._BindableInstanceId, ref _BindableInstanceIdLocator, _BindableInstanceIdDefaultValueFactory));
 			static Func<string> _BindableInstanceIdDefaultValueFactory = () => { return default(string); };
 			#endregion
 
@@ -1051,21 +1068,21 @@ namespace MVVMSidekick
 
 
 
-#if SILVERLIGHT_5 || WINDOWS_PHONE_8 || WINDOWS_PHONE_7
-			/// <summary>
-			/// The _plain property container getters
-			/// </summary>
-			protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
-			 _plainPropertyContainerGetters =
-			 new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
-#else
-			/// <summary>
-			/// The _plain property container getters
-			/// </summary>
-			protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
-				_plainPropertyContainerGetters =
-				new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
-#endif
+//#if SILVERLIGHT_5 || WINDOWS_PHONE_8 || WINDOWS_PHONE_7
+//			/// <summary>
+//			/// The _plain property container getters
+//			/// </summary>
+//			protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
+//			 _plainPropertyContainerGetters =
+//			 new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
+//#else
+//			/// <summary>
+//			/// The _plain property container getters
+//			/// </summary>
+//			protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
+//				_plainPropertyContainerGetters =
+//				new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
+//#endif
 
 
 
@@ -1578,7 +1595,7 @@ namespace MVVMSidekick
 		/// Class DisposeGroupBase.
 		/// </summary>
 		[DataContract]
-		public abstract class DisposeGroupBase :InstanceCounableBase, IDisposeGroup
+		public abstract class DisposeGroupBase : InstanceCounableBase, IDisposeGroup
 		{
 			/// <summary>
 			/// Initializes a new instance of the <see cref="DisposeGroupBase"/> class.

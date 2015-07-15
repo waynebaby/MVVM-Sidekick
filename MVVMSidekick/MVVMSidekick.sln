@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonCode", "CommonCode\CommonCode.csproj", "{4D755FF7-84F5-4D29-A771-55F520F87814}"
 EndProject
@@ -325,5 +325,8 @@ Global
 		{4E76A573-00FF-4DDB-88EB-B6B32A1D950B} = {D631B7B0-E263-4EF0-8749-9EB9B1AFE0C8}
 		{B4285068-E050-4D91-A5D5-F16349DBED5C} = {9A63239D-4816-4C82-B408-AAB6B0D5FE39}
 		{D1982831-C45B-4900-93EC-95297365E69C} = {B4285068-E050-4D91-A5D5-F16349DBED5C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal

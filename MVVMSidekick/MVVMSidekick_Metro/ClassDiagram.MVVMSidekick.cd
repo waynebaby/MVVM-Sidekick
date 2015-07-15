@@ -138,7 +138,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="MVVMSidekick.ValueConverters.GenericValueConverter&lt;TSource, TTarget, TParemeter&gt;" Collapsed="true">
+  <Class Name="MVVMSidekick.ValueConverters.GenericValueConverter&lt;TSource, TTarget, Tparameter&gt;" Collapsed="true">
     <Position X="5.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAYAAAIAAAAIAIAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
