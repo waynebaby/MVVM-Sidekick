@@ -1,4 +1,5 @@
-
+* Warning: For .Net 4.0 WPF / SL 5 users， please use Unity 2.X packages instead of latest Unity 3*
+* Warning: if you are using Windows Phone 8.1 project, and you found nuget update failed, please use prelease version of Unity cos P&P team lost WPA81 in nupkg folder name in the stable versions.* 
 
 MVVM-Sidekick
 =============
@@ -12,11 +13,11 @@ MVVM-Sidekick
 ![MVVM-Sidekick！ You play the hero, and I play cute!](https://github.com/waynebaby/MVVM-Sidekick/raw/master/MVVMSidekick/Documents/Hammer.png)
 
 
-- MVVM-Sidekick: A Modern light-weight MVVM framework based on RX and TAP await. The CORE of this framework is ViewModelBase Type which you can use it with this framework, or use it with other framework, as well.
+- MVVM-Sidekick: A Modern light-weight MVVM framework based on RX and TAP await. The CORE of this framework is ViewModelBase Class which you can even use it with other frameworks.
 > 本项目是一个基于RX与 await等新技术的轻量级MVVM框架。其核心是ViewModelBase类型，你甚至可以把它拿出去和别的框架一起使用。
 
 
-- The aim of this project: This project has learned a lot of good ideas from Prism and Reactive UI/Command project, and it is using new techs offered by .Net 4.5 and Windows Run-time. It offers a suitable foundation for new tech environment, based on a cool ViewModelBase and ReactiveCommand. 
+- The aim of this project: This project has learned a lot of good ideas from Prism and Reactive UI/Command project, and it is using new techs offered by .Net 4.5 and Windows Run-time. It offers a suitable foundation for new tech environment, based on cool ViewModelBase and ReactiveCommands. 
 > 项目的目的：集合 Reactive UI/Command, Prism 等框架的优点，应对.Net 4.5 和 Windows Run-time 带来的变化，为新技术环境量身打造一套以 ViewModelBase/ReactiveCommand 为核心的基础。
 
 
