@@ -297,6 +297,7 @@ namespace MVVMSidekick
 						ImplementedInterfaceTypeInstances = typeof(TEventData)
 							.GetTypeOrTypeInfo()
 							.ImplementedInterfaces
+							.Where (x=>x.Name[0]=='I')
 							.Select(x =>
 									router.GetEventChannel(x))
 							.Where(x => x != null)
