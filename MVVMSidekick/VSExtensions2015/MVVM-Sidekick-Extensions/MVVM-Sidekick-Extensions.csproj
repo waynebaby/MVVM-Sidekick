@@ -110,10 +110,6 @@
       <Link>ProjectTemplates\Windows\Windows Desktop\MVVMSidekickApplication.WPF4.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick.1.4.20150519.14200000.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.4.20150519.14200000.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="..\..\packages\Unity.2.1.505.2\Unity.2.1.505.2.nupkg">
       <Link>Packages\Unity.2.1.505.2.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>

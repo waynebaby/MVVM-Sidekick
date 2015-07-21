@@ -16,7 +16,7 @@
     <DefaultName>WPFApplication</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <BuildProjectOnLoad>true</BuildProjectOnLoad>
+    <!--<BuildProjectOnLoad>true</BuildProjectOnLoad>-->
     <ShowByDefault>false</ShowByDefault>
     <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
   </TemplateData>

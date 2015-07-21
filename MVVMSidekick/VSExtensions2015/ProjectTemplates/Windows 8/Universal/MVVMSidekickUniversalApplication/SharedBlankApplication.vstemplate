@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="ProjectGroup">
 	<TemplateData>
     <Name >MVVM-Sidekick Universal App</Name>
     <Description>A Blank Universal App  (Windows Runtime /Windows Phone 8.1) template works with MVVM Sidekick</Description>
-
-    <Icon  >SharedBlankApplication.ico</Icon>
+    <Icon>SharedBlankApplication.ico</Icon>
 		<DefaultName>App</DefaultName>
 		<TemplateID>Microsoft.CS.WinRT.MVVMSidekick.SharedBlankApplication</TemplateID>
 		<TemplateGroupID>WinRT-Managed</TemplateGroupID>
