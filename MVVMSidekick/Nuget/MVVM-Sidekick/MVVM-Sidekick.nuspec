@@ -38,10 +38,8 @@
 
     </summary>
     <releaseNotes>
-      1.4.201507015.x : 
-        - Use Unity as default IoC core.
-        - Bring TPL.Dataflow in.
-        
+      1.4.201507022.x : 
+        - Fix Exception Event Router Bug
 
     </releaseNotes>
     <tags>Rx Reactive Extensions MVVM Win8 Metro Modern UI</tags>
