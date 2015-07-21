@@ -44,10 +44,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\packages\Microsoft.Bcl.1.1.9\Microsoft.Bcl.1.1.9.nupkg">
-      <Link>Packages\Microsoft.Bcl.1.1.9.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="..\..\packages\Microsoft.Bcl.Async.1.0.168\Microsoft.Bcl.Async.1.0.168.nupkg">
       <Link>Packages\Microsoft.Bcl.Async.1.0.168.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -136,6 +132,10 @@
     </Content>
     <Content Include="..\ProjectTemplates\Windows 8\Universal\MVVMSidekickUniversalApplication\bin\ProjectTemplates\CSharp\1033\SharedBlankApplication.zip">
       <Link>ProjectTemplates\Windows\Windows 8\Universal\SharedBlankApplication.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.4.201507022.00300000.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.4.201507022.00300000.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
