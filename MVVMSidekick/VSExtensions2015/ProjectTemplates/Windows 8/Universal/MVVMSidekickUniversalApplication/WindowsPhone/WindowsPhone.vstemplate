@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+	<TemplateData>
+		<Name>SharedBlankApplication.WindowsPhone</Name>
+		<DefaultName>$safeprojectname$</DefaultName>
+		<TemplateID>Microsoft.CS.WinRT.SharedBlankApplication.Converged.WindowsPhone</TemplateID>
+		<TemplateGroupID>WinRT-Managed</TemplateGroupID>
+		<ProjectType>CSharp</ProjectType>
+		<TargetPlatformName>Windows</TargetPlatformName>
+		<RequiredPlatformVersion>6.3.0</RequiredPlatformVersion>
+		<CreateInPlace>true</CreateInPlace>
+		<CreateNewFolder>true</CreateNewFolder>
+		<LocationField>Enabled</LocationField>
+		<Hidden>true</Hidden>
+	</TemplateData>
+	<TemplateContent>
+		<Project File="WindowsPhone.Application.WindowsPhone.csproj" ReplaceParameters="true">
+			<Folder Name="Assets">
+				<ProjectItem ReplaceParameters="false" TargetFileName="Logo.scale-240.png">Phone.Logo.png</ProjectItem>
+				<ProjectItem ReplaceParameters="false" TargetFileName="SmallLogo.scale-240.png">Phone.SmallLogo.png</ProjectItem>
+				<ProjectItem ReplaceParameters="false" TargetFileName="SplashScreen.scale-240.png">Phone.SplashScreen.png</ProjectItem>
+				<ProjectItem ReplaceParameters="false" TargetFileName="Square71x71Logo.scale-240.png">Phone.Square71x71Logo.png</ProjectItem>
+				<ProjectItem ReplaceParameters="false" TargetFileName="StoreLogo.scale-240.png">Phone.StoreLogo.png</ProjectItem>
+				<ProjectItem ReplaceParameters="false" TargetFileName="WideLogo.scale-240.png">Phone.WideLogo.png</ProjectItem>
+			</Folder>
+			<Folder Name="Properties">
+				<ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">WindowsPhone.AssemblyInfo.cs</ProjectItem>
+			</Folder>
+			<ProjectItem ReplaceParameters="true" TargetFileName="Package.appxmanifest">Package-PhoneAppx.appxmanifest</ProjectItem>
+			<ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml">WindowsPhone.MainPage.xaml</ProjectItem>
+			<ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml.cs">WindowsPhone.MainPage.xaml.cs</ProjectItem>
+		</Project>
+	</TemplateContent>
+	<WizardExtension>
+		<Assembly>Microsoft.VisualStudio.WinRT.TemplateWizards, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+		<FullClassName>Microsoft.VisualStudio.WinRT.TemplateWizards.PhoneAppxWizard</FullClassName>
+	</WizardExtension>
+  <WizardExtension>
+    <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    <packages repository="extension"
+          repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
+
+      <package id="Rx-Core" version="2.2.5"  />
+      <package id="Rx-Interfaces" version="2.2.5"  />
+      <package id="Rx-Linq" version="2.2.5"  />
+      <package id="Rx-Main" version="2.2.5"  />
+      <package id="Rx-PlatformServices" version="2.2.5"  />
+      <package id="Rx-Xaml" version="2.2.5"  />
+      <package id="MVVM-Sidekick" version="1.4.20150605.16300000" />
+      
+    </packages>
+  </WizardData>
+</VSTemplate>

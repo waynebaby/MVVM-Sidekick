@@ -19,118 +19,121 @@ using Windows.UI.Xaml.Data;
 #endif
 
 
-namespace MVVMSidekick.Behaviors
-{
-#if NETFX_CORE
-	public class ItemsSelectionBindingBehavior : BehaviorBase, IBehavior
-#else
-    public class ItemsSelectionBindingBehavior : Behavior<DependencyObject>
+//namespace MVVMSidekick.Behaviors
+//{
+//	/// <summary>
+//	/// Items Binding Behaviors
+//	/// </summary>
+//#if NETFX_CORE
+//	public class ItemsSelectionBindingBehavior : BehaviorBase, IBehavior
+//#else
+//    public class ItemsSelectionBindingBehavior : Behavior<DependencyObject>
 
-#endif
-    {
-
-
-
-        public IItemsAndSelectionGroupBinding BindingTarget
-        {
-            get { return (IItemsAndSelectionGroupBinding)GetValue(BindingTargetProperty); }
-            set { SetValue(BindingTargetProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for BindingTarget.  This enables animation, styling, binding, etc...
-		/// <summary>
-		/// The binding target property
-		/// </summary>
-        public static readonly DependencyProperty BindingTargetProperty =
-            DependencyProperty.Register("BindingTarget", typeof(IItemsAndSelectionGroupBinding), typeof(ItemsSelectionBindingBehavior), new PropertyMetadata(null));
+//#endif
+//    {
 
 
 
+//        public IItemsAndSelectionGroupBinding BindingTarget
+//        {
+//            get { return (IItemsAndSelectionGroupBinding)GetValue(BindingTargetProperty); }
+//            set { SetValue(BindingTargetProperty, value); }
+//        }
 
-        WeakReference _associatedObject = new WeakReference(null);
-
-
-
-#if NETFX_CORE
-        public override void Attach(DependencyObject associatedObject)
-        {
-            base.Attach(associatedObject);
-            this.OnBehaviorOnAttached(associatedObject );
-        }
-
-        public override void Detach()
-        {
-            this.OnBehaviorOnOnDetaching(AssociatedObject );
-            base.Detach();
-        }
-
-#else
-        protected override void OnAttached()
-        {
-
-            this.OnBehaviorOnAttached(AssociatedObject);
-
-            base.OnAttached();
-        }
+//        // Using a DependencyProperty as the backing store for BindingTarget.  This enables animation, styling, binding, etc...
+//		/// <summary>
+//		/// The binding target property
+//		/// </summary>
+//        public static readonly DependencyProperty BindingTargetProperty =
+//            DependencyProperty.Register("BindingTarget", typeof(IItemsAndSelectionGroupBinding), typeof(ItemsSelectionBindingBehavior), new PropertyMetadata(null));
 
 
 
 
-        protected override void OnDetaching()
-        {
-            this.OnBehaviorOnOnDetaching(AssociatedObject);
-            base.OnDetaching();
-        }
+//        WeakReference _associatedObject = new WeakReference(null);
+
+
+
+//#if NETFX_CORE
+//        public override void Attach(DependencyObject associatedObject)
+//        {
+//            base.Attach(associatedObject);
+//            this.OnBehaviorOnAttached(associatedObject );
+//        }
+
+//        public override void Detach()
+//        {
+//            this.OnBehaviorOnOnDetaching(AssociatedObject );
+//            base.Detach();
+//        }
+
+//#else
+//        protected override void OnAttached()
+//        {
+
+//            this.OnBehaviorOnAttached(AssociatedObject);
+
+//            base.OnAttached();
+//        }
 
 
 
 
-#endif
-
-        private void OnBehaviorOnAttached(DependencyObject AssociatedObject)
-        {
-            _associatedObject.Target = (AssociatedObject);
-            CheckBinding();
-        }
-
-        private void OnBehaviorOnOnDetaching(DependencyObject AssociatedObject)
-        {
-            DependencyObject ao = null;
-            ao = _associatedObject.Target as DependencyObject;
-            {
-                if (ao == null)
-                {
-                    return;
-                }
-                DependencyProperty targetProperty = ItemsAndSelectionGroupBinder.BinderProperty;
-                ao.SetValue(targetProperty, null);
-            }
-            _associatedObject.Target = null;
+//        protected override void OnDetaching()
+//        {
+//            this.OnBehaviorOnOnDetaching(AssociatedObject);
+//            base.OnDetaching();
+//        }
 
 
-        }
-
-        void CheckBinding()
-        {
-            DependencyObject ao = null;
-            ao = _associatedObject.Target as DependencyObject;
-            if (ao == null)
-            {
-                return;
-            }
-
-            DependencyProperty targetProperty = ItemsAndSelectionGroupBinder.BinderProperty;
-
-            string path = "BindingTarget.Binder";
-
-            var binding = new Binding();
-            binding.Source = this;
-            binding.Path = new PropertyPath(path);
-            binding.Mode = BindingMode.TwoWay;
-            BindingOperations.SetBinding(ao, targetProperty, binding);
-
-        }
 
 
-    }
-}
+//#endif
+
+//        private void OnBehaviorOnAttached(DependencyObject AssociatedObject)
+//        {
+//            _associatedObject.Target = (AssociatedObject);
+//            CheckBinding();
+//        }
+
+//        private void OnBehaviorOnOnDetaching(DependencyObject AssociatedObject)
+//        {
+//            DependencyObject ao = null;
+//            ao = _associatedObject.Target as DependencyObject;
+//            {
+//                if (ao == null)
+//                {
+//                    return;			y
+//                }
+//                DependencyProperty targetProperty = ItemsAndSelectionGroupBinder.BinderProperty;
+//                ao.SetValue(targetProperty, null);
+//            }
+//            _associatedObject.Target = null;
+
+
+//        }
+
+//        void CheckBinding()
+//        {
+//            DependencyObject ao = null;
+//            ao = _associatedObject.Target as DependencyObject;
+//            if (ao == null)
+//            {
+//                return;
+//            }
+
+//            DependencyProperty targetProperty = ItemsAndSelectionGroupBinder.BinderProperty;
+
+//            string path = "BindingTarget.Binder";
+
+//            var binding = new Binding();
+//            binding.Source = this;
+//            binding.Path = new PropertyPath(path);
+//            binding.Mode = BindingMode.TwoWay;
+//            BindingOperations.SetBinding(ao, targetProperty, binding);
+
+//        }
+
+
+//    }
+//}

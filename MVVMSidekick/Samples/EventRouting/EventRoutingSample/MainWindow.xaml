@@ -26,14 +26,8 @@
         <StackPanel   Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,32">
             <Label Content="Behavior Received Globle Events" >
                 <i:Interaction.Triggers>
-
-           
-                    <i:EventTrigger  EventName="MouseLeftButtonDown">
-                  
-                    </i:EventTrigger>
-                      
-
-                </i:Interaction.Triggers>
+                    <beh:ListenToEventRouterDataBehavior  />
+                </i:Interaction.Triggers>                       
 
             </Label>
             <TextBlock />

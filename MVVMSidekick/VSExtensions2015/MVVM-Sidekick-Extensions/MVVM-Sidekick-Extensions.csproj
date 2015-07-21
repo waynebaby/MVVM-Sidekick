@@ -114,6 +114,34 @@
       <Link>Packages\MVVM-Sidekick.1.4.20150519.14200000.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="..\..\packages\Unity.2.1.505.2\Unity.2.1.505.2.nupkg">
+      <Link>Packages\Unity.2.1.505.2.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Unity.3.5.1404.0\Unity.3.5.1404.nupkg">
+      <Link>Packages\Unity.3.5.1404.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Unity.3.5.1405-prerelease\Unity.3.5.1405-prerelease.nupkg">
+      <Link>Packages\Unity.3.5.1405-prerelease.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\CommonServiceLocator.1.3\CommonServiceLocator.1.3.0.nupkg">
+      <Link>Packages\CommonServiceLocator.1.3.0.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Microsoft.Bcl.1.1.10\Microsoft.Bcl.1.1.10.nupkg">
+      <Link>Packages\Microsoft.Bcl.1.1.10.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\packages\Microsoft.Tpl.Dataflow.4.5.24\Microsoft.Tpl.Dataflow.4.5.24.nupkg">
+      <Link>Packages\Microsoft.Tpl.Dataflow.4.5.24.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\ProjectTemplates\Windows 8\Universal\MVVMSidekickUniversalApplication\bin\ProjectTemplates\CSharp\1033\SharedBlankApplication.zip">
+      <Link>ProjectTemplates\Windows\Windows 8\Universal\SharedBlankApplication.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>

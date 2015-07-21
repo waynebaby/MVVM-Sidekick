@@ -2,9 +2,49 @@
 <CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
   <!--View Model Property-->
   <CodeSnippet Format="1.0.0">
-    <Header>
+    <Header>                                
       <Title>MVVM Sidekick View Model Property</Title>
       <Shortcut>propvm</Shortcut>
+      <Description>Property of View Model for XAML MVVM </Description>
+      <Author>Wayne Wang</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>       
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>type</ID>
+          <ToolTip>Property Type</ToolTip>
+          <Default>int</Default>
+        </Literal>
+        <Literal>
+          <ID>property</ID>
+          <ToolTip>Property Name</ToolTip>
+          <Default>MyProperty</Default>
+        </Literal>
+
+      </Declarations>
+      <Code Language="CSharp" >
+        <![CDATA[        public $type$ $property$
+        {
+            get { return _$property$Locator(this).Value; }
+            set { _$property$Locator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property $type$ $property$ Setup        
+        protected Property<$type$> _$property$ = new Property<$type$>{ LocatorFunc = _$property$Locator};
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator<$type$>("$property$", model =>model.Initialize("$property$",ref model._$property$, ref _$property$Locator,_$property$DefaultValueFactory));         
+        static Func<$type$> _$property$DefaultValueFactory = ()=> default($type$);
+        #endregion
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>MVVM Sidekick View Model Property for C# 6</Title>
+      <Shortcut>propvm6</Shortcut>
       <Description>Property of View Model for WPF &amp; Silverlight MVVM </Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
@@ -23,29 +63,28 @@
           <ToolTip>Property Name</ToolTip>
           <Default>MyProperty</Default>
         </Literal>
-      
+
       </Declarations>
       <Code Language="csharp">
-                  <![CDATA[        public $type$ $property$
+        <![CDATA[        public $type$ $property$
         {
             get { return _$property$Locator(this).Value; }
             set { _$property$Locator(this).SetValueAndTryNotify(value); }
         }
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>{ LocatorFunc = _$property$Locator};
-        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator<$type$>("$property$", model =>model.Initialize("$property$",ref model._$property$, ref _$property$Locator,_$property$DefaultValueFactory));         
-        static Func<$type$> _$property$DefaultValueFactory = ()=>{ return default($type$); };
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator<$type$>(nameof($property$), model =>model.Initialize(nameof($property$),ref model._$property$, ref _$property$Locator,_$property$DefaultValueFactory));         
+        static Func<$type$> _$property$DefaultValueFactory = ()=> default($type$);
         #endregion
 ]]>
       </Code>
     </Snippet>
   </CodeSnippet>
-
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Property with complex value factory</Title>
+      <Title>MVVM Sidekick View Model Property with complex value factory for </Title>
       <Shortcut>propcvm</Shortcut>
-      <Description>Property of View Model for WPF &amp; Silverlight MVVM </Description>
+      <Description>Property of View Model for XAML MVVM </Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
         <SnippetType>Expansion</SnippetType>
@@ -86,7 +125,52 @@
       </Code>
     </Snippet>
   </CodeSnippet>
-  
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>MVVM Sidekick View Model Property with complex value factory for C# 6</Title>
+      <Shortcut>propcvm6</Shortcut>
+      <Description>Property of View Model for XAML MVVM </Description>
+      <Author>Wayne Wang</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>type</ID>
+          <ToolTip>Property Type</ToolTip>
+          <Default>int</Default>
+        </Literal>
+        <Literal>
+          <ID>property</ID>
+          <ToolTip>Property Name</ToolTip>
+          <Default>MyProperty</Default>
+        </Literal>
+
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[        public $type$ $property$
+        {
+            get { return _$property$Locator(this).Value; }
+            set { _$property$Locator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property $type$ $property$ Setup        
+        protected Property<$type$> _$property$ = new Property<$type$>{ LocatorFunc = _$property$Locator};
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator<$type$>(nameof($property$), model =>model.Initialize(nameof($property$),ref model._$property$, ref _$property$Locator,_$property$DefaultValueFactory));         
+        static Func<BindableBase,$type$> _$property$DefaultValueFactory = 
+            model=>
+            { 
+                var vm = CastToCurrentType(model);
+                //TODO: Add the logic that produce default value from vm current status.
+                return default($type$); 
+            };
+        #endregion
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
   <!--View Model Class-->
   <CodeSnippet Format="1.0.0">
     <Header>
@@ -113,16 +197,15 @@
     {
         public $class$()
         {
-            // Use propery to init value here:
+           
             if (IsInDesignMode)
             { 
                 //Add design time demo data init here. These will not execute in runtime.
-            }
-            
-            
+            }                                        
         }
 
         //Use propvm + tab +tab  to create a new property of vm here:
+        //Use propcvm + tab +tab  to create a new property of vm  with complex default value factory here:
         //Use propcmd + tab +tab  to create a new command of vm here:
            
 
@@ -229,8 +312,8 @@
         static Func<BindableBase,CommandModel<$commandType$, $resourceType$>> _Command$commandName$DefaultValueFactory =
             model => 
             {
-                var resource = "$commandName$";           // Command resource  
-                var commandId = "$commandName$";
+                var resource = "Command$commandName$";           // Command resource  
+                var commandId = "Command$commandName$";
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
                 
@@ -259,6 +342,77 @@
     </Snippet>
   </CodeSnippet>
 
+                                     <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>MVVM Sidekick View Model Command With Resource for C# 6</Title>
+      <Shortcut>propcmd</Shortcut>
+      <Description>Command Model of MVVM</Description>
+      <Author>Wayne Wang</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>commandType</ID>
+          <ToolTip>View Model Command Type</ToolTip>
+          <Default>ReactiveCommand</Default>
+        </Literal>
+        <Literal>
+          <ID>commandName</ID>
+          <ToolTip>View Model Command Type</ToolTip>
+          <Default>SomeCommand</Default>
+        </Literal>
+        <Literal>
+          <ID>resourceType</ID>
+          <ToolTip>View Model Class Name</ToolTip>
+          <Default>String</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" >
+        <![CDATA[
+        public CommandModel<$commandType$, $resourceType$> Command$commandName$
+        {
+            get { return _Command$commandName$Locator(this).Value; }
+            set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<$commandType$, $resourceType$> Command$commandName$ Setup        
+        
+        protected Property<CommandModel<$commandType$, $resourceType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $resourceType$>>{ LocatorFunc = _Command$commandName$Locator};
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $resourceType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $resourceType$>>(nameof(CommandModel$commandName$), model =>model.Initialize(nameof(CommandModel$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
+        static Func<BindableBase,CommandModel<$commandType$, $resourceType$>> _Command$commandName$DefaultValueFactory =
+            model => 
+            {
+                var resource = nameof(CommandModel$commandName$);           // Command resource  
+                var commandId = nameof(CommandModel$commandName$);
+                var vm = CastToCurrentType(model);
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                
+                cmd.DoExecuteUIBusyTask(
+                        vm,
+                        async e =>
+                        {
+                            //Todo: Add $commandName$ logic here, or
+                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
+                        })
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+                    
+                var cmdmdl = cmd.CreateCommandModel(resource);
+                
+                cmdmdl.ListenToIsUIBusy(
+                    model: vm, 
+                    canExecuteWhenBusy: false);
+                return cmdmdl;
+            };
+
+        #endregion
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
 
 
 

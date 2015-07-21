@@ -20,6 +20,7 @@ using MVVMSidekick.ViewModels;
 using System.Reactive.Subjects;
 using MVVMSidekick.Utilities;
 using MVVMSidekick.Common;
+using System.Runtime.CompilerServices;
 
 #if NETFX_CORE
 using System.Collections.Concurrent;
@@ -63,7 +64,7 @@ namespace MVVMSidekick
 		/// <summary>
 		/// 全局事件根
 		/// </summary>
-		public class EventRouter    :InstanceCounableBase
+		public class EventRouter : InstanceCounableBase
 		{
 			/// <summary>
 			/// Initializes a new instance of the <see cref="EventRouter" /> class.
@@ -84,6 +85,14 @@ namespace MVVMSidekick
 			/// </summary>
 			/// <value>The instance.</value>
 			public static EventRouter Instance { get; protected set; }
+
+
+
+			public static void RaiseErrorEvent<TException>(object sender, TException exception, [CallerMemberName] string callerMemberOrEventName = null) where TException : Exception
+			{
+				EventRouter.Instance.RaiseEvent(sender, exception, callerMemberOrEventName, true, true);
+			}
+
 
 
 
@@ -161,9 +170,7 @@ namespace MVVMSidekick
 						}
 						catch (Exception ex)
 						{
-							//EventRouter.Instance.GetEventChannel<Exception>().RaiseEvent(this, ex.Message, ex, false, false);
-
-							//throw;
+							EventRouter.RaiseErrorEvent(this, ex);
 						}
 						return null;
 					}
@@ -210,8 +217,14 @@ namespace MVVMSidekick
 			/// 事件对象
 			/// </summary>
 			/// <typeparam name="TEventData">The type of the t event arguments.</typeparam>
-			public class EventChannel<TEventData> : InstanceCounableBase,IEventChannel, IObservable<RouterEventData<TEventData>>, IDisposable
+			public class EventChannel<TEventData> : InstanceCounableBase, IEventChannel, IObservable<RouterEventData<TEventData>>, IDisposable
 			{
+
+
+				public EventChannel() : this(null)
+				{
+				}
+
 				public EventChannel(EventRouter router)
 				{
 					var current = this;
@@ -240,8 +253,7 @@ namespace MVVMSidekick
 								break;
 
 							}
-
-							//rval.BaseArgsTypeInstance = EventRouter.Instance.GetEventChannel(baseT);
+																									  
 						}
 						else
 						{
@@ -257,7 +269,6 @@ namespace MVVMSidekick
 						if (argsType != typeof(object) && argsType != null)
 						{
 							basetypes.Add(argsType);
-							//rval.BaseArgsTypeInstance = EventRouter.Instance.GetEventChannel(baseT);
 						}
 						else
 						{
@@ -270,30 +281,36 @@ namespace MVVMSidekick
 						basetypes.Add(typeof(object));
 
 					}
+					if (router != null)
+					{
 
 
-					BaseClassTypeChannels = basetypes.Select
-						(x => router.GetEventChannel(x))
-						.Where(x => x != null)
-						.ToList();
+
+						BaseClassTypeChannels = basetypes
+
+							.Select(x => router.GetEventChannel(x))
+							.Where(x => x != null)
+							.ToList();
 
 
 #if NETFX_CORE
-					ImplementedInterfaceTypeInstances = typeof(TEventData)
-						.GetTypeOrTypeInfo()
-						.ImplementedInterfaces
-						.Select(x =>
-								EventRouter.Instance.GetEventChannel(x))
-						.Where(x => x != null)
-						.ToList();
+						ImplementedInterfaceTypeInstances = typeof(TEventData)
+							.GetTypeOrTypeInfo()
+							.ImplementedInterfaces
+							.Select(x =>
+									router.GetEventChannel(x))
+							.Where(x => x != null)
+							.ToList();
 #else
-					ImplementedInterfaceTypeInstances = typeof(TEventData)
-						.GetInterfaces()
-						.Select(x =>
-								EventRouter.Instance.GetEventChannel(x))
-						.Where(x => x != null)
-						.ToList();
+						ImplementedInterfaceTypeInstances = typeof(TEventData)
+							.GetInterfaces()
+							.Select(x =>
+									router.GetEventChannel(x))
+							.Where(x => x != null)
+							.ToList();
 #endif
+					}
+
 
 				}
 
@@ -417,7 +434,7 @@ namespace MVVMSidekick
 					var a = args;
 					_core.OnNext(new RouterEventData<TEventData>(sender, eventName, (TEventData)args));
 
-					if (isFiringToAllBaseClassChannels)
+					if (isFiringToAllBaseClassChannels && BaseClassTypeChannels != null)
 					{
 						foreach (var item in BaseClassTypeChannels)
 						{
@@ -426,7 +443,7 @@ namespace MVVMSidekick
 
 					}
 
-					if (isFiringToAllImplementedInterfaceChannels)
+					if (isFiringToAllImplementedInterfaceChannels && ImplementedInterfaceTypeInstances != null)
 					{
 
 						foreach (var item in ImplementedInterfaceTypeInstances)

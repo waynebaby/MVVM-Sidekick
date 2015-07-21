@@ -17,6 +17,7 @@ using Windows.UI.Xaml;
 using System;
 using MVVMSidekick.EventRouting;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Data;
 #endif
 
 namespace MVVMSidekick.Behaviors
@@ -26,6 +27,31 @@ namespace MVVMSidekick.Behaviors
 	public class ListenToEventRouterTriggerBehavior : BehaviorBase
 
 	{
+
+
+		public ListenToEventRouterTriggerBehavior()
+		{
+			var binding = new Binding();
+			binding.Path = new PropertyPath(nameof(ObjectTypeFilterAssemblyQualifiedName));
+			binding.Mode = BindingMode.TwoWay;
+			binding.Converter = TypeNameStringToTypeConverter.Instance;
+			binding.TargetNullValue = typeof(object);
+			binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+			BindingOperations.SetBinding(this, EventObjectTypeProperty, binding);
+		}
+
+
+
+		public String ObjectTypeFilterAssemblyQualifiedName
+		{
+			get { return (String)GetValue(ObjectTypeFilterAssemblyQualifiedNameProperty); }
+			set { SetValue(ObjectTypeFilterAssemblyQualifiedNameProperty, value); }
+		}
+
+		// Using a DependencyProperty as the backing store for ObjectTypeFilterAssemblyQualifiedName.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty ObjectTypeFilterAssemblyQualifiedNameProperty =
+			DependencyProperty.Register("ObjectTypeFilterAssemblyQualifiedName", typeof(String), typeof(ListenToEventRouterTriggerBehavior), new PropertyMetadata(typeof(object).AssemblyQualifiedName));
+
 
 		private object InvokeActions(object e)
 		{
@@ -55,9 +81,9 @@ namespace MVVMSidekick.Behaviors
 
 
 
-	
 
-	
+
+
 
 		public override void Attach(DependencyObject associatedObject)
 		{
@@ -67,7 +93,7 @@ namespace MVVMSidekick.Behaviors
 		}
 
 
-		
+
 		public override void Detach()
 		{
 			base.Detach();
@@ -157,11 +183,63 @@ namespace MVVMSidekick.Behaviors
 #endif
 
 #if NETFX_CORE
-    public class ListenToEventRouterDataBehavior : BehaviorBase
-#else 
-	public class ListenToEventRouterDataBehavior : Behavior<FrameworkElement>
-#endif 
+
+	public class TypeNameStringToTypeConverter : IValueConverter
 	{
+		static TypeNameStringToTypeConverter()
+		{
+			Instance = new TypeNameStringToTypeConverter();
+		}
+		public static TypeNameStringToTypeConverter Instance { get; set; }
+
+		public object Convert(object value, Type targetType, object parameter, string language)
+		{
+			var inputString = value as string;
+			var t = Type.GetType(inputString, false);
+			return t ?? typeof(Object);
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, string language)
+		{
+			var t = value as Type;
+			return (t ?? typeof(object)).AssemblyQualifiedName;
+		}
+	}
+#endif
+#if NETFX_CORE
+	public class ListenToEventRouterDataBehavior : BehaviorBase
+	{
+		public ListenToEventRouterDataBehavior()
+		{
+			var binding = new Binding();
+			binding.Path = new PropertyPath(nameof(ObjectTypeFilterAssemblyQualifiedName));
+			binding.Mode = BindingMode.TwoWay;
+			binding.Converter = TypeNameStringToTypeConverter.Instance;
+			binding.TargetNullValue = typeof(object);
+			binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+			BindingOperations.SetBinding(this, EventObjectTypeProperty, binding);
+		}
+
+
+
+		public String ObjectTypeFilterAssemblyQualifiedName
+		{
+			get { return (String)GetValue(ObjectTypeFilterAssemblyQualifiedNameProperty); }
+			set { SetValue(ObjectTypeFilterAssemblyQualifiedNameProperty, value); }
+		}
+
+		// Using a DependencyProperty as the backing store for ObjectTypeFilterAssemblyQualifiedName.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty ObjectTypeFilterAssemblyQualifiedNameProperty =
+			DependencyProperty.Register("ObjectTypeFilterAssemblyQualifiedName", typeof(String), typeof(ListenToEventRouterDataBehavior), new PropertyMetadata(
+				typeof(object).AssemblyQualifiedName));
+
+
+
+#else
+	public class ListenToEventRouterDataBehavior : Behavior<FrameworkElement>
+	{
+#endif
+
 
 
 

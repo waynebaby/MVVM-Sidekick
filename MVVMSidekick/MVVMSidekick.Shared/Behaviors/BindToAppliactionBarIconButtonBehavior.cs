@@ -398,7 +398,9 @@ namespace MVVMSidekick.Behaviors
 			}
 		}
 
-
+				/// <summary>
+				/// Executed when this behavior is detaching from DependencyObject
+				/// </summary>
 		protected override void OnDetaching()
 		{
 			base.OnDetaching();

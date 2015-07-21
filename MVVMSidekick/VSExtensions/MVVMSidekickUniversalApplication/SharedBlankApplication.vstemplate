@@ -20,6 +20,7 @@
 		<EnableLocationBrowseButton>true</EnableLocationBrowseButton>
 		<NumberOfParentCategoriesToRollUp>2</NumberOfParentCategoriesToRollUp>
 		<PromptForSaveOnCreation>true</PromptForSaveOnCreation>		
+		<AppIdFilter>blend</AppIdFilter>
 	</TemplateData>
  	<TemplateContent>
  		<ProjectCollection>

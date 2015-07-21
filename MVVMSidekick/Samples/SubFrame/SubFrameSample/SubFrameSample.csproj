@@ -164,7 +164,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MVVMSidekick_Metro, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\MVVM-Sidekick.1.4.201507015.20300000\lib\win81\MVVMSidekick_Metro.dll</HintPath>
+      <HintPath>..\..\..\packages\MVVM-Sidekick.1.4.201507018.10300000\lib\win81\MVVMSidekick_Metro.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Numerics.Vectors, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

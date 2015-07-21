@@ -2516,17 +2516,8 @@ namespace MVVMSidekick
 				set { _UIBusyTaskCountLocator(this).SetValueAndTryNotify(value); }
 			}
 			#region Property int UIBusyTaskCount Setup
-			/// <summary>
-			/// The _ UI busy task count
-			/// </summary>
 			private Property<int> _UIBusyTaskCount = new Property<int> { LocatorFunc = _UIBusyTaskCountLocator };
-			/// <summary>
-			/// The _ UI busy task count locator
-			/// </summary>
 			private static Func<BindableBase, ValueContainer<int>> _UIBusyTaskCountLocator = RegisterContainerLocator<int>("UIBusyTaskCount", model => model.Initialize("UIBusyTaskCount", ref model._UIBusyTaskCount, ref _UIBusyTaskCountLocator, _UIBusyTaskCountDefaultValueFactory));
-			/// <summary>
-			/// The _ UI busy task count default value factory
-			/// </summary>
 			private static Func<int> _UIBusyTaskCountDefaultValueFactory = null;
 			#endregion
 

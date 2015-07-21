@@ -13,7 +13,7 @@ set "bver=%bver:~0,8%"
 set "bver=%bver: =%"
 
 rem set ver=1.4.%bver%.%sver%
-set ver=1.4.201507015.20300000
+set ver=1.4.201507018.10300000
 echo %ver%
 xcopy lib\*.*  ..\..\packages\MVVM-Sidekick.%ver%\lib  /s /i /y 
 BuildPublishPackage.cmd MVVM-Sidekick "%ver%"
