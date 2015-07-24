@@ -44,7 +44,10 @@
     </releaseNotes>
     <tags>Rx Reactive Extensions MVVM Win8 Metro Modern UI</tags>
     <dependencies>
+     <group targetFramework="net40">
 
+       <package id="Unity" version="2.1.505.2" targetFramework="net4" userInstalled="true" />
+      </group>
 
       <!--<group targetFramework="Windows8.0">
         <dependency id="CommonServiceLocator" version="1.2.0" />
@@ -65,7 +68,7 @@
       <dependency id="Rx-Linq" version="[2.2.5,100.0]" />
       <dependency id="Rx-Xaml" version="[2.2.5,100.0]" />
       <dependency id="Unity" version="[2.1.505.2,100.0]"  />
-      <dependency id="CommonServiceLocator" version="1.2.0" />
+      <dependency id="CommonServiceLocator" version="[1.3.0,100.0]" />
 
 
     </dependencies>
