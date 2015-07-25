@@ -129,7 +129,11 @@
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)..
 
-xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\net40 /s  /i /y</PostBuildEvent>
+xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\net40 /s  /i /y
+
+
+cd $(ProjectDir)
+..\CommonCode\CommonCode DPGRP $(ProjectDir)packages.config ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\MVVMSidekick.Shared\MVVMSidekick.Shared.projitems" Label="Shared" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
