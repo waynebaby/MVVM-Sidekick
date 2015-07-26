@@ -24,6 +24,8 @@
     <TargetFrameworkProfile />
     <DefaultLanguage>en-US</DefaultLanguage>
     <NuGetPackageImportStamp>d71c6f6c</NuGetPackageImportStamp>
+    <SupportedCultures>
+    </SupportedCultures>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -141,6 +143,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rx-Xaml.2.2.5\lib\windowsphone8\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.24.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Tpl.Dataflow.4.5.24\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +161,12 @@
 
 xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y
 xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\wp8 /s  /i /y
+copy $(TargetDir)System.Threading.Tasks.Dataflow.dll $(SolutionDir)MVVMSidekick_SL\ReferenceAlterDll
+copy $(TargetDir)System.Threading.Tasks.Dataflow.dll $(SolutionDir)MVVMSidekick_Net40\ReferenceAlterDll
 
 cd $(ProjectDir)
-..\CommonCode\CommonCode DPGRP $(ProjectDir)packages.config ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec</PostBuildEvent>
+..\CommonCode\CommonCode DPGRP $(ProjectDir)packages.config ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec
+</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\MVVMSidekick.Shared\MVVMSidekick.Shared.projitems" Label="Shared" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

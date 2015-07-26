@@ -105,6 +105,10 @@
       <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Threading.Tasks.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.24.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Tpl.Dataflow.4.5.24\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -121,6 +125,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ReferenceAlterDll\System.Threading.Tasks.Dataflow.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
@@ -130,7 +140,8 @@
     <PostBuildEvent>cd $(ProjectDir)..
 
 xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\net40 /s  /i /y
-
+xcopy $(TargetDir)System.Threading.Tasks.Dataflow.dll
+ Nuget\MVVM-Sidekick\lib\net40 /s  /i /y
 
 cd $(ProjectDir)
 ..\CommonCode\CommonCode DPGRP $(ProjectDir)packages.config ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec</PostBuildEvent>

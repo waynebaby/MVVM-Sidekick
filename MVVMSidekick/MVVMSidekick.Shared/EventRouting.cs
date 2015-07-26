@@ -52,7 +52,7 @@ using System.Windows.Controls.Primitives;
 #endif
 
 
-
+				
 
 
 namespace MVVMSidekick
@@ -66,6 +66,7 @@ namespace MVVMSidekick
 		/// </summary>
 		public class EventRouter : InstanceCounableBase
 		{
+			System.Threading.Tasks.Dataflow.ActionBlock<object > a;
 			/// <summary>
 			/// Initializes a new instance of the <see cref="EventRouter" /> class.
 			/// </summary>
