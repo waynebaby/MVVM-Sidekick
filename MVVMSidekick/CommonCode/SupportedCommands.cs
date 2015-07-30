@@ -36,6 +36,9 @@ namespace CommonCode
 			return dics[commandName];
 		}
 
+		/// <summary>
+		/// 将所有的工程 中package.config 文件里的依赖包信息 放入 nuget spec 索引中，保证依赖
+		/// </summary>
 		public static readonly ICommandLineCommand DPGRP
 		#region DPGRP
 		= new CommandLineCommand(nameof(DPGRP), null)
@@ -67,7 +70,7 @@ namespace CommonCode
 
 				var docnusp = XDocument.Load(f2);
 				var dependencies = docnusp
-				.Descendants().Single(x => x.Name.LocalName  == "dependencies");
+				.Descendants().Single(x => x.Name.LocalName == "dependencies");
 
 				var ns = dependencies.Name.NamespaceName;
 				var gp = dependencies.Elements()
@@ -79,7 +82,7 @@ namespace CommonCode
 					  .FirstOrDefault();
 				if (gp == null)
 				{
-					gp = new XElement(XName.Get("group" ,ns), new XAttribute("targetFramework", framework));
+					gp = new XElement(XName.Get("group", ns), new XAttribute("targetFramework", framework));
 					dependencies.Add(gp);
 				}
 				else
@@ -131,7 +134,65 @@ namespace CommonCode
 		};
 		#endregion
 
+		public static readonly ICommandLineCommand DPEXT
+		#region DPEXT
+		= new CommandLineCommand(nameof(DPEXT), null)
+		{
+			OnExecute = args =>
+			{
+				var xmlDoc = XDocument.Load(args[1]);
+				var packages = xmlDoc.Descendants(XName.Get("project")).Select(x => x.Value)
+					.SelectMany(p =>
+					   new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, p)).GetFiles("packages.config"))
+					.Select(p =>
+					   XDocument.Load(p.FullName))
+					.SelectMany(xd =>
+					   xd.Descendants(XName.Get("package")).Select(nd => nd.Attribute(XName.Get("id")).Value + "." + nd.Attribute(XName.Get("version")).Value))
+					.Distinct();
+				var extensionPath = args[2];
+				var extensionFile = Directory.GetFiles(extensionPath, "*.vsixmanifest", SearchOption.AllDirectories).FirstOrDefault();
+				if (extensionFile == null)
+				{
+					throw new FileNotFoundException();
+				}
 
+				var vsixPath = new FileInfo(extensionFile).Directory.GetFiles("*.csproj",  SearchOption.AllDirectories).Single().FullName;
+
+				var dvisx = XDocument.Load(vsixPath);
+				var itemGroup = dvisx.Descendants()
+					.Where(x => x.Name.LocalName == "None" && x.Attributes().Any(a => a.Name.LocalName == "Include" && a.Value.EndsWith(".vsixmanifest")))
+					.Select(x => x.Parent)
+					.Single();
+
+				var incs = itemGroup.Elements().Where(x => x.Name.LocalName == "Content" && x.Attributes().Any(a => a.Name.LocalName == "Include" && a.Value.EndsWith(".nupkg")));
+				incs.ToList().ForEach(x => x.Remove());
+				/*    
+				<Content Include="..\..\packages\Microsoft.Bcl.1.1.9\Microsoft.Bcl.1.1.9.nupkg">
+				  <Link>Packages\Microsoft.Bcl.1.1.9.nupkg</Link>
+				  <IncludeInVSIX>true</IncludeInVSIX>
+				</Content>*/
+				var newNd = new XElement("Content",
+					  new XAttribute("Include", Path.Combine(Environment.CurrentDirectory,"packages" ,string.Format ("{0}\\{0}")))
+					);
+
+
+				//foreach (var item in packages)
+				//{
+				//	Console.WriteLine(item);
+				//}
+
+
+
+				Console.Read();
+			},
+			OnHelp = () =>
+			{
+				Console.WriteLine("commoncode.exe DPEXT <XML File Name> <Extension project path>");
+			}
+
+
+		};
+		#endregion
 
 	}
 }
