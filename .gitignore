@@ -110,7 +110,7 @@ ClientBin
 *.dbmdl
 *.zip
 *.suo
-*.dll
+
 *.vsix
 Generated_Code #added for RIA/Silverlight projects
 
