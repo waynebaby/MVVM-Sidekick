@@ -154,7 +154,7 @@
 
 xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y
 xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\sl50 /s  /i /y
-xcopy $(TargetDir)System.Threading.Tasks.Dataflow.dll Nuget\MVVM-Sidekick\lib\sl50 /s  /i /y
+xcopy $(TargetDir)ReferenceAlterDll\System.Threading.Tasks.Dataflow.dll Nuget\MVVM-Sidekick\lib\sl50 /s  /i /y
 
 cd $(ProjectDir)
 ..\CommonCode\CommonCode DPGRP $(ProjectDir)packages.config ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec</PostBuildEvent>

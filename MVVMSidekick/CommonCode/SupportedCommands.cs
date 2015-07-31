@@ -156,10 +156,11 @@ namespace CommonCode
 					throw new FileNotFoundException();
 				}
 
-				var vsixPath = new FileInfo(extensionFile).Directory.GetFiles("*.csproj",  SearchOption.AllDirectories).Single().FullName;
+				var vsixPath = new FileInfo(extensionFile).Directory.GetFiles("*.csproj", SearchOption.AllDirectories).Single().FullName;
 
-				var dvisx = XDocument.Load(vsixPath);
-				var itemGroup = dvisx.Descendants()
+				var dvsix = XDocument.Load(vsixPath);
+				var ns = dvsix.Root.Name.Namespace;
+				var itemGroup = dvsix.Descendants()
 					.Where(x => x.Name.LocalName == "None" && x.Attributes().Any(a => a.Name.LocalName == "Include" && a.Value.EndsWith(".vsixmanifest")))
 					.Select(x => x.Parent)
 					.Single();
@@ -171,19 +172,31 @@ namespace CommonCode
 				  <Link>Packages\Microsoft.Bcl.1.1.9.nupkg</Link>
 				  <IncludeInVSIX>true</IncludeInVSIX>
 				</Content>*/
-				var newNd = new XElement("Content",
-					  new XAttribute("Include", Path.Combine(Environment.CurrentDirectory,"packages" ,string.Format ("{0}\\{0}")))
-					);
+
+				foreach (var package in packages)
+				{
+					var newNd = new XElement(XName.Get("Content", ns.NamespaceName),
+							new XAttribute("Include", Path.Combine(Environment.CurrentDirectory, "packages", string.Format("{0}\\{0}", package))),
+							new XElement(XName.Get("Link", ns.NamespaceName), string.Format("Packages\\{0}", package)),
+							new XElement(XName.Get("IncludeInVSIX", ns.NamespaceName), "true")
+						  );
+					itemGroup.Add(newNd);
+				}
 
 
-				//foreach (var item in packages)
-				//{
-				//	Console.WriteLine(item);
-				//}
+				var currentPackageVersion = XDocument.Load(@"CommonCode\CurrentPackageVersion.xml").Root.Value;
+				var newMSKNd = new XElement(XName.Get("Content", ns.NamespaceName),
+							new XAttribute("Include", Path.Combine(Environment.CurrentDirectory, "packages", string.Format("MVVM-Sidekick.{0}.nupkg\\MVVM-Sidekick.{0}.nupkg", currentPackageVersion))),
+							new XElement(XName.Get("Link", ns.NamespaceName), string.Format("Packages\\MVVM-Sidekick.{0}.nupkg", currentPackageVersion)),
+							new XElement(XName.Get("IncludeInVSIX", ns.NamespaceName), "true")
+						  );
+				itemGroup.Add(newMSKNd);
 
 
+				Console.Write(dvsix);
+				dvsix.Save(vsixPath);
 
-				Console.Read();
+				//Console.Read();
 			},
 			OnHelp = () =>
 			{
@@ -194,5 +207,32 @@ namespace CommonCode
 		};
 		#endregion
 
+
+
+		public static readonly ICommandLineCommand UPVER
+		#region UPVER
+		= new CommandLineCommand(nameof(UPVER), null)
+		{
+			OnExecute = args =>
+			  {
+				  if (args.Length < 2)
+				  {
+					  throw new IndexOutOfRangeException("need path of nuget spec file");
+				  }
+
+				  if (!File.Exists(args[1]))
+				  {
+					  throw new IndexOutOfRangeException("nuget spec file not exists");
+				  }
+
+				  var d = XDocument.Load(args[1]);
+				  var ver = d.Descendants().First(x => x.Name.LocalName == "version");
+
+				  var currentPackageVersion = XDocument.Load(@"CommonCode\CurrentPackageVersion.xml").Root.Value;
+				  ver.Value = currentPackageVersion;
+				  d.Save(args[1]);
+			  }
+		};
+		#endregion
 	}
 }

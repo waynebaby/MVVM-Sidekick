@@ -1,22 +1,14 @@
 @echo off
-set sver=%time%
-set "sver=%sver::=%"
-set "sver=%sver:.=%"
 
-
-set bver=%date%
-set "bver=%bver::=%"
-set "bver=%bver:/=%"
-set "bver=%bver:.=%"
-
-set "bver=%bver:~0,8%"
-set "bver=%bver: =%"
-
-rem set ver=1.4.%bver%.%sver%
-set ver=1.4.2015070246.20000000
-echo %ver%
 xcopy lib\*.*  ..\..\packages\MVVM-Sidekick.%ver%\lib  /s /i /y 
-BuildPublishPackage.cmd MVVM-Sidekick "%ver%"
+
+cd..\..\
+commoncode\commonCode UPVer nuget\mvvm-sidekick\MVVM-Sidekick.nuspec
+commoncode\commonCode DPEXT commonCode\ProjectsForNugetPackages.xml  d:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick\VSExtensions2015  
+commoncode\commonCode DPEXT commonCode\ProjectsForNugetPackages.xml  d:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick\VSExtensions
+
+cd nuget\mvvm-sidekick\ 
+BuildPublishPackage.cmd MVVM-Sidekick 
 
 
                                          

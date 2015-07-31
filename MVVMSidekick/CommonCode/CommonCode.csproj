@@ -91,9 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CurrentPackageVersion.xml" />
-    <Content Include="ProjectsForNugetPackages.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="ProjectsForNugetPackages.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -103,8 +101,9 @@
   <PropertyGroup>
     <PostBuildEvent>
 cd $(ProjectDir)
-copy $(ProjectDir)*.snippet  ..\Nuget\MVVM-Sidekick\toolsy
-</PostBuildEvent>
+copy $(ProjectDir)*.snippet  ..\Nuget\MVVM-Sidekick\tools /y
+
+copy $(TargetDir)*.xml ..\Nuget\MVVM-Sidekick\</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
