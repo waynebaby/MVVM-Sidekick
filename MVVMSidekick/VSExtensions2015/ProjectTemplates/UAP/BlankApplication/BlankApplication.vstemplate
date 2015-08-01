@@ -13,7 +13,7 @@
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <NumberOfParentCategoriesToRollUp>10</NumberOfParentCategoriesToRollUp>
+    <NumberOfParentCategoriesToRollUp>2</NumberOfParentCategoriesToRollUp>
     <TargetPlatformName>Windows</TargetPlatformName>
     <RequiredPlatformVersion>6.1.0</RequiredPlatformVersion>
     <CreateInPlace>true</CreateInPlace>
@@ -26,14 +26,17 @@
       <ProjectItem ReplaceParameters="true" OpenInEditor="!blend" TargetFileName="App.xaml.cs">App.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" OpenInEditor="blend" TargetFileName="MainPage.xaml">MainPage.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml.cs">MainPage.xaml.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="project.json">project.json1</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Properties\AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Properties\Default.rd.xml">Default.rd.xml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Package.appxmanifest">Package-managed.appxmanifest</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\Logo.scale-100.png">Logo.scale-100.png</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\SmallLogo.scale-100.png">SmallLogo.scale-100.png</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\SplashScreen.scale-100.png">SplashScreen.scale-100.png</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\StoreLogo.scale-100.png">StoreLogo.scale-100.png</ProjectItem>
-      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\WideLogo.scale-100.png">WideLogo.scale-100.png</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\LockScreenLogo.scale-200.png">LockScreenLogo.scale-200.png</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\SplashScreen.scale-200.png">SplashScreen.scale-200.png</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\Square150x150Logo.scale-200.png">Square150x150Logo.scale-200.png</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\Square44x44Logo.scale-200.png">Square44x44Logo.scale-200.png</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">Square44x44Logo.targetsize-24_altform-unplated.png</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\StoreLogo.png">StoreLogo.png</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Assets\Wide310x150Logo.scale-200.png">Wide310x150Logo.scale-200.png</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="$projectname$_TemporaryKey.pfx" BlendDoNotCreate="true">Application_TemporaryKey.pfx</ProjectItem>
       <Folder Name="Startups" TargetFolderName="Startups">
         <ProjectItem ReplaceParameters="true" TargetFileName="StartupFunctions.cs">StartupFunctions.cs</ProjectItem>
@@ -55,17 +58,17 @@
     <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
     <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
   </WizardExtension>
-
-
+  <WizardExtension>
+    <Assembly>Microsoft.VisualStudio.Universal.TemplateWizards, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VisualStudio.Universal.TemplateWizards.PlatformVersion.Wizard</FullClassName>
+  </WizardExtension>
   <WizardData>
-    <packages repository="registry" keyName="UAPFrameworkDependenciesLocationVS14" isPreunzipped="true">
-      <package id="System.Numerics.Vectors" version="4.0.0" skipAssemblyReferences="false" />
+    <packages repository="registry" keyName="NETCoreSDK" isPreunzipped="true">
+      <package id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.0.0" skipAssemblyReferences="false" />
     </packages>
     <packages repository="extension"
-         repositoryId="MVVM_Sidekick_Extensions.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24">
-
-
-      <package id="Microsoft.Bcl" version="1.1.9" />
+         repositoryId="MVVM_Sidekick_Extensions.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24">      
+      <package id="Microsoft.Bcl" version="1.1.10" />
       <package id="Microsoft.Bcl.Async" version="1.0.168" />
       <package id="Microsoft.Bcl.Build" version="1.0.21" />
       <package id="Rx-Core" version="2.2.5"  />
@@ -73,8 +76,8 @@
       <package id="Rx-Linq" version="2.2.5"  />
       <package id="Rx-Main" version="2.2.5"  />
       <package id="Rx-PlatformServices" version="2.2.5"  />
-      <package id="Rx-Xaml" version="2.2.5"  />
-      <package id="MVVM-Sidekick" version="MVVM-Sidekick.1.4.201507022.00300000" />
+   
+      <package id="MVVM-Sidekick" version="1.5.20150801.200000" />
 
     </packages>
   </WizardData>

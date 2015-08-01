@@ -121,7 +121,6 @@
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-  
     <Content Include="D:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Microsoft.Bcl.1.1.10\Microsoft.Bcl.1.1.10.nupkg">
       <Link>Packages\Microsoft.Bcl.1.1.10.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -170,8 +169,8 @@
       <Link>Packages\Unity.2.1.505.2.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.5.20150801.190000.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.5.20150801.190000.nupkg</Link>
+    <Content Include="D:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.5.20150801.200000.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.5.20150801.200000.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
