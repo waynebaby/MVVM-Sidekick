@@ -175,9 +175,19 @@ namespace CommonCode
 
 				foreach (var package in packages)
 				{
+					var p = string.Format("{0}\\{0}.nupkg", package);
+					if (!File.Exists(Path.Combine(Environment.CurrentDirectory, "packages", p)))
+					{
+						p = string.Format("{0}\\{0}.nupkg", package.Remove(package.Length - 2));
+					}
+					if (!File.Exists(Path.Combine(Environment.CurrentDirectory, "packages", p)))
+					{
+						p = string.Format("{0}.0\\{0}.0.nupkg", package);
+
+					}
 					var newNd = new XElement(XName.Get("Content", ns.NamespaceName),
-							new XAttribute("Include", Path.Combine(Environment.CurrentDirectory, "packages", string.Format("{0}\\{0}", package))),
-							new XElement(XName.Get("Link", ns.NamespaceName), string.Format("Packages\\{0}", package)),
+							new XAttribute("Include", Path.Combine(Environment.CurrentDirectory, "packages", p)),
+							new XElement(XName.Get("Link", ns.NamespaceName), string.Format("Packages\\{0}.nupkg",package)),
 							new XElement(XName.Get("IncludeInVSIX", ns.NamespaceName), "true")
 						  );
 					itemGroup.Add(newNd);
@@ -186,7 +196,7 @@ namespace CommonCode
 
 				var currentPackageVersion = XDocument.Load(@"CommonCode\CurrentPackageVersion.xml").Root.Value;
 				var newMSKNd = new XElement(XName.Get("Content", ns.NamespaceName),
-							new XAttribute("Include", Path.Combine(Environment.CurrentDirectory, "packages", string.Format("MVVM-Sidekick.{0}.nupkg\\MVVM-Sidekick.{0}.nupkg", currentPackageVersion))),
+							new XAttribute("Include", Path.Combine(Environment.CurrentDirectory, "Nuget", string.Format("MVVM-Sidekick.{0}.nupkg", currentPackageVersion))),
 							new XElement(XName.Get("Link", ns.NamespaceName), string.Format("Packages\\MVVM-Sidekick.{0}.nupkg", currentPackageVersion)),
 							new XElement(XName.Get("IncludeInVSIX", ns.NamespaceName), "true")
 						  );
