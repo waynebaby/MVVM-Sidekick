@@ -6,9 +6,8 @@
     <Icon>MVVMSidekickViewWithVM.WPF.ico</Icon>
     <TemplateID>861933b0-7123-44d2-a49b-ee5fa112f142_Window</TemplateID>
     <ProjectType>CSharp</ProjectType>
-    <ProjectSubType>WPF</ProjectSubType> 
+    <ProjectSubType>WPF</ProjectSubType>
     <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
-    
     <DefaultName>Window.xaml</DefaultName>
     <SortOrder>1</SortOrder>
     <TemplateGroupID>WPF</TemplateGroupID>
@@ -21,28 +20,22 @@
         <Assembly>System</Assembly>
       </Reference>
     </References>
-    <ProjectItem ReplaceParameters="true" SubType="Designer"  TargetFileName="$fileinputname$.xaml">View.xaml</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Designer" TargetFileName="$fileinputname$.xaml">View.xaml</ProjectItem>
     <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="$fileinputname$.xaml.cs">View.xaml.cs</ProjectItem>
-    <ProjectItem ReplaceParameters="true"  SubType="Code"  TargetFileName="ViewModels\$fileinputname$_Model.cs">View_Model.cs</ProjectItem>
-    <ProjectItem ReplaceParameters="true"  SubType="Code"  TargetFileName="Startups\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="ViewModels\$fileinputname$_Model.cs">View_Model.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="Startups\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
   </TemplateContent>
-
-
   <WizardExtension>
     <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
     <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
   </WizardExtension>
   <WizardData>
-    <packages repository="extension"
-          repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
-
-      <package id="Rx-Core" version="2.2.5"  />
-      <package id="Rx-Interfaces" version="2.2.5"  />
-      <package id="Rx-Linq" version="2.2.5"  />
-      <package id="Rx-Main" version="2.2.5"  />
-      <package id="Rx-PlatformServices" version="2.2.5"  />
-
-
+    <packages repository="extension" repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
+      <package id="Rx-Core" version="2.2.5" />
+      <package id="Rx-Interfaces" version="2.2.5" />
+      <package id="Rx-Linq" version="2.2.5" />
+      <package id="Rx-Main" version="2.2.5" />
+      <package id="Rx-PlatformServices" version="2.2.5" />
     </packages>
   </WizardData>
 </VSTemplate>

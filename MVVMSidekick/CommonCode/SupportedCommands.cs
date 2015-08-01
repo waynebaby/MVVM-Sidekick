@@ -320,7 +320,7 @@ namespace CommonCode
 						Console.WriteLine(package);
 					}
 
-					docp.doc.Save(docp.path);
+					docp.doc.Save (docp.path);
 				}
 
 

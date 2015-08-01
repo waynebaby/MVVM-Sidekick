@@ -11,22 +11,19 @@
     <DefaultName>DataModel.cs</DefaultName>
   </TemplateData>
   <TemplateContent>
-    <ProjectItem ReplaceParameters="true" SubType="Code"  TargetFileName="$fileinputname$.cs">DataModel.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="$fileinputname$.cs">DataModel.cs</ProjectItem>
   </TemplateContent>
-  
-
   <WizardExtension>
     <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
     <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
   </WizardExtension>
   <WizardData>
     <packages>
-      <package id="Rx-Core" version="2.2.5"  />
-      <package id="Rx-Interfaces" version="2.2.5"  />
-      <package id="Rx-Linq" version="2.2.5"  />
-      <package id="Rx-Main" version="2.2.5"  />
-      <package id="Rx-PlatformServices" version="2.2.5"  />
+      <package id="Rx-Core" version="2.2.5" />
+      <package id="Rx-Interfaces" version="2.2.5" />
+      <package id="Rx-Linq" version="2.2.5" />
+      <package id="Rx-Main" version="2.2.5" />
+      <package id="Rx-PlatformServices" version="2.2.5" />
     </packages>
   </WizardData>
-  
 </VSTemplate>

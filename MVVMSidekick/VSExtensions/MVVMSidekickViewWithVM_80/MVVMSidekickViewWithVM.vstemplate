@@ -7,30 +7,23 @@
     <TemplateID>Microsoft.CS.WinRT.MVVMSidekickViewWithVM_Page</TemplateID>
     <TemplateGroupID>WinRT-Managed</TemplateGroupID>
     <ProjectType>CSharp</ProjectType>
-    <ProjectSubType>
-    </ProjectSubType>
+    <ProjectSubType></ProjectSubType>
     <DefaultName>BasicPage.xaml</DefaultName>
     <ShowByDefault>false</ShowByDefault>
-    <SortOrder>1</SortOrder>    
+    <SortOrder>1</SortOrder>
     <TargetPlatformName>Windows</TargetPlatformName>
     <RequiredPlatformVersion>8</RequiredPlatformVersion>
     <BuildProjectOnLoad>true</BuildProjectOnLoad>
   </TemplateData>
   <TemplateContent>
     <References>
-
       <Reference>
         <Assembly>MVVMSidekick_Metro</Assembly>
       </Reference>
     </References>
-    <ProjectItem ReplaceParameters="true" SubType="Designer"  TargetFileName="$fileinputname$.xaml">View.xaml</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Designer" TargetFileName="$fileinputname$.xaml">View.xaml</ProjectItem>
     <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="$fileinputname$.xaml.cs">View.xaml.cs</ProjectItem>
-    <ProjectItem ReplaceParameters="true"  SubType="Code"  TargetFileName="ViewModels\$fileinputname$_Model.cs">View_Model.cs</ProjectItem>
-    <ProjectItem ReplaceParameters="true"  SubType="Code"  TargetFileName="Startups\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
-    
-
-
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="ViewModels\$fileinputname$_Model.cs">View_Model.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="Startups\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
   </TemplateContent>
-
-  
 </VSTemplate>

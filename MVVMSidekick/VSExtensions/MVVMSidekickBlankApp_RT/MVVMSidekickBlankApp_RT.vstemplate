@@ -1,7 +1,8 @@
-﻿<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
-    <Name >MVVM-Sidekick Blank Windows Store App 8.0</Name>
-    <Description>A Blank App template works with MVVM Sidekick</Description>    
+    <Name>MVVM-Sidekick Blank Windows Store App 8.0</Name>
+    <Description>A Blank App template works with MVVM Sidekick</Description>
     <Icon>MVVMSidekickBlankApp_RT.ico</Icon>
     <TemplateID>Microsoft.CS.WinRT.MVVMSidekickBlankApp</TemplateID>
     <TemplateGroupID>Windows Store</TemplateGroupID>
@@ -22,7 +23,6 @@
   </TemplateData>
   <TemplateContent>
     <Project TargetFileName="$safeprojectname$.csproj" File="BlankApp_MVVMSidekick.csproj" ReplaceParameters="true">
-
       <Folder Name="Assets" TargetFolderName="Assets">
         <ProjectItem ReplaceParameters="false" TargetFileName="Logo.png">Logo.png</ProjectItem>
         <ProjectItem ReplaceParameters="false" TargetFileName="SmallLogo.png">SmallLogo.png</ProjectItem>
@@ -40,7 +40,6 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="RichTextColumns.cs">RichTextColumns.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="SuspensionManager.cs">SuspensionManager.cs</ProjectItem>
       </Folder>
-
       <ProjectItem ReplaceParameters="true" OpenInEditor="true" TargetFileName="MainPage.xaml">MainPage.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml.cs">MainPage.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Package.appxmanifest">Package.appxmanifest</ProjectItem>
@@ -55,7 +54,6 @@
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="App.xaml">App.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="App.xaml.cs">App.xaml.cs</ProjectItem>
-
     </Project>
   </TemplateContent>
   <WizardExtension>
@@ -63,16 +61,14 @@
     <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
   </WizardExtension>
   <WizardData>
-    <packages repository="extension"
-          repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
-      <package id="Rx-Core" version="2.2.5"  />
-      <package id="Rx-Interfaces" version="2.2.5"  />
-      <package id="Rx-Linq" version="2.2.5"  />
-      <package id="Rx-Main" version="2.2.5"  />
-      <package id="Rx-Xaml" version="2.2.5"  />
-      <package id="Rx-PlatformServices" version="2.2.5"  />
-      <package id="MVVM-Sidekick" version="1.4.20150605.16300000"/>
-
+    <packages repository="extension" repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
+      <package id="Rx-Core" version="2.2.5" />
+      <package id="Rx-Interfaces" version="2.2.5" />
+      <package id="Rx-Linq" version="2.2.5" />
+      <package id="Rx-Main" version="2.2.5" />
+      <package id="Rx-Xaml" version="2.2.5" />
+      <package id="Rx-PlatformServices" version="2.2.5" />
+      <package id="MVVM-Sidekick" version="1.6.0-prerelease" />
     </packages>
   </WizardData>
 </VSTemplate>

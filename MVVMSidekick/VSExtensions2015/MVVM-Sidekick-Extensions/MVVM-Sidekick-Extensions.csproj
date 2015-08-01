@@ -82,6 +82,18 @@
       <Link>ProjectTemplates\Windows\Windows 8\Windows Phone\MVVMSidekickWP8.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="..\ItemTemplates\Windows\Windows Store\MVVMSidekickViewWithVM_81\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM_81.zip">
+      <Link>ItemTemplates\XAML\MVVMSidekickViewWithVM_81.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\ItemTemplates\Windows\Windows Phone\MVVMSidekickViewWithVM.WP8\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM.WP8.zip">
+      <Link>ItemTemplates\XAML\MVVMSidekickViewWithVM.WP8.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\ItemTemplates\Windows\Windows Phone\MVVMSidekickViewWithVM.WPA81\bin\ItemTemplates\CSharp\1033\MVVMSidekickViewWithVM.WPA81.zip">
+      <Link>ItemTemplates\XAML\MVVMSidekickViewWithVM.WPA81.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -133,8 +145,16 @@
       <Link>Packages\Unity.2.1.505.2.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.5.20150801.200000.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.5.20150801.200000.nupkg</Link>
+    <Content Include="D:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick\packages\CommonServiceLocator.1.3\CommonServiceLocator.1.3.nupkg">
+      <Link>Packages\CommonServiceLocator.1.3.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="D:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Unity.3.5.1405-prerelease\Unity.3.5.1405-prerelease.nupkg">
+      <Link>Packages\Unity.3.5.1405-prerelease.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="D:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.6.0-prerelease.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.6.0-prerelease.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>

@@ -1,13 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-    <Name >MVVM-Sidekick Phone Silverlight App 8.0 /8.1</Name>
+    <Name>MVVM-Sidekick Phone Silverlight App 8.0 /8.1</Name>
     <Description>A Blank Windows Phone Application  (Silverlight) template works with MVVM Sidekick. If 8.0 have error update it to 8.1</Description>
     <Icon>MVVMSidekickWindowsPhoneApplication.WP8.ico</Icon>
     <TemplateID>MVVM-Sidekick.Phone.Silverlight.App.8.1</TemplateID>
     <ProjectType>CSharp</ProjectType>
-    <ProjectSubType>
-    </ProjectSubType>
+    <ProjectSubType></ProjectSubType>
     <SortOrder>1</SortOrder>
     <CreateNewFolder>true</CreateNewFolder>
     <DefaultName>PhoneApp</DefaultName>
@@ -19,7 +18,6 @@
   </TemplateData>
   <TemplateContent>
     <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
-
       <Folder Name="Properties" TargetFolderName="Properties">
         <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
         <ProjectItem OpenInEditor="false" ReplaceParameters="false">AppManifest.xml</ProjectItem>
@@ -30,18 +28,13 @@
       </Folder>
       <ProjectItem ReplaceParameters="true" OpenInEditor="true" TargetFileName="MainPage.xaml">Page.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="MainPage.xaml.cs">Page.xaml.cs</ProjectItem>
-
-
       <Folder Name="ViewModels" TargetFolderName="ViewModels">
         <ProjectItem ReplaceParameters="true" TargetFileName="MainPage_Model.cs">MainPage_Model.cs</ProjectItem>
       </Folder>
-
       <Folder Name="Resources" TargetFolderName="Resources">
         <ProjectItem ReplaceParameters="true" TargetFileName="AppResources.Designer.cs">AppResources.Designer.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="AppResources.resx">AppResources.resx</ProjectItem>
-        
       </Folder>
-
       <Folder Name="Assets" TargetFolderName="Assets">
         <ProjectItem ReplaceParameters="false" TargetFileName="ApplicationIcon.png">ApplicationIcon.png</ProjectItem>
         <ProjectItem ReplaceParameters="false" TargetFileName="AlignmentGrid.png">AlignmentGrid.png</ProjectItem>
@@ -58,23 +51,19 @@
       <ProjectItem ReplaceParameters="true" TargetFileName="LocalizedStrings.cs">LocalizedStrings.cs</ProjectItem>
     </Project>
   </TemplateContent>
-
   <WizardExtension>
     <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
     <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
   </WizardExtension>
   <WizardData>
-    <packages repository="extension"
-          repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
-
-      <package id="Rx-Core" version="2.2.5"  />
-      <package id="Rx-Interfaces" version="2.2.5"  />
-      <package id="Rx-Linq" version="2.2.5"  />
-      <package id="Rx-Main" version="2.2.5"  />
-      <package id="Rx-PlatformServices" version="2.2.5"  />
-      <package id="Rx-Xaml" version="2.2.5"  />
-      <package id="MVVM-Sidekick"  version="1.4.20150605.16300000"/>
-      
+    <packages repository="extension" repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
+      <package id="Rx-Core" version="2.2.5" />
+      <package id="Rx-Interfaces" version="2.2.5" />
+      <package id="Rx-Linq" version="2.2.5" />
+      <package id="Rx-Main" version="2.2.5" />
+      <package id="Rx-PlatformServices" version="2.2.5" />
+      <package id="Rx-Xaml" version="2.2.5" />
+      <package id="MVVM-Sidekick" version="1.6.0-prerelease" />
     </packages>
   </WizardData>
 </VSTemplate>
