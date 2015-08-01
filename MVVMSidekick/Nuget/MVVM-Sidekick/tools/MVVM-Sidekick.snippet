@@ -345,7 +345,7 @@
                                      <CodeSnippet Format="1.0.0">
     <Header>
       <Title>MVVM Sidekick View Model Command With Resource for C# 6</Title>
-      <Shortcut>propcmd</Shortcut>
+      <Shortcut>propcmd6</Shortcut>
       <Description>Command Model of MVVM</Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
@@ -380,12 +380,12 @@
         #region Property CommandModel<$commandType$, $resourceType$> Command$commandName$ Setup        
         
         protected Property<CommandModel<$commandType$, $resourceType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $resourceType$>>{ LocatorFunc = _Command$commandName$Locator};
-        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $resourceType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $resourceType$>>(nameof(CommandModel$commandName$), model =>model.Initialize(nameof(CommandModel$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $resourceType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $resourceType$>>(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
         static Func<BindableBase,CommandModel<$commandType$, $resourceType$>> _Command$commandName$DefaultValueFactory =
             model => 
             {
-                var resource = nameof(CommandModel$commandName$);           // Command resource  
-                var commandId = nameof(CommandModel$commandName$);
+                var resource = nameof(Command$commandName$);           // Command resource  
+                var commandId = nameof(Command$commandName$);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
                 

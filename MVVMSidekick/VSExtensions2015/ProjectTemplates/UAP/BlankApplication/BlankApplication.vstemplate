@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
-    <Name  >MVVM-Sidekick Blank App (Windows Universal) </Name>
-    <Description >An Application project template for Visual Studion 2015</Description>
+    <Name>MVVM-Sidekick Blank App (Windows Universal) </Name>
+    <Description>An Application project template for Visual Studion 2015</Description>
     <Icon Package="{2581426E-BF4F-4A49-A42A-20EF9D51EF49}" ID="4001" />
     <TemplateID>Microsoft.CS.WinRT.UAP.BlankApplication_MVVM-Sidekick</TemplateID>
     <TemplateGroupID>WinRT-Managed</TemplateGroupID>
@@ -66,20 +66,16 @@
     <packages repository="registry" keyName="NETCoreSDK" isPreunzipped="true">
       <package id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.0.0" skipAssemblyReferences="false" />
     </packages>
-    <packages repository="extension"
-         repositoryId="MVVM_Sidekick_Extensions.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24">      
+    <packages repository="extension" repositoryId="MVVM_Sidekick_Extensions.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24">
       <package id="Microsoft.Bcl" version="1.1.10" />
       <package id="Microsoft.Bcl.Async" version="1.0.168" />
       <package id="Microsoft.Bcl.Build" version="1.0.21" />
-      <package id="Rx-Core" version="2.2.5"  />
-      <package id="Rx-Interfaces" version="2.2.5"  />
-      <package id="Rx-Linq" version="2.2.5"  />
-      <package id="Rx-Main" version="2.2.5"  />
-      <package id="Rx-PlatformServices" version="2.2.5"  />
-   
+      <package id="Rx-Core" version="2.2.5" />
+      <package id="Rx-Interfaces" version="2.2.5" />
+      <package id="Rx-Linq" version="2.2.5" />
+      <package id="Rx-Main" version="2.2.5" />
+      <package id="Rx-PlatformServices" version="2.2.5" />
       <package id="MVVM-Sidekick" version="1.5.20150801.200000" />
-
     </packages>
   </WizardData>
-
 </VSTemplate>

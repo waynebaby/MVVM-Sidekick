@@ -5,8 +5,7 @@
     <Description>A Blank Windows Presentation Framework 4.0 Application template works with MVVM Sidekick</Description>
     <Icon>MVVMSidekickApplication.WPF.ico</Icon>
     <ProjectType>CSharp</ProjectType>
-    <ProjectSubType>
-    </ProjectSubType>
+    <ProjectSubType></ProjectSubType>
     <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
     <SortOrder>1</SortOrder>
     <TemplateID>Microsoft.CS.WPF.MVVMSidekickBlankApp</TemplateID>
@@ -27,7 +26,7 @@
       <ProjectItem ReplaceParameters="true" TargetFileName="Properties\Resources.Designer.cs">Resources.Designer.cs</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="Properties\Settings.settings">Settings.settings</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Properties\Settings.Designer.cs">Settings.Designer.cs</ProjectItem>
-      <ProjectItem ReplaceParameters="true"  SubType="Code" OpenOrder="20">MainWindow.xaml.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" SubType="Code" OpenOrder="20">MainWindow.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" OpenInEditor="true" OpenOrder="10">MainWindow.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true">App.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" SubType="Code">App.xaml.cs</ProjectItem>
@@ -39,28 +38,23 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="MainWindow_Model.cs">MainWindow_Model.cs</ProjectItem>
       </Folder>
     </Project>
-
   </TemplateContent>
   <WizardExtension>
     <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
     <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
   </WizardExtension>
   <WizardData>
-    <packages repository="extension"
-        repositoryId="MVVM_Sidekick_Extensions.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24">
-
-
-      <package id="Microsoft.Bcl" version="1.1.9" />
+    <packages repository="extension" repositoryId="MVVM_Sidekick_Extensions.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24">
+      <package id="Microsoft.Bcl" version="1.1.10" />
       <package id="Microsoft.Bcl.Async" version="1.0.168" />
       <package id="Microsoft.Bcl.Build" version="1.0.21" />
-      <package id="Rx-Core" version="2.2.5"  />
-      <package id="Rx-Interfaces" version="2.2.5"  />
-      <package id="Rx-Linq" version="2.2.5"  />
-      <package id="Rx-Main" version="2.2.5"  />
-      <package id="Rx-PlatformServices" version="2.2.5"  />
-      <package id="Rx-Xaml" version="2.2.5"  />
-      <package id="MVVM-Sidekick" version="1.4.201507022.00300000" />
-
+      <package id="Rx-Core" version="2.2.5" />
+      <package id="Rx-Interfaces" version="2.2.5" />
+      <package id="Rx-Linq" version="2.2.5" />
+      <package id="Rx-Main" version="2.2.5" />
+      <package id="Rx-PlatformServices" version="2.2.5" />
+      <package id="Rx-Xaml" version="2.2.5" />
+      <package id="MVVM-Sidekick" version="1.5.20150801.200000" />
     </packages>
   </WizardData>
 </VSTemplate>
