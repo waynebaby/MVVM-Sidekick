@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\ProjectTemplates\UAP\BlankApplication\bin\ProjectTemplates\CSharp\1033\BlankApplication.zip">
-      <Link>ProjectTemplates\Windows\Windows Universal\BlankApplication.zip</Link>
+      <Link>ProjectTemplates\Windows\Universal\BlankApplication.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -67,15 +67,19 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\ProjectTemplates\Windows Desktop\MVVMSidekickApplication.WPF\bin\ProjectTemplates\CSharp\1033\MVVMSidekickApplication.WPF.zip">
-      <Link>ProjectTemplates\Windows\Windows Desktop\MVVMSidekickApplication.WPF.zip</Link>
+      <Link>ProjectTemplates\Windows\Classic Desktop\MVVMSidekickApplication.WPF.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\ProjectTemplates\Windows Desktop\MVVMSidekickApplication.WPF\bin\ProjectTemplates\CSharp\1033\MVVMSidekickApplication.WPF4.zip">
-      <Link>ProjectTemplates\Windows\Windows Desktop\MVVMSidekickApplication.WPF4.zip</Link>
+      <Link>ProjectTemplates\Windows\Classic Desktop\MVVMSidekickApplication.WPF4.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\ProjectTemplates\Windows 8\Universal\MVVMSidekickUniversalApplication\bin\ProjectTemplates\CSharp\1033\SharedBlankApplication.zip">
       <Link>ProjectTemplates\Windows\Windows 8\Universal\SharedBlankApplication.zip</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\ProjectTemplates\Windows 8\Windows Phone\MVVMSidekickWP8\bin\ProjectTemplates\CSharp\1033\MVVMSidekickWP8.zip">
+      <Link>ProjectTemplates\Windows\Windows 8\Windows Phone\MVVMSidekickWP8.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
@@ -135,7 +139,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ProjectTemplates\Windows\Windows 8\Windows Phone\" />
     <Folder Include="ProjectTemplates\Windows\Windows 8\Windows\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

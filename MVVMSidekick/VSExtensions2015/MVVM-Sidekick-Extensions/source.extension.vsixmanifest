@@ -2,7 +2,7 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
     <Identity Id="MVVM_Sidekick_Extensions.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24" Version="1.0.1" Language="en-US" Publisher="waywa msft" />
-    <DisplayName>MVVM-Sidekick Extensions For VS 2015</DisplayName>
+    <DisplayName>w</DisplayName>
     <Description xml:space="preserve">MVVM-Sidekick Extensions For VS 2015</Description>
   </Metadata>
   <Installation>
