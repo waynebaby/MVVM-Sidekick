@@ -5,7 +5,7 @@
     <DisplayName>MVVM-Sidekick VSIX 2015</DisplayName>
     <Description xml:space="preserve">MVVM-Sidekick Extensions For VS 2015</Description>
     <License>license.rtf</License>
-    <Icon>MVVMSidekickIcon.ico</Icon>
+    <Icon>smaller.png</Icon>
     <PreviewImage>Preview.png</PreviewImage>
   </Metadata>
   <Installation>

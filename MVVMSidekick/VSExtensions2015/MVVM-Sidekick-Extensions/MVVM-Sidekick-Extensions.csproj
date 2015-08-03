@@ -122,6 +122,10 @@
       <Link>ProjectTemplates\Windows\Windows 8\Windows\MVVMSidekickBlankApp_RT_81.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="smaller.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
