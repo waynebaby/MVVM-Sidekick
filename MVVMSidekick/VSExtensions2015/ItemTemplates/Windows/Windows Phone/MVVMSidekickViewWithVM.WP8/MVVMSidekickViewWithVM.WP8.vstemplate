@@ -11,7 +11,7 @@
     <SortOrder>1</SortOrder>
     <DefaultName>View.xaml</DefaultName>
     <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
-    <BuildProjectOnLoad>true</BuildProjectOnLoad>
+    <BuildProjectOnLoad>false</BuildProjectOnLoad>
   </TemplateData>
   <TemplateContent>
     <References>
@@ -35,6 +35,8 @@
       <package id="Rx-Linq" version="2.2.5" />
       <package id="Rx-Main" version="2.2.5" />
       <package id="Rx-PlatformServices" version="2.2.5" />
+      <package id="CommonServiceLocator" version="1.3" />
+      <package id="Unity" version="2.1.505.2" />
     </packages>
   </WizardData>
 </VSTemplate>

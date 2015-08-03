@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>MVVM-Sidekick Page View for Silverlight</Name>
+    <Description>MVVM-Sidekick Page View With VM for Silverlight Apps</Description>
+    <Icon>MVVMSidekickViewWithVM.SL5.ico</Icon>
+    <TemplateID>Microsoft.Silverlight.CSharp.MVVMSidekick.Page</TemplateID>
+    <TemplateGroupID>Silverlight</TemplateGroupID>
+    <ProjectType>CSharp</ProjectType>
+    <ShowByDefault>false</ShowByDefault>
+    <SortOrder>1</SortOrder>
+    <BuildProjectOnLoad>false</BuildProjectOnLoad>
+    <DefaultName>View.xaml</DefaultName>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>System.Windows.Controls.Navigation</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem ReplaceParameters="true" SubType="Designer" OpenInEditor="true" TargetFileName="$fileinputname$.xaml">View.xaml</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="$fileinputname$.xaml.cs">View.xaml.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="ViewModels\$fileinputname$_Model.cs">View_Model.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="Startups\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    <packages repository="extension" repositoryId="MVVM_Sidekick_Extensions.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24">
+      <package id="Microsoft.Bcl" version="1.1.10" />
+      <package id="Microsoft.Bcl.Async" version="1.0.168" />
+      <package id="Microsoft.Bcl.Build" version="1.0.21" />
+      <package id="Rx-Core" version="2.2.5" />
+      <package id="Rx-Interfaces" version="2.2.5" />
+      <package id="Rx-Linq" version="2.2.5" />
+      <package id="Rx-Main" version="2.2.5" />
+      <package id="Rx-PlatformServices" version="2.2.5" />
+      <package id="CommonServiceLocator" version="1.3" />
+      <package id="Unity" version="2.1.505.2" />
+    </packages>
+  </WizardData>
+</VSTemplate>

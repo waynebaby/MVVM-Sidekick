@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.0-prerelease</version>
+    <version>1.6.1-prerelease</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,8 +38,8 @@
 
     </summary>
     <releaseNotes>
-      1.4.201507022.x :
-      - Fix Exception Event Router Bug
+      1.6.1-RC
+      - Pre Release for Win10 vs 2015
 
     </releaseNotes>
     <tags>Rx Reactive Extensions MVVM Win8 Metro Modern UI</tags>
