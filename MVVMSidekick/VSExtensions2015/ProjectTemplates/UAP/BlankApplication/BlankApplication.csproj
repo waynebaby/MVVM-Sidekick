@@ -88,6 +88,7 @@
   <ItemGroup>
     <Content Include="Application.csproj" />
     <Content Include="BlankApp.png" />
+    <None Include="MVVMSidekick.ico" />
     <None Include="LockScreenLogo.scale-200.png" />
     <None Include="SplashScreen.scale-200.png" />
     <None Include="Square150x150Logo.scale-200.png" />

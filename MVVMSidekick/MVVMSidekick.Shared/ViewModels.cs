@@ -125,14 +125,7 @@ namespace MVVMSidekick
 			abstract public String BindableInstanceId { get; }
 
 
-			/// <summary>
-			/// Returns a <see cref="System.String" /> that represents this instance.
-			/// </summary>
-			/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-			public override string ToString()
-			{
-				return string.Format("Id {0} of {1} ({2})", BindableInstanceId, base.GetType().Name, base.ToString());
-			}
+
 
 
 			/// <summary>
@@ -956,16 +949,10 @@ namespace MVVMSidekick
 
 			public override string BindableInstanceId
 			{
-				get { return _BindableInstanceIdLocator(this).Value; }
-				//set { _BindableInstanceIdLocator(this).SetValueAndTryNotify(value); }
-			}
-			#region Property string BindableInstanceId Setup
-			protected Property<string> _BindableInstanceId = new Property<string> { LocatorFunc = _BindableInstanceIdLocator };
-			static Func<BindableBase, ValueContainer<string>> _BindableInstanceIdLocator =
-				RegisterContainerLocator<string>("BindableInstanceId", model => model.Initialize("BindableInstanceId", ref model._BindableInstanceId, ref _BindableInstanceIdLocator, _BindableInstanceIdDefaultValueFactory));
-			static Func<string> _BindableInstanceIdDefaultValueFactory = () => { return default(string); };
-			#endregion
+				get { return _instanceIdOfThisType.ToString(); }
 
+			}
+		
 
 
 

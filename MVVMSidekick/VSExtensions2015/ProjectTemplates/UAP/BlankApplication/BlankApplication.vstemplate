@@ -3,7 +3,7 @@
   <TemplateData>
     <Name>MVVM-Sidekick Blank App (Windows Universal) </Name>
     <Description>An Application project template for Visual Studion 2015</Description>
-    <Icon Package="{2581426E-BF4F-4A49-A42A-20EF9D51EF49}" ID="4001" />
+    <Icon>MVVMSidekick.ico</Icon>
     <TemplateID>Microsoft.CS.WinRT.UAP.BlankApplication_MVVM-Sidekick</TemplateID>
     <TemplateGroupID>WinRT-Managed</TemplateGroupID>
     <ProjectType>CSharp</ProjectType>
@@ -75,9 +75,9 @@
       <package id="Rx-Linq" version="2.2.5" />
       <package id="Rx-Main" version="2.2.5" />
       <package id="Rx-PlatformServices" version="2.2.5" />
-      <package id="MVVM-Sidekick" version="1.6.1-prerelease" />
+      <package id="MVVM-Sidekick" version="1.6.2-prerelease" />
       <package id="CommonServiceLocator" version="1.3" />
-      <package id="Unity" version="2.1.505.2" />
+      <package id="Unity" version="3.5.1404.0" />
     </packages>
   </WizardData>
 </VSTemplate>
