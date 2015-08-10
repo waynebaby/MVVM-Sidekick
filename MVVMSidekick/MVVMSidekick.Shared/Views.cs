@@ -240,7 +240,7 @@ namespace MVVMSidekick
 			///    MVVM Window constructor
 			/// </summary>
 			public MVVMWindow()
-				: this(null)
+				//: this(null)
 			{
 			}
 
@@ -275,14 +275,13 @@ namespace MVVMSidekick
 				Loaded += async (_1, _2) =>
 				{
 
-					//    if (viewModel != null)
-					//    {
-					//        //   this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
-					//        if (!object.ReferenceEquals(ViewModel, viewModel))
-					//        {
-					//            ViewModel = viewModel;
-					//        }
-					//    }
+					if (viewModel != null)
+					{																			 
+						if (!object.ReferenceEquals(ViewModel, viewModel))
+						{
+							ViewModel = viewModel;
+						}
+					}
 					//    else
 					//    {
 					//        var solveV = this.GetDefaultViewModel();
@@ -293,7 +292,7 @@ namespace MVVMSidekick
 
 					//    }
 					//    ////ViewModel = ViewModel ?? new DefaultViewModel();
-
+				
 					await ViewModel.OnBindedViewLoad(this);
 				};
 			}

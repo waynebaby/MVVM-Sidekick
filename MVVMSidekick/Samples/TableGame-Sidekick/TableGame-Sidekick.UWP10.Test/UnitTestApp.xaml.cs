@@ -15,9 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
-
-namespace TableGame_Sidekick.UWP10
+namespace TableGame_Sidekick.UWP10.Test
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -34,10 +32,6 @@ namespace TableGame_Sidekick.UWP10
             this.Suspending += OnSuspending;
         }
 
-		public static void InitNavigationConfigurationInThisAssembly()
-		{
-			MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
-		}
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -52,8 +46,6 @@ namespace TableGame_Sidekick.UWP10
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
-            //Init MVVM-Sidekick Navigations:
-            InitNavigationConfigurationInThisAssembly();
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -74,16 +66,13 @@ namespace TableGame_Sidekick.UWP10
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
+            
+            Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.CreateDefaultUI();
 
-            if (rootFrame.Content == null)
-            {
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
-            }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.Run(e.Arguments);
         }
 
         /// <summary>
