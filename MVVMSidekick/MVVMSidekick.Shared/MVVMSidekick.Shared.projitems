@@ -21,6 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EventRouting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IStageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patterns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlatformPatches.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive.cs" />

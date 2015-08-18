@@ -2075,7 +2075,7 @@ Please check startup function of this mapping is well configured and be proper c
 		/// <summary>
 		/// The abstract  for frame/contentcontrol. VM can access this class to Show other vm and vm's mapped view.
 		/// </summary>
-		public class StageManager : DependencyObject
+		public class StageManager : DependencyObject, IStageManager
 		{
 
 

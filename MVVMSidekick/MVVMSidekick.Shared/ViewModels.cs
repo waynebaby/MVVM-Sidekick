@@ -1998,7 +1998,7 @@ namespace MVVMSidekick
 			/// Gets or sets the stage manager.
 			/// </summary>
 			/// <value>The stage manager.</value>
-			MVVMSidekick.Views.StageManager StageManager { get; set; }
+			MVVMSidekick.Views.IStageManager StageManager { get; set; }
 
 
 			/// <summary>
@@ -2449,13 +2449,13 @@ namespace MVVMSidekick
 			/// <summary>
 			/// The _ stage manager
 			/// </summary>
-			MVVMSidekick.Views.StageManager _StageManager;
+			MVVMSidekick.Views.IStageManager _StageManager;
 
 			/// <summary>
-			/// Gets or sets the stage manager.
+			/// Gets or sets the stage manager.												 I
 			/// </summary>
 			/// <value>The stage manager.</value>
-			public MVVMSidekick.Views.StageManager StageManager
+			public MVVMSidekick.Views.IStageManager StageManager
 			{
 				get { return _StageManager; }
 				set { _StageManager = value; }
