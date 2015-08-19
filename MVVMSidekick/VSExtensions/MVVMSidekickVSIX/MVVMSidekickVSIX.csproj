@@ -177,8 +177,8 @@
       <Link>Packages\Unity.3.5.1405-prerelease.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.6.2-prerelease.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.6.2-prerelease.nupkg</Link>
+    <Content Include="D:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.6.3-prerelease.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.6.3-prerelease.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>

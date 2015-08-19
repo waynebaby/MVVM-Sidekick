@@ -83,7 +83,7 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="MVVMSidekick_Sl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\MVVM-Sidekick.1.6.2-prerelease\lib\sl50\MVVMSidekick_Sl.dll</HintPath>
+      <HintPath>..\..\..\packages\MVVM-Sidekick.1.6.3-prerelease\lib\sl50\MVVMSidekick_Sl.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
