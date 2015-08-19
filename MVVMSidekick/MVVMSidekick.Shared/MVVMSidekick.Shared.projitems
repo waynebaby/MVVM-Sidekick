@@ -21,7 +21,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EventRouting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IStageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patterns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlatformPatches.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive.cs" />
@@ -31,6 +30,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Stage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IStage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\StageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IStageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VisualStates.cs" />
   </ItemGroup>
 </Project>
