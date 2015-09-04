@@ -19,6 +19,7 @@ using System.Reactive.Linq;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using MVVMSidekick.Utilities;
+using MVVMSidekick.Common;
 #if NETFX_CORE
 
 

@@ -101,25 +101,6 @@ namespace MVVMSidekick.Views
 
 
 
-
-        //public static IView GetViewOfStage(DependencyObject obj)
-        //{
-        //	return (IView)obj.GetValue(ViewOfStageProperty);
-        //}
-
-        //public static void SetViewOfStage(DependencyObject obj, IView value)
-        //{
-        //	obj.SetValue(ViewOfStageProperty, value);
-        //}
-
-        //// Using a DependencyProperty as the backing store for ViewOfStage.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty ViewOfStageProperty =
-        //	DependencyProperty.RegisterAttached("ViewOfStage", typeof(IView), typeof(StageManager), new PropertyMetadata(null));
-
-
-
-
-
         /// <summary>
         /// Initializes the parent.
         /// </summary>

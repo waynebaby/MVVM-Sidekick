@@ -19,6 +19,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\CallingCodeContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\DisposeEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\DisposeEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\IDisposeGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EventRouting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patterns.cs" />
@@ -27,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ReactiveExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Storages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Testing\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views.cs" />
@@ -34,6 +39,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\IStage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\StageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IStageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TestingStage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TestingStageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VisualStates.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
   </ItemGroup>
 </Project>

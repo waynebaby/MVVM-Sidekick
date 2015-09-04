@@ -57,14 +57,14 @@ namespace MVVMSidekick.Views
         bool IsGoForwardSupported { get; }
         FrameworkElement Target { get; }
 
-        Task Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel;
+        Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel;
 
 #if SILVERLIGHT_5 || WINDOWS_PHONE_7 || WINDOWS_PHONE_8
         Dictionary<string, IViewModel> NavigateRequestContexts { get; set; }
 #endif
 #if WPF
-        Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel<TResult>;
-        Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel;
+        Task<TResult> ShowAndReturnResult<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel<TResult>;
+        Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel;
 #endif
 
     }

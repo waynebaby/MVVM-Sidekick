@@ -1500,83 +1500,9 @@ namespace MVVMSidekick
 
 
 
-		/// <summary>
-		/// Interface IDisposeGroup
-		/// </summary>
-		public interface IDisposeGroup : IDisposable
-		{
-			/// <summary>
-			/// 增加一个一起Dispose的对象
-			/// </summary>
-			/// <param name="item">The item.</param>
-			/// <param name="needCheckInFinalizer">if set to <c>true</c> [need check in finalizer].</param>
-			/// <param name="comment">The comment.</param>
-			/// <param name="member">The member.</param>
-			/// <param name="file">The file.</param>
-			/// <param name="line">The line.</param>
-			void AddDisposable(IDisposable item, bool needCheckInFinalizer = false, string comment = "", string member = "", string file = "", int line = -1);
-
-			/// <summary>
-			/// 增加一个Dispose的时候需要做的操作
-			/// </summary>
-			/// <param name="action">The action.</param>
-			/// <param name="needCheckInFinalizer">if set to <c>true</c> [need check in finalizer].</param>
-			/// <param name="comment">The comment.</param>
-			/// <param name="member">The member.</param>
-			/// <param name="file">The file.</param>
-			/// <param name="line">The line.</param>
-			void AddDisposeAction(Action action, bool needCheckInFinalizer = false, string comment = "", string member = "", string file = "", int line = -1);
 
 
-			/// <summary>
-			/// Gets the dispose information list.
-			/// </summary>
-			/// <value>The dispose information list.</value>
-			IList<DisposeEntry> DisposeInfoList { get; }
-
-			/// <summary>
-			/// Occurs when [disposing entry].
-			/// </summary>
-			event EventHandler<DisposeEventArgs> DisposingEntry;
-			/// <summary>
-			/// Occurs when [disposed entry].
-			/// </summary>
-			event EventHandler<DisposeEventArgs> DisposedEntry;
-
-
-		}
-
-
-
-
-		/// <summary>
-		/// Class DisposeEventArgs.
-		/// </summary>
-		public class DisposeEventArgs : EventArgs
-		{
-			/// <summary>
-			/// Creates the specified information.
-			/// </summary>
-			/// <param name="info">The information.</param>
-			/// <returns>DisposeEventArgs.</returns>
-			public static DisposeEventArgs Create(DisposeEntry info)
-			{
-				return new DisposeEventArgs(info);
-			}
-			/// <summary>
-			/// Initializes a new instance of the <see cref="DisposeEventArgs"/> class.
-			/// </summary>
-			/// <param name="info">The information.</param>
-			public DisposeEventArgs(DisposeEntry info)
-			{
-				DisposeEntry = info;
-			}
-			/// <summary>
-			/// Gets the dispose entry.
-			/// </summary>
-			/// <value>The dispose entry.</value>
-			public DisposeEntry DisposeEntry { get; private set; }
-		}
+	
 
 		/// <summary>
 		/// Class DisposeGroupBase.
@@ -1805,40 +1731,6 @@ namespace MVVMSidekick
 		public class DisposeGroup : DisposeGroupBase
 		{
 
-		}
-
-		/// <summary>
-		/// <para>Dispose action infomation struct</para>
-		/// <para>注册销毁方法时的相关信息</para>
-		/// </summary>
-		public struct DisposeEntry
-		{
-			/// <summary>
-			/// <para>Code Context in this dispose action execution register .</para>
-			/// <para>执行代码上下文</para>
-			/// </summary>
-			/// <value>The calling code context.</value>
-			public CallingCodeContext CallingCodeContext { get; set; }
-
-			/// <summary>
-			/// 是否为托管资源，需要在析构器强制检查
-			/// </summary>
-			/// <value><c>true</c> if this instance is need check on finalizer; otherwise, <c>false</c>.</value>
-			public bool IsNeedCheckOnFinalizer { get; set; }
-
-			/// <summary>
-			/// <para>Exception thrown in this dispose action execution .</para>
-			/// <para>执行此次Dispose动作产生的Exception</para>
-			/// </summary>
-			/// <value>The exception.</value>
-			public Exception Exception { get; set; }
-			/// <summary>
-			/// <para>Dispose action.</para>
-			/// <para>Dispose动作</para>
-			/// </summary>
-			/// <value>The action.</value>
-
-			public Action Action { get; set; }
 		}
 
 		/// <summary>
@@ -2449,12 +2341,13 @@ namespace MVVMSidekick
 			/// <summary>
 			/// The _ stage manager
 			/// </summary>
-			MVVMSidekick.Views.IStageManager _StageManager;
+			MVVMSidekick.Views.IStageManager _StageManager=new TestingStageManager();
 
 			/// <summary>
 			/// Gets or sets the stage manager.												 I
 			/// </summary>
 			/// <value>The stage manager.</value>
+            //[Microsoft.Practices.Unity.Dependency(Testing.Constants.DependencyKeyForTesting)]
 			public MVVMSidekick.Views.IStageManager StageManager
 			{
 				get { return _StageManager; }
