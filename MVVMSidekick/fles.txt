@@ -1,0 +1,14 @@
+ 驱动器 D 中的卷没有标签。
+ 卷的序列号是 981A-0CED
+
+ d:\Users\waywa\Documents\GitHub\MVVM-Sidekick\MVVMSidekick 的目录
+
+2015/07/29  13:55    <DIR>          MVVMSidekick
+2015/07/21  17:08    <DIR>          MVVMSidekick_Metro
+2015/07/26  17:41    <DIR>          MVVMSidekick_net40
+2015/07/26  17:23    <DIR>          MVVMSidekick_Sl
+2015/07/21  17:08    <DIR>          MVVMSidekick_win81
+2015/07/26  17:24    <DIR>          MVVMSidekick_Wp8
+2015/07/21  17:08    <DIR>          MVVMSidekick_Wpa81
+               0 个文件              0 字节
+               7 个目录      6,422,528 可用字节
