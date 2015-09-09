@@ -50,6 +50,8 @@ namespace MVVMSidekick.Views
     {
 
 
+
+
         public string BeaconKey
         {
             get; set;
@@ -107,20 +109,20 @@ namespace MVVMSidekick.Views
 
         Dictionary<Type, Func<IViewModel, Task<IViewModel>>> mockingActionsWhenShown
             = new Dictionary<Type, Func<IViewModel, Task<IViewModel>>>();
-        public void MockShowLogic<TTarget>(Func<TTarget, Task<TTarget>> mockingActionWhenShown) where TTarget : class, IViewModel
+        public void MockShowLogic<TTarget>(Func<TTarget, Task<TTarget>> mockingActionWhenShowing) where TTarget : class, IViewModel
         {
-            Func<IViewModel, Task<IViewModel>> asyncAction = async m =>
-             {
-                 var inp = m as TTarget;
-                 var rval = await mockingActionWhenShown(inp);
-                 inp.CloseViewAndDispose();
-                 return rval;
-             };
+            Func<IViewModel, Task<IViewModel>> asyncAction = async (m) =>
+              {
+                  var inp = m as TTarget;
+                  var rval = await mockingActionWhenShowing(inp);
+                  inp.CloseViewAndDispose();
+                  return rval;
+              };
             mockingActionsWhenShown[typeof(TTarget)] = asyncAction;
 
         }
 
-        async Task<TTarget> IStage.Show<TTarget>(TTarget targetViewModel, string viewMappingKey)
+        public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel
         {
             var vm = targetViewModel ?? ServiceLocator.Instance.Resolve<TTarget>(viewMappingKey);
             return await InternalTestShow(vm, viewMappingKey);
@@ -133,6 +135,10 @@ namespace MVVMSidekick.Views
             if (mockingActionsWhenShown.TryGetValue(typeof(TTarget), out mockingAction))
             {
                 await mockingAction(vm);
+            }
+            else
+            {
+                await vm.OnBindedViewLoad(null);
             }
             return vm;
         }

@@ -49,13 +49,30 @@ namespace MVVMSidekick.Views
     public class TestingStageManager : IStageManager
     {
 
-
+        Dictionary<string, IStage> _currentStages = new Dictionary<string, IStage>();
 
         public IStage this[string beaconKey]
         {
             get
             {
-                throw new NotImplementedException();
+                IStage stage = null;
+                _currentStages.TryGetValue(beaconKey, out stage);
+                if (stage == null)
+                {
+                    stage = new TestingStage()
+                    {
+                        BeaconKey = beaconKey,
+                        CanGoBack = true,
+                        CanGoForward = true,
+                        IsGoBackSupported = true,
+                        IsGoForwardSupported = true,
+                        Frame = null,
+                        Target = null
+                    };
+                    _currentStages[beaconKey] = stage;
+                }
+
+                return stage;
             }
         }
 
@@ -63,7 +80,7 @@ namespace MVVMSidekick.Views
         {
             get
             {
-                throw new NotImplementedException();
+                return null;
             }
         }
 
@@ -71,18 +88,18 @@ namespace MVVMSidekick.Views
         {
             get
             {
-                throw new NotImplementedException();
+                return this[""];
             }
 
             set
             {
-                throw new NotImplementedException();
+                _currentStages[""] = value;
             }
         }
 
         public void InitParent(Func<DependencyObject> parentLocator)
         {
-            throw new NotImplementedException();
+   
         }
     }
 }

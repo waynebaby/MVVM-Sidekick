@@ -65,7 +65,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MVVMSidekick, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\MVVM-Sidekick.1.6.3-prerelease\lib\net45\MVVMSidekick.dll</HintPath>
+      <HintPath>..\..\..\packages\MVVM-Sidekick.1.6.4-prerelease\lib\net45\MVVMSidekick.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

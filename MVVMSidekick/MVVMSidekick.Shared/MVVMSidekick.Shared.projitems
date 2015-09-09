@@ -43,7 +43,4 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\TestingStageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VisualStates.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
-  </ItemGroup>
 </Project>

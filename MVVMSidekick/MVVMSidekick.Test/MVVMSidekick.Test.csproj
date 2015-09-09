@@ -90,7 +90,9 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -102,6 +104,7 @@
     <Compile Include="Patterns_ItemdAndSelectionGroupTest.cs" />
     <Compile Include="ServiceLocatorTest.cs" />
     <Compile Include="StorageTest.cs" />
+    <Compile Include="TestingTest.cs" />
     <Compile Include="ViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

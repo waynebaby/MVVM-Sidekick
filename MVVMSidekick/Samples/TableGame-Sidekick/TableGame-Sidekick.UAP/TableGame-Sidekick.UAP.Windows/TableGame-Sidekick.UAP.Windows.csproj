@@ -156,7 +156,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MVVMSidekick_Metro, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\MVVM-Sidekick.1.6.3-prerelease\lib\win81\MVVMSidekick_Metro.dll</HintPath>
+      <HintPath>..\..\..\..\packages\MVVM-Sidekick.1.6.4-prerelease\lib\win81\MVVMSidekick_Metro.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

@@ -234,7 +234,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.3-prerelease": {
+      "MVVM-Sidekick/1.6.4-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -1941,7 +1941,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.3-prerelease": {
+      "MVVM-Sidekick/1.6.4-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -3681,7 +3681,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.3-prerelease": {
+      "MVVM-Sidekick/1.6.4-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -5426,7 +5426,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.3-prerelease": {
+      "MVVM-Sidekick/1.6.4-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -7166,7 +7166,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.3-prerelease": {
+      "MVVM-Sidekick/1.6.4-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -8911,7 +8911,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.3-prerelease": {
+      "MVVM-Sidekick/1.6.4-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -10651,7 +10651,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.3-prerelease": {
+      "MVVM-Sidekick/1.6.4-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -12945,8 +12945,8 @@
         "[Content_Types].xml"
       ]
     },
-    "MVVM-Sidekick/1.6.3-prerelease": {
-      "sha512": "UufF+HY24Uz47ZJrK1/pyKB8ZEHq2rNFohGPsHr4y3KFXwXkjmxUyuv7uwlt9k1WYKjSCxbAqIJETP95bPfQeQ==",
+    "MVVM-Sidekick/1.6.4-prerelease": {
+      "sha512": "HjsfrmHl25B19rhTHt8OY2VJGInSpmKvEuVtlNz/lnunFTYAuJx5I9gkW4mcpqBToAvJoNMypIVTzOy/xPmFXA==",
       "type": "Package",
       "files": [
         "_rels/.rels",
@@ -12980,7 +12980,7 @@
         "lib/wpa81/MVVMSidekick_Wpa81.dll.config",
         "lib/wpa81/MVVMSidekick_Wpa81.pdb",
         "lib/wpa81/MVVMSidekick_Wpa81.pri",
-        "package/services/metadata/core-properties/7aa1f44cf24a4e9b8043cf08d14716f2.psmdcp",
+        "package/services/metadata/core-properties/5017ff057f964376ad60e206bf2d59c2.psmdcp",
         "[Content_Types].xml"
       ]
     },
@@ -15869,7 +15869,7 @@
       "Microsoft.Bcl.Async >= 1.0.168",
       "Microsoft.Bcl.Build >= 1.0.21",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
-      "MVVM-Sidekick >= 1.6.3-prerelease",
+      "MVVM-Sidekick >= 1.6.4-prerelease",
       "Rx-Core >= 2.2.5",
       "Rx-Interfaces >= 2.2.5",
       "Rx-Linq >= 2.2.5",
