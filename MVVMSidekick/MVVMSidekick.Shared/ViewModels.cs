@@ -744,10 +744,10 @@ namespace MVVMSidekick
 #if NETFX_CORE
             bool _IsCopyToAllowed = !typeof(ICommand).GetTypeInfo().IsAssignableFrom(typeof(TProperty).GetTypeInfo());
 #else
-			/// <summary>
-			/// The _ is copy to allowed
-			/// </summary>
-			bool _IsCopyToAllowed = !typeof(ICommand).IsAssignableFrom(typeof(TProperty));
+            /// <summary>
+            /// The _ is copy to allowed
+            /// </summary>
+            bool _IsCopyToAllowed = !typeof(ICommand).IsAssignableFrom(typeof(TProperty));
 #endif
             /// <summary>
             /// <para>Can be copied by CopyTo method</para>
@@ -1274,7 +1274,7 @@ namespace MVVMSidekick
                     if (propertyContainer != null && typeof(INotifyDataErrorInfo).GetTypeInfo().IsAssignableFrom(propertyContainer.PropertyType.GetTypeInfo()))
 #else
 
-					if (propertyContainer != null && typeof(INotifyDataErrorInfo).IsAssignableFrom(propertyContainer.PropertyType))
+                    if (propertyContainer != null && typeof(INotifyDataErrorInfo).IsAssignableFrom(propertyContainer.PropertyType))
 #endif
                     {
                         INotifyDataErrorInfo di = this[propertyName] as INotifyDataErrorInfo;
@@ -1859,11 +1859,11 @@ namespace MVVMSidekick
             /// </summary>
             Windows.UI.Core.CoreDispatcher Dispatcher { get; }
 #else
-			/// <summary>
-			/// Gets the dispatcher of view.
-			/// </summary>
-			/// <value>The dispatcher.</value>
-			Dispatcher Dispatcher { get; }
+            /// <summary>
+            /// Gets the dispatcher of view.
+            /// </summary>
+            /// <value>The dispatcher.</value>
+            Dispatcher Dispatcher { get; }
 
 #endif
             /// <summary>
@@ -2128,7 +2128,7 @@ namespace MVVMSidekick
         /// 一个VM,带有若干界面特性
         /// </summary>
         /// <typeparam name="TViewModel">本身的类型</typeparam>
-
+        [DataContract]
         public abstract partial class ViewModelBase<TViewModel> : BindableBase<TViewModel>, IViewModel where TViewModel : ViewModelBase<TViewModel>
         {
             IDisposeGroup _UnbindDisposeGroup = new DisposeGroup();
@@ -2246,9 +2246,11 @@ namespace MVVMSidekick
                 //#else
                 //                await T.ask.Yield();
                 //#endif
-
-                StageManager = new StageManager(this) { CurrentBindingView = view };
-                StageManager.InitParent(() => view.Parent);
+                if (view != null)
+                {
+                    StageManager = new StageManager(this) { CurrentBindingView = view };
+                    StageManager.InitParent(() => view.Parent);
+                }
                 //StageManager.DisposeWith(this);
                 await TaskExHelper.Yield();
             }
@@ -2278,9 +2280,12 @@ namespace MVVMSidekick
             /// <returns>Task awaiter</returns>
             protected virtual async Task OnBindedViewLoad(IView view)
             {
-                StageManager = new StageManager(this) { CurrentBindingView = view };
-                StageManager.InitParent(() => view.Parent);
-                //StageManager.DisposeWith(this);
+                if(view != null)
+                {
+                    StageManager = new StageManager(this) { CurrentBindingView = view };
+                    StageManager.InitParent(() => view.Parent);
+                }
+                
                 await TaskExHelper.Yield();
             }
 
@@ -2451,8 +2456,8 @@ namespace MVVMSidekick
 
 				await Dispatcher.BeginInvoke(action).Task;
 #else
-				await TaskExHelper.Yield();
-				Dispatcher.BeginInvoke(action);
+                await TaskExHelper.Yield();
+                Dispatcher.BeginInvoke(action);
 
 #endif
 
@@ -2609,24 +2614,24 @@ namespace MVVMSidekick
             }
 #else
 
-			/// <summary>
-			/// Gets the current view dispatcher.
-			/// </summary>
-			/// <returns>Dispatcher.</returns>
-			private Dispatcher GetCurrentViewDispatcher()
-			{
-				DependencyObject dp = null;
-				if (this.StageManager == null)
-				{
-					return null;
-				}
-				else if ((dp = (this.StageManager.CurrentBindingView as DependencyObject)) == null)
-				{
-					return null;
-				}
-				return dp.Dispatcher;
+            /// <summary>
+            /// Gets the current view dispatcher.
+            /// </summary>
+            /// <returns>Dispatcher.</returns>
+            private Dispatcher GetCurrentViewDispatcher()
+            {
+                DependencyObject dp = null;
+                if (this.StageManager == null)
+                {
+                    return null;
+                }
+                else if ((dp = (this.StageManager.CurrentBindingView as DependencyObject)) == null)
+                {
+                    return null;
+                }
+                return dp.Dispatcher;
 
-			}
+            }
 #endif
 #if NETFX_CORE
             /// <summary>
@@ -2678,32 +2683,32 @@ namespace MVVMSidekick
 							
 			}
 #elif SILVERLIGHT_5 || WINDOWS_PHONE_8
-			/// <summary>
-			/// Gets the dispatcher.
-			/// </summary>
-			/// <value>The dispatcher.</value>
-			public Dispatcher Dispatcher
-			{
-				get
-				{
-					var current = GetCurrentViewDispatcher();
-					if (current != null)
-					{
-						return current;
-					}
-					if (Application.Current == null)
-					{
-						return null;
-					}
-					else if (Application.Current.RootVisual == null)
-					{
-						return null;
-					}
-					else return Application.Current.RootVisual.Dispatcher;
-				}
+            /// <summary>
+            /// Gets the dispatcher.
+            /// </summary>
+            /// <value>The dispatcher.</value>
+            public Dispatcher Dispatcher
+            {
+                get
+                {
+                    var current = GetCurrentViewDispatcher();
+                    if (current != null)
+                    {
+                        return current;
+                    }
+                    if (Application.Current == null)
+                    {
+                        return null;
+                    }
+                    else if (Application.Current.RootVisual == null)
+                    {
+                        return null;
+                    }
+                    else return Application.Current.RootVisual.Dispatcher;
+                }
 
 
-			}
+            }
 #endif
         }
 

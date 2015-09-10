@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
-namespace TableGame_Sidekick.SL5.ViewModels
+namespace TableGame_Sidekick.ViewModels
 {
 
 	//[DataContract]

@@ -16,9 +16,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using TableGame_Sidekick.SL5.ViewModels;
+using TableGame_Sidekick.ViewModels;
 
-namespace TableGame_Sidekick.SL5
+namespace TableGame_Sidekick
 {
 	public partial class MainPage : MVVMControl
 	{

@@ -1,2 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<version>1.6.4-prerelease</version>
+<versions>
+  <version>
+    <id>1.6.5-prerelease</id>
+    <releaseNotes>Fix serilizeation problem</releaseNotes>
+  </version>
+  
+  <version>
+    <id>1.6.4-prerelease</id>
+    <releaseNotes>Add Testing features.</releaseNotes>
+  </version>
+</versions>

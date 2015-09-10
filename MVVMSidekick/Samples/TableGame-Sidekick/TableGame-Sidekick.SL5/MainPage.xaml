@@ -1,4 +1,4 @@
-﻿<mvvm:MVVMControl x:Class="TableGame_Sidekick.SL5.MainPage"
+﻿<mvvm:MVVMControl x:Class="TableGame_Sidekick.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
-    xmlns:vm="clr-namespace:TableGame_Sidekick.SL5.ViewModels" 
+    xmlns:vm="clr-namespace:TableGame_Sidekick.ViewModels" 
     xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_Sl">
     <FrameworkElement.Resources>
         <vm:MainPage_Model x:Key="DesignVM" />

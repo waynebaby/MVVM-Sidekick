@@ -236,11 +236,38 @@ namespace CommonCode
 				  }
 
 				  var d = XDocument.Load(args[1]);
-				  var ver = d.Descendants().First(x => x.Name.LocalName == "version");
+                  var packages = XDocument.Load(@"CommonCode\CurrentPackageVersion.xml").Root
+                              .Elements()
+                              .Where(x => x.Name.LocalName == "version");
+                  var rnotes = d.Descendants().First(x => x.Name.LocalName == "releaseNotes");
+                  rnotes.Value = "";
+                  foreach (var currentPackage in packages)
+                  {
+                      var currentPackageVersion = currentPackage
+                        .Descendants()
+                        .Where(x => x.Name.LocalName == "id" && x.Parent.Name.LocalName == "version")
+                        .First()
+                        .Value;
 
-				  var currentPackageVersion = XDocument.Load(@"CommonCode\CurrentPackageVersion.xml").Root.Value;
-				  ver.Value = currentPackageVersion;
-				  d.Save(args[1]);
+
+                     
+                      var currentPackageReleaseNotes = currentPackage
+                        .Descendants()
+                        .Where(x => x.Name.LocalName == "releaseNotes" && x.Parent.Name.LocalName == "version")
+                        .First()
+                        .Value;
+                      rnotes.Value = rnotes.Value + string.Format("\r\n\t{0}\r\n\t\t{1}\r\n", currentPackageVersion, currentPackageReleaseNotes);
+                  }
+
+
+
+                  var ver = d.Descendants().First(x => x.Name.LocalName == "version");
+                  ver.Value = packages.First ()
+                        .Descendants()
+                        .Where(x => x.Name.LocalName == "id" && x.Parent.Name.LocalName == "version")
+                        .First()
+                        .Value; ;
+                  d.Save(args[1]);
 			  }
 		};
 		#endregion

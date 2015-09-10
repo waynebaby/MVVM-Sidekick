@@ -9,5 +9,13 @@
     <Import_RootNamespace>TableGame_Sidekick.CoreCode</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Game.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ContextDataChangeChecker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\GameState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\StateChangeChecker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPage_Model.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Services\" />
   </ItemGroup>
 </Project>

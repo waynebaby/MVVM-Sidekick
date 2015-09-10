@@ -30,7 +30,7 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="TableGame_Sidekick.UWP10.App">
+      EntryPoint="TableGame_Sidekick.App">
       <uap:VisualElements
         DisplayName="TableGame-Sidekick.UWP10"
         Square150x150Logo="Assets\Square150x150Logo.png"

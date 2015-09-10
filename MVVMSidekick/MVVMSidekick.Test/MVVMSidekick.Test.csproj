@@ -79,7 +79,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xaml" />
+    <Reference Include="System.XML" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <Choose>
@@ -102,6 +104,7 @@
     <Compile Include="Patterns_TreeTest.cs" />
     <Compile Include="Playground.cs" />
     <Compile Include="Patterns_ItemdAndSelectionGroupTest.cs" />
+    <Compile Include="SerTest.cs" />
     <Compile Include="ServiceLocatorTest.cs" />
     <Compile Include="StorageTest.cs" />
     <Compile Include="TestingTest.cs" />

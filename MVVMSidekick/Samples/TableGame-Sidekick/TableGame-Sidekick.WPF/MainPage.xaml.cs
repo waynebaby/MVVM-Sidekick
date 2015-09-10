@@ -5,7 +5,7 @@ using MVVMSidekick.Views;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.Services;
 using MVVMSidekick.Commands;
-using TableGame_Sidekick.WPF.ViewModels;
+using TableGame_Sidekick.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,20 +21,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TableGame_Sidekick.WPF
+namespace TableGame_Sidekick
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : MVVMWindow
+	public partial class MainPage : MVVMWindow
 	{
-		public MainWindow()
+		public MainPage()
 			: base(null)
 		{
 			InitializeComponent();
 		}
 
-		public MainWindow(MainWindow_Model model)
+		public MainPage(MainPage_Model model)
 			: base(model)
 		{
 			InitializeComponent();

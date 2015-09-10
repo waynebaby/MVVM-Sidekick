@@ -13,7 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace TableGame_Sidekick.WPF
+namespace TableGame_Sidekick
 {
 	/// <summary>
 	/// Interaction logic for App.xaml

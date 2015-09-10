@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="TableGame_Sidekick.UWP10.App"
+    x:Class="TableGame_Sidekick.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:TableGame_Sidekick.UWP10"
+    xmlns:local="using:TableGame_Sidekick"
     RequestedTheme="Light">
 
 </Application>

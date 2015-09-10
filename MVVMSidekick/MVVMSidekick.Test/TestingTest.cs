@@ -74,7 +74,7 @@ namespace MVVMSidekick.Test
             {
                 var ivm = vm as IViewModel;
                 await ivm.OnBindedViewLoad(null);
-                vm.CommandGetNowString.Execute(null);
+                
                 await Task.Delay(200);
                 return vm;
             });
@@ -121,46 +121,11 @@ namespace MVVMSidekick.Test
         static Func<string> _ResultDefaultValueFactory = () => default(string);
         #endregion
 
-
-        public CommandModel<ReactiveCommand, String> CommandGetNowString
+        protected override Task OnBindedViewLoad(IView view)
         {
-            get { return _CommandGetNowStringLocator(this).Value; }
-            set { _CommandGetNowStringLocator(this).SetValueAndTryNotify(value); }
+            Result = DateTime.Now.ToString();
+            return base.OnBindedViewLoad(view);
         }
-        #region Property CommandModel<ReactiveCommand, String> CommandGetNowString Setup        
-
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandGetNowString = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandGetNowStringLocator };
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandGetNowStringLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandGetNowString), model => model.Initialize(nameof(CommandGetNowString), ref model._CommandGetNowString, ref _CommandGetNowStringLocator, _CommandGetNowStringDefaultValueFactory));
-        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandGetNowStringDefaultValueFactory =
-            model =>
-            {
-                var resource = nameof(CommandGetNowString);           // Command resource  
-                var commandId = nameof(CommandGetNowString);
-                var vm = CastToCurrentType(model);
-                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-
-                cmd.DoExecuteUIBusyTask(
-                        vm,
-                        async e =>
-                        {
-                            //Todo: Add GetNowString logic here, or
-
-                            vm.Result = DateTime.Now.ToString();
-                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
-                        })
-                    .DoNotifyDefaultEventRouter(vm, commandId)
-                    .Subscribe()
-                    .DisposeWith(vm);
-
-                var cmdmdl = cmd.CreateCommandModel(resource);
-
-                cmdmdl.ListenToIsUIBusy(
-                    model: vm,
-                    canExecuteWhenBusy: false);
-                return cmdmdl;
-            };
-
-        #endregion
 
     }
 

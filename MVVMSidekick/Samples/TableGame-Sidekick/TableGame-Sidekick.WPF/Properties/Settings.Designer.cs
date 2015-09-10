@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TableGame_Sidekick.WPF.Properties
+namespace TableGame_Sidekick.Properties
 {
 
 

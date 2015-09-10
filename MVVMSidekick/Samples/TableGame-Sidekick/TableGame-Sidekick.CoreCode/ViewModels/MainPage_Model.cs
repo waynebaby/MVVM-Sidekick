@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
-namespace TableGame_Sidekick.UAP.ViewModels
+namespace TableGame_Sidekick.ViewModels
 {
 
     [DataContract]
