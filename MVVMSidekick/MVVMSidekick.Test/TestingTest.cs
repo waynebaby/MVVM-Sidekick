@@ -6,6 +6,7 @@ using MVVMSidekick.ViewModels;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.Views;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace MVVMSidekick.Test
 {
@@ -109,7 +110,7 @@ namespace MVVMSidekick.Test
         //Use propcvm + tab +tab  to create a new property of vm  with complex default value factory here:
         //Use propcmd + tab +tab  to create a new command of vm here:
 
-
+            [DataMember]
         public string Result
         {
             get { return _ResultLocator(this).Value; }
