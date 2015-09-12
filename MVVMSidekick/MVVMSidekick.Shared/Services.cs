@@ -28,7 +28,6 @@ using System.Windows.Data;
 using System.Collections.Concurrent;
 using System.Windows.Navigation;
 
-using MVVMSidekick.Views;
 using System.Windows.Controls.Primitives;
 
 

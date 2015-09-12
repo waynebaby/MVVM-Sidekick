@@ -92,6 +92,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableGame-Sidekick.UWP10.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C493089D-B553-4509-A548-71EC718E9C78}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableGame-Sidekick.WPF.Test", "Samples\TableGame-Sidekick\TableGame-Sidekick.WPF.Test\TableGame-Sidekick.WPF.Test.csproj", "{5657FF44-8B47-4A36-8309-63B55FDB7D0F}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\TableGame-Sidekick\TableGame-Sidekick.CoreCode\TableGame-Sidekick.CoreCode.projitems*{47506d38-70f1-4c9a-a307-befa994aadab}*SharedItemsImports = 4
@@ -434,6 +436,26 @@ Global
 		{196FB5E0-6D25-4B6A-BCBA-F8D3D8924007}.Release|x86.ActiveCfg = Release|x86
 		{196FB5E0-6D25-4B6A-BCBA-F8D3D8924007}.Release|x86.Build.0 = Release|x86
 		{196FB5E0-6D25-4B6A-BCBA-F8D3D8924007}.Release|x86.Deploy.0 = Release|x86
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Debug|ARM.Build.0 = Debug|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Debug|x64.Build.0 = Debug|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Debug|x86.Build.0 = Debug|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Release|ARM.Build.0 = Release|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Release|x64.ActiveCfg = Release|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Release|x64.Build.0 = Release|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Release|x86.ActiveCfg = Release|Any CPU
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -466,6 +488,7 @@ Global
 		{6E7E8960-D86F-4BA6-AD51-E2C302F27130} = {053AD08B-9AA7-43F2-AD35-F3C288665434}
 		{196FB5E0-6D25-4B6A-BCBA-F8D3D8924007} = {C493089D-B553-4509-A548-71EC718E9C78}
 		{C493089D-B553-4509-A548-71EC718E9C78} = {4F72D76E-3B72-4E49-ACB6-3E2E764BC553}
+		{5657FF44-8B47-4A36-8309-63B55FDB7D0F} = {C493089D-B553-4509-A548-71EC718E9C78}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35

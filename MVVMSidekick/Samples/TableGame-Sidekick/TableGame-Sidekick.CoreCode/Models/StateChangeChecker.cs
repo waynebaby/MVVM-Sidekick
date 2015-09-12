@@ -52,6 +52,32 @@ namespace TableGame_Sidekick.Models
         #endregion
 
 
+        /// <summary>
+        /// 检测逻辑 Checker Logic
+        /// </summary>
+        public Func<TContext, bool> CheckContextFunction
+        {
+            get { return _CheckContextFunctionLocator(this).Value; }
+            set { _CheckContextFunctionLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property Func<TContext,bool> CheckContextFunction Setup        
+        protected Property<Func<TContext, bool>> _CheckContextFunction = new Property<Func<TContext, bool>> { LocatorFunc = _CheckContextFunctionLocator };
+        static Func<BindableBase, ValueContainer<Func<TContext, bool>>> _CheckContextFunctionLocator = RegisterContainerLocator<Func<TContext, bool>>("CheckContextFunction", model => model.Initialize("CheckContextFunction", ref model._CheckContextFunction, ref _CheckContextFunctionLocator, _CheckContextFunctionDefaultValueFactory));
+        static Func<Func<TContext, bool>> _CheckContextFunctionDefaultValueFactory = () => default(Func<TContext, bool>);
+        #endregion
+
+
+
+        public string TargetStateName
+        {
+            get { return _TargetStateNameLocator(this).Value; }
+            set { _TargetStateNameLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property string TargetStateName Setup        
+        protected Property<string> _TargetStateName = new Property<string> { LocatorFunc = _TargetStateNameLocator };
+        static Func<BindableBase, ValueContainer<string>> _TargetStateNameLocator = RegisterContainerLocator<string>("TargetStateName", model => model.Initialize("TargetStateName", ref model._TargetStateName, ref _TargetStateNameLocator, _TargetStateNameDefaultValueFactory));
+        static Func<string> _TargetStateNameDefaultValueFactory = () => default(string);
+        #endregion
 
     }
 

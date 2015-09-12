@@ -18,9 +18,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\GameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IGameModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\StateChangeChecker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IEntityFileService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ILoggerService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPage_Model.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Services\" />
   </ItemGroup>
 </Project>

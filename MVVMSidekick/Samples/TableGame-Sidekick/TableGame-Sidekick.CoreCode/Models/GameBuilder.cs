@@ -6,87 +6,116 @@ using System.Text;
 namespace TableGame_Sidekick.Models
 {
 
+    public static class GameBuilder
+    {
+        public static GameBuilder<TContext> CreateGame<TContext>()
+        {
+            return new GameBuilder<TContext>();
+        }
+    }
+
     public abstract class BuilderBase<TProduct, TContext, TBuilder>
         where TProduct : IGameModel<TContext>, new()
         where TBuilder : BuilderBase<TProduct, TContext, TBuilder>
     {
-        public virtual TProduct CreateProduct()
-        {
-            var tp = new TProduct();
-            foreach (var item in BuildingActions)
-            {
-                try
-                {
-                    item(tp);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("ERROR: when call {0}==>CreateProduct()", typeof(TProduct).Name);
-                    Debug.WriteLine(ex.ToString());
 
+        public BuilderBase()
+        {
+            _product = new Lazy<TProduct>
+            (() =>
+            {
+                var tp = new TProduct();
+                foreach (var item in BuildingActions)
+                {
+                    try
+                    {
+                        item(tp);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("ERROR: when call {0}==>CreateProduct()", typeof(TProduct).Name);
+                        Debug.WriteLine(ex.ToString());
+
+                    }
                 }
+                return tp;
+
+            }, true);
+        }
+
+        Lazy<TProduct> _product;
+        public virtual TProduct CurrentProduct
+        {
+            get
+            {
+                return _product.Value;
             }
-            return tp;
         }
 
         protected List<Action<TProduct>> BuildingActions = new List<Action<TProduct>>();
 
-        public TBuilder WithContext(TContext context)
-        {
-            BuildingActions.Add(x => x.GameExecutingContext = context);
-            return this as TBuilder;
-        }
 
 
-        public TBuilder WithName(string name)
+
+        public TBuilder HasNameAndDescription(string name, string description = null)
         {
             BuildingActions.Add(x => x.Name = name);
-            return this as TBuilder;
-        }
-
-
-        public TBuilder WithDescription(string description)
-        {
             BuildingActions.Add(x => x.Description = description);
             return this as TBuilder;
         }
 
-
-
     }
 
-    public class GameBuilder<TContext> : BuilderBase<Game<TContext>, TContext,GameBuilder<TContext>>
+    public class GameBuilder<TContext> : BuilderBase<Game<TContext>, TContext, GameBuilder<TContext>>
     {
 
 
-
-        public GameBuilder<TContext> HasStartState(Action<GameStateBuilder<TContext>> builderAction)
+        public GameBuilder<TContext> WithContext(TContext context)
         {
-            var bd = new GameStateBuilder<TContext>();
-            builderAction(bd);
+            BuildingActions.Add(x => x.GameExecutingContext = context);
+            return this as GameBuilder<TContext>;
+        }
+        public GameStateBuilder<TContext> HasStartState(string name, string description = null)
+        {
+            var bd = new GameStateBuilder<TContext>(this)
+                .HasNameAndDescription(name, description);
 
             BuildingActions.Add(x =>
             {
-                var state = bd.CreateProduct();
+                var state = bd.CurrentProduct;
                 x.StartState = state;
                 x.AllStates[state.Name] = state;
             });
-            return this;
+            return bd;
         }
 
-        public GameBuilder<TContext> HasEndState(Action<GameStateBuilder<TContext>> builderAction)
+        public GameStateBuilder<TContext> HasEndState(string name, string description = null)
         {
-            var bd = new GameStateBuilder<TContext>();
-            builderAction(bd);
+            var bd = new GameStateBuilder<TContext>(this)
+                .HasNameAndDescription(name, description);
 
             BuildingActions.Add(x =>
             {
-                var state = bd.CreateProduct();
+                var state = bd.CurrentProduct;
                 x.EndStates[state.Name] = state;
                 x.AllStates[state.Name] = state;
             });
-            return this;
+            return bd;
         }
+
+        public GameStateBuilder<TContext> HasState(string name, string description = null)
+        {
+            var bd = new GameStateBuilder<TContext>(this)
+                .HasNameAndDescription(name, description);
+
+            BuildingActions.Add(x =>
+            {
+                var state = bd.CurrentProduct;
+                x.AllStates[state.Name] = state;
+            });
+            return bd;
+        }
+
 
 
     }
@@ -94,24 +123,87 @@ namespace TableGame_Sidekick.Models
 
     public class GameStateBuilder<TContext> : BuilderBase<GameState<TContext>, TContext, GameStateBuilder<TContext>>
     {
-        //public GameStateBuilder<TContext> HasStateChangeChecker(Func<TContext ,bool> checker )
-        //{
-        //    BuildingActions.Add(x =>
-        //    {
-        //        var cd=new 
+        public GameStateBuilder(GameBuilder<TContext> parent)
+        {
+            _Parent = parent;
 
-        //    });
-        //}
+        }
+
+        private GameBuilder<TContext> _Parent;
+
+
+        public GameBuilder<TContext> EndHasState()
+        {
+            return _Parent;
+        }
+
+
+        public StateChangeCheckerBuilder<TContext> HasCheckerForStateChange(Func<TContext, bool> checkLogic)
+        {
+            var bd = new StateChangeCheckerBuilder<TContext>(this);
+            BuildingActions.Add(x =>
+            {
+                var ck = bd.CurrentProduct;
+                ck.CheckContextFunction = checkLogic;
+            });
+
+            return bd;
+        }
+
+        public ContextDataChangeCheckerBuilder<TContext> HasCheckerForContextDataChange(Func<TContext, bool> checkLogic)
+        {
+            var bd = new ContextDataChangeCheckerBuilder<TContext>(this);
+            BuildingActions.Add(x =>
+            {
+                var ck = bd.CurrentProduct;
+                ck.CheckContextFunction = checkLogic;
+            });
+
+            return bd;
+        }
+
 
     }
     public class StateChangeCheckerBuilder<TContext> : BuilderBase<StateChangeChecker<TContext>, TContext, StateChangeCheckerBuilder<TContext>>
     {
+        public StateChangeCheckerBuilder(GameStateBuilder<TContext> parent)
+        {
+            _Parent = parent;
+        }
+        private GameStateBuilder<TContext> _Parent;
+
+
+        public GameStateBuilder<TContext> ThenGoToState(string stateName)
+        {
+
+            BuildingActions.Add(x =>
+            {
+                var ck = CurrentProduct;
+                ck.TargetStateName = stateName;
+            });
+
+            return _Parent;
+        }
 
     }
 
     public class ContextDataChangeCheckerBuilder<TContext> : BuilderBase<ContextDataChangeChecker<TContext>, TContext, ContextDataChangeCheckerBuilder<TContext>>
     {
+        public ContextDataChangeCheckerBuilder(GameStateBuilder<TContext> parent)
+        {
+            _Parent = parent;
+        }
+        private GameStateBuilder<TContext> _Parent;
 
+        public GameStateBuilder<TContext> ThenDo(Action<TContext> changingAction)
+        {
+            BuildingActions.Add(x =>
+            {
+                var ck = CurrentProduct;
+                ck.ChangeActions.Add(new ContextDataChangeAction<TContext>() { ChangingAction = changingAction });
+            });
+            return _Parent;
+        }
     }
 
 
