@@ -1,11 +1,13 @@
-﻿using MVVMSidekick.ViewModels;
+﻿using MVVMSidekick.Collections;
+using MVVMSidekick.Reactive;
+using MVVMSidekick.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace TableGame_Sidekick.Models
 {
-    
+
     public class Game<TContext> : BindableBase<Game<TContext>>, IGameModel<TContext>
     {
 
@@ -34,7 +36,7 @@ namespace TableGame_Sidekick.Models
         static Func<BindableBase, ValueContainer<string>> _NameLocator = RegisterContainerLocator<string>("Name", model => model.Initialize("Name", ref model._Name, ref _NameLocator, _NameDefaultValueFactory));
         static Func<string> _NameDefaultValueFactory = () => default(string);
         #endregion
-        
+
         /// <summary>
         /// 游戏说明 Game Description
         /// </summary>
@@ -108,6 +110,18 @@ namespace TableGame_Sidekick.Models
         protected Property<IDictionary<string, GameState<TContext>>> _AllStates = new Property<IDictionary<string, GameState<TContext>>> { LocatorFunc = _AllStatesLocator };
         static Func<BindableBase, ValueContainer<IDictionary<string, GameState<TContext>>>> _AllStatesLocator = RegisterContainerLocator<IDictionary<string, GameState<TContext>>>("AllStates", model => model.Initialize("AllStates", ref model._AllStates, ref _AllStatesLocator, _AllStatesDefaultValueFactory));
         static Func<IDictionary<string, GameState<TContext>>> _AllStatesDefaultValueFactory = () => default(IDictionary<string, GameState<TContext>>);
+        #endregion
+
+
+        public KeyedObservableCollection<string, ReactiveCommand> Commands
+        {
+            get { return _CommandsLocator(this).Value; }
+            set { _CommandsLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property KeyedObservableCollection<string,ReactiveCommand> Commands Setup        
+        protected Property<KeyedObservableCollection<string, ReactiveCommand>> _Commands = new Property<KeyedObservableCollection<string, ReactiveCommand>> { LocatorFunc = _CommandsLocator };
+        static Func<BindableBase, ValueContainer<KeyedObservableCollection<string, ReactiveCommand>>> _CommandsLocator = RegisterContainerLocator<KeyedObservableCollection<string, ReactiveCommand>>("Commands", model => model.Initialize("Commands", ref model._Commands, ref _CommandsLocator, _CommandsDefaultValueFactory));
+        static Func<KeyedObservableCollection<string, ReactiveCommand>> _CommandsDefaultValueFactory = () => new KeyedObservableCollection<string, ReactiveCommand>(new Dictionary<string, ReactiveCommand>());
         #endregion
 
 

@@ -192,7 +192,7 @@
       </Declarations>
       <Code Language="csharp">
         <![CDATA[
-    //[DataContract(IsReference=true) ] //if you want
+    //[DataContract() ] //if you want
     public class $class$ : ViewModelBase<$class$> 
     {
         public $class$()
@@ -200,7 +200,7 @@
            
             if (IsInDesignMode)
             { 
-                //Add design time demo data init here. These will not execute in runtime.
+                //Add design time mock data init here. These will not execute in runtime.
             }                                        
         }
 
@@ -241,7 +241,7 @@
       </Declarations>
       <Code Language="csharp">
         <![CDATA[
-    //[DataContract(IsReference=true) ] //if you want
+    //[DataContract() ] //if you want
     public class $class$ : BindableBase<$class$> 
     {
         public $class$()
@@ -249,7 +249,7 @@
             // Use propery to init value here:
             if (IsInDesignMode)
             { 
-                //Add design time demo data init here. These will not execute in runtime.
+                //Add design time test data init here. These will not execute in runtime.
             }
             
             

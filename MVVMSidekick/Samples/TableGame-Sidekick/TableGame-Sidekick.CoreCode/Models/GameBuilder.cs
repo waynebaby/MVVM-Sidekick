@@ -1,6 +1,10 @@
-﻿using System;
+﻿using MVVMSidekick.Commands;
+using MVVMSidekick.Reactive;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Text;
 
 namespace TableGame_Sidekick.Models
@@ -114,6 +118,18 @@ namespace TableGame_Sidekick.Models
                 x.AllStates[state.Name] = state;
             });
             return bd;
+        }
+
+        public GameBuilder<TContext> HasOneOfCommands(string name,
+           Func<Game<TContext>, IObserver<EventPattern<EventCommandEventArgs>>> executeObserverBuilder,
+                 Func<Game<TContext>, IObservable<bool>> canExecuteObservableBuilder)
+        {
+            var cmd = new ReactiveCommand();
+            BuildingActions.Add(x =>
+            {
+                ;
+            });
+            return this;
         }
 
 
