@@ -53,25 +53,25 @@ namespace TableGame_Sidekick.Models
         protected Property<string> _Name = new Property<string> { LocatorFunc = _NameLocator };
         static Func<BindableBase, ValueContainer<string>> _NameLocator = RegisterContainerLocator<string>("Name", model => model.Initialize("Name", ref model._Name, ref _NameLocator, _NameDefaultValueFactory));
         static Func<string> _NameDefaultValueFactory = () => default(string);
-        #endregion
+		#endregion
 
-        /// <summary>
-        /// 说明  Description
-        /// </summary>
-        public string Description
-        {
-            get { return _MyPropertyLocator(this).Value; }
-            set { _MyPropertyLocator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property string MyProperty Setup        
-        protected Property<string> _MyProperty = new Property<string> { LocatorFunc = _MyPropertyLocator };
-        static Func<BindableBase, ValueContainer<string>> _MyPropertyLocator = RegisterContainerLocator<string>("MyProperty", model => model.Initialize("MyProperty", ref model._MyProperty, ref _MyPropertyLocator, _MyPropertyDefaultValueFactory));
-        static Func<string> _MyPropertyDefaultValueFactory = () => default(string);
-        #endregion
+		/// <summary>
+		/// 说明  Description
+		/// </summary>
+		public string Description
+		{
+			get { return _DescriptionLocator(this).Value; }
+			set { _DescriptionLocator(this).SetValueAndTryNotify(value); }
+		}
+		#region Property string Description Setup        
+		protected Property<string> _Description = new Property<string> { LocatorFunc = _DescriptionLocator };
+		static Func<BindableBase, ValueContainer<string>> _DescriptionLocator = RegisterContainerLocator<string>("Description", model => model.Initialize("Description", ref model._Description, ref _DescriptionLocator, _DescriptionDefaultValueFactory));
+		static Func<string> _DescriptionDefaultValueFactory = () => default(string);
+		#endregion
 
 
 
-        public ObservableCollection<ContextDataChangeAction<TContext>> ChangeActions
+		public ObservableCollection<ContextDataChangeAction<TContext>> ChangeActions
         {
             get { return _ChangeActionsLocator(this).Value; }
             set { _ChangeActionsLocator(this).SetValueAndTryNotify(value); }

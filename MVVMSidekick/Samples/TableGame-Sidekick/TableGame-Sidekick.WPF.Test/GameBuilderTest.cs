@@ -11,7 +11,7 @@ namespace TableGame_Sidekick.WPF.Test
         public void SimpleBuilderPlayground()
         {
 
-            var gb = GameBuilder.CreateGame<String>()
+            var gb = GameBuilder.Create<String>()
                     .WithContext("a")
                     .HasNameAndDescription("name", "asdsadsa")
                     .HasEndState("name2", "asdsadsa")

@@ -7,9 +7,8 @@ namespace TableGame_Sidekick.Models
 {
 
     //[DataContract(IsReference=true) ] //if you want
-    public class StateChangeChecker<TContext> : BindableBase<StateChangeChecker<TContext>>,IGameModel<TContext>
+    public class ContextDataChangeAction<TContext> : BindableBase<ContextDataChangeAction<TContext>>, IGameModel<TContext>
     {
-
 
         public TContext GameExecutingContext
         {
@@ -24,7 +23,7 @@ namespace TableGame_Sidekick.Models
 
 
         /// <summary>
-        /// 名  Name
+        /// 游戏名 Game Name
         /// </summary>
         public string Name
         {
@@ -35,11 +34,11 @@ namespace TableGame_Sidekick.Models
         protected Property<string> _Name = new Property<string> { LocatorFunc = _NameLocator };
         static Func<BindableBase, ValueContainer<string>> _NameLocator = RegisterContainerLocator<string>("Name", model => model.Initialize("Name", ref model._Name, ref _NameLocator, _NameDefaultValueFactory));
         static Func<string> _NameDefaultValueFactory = () => default(string);
-        #endregion
+		#endregion
 
-        /// <summary>
-        /// 说明  Description
-        /// </summary>
+		/// <summary>
+		/// 游戏说明 Game Description
+		/// </summary>
 		public string Description
 		{
 			get { return _DescriptionLocator(this).Value; }
@@ -52,32 +51,17 @@ namespace TableGame_Sidekick.Models
 		#endregion
 
 
-        /// <summary>
-        /// 检测逻辑 Checker Logic
-        /// </summary>
-        public Func<TContext, bool> CheckContextFunction
+		public Action<TContext> ChangingAction
         {
-            get { return _CheckContextFunctionLocator(this).Value; }
-            set { _CheckContextFunctionLocator(this).SetValueAndTryNotify(value); }
+            get { return _ChangingActionLocator(this).Value; }
+            set { _ChangingActionLocator(this).SetValueAndTryNotify(value); }
         }
-        #region Property Func<TContext,bool> CheckContextFunction Setup        
-        protected Property<Func<TContext, bool>> _CheckContextFunction = new Property<Func<TContext, bool>> { LocatorFunc = _CheckContextFunctionLocator };
-        static Func<BindableBase, ValueContainer<Func<TContext, bool>>> _CheckContextFunctionLocator = RegisterContainerLocator<Func<TContext, bool>>("CheckContextFunction", model => model.Initialize("CheckContextFunction", ref model._CheckContextFunction, ref _CheckContextFunctionLocator, _CheckContextFunctionDefaultValueFactory));
-        static Func<Func<TContext, bool>> _CheckContextFunctionDefaultValueFactory = () => default(Func<TContext, bool>);
+        #region Property Action<TContext> ChangingAction Setup        
+        protected Property<Action<TContext>> _ChangingAction = new Property<Action<TContext>> { LocatorFunc = _ChangingActionLocator };
+        static Func<BindableBase, ValueContainer<Action<TContext>>> _ChangingActionLocator = RegisterContainerLocator<Action<TContext>>("ChangingAction", model => model.Initialize("ChangingAction", ref model._ChangingAction, ref _ChangingActionLocator, _ChangingActionDefaultValueFactory));
+        static Func<Action<TContext>> _ChangingActionDefaultValueFactory = () => default(Action<TContext>);
         #endregion
 
-
-
-        public string TargetStateName
-        {
-            get { return _TargetStateNameLocator(this).Value; }
-            set { _TargetStateNameLocator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property string TargetStateName Setup        
-        protected Property<string> _TargetStateName = new Property<string> { LocatorFunc = _TargetStateNameLocator };
-        static Func<BindableBase, ValueContainer<string>> _TargetStateNameLocator = RegisterContainerLocator<string>("TargetStateName", model => model.Initialize("TargetStateName", ref model._TargetStateName, ref _TargetStateNameLocator, _TargetStateNameDefaultValueFactory));
-        static Func<string> _TargetStateNameDefaultValueFactory = () => default(string);
-        #endregion
 
     }
 

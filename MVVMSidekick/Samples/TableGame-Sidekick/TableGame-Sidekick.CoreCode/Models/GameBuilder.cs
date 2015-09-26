@@ -12,7 +12,7 @@ namespace TableGame_Sidekick.Models
 
     public static class GameBuilder
     {
-        public static GameBuilder<TContext> CreateGame<TContext>()
+        public static GameBuilder<TContext> Create<TContext>()
         {
             return new GameBuilder<TContext>();
         }
@@ -73,8 +73,11 @@ namespace TableGame_Sidekick.Models
     public class GameBuilder<TContext> : BuilderBase<Game<TContext>, TContext, GameBuilder<TContext>>
     {
 
+		public GameBuilder() { 
 
-        public GameBuilder<TContext> WithContext(TContext context)
+		}
+
+		public GameBuilder<TContext> WithContext(TContext context)
         {
             BuildingActions.Add(x => x.GameExecutingContext = context);
             return this as GameBuilder<TContext>;
