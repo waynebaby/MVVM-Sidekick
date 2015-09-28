@@ -194,7 +194,7 @@ namespace CommonCode
 				}
 
 
-				var currentPackageVersion = XDocument.Load(@"CommonCode\CurrentPackageVersion.xml").Root.Value;
+                var currentPackageVersion = XDocument.Load(@"CommonCode\CurrentPackageVersion.xml").Descendants().First(x => x.Name.LocalName == "id").Value;
 				var newMSKNd = new XElement(XName.Get("Content", ns.NamespaceName),
 							new XAttribute("Include", Path.Combine(Environment.CurrentDirectory, "Nuget", string.Format("MVVM-Sidekick.{0}.nupkg", currentPackageVersion))),
 							new XElement(XName.Get("Link", ns.NamespaceName), string.Format("Packages\\MVVM-Sidekick.{0}.nupkg", currentPackageVersion)),
