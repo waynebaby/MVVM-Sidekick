@@ -35,16 +35,33 @@ namespace $rootnamespace$
 		public $safeitemname$()
             : this(null)
         {
-            this.InitializeComponent();
+   
         }
         public $safeitemname$($safeitemname$_Model model)
             : base(model)
         {
             this.InitializeComponent();
+            this.RegisterPropertyChangedCallback(ViewModelProperty, (_, __) =>
+            {
+                StrongTypeViewModel = this.ViewModel as $safeitemname$_Model;
+            });
+            StrongTypeViewModel = this.ViewModel as $safeitemname$_Model;
         }
 
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        public $safeitemname$_Model StrongTypeViewModel
+        {
+            get { return ($safeitemname$_Model)GetValue(StrongTypeViewModelProperty); }
+            set { SetValue(StrongTypeViewModelProperty, value); }
+        }
+
+        public static readonly DependencyProperty StrongTypeViewModelProperty =
+                    DependencyProperty.Register("StrongTypeViewModel", typeof($safeitemname$_Model ), typeof($safeitemname$), new PropertyMetadata(null));
+
+
+
+
+protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
         }

@@ -930,7 +930,8 @@ namespace MVVMSidekick
 			/// </summary>
 			/// <value>The parent.</value>
 			DependencyObject Parent { get; }
-            
+
+   
 		}
 
 

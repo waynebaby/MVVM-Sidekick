@@ -38,7 +38,6 @@ namespace $rootnamespace$
 		public $safeitemname$()
             : this(null)
         {
-            this.InitializeComponent();
         }
 
         public $safeitemname$($safeitemname$_Model model)
