@@ -20,6 +20,7 @@ using System.Reactive.Linq;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Collections;
+using System.Dynamic;
 
 #if NETFX_CORE
 using Windows.UI.Xaml;
@@ -600,13 +601,16 @@ namespace MVVMSidekick
             public int Index { get; set; }
             public TValue Value { get; set; }
         }
+
+
+
         /// <summary>
         /// Class KeyedObservableCollection.
         /// </summary>
         /// <typeparam name="TKey"></typeparam>
         /// <typeparam name="TValue"></typeparam>
         public class KeyedObservableCollection<TKey, TValue> : ObservableCollection<KeyValuePair<TKey, TValue>>
-        {
+        {     
 
             /// <summary>
             /// Initializes a new instance of the <see cref="KeyedObservableCollection{K, V}"/> class.

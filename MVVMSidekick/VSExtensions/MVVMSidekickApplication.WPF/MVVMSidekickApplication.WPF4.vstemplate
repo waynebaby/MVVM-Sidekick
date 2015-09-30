@@ -54,7 +54,7 @@
       <package id="Rx-Main" version="2.2.5" />
       <package id="Rx-PlatformServices" version="2.2.5" />
       <package id="Rx-Xaml" version="2.2.5" />
-      <package id="MVVM-Sidekick" version="1.6.6-prerelease" />
+      <package id="MVVM-Sidekick" version="1.6.6" />
     </packages>
   </WizardData>
 </VSTemplate>

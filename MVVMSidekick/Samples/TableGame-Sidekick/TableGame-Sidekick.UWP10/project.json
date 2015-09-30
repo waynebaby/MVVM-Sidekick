@@ -5,13 +5,13 @@
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
-    "MVVM-Sidekick": "1.6.4-prerelease",
+    "MVVM-Sidekick": "1.6.6-prerelease",
     "Rx-Core": "2.2.5",
     "Rx-Interfaces": "2.2.5",
     "Rx-Linq": "2.2.5",
     "Rx-Main": "2.2.5",
     "Rx-PlatformServices": "2.2.5",
-    "Unity": "3.5.1404"
+    "Unity": "3.5.1405"
   },
   "frameworks": {
     "uap10.0": {}

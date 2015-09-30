@@ -234,7 +234,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.4-prerelease": {
+      "MVVM-Sidekick/1.6.6-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -1652,9 +1652,9 @@
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Unity/3.5.1404": {
+      "Unity/3.5.1405": {
         "dependencies": {
-          "CommonServiceLocator": "[1.2.0, )"
+          "CommonServiceLocator": "[1.3.0, )"
         },
         "compile": {
           "lib/win8/Microsoft.Practices.Unity.dll": {},
@@ -1941,7 +1941,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.4-prerelease": {
+      "MVVM-Sidekick/1.6.6-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -3406,9 +3406,9 @@
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Unity/3.5.1404": {
+      "Unity/3.5.1405": {
         "dependencies": {
-          "CommonServiceLocator": "[1.2.0, )"
+          "CommonServiceLocator": "[1.3.0, )"
         },
         "compile": {
           "lib/win8/Microsoft.Practices.Unity.dll": {},
@@ -3681,7 +3681,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.4-prerelease": {
+      "MVVM-Sidekick/1.6.6-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -5132,9 +5132,9 @@
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Unity/3.5.1404": {
+      "Unity/3.5.1405": {
         "dependencies": {
-          "CommonServiceLocator": "[1.2.0, )"
+          "CommonServiceLocator": "[1.3.0, )"
         },
         "compile": {
           "lib/win8/Microsoft.Practices.Unity.dll": {},
@@ -5426,7 +5426,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.4-prerelease": {
+      "MVVM-Sidekick/1.6.6-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -6891,9 +6891,9 @@
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Unity/3.5.1404": {
+      "Unity/3.5.1405": {
         "dependencies": {
-          "CommonServiceLocator": "[1.2.0, )"
+          "CommonServiceLocator": "[1.3.0, )"
         },
         "compile": {
           "lib/win8/Microsoft.Practices.Unity.dll": {},
@@ -7166,7 +7166,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.4-prerelease": {
+      "MVVM-Sidekick/1.6.6-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -8617,9 +8617,9 @@
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Unity/3.5.1404": {
+      "Unity/3.5.1405": {
         "dependencies": {
-          "CommonServiceLocator": "[1.2.0, )"
+          "CommonServiceLocator": "[1.3.0, )"
         },
         "compile": {
           "lib/win8/Microsoft.Practices.Unity.dll": {},
@@ -8911,7 +8911,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.4-prerelease": {
+      "MVVM-Sidekick/1.6.6-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -10376,9 +10376,9 @@
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Unity/3.5.1404": {
+      "Unity/3.5.1405": {
         "dependencies": {
-          "CommonServiceLocator": "[1.2.0, )"
+          "CommonServiceLocator": "[1.3.0, )"
         },
         "compile": {
           "lib/win8/Microsoft.Practices.Unity.dll": {},
@@ -10651,7 +10651,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.4-prerelease": {
+      "MVVM-Sidekick/1.6.6-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -12102,9 +12102,9 @@
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Unity/3.5.1404": {
+      "Unity/3.5.1405": {
         "dependencies": {
-          "CommonServiceLocator": "[1.2.0, )"
+          "CommonServiceLocator": "[1.3.0, )"
         },
         "compile": {
           "lib/win8/Microsoft.Practices.Unity.dll": {},
@@ -12945,8 +12945,8 @@
         "ref/xamarinmac20/_._"
       ]
     },
-    "MVVM-Sidekick/1.6.4-prerelease": {
-      "sha512": "FVHMiudteDwuZCIql1TwQpRS4dW1lmJW43ROEDHKUrAinRoHpHosNboXgTRT64FkxJr4BMNnI1zO66FXKZbZJg==",
+    "MVVM-Sidekick/1.6.6-prerelease": {
+      "sha512": "gCywHwEETaHdZKORRwUgbwkss4k2+ZVyAIKNROC8SycOaryhnH9Z8kuAhrort+AtX/7sVYWFiSe7l+Jz+lT2tg==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
@@ -12979,7 +12979,7 @@
         "lib/wpa81/MVVMSidekick_Wpa81.pdb",
         "lib/wpa81/MVVMSidekick_Wpa81.pri",
         "MVVM-Sidekick.nuspec",
-        "package/services/metadata/core-properties/19eb9f529f3b40a69f31bc15c90ba89a.psmdcp",
+        "package/services/metadata/core-properties/b8670db23e244d3093b623999eeae0dd.psmdcp",
         "tools/install.ps1",
         "tools/MVVM-Sidekick.snippet"
       ]
@@ -15833,8 +15833,8 @@
         "System.Xml.XmlSerializer.nuspec"
       ]
     },
-    "Unity/3.5.1404": {
-      "sha512": "1wNboi2d9H0I14KevW7o7NTVN2IYsGC6L9m/gPztiQxhsXDTDxVJ3jddX0P03x3gd+goGB9zB2569HHaDA47SA==",
+    "Unity/3.5.1405": {
+      "sha512": "mqrMVF10Vo4haCV5q9p4sdcETcOYr5vp6GPsyI1Pu5BNENr+Ycp9lcYfFqixMugbdAPJsg6YbjhUnvVO0jPpAw==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
@@ -15845,8 +15845,8 @@
         "lib/net45/Microsoft.Practices.Unity.RegistrationByConvention.dll",
         "lib/net45/Microsoft.Practices.Unity.RegistrationByConvention.XML",
         "lib/net45/Microsoft.Practices.Unity.xml",
-        "lib/portable-net45+wp80+win8+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.dll",
-        "lib/portable-net45+wp80+win8+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.xml",
+        "lib/portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.dll",
+        "lib/portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10/Microsoft.Practices.Unity.xml",
         "lib/win8/Microsoft.Practices.Unity.dll",
         "lib/win8/Microsoft.Practices.Unity.RegistrationByConvention.dll",
         "lib/win8/Microsoft.Practices.Unity.RegistrationByConvention.pri",
@@ -15856,7 +15856,7 @@
         "lib/wp80/Microsoft.Practices.Unity.RegistrationByConvention.dll",
         "lib/wp80/Microsoft.Practices.Unity.RegistrationByConvention.XML",
         "lib/wp80/Microsoft.Practices.Unity.xml",
-        "package/services/metadata/core-properties/e3a16be5fc4446da9ac9290e1d23e420.psmdcp",
+        "package/services/metadata/core-properties/64e33bba6a2d4298b2490a6231974c84.psmdcp",
         "Unity.nuspec",
         "UnityConfiguration30.xsd"
       ]
@@ -15865,7 +15865,7 @@
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
-      "MVVM-Sidekick >= 1.6.4-prerelease"
+      "MVVM-Sidekick >= 1.6.6-prerelease"
     ],
     "UAP,Version=v10.0": []
   }

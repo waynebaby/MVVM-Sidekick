@@ -70,14 +70,16 @@ namespace TableGame_Sidekick.Models
 
     }
 
+
     public class GameBuilder<TContext> : BuilderBase<Game<TContext>, TContext, GameBuilder<TContext>>
     {
 
-		public GameBuilder() { 
+        public GameBuilder()
+        {
 
-		}
+        }
 
-		public GameBuilder<TContext> WithContext(TContext context)
+        public GameBuilder<TContext> WithContext(TContext context)
         {
             BuildingActions.Add(x => x.GameExecutingContext = context);
             return this as GameBuilder<TContext>;
@@ -123,14 +125,13 @@ namespace TableGame_Sidekick.Models
             return bd;
         }
 
-        public GameBuilder<TContext> HasOneOfCommands(string name,
-           Func<Game<TContext>, IObserver<EventPattern<EventCommandEventArgs>>> executeObserverBuilder,
-                 Func<Game<TContext>, IObservable<bool>> canExecuteObservableBuilder)
+        public GameBuilder<TContext> HasCommand(string name,
+           Func<Game<TContext>, ReactiveCommand>  factory)
         {
             var cmd = new ReactiveCommand();
             BuildingActions.Add(x =>
             {
-                ;
+                x.Commands.AddOrUpdateByKey(new KeyValuePair<string, ReactiveCommand>(name, factory(x)));
             });
             return this;
         }
@@ -138,6 +139,8 @@ namespace TableGame_Sidekick.Models
 
 
     }
+
+
 
 
     public class GameStateBuilder<TContext> : BuilderBase<GameState<TContext>, TContext, GameStateBuilder<TContext>>
