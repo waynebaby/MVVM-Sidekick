@@ -10,8 +10,19 @@ namespace CommonCode
 	{
 		public static void Main(string[] args)
 		{
-			var cmd = Commands.GetCommand (args[0]);	 
-			cmd.Execute(args);
+			var cmd = Commands.GetCommand (args[0]);
+
+			try
+			{
+
+				cmd.Execute(args);
+			}
+			catch (Exception ex)
+			{
+
+				Console.WriteLine(ex); 
+			}
+
 
 																					
 			

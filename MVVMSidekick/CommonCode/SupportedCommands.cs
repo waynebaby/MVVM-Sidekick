@@ -1,5 +1,8 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -64,10 +67,40 @@ namespace CommonCode
 					throw new ArgumentException("to file not exists");
 				}
 
-				var elementFrag = XDocument.Load(f1)
-				 .Descendants().Single(x => x.Name.LocalName == "packages");
-				var framework = elementFrag.Elements().First().Attribute("targetFramework").Value;
+				XElement elementFrag = null;
+				string framework = null;
 
+				if (f1.EndsWith(".config"))
+				{
+					elementFrag = XDocument.Load(f1)
+						.Descendants().Single(x => x.Name.LocalName == "packages");
+
+					framework = elementFrag.Elements().First().Attribute("targetFramework").Value;
+				}
+				else
+				{
+
+					framework = "uap10.0";
+					var obj = JObject.Load(new JsonTextReader(new StreamReader(f1)));
+
+					var deps = obj["dependencies"];
+
+
+
+					elementFrag = new XElement("packages");
+				
+
+
+					foreach (JProperty item in deps)
+					{
+						elementFrag .Add(new XElement("package",
+							new XAttribute("version", item.Value),
+							new XAttribute("id", item.Name)
+							));
+						//Console.WriteLine(item.Name );
+					}
+				}
+												   
 				var docnusp = XDocument.Load(f2);
 				var dependencies = docnusp
 				.Descendants().Single(x => x.Name.LocalName == "dependencies");
@@ -134,6 +167,9 @@ namespace CommonCode
 		};
 		#endregion
 
+
+
+
 		public static readonly ICommandLineCommand DPEXT
 		#region DPEXT
 		= new CommandLineCommand(nameof(DPEXT), null)
@@ -194,7 +230,7 @@ namespace CommonCode
 				}
 
 
-                var currentPackageVersion = XDocument.Load(@"CommonCode\CurrentPackageVersion.xml").Descendants().First(x => x.Name.LocalName == "id").Value;
+				var currentPackageVersion = XDocument.Load(@"CommonCode\CurrentPackageVersion.xml").Descendants().First(x => x.Name.LocalName == "id").Value;
 				var newMSKNd = new XElement(XName.Get("Content", ns.NamespaceName),
 							new XAttribute("Include", Path.Combine(Environment.CurrentDirectory, "Nuget", string.Format("MVVM-Sidekick.{0}.nupkg", currentPackageVersion))),
 							new XElement(XName.Get("Link", ns.NamespaceName), string.Format("Packages\\MVVM-Sidekick.{0}.nupkg", currentPackageVersion)),
@@ -236,38 +272,38 @@ namespace CommonCode
 				  }
 
 				  var d = XDocument.Load(args[1]);
-                  var packages = XDocument.Load(@"CommonCode\CurrentPackageVersion.xml").Root
-                              .Elements()
-                              .Where(x => x.Name.LocalName == "version");
-                  var rnotes = d.Descendants().First(x => x.Name.LocalName == "releaseNotes");
-                  rnotes.Value = "";
-                  foreach (var currentPackage in packages)
-                  {
-                      var currentPackageVersion = currentPackage
-                        .Descendants()
-                        .Where(x => x.Name.LocalName == "id" && x.Parent.Name.LocalName == "version")
-                        .First()
-                        .Value;
-
-
-                     
-                      var currentPackageReleaseNotes = currentPackage
-                        .Descendants()
-                        .Where(x => x.Name.LocalName == "releaseNotes" && x.Parent.Name.LocalName == "version")
-                        .First()
-                        .Value;
-                      rnotes.Value = rnotes.Value + string.Format("\r\n\t{0}\r\n\t\t{1}\r\n", currentPackageVersion, currentPackageReleaseNotes);
-                  }
+				  var packages = XDocument.Load(@"CommonCode\CurrentPackageVersion.xml").Root
+							  .Elements()
+							  .Where(x => x.Name.LocalName == "version");
+				  var rnotes = d.Descendants().First(x => x.Name.LocalName == "releaseNotes");
+				  rnotes.Value = "";
+				  foreach (var currentPackage in packages)
+				  {
+					  var currentPackageVersion = currentPackage
+						.Descendants()
+						.Where(x => x.Name.LocalName == "id" && x.Parent.Name.LocalName == "version")
+						.First()
+						.Value;
 
 
 
-                  var ver = d.Descendants().First(x => x.Name.LocalName == "version");
-                  ver.Value = packages.First ()
-                        .Descendants()
-                        .Where(x => x.Name.LocalName == "id" && x.Parent.Name.LocalName == "version")
-                        .First()
-                        .Value; ;
-                  d.Save(args[1]);
+					  var currentPackageReleaseNotes = currentPackage
+						.Descendants()
+						.Where(x => x.Name.LocalName == "releaseNotes" && x.Parent.Name.LocalName == "version")
+						.First()
+						.Value;
+					  rnotes.Value = rnotes.Value + string.Format("\r\n\t{0}\r\n\t\t{1}\r\n", currentPackageVersion, currentPackageReleaseNotes);
+				  }
+
+
+
+				  var ver = d.Descendants().First(x => x.Name.LocalName == "version");
+				  ver.Value = packages.First()
+						.Descendants()
+						.Where(x => x.Name.LocalName == "id" && x.Parent.Name.LocalName == "version")
+						.First()
+						.Value; ;
+				  d.Save(args[1]);
 			  }
 		};
 		#endregion
@@ -347,13 +383,13 @@ namespace CommonCode
 						Console.WriteLine(package);
 					}
 
-					docp.doc.Save (docp.path);
+					docp.doc.Save(docp.path);
 				}
 
 
 
 
-			
+
 
 			},
 			OnHelp = () =>

@@ -234,7 +234,17 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.6-prerelease": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.0.3": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        }
+      },
+      "MVVM-Sidekick/1.6.7-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -246,13 +256,13 @@
           "Rx-Main": "[2.2.5, 100.0.0)",
           "Rx-PlatformServices": "[2.2.5, 100.0.0)",
           "Rx-Xaml": "[2.2.5, 100.0.0)",
-          "Unity": "[3.5.1404, 100.0.0)"
+          "Unity": "[3.5.1405, 100.0.0)"
         },
         "compile": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         },
         "runtime": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         }
       },
       "Rx-Core/2.2.5": {
@@ -1941,7 +1951,17 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.6-prerelease": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.0.3": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        }
+      },
+      "MVVM-Sidekick/1.6.7-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -1953,13 +1973,13 @@
           "Rx-Main": "[2.2.5, 100.0.0)",
           "Rx-PlatformServices": "[2.2.5, 100.0.0)",
           "Rx-Xaml": "[2.2.5, 100.0.0)",
-          "Unity": "[3.5.1404, 100.0.0)"
+          "Unity": "[3.5.1405, 100.0.0)"
         },
         "compile": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         },
         "runtime": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         }
       },
       "Rx-Core/2.2.5": {
@@ -3681,7 +3701,17 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.6-prerelease": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.0.3": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        }
+      },
+      "MVVM-Sidekick/1.6.7-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -3693,13 +3723,13 @@
           "Rx-Main": "[2.2.5, 100.0.0)",
           "Rx-PlatformServices": "[2.2.5, 100.0.0)",
           "Rx-Xaml": "[2.2.5, 100.0.0)",
-          "Unity": "[3.5.1404, 100.0.0)"
+          "Unity": "[3.5.1405, 100.0.0)"
         },
         "compile": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         },
         "runtime": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         }
       },
       "Rx-Core/2.2.5": {
@@ -5426,7 +5456,17 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.6-prerelease": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.0.3": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        }
+      },
+      "MVVM-Sidekick/1.6.7-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -5438,13 +5478,13 @@
           "Rx-Main": "[2.2.5, 100.0.0)",
           "Rx-PlatformServices": "[2.2.5, 100.0.0)",
           "Rx-Xaml": "[2.2.5, 100.0.0)",
-          "Unity": "[3.5.1404, 100.0.0)"
+          "Unity": "[3.5.1405, 100.0.0)"
         },
         "compile": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         },
         "runtime": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         }
       },
       "Rx-Core/2.2.5": {
@@ -7166,7 +7206,17 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.6-prerelease": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.0.3": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        }
+      },
+      "MVVM-Sidekick/1.6.7-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -7178,13 +7228,13 @@
           "Rx-Main": "[2.2.5, 100.0.0)",
           "Rx-PlatformServices": "[2.2.5, 100.0.0)",
           "Rx-Xaml": "[2.2.5, 100.0.0)",
-          "Unity": "[3.5.1404, 100.0.0)"
+          "Unity": "[3.5.1405, 100.0.0)"
         },
         "compile": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         },
         "runtime": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         }
       },
       "Rx-Core/2.2.5": {
@@ -8911,7 +8961,17 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.6-prerelease": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.0.3": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        }
+      },
+      "MVVM-Sidekick/1.6.7-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -8923,13 +8983,13 @@
           "Rx-Main": "[2.2.5, 100.0.0)",
           "Rx-PlatformServices": "[2.2.5, 100.0.0)",
           "Rx-Xaml": "[2.2.5, 100.0.0)",
-          "Unity": "[3.5.1404, 100.0.0)"
+          "Unity": "[3.5.1405, 100.0.0)"
         },
         "compile": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         },
         "runtime": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         }
       },
       "Rx-Core/2.2.5": {
@@ -10651,7 +10711,17 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "MVVM-Sidekick/1.6.6-prerelease": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.0.3": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
+          "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
+        }
+      },
+      "MVVM-Sidekick/1.6.7-prerelease": {
         "dependencies": {
           "CommonServiceLocator": "[1.3.0, 100.0.0)",
           "Microsoft.Bcl": "[1.1.10, 100.0.0)",
@@ -10663,13 +10733,13 @@
           "Rx-Main": "[2.2.5, 100.0.0)",
           "Rx-PlatformServices": "[2.2.5, 100.0.0)",
           "Rx-Xaml": "[2.2.5, 100.0.0)",
-          "Unity": "[3.5.1404, 100.0.0)"
+          "Unity": "[3.5.1405, 100.0.0)"
         },
         "compile": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         },
         "runtime": {
-          "lib/win81/MVVMSidekick_Metro.dll": {}
+          "lib/uap10.0/MVVMSidekick_UAP10.dll": {}
         }
       },
       "Rx-Core/2.2.5": {
@@ -12945,8 +13015,28 @@
         "ref/xamarinmac20/_._"
       ]
     },
-    "MVVM-Sidekick/1.6.6-prerelease": {
-      "sha512": "gCywHwEETaHdZKORRwUgbwkss4k2+ZVyAIKNROC8SycOaryhnH9Z8kuAhrort+AtX/7sVYWFiSe7l+Jz+lT2tg==",
+    "Microsoft.Xaml.Behaviors.Uwp.Managed/1.0.3": {
+      "sha512": "N/HJa+ld/kKIKQaTTBY/ytLukfujKkBMww59p9qmPkEpyHZRMYB8FNalghu1rFMCXoSx9cWD8U4nt/r7qLQmVg==",
+      "type": "Package",
+      "files": [
+        "[Content_Types].xml",
+        "_rels/.rels",
+        "lib/uap10.0/Design/Microsoft.Xaml.Interactions.Design.dll",
+        "lib/uap10.0/Design/Microsoft.Xaml.Interactivity.Design.dll",
+        "lib/uap10.0/Microsoft.Xaml.Interactions.dll",
+        "lib/uap10.0/Microsoft.Xaml.Interactions.pri",
+        "lib/uap10.0/Microsoft.Xaml.Interactions.xml",
+        "lib/uap10.0/Microsoft.Xaml.Interactions/Properties/Microsoft.Xaml.Interactions.rd.xml",
+        "lib/uap10.0/Microsoft.Xaml.Interactivity.dll",
+        "lib/uap10.0/Microsoft.Xaml.Interactivity.pri",
+        "lib/uap10.0/Microsoft.Xaml.Interactivity.xml",
+        "lib/uap10.0/Microsoft.Xaml.Interactivity/Properties/Microsoft.Xaml.Interactivity.rd.xml",
+        "Microsoft.Xaml.Behaviors.Uwp.Managed.nuspec",
+        "package/services/metadata/core-properties/3c85324cf8b64508a39f4ccba86cb561.psmdcp"
+      ]
+    },
+    "MVVM-Sidekick/1.6.7-prerelease": {
+      "sha512": "j806SUlO0qTLYGZkRjADL4gATX7cQmmoxFoyDhqXi9q4I2ou1Yc3Eje5NDP8BQc0gfuAQgsS3OVYzEndPbwSyw==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
@@ -12961,16 +13051,18 @@
         "lib/sl50/MVVMSidekick_Sl.dll.config",
         "lib/sl50/MVVMSidekick_Sl.pdb",
         "lib/sl50/MVVMSidekick_Sl.XML",
+        "lib/uap10.0/MVVMSidekick_UAP10.dll",
+        "lib/uap10.0/MVVMSidekick_UAP10.pdb",
+        "lib/uap10.0/MVVMSidekick_UAP10.pri",
+        "lib/uap10.0/x86/Release/MVVMSidekick_UAP10.dll",
+        "lib/uap10.0/x86/Release/MVVMSidekick_UAP10.pdb",
+        "lib/uap10.0/x86/Release/MVVMSidekick_UAP10.pri",
         "lib/win81/MVVMSidekick_Metro.dll",
-        "lib/win81/MVVMSidekick_Metro.dll.CodeAnalysisLog.xml",
-        "lib/win81/MVVMSidekick_Metro.dll.lastcodeanalysissucceeded",
         "lib/win81/MVVMSidekick_Metro.pdb",
         "lib/win81/MVVMSidekick_Metro.pri",
         "lib/win81/MVVMSidekick_Metro.XML",
         "lib/wp8/MVVMSidekick_Wp8.dll",
-        "lib/wp8/MVVMSidekick_Wp8.dll.CodeAnalysisLog.xml",
         "lib/wp8/MVVMSidekick_Wp8.dll.config",
-        "lib/wp8/MVVMSidekick_Wp8.dll.lastcodeanalysissucceeded",
         "lib/wp8/MVVMSidekick_Wp8.pdb",
         "lib/wp8/MVVMSidekick_Wp8.XML",
         "lib/wpa81/Microsoft.Practices.Unity.dll",
@@ -12979,7 +13071,7 @@
         "lib/wpa81/MVVMSidekick_Wpa81.pdb",
         "lib/wpa81/MVVMSidekick_Wpa81.pri",
         "MVVM-Sidekick.nuspec",
-        "package/services/metadata/core-properties/b8670db23e244d3093b623999eeae0dd.psmdcp",
+        "package/services/metadata/core-properties/f90b66261c214d9db130bb532cb1e3fa.psmdcp",
         "tools/install.ps1",
         "tools/MVVM-Sidekick.snippet"
       ]
@@ -15869,7 +15961,8 @@
       "Microsoft.Bcl.Async >= 1.0.168",
       "Microsoft.Bcl.Build >= 1.0.21",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
-      "MVVM-Sidekick >= 1.6.6-prerelease",
+      "Microsoft.Xaml.Behaviors.Uwp.Managed >= 1.0.3",
+      "MVVM-Sidekick >= 1.6.7-prerelease",
       "Rx-Core >= 2.2.5",
       "Rx-Interfaces >= 2.2.5",
       "Rx-Linq >= 2.2.5",

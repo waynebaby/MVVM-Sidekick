@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
 
+
+  <version>
+    <id>1.6.7-prerelease</id>
+    <releaseNotes>
+      - Try fix behavior sdk reference to nuget package for UWP 10586.
+    </releaseNotes>
+  </version>
   <version>
     <id>1.6.6</id>
     <releaseNotes>
