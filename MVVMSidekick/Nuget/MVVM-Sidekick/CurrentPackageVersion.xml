@@ -3,7 +3,7 @@
 
 
   <version>
-    <id>1.6.8</id>
+    <id>1.6.9</id>
     <releaseNotes>
       - Try fixed behavior sdk reference to nuget package for UWP 10586.
     </releaseNotes>

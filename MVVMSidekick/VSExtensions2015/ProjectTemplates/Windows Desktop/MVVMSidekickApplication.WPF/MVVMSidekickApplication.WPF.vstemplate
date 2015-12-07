@@ -15,7 +15,7 @@
     <DefaultName>WPFApplication</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <!--<BuildProjectOnLoad>true</BuildProjectOnLoad>-->
+    <BuildProjectOnLoad>false</BuildProjectOnLoad>
     <ShowByDefault>false</ShowByDefault>
     <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
   </TemplateData>
@@ -54,6 +54,6 @@
       <package id="Rx-Main" version="2.2.5" />
       <package id="Rx-PlatformServices" version="2.2.5" />
       <package id="Rx-Xaml" version="2.2.5" />                       ‘
-      <package id="CommonServiceLocator" version="1.3" /><package id="Unity" version="2.1.505.2" /><package id="MVVM-Sidekick" version="1.6.8" /></packages>
+      <package id="CommonServiceLocator" version="1.3" /><package id="Unity" version="2.1.505.2" /><package id="MVVM-Sidekick" version="1.6.9" /></packages>
   </WizardData>
 </VSTemplate>
