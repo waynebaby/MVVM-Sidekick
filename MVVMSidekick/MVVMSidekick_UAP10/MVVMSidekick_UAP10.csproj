@@ -126,7 +126,7 @@ xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\uap10.0 /s  /i /y
 
 
 cd $(ProjectDir)
-echo ..\CommonCode\CommonCode DPGRP $(ProjectDir)project.json ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec</PostBuildEvent>
+..\CommonCode\CommonCode DPGRP $(ProjectDir)project.json ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

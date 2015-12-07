@@ -107,7 +107,7 @@ namespace CommonCode
 
 				var ns = dependencies.Name.NamespaceName;
 				var gp = dependencies.Elements()
-					  .Where(g => g.Name.LocalName == "group")
+					  .Where(g => g.Name.LocalName == "group")																		
 					  .Where(g => g.Attributes()
 						 .Where(x => x.Name == "targetFramework")
 						 .Single()
@@ -115,7 +115,11 @@ namespace CommonCode
 					  .FirstOrDefault();
 				if (gp == null)
 				{
-					gp = new XElement(XName.Get("group", ns), new XAttribute("targetFramework", framework));
+					gp = new XElement(XName.Get("group", ns),new XAttribute("targetFramework", framework));
+					//if (framework != "uap10.0")
+					//{
+					//		 gp.Add ();
+					//}
 					dependencies.Add(gp);
 				}
 				else

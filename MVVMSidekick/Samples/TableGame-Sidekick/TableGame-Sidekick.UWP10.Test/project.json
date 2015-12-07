@@ -1,7 +1,7 @@
 ﻿{
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
-    "MVVM-Sidekick": "1.6.6-prerelease"
+    "MVVM-Sidekick": "1.6.8"
   },
   "frameworks": {
     "uap10.0": {}

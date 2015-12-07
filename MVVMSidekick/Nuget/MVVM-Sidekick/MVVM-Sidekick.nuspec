@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.7-prerelease</version>
+    <version>1.6.8</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,9 +38,9 @@
 
     </summary>
     <releaseNotes>
-	1.6.7-prerelease
+	1.6.8
 		
-      - Try fix behavior sdk reference to nuget package for UWP 10586.
+      - Try fixed behavior sdk reference to nuget package for UWP 10586.
     
 
 	1.6.6
@@ -66,18 +66,6 @@
 </releaseNotes>
     <tags>Rx Reactive Extensions MVVM UWP UAP Win8 Win10 APP IoT  Metro Modern UI</tags>
     <dependencies>
-      <group targetFramework="net45">
-        <dependency id="Microsoft.Bcl" version="[1.1.10,100.0)" />
-        <dependency id="Microsoft.Bcl.Async" version="[1.0.168,100.0)" />
-        <dependency id="Microsoft.Bcl.Build" version="[1.0.21,100.0)" />
-        <dependency id="Rx-Core" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Interfaces" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Linq" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Main" version="[2.2.5,100.0)" />
-        <dependency id="Rx-PlatformServices" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Xaml" version="[2.2.5,100.0)" />
-        <dependency id="Unity" version="[3.5.1405,100.0)" />
-      </group>
       <group targetFramework="wpa81">
         <dependency id="CommonServiceLocator" version="[1.3,100.0)" />
         <dependency id="Microsoft.Bcl" version="[1.1.10,100.0)" />
@@ -103,7 +91,7 @@
         <dependency id="Rx-Xaml" version="[2.2.5,100.0)" />
         <dependency id="Unity" version="[2.1.505.2,100.0)" />
       </group>
-      <group targetFramework="wp8">
+      <group targetFramework="net45">
         <dependency id="Microsoft.Bcl" version="[1.1.10,100.0)" />
         <dependency id="Microsoft.Bcl.Async" version="[1.0.168,100.0)" />
         <dependency id="Microsoft.Bcl.Build" version="[1.0.21,100.0)" />
@@ -114,46 +102,6 @@
         <dependency id="Rx-PlatformServices" version="[2.2.5,100.0)" />
         <dependency id="Rx-Xaml" version="[2.2.5,100.0)" />
         <dependency id="Unity" version="[3.5.1405,100.0)" />
-      </group>
-      <group targetFramework="net4">
-        <dependency id="CommonServiceLocator" version="[1.3.0,100.0)" />
-        <dependency id="Microsoft.Bcl" version="[1.1.10,100.0)" />
-        <dependency id="Microsoft.Bcl.Async" version="[1.0.168,100.0)" />
-        <dependency id="Microsoft.Bcl.Build" version="[1.0.21,100.0)" />
-        <dependency id="Rx-Core" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Interfaces" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Linq" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Main" version="[2.2.5,100.0)" />
-        <dependency id="Rx-PlatformServices" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Xaml" version="[2.2.5,100.0)" />
-        <dependency id="Unity" version="[2.1.505.2,100.0)" />
-      </group>
-      <group targetFramework="win81">
-        <dependency id="CommonServiceLocator" version="[1.3.0,100.0)" />
-        <dependency id="Microsoft.Bcl" version="[1.1.10,100.0)" />
-        <dependency id="Microsoft.Bcl.Async" version="[1.0.168,100.0)" />
-        <dependency id="Microsoft.Bcl.Build" version="[1.0.21,100.0)" />
-        <dependency id="Rx-Core" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Interfaces" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Linq" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Main" version="[2.2.5,100.0)" />
-        <dependency id="Rx-PlatformServices" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Xaml" version="[2.2.5,100.0)" />
-        <dependency id="Unity" version="[3.5.1405,100.0)" />
-      </group>
-      <group targetFramework="uap10.0">
-        <dependency version="[1.3.0,100.0)" id="CommonServiceLocator" />
-        <dependency version="[1.1.10,100.0)" id="Microsoft.Bcl" />
-        <dependency version="[1.0.168,100.0)" id="Microsoft.Bcl.Async" />
-        <dependency version="[1.0.21,100.0)" id="Microsoft.Bcl.Build" />
-        <dependency version="[5.0.0,100.0)" id="Microsoft.NETCore.UniversalWindowsPlatform" />
-        <dependency version="[1.0.3,100.0)" id="Microsoft.Xaml.Behaviors.Uwp.Managed" />
-        <dependency version="[2.2.5,100.0)" id="Rx-Core" />
-        <dependency version="[2.2.5,100.0)" id="Rx-Interfaces" />
-        <dependency version="[2.2.5,100.0)" id="Rx-Linq" />
-        <dependency version="[2.2.5,100.0)" id="Rx-Main" />
-        <dependency version="[2.2.5,100.0)" id="Rx-PlatformServices" />
-        <dependency version="[3.5.1405,100.0)" id="Unity" />
       </group>
     </dependencies>
   </metadata>
