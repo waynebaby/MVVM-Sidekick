@@ -88,26 +88,26 @@ namespace CommonCode
 
 
 					elementFrag = new XElement("packages");
-				
+
 
 
 					foreach (JProperty item in deps)
 					{
-						elementFrag .Add(new XElement("package",
+						elementFrag.Add(new XElement("package",
 							new XAttribute("version", item.Value),
 							new XAttribute("id", item.Name)
 							));
 						//Console.WriteLine(item.Name );
 					}
 				}
-												   
+
 				var docnusp = XDocument.Load(f2);
 				var dependencies = docnusp
 				.Descendants().Single(x => x.Name.LocalName == "dependencies");
 
 				var ns = dependencies.Name.NamespaceName;
 				var gp = dependencies.Elements()
-					  .Where(g => g.Name.LocalName == "group")																		
+					  .Where(g => g.Name.LocalName == "group")
 					  .Where(g => g.Attributes()
 						 .Where(x => x.Name == "targetFramework")
 						 .Single()
@@ -115,7 +115,7 @@ namespace CommonCode
 					  .FirstOrDefault();
 				if (gp == null)
 				{
-					gp = new XElement(XName.Get("group", ns),new XAttribute("targetFramework", framework));
+					gp = new XElement(XName.Get("group", ns), new XAttribute("targetFramework", framework));
 					//if (framework != "uap10.0")
 					//{
 					//		 gp.Add ();
@@ -173,7 +173,9 @@ namespace CommonCode
 
 
 
-
+		/// <summary>
+		/// 更新扩展工程中的文件引用
+		/// </summary>
 		public static readonly ICommandLineCommand DPEXT
 		#region DPEXT
 		= new CommandLineCommand(nameof(DPEXT), null)
@@ -258,7 +260,9 @@ namespace CommonCode
 		#endregion
 
 
-
+		/// <summary>
+		/// 更新nuget spec中的版本号
+		/// </summary>
 		public static readonly ICommandLineCommand UPVER
 		#region UPVER
 		= new CommandLineCommand(nameof(UPVER), null)
@@ -313,16 +317,18 @@ namespace CommonCode
 		#endregion
 
 
-
+		/// <summary>
+		/// 更新每个模板文件中的包版本
+		/// </summary>
 		public static readonly ICommandLineCommand DPTML
-		#region DPEXT
+		#region DPTML
 		= new CommandLineCommand(nameof(DPTML), null)
 		{
 			OnExecute = args =>
 			{
 
 				var templateRootDir = args[1];
-				var files = Directory.GetFiles(templateRootDir, "*.vstemplate", SearchOption.AllDirectories);
+				var templateDefFiles = Directory.GetFiles(templateRootDir, "*.vstemplate", SearchOption.AllDirectories);
 				var extensionFile = Directory.GetFiles(templateRootDir, "*.vsixmanifest", SearchOption.AllDirectories).FirstOrDefault();
 				if (extensionFile == null)
 				{
@@ -360,7 +366,7 @@ namespace CommonCode
 							<package id="Rx-Xaml" version="2.2.5"  />
 							<package id="MVVM-Sidekick"  version="1.4.20150605.16300000"/>*/
 
-				foreach (var docp in files.Select(f => new { doc = XDocument.Load(f), path = f }))
+				foreach (var docp in templateDefFiles.Select(f => new { doc = XDocument.Load(f), path = f }))
 				{
 					var nodes =
 						docp.doc

@@ -11,7 +11,7 @@
     "Rx-Linq": "2.2.5",
     "Rx-Main": "2.2.5",
     "Rx-PlatformServices": "2.2.5",
-    "Unity": "3.5.1405"
+    "Unity": "4.0.1"
   },
   "frameworks": {
     "uap10.0": {}
