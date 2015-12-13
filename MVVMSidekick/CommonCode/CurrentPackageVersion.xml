@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
+     
 
+  <version>
+    <id>1.6.11</id>
+    <releaseNotes>
+      - Fix wrong reference clearance which might cause nullreference exception when Page Cache mode is Required.
+    </releaseNotes>
+  </version>
 
   <version>
     <id>1.6.10</id>

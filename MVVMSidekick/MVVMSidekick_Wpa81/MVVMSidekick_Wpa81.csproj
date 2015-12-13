@@ -141,7 +141,7 @@
 
 xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y
 xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\wpa81 /s  /i /y
-xcopy $(TargetDir)*Unity.dll Nuget\MVVM-Sidekick\lib\wpa81 /s  /i /y
+rem xcopy $(TargetDir)*Unity.dll Nuget\MVVM-Sidekick\lib\wpa81 /s  /i /y
 
 cd $(ProjectDir)
 ..\CommonCode\CommonCode DPGRP $(ProjectDir)packages.config ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec</PostBuildEvent>

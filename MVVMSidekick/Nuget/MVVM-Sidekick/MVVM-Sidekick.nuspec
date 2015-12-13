@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.10</version>
+    <version>1.6.11</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,6 +38,11 @@
 
     </summary>
     <releaseNotes>
+	1.6.11
+		
+      - Fix wrong reference clearance which might cause nullreference exception when Page Cache mode is Required.
+    
+
 	1.6.10
 		
       - Try fixed behavior sdk reference to nuget package for UWP 10586.
