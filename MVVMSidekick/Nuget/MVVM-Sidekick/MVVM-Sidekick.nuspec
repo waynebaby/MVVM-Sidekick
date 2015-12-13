@@ -38,11 +38,6 @@
 
     </summary>
     <releaseNotes>
-	1.6.11
-		
-      - Fix wrong reference clearance which might cause nullreference exception when Page Cache mode is Required.
-    
-
 	1.6.10
 		
       - Try fixed behavior sdk reference to nuget package for UWP 10586.

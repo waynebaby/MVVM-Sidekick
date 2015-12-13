@@ -156,9 +156,11 @@ How To Use project template ?
 1. [Hello world](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/1.HelloWorld.md) 	跟班问世篇
 2. [View Models (Part 1)](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/2.ViewModels.md) 	View Models(第1部分)
 
-3.  [View Models (Part 2)](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/3.ViewModels_2.md) 	View Models(第2部分)
+3. [View Models (Part 2)](https://github.com/waynebaby/MVVM-Sidekick/blob/master/MVVMSidekick/Documents/3.ViewModels_2.md) 	View Models(第2部分)
 
 ----------
+More document would be here in Onenote form:
+https://onedrive.live.com/redir?page=view&resid=45FE30D49807DF3C!1002973&authkey=!AL4aMWuTcP8yEEw
 
 Owner: Waynebaby
 
@@ -167,7 +169,7 @@ Ping Me：
  
 [微博]  
 [twitter]  
- [Mail]
+[Mail]
 
 [微博]: http://www.weibo.com/waynebabywang "WaynebabyWang"
 
