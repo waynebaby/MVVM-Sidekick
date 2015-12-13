@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
 
+  <version>
+    <id>1.6.11</id>
+    <releaseNotes>
+      - Fixed "ListenCanExecuteObservable" is not working issue #8  https://github.com/waynebaby/MVVM-Sidekick/issues/8
+    </releaseNotes>
+  </version>
 
   <version>
     <id>1.6.10</id>

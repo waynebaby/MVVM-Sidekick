@@ -171,13 +171,14 @@ namespace MVVMSidekick
                         Observer.Create<bool>(
                         canExe =>
                         {
-                            //var oldv = this._CurrentCanExecuteObserverValue;
-                            //_CurrentCanExecuteObserverValue = canExe;
-                            //if (oldv != canExe)
-                            //{
-                            //    OnCanExecuteChanged();
-                            //}
-                            OnCanExecuteChanged();
+
+							//var oldv = this._CurrentCanExecuteObserverValue;
+							_CurrentCanExecuteObserverValue = canExe;
+							//if (oldv != canExe)
+							//{
+							//    OnCanExecuteChanged();
+							//}
+							OnCanExecuteChanged();
                         }
                         )
 

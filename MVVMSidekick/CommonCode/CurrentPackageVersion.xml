@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
 
+  <version>
+    <id>1.6.11</id>
+    <releaseNotes>
+      - Fixed "ListenCanExecuteObservable" is not working issue #8  https://github.com/waynebaby/MVVM-Sidekick/issues/8
+    </releaseNotes>
+  </version>
 
   <version>
     <id>1.6.10</id>
@@ -12,7 +18,7 @@
   <version>
     <id>1.6.6</id>
     <releaseNotes>
-      - Added AddOrUpdateByKey and RemoveByKey to KeyedObservableCollection&gt;TKey, TValue&lt;
+      - Added AddOrUpdateByKey and RemoveByKey to KeyedObservableCollection&lt;TKey, TValue&gt;
       - Removed ReactiveCommand.CanExecuteObserver property and added new method instead ReactiveCommand.ListenCanExecuteObservable(observable&gt;bool&lt;)
       - As Unity Finally updated it's released version, we go release.
     </releaseNotes>
