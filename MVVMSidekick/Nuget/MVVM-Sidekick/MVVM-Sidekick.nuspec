@@ -38,6 +38,16 @@
 
     </summary>
     <releaseNotes>
+	1.6.11
+		
+      - Fixed "ListenCanExecuteObservable" is not working issue #8  https://github.com/waynebaby/MVVM-Sidekick/issues/8
+    
+
+	1.6.11
+		
+      - Fix wrong reference clearance which might cause nullreference exception when Page Cache mode is Required.
+    
+
 	1.6.10
 		
       - Try fixed behavior sdk reference to nuget package for UWP 10586.
@@ -45,7 +55,7 @@
 
 	1.6.6
 		
-      - Added AddOrUpdateByKey and RemoveByKey to KeyedObservableCollection&gt;TKey, TValue&lt;
+      - Added AddOrUpdateByKey and RemoveByKey to KeyedObservableCollection&lt;TKey, TValue&gt;
       - Removed ReactiveCommand.CanExecuteObserver property and added new method instead ReactiveCommand.ListenCanExecuteObservable(observable&gt;bool&lt;)
       - As Unity Finally updated it's released version, we go release.
     

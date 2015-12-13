@@ -2,7 +2,7 @@
 <versions>
 
   <version>
-    <id>1.6.11</id>
+    <id>1.6.12</id>
     <releaseNotes>
       - Fixed "ListenCanExecuteObservable" is not working issue #8  https://github.com/waynebaby/MVVM-Sidekick/issues/8
     </releaseNotes>
