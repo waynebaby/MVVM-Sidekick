@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
 
+
+  <version>
+    <id>1.6.13-prerelease</id>
+    <releaseNotes>
+      - Deleted  Views new(vm) Constructor.  You might need update your template and deleted your contructor dependented on this.
+    </releaseNotes>
+  </version>
   <version>
     <id>1.6.12</id>
     <releaseNotes>

@@ -115,6 +115,23 @@ namespace MVVMSidekick
 						}
 					}
 				};
+
+			/// <summary>
+			/// The view load call back
+			/// </summary>
+			internal static RoutedEventHandler ViewLoadCallBack
+				= async (o, e) =>
+				{
+					IView v = o as IView;
+					if (v != null)
+					{
+						var m = v.ViewModel as IViewModelLifetime;
+						if (m != null)
+						{
+							await m.OnBindedViewLoad(v);
+						}
+					}
+				};
 			/// <summary>
 			/// The designing view model changed call back
 			/// </summary>
@@ -242,6 +259,8 @@ namespace MVVMSidekick
 			public MVVMWindow()
 				//: this(null)
 			{
+				Loaded += ViewHelper.ViewLoadCallBack;
+				Unloaded += ViewHelper.ViewUnloadCallBack;
 			}
 
 
@@ -264,38 +283,31 @@ namespace MVVMSidekick
 
 
 
-			/// <summary>
-			///  MVVM Window constructor
-			/// </summary>
-			/// <param name="viewModel"> view model</param>
-			public MVVMWindow(IViewModel viewModel)
-			{
+			///// <summary>
+			/////  MVVM Window constructor
+			///// </summary>
+			///// <param name="viewModel"> view model</param>
+			//public MVVMWindow(IViewModel viewModel)
+			//{
+			//	ViewModel = viewModel;
+			//	Unloaded += ViewHelper.ViewUnloadCallBack;
+			//	Loaded += async (_1, _2) =>
+			//	{
 
-				Unloaded += ViewHelper.ViewUnloadCallBack;
-				Loaded += async (_1, _2) =>
-				{
+			//		if (viewModel != null)
+			//		{
+			//			if (!object.ReferenceEquals(ViewModel, viewModel))
+			//			{
+			//				ViewModel = viewModel;
+			//			}
+			//		}													   
 
-					if (viewModel != null)
-					{																			 
-						if (!object.ReferenceEquals(ViewModel, viewModel))
-						{
-							ViewModel = viewModel;
-						}
-					}
-					//    else
-					//    {
-					//        var solveV = this.GetDefaultViewModel();
-					//        if (solveV != null)
-					//        {
-					//            ViewModel = solveV;
-					//        }
-
-					//    }
-					//    ////ViewModel = ViewModel ?? new DefaultViewModel();
-				
-					await ViewModel.OnBindedViewLoad(this);
-				};
-			}
+			//		if (ViewModel != null)
+			//		{
+			//			await ViewModel.OnBindedViewLoad(this);
+			//		}
+			//	};
+			//}
 
 			/// <summary>
 			/// the first content object of view.
@@ -411,9 +423,10 @@ namespace MVVMSidekick
 			/// Initializes a new instance of the <see cref="MVVMPage" /> class.
 			/// </summary>
 			public MVVMPage()
-				: this(null)
+				//: this(null)
 			{
-
+				Loaded += ViewHelper.ViewLoadCallBack;
+				Unloaded += ViewHelper.ViewUnloadCallBack;
 			}
 
 
@@ -448,23 +461,34 @@ namespace MVVMSidekick
 			}
 #endif
 
-			/// <summary>
-			/// Initializes a new instance of the <see cref="MVVMPage" /> class.
-			/// </summary>
-			/// <param name="viewModel">The view model.</param>
-			public MVVMPage(IViewModel viewModel)
-			{
-				ViewModel = viewModel;
-				Unloaded += ViewHelper.ViewUnloadCallBack;
-#if WPF
-				Loaded += async (o, e) =>
-					{
-						await ViewModel.OnBindedViewLoad(this);
+//			/// <summary>
+//			/// Initializes a new instance of the <see cref="MVVMPage" /> class.
+//			/// </summary>
+//			/// <param name="viewModel">The view model.</param>
+//			public MVVMPage(IViewModel viewModel)
+//			{
+//				ViewModel = viewModel;
+//				Unloaded += ViewHelper.ViewUnloadCallBack;
+//#if WPF
+//				Loaded += async (o, e) =>
+//					{
+//						if (viewModel != null)
+//						{
+//							if (!object.ReferenceEquals(ViewModel, viewModel))
+//							{
+//								ViewModel = viewModel;
+//							}
+//						}
 
-					};
-#endif
+//						if (ViewModel != null)
+//						{
+//							await ViewModel.OnBindedViewLoad(this);
+//						}
 
-			}
+//					};
+//#endif
+
+//			}
 
 
 
@@ -703,48 +727,52 @@ namespace MVVMSidekick
 			/// Initializes a new instance of the <see cref="MVVMControl" /> class.
 			/// </summary>
 			public MVVMControl()
-				: this(null)
+				
 			{
-
-			}
-
-
-			/// <summary>
-			/// Initializes a new instance of the <see cref="MVVMControl" /> class.
-			/// </summary>
-			/// <param name="viewModel">The view model.</param>
-			public MVVMControl(IViewModel viewModel)
-			{
-
+				Loaded += ViewHelper.ViewLoadCallBack;
 				Unloaded += ViewHelper.ViewUnloadCallBack;
-				////////// Unloaded += (_1, _2) => ViewModel = null;
-				Loaded += async (_1, _2) =>
-				{
-
-					//if (viewModel != null)
-					//{
-					//    //this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
-					//    if (!object.ReferenceEquals(ViewModel, viewModel))
-					//    {
-					//        ViewModel = viewModel;
-
-					//    }
-					//}
-					//else
-					//{
-					//    var solveV = this.GetDefaultViewModel();
-					//    if (solveV != null)
-					//    {
-					//        ViewModel = solveV;
-					//    }
-
-					//}
-					//ViewModel = ViewModel ?? new DefaultViewModel();
-
-
-					await ViewModel.OnBindedViewLoad(this);
-				};
+			
 			}
+
+
+			///// <summary>
+			///// Initializes a new instance of the <see cref="MVVMControl" /> class.
+			///// </summary>
+			///// <param name="viewModel">The view model.</param>
+			//public MVVMControl(IViewModel viewModel)
+			//{
+			//	ViewModel = viewModel;
+			//	Unloaded += ViewHelper.ViewUnloadCallBack;
+			//	////////// Unloaded += (_1, _2) => ViewModel = null;
+			//	Loaded += async (_1, _2) =>
+			//	{
+
+			//		if (viewModel != null)
+			//		{
+			//			//this.Resources[ViewHelper.DEFAULT_VM_NAME] = viewModel;
+			//			if (!object.ReferenceEquals(ViewModel, viewModel))
+			//			{
+			//				ViewModel = viewModel;
+
+			//			}
+			//		}
+			//		//else
+			//		//{
+			//		//    var solveV = this.GetDefaultViewModel();
+			//		//    if (solveV != null)
+			//		//    {
+			//		//        ViewModel = solveV;
+			//		//    }
+
+			//		//}
+			//		//ViewModel = ViewModel ?? new DefaultViewModel();
+
+			//		if (ViewModel != null)
+			//		{
+			//			await ViewModel.OnBindedViewLoad(this);
+			//		}
+			//	};
+			//}
 #if !WPF
 			/// <summary>
 			/// Gets or sets the content object.
@@ -931,7 +959,7 @@ namespace MVVMSidekick
 			/// <value>The parent.</value>
 			DependencyObject Parent { get; }
 
-   
+
 		}
 
 

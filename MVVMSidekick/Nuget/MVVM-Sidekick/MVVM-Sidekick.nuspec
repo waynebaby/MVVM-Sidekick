@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.11</version>
+    <version>1.6.13-prerelease</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,7 +38,12 @@
 
     </summary>
     <releaseNotes>
-	1.6.11
+	1.6.13-prerelease
+		
+      - Deleted  Views new(vm) Constructor.  You might need update your template and deleted your contructor dependented on this.
+    
+
+	1.6.12
 		
       - Fixed "ListenCanExecuteObservable" is not working issue #8  https://github.com/waynebaby/MVVM-Sidekick/issues/8
     

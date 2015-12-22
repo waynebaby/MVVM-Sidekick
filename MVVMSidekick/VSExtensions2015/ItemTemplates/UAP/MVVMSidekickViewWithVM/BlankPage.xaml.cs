@@ -32,15 +32,12 @@ namespace $rootnamespace$
     public sealed partial class $safeitemname$ : MVVMPage
     {
 	
+
+
 		public $safeitemname$()
-            : this(null)
         {
-   
-        }
-        public $safeitemname$($safeitemname$_Model model)
-            : base(model)
-        {
-            this.InitializeComponent();
+
+			this.InitializeComponent();
             this.RegisterPropertyChangedCallback(ViewModelProperty, (_, __) =>
             {
                 StrongTypeViewModel = this.ViewModel as $safeitemname$_Model;

@@ -34,13 +34,6 @@ namespace $rootnamespace$
     {
 	
 		public $safeitemname$()
-            : this(null)
-        {
-
-        }
-
-        public $safeitemname$($safeitemname$_Model model)
-            : base(model)
         {
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
