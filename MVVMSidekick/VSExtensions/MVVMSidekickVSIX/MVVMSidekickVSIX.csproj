@@ -173,8 +173,8 @@
       <Link>Packages\Unity.2.1.505.2.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="d:\Users\waywa\Documents\GitHubVisualStudio\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.6.13-prerelease.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.6.13-prerelease.nupkg</Link>
+    <Content Include="d:\Users\waywa\Documents\GitHubVisualStudio\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.6.13.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.6.13.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>

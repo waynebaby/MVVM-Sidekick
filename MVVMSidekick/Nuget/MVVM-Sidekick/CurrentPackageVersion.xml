@@ -3,7 +3,7 @@
 
 
   <version>
-    <id>1.6.13-prerelease</id>
+    <id>1.6.13</id>
     <releaseNotes>
       - Deleted  Views new(vm) Constructor.  You might need update your template and deleted your contructor dependented on this.
     </releaseNotes>
