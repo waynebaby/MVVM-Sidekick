@@ -29,13 +29,6 @@ namespace $safeprojectname$
     public partial class $safeitemrootname$ : MVVMWindow
     {
         public $safeitemrootname$()
-            : base(null)
-        {
-            InitializeComponent();
-        }
-
-        public $safeitemrootname$($safeitemrootname$_Model model)
-            : base(model)
         {
             InitializeComponent();
         }

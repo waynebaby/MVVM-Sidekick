@@ -1,5 +1,6 @@
 ﻿{
   "dependencies": {
+      "MVVM-Sidekick":  "1.6.13"
   },
 
   "frameworks": {

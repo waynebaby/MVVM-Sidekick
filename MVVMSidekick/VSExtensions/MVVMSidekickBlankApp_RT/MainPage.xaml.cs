@@ -30,12 +30,8 @@ namespace $safeprojectname$
     public sealed partial class MainPage : LayoutAwarePage
     {
         public MainPage():base(null)
-        {
-            this.InitializeComponent();
-        }
-        public MainPage(MainPage_Model model):base(model)
-        {
-            this.InitializeComponent();
+        {	  
+			this.InitializeComponent();
         }
 
         /// <summary>

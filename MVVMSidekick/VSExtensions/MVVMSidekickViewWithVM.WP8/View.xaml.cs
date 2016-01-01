@@ -28,12 +28,8 @@ namespace $rootnamespace$
 
 
         
-        public $safeitemrootname$():base(null)
-        {
-            this.InitializeComponent();
-        }
-        public $safeitemrootname$($safeitemrootname$_Model model):base(model)
-        {
+        public $safeitemrootname$()  
+		{
             this.InitializeComponent();
         }
 
