@@ -117,14 +117,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MVVMSidekick\MVVMSidekick.csproj">
-      <Project>{0d9da5fb-bbfa-46ac-9c18-1253684a7c9a}</Project>
-      <Name>MVVMSidekick</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MVVMSidekick_net45\MVVMSidekick_net45.csproj">
+      <Project>{0dffbbc1-9a4d-4183-80eb-37da3f507d9e}</Project>
+      <Name>MVVMSidekick_net45</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

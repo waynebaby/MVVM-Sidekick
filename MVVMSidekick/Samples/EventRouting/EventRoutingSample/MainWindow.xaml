@@ -25,12 +25,15 @@
         </StackPanel>
         <StackPanel   Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,32">
             <Label Content="Behavior Received Globle Events" >
-                <i:Interaction.Triggers>
-                    <beh:ListenToEventRouterDataBehavior  />
-                </i:Interaction.Triggers>                       
+           
 
             </Label>
-            <TextBlock />
+            <TextBlock Text="{Binding ElementName=sourceE, Path=LastDataReceived}">
+                 <i:Interaction.Behaviors>
+                    <beh:ListenToEventRouterDataBehavior  EventRoutingName="Global HeartBeat" EventRouter="{x:Null}" x:Name="sourceE" />
+                    <!--<ei:DataStateBehavior/>-->
+                </i:Interaction.Behaviors>
+            </TextBlock>
         </StackPanel>
 
     </Grid>

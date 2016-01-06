@@ -29,15 +29,14 @@ namespace EventRoutingSample
 	public partial class MainWindow : MVVMWindow
 	{
 		public MainWindow()
-			: base(null)
+			
 		{
 			InitializeComponent();
 		}
 
-		public MainWindow(MainWindow_Model model)
-			: base(model)
+		private void ListenToEventRouterDataBehavior_Changed(object sender, EventArgs e)
 		{
-			InitializeComponent();
+
 		}
 	}
 }

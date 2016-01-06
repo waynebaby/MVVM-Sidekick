@@ -241,7 +241,10 @@ namespace MVVMSidekick.Behaviors
 #endif
 
 
+		public ListenToEventRouterDataBehavior()
+		{
 
+		}
 
 		public Object LastDataReceived
 		{
