@@ -19,6 +19,7 @@ using MVVMSidekick.EventRouting;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Data;
 #endif
+using MVVMSidekick.Common;
 
 namespace MVVMSidekick.Behaviors
 {
@@ -173,7 +174,7 @@ namespace MVVMSidekick.Behaviors
 
 			var old = Interlocked.Exchange(
 				ref trigger._oldSubscrption,
-				query.Subscribe(e => trigger.InvokeActions(e)));
+				query.Subscribe(e => trigger.InvokeActions(e)).MakeFinalizableDisposable());
 
 			old.Dispose();
 
@@ -236,16 +237,46 @@ namespace MVVMSidekick.Behaviors
 
 
 #else
-	public class ListenToEventRouterDataBehavior : Behavior<FrameworkElement>
+	public class ListenToEventRouterDataBehavior : Behavior<FrameworkElement>, IDisposable
 	{
-		
+
 
 		protected override void OnAttached()
 		{
 			ExchangeTheSubscribedRouter(this, EventRouter);
 
+#if WPF
+		 
+			Window.GetWindow(AssociatedObject).Closed += ListenToEventRouterDataBehavior_Closed;
+#endif
+
 			base.OnAttached();
 		}
+
+#if WPF
+		private void ListenToEventRouterDataBehavior_Closed(object sender, EventArgs e)
+		{
+			this.Dispose();
+		}
+#else
+
+#endif
+
+		protected override void OnDetaching()
+		{
+			if (_oldSubscrption != null)
+			{
+				_oldSubscrption.Dispose();
+				_oldSubscrption = null;
+			}
+#if WPF
+		
+			Window.GetWindow(AssociatedObject).Closed -= ListenToEventRouterDataBehavior_Closed;		
+#endif
+			base.OnDetaching();
+		}
+
+
 #endif
 
 
@@ -308,12 +339,20 @@ namespace MVVMSidekick.Behaviors
 
 			var old = Interlocked.Exchange(
 				ref bhv._oldSubscrption,
-				query.Subscribe(e => bhv.LastDataReceived = e.EventData));
+				query.Subscribe(e => bhv.LastDataReceived = e.EventData).MakeFinalizableDisposable());
 
 			old?.Dispose();
 
 		}
 
+
+#if !NETFX_CORE
+		public void Dispose()
+		{
+			_oldSubscrption?.Dispose();
+		}
+
+#endif
 
 
 		/// <summary>

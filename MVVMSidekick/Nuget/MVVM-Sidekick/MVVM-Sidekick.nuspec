@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.13</version>
+    <version>1.6.14</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,6 +38,12 @@
 
     </summary>
     <releaseNotes>
+	1.6.14
+		
+      -   Fixed ListenToEventRouterDataBehavior Not working in wpf bug.
+      -   Fixed View Factory cannot Createinstance Bug cos by removed  new(vm) Constructor.
+    
+
 	1.6.13
 		
       - Deleted  Views new(vm) Constructor.  You might need update your template and deleted your contructor dependented on this.
@@ -64,20 +70,6 @@
       - Removed ReactiveCommand.CanExecuteObserver property and added new method instead ReactiveCommand.ListenCanExecuteObservable(observable&gt;bool&lt;)
       - As Unity Finally updated it's released version, we go release.
     
-
-	1.6.6-prerelease
-		
-      - Added AddOrUpdateByKey and RemoveByKey to KeyedObservableCollection&gt;TKey, TValue&lt;
-      - Removed ReactiveCommand.CanExecuteObserver property and added new method instead ReactiveCommand.ListenCanExecuteObservable(observable&gt;bool&lt;)
-    
-
-	1.6.5-prerelease
-		
-      - Fix serilizeation problem
-    
-
-	1.6.4-prerelease
-		Add Testing features.
 </releaseNotes>
     <tags>Rx Reactive Extensions MVVM UWP UAP Win8 Win10 APP IoT  Metro Modern UI</tags>
     <dependencies>

@@ -1036,7 +1036,7 @@ namespace MVVMSidekick
 			public ViewModelToViewMapper<TModel> MapToDefault<TView>(bool alwaysNew = true) where TView : class, IView
 			{
 				MapViewToViewModel<TView>();
-				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TView)Activator.CreateInstance(typeof(TView)), alwaysNew);
 				return this;
 			}
 			/// <summary>
@@ -1049,7 +1049,7 @@ namespace MVVMSidekick
 			public ViewModelToViewMapper<TModel> MapTo<TView>(string viewMappingKey, bool alwaysNew = true) where TView : class, IView
 			{
 				MapViewToViewModel<TView>();
-				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TView)Activator.CreateInstance(typeof(TView), d as object), alwaysNew);
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TView)Activator.CreateInstance(typeof(TView)), alwaysNew);
 				return this;
 			}
 
@@ -1119,7 +1119,7 @@ namespace MVVMSidekick
 			public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(bool alwaysNew = true) where TControl : MVVMControl
 			{
 				MapViewToViewModel<TControl>();
-				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TControl)Activator.CreateInstance(typeof(TControl)), alwaysNew);
 				return this;
 			}
 			/// <summary>
@@ -1132,7 +1132,7 @@ namespace MVVMSidekick
 			public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, bool alwaysNew = true) where TControl : MVVMControl
 			{
 				MapViewToViewModel<TControl>();
-				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TControl)Activator.CreateInstance(typeof(TControl), d as object), alwaysNew);
+				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TControl)Activator.CreateInstance(typeof(TControl)), alwaysNew);
 				return this;
 			}
 

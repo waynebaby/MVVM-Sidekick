@@ -74,6 +74,48 @@ namespace EventRoutingSample.ViewModels
 
 
 
+
+		public CommandModel<ReactiveCommand, String> CommandNavigateToDisposeBehaviorTest
+		{
+			get { return _CommandNavigateToDisposeBehaviorTestLocator(this).Value; }
+			set { _CommandNavigateToDisposeBehaviorTestLocator(this).SetValueAndTryNotify(value); }
+		}
+		#region Property CommandModel<ReactiveCommand, String> CommandNavigateToDisposeBehaviorTest Setup        
+
+		protected Property<CommandModel<ReactiveCommand, String>> _CommandNavigateToDisposeBehaviorTest = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandNavigateToDisposeBehaviorTestLocator };
+		static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNavigateToDisposeBehaviorTestLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandNavigateToDisposeBehaviorTest), model => model.Initialize(nameof(CommandNavigateToDisposeBehaviorTest), ref model._CommandNavigateToDisposeBehaviorTest, ref _CommandNavigateToDisposeBehaviorTestLocator, _CommandNavigateToDisposeBehaviorTestDefaultValueFactory));
+		static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNavigateToDisposeBehaviorTestDefaultValueFactory =
+			model =>
+			{
+				var resource = nameof(CommandNavigateToDisposeBehaviorTest);           // Command resource  
+				var commandId = nameof(CommandNavigateToDisposeBehaviorTest);
+				var vm = CastToCurrentType(model);
+				var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+
+				cmd.DoExecuteUIBusyTask(
+						vm,
+						async e =>
+						{
+							//Todo: Add NavigateToDisposeBehaviorTest logic here, or
+							await vm.StageManager.DefaultStage.Show<DisopseTestForBehaviors_Model>();
+							await MVVMSidekick.Utilities.TaskExHelper.Yield();
+						})
+					.DoNotifyDefaultEventRouter(vm, commandId)
+					.Subscribe()
+					.DisposeWith(vm);
+
+				var cmdmdl = cmd.CreateCommandModel(resource);
+
+				cmdmdl.ListenToIsUIBusy(
+					model: vm,
+					canExecuteWhenBusy: false);
+				return cmdmdl;
+			};
+
+		#endregion
+
+
+
 	}
 
 }

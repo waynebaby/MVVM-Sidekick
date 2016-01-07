@@ -1,0 +1,22 @@
+﻿<mvvm:MVVMWindow x:Class="EventRoutingSample.DisopseTestForBehaviors"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DisopseTestForBehaviors" Height="350" Width="525"
+        xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"
+           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+          xmlns:beh="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick"
+      
+        xmlns:vm="clr-namespace:EventRoutingSample.ViewModels" >
+    <FrameworkElement.Resources>
+        <vm:DisopseTestForBehaviors_Model x:Key="DesignVM" />
+    </FrameworkElement.Resources>
+    <Grid x:Name="grid" DataContext="{StaticResource DesignVM}">
+
+        <TextBlock Text="{Binding ElementName=sourceE, Path=LastDataReceived}">
+                 <i:Interaction.Behaviors>
+                    <beh:ListenToEventRouterDataBehavior  EventRoutingName="Global HeartBeat"  x:Name="sourceE" />
+                    <!--<ei:DataStateBehavior/>-->
+                </i:Interaction.Behaviors>
+        </TextBlock>
+    </Grid>
+</mvvm:MVVMWindow>

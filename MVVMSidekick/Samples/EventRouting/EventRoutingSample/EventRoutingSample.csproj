@@ -113,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="DisopseTestForBehaviors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -121,13 +125,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DisopseTestForBehaviors.xaml.cs">
+      <DependentUpon>DisopseTestForBehaviors.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Startups\DisopseTestForBehaviors.cs" />
     <Compile Include="Startups\StartupFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\DisopseTestForBehaviors_Model.cs" />
     <Compile Include="ViewModels\MainWindow_Model.cs">
       <SubType>Code</SubType>
     </Compile>

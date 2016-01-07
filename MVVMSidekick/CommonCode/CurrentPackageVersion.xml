@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
-
+  <version>
+    <id>1.6.14</id>
+    <releaseNotes>
+      -   Fixed ListenToEventRouterDataBehavior Not working in wpf bug.
+      -   Fixed View Factory cannot Createinstance Bug cos by removed  new(vm) Constructor.
+    </releaseNotes>
+  </version>
 
   <version>
     <id>1.6.13</id>
@@ -38,24 +44,4 @@
     </releaseNotes>
   </version>
 
-  <version>
-    <id>1.6.6-prerelease</id>
-    <releaseNotes>
-      - Added AddOrUpdateByKey and RemoveByKey to KeyedObservableCollection&gt;TKey, TValue&lt;
-      - Removed ReactiveCommand.CanExecuteObserver property and added new method instead ReactiveCommand.ListenCanExecuteObservable(observable&gt;bool&lt;)
-    </releaseNotes>
-  </version>
-
-
-  <version>
-    <id>1.6.5-prerelease</id>
-    <releaseNotes>
-      - Fix serilizeation problem
-    </releaseNotes>
-  </version>
-  
-  <version>
-    <id>1.6.4-prerelease</id>
-    <releaseNotes>Add Testing features.</releaseNotes>
-  </version>
 </versions>

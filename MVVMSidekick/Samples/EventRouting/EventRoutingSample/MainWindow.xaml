@@ -30,11 +30,15 @@
             </Label>
             <TextBlock Text="{Binding ElementName=sourceE, Path=LastDataReceived}">
                  <i:Interaction.Behaviors>
-                    <beh:ListenToEventRouterDataBehavior  EventRoutingName="Global HeartBeat" EventRouter="{x:Null}" x:Name="sourceE" />
+                    <beh:ListenToEventRouterDataBehavior  EventRoutingName="Global HeartBeat"  x:Name="sourceE" />
                     <!--<ei:DataStateBehavior/>-->
                 </i:Interaction.Behaviors>
             </TextBlock>
         </StackPanel>
-
+        <Button x:Name="button" 
+         HorizontalAlignment="Left" Command="{Binding Path=CommandNavigateToDisposeBehaviorTest}" Height="20" Margin="29,21,0,0" Grid.Row="2" VerticalAlignment="Top" Width="158">
+          
+            <TextBlock>Test Behavior Dispose</TextBlock>
+        </Button>
     </Grid>
 </mvvm:MVVMWindow>
