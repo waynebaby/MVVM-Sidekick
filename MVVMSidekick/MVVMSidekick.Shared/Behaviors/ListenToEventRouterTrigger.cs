@@ -238,13 +238,17 @@ namespace MVVMSidekick.Behaviors
 #else
 	public class ListenToEventRouterDataBehavior : Behavior<FrameworkElement>
 	{
+		
+
+		protected override void OnAttached()
+		{
+			ExchangeTheSubscribedRouter(this, EventRouter);
+
+			base.OnAttached();
+		}
 #endif
 
 
-		public ListenToEventRouterDataBehavior()
-		{
-
-		}
 
 		public Object LastDataReceived
 		{
@@ -306,7 +310,7 @@ namespace MVVMSidekick.Behaviors
 				ref bhv._oldSubscrption,
 				query.Subscribe(e => bhv.LastDataReceived = e.EventData));
 
-			old.Dispose();
+			old?.Dispose();
 
 		}
 
