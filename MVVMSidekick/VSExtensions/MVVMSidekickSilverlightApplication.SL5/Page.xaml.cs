@@ -22,13 +22,8 @@ namespace $safeprojectname$
 {
     public partial class MainPage : MVVMControl
     {
-        public MainPage():base(null)
-        {
-            InitializeComponent();
-        }
-
-        public MainPage(MainPage_Model model):base(model)
-        {
+        public MainPage()
+		{
             InitializeComponent();
         }
     }

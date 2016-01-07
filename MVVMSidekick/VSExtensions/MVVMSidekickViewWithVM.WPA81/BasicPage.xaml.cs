@@ -35,15 +35,8 @@ namespace $rootnamespace$
     public sealed partial class $safeitemname$ : MVVMPage
     {
 	
-		public $safeitemname$()
-            : this(null)
-        {
-            this.InitializeComponent();
-        }
-
-        public $safeitemname$($safeitemname$_Model model)
-            : base(model)
-        {
+		public $safeitemname$()   
+		{
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
