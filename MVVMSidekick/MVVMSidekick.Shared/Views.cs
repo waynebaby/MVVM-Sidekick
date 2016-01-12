@@ -522,16 +522,13 @@ namespace MVVMSidekick
 				base.OnNavigatedTo(e);
 				RoutedEventHandler loadEvent = null;
 
-				loadEvent = async (_1, _2) =>
+				loadEvent =  (_1, _2) =>
 				{
 
 
 					EventRouting.EventRouter.Instance.RaiseEvent(this, e);
 
-					if (ViewModel != null)
-					{
-						await ViewModel.OnBindedViewLoad(this);
-					}
+		
 
 					IsLoaded = true;
 					this.Loaded -= loadEvent;

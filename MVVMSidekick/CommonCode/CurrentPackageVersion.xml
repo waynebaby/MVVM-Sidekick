@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
+
+  <version>
+    <id>1.6.15</id>
+    <releaseNotes>
+      -   Fixed  View model of Page Got duplicate Call to OnBindedViewLoad()
+    </releaseNotes>
+  </version>
   <version>
     <id>1.6.14</id>
     <releaseNotes>
