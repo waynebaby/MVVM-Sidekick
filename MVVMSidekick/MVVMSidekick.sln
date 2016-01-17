@@ -100,16 +100,16 @@ Global
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{cc92e8d7-34e8-4a48-be01-6f3f5c478604}*SharedItemsImports = 4
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{0dffbbc1-9a4d-4183-80eb-37da3f507d9e}*SharedItemsImports = 4
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{f69407b0-9503-4242-85c4-c0b9be28a73f}*SharedItemsImports = 4
-		Samples\TableGame-Sidekick\TableGame-Sidekick.CoreCode\TableGame-Sidekick.CoreCode.projitems*{3b99520e-37e5-421c-bb1b-a98be9d60623}*SharedItemsImports = 4
 		Samples\TableGame-Sidekick\TableGame-Sidekick.UAP\TableGame-Sidekick.UAP.Shared\TableGame-Sidekick.UAP.Shared.projitems*{3b99520e-37e5-421c-bb1b-a98be9d60623}*SharedItemsImports = 4
+		Samples\TableGame-Sidekick\TableGame-Sidekick.CoreCode\TableGame-Sidekick.CoreCode.projitems*{3b99520e-37e5-421c-bb1b-a98be9d60623}*SharedItemsImports = 4
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{713ce5f7-c071-4550-b6b0-7a2fd8e870df}*SharedItemsImports = 13
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{a9f83747-322a-44a8-86df-44bdfde0e0f5}*SharedItemsImports = 4
 		Samples\TableGame-Sidekick\TableGame-Sidekick.UAP\TableGame-Sidekick.UAP.Shared\TableGame-Sidekick.UAP.Shared.projitems*{bcf8e2ec-7cdb-4162-90aa-c54b27b98a20}*SharedItemsImports = 13
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{e3f7bd12-e681-4552-8f3b-473f325b1a2b}*SharedItemsImports = 4
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{c7b975fc-9323-4e05-af3d-194c63af8d34}*SharedItemsImports = 4
 		Samples\TableGame-Sidekick\TableGame-Sidekick.CoreCode\TableGame-Sidekick.CoreCode.projitems*{6e7e8960-d86f-4ba6-ad51-e2c302f27130}*SharedItemsImports = 4
-		Samples\TableGame-Sidekick\TableGame-Sidekick.CoreCode\TableGame-Sidekick.CoreCode.projitems*{89ebc4a6-c464-4628-be57-25f9adac364a}*SharedItemsImports = 4
 		Samples\TableGame-Sidekick\TableGame-Sidekick.UAP\TableGame-Sidekick.UAP.Shared\TableGame-Sidekick.UAP.Shared.projitems*{89ebc4a6-c464-4628-be57-25f9adac364a}*SharedItemsImports = 4
+		Samples\TableGame-Sidekick\TableGame-Sidekick.CoreCode\TableGame-Sidekick.CoreCode.projitems*{89ebc4a6-c464-4628-be57-25f9adac364a}*SharedItemsImports = 4
 		Samples\TableGame-Sidekick\TableGame-Sidekick.CoreCode\TableGame-Sidekick.CoreCode.projitems*{19d5c879-b89d-4357-a34c-d7ee3dce6f51}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

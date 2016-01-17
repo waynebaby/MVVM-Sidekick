@@ -425,8 +425,10 @@ namespace MVVMSidekick
 			public MVVMPage()
 				//: this(null)
 			{
+#if WPF
 				Loaded += ViewHelper.ViewLoadCallBack;
 				Unloaded += ViewHelper.ViewUnloadCallBack;
+#endif
 			}
 
 
@@ -523,22 +525,19 @@ namespace MVVMSidekick
 				RoutedEventHandler loadEvent = null;
 
 				loadEvent =  (_1, _2) =>
-				{
-
-
-					EventRouting.EventRouter.Instance.RaiseEvent(this, e);
-
-		
-
+				{																 
+					EventRouting.EventRouter.Instance.RaiseEvent(this, e);	//VM Is Ready after this
 					IsLoaded = true;
-					this.Loaded -= loadEvent;
-
-
-
-
+					this.Loaded -= loadEvent;									 
 
 				};
+
+			
+
 				this.Loaded += loadEvent;
+
+				Loaded += ViewHelper.ViewLoadCallBack;
+				Unloaded += ViewHelper.ViewUnloadCallBack;
 
 			}
 

@@ -2,9 +2,17 @@
 <versions>
 
   <version>
+    <id>1.6.16</id>
+    <releaseNotes>
+      -   Fixed a new bug cosed by 1.6.15 change. 
+          In .15 you cannot show(new vm) which would wrongly give vm a testing stage manager.
+          Now it would be okay.
+    </releaseNotes>
+  </version>
+  <version>
     <id>1.6.15</id>
     <releaseNotes>
-      -   Fixed  View model of Page Got duplacate Call to OnBindedViewLoad()
+      -   Fixed  View model of Page Got duplicate Call to OnBindedViewLoad()
     </releaseNotes>
   </version>
   <version>
