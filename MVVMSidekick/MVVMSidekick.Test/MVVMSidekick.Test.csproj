@@ -103,6 +103,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CommandAwaitTest.cs" />
     <Compile Include="CommandEventBridge.cs" />
     <Compile Include="FuncInOut.cs" />
     <Compile Include="ListenCanExecuteObservableTest.cs" />

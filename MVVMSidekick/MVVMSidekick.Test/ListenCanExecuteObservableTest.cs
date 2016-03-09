@@ -128,7 +128,7 @@ namespace MVVMSidekick.Test
 					var resource = nameof(CommandSomeCommand);           // Command resource  
 					var commandId = nameof(CommandSomeCommand);
 					var vm = CastToCurrentType(model);
-					var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+					var cmd = new ReactiveCommand( true) { ViewModel = model }; //New Command Core
 
 					cmd.DoExecuteUIBusyTask(
 								vm,

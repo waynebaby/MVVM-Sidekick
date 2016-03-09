@@ -70,15 +70,16 @@ namespace MVVMSidekick.Test
             var v = false;
             c.CanExecuteChanged += (o, e) =>
                 v = c.CanExecute(null);
-            c.ListenCanExecuteObservable(Observable.Delay(Observable.Range(0, 1).Select(xxx => false), DateTimeOffset.Now.AddMinutes(15)));
-
-            await Task.Delay(100);
-            Assert.AreEqual(v, true);
-
-        }
+            c.ListenCanExecuteObservable(Observable.Delay(Observable.Range(0, 1).Select(xxx => false), DateTimeOffset.Now.AddMilliseconds(15)));
+			Assert.AreEqual(c.CanExecute(null), true);
+			await Task.Delay(100);
+			Assert.AreEqual(v, false);
 
 
-        [TestMethod]
+		}
+
+
+		[TestMethod]
         public void TestRegRes()
         {
             //

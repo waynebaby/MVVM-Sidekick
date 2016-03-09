@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.16</version>
+    <version>1.6.17-prerelease</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,6 +38,12 @@
 
     </summary>
     <releaseNotes>
+	1.6.17-prerelease
+		
+      -   Add ExecuteAsync(object parameter) in ReactiveCommand  (Command.CommandCore) to be awaited.
+      -   Add Code snippet for command in BindableBase.
+    
+
 	1.6.16
 		
       -   Fixed a new bug cosed by 1.6.15 change. 

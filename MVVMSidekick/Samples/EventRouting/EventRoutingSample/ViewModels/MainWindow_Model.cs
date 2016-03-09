@@ -60,11 +60,11 @@ namespace EventRoutingSample.ViewModels
 		protected override Task OnBindedViewLoad(IView view)
 		{
 			EventRouter.Instance.GetEventChannel<Object>()
-				.Where(e => 
+				.Where(e =>
 					e.EventName == "Global HeartBeat")
 				.Subscribe(
 					e =>
-						LastHeartBeat = e.EventData.ToString ()
+						LastHeartBeat = e.EventData.ToString()
 				)
 				.DisposeWhenUnload(this);
 
@@ -90,7 +90,7 @@ namespace EventRoutingSample.ViewModels
 				var resource = nameof(CommandNavigateToDisposeBehaviorTest);           // Command resource  
 				var commandId = nameof(CommandNavigateToDisposeBehaviorTest);
 				var vm = CastToCurrentType(model);
-				var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+				var cmd = new ReactiveCommand(true) { ViewModel = model }; //New Command Core
 
 				cmd.DoExecuteUIBusyTask(
 						vm,

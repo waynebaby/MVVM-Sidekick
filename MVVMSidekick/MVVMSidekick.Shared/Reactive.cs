@@ -99,132 +99,155 @@ namespace MVVMSidekick
 
 
 
-        /// <summary>
-        /// Class ReactiveCommand.
-        /// </summary>
-        public class ReactiveCommand : EventCommandBase, ICommand, IObservable<EventPattern<EventCommandEventArgs>>
-        {
+  //      /// <summary>
+  //      /// Class ReactiveCommand.
+  //      /// </summary>
+  //      public class ReactiveCommand : EventCommandBase, ICommand, IObservable<EventPattern<EventCommandEventArgs>>, IReactiveCommand
+		//{
 
 
 
-            /// <summary>
-            /// The _ lazy observable execute
-            /// </summary>
-            protected Lazy<IObservable<EventPattern<EventCommandEventArgs>>> _LazyObservableExecute;
-            /// <summary>
-            /// The _ lazy observer can execute
-            /// </summary>
-            protected Lazy<IObserver<bool>> _LazyObserverCanExecute;
-            /// <summary>
-            /// The _ current can execute observer value
-            /// </summary>
-            protected bool _CurrentCanExecuteObserverValue;
+  //          /// <summary>
+  //          /// The _ lazy observable execute
+  //          /// </summary>
+  //          protected Lazy<IObservable<EventPattern<EventCommandEventArgs>>> _LazyObservableExecute;
+  //          /// <summary>
+  //          /// The _ lazy observer can execute
+  //          /// </summary>
+  //          protected Lazy<IObserver<bool>> _LazyObserverCanExecute;
+  //          /// <summary>
+  //          /// The _ current can execute observer value
+  //          /// </summary>
+  //          protected bool _CurrentCanExecuteObserverValue;
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ReactiveCommand"/> class.
-            /// </summary>
-            protected ReactiveCommand()
-            {
-                ConfigReactive();
+  //          /// <summary>
+  //          /// Initializes a new instance of the <see cref="ReactiveCommand"/> class.
+  //          /// </summary>
+  //          protected ReactiveCommand()
+  //          {
+  //              ConfigReactive();
 
-            }
+  //          }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ReactiveCommand"/> class.
-            /// </summary>
-            /// <param name="canExecute">if set to <c>true</c> [can execute].</param>
-            public ReactiveCommand(bool canExecute = false)
-                : this()
-            {
-                _CurrentCanExecuteObserverValue = canExecute;
-            }
-
-
-            /// <summary>
-            /// Configurations the reactive.
-            /// </summary>
-            protected void ConfigReactive()
-            {
-                _LazyObservableExecute = new Lazy<IObservable<EventPattern<EventCommandEventArgs>>>
-                (
-                    () =>
-                    {
-                        var ob = Observable.FromEventPattern<EventHandler<EventCommandEventArgs>, EventCommandEventArgs>
-                    (
-                        eh =>
-                        {
-                            this.CommandExecute += eh;
-                        },
-                        eh =>
-                        {
-                            this.CommandExecute -= eh;
-                        }
-                    );
-
-                        return ob;
-                    }
-                );
-
-                _LazyObserverCanExecute = new Lazy<IObserver<bool>>
-                (
-                    () =>
-                        Observer.Create<bool>(
-                        canExe =>
-                        {
-
-							//var oldv = this._CurrentCanExecuteObserverValue;
-							_CurrentCanExecuteObserverValue = canExe;
-							//if (oldv != canExe)
-							//{
-							//    OnCanExecuteChanged();
-							//}
-							OnCanExecuteChanged();
-                        }
-                        )
-
-                );
-            }
-            /// <summary>
-            /// Gets the can execute observer.
-            /// </summary>
-            /// <value>The can execute observer.</value>
-            private IObserver<bool> CanExecuteObserver { get { return _LazyObserverCanExecute.Value; } }
-
-            public IDisposable ListenCanExecuteObservable(IObservable<bool> canExecuteSeq)
-            {
-                return Observable.Range(0, 1)
-                        .Select(_ => this._CurrentCanExecuteObserverValue)
-                        .Concat(canExecuteSeq)
-                       .Subscribe(CanExecuteObserver);
-            }
-
-            /// <summary>
-            /// Determines whether this instance can execute the specified parameter.
-            /// </summary>
-            /// <param name="parameter">The parameter.</param>
-            /// <returns><c>true</c> if this instance can execute the specified parameter; otherwise, <c>false</c>.</returns>
-            public override bool CanExecute(object parameter)
-            {
-                return _CurrentCanExecuteObserverValue;
-            }
+  //          /// <summary>
+  //          /// Initializes a new instance of the <see cref="ReactiveCommand"/> class.
+  //          /// </summary>
+  //          /// <param name="canExecute">if set to <c>true</c> [can execute].</param>
+  //          public ReactiveCommand(bool canExecute = false)
+  //              : this()
+  //          {
+  //              _CurrentCanExecuteObserverValue = canExecute;
+  //          }
 
 
+  //          /// <summary>
+  //          /// Configurations the reactive.
+  //          /// </summary>
+  //          protected void ConfigReactive()
+  //          {
+  //              _LazyObservableExecute = new Lazy<IObservable<EventPattern<EventCommandEventArgs>>>
+  //              (
+  //                  () =>
+  //                  {
+  //                      var ob = Observable.FromEventPattern<EventHandler<EventCommandEventArgs>, EventCommandEventArgs>
+  //                  (
+  //                      eh =>
+  //                      {
+  //                          this.CommandExecute += eh;
+  //                      },
+  //                      eh =>
+  //                      {
+  //                          this.CommandExecute -= eh;
+  //                      }
+  //                  );
+
+  //                      return ob;
+  //                  }
+  //              );
+
+  //              _LazyObserverCanExecute = new Lazy<IObserver<bool>>
+  //              (
+  //                  () =>
+  //                      Observer.Create<bool>(
+  //                      canExe =>
+  //                      {
+
+		//					//var oldv = this._CurrentCanExecuteObserverValue;
+		//					_CurrentCanExecuteObserverValue = canExe;
+		//					//if (oldv != canExe)
+		//					//{
+		//					//    OnCanExecuteChanged();
+		//					//}
+		//					OnCanExecuteChanged();
+  //                      }
+  //                      )
+
+  //              );
+  //          }
+  //          /// <summary>
+  //          /// Gets the can execute observer.
+  //          /// </summary>
+  //          /// <value>The can execute observer.</value>
+  //          private IObserver<bool> CanExecuteObserver { get { return _LazyObserverCanExecute.Value; } }
+
+		//	public IObservable<bool> CanExecuteObserveable
+		//	{
+		//		get
+		//		{
+		//			throw new NotImplementedException();
+		//		}
+		//	}
+
+		//	public IDisposable ListenCanExecuteObservable(IObservable<bool> canExecuteSeq)
+  //          {
+  //              return Observable.Range(0, 1)
+  //                      .Select(_ => this._CurrentCanExecuteObserverValue)
+  //                      .Concat(canExecuteSeq)
+  //                     .Subscribe(CanExecuteObserver);
+  //          }
+
+  //          /// <summary>
+  //          /// Determines whether this instance can execute the specified parameter.
+  //          /// </summary>
+  //          /// <param name="parameter">The parameter.</param>
+  //          /// <returns><c>true</c> if this instance can execute the specified parameter; otherwise, <c>false</c>.</returns>
+  //          public override bool CanExecute(object parameter)
+  //          {
+  //              return _CurrentCanExecuteObserverValue;
+  //          }
 
 
 
 
-            /// <summary>
-            /// Subscribes the specified observer.
-            /// </summary>
-            /// <param name="observer">The observer.</param>
-            /// <returns>IDisposable.</returns>
-            public IDisposable Subscribe(IObserver<EventPattern<EventCommandEventArgs>> observer)
-            {
-                return _LazyObservableExecute
-                      .Value
-                      .Subscribe(observer);
-            }
-        }
+
+
+  //          /// <summary>
+  //          /// Subscribes the specified observer.
+  //          /// </summary>
+  //          /// <param name="observer">The observer.</param>
+  //          /// <returns>IDisposable.</returns>
+  //          public IDisposable Subscribe(IObserver<EventPattern<EventCommandEventArgs>> observer)
+  //          {
+  //              return _LazyObservableExecute
+  //                    .Value
+  //                    .Subscribe(observer);
+  //          }
+
+		//	public IDisposable ConfigureSyncCanExecute(Func<object, bool> canExecuteFunc)
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+
+		//	public Task ExecuteAsync(object parameter)
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+
+		//	IReactiveCommand IReactiveCommand.ConfigureSyncCanExecute(Func<object, bool> canExecuteFunc)
+		//	{
+		//		throw new NotImplementedException();
+		//	}
+		//}
 
 
         /// <summary>

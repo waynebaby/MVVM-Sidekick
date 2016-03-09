@@ -73,7 +73,7 @@ namespace MVVMSidekick
 		using Utilities;
 		using Views;
 		using MVVMSidekick.Common;
-
+		using System.Reactive;
 
 		/// <summary>
 		/// <para>A ViewModel by default, with basic implement of name-value container.</para>
@@ -1690,7 +1690,7 @@ namespace MVVMSidekick
 					}
 				}
 
-				
+
 
 			}
 
@@ -2483,6 +2483,33 @@ namespace MVVMSidekick
 				//      taskComplet.SetResult();
 				//  };
 
+				var cmdarh = inputContext as EventPattern<EventCommandEventArgs>;
+				if (cmdarh != null)
+				{
+					var oldBody = taskBody;
+					taskBody = async (i, c) =>
+					 {
+						 try
+						 {
+							 var rval = await oldBody(i, c);
+							 if (c.IsCancellationRequested)
+							 {
+								 cmdarh.EventArgs.Completion.TrySetCanceled();
+							 }
+							 else
+							 {
+								 cmdarh.EventArgs.Completion.TrySetResult(cmdarh.EventArgs);
+							 }
+							 return rval;
+						 }
+						 catch (Exception ex)
+						 {
+							 cmdarh.EventArgs.Completion.SetException(ex);
+							 throw;
+						 }
+
+					 };
+				}
 
 				if (UIBusyWhenExecuting)
 				{
@@ -3086,6 +3113,21 @@ namespace MVVMSidekick
 		/// </summary>
 		public static class CommandModelExtensions
 		{
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <typeparam name="TReactiveCommand"></typeparam>
+			/// <typeparam name="TResource"></typeparam>
+			/// <param name="command"></param>
+			/// <param name="parameter"></param>
+			/// <returns></returns>
+			public static async Task ExecuteAsync<TReactiveCommand, TResource>(this CommandModel<TReactiveCommand, TResource> command, object parameter)
+				where TReactiveCommand : IReactiveCommand
+			{
+				await command.CommandCore.ExecuteAsync(parameter);
+			}
+
 			/// <summary>
 			/// 根据ICommand实例创建CommandModel
 			/// </summary>
@@ -3099,6 +3141,8 @@ namespace MVVMSidekick
 			{
 				return new CommandModel<TCommand, TResource>(command, resource);
 			}
+
+
 
 			/// <summary>
 			/// 据ICommand实例创建不具备/弱类型资源的CommandModel

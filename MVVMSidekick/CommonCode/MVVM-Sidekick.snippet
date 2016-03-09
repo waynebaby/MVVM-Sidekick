@@ -272,7 +272,7 @@
   <!--View Model Command With Resource-->
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Command With Resource</Title>
+      <Title>MVVM Sidekick View Model Async Command With Resource</Title>
       <Shortcut>propcmd</Shortcut>
       <Description>Command Model of MVVM </Description>
       <Author>Wayne Wang</Author>
@@ -281,20 +281,20 @@
       </SnippetTypes>
     </Header>
     <Snippet>
-      <Declarations>
+         <Declarations>
         <Literal>
           <ID>commandType</ID>
-          <ToolTip>View Model Command Type</ToolTip>
+          <ToolTip>Command Type</ToolTip>
           <Default>ReactiveCommand</Default>
         </Literal>
         <Literal>
           <ID>commandName</ID>
-          <ToolTip>View Model Command Type</ToolTip>
+          <ToolTip>Command Name</ToolTip>
           <Default>SomeCommand</Default>
         </Literal>
         <Literal>
           <ID>resourceType</ID>
-          <ToolTip>View Model Class Name</ToolTip>
+          <ToolTip>Resource Type</ToolTip>
           <Default>String</Default>
         </Literal>
       </Declarations>
@@ -342,11 +342,11 @@
     </Snippet>
   </CodeSnippet>
 
-                                     <CodeSnippet Format="1.0.0">
+<CodeSnippet Format="1.0.0">
     <Header>
       <Title>MVVM Sidekick View Model Command With Resource for C# 6</Title>
-      <Shortcut>propcmd6</Shortcut>
-      <Description>Command Model of MVVM</Description>
+      <Shortcut>propcmdb6</Shortcut>
+      <Description>Async Command for MVVM-Sidekick</Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
         <SnippetType>Expansion</SnippetType>
@@ -356,17 +356,17 @@
       <Declarations>
         <Literal>
           <ID>commandType</ID>
-          <ToolTip>View Model Command Type</ToolTip>
+          <ToolTip>Command Type</ToolTip>
           <Default>ReactiveCommand</Default>
         </Literal>
         <Literal>
           <ID>commandName</ID>
-          <ToolTip>View Model Command Type</ToolTip>
+          <ToolTip>Command Name</ToolTip>
           <Default>SomeCommand</Default>
         </Literal>
         <Literal>
           <ID>resourceType</ID>
-          <ToolTip>View Model Class Name</ToolTip>
+          <ToolTip>Resource Type</ToolTip>
           <Default>String</Default>
         </Literal>
       </Declarations>
@@ -415,6 +415,72 @@
   </CodeSnippet>
 
 
+
+    <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>MVVM Sidekick View Model Command With Resource for C# 6</Title>
+      <Shortcut>propcmd6</Shortcut>
+      <Description>Sync Command Model for MVVM-Sidekick</Description>
+      <Author>Wayne Wang</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>commandType</ID>
+          <ToolTip>Command Type</ToolTip>
+          <Default>ReactiveCommand</Default>
+        </Literal>
+        <Literal>
+          <ID>commandName</ID>
+          <ToolTip>Command Name</ToolTip>
+          <Default>SomeCommand</Default>
+        </Literal>
+        <Literal>
+          <ID>resourceType</ID>
+          <ToolTip>Resource Type</ToolTip>
+          <Default>String</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" >
+        <![CDATA[
+        public CommandModel<$commandType$, $resourceType$> Command$commandName$
+        {
+            get { return _Command$commandName$Locator(this).Value; }
+            set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<$commandType$, $resourceType$> Command$commandName$ Setup        
+        
+        protected Property<CommandModel<$commandType$, $resourceType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $resourceType$>>{ LocatorFunc = _Command$commandName$Locator};
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $resourceType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $resourceType$>>(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
+        static Func<BindableBase,CommandModel<$commandType$, $resourceType$>> _Command$commandName$DefaultValueFactory =
+            model => 
+            {
+                var resource = nameof(Command$commandName$);           // Command resource  
+                var commandId = nameof(Command$commandName$);
+                var vm = CastToCurrentType(model);
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                
+                cmd.Do( e =>
+                        {
+                            //Todo: Add $commandName$ logic here                           
+                        })
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+                    
+                var cmdmdl = cmd.CreateCommandModel(resource);                 
+             
+                return cmdmdl;
+            };
+
+        #endregion
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
 
 
 

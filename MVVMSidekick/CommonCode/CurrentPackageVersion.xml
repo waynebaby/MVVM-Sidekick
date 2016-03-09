@@ -2,6 +2,13 @@
 <versions>
 
   <version>
+    <id>1.6.17-prerelease</id>
+    <releaseNotes>
+      -   Add ExecuteAsync(object parameter) in ReactiveCommand  (Command.CommandCore) to be awaited.
+      -   Add Code snippet for command in BindableBase.
+    </releaseNotes>
+  </version>
+  <version>
     <id>1.6.16</id>
     <releaseNotes>
       -   Fixed a new bug cosed by 1.6.15 change. 

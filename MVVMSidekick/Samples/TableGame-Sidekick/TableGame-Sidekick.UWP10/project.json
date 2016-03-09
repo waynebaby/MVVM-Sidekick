@@ -7,6 +7,7 @@
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "MVVM-Sidekick": "1.6.8",
     "Rx-Core": "2.2.5",
+    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.0.3",
     "Rx-Interfaces": "2.2.5",
     "Rx-Linq": "2.2.5",
     "Rx-Main": "2.2.5",
