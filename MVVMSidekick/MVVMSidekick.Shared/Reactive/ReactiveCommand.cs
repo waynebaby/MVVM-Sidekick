@@ -81,7 +81,7 @@ namespace MVVMSidekick.Reactive
 		{
 			if (CanExecute(parameter))
 			{
-				var evp = EventCommandEventArgs.Create(parameter, ViewModel, null);
+				var evp = EventCommandEventArgs.Create(parameter, ViewModel);
 				_executeSource.OnNext(new EventPattern<EventCommandEventArgs>(this, evp));
 				await evp.Completion.Task;
 			}

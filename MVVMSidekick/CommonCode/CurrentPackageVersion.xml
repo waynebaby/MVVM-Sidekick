@@ -2,10 +2,11 @@
 <versions>
 
   <version>
-    <id>1.6.17-prerelease</id>
+    <id>1.6.18-prerelease</id>
     <releaseNotes>
       -   Add ExecuteAsync(object parameter) in ReactiveCommand  (Command.CommandCore) to be awaited.
       -   Add Code snippet for command in BindableBase.
+      -   Add ContentDialog in UWP support (as a Stage)
     </releaseNotes>
   </version>
   <version>

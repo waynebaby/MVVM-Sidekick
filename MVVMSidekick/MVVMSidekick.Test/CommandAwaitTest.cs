@@ -77,6 +77,7 @@ namespace MVVMSidekick.Test
 						{
 
 							vm.Value = 1;
+							await Task.Delay(3000);
 							await vm.Command2.ExecuteAsync(e);							
 						})
 					.DoNotifyDefaultEventRouter(vm, commandId)

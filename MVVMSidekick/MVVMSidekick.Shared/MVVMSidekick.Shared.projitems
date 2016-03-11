@@ -36,6 +36,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Testing\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Stage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IStage.cs" />

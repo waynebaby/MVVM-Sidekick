@@ -447,24 +447,24 @@ namespace MVVMSidekick
 			/// <param name="model">The View Model  command wanna bind to</param>
 			/// <param name="canExecuteWhenBusy">if can execute when ui busy , input true</param>
 			/// <returns>command instance itself</returns>
-			public static CommandModel<TCommand, TResource> ListenToIsUIBusy<TCommand, TResource, TViewModel>(this CommandModel<TCommand, TResource> command, ViewModelBase<TViewModel> model, bool canExecuteWhenBusy = false, IObservable<bool> anotherSequence = null)
+			public static CommandModel<TCommand, TResource> ListenToIsUIBusy<TCommand, TResource, TViewModel>(this CommandModel<TCommand, TResource> command, ViewModelBase<TViewModel> model, bool canExecuteWhenBusy = false, IObservable<bool> and_also_listen_to_this_sequence = null)
 				where TViewModel : ViewModelBase<TViewModel>
 				where TCommand : ReactiveCommand
 			{
 
 				var eventSeq = model.GetValueContainer(x => x.IsUIBusy)
 						.GetNewValueObservable()
-						.Select(e =>
-							 canExecuteWhenBusy ? canExecuteWhenBusy : (!e.EventArgs));
+						.Select(e => canExecuteWhenBusy ? canExecuteWhenBusy : (!e.EventArgs));
 
-				if (anotherSequence != null)
+
+				if (and_also_listen_to_this_sequence != null)
 				{
-					eventSeq = eventSeq.Merge(anotherSequence);
-				}
+					eventSeq = eventSeq.CombineLatest(and_also_listen_to_this_sequence, (a, b) => a && b);
+				}								   
 
 
-				//See Test  CommandListenToUIBusy_Test
-				var mainSeq = Observable.Range(0, 1)
+				 //See Test  CommandListenToUIBusy_Test
+				 var mainSeq = Observable.Range(0, 2)
 					.Select(x => (x == 0) ? !command.LastCanExecuteValue : command.LastCanExecuteValue)
 					.Concat(eventSeq);
 
