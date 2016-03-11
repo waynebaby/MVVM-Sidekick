@@ -464,7 +464,7 @@ namespace MVVMSidekick
 
 
 				 //See Test  CommandListenToUIBusy_Test
-				 var mainSeq = Observable.Range(0, 2)
+				 var mainSeq = Observable.Range(0, 1)
 					.Select(x => (x == 0) ? !command.LastCanExecuteValue : command.LastCanExecuteValue)
 					.Concat(eventSeq);
 

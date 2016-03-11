@@ -6,6 +6,7 @@ using MVVMSidekick.Services;
 using MVVMSidekick.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using MVVMSidekick.ViewModels;
 
 namespace MVVMSidekick.Test
 {
@@ -73,11 +74,11 @@ namespace MVVMSidekick.Test
             c.ListenCanExecuteObservable(Observable.Delay(Observable.Range(0, 1).Select(xxx => false), DateTimeOffset.Now.AddMilliseconds(15)));
 			Assert.AreEqual(c.CanExecute(null), true);
 			await Task.Delay(100);
-			Assert.AreEqual(v, false);
-
+			Assert.AreEqual(v, false);	   
 
 		}
 
+		
 
 		[TestMethod]
         public void TestRegRes()

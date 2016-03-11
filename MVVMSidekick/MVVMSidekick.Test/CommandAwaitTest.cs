@@ -4,6 +4,7 @@ using MVVMSidekick.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,8 +21,47 @@ namespace MVVMSidekick.Test
 			await vm.Command1.ExecuteAsync(null);
 			Assert.AreEqual(vm.Value, 4);
 		}
-	}
 
+
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
+		public async Task CommandAwaitTestTestCommand2()
+		{
+			var vm = new CommandAsyncTestVM();
+			vm.Command2.ListenToIsUIBusy(vm, false);
+
+			await vm.Command1.ExecuteAsync(null);
+			Assert.AreEqual(vm.Value, 1);
+		}
+
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
+		public async Task CommandAwaitTestTestCommand3()
+		{
+			var vm = new CommandAsyncTestVM();
+			vm.Command2.ListenToIsUIBusy(vm, false, Observable.Delay(new[] { false}.ToObservable() ,TimeSpan.FromSeconds(2.5) ));
+
+			await vm.Command1.ExecuteAsync(null);
+			Assert.AreEqual(vm.Value, 1);
+		}
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
+
+		public async Task CommandAwaitTestTestCommand4()
+		{
+			var vm = new CommandAsyncTestVM();
+			vm.Command2.ListenToIsUIBusy(vm, false, Observable.Delay(new[] { true }.ToObservable(), TimeSpan.FromSeconds(3.5)));
+
+			await vm.Command1.ExecuteAsync(null);
+			Assert.AreEqual(vm.Value, 1);
+		}
+
+		public async Task CommandAwaitTestTestCommand5()
+		{
+			var vm = new CommandAsyncTestVM();
+			vm.Command2.ListenToIsUIBusy(vm, false, Observable.Delay(new[] { false  }.ToObservable(), TimeSpan.FromSeconds(3.5)));
+
+			await vm.Command1.ExecuteAsync(null);
+			Assert.AreEqual(vm.Value, 1);
+		}
+	}  
 
 
 	//[DataContract() ] //if you want
@@ -78,6 +118,7 @@ namespace MVVMSidekick.Test
 
 							vm.Value = 1;
 							await Task.Delay(3000);
+							vm.IsUIBusy = true;
 							await vm.Command2.ExecuteAsync(e);							
 						})
 					.DoNotifyDefaultEventRouter(vm, commandId)
