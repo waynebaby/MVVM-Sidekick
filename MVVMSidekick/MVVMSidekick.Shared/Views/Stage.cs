@@ -751,20 +751,21 @@ where TTarget : class, IViewModel
 					//var oldcontent = targetCControl.Content as IDisposable;			
 					targetCControl.Content = view;
 					//targetCControl.
+					var viewModel = view.ViewModel;
 
-					var actionList = new List<Action>();
-					var eh = new TypedEventHandler<ContentDialog, ContentDialogClosingEventArgs>(
-						(c, a) =>
-						{
-							foreach (var item in actionList)
+					IDisposable dis=null;
+
+					dis= Observable.FromAsync(x => viewModel.WaitForClose())
+							.ObserveOnDispatcher()
+							.Subscribe(_=>
 							{
-								item();
-							}
-						});
-
-					targetCControl.Closing += eh;
-					actionList.Add(() => targetCControl.Content = null);
-					actionList.Add(() => targetCControl.Closing -= eh);
+							
+								targetCControl.Hide();
+								targetCControl.Content = null;
+								dis?.Dispose();
+							});
+				  
+					//actionList.Add(() => targetCControl.Closing -= eh);
 					var t = targetCControl.ShowAsync();
 				}
 				else

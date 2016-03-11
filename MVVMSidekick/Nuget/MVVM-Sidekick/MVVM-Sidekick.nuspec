@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.18-prerelease</version>
+    <version>1.6.18</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,7 +38,7 @@
 
     </summary>
     <releaseNotes>
-	1.6.18-prerelease
+	1.6.18
 		
       -   Add ExecuteAsync(object parameter) in ReactiveCommand  (Command.CommandCore) to be awaited.
       -   Add Code snippet for command in BindableBase.
@@ -115,6 +115,7 @@
         <dependency id="Rx-Linq" version="[2.2.5,100.0)" />
         <dependency id="Rx-Main" version="[2.2.5,100.0)" />
         <dependency id="Rx-PlatformServices" version="[2.2.5,100.0)" />
+        <dependency id="Rx-XAML" version="[2.2.5,100.0)" />
         <dependency id="Unity" version="[4.0.1,100.0)" />
       </group>
       <group targetFramework="sl5">
@@ -181,6 +182,7 @@
         <dependency version="[2.2.5,100.0)" id="Rx-Linq" />
         <dependency version="[2.2.5,100.0)" id="Rx-Main" />
         <dependency version="[2.2.5,100.0)" id="Rx-PlatformServices" />
+        <dependency version="[2.2.5,100.0)" id="Rx-XAML" />
         <dependency version="[4.0.1,100.0)" id="Unity" />
       </group>
       <group targetFramework="net452">

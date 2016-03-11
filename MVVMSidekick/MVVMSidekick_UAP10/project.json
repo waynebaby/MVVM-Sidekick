@@ -11,6 +11,7 @@
     "Rx-Linq": "2.2.5",
     "Rx-Main": "2.2.5",
     "Rx-PlatformServices": "2.2.5",
+    "Rx-XAML": "2.2.5",
     "Unity": "4.0.1"
   },
   "frameworks": {
