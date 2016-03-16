@@ -8,12 +8,11 @@
     xmlns:mvvm="using:MVVMSidekick.Views"
     xmlns:vm="using:$safeprojectname$.ViewModels"
     mc:Ignorable="d">
-    <Page.Resources>
-        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="AppName">My Application</x:String>
-        <vm:MainPage_Model x:Key="DesignVM"/>
-    </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  DataContext="{StaticResource DesignVM}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <d:FrameworkElement.DataContext>
+            <vm:MainPage_Model/>
+        </d:FrameworkElement.DataContext>
         <TextBlock x:Name="pageTitle" Grid.Column="1" Margin="100" Text="{Binding Title}" />
 
     </Grid>

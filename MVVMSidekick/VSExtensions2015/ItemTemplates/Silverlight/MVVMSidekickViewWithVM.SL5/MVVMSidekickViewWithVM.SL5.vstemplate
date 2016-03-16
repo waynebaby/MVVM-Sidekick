@@ -35,6 +35,7 @@
       <package id="Rx-Core" version="2.2.5" />
       <package id="Rx-Interfaces" version="2.2.5" />
       <package id="Rx-Linq" version="2.2.5" />
+      <package id="Rx-Xaml" version="2.2.5" />
       <package id="Rx-Main" version="2.2.5" />
       <package id="Rx-PlatformServices" version="2.2.5" />
       <package id="CommonServiceLocator" version="1.3" />
