@@ -11,7 +11,7 @@ namespace MVVMSidekick.Reactive
 		bool CanExecute(object parameter);
 		IObservable<bool> CanExecuteObserveable { get; }
 		IDisposable ListenCanExecuteObservable(IObservable<bool> canExecuteSeq);
-		IReactiveCommand ConfigureSyncCanExecute(Func<object, bool> canExecuteFunc);
+		IReactiveCommand OverwriteCanExecute(Func<object, bool> canExecuteFunc);
 		//IDisposable Subscribe(IObserver<EventPattern<EventCommandEventArgs>> observer);
 		Task ExecuteAsync(object parameter);
 	}

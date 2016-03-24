@@ -62,7 +62,7 @@ namespace MVVMSidekick.Reactive
 			}
 		}
 
-		public IReactiveCommand ConfigureSyncCanExecute(Func<object, bool> canExecuteFunc)
+		public IReactiveCommand OverwriteCanExecute(Func<object, bool> canExecuteFunc)
 		{
 			_canExecuteFunc = canExecuteFunc;
 			return this;
