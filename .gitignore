@@ -119,7 +119,6 @@ Generated_Code #added for RIA/Silverlight projects
 _UpgradeReport_Files/
 Backup*/
 *.nupkg
-UpgradeLog*.XML
 *.dll
 *.exe
 /MVVMSidekick/CommonCode/*.xml
@@ -128,11 +127,8 @@ UpgradeLog*.XML
 /MVVMSidekick/VSExtensions/license.rtf
 /MVVMSidekick/VSExtensions/Preview.png
 /MVVMSidekick/VSExtensions/smaller.png
-
-/MVVMSidekick/MVVMSidekick_UAP10/project.lock.json
-/MVVMSidekick/Nuget/MVVM-Sidekick
+project.lock.json
+/MVVMSidekick/Nuget/MVVM-Sidekick/*.xml
 /MVVMSidekick/Samples/TableGame-Sidekick/TableGame-Sidekick.WPF.Test/FakesAssemblies
-/MVVMSidekick/Samples/TableGame-Sidekick/TableGame-Sidekick.UWP10.Test
-/MVVMSidekick/Samples/TableGame-Sidekick/TableGame-Sidekick.UWP10
-UpgradeLog*.htm
+UpgradeLog*.*
 /MVVMSidekick/CommonCode/CommonCode.vshost.exe.manifest
