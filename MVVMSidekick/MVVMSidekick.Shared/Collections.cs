@@ -547,30 +547,6 @@ namespace MVVMSidekick
 
 
 
-		/// <summary>
-		/// Provides data for the changed events of a vector
-		///</summary>
-		public class VectorChangedEventArgs : Windows.Foundation.Collections.IVectorChangedEventArgs
-		{
-			#region IVectorChangedEventArgs Members
-			/// <summary>
-			/// Describes the change that caused the change
-			/// </summary>
-			public Windows.Foundation.Collections.CollectionChange CollectionChange
-			{
-				get;
-				set;
-			}
-			/// <summary>
-			/// The index of the item changed
-			/// </summary>
-			public uint Index
-			{
-				get;
-				set;
-			}
-			#endregion
-		}
 
 #endif
 		/// <summary>
@@ -1189,15 +1165,31 @@ namespace MVVMSidekick
 
 			public CollectionView<T> CollectionView { get; set; }
 
-			#region ISupportIncrementalLoading Members
+            /// <summary>Internals the load more items asynchronous.</summary>
+            /// <param name="count">The count.</param>
+            /// <returns></returns>
+            async Task<LoadMoreItemsResult> InternalLoadMoreItemsAsync(uint count)
+            {
+                var rval = await _loadMore(CollectionView, (int)count);
+
+                _hasNoMore = !rval.HaveMore;
+
+                foreach (var x in rval.NewItems)
+                {
+                    CollectionView.Add(x);
+
+                }
+                return new LoadMoreItemsResult { Count = count };
+            }
+            #region ISupportIncrementalLoading Members
 
 
 
-			/// <summary>Gets a value indicating whether this instance has more items.</summary>
-			/// <value>
-			/// <c>true</c> if this instance has more items; otherwise, <c>false</c>.
-			/// </value>
-			public bool HasMoreItems
+            /// <summary>Gets a value indicating whether this instance has more items.</summary>
+            /// <value>
+            /// <c>true</c> if this instance has more items; otherwise, <c>false</c>.
+            /// </value>
+            public bool HasMoreItems
 			{
 				get
 				{
@@ -1210,26 +1202,8 @@ namespace MVVMSidekick
 				}
 			}
 
-			/// <summary>Internals the load more items asynchronous.</summary>
-			/// <param name="count">The count.</param>
-			/// <returns></returns>
-			async Task<LoadMoreItemsResult> InternalLoadMoreItemsAsync(uint count)
-			{
-				var rval = await _loadMore(CollectionView, (int)count);
 
-				_hasNoMore = !rval.HaveMore;
 
-				foreach (var x in rval.NewItems)
-				{
-					CollectionView.Add(x);
-
-				}
-				return new LoadMoreItemsResult { Count = count };
-			}
-
-			#endregion
-
-			#region ISupportIncrementalLoading Members
 
 
 			/// <summary>Loads the more items asynchronous.</summary>

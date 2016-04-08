@@ -12,160 +12,109 @@ using Windows.UI.Xaml.Data;
 
 namespace MVVMSidekick.Collections
 {
-    public abstract class DependencyObservableVector<TValue, Subclass> : DependencyObject, IObservableVector<TValue>
-        where Subclass : DependencyObservableVector<TValue, Subclass>
-    {
-        protected ObservableCollection<TValue> _coreCollection;
-        public DependencyObservableVector()
-        {
-            _coreCollection = new ObservableCollection<TValue>();
-            _coreCollection.CollectionChanged += _coreCollection_CollectionChanged;
-
-        }
-
-        private void _coreCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-
-        }
-
-        public TValue this[int index]
-        {
-            get
-            {
-                return _coreCollection[index];
-            }
-            set
-            {
-                _coreCollection[index] = value;
-            }
-        }
-
-
-        public int Count
-        {
-            get { return (int)GetValue(CountProperty); }
-            //set { SetValue(CountProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Count.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CountProperty =
-            DependencyProperty.Register(nameof(Count), typeof(int), typeof(Subclass), new PropertyMetadata(0));
-
-        public bool IsReadOnly
-        {
-            get { return (bool)GetValue(IsReadOnlyProperty); }
-            //set { SetValue(IsReadOnlyProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for IsReadOnly.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsReadOnlyProperty =
-            DependencyProperty.Register(nameof(IsReadOnly), typeof(bool), typeof(Subclass), new PropertyMetadata(false));
-
-
-        public event VectorChangedEventHandler<TValue> VectorChanged;
-
-        public void Add(TValue item)
-        {
-            _coreCollection.Add(item);
-        }
-
-        public void Clear()
-        {
-            _coreCollection.Clear();
-        }
-
-        public bool Contains(TValue item)
-        {
-            return _coreCollection.Contains(item);
-        }
-
-        public void CopyTo(TValue[] array, int arrayIndex)
-        {
-            _coreCollection.CopyTo(array, arrayIndex);
-        }
-
-        public IEnumerator<TValue> GetEnumerator()
-        {
-            return _coreCollection.GetEnumerator();
-        }
-
-        public int IndexOf(TValue item)
-        {
-            return _coreCollection.IndexOf(item);
-        }
-
-        public void Insert(int index, TValue item)
-        {
-            _coreCollection.Insert(index, item);
-        }
-
-        public bool Remove(TValue item)
-        {
-            return _coreCollection.Remove(item);
-        }
-
-        public void RemoveAt(int index)
-        {
-            _coreCollection.RemoveAt(index);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _coreCollection.GetEnumerator();
-        }
-    }
-
+    
     public class DependencyCollectionView : DependencyObservableVector<Object, DependencyCollectionView>, ICollectionView
     {
-        public IObservableVector<object> CollectionGroups
+
+
+        public DependencyCollectionView()
         {
-            get
+            CollectionGroups = new DependencyObservableVector();
+            base.VectorChanged += DependencyCollectionView_VectorChanged;
+        }
+
+        private void DependencyCollectionView_VectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs @event)
+        {
+            switch (@event.CollectionChange)
             {
-                throw new NotImplementedException();
+                case CollectionChange.ItemChanged:
+                    break;
+                default:
+                    RefreshPositionValues();
+                    break;
             }
         }
+
+        public IObservableVector<object> CollectionGroups
+        {
+            get { return (IObservableVector<object>)GetValue(CollectionGroupsProperty); }
+            private set { SetValue(CollectionGroupsProperty, value); }
+        }
+
+        public static readonly DependencyProperty CollectionGroupsProperty =
+            DependencyProperty.Register(nameof(CollectionGroups), typeof(IObservableVector<object>), typeof(DependencyCollectionView), new PropertyMetadata(null));
 
         public object CurrentItem
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return (object)GetValue(CurrentItemProperty); }
+            private set { SetValue(CurrentItemProperty, value); }
         }
+
+        public static readonly DependencyProperty CurrentItemProperty =
+            DependencyProperty.Register(
+                nameof(CurrentItem),
+                typeof(object),
+                typeof(DependencyCollectionView),
+                new PropertyMetadata(
+                    null,
+                    (o, e) => (o as DependencyCollectionView)?.CurrentChanged(o, e.NewValue)));
+
 
         public int CurrentPosition
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return (int)GetValue(CurrentPositionProperty); }
+            private set { SetValue(CurrentPositionProperty, value); }
+        }
+
+        public static readonly DependencyProperty CurrentPositionProperty =
+            DependencyProperty.Register(
+                nameof(CurrentPosition),
+                typeof(int),
+                typeof(DependencyCollectionView),
+                new PropertyMetadata(0, (o, e) =>
+                    (o as DependencyCollectionView)?.RefreshPositionValues()));
+
+        private void RefreshPositionValues()
+        {
+            IsCurrentAfterLast = CurrentPosition >= Count;
+            IsCurrentBeforeFirst = CurrentPosition < 0;
+            CurrentItem = (IsCurrentBeforeFirst || IsCurrentAfterLast) ? null : this[CurrentPosition];
+
         }
 
         public bool HasMoreItems
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return (bool)GetValue(HasMoreItemsProperty); }
+            private set { SetValue(HasMoreItemsProperty, value); }
         }
+
+        public static readonly DependencyProperty HasMoreItemsProperty =
+            DependencyProperty.Register(nameof(HasMoreItems), typeof(bool), typeof(DependencyCollectionView), new PropertyMetadata(false));
+
 
         public bool IsCurrentAfterLast
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return (bool)GetValue(IsCurrentAfterLastProperty); }
+            private set { SetValue(IsCurrentAfterLastProperty, value); }
         }
+
+        public static readonly DependencyProperty IsCurrentAfterLastProperty =
+         DependencyProperty.Register(nameof(IsCurrentAfterLast), typeof(bool), typeof(DependencyCollectionView), new PropertyMetadata(0));
+
 
         public bool IsCurrentBeforeFirst
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return (bool)GetValue(IsCurrentBeforeFirstProperty); }
+            private set { SetValue(IsCurrentBeforeFirstProperty, value); }
         }
 
+        // Using a DependencyProperty as the backing store for IsCurrentBeforeFirst.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsCurrentBeforeFirstProperty =
+            DependencyProperty.Register(nameof(IsCurrentBeforeFirst), typeof(bool), typeof(DependencyCollectionView), new PropertyMetadata(0));
+
+
         public event EventHandler<object> CurrentChanged;
+
         public event CurrentChangingEventHandler CurrentChanging;
 
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
@@ -173,35 +122,113 @@ namespace MVVMSidekick.Collections
             throw new NotImplementedException();
         }
 
+
+
+
+        
         public bool MoveCurrentTo(object item)
         {
-            throw new NotImplementedException();
+            return InternalExecuteCancellable(
+                () =>
+                {
+                    var findex = IndexOf(item);
+                    if (findex < 0)
+                    {
+                        return false;
+                    }
+                    return InternalMoveCurrentToNewPosition(findex);
+                });
         }
+
+
 
         public bool MoveCurrentToFirst()
         {
-            throw new NotImplementedException();
+            return InternalExecuteCancellable(
+             () =>
+             {
+                 var newpo = 0;
+                 return InternalMoveCurrentToNewPosition(newpo);
+             });
         }
 
         public bool MoveCurrentToLast()
         {
-            throw new NotImplementedException();
+            var newpo = Count - 1;
+            return InternalExecuteCancellable(
+               () =>
+               {
+                   return InternalMoveCurrentToNewPosition(newpo);
+               });
         }
 
         public bool MoveCurrentToNext()
         {
-            throw new NotImplementedException();
+            var newpo = CurrentPosition + 1;
+            return InternalExecuteCancellable(
+               () =>
+               {
+                   return InternalMoveCurrentToNewPosition(newpo);
+               });
         }
 
         public bool MoveCurrentToPosition(int index)
         {
-            throw new NotImplementedException();
+            var newpo = index;
+            return InternalExecuteCancellable(
+               () =>
+               {
+                   return InternalMoveCurrentToNewPosition(newpo);
+               });
         }
 
         public bool MoveCurrentToPrevious()
         {
-            throw new NotImplementedException();
+            var newpo = CurrentPosition-1;
+            return InternalExecuteCancellable(
+               () =>
+               {
+                   return InternalMoveCurrentToNewPosition(newpo);
+               });
         }
+        private bool InternalMoveCurrentToNewPosition(int newpo)
+        {
+            if (IsCurrentAfterLast || IsCurrentBeforeFirst)
+            {
+                return false;
+            }
+
+            if (newpo == CurrentPosition || newpo < 0 || newpo >= Count)
+            {
+                return false;
+            }
+
+            var position = CurrentPosition;
+            _coreCollection.Move(position, newpo);
+            CurrentPosition = newpo;
+
+            return true;
+        }
+
+        private bool InternalExecuteCancellable(Func<bool> act)
+        {
+            var rval = false;
+            bool isCanceled = false;
+
+            if (CurrentChanging != null)
+            {
+                var cargs = new CurrentChangingEventArgs(true);
+                CurrentChanging(this, cargs);
+                isCanceled = cargs.Cancel;
+            }
+            if (!isCanceled)
+            {
+                rval = act();
+            }
+
+            return rval;
+        }
+
     }
 }
 
