@@ -9,23 +9,63 @@ using Windows.UI.Xaml.Data;
 
 namespace MVVMSidekick.Collections
 {
-    public class DependencyCollectionViewIncrementalLoader : DependencyObject, ISupportIncrementalLoading
+    public abstract class DependencyCollectionViewIncrementalLoaderBase : DependencyObject, ISupportIncrementalLoading
     {
 
+        public DependencyCollectionViewIncrementalLoaderBase(DependencyCollectionView target)
+        {
+            Target = target;
+        }
+
+        internal protected DependencyCollectionView Target { get; set; }
 
         public bool HasMoreItems
         {
             get
             {
-                throw new NotImplementedException();
+                return OnCheckIfHasMoreItems();
             }
         }
 
+
+        protected abstract bool OnCheckIfHasMoreItems();
+
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
-            throw new NotImplementedException();
+            return OnLoadMoreItemsAsync(count);
+        }
+
+        protected abstract IAsyncOperation<LoadMoreItemsResult> OnLoadMoreItemsAsync(uint count);
+
+    }
+
+
+    public class DependencyCollectionViewDelegateIncrementalLoader : DependencyCollectionViewIncrementalLoaderBase
+    {
+        public DependencyCollectionViewDelegateIncrementalLoader(DependencyCollectionView target,
+            Func<DependencyCollectionView, bool> hasMoreItems,
+            Func<DependencyCollectionView, IAsyncOperation<LoadMoreItemsResult>> loadMoreItemsAsync
+            ) : base(target)
+        {
+            _OnCheckIfHasMoreItems = hasMoreItems;
+            _OnLoadMoreItemsAsync = loadMoreItemsAsync;
+        }
+
+
+        Func<DependencyCollectionView, bool> _OnCheckIfHasMoreItems;
+        Func<DependencyCollectionView, IAsyncOperation<LoadMoreItemsResult>> _OnLoadMoreItemsAsync;
+        protected override bool OnCheckIfHasMoreItems()
+        {
+            return _OnCheckIfHasMoreItems?.Invoke(Target) ?? false;
+        }
+
+        protected override IAsyncOperation<LoadMoreItemsResult> OnLoadMoreItemsAsync(uint count)
+        {
+            return _OnLoadMoreItemsAsync?.Invoke(Target);
         }
     }
+
+
 }
 
 #endif

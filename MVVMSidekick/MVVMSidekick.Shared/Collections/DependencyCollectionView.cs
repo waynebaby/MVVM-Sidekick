@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Data;
 
 namespace MVVMSidekick.Collections
 {
-    
+
     public class DependencyCollectionView : DependencyObservableVector<Object, DependencyCollectionView>, ICollectionView
     {
 
@@ -28,6 +28,37 @@ namespace MVVMSidekick.Collections
             switch (@event.CollectionChange)
             {
                 case CollectionChange.ItemChanged:
+                    break;
+                case CollectionChange.ItemInserted:
+                    if (CollectionGroups?.Count > 0)
+                    {
+                        foreach (DependencyCollectionViewGroupBase item in CollectionGroups)
+                        {
+                            item?.TryAddItemToGroup(item);
+                        }
+                    }
+                    RefreshPositionValues();
+                    break;
+                case CollectionChange.ItemRemoved:
+                    if (CollectionGroups?.Count > 0)
+                    {
+                        foreach (DependencyCollectionViewGroupBase item in CollectionGroups)
+                        {
+                            item?.TryRemoveItemFromGroup(item);
+                        }
+                    }
+                    RefreshPositionValues();
+                    break;
+                case CollectionChange.Reset:
+                    if (CollectionGroups?.Count > 0)
+                    {
+                        foreach (ICollectionViewGroup item in CollectionGroups)
+                        {
+                            item.GroupItems?.Clear();
+                        }
+                    }
+                    RefreshPositionValues();
+
                     break;
                 default:
                     RefreshPositionValues();
@@ -125,7 +156,7 @@ namespace MVVMSidekick.Collections
 
 
 
-        
+
         public bool MoveCurrentTo(object item)
         {
             return InternalExecuteCancellable(
@@ -184,7 +215,7 @@ namespace MVVMSidekick.Collections
 
         public bool MoveCurrentToPrevious()
         {
-            var newpo = CurrentPosition-1;
+            var newpo = CurrentPosition - 1;
             return InternalExecuteCancellable(
                () =>
                {

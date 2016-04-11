@@ -128,7 +128,7 @@ namespace MVVMSidekick.Collections
             get { return false; }
         }
 
-      
+
 
         public event VectorChangedEventHandler<TValue> VectorChanged;
 
@@ -181,6 +181,12 @@ namespace MVVMSidekick.Collections
         {
             return _coreCollection.GetEnumerator();
         }
+    }
+
+
+    public class DependencyObservableVector<T> : DependencyObservableVector<T, DependencyObservableVector<T>>
+    {
+
     }
 
 
