@@ -58,23 +58,23 @@ namespace MVVMSidekick.Collections
 
     public class DependencyDelegateCollectionViewGroup : DependencyCollectionViewGroupBase
     {
-        public DependencyDelegateCollectionViewGroup(Func<object, bool> tryAddItemToGroup, Func<object, bool> tryRemoveItemFromGroup)
+        public DependencyDelegateCollectionViewGroup(Func<ICollectionViewGroup, object, bool> tryAddItemToGroup, Func<ICollectionViewGroup, object, bool> tryRemoveItemFromGroup)
         {
             _OnAddingItemToGroup = tryAddItemToGroup;
             _OnRemovingingItemRemoveGroup = tryRemoveItemFromGroup;
         }
 
-        Func<object, bool> _OnAddingItemToGroup;
+        Func<ICollectionViewGroup, object, bool> _OnAddingItemToGroup;
         protected override bool OnAddingItemToGroup(object item)
         {
-            return _OnAddingItemToGroup?.Invoke(item) ?? false;
+            return _OnAddingItemToGroup?.Invoke(this, item) ?? false;
         }
 
-        Func<object, bool> _OnRemovingingItemRemoveGroup;
+        Func<ICollectionViewGroup, object, bool> _OnRemovingingItemRemoveGroup;
 
         protected override bool OnRemovingingItemFromGroup(object item)
         {
-            return _OnRemovingingItemRemoveGroup?.Invoke(item) ?? false;
+            return _OnRemovingingItemRemoveGroup?.Invoke(this, item) ?? false;
         }
     }
 }

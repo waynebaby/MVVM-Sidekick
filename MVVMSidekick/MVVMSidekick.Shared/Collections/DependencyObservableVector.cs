@@ -119,7 +119,6 @@ namespace MVVMSidekick.Collections
             private set { SetValue(CountProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Count.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CountProperty =
             DependencyProperty.Register(nameof(Count), typeof(int), typeof(Subclass), new PropertyMetadata(0));
 
@@ -184,10 +183,7 @@ namespace MVVMSidekick.Collections
     }
 
 
-    public class DependencyObservableVector<T> : DependencyObservableVector<T, DependencyObservableVector<T>>
-    {
 
-    }
 
 
     public class DependencyObservableVector : DependencyObservableVector<object, DependencyObservableVector>

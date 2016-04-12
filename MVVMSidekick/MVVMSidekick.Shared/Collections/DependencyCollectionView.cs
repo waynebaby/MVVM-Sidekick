@@ -8,7 +8,8 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
-
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MVVMSidekick.Collections
 {
@@ -20,36 +21,41 @@ namespace MVVMSidekick.Collections
         public DependencyCollectionView()
         {
             CollectionGroups = new DependencyObservableVector();
-            base.VectorChanged += DependencyCollectionView_VectorChanged;
+            //base.VectorChanged += DependencyCollectionView_VectorChanged;
+            base._coreCollection.CollectionChanged += _coreCollection_CollectionChanged;
+
         }
 
-        private void DependencyCollectionView_VectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs @event)
+        private void _coreCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            switch (@event.CollectionChange)
+            switch (e.Action)
             {
-                case CollectionChange.ItemChanged:
-                    break;
-                case CollectionChange.ItemInserted:
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+
                     if (CollectionGroups?.Count > 0)
                     {
                         foreach (DependencyCollectionViewGroupBase item in CollectionGroups)
                         {
-                            item?.TryAddItemToGroup(item);
+                            e.NewItems?.OfType<object>().ToList().Select(x => item?.TryAddItemToGroup(x)).Any();
                         }
                     }
                     RefreshPositionValues();
                     break;
-                case CollectionChange.ItemRemoved:
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Move:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
                     if (CollectionGroups?.Count > 0)
                     {
                         foreach (DependencyCollectionViewGroupBase item in CollectionGroups)
                         {
-                            item?.TryRemoveItemFromGroup(item);
+                            e.OldItems?.OfType<object>().ToList().Select(x => item?.TryRemoveItemFromGroup(x)).Any();
                         }
                     }
                     RefreshPositionValues();
                     break;
-                case CollectionChange.Reset:
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
                     if (CollectionGroups?.Count > 0)
                     {
                         foreach (ICollectionViewGroup item in CollectionGroups)
@@ -58,13 +64,13 @@ namespace MVVMSidekick.Collections
                         }
                     }
                     RefreshPositionValues();
-
                     break;
                 default:
-                    RefreshPositionValues();
                     break;
             }
         }
+
+
 
         public IObservableVector<object> CollectionGroups
         {
@@ -88,7 +94,7 @@ namespace MVVMSidekick.Collections
                 typeof(DependencyCollectionView),
                 new PropertyMetadata(
                     null,
-                    (o, e) => (o as DependencyCollectionView)?.CurrentChanged(o, e.NewValue)));
+                    (o, e) => (o as DependencyCollectionView)?.CurrentChanged?.Invoke(o, e.NewValue)));
 
 
         public int CurrentPosition
@@ -139,7 +145,6 @@ namespace MVVMSidekick.Collections
             private set { SetValue(IsCurrentBeforeFirstProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for IsCurrentBeforeFirst.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsCurrentBeforeFirstProperty =
             DependencyProperty.Register(nameof(IsCurrentBeforeFirst), typeof(bool), typeof(DependencyCollectionView), new PropertyMetadata(0));
 
@@ -150,10 +155,17 @@ namespace MVVMSidekick.Collections
 
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
-            throw new NotImplementedException();
+            return InternalLoadMoreItemsAsync(count).AsAsyncOperation();
         }
 
-
+        private async Task<LoadMoreItemsResult> InternalLoadMoreItemsAsync(uint count)
+        {
+            if (IncrementalLoader != null && HasMoreItems)
+            {
+                await IncrementalLoader.LoadMoreItemsAsync(count);
+            }
+            return default(LoadMoreItemsResult);
+        }
 
 
 
@@ -259,6 +271,42 @@ namespace MVVMSidekick.Collections
 
             return rval;
         }
+
+        public DependencyCollectionViewIncrementalLoaderBase IncrementalLoader
+        {
+            get { return (DependencyCollectionViewIncrementalLoaderBase)GetValue(IncrementalLoaderProperty); }
+            set { SetValue(IncrementalLoaderProperty, value); }
+        }
+
+        public static readonly DependencyProperty IncrementalLoaderProperty =
+            DependencyProperty.Register(
+                nameof(IncrementalLoader),
+                typeof(DependencyCollectionViewIncrementalLoaderBase),
+                typeof(DependencyCollectionView),
+                new PropertyMetadata(null,
+                (o, e) =>
+                {
+                    var cv = o as DependencyCollectionView;
+                    //BindingOperations.SetBinding(cv, HasMoreItemsProperty, new Binding ());
+                    cv.HasMoreItems = false;
+                    if (e.NewValue != null)
+                    {
+                        var binding = new Binding()
+                        {
+                            Mode = BindingMode.OneWay,
+                            Path = new PropertyPath(nameof(HasMoreItems)),
+                            Source = e.NewValue,
+
+                        };
+                        var nv = e.NewValue as DependencyCollectionViewIncrementalLoaderBase;
+                        nv.Target = cv;
+                        BindingOperations.SetBinding(cv, HasMoreItemsProperty, binding);
+                    }
+
+                }
+                ));
+
+
 
     }
 }

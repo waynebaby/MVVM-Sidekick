@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
@@ -44,7 +45,7 @@ namespace MVVMSidekick.Collections
     {
         public DependencyCollectionViewDelegateIncrementalLoader(DependencyCollectionView target,
             Func<DependencyCollectionView, bool> hasMoreItems,
-            Func<DependencyCollectionView, IAsyncOperation<LoadMoreItemsResult>> loadMoreItemsAsync
+            Func<DependencyCollectionView, int, Task<LoadMoreItemsResult>> loadMoreItemsAsync
             ) : base(target)
         {
             _OnCheckIfHasMoreItems = hasMoreItems;
@@ -53,7 +54,7 @@ namespace MVVMSidekick.Collections
 
 
         Func<DependencyCollectionView, bool> _OnCheckIfHasMoreItems;
-        Func<DependencyCollectionView, IAsyncOperation<LoadMoreItemsResult>> _OnLoadMoreItemsAsync;
+        Func<DependencyCollectionView, int, Task<LoadMoreItemsResult>> _OnLoadMoreItemsAsync;
         protected override bool OnCheckIfHasMoreItems()
         {
             return _OnCheckIfHasMoreItems?.Invoke(Target) ?? false;
@@ -61,7 +62,7 @@ namespace MVVMSidekick.Collections
 
         protected override IAsyncOperation<LoadMoreItemsResult> OnLoadMoreItemsAsync(uint count)
         {
-            return _OnLoadMoreItemsAsync?.Invoke(Target);
+            return _OnLoadMoreItemsAsync?.Invoke(Target, (int)count)?.AsAsyncOperation();
         }
     }
 
