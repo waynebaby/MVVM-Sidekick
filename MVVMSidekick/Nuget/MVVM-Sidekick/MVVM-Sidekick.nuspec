@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.18</version>
+    <version>1.6.21</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,11 +38,16 @@
 
     </summary>
     <releaseNotes>
+	1.6.21
+		
+      -   Added DependencyCollectionView in Metro/WPA81/UAP10
+    
+
 	1.6.18
 		
-      -   Add ExecuteAsync(object parameter) in ReactiveCommand  (Command.CommandCore) to be awaited.
-      -   Add Code snippet for command in BindableBase.
-      -   Add ContentDialog in UWP support (as a Stage)
+      -   Added ExecuteAsync(object parameter) in ReactiveCommand  (Command.CommandCore) to be awaited.
+      -   Added Code snippet for command in BindableBase.
+      -   Added ContentDialog in UWP support (as a Stage)
     
 
 	1.6.16

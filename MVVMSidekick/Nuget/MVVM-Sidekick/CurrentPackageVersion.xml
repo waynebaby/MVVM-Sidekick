@@ -2,11 +2,17 @@
 <versions>
 
   <version>
+    <id>1.6.21</id>
+    <releaseNotes>
+      -   Added DependencyCollectionView in Metro/WPA81/UAP10
+    </releaseNotes>
+  </version>
+  <version>
     <id>1.6.18</id>
     <releaseNotes>
-      -   Add ExecuteAsync(object parameter) in ReactiveCommand  (Command.CommandCore) to be awaited.
-      -   Add Code snippet for command in BindableBase.
-      -   Add ContentDialog in UWP support (as a Stage)
+      -   Added ExecuteAsync(object parameter) in ReactiveCommand  (Command.CommandCore) to be awaited.
+      -   Added Code snippet for command in BindableBase.
+      -   Added ContentDialog in UWP support (as a Stage)
     </releaseNotes>
   </version>
   <version>

@@ -4,29 +4,55 @@ using System.Collections.Generic;
 using System.Text;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 
 namespace MVVMSidekick.Collections
 {
-    public abstract class DependencyCollectionViewGroupBase : DependencyObject, ICollectionViewGroup
-    {
 
-        public DependencyCollectionViewGroupBase()
+    public class DependencyCollectionViewGroup : DependencyObject, ICollectionViewGroup
+    {
+        public DependencyCollectionViewGroup(object groupObject, DependencyCollectionView parentView)
         {
-            Group = new object();
-            GroupItems = new DependencyObservableVector();
+            Group = groupObject;
+            var groupItems = new DependencyCollectionView();
+            GroupItems = groupItems;
+            _parentView = parentView;
+            var loader = new DependencyCollectionViewProxyIncrementalLoader()
+            {
+                InnerLoader = parentView.IncrementalLoader
+            };
+            
+            groupItems.IncrementalLoader = loader;
+
+
+
         }
+        //public ItemsControl BindedToItemsControl
+        //{
+        //    get { return (ItemsControl)GetValue(BindedToItemsControlProperty); }
+        //    set { SetValue(BindedToItemsControlProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for BindedToItemsControl.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty BindedToItemsControlProperty =
+        //    DependencyProperty.Register("BindedToItemsControl", typeof(ItemsControl), typeof(DependencyCollectionViewGroup), new PropertyMetadata(null));
+
+
+
+
+        protected DependencyCollectionView _parentView;
 
         public object Group
         {
             get { return (object)GetValue(GroupProperty); }
-            set { SetValue(GroupProperty, value); }
+            protected set { SetValue(GroupProperty, value); }
         }
 
 
 
         public static readonly DependencyProperty GroupProperty =
-            DependencyProperty.Register(nameof(Group), typeof(object), typeof(DependencyCollectionViewGroupBase), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Group), typeof(object), typeof(DependencyCollectionViewGroup), new PropertyMetadata(null));
 
 
         public IObservableVector<object> GroupItems
@@ -36,8 +62,19 @@ namespace MVVMSidekick.Collections
         }
 
         public static readonly DependencyProperty GroupItemsProperty =
-            DependencyProperty.Register(nameof(GroupItems), typeof(IObservableVector<object>), typeof(DependencyCollectionViewGroupBase), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(GroupItems), typeof(IObservableVector<object>), typeof(DependencyCollectionViewGroup), new PropertyMetadata(null));
 
+    }
+
+
+    public abstract class SelfServiceDependencyCollectionViewGroupBase : DependencyCollectionViewGroup, IDependencyCollectionViewGroupingManager
+    {
+
+        public SelfServiceDependencyCollectionViewGroupBase(object groupObject, DependencyCollectionView parentView)
+            : base(groupObject, parentView)
+        {
+
+        }
 
         public bool TryAddItemToGroup(object item)
         {
@@ -56,9 +93,12 @@ namespace MVVMSidekick.Collections
     }
 
 
-    public class DependencyDelegateCollectionViewGroup : DependencyCollectionViewGroupBase
+
+    public class SelfServiceDependencyDelegateCollectionViewGroup : SelfServiceDependencyCollectionViewGroupBase
     {
-        public DependencyDelegateCollectionViewGroup(Func<ICollectionViewGroup, object, bool> tryAddItemToGroup, Func<ICollectionViewGroup, object, bool> tryRemoveItemFromGroup)
+
+        public SelfServiceDependencyDelegateCollectionViewGroup(object groupObject, DependencyCollectionView parentView, Func<ICollectionViewGroup, object, bool> tryAddItemToGroup, Func<ICollectionViewGroup, object, bool> tryRemoveItemFromGroup)
+      : base(groupObject, parentView)
         {
             _OnAddingItemToGroup = tryAddItemToGroup;
             _OnRemovingingItemRemoveGroup = tryRemoveItemFromGroup;

@@ -35,7 +35,7 @@ namespace MVVMSidekick_UAP10.Test
 
 
         [Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer.UITestMethod]
-         public void  AutoGroupTest()
+        public void AutoGroupTest()
         {
             var cw = new DependencyCollectionView();
             CreateGroups(cw);
@@ -55,7 +55,7 @@ namespace MVVMSidekick_UAP10.Test
                 19,
                 cw
                     .CollectionGroups
-                    .OfType<DependencyCollectionViewGroupBase>()
+                    .OfType<SelfServiceDependencyCollectionViewGroupBase>()
                     .Where(g => (int)g.Group == 3)
                     .Select(g => g.GroupItems.Count).First());
 
@@ -65,9 +65,9 @@ namespace MVVMSidekick_UAP10.Test
                 cw.Count);
 
 
-            var incFac = new DependencyCollectionViewDelegateIncrementalLoader(cw,
-                v => true,
-                async (v, c) =>
+            var incFac = new DependencyCollectionViewDelegateIncrementalLoader(
+                (v, inc) => true,
+                async (v, inc, c) =>
                 {
                     Enumerable.Range((int)v[v.Count - 1] + 1, c)
                     .ToList().ForEach(val => v.Add(val));
@@ -78,7 +78,7 @@ namespace MVVMSidekick_UAP10.Test
 
             cw.IncrementalLoader = incFac;
 
-             cw.LoadMoreItemsAsync(10);
+            cw.LoadMoreItemsAsync(10);
 
             Assert.AreEqual(
                  109,
@@ -88,7 +88,7 @@ namespace MVVMSidekick_UAP10.Test
                 21,
                 cw
                     .CollectionGroups
-                    .OfType<DependencyCollectionViewGroupBase>()
+                    .OfType<SelfServiceDependencyCollectionViewGroupBase>()
                     .Where(g => (int)g.Group == 3)
                     .Select(g => g.GroupItems.Count).First());
 
@@ -96,10 +96,10 @@ namespace MVVMSidekick_UAP10.Test
 
         private static void CreateGroups(DependencyCollectionView cw)
         {
-            Func<int, DependencyDelegateCollectionViewGroup> fac =
+            Func<int, SelfServiceDependencyDelegateCollectionViewGroup> fac =
                 n =>
                 {
-                    return new DependencyDelegateCollectionViewGroup(
+                    return new SelfServiceDependencyDelegateCollectionViewGroup(n, cw,
                     (c, o) =>
                     {
                         if (o is int)
@@ -123,10 +123,7 @@ namespace MVVMSidekick_UAP10.Test
                         }
                         return false;
 
-                    })
-                    {
-                        Group = n,
-                    };
+                    });
                 };
 
 

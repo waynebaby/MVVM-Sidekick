@@ -30,11 +30,13 @@ namespace MVVMSidekick.Collections
 
         private void _coreCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            Count = _coreCollection.Count;
             if (VectorChanged != null)
             {
 
                 switch (e.Action)
                 {
+
                     case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
                         {
                             var changeType = CollectionChange.ItemInserted;
@@ -63,8 +65,8 @@ namespace MVVMSidekick.Collections
                         break;
                     case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
                         {
-                            var changeType = CollectionChange.ItemChanged;
-                            VectorChanged(this, new VectorChangedEventArgs { CollectionChange = changeType });
+                            var changeType = CollectionChange.Reset;
+                            VectorChanged(this, new VectorChangedEventArgs { CollectionChange = changeType, Index = 0u });
                         }
                         break;
                     default:

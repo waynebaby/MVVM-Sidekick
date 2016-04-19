@@ -14,14 +14,13 @@ using System.Threading.Tasks;
 namespace MVVMSidekick.Collections
 {
 
-    public class DependencyCollectionView : DependencyObservableVector<Object, DependencyCollectionView>, ICollectionView
+    public class DependencyCollectionView : DependencyObservableVector<Object, DependencyCollectionView>, ICollectionView, ISupportIncrementalLoading
     {
 
 
         public DependencyCollectionView()
         {
-            CollectionGroups = new DependencyObservableVector();
-            //base.VectorChanged += DependencyCollectionView_VectorChanged;
+            CollectionGroups = new DependencyObservableVector();  
             base._coreCollection.CollectionChanged += _coreCollection_CollectionChanged;
 
         }
@@ -34,10 +33,11 @@ namespace MVVMSidekick.Collections
 
                     if (CollectionGroups?.Count > 0)
                     {
-                        foreach (DependencyCollectionViewGroupBase item in CollectionGroups)
+                        foreach (var item in CollectionGroups.OfType < SelfServiceDependencyCollectionViewGroupBase>())
                         {
-                            e.NewItems?.OfType<object>().ToList().Select(x => item?.TryAddItemToGroup(x)).Any();
+                            e.NewItems?.OfType<object>().ToList().Select(x => item?.TryAddItemToGroup(x)).ToArray();
                         }
+                        e.NewItems?.OfType<object>().ToList().Select(x => GroupingManager?.TryAddItemToGroup(x)).ToArray();
                     }
                     RefreshPositionValues();
                     break;
@@ -46,10 +46,12 @@ namespace MVVMSidekick.Collections
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
                     if (CollectionGroups?.Count > 0)
                     {
-                        foreach (DependencyCollectionViewGroupBase item in CollectionGroups)
+                        foreach (var item in CollectionGroups.OfType< SelfServiceDependencyCollectionViewGroupBase>())
                         {
                             e.OldItems?.OfType<object>().ToList().Select(x => item?.TryRemoveItemFromGroup(x)).Any();
                         }
+                        e.NewItems?.OfType<object>().ToList().Select(x => GroupingManager?.TryRemoveItemFromGroup(x)).ToArray();
+
                     }
                     RefreshPositionValues();
                     break;
@@ -69,6 +71,17 @@ namespace MVVMSidekick.Collections
                     break;
             }
         }
+
+        public DependencyCollectionViewGroupingManagerBase GroupingManager
+        {
+            get { return (DependencyCollectionViewGroupingManagerBase)GetValue(GroupingManagerProperty); }
+            set { SetValue(GroupingManagerProperty, value); }
+        }
+
+        public static readonly DependencyProperty GroupingManagerProperty =
+            DependencyProperty.Register(nameof(GroupingManager), typeof(DependencyCollectionViewGroupingManagerBase), typeof(DependencyCollectionView), new PropertyMetadata(null));
+
+
 
 
 
@@ -236,20 +249,20 @@ namespace MVVMSidekick.Collections
         }
         private bool InternalMoveCurrentToNewPosition(int newpo)
         {
-            if (IsCurrentAfterLast || IsCurrentBeforeFirst)
-            {
-                return false;
-            }
+            //if (IsCurrentAfterLast || IsCurrentBeforeFirst)
+            //{
+            //    return false;
+            //}
 
             if (newpo == CurrentPosition || newpo < 0 || newpo >= Count)
             {
                 return false;
             }
 
-            var position = CurrentPosition;
-            _coreCollection.Move(position, newpo);
+            //var position = CurrentPosition;
+            //_coreCollection.Move(position, newpo);
             CurrentPosition = newpo;
-
+            
             return true;
         }
 
@@ -296,7 +309,6 @@ namespace MVVMSidekick.Collections
                             Mode = BindingMode.OneWay,
                             Path = new PropertyPath(nameof(HasMoreItems)),
                             Source = e.NewValue,
-
                         };
                         var nv = e.NewValue as DependencyCollectionViewIncrementalLoaderBase;
                         nv.Target = cv;
