@@ -38,6 +38,7 @@ namespace MVVMSidekick.Collections
 
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
+            HasMoreItems = OnCheckIfHasMoreItems();
             var v = OnLoadMoreItemsAsync(count);
             HasMoreItems = OnCheckIfHasMoreItems();
             return v;
@@ -55,17 +56,17 @@ namespace MVVMSidekick.Collections
         {
 
 
-            base.RegisterPropertyChangedCallback(InnerLoaderProperty,
-                (o, e) =>
-                {
-                    var b = new Binding()
-                    {
-                        Path = new PropertyPath(nameof(HasMoreItems)),
-                        Source = InnerLoader,
-                    };
+            //base.RegisterPropertyChangedCallback(InnerLoaderProperty,
+            //    (o, e) =>
+            //    {
+            //        var b = new Binding()
+            //        {
+            //            Path = new PropertyPath(nameof(HasMoreItems)),
+            //            Source = InnerLoader,
+            //        };
 
-                    BindingOperations.SetBinding(this, HasMoreItemsProperty, b);
-                });
+            //        BindingOperations.SetBinding(this, HasMoreItemsProperty, b);
+            //    });
 
         }
 
@@ -78,7 +79,23 @@ namespace MVVMSidekick.Collections
 
         // Using a DependencyProperty as the backing store for InnerLoader.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty InnerLoaderProperty =
-            DependencyProperty.Register("InnerLoader", typeof(DependencyCollectionViewIncrementalLoaderBase), typeof(DependencyCollectionViewProxyIncrementalLoader), new PropertyMetadata(null));
+            DependencyProperty.Register(
+                "InnerLoader",
+                typeof(DependencyCollectionViewIncrementalLoaderBase),
+                typeof(DependencyCollectionViewProxyIncrementalLoader),
+                new PropertyMetadata(
+                    null,
+                  (o, e) =>
+                  {
+                      var _this = o as DependencyCollectionViewProxyIncrementalLoader;
+                      var b = new Binding()
+                      {
+                          Path = new PropertyPath(nameof(HasMoreItems)),
+                          Source = _this.InnerLoader,
+                      };
+
+                      BindingOperations.SetBinding(_this, HasMoreItemsProperty, b);
+                  }));
 
 
         sealed protected override bool OnCheckIfHasMoreItems()
@@ -102,6 +119,7 @@ namespace MVVMSidekick.Collections
         {
             _OnCheckIfHasMoreItems = hasMoreItems;
             _OnLoadMoreItemsAsync = loadMoreItemsAsync;
+            HasMoreItems = true;
         }
 
 

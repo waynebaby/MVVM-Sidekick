@@ -17,7 +17,7 @@ namespace MVVMSidekick.Collections
             Group = groupObject;
             var groupItems = new DependencyCollectionView();
             GroupItems = groupItems;
-            _parentView = parentView;
+            ParentView = parentView;
             var loader = new DependencyCollectionViewProxyIncrementalLoader()
             {
                 InnerLoader = parentView.IncrementalLoader
@@ -41,7 +41,7 @@ namespace MVVMSidekick.Collections
 
 
 
-        protected DependencyCollectionView _parentView;
+        private DependencyCollectionView parentView;
 
         public object Group
         {
@@ -59,6 +59,19 @@ namespace MVVMSidekick.Collections
         {
             get { return (IObservableVector<object>)GetValue(GroupItemsProperty); }
             set { SetValue(GroupItemsProperty, value); }
+        }
+
+        public DependencyCollectionView ParentView
+        {
+            get
+            {
+                return parentView;
+            }
+
+            set
+            {
+                parentView = value;
+            }
         }
 
         public static readonly DependencyProperty GroupItemsProperty =

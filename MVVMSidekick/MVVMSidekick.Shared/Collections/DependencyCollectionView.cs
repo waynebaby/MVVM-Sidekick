@@ -173,7 +173,7 @@ namespace MVVMSidekick.Collections
 
         private async Task<LoadMoreItemsResult> InternalLoadMoreItemsAsync(uint count)
         {
-            if (IncrementalLoader != null && HasMoreItems)
+            if (IncrementalLoader != null && IncrementalLoader.HasMoreItems)
             {
                 await IncrementalLoader.LoadMoreItemsAsync(count);
             }

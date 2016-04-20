@@ -17,10 +17,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListenToEventRouterTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\SendToEventRouterAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyCollectionView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyCollectionViewGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyCollectionViewGroupingManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyCollectionViewIncrementalLoader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyCollectionView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyObservableVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common.cs" />

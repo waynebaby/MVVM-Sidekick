@@ -70,7 +70,8 @@ namespace MVVMSidekick_UAP10.Test
                 async (v, inc, c) =>
                 {
                     Enumerable.Range((int)v[v.Count - 1] + 1, c)
-                    .ToList().ForEach(val => v.Add(val));
+                    .ToList().ForEach(val =>
+                        v.Add(val));
                     await Task.Yield();
                     return new LoadMoreItemsResult { Count = (uint)c };
                 }
@@ -78,8 +79,8 @@ namespace MVVMSidekick_UAP10.Test
 
             cw.IncrementalLoader = incFac;
 
-            cw.LoadMoreItemsAsync(10);
-
+var t=            cw.LoadMoreItemsAsync(10);
+          
             Assert.AreEqual(
                  109,
                  cw.Count);
