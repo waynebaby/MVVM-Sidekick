@@ -18,15 +18,15 @@ namespace MVVMSidekick.Collections
     {
 
 
-      
+
         public DependencyCollectionViewGroupingManagerBase(DependencyCollectionView collectionView)
         {
             CollectionView = collectionView;
 
             var binding = new Binding
             {
-                Path = new PropertyPath( nameof (collectionView.IncrementalLoader)),
-                Source= CollectionView
+                Path = new PropertyPath(nameof(collectionView.IncrementalLoader)),
+                Source = CollectionView
             };
 
             BindingOperations.SetBinding(this, IncrementalLoaderProperty, binding);
@@ -39,7 +39,7 @@ namespace MVVMSidekick.Collections
         }
 
         public static readonly DependencyProperty CollectionViewProperty =
-            DependencyProperty.Register(nameof(CollectionView), typeof(DependencyCollectionView), typeof(DependencyCollectionViewGroupingManagerBase), new PropertyMetadata(0));
+            DependencyProperty.Register(nameof(CollectionView), typeof(DependencyCollectionView), typeof(DependencyCollectionViewGroupingManagerBase), new PropertyMetadata(null));
 
 
         protected DependencyCollectionViewIncrementalLoaderBase IncrementalLoader
@@ -80,17 +80,17 @@ namespace MVVMSidekick.Collections
                 nameof(GroupCount),
                 typeof(int),
                 typeof(DependencyCollectionViewGroupingManagerBase),
-                new PropertyMetadata(3,
+                new PropertyMetadata(-1,
                     (o, e) =>
                     {
                         var gm = o as DependencyCollectionViewGroupingManagerBase;
                         var count = (int)e.NewValue;
                         var view = gm.CollectionView;
-                        InitCollectionViewGroup(view, count);
+                        gm.InitCollectionViewGroup(view, count);
                     }
                 ));
 
-        private static void InitCollectionViewGroup(DependencyCollectionView view, int count)
+        private void InitCollectionViewGroup(DependencyCollectionView view, int count)
         {
             if (view.CollectionGroups?.Count != count)
             {
@@ -98,8 +98,19 @@ namespace MVVMSidekick.Collections
                 for (int i = 0; i < count; i++)
                 {
                     var g = new DependencyCollectionViewGroup(i, view);
-               
+
                     view.CollectionGroups.Add(g);
+                }
+
+
+                if ((view.CollectionGroups?.Count ?? 0) != 0)
+                {
+
+
+                    foreach (var item in view)
+                    {
+                        this.TryAddItemToGroup(item);
+                    }
                 }
             }
         }
