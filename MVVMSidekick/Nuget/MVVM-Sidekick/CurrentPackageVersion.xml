@@ -1,6 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
-
+  <version>
+    <id>1.6.23</id>
+    <releaseNotes>
+      -   Add GlobalEventRouter to BindableBase.
+    </releaseNotes>
+  </version>
+  <version>
+    <id>1.6.22</id>
+    <releaseNotes>
+      -   Modify DependencyCollectionViewGroupingManager behavior when reset group in Metro/WPA81/UAP10
+    </releaseNotes>
+  </version>
   <version>
     <id>1.6.21</id>
     <releaseNotes>

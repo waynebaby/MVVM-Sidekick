@@ -16,12 +16,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ItemsSelectionBindingBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListenToEventRouterTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\SendToEventRouterAction.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Collections.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\CollectionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\KeyedObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyCollectionView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyCollectionViewGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyCollectionViewGroupingManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyCollectionViewIncrementalLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyObservableVector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\ObservableVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CallingCodeContext.cs" />

@@ -72,10 +72,6 @@ namespace MVVMSidekick
 
 			Lazy<TaskCompletionSource<EventCommandEventArgs>> _completion;
 
-			/// <summary>
-			/// Gets or sets the parameter.
-			/// </summary>
-			/// <value>The parameter.</value>
 			public Object Parameter { get; set; }
 			/// <summary>
 			/// Gets or sets the view model.

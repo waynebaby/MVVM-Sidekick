@@ -237,7 +237,11 @@ namespace MVVMSidekick.Behaviors
 
 
 #else
-	public class ListenToEventRouterDataBehavior : Behavior<FrameworkElement>, IDisposable
+
+    /// <summary>
+    /// ListenToEventRouterData Behavior
+    /// </summary>
+    public sealed class ListenToEventRouterDataBehavior : Behavior<FrameworkElement>, IDisposable
 	{
 
 
@@ -280,15 +284,19 @@ namespace MVVMSidekick.Behaviors
 #endif
 
 
-
+        /// <summary>
+        /// Last Data Received 
+        /// </summary>
 		public Object LastDataReceived
 		{
 			get { return (Object)GetValue(LastDataReceivedProperty); }
 			set { SetValue(LastDataReceivedProperty, value); }
 		}
 
-		// Using a DependencyProperty as the backing store for LastDataReceived.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty LastDataReceivedProperty =
+        /// <summary>
+        /// Last Data Received 
+        /// </summary>
+        public static readonly DependencyProperty LastDataReceivedProperty =
 			DependencyProperty.Register("LastDataReceived", typeof(Object), typeof(ListenToEventRouterDataBehavior), new PropertyMetadata(0));
 
 
@@ -303,20 +311,29 @@ namespace MVVMSidekick.Behaviors
 			get { return (Type)GetValue(EventObjectTypeProperty); }
 			set { SetValue(EventObjectTypeProperty, value); }
 		}
-
-		// Using a DependencyProperty as the backing store for EventObjectType.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty EventObjectTypeProperty =
+        /// <summary>
+        /// Gets or sets the type of the event object.
+        /// </summary>
+        /// <value>
+        /// The type of the event object.
+        /// </value>
+        public static readonly DependencyProperty EventObjectTypeProperty =
 			DependencyProperty.Register("EventObjectType", typeof(Type), typeof(ListenToEventRouterDataBehavior), new PropertyMetadata(typeof(object)));
 
 
+        /// <summary>
+        /// Target Event Router
+        /// </summary>
 		public EventRouter EventRouter
 		{
 			get { return (EventRouter)GetValue(EventRouterProperty); }
 			set { SetValue(EventRouterProperty, value); }
 		}
 
-		// Using a DependencyProperty as the backing store for EventRouter.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty EventRouterProperty =
+        /// <summary>
+        /// Target Event Router
+        /// </summary>
+        public static readonly DependencyProperty EventRouterProperty =
 			DependencyProperty.Register("EventRouter", typeof(EventRouter), typeof(ListenToEventRouterDataBehavior), new PropertyMetadata(null,
 				(o, e) =>
 				{
@@ -347,7 +364,10 @@ namespace MVVMSidekick.Behaviors
 
 
 #if !NETFX_CORE
-		public void Dispose()
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        public void Dispose()
 		{
 			_oldSubscrption?.Dispose();
 		}
@@ -368,8 +388,13 @@ namespace MVVMSidekick.Behaviors
 		}
 
 
-		// Using a DependencyProperty as the backing store for EventRoutingName.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty EventRoutingNameProperty =
+        /// <summary>
+        /// Gets or sets the name of the event routing.
+        /// </summary>
+        /// <value>
+        /// The name of the event routing.
+        /// </value>
+        public static readonly DependencyProperty EventRoutingNameProperty =
 			DependencyProperty.Register("EventRoutingName", typeof(string), typeof(ListenToEventRouterDataBehavior), new PropertyMetadata(null));
 
 
