@@ -265,7 +265,7 @@ namespace MVVMSidekick.Behaviors
 
 				eventSubscribe = EventRouting.EventRouter.Instance
 					   .GetEventChannel<EventCommandEventArgs>()
-					   .ObserveOn(System.Reactive.Concurrency.DispatcherScheduler.Current)
+					   .ObserveOnDispatcher()
 					   .Where(_ =>
 						   IsBindingActive)
 					   .Where(x =>
