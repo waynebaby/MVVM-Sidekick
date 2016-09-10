@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.23</version>
+    <version>1.7.1</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,6 +38,16 @@
 
     </summary>
     <releaseNotes>
+	1.7.1
+		
+      -   Fix dependencies to other packages
+    
+
+	1.7.0
+		
+      -   Use System.Reactive Packages
+    
+
 	1.6.23
 		
       -   Add GlobalEventRouter to BindableBase.
@@ -62,9 +72,9 @@
 
 	1.6.16
 		
-      -   Fixed a new bug cosed by 1.6.15 change. 
-          In .15 you cannot show(new vm) which would wrongly give vm a testing stage manager.
-          Now it would be okay.
+      -   Fixed a new bug cosed by 1.6.15 change.
+      In .15 you cannot show(new vm) which would wrongly give vm a testing stage manager.
+      Now it would be okay.
     
 
 	1.6.15
@@ -192,8 +202,14 @@
         <dependency version="[1.0.168,100.0)" id="Microsoft.Bcl.Async" />
         <dependency version="[1.0.21,100.0)" id="Microsoft.Bcl.Build" />
         <dependency version="[5.2.2,100.0)" id="Microsoft.NETCore.UniversalWindowsPlatform" />
-        <dependency version="[1.0.3,100.0)" id="Microsoft.Xaml.Behaviors.Uwp.Managed" />
+        <dependency version="[1.1.0,100.0)" id="Microsoft.Xaml.Behaviors.Uwp.Managed" />
         <dependency version="[3.0.0,100.0)" id="System.Reactive" />
+        <dependency version="[3.0.0,100.0)" id="System.Reactive.Core" />
+        <dependency version="[3.0.0,100.0)" id="System.Reactive.Interfaces" />
+        <dependency version="[3.0.0,100.0)" id="System.Reactive.Linq" />
+        <dependency version="[3.0.0,100.0)" id="System.Reactive.PlatformServices" />
+        <dependency version="[3.0.0,100.0)" id="System.Reactive.Windows.Threading" />
+        <dependency version="[3.0.0,100.0)" id="System.Reactive.WindowsRuntime" />
         <dependency version="[4.0.1,100.0)" id="Unity" />
       </group>
       <group targetFramework="net452">
