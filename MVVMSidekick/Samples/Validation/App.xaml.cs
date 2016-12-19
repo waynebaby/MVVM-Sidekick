@@ -24,7 +24,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
 
-namespace $safeprojectname$
+namespace Validation
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -145,8 +145,8 @@ namespace $safeprojectname$
 		/// </summary>
 		private static void ConfigureCommandAndCommandExceptionHandler()
 		{
-            EventRouter.Instance.GetEventChannel<EventPattern<EventCommandEventArgs>>()
-                .ObserveOnDispatcher()
+			EventRouter.Instance.GetEventChannel<EventPattern<EventCommandEventArgs>>()
+				.ObserveOnDispatcher()
 				.Subscribe(
 					e =>
 					{

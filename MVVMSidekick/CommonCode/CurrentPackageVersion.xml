@@ -1,6 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
   <version>
+    <id>1.6.25</id>
+    <releaseNotes>
+      -  Validation:  To add a property validation error:  vm.GetValueContainer(x=>propertyName).AddErrorEntry("message",ex);
+ 
+ -  Validation: Add vm.ValueContainers[propertyName]  Visitor for binding.
+      Try Visit Errors property of value container!
+      Binidng:{Binding ValueContainers[PropertyName].Errors.Count}
+    </releaseNotes>
+  </version>
+  <version>
+    <id>1.6.24</id>
+    <releaseNotes>
+      -  Validation: vm.GenerateMessage() to join all the property error messages to single string: vm.ErrorMessage.
+      -  Validation: override vm.OnGenrateErrorsMessage()  to rewrite the generation logic.
+      -  Validation: Delete vm.GetColumnErrorMessage()
+
+
+    </releaseNotes>
+  </version>
+  <version>
     <id>1.6.23</id>
     <releaseNotes>
       -   Add GlobalEventRouter to BindableBase.
