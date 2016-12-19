@@ -74,6 +74,7 @@ namespace MVVMSidekick
         using Views;
         using MVVMSidekick.Common;
         using System.Reactive;
+        using System.Dynamic;
 
 
 
@@ -93,7 +94,11 @@ namespace MVVMSidekick
             {
                 base.Dispose(disposing);
             }
-
+            public BindableBase()
+            {
+                ValueContainers = new ValueContainerIndexer(this);
+            }
+            public ValueContainerIndexer ValueContainers { get; private set; }
 
             /// <summary>
             /// Occurs when [_ errors changed].
@@ -230,29 +235,29 @@ namespace MVVMSidekick
 
 
 
-            /// <summary>
-            /// Checks the error.
-            /// </summary>
-            /// <param name="test">The test.</param>
-            /// <param name="errorMessage">The error message.</param>
-            /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-            protected bool CheckError(Func<Boolean> test, string errorMessage)
-            {
+            ///// <summary>
+            ///// Checks the error.
+            ///// </summary>
+            ///// <param name="test">The test.</param>
+            ///// <param name="errorMessage">The error message.</param>
+            ///// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+            //protected bool CheckError(Func<Boolean> test, string errorMessage)
+            //{
 
-                var rval = test();
-                if (rval)
-                {
-                    SetErrorAndTryNotify(errorMessage);
-                }
-                return rval;
+            //    var rval = test();
+            //    if (rval)
+            //    {
+            //        SetErrorAndTryNotify(errorMessage);
+            //    }
+            //    return rval;
 
-            }
+            //}
 
 
             ///// <summary>
             ///// 验证错误内容
             ///// </summary>
-            //string IDataErrorInfo.Error
+            //string IDataErrorInfo.ErrorMessage
             //{
             //    get
             //    {
@@ -266,32 +271,27 @@ namespace MVVMSidekick
             /// <para>取得错误内容</para>
             /// </summary>
             /// <value>The error.</value>
-            public abstract string Error { get; }
+            public abstract string ErrorMessage { get; }
             /// <summary>
             /// <para>Sets the validate error of this model </para>
             /// <para>设置错误内容</para>
             /// </summary>
             /// <param name="value">The value.</param>
-            /// <returns>Error string/错误内容字符串</returns>
-            protected abstract void SetError(string value);
+            /// <returns>ErrorMessage string/错误内容字符串</returns>
+            protected abstract void SetErrorMessage(string value);
 
             /// <summary>
             /// <para>Sets the validate error of this model and notify </para>
             /// <para>设置错误内容并且尝试用事件通知</para>
             /// </summary>
             /// <param name="value">The value.</param>
-            /// <returns>Error string/错误内容字符串</returns>
-            protected abstract void SetErrorAndTryNotify(string value);
+            /// <returns>ErrorMessage string/错误内容字符串</returns>
+            protected abstract void SetErrorMessageAndTryNotify(string value);
 
 
 
-            /// <summary>
-            /// <para>Gets validate error string of this field</para>
-            /// <para>取得对于每个字段，验证失败所产生的错误信息</para>
-            /// </summary>
-            /// <param name="propertyName">Property Name of error /要检查错误的属性名</param>
-            /// <returns>Rrror string /错误字符串</returns>
-            protected abstract string GetColumnError(string propertyName);
+            public abstract IValueContainer GetValueContainer(string propertyName);
+
 
 
 
@@ -306,14 +306,13 @@ namespace MVVMSidekick
 
 
 
+            public abstract EventRouter LocalEventRouter { get; set; }
 
 
             /// <summary>
             /// Gets or sets the event router.
             /// </summary>
             /// <value>The event router.</value>
-            public abstract EventRouter LocalEventRouter { get; set; }
-
 
             public EventRouter GlobalEventRouter
             {
@@ -510,7 +509,7 @@ namespace MVVMSidekick
         /// <para>值容器</para>
         /// </summary>
         /// <typeparam name="TProperty">Type of the property value /属性的类型</typeparam>
-        public class ValueContainer<TProperty> : IErrorInfo, IValueCanSet<TProperty>, IValueCanGet<TProperty>, IValueContainer, INotifyChanges<TProperty>
+        public class ValueContainer<TProperty> : IErrorInfo, IValueCanSet<TProperty>, IValueCanGet<TProperty>, IValueContainer, INotifyChanges<TProperty>, INotifyPropertyChanged
         {
 
 
@@ -617,7 +616,10 @@ namespace MVVMSidekick
             public TProperty Value
             {
                 get { return _value; }
-                set { SetValueAndTryNotify(value); }
+                set
+                {
+                    SetValueAndTryNotify(value);
+                }
             }
 
             /// <summary>
@@ -631,6 +633,8 @@ namespace MVVMSidekick
                 InternalPropertyChange(this.Model, value, ref _value, PropertyName);
                 return this;
             }
+
+
 
             /// <summary>
             /// <para>Save the value and do not try raise the value changed event</para>
@@ -669,18 +673,31 @@ namespace MVVMSidekick
                     Func<PropertyChangedEventArgs> lzf =
                         () =>
                         {
-
                             arg = arg ?? new ValueChangedEventArgs<TProperty>(message, oldvalue, newValue);
                             return arg;
                         };
 
 
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
                     objectInstance.RaisePropertyChanged(lzf);
+                    ValueChanged?.Invoke(this, lzf() as ValueChangedEventArgs<TProperty>);
+                    ValueChangedWithNameOnly?.Invoke(this, new PropertyChangedEventArgs(message));
+                    ValueChangedWithNothing?.Invoke(this, EventArgs.Empty);
 
-                    if (ValueChanged != null) ValueChanged(this, lzf() as ValueChangedEventArgs<TProperty>);
-                    if (ValueChangedWithNameOnly != null) ValueChangedWithNameOnly(this, new PropertyChangedEventArgs(message));
-                    if (ValueChangedWithNothing != null) ValueChangedWithNothing(this, EventArgs.Empty);
                 }
+            }
+
+            public void AddErrorEntry(string message, Exception exception = null)
+            {
+
+                Errors.Add(new ViewModels.ErrorEntity
+                {
+                    Exception = exception,
+                    InnerErrorInfoSource = this,
+                    PropertyName = PropertyName,
+                    Message = message
+                });
+
             }
 
 
@@ -770,6 +787,7 @@ namespace MVVMSidekick
             /// Occurs when [value changed with nothing].
             /// </summary>
             public event EventHandler ValueChangedWithNothing;
+            public event PropertyChangedEventHandler PropertyChanged;
         }
 
 
@@ -936,6 +954,14 @@ namespace MVVMSidekick
             /// </summary>
             public BindableBase()
             {
+                Observable.FromEventPattern<DataErrorsChangedEventArgs>(
+                    eh => this._ErrorsChanged += eh,
+                    eh => this._ErrorsChanged -= eh)
+                    .Subscribe(_ =>
+                    {
+                        HasErrors = GetAllErrors().Any();
+                    })
+                    .DisposeWith(this);
 
                 //_BindableInstanceIdLocator(this).SetValueAndTryNotify( string.Format("{0}:{1}", this.GetType().Name, base._instanceIdOfThisType));
             }
@@ -1076,56 +1102,45 @@ namespace MVVMSidekick
             /// Gets the error.
             /// </summary>
             /// <value>The error.</value>
-            public override string Error
+            public override string ErrorMessage
             {
-                get { return _ErrorLocator(this).Value; }
+                get { return _ErrorMessageLocator(this).Value; }
             }
 
             /// <summary>
             /// Sets the error.
             /// </summary>
             /// <param name="value">The value.</param>
-            protected override void SetError(string value)
+            protected override void SetErrorMessage(string value)
             {
-                _ErrorLocator(this).SetValue(value);
+                _ErrorMessageLocator(this).SetValue(value);
+            }
+            /// <summary>
+            /// 
+            /// </summary>
+            public void GenrateErrorMessage()
+            {
+                var sb = new StringBuilder();
+                OnGenrateErrorsMessage(GetAllErrors(), sb);
+                SetErrorMessageAndTryNotify(sb.ToString());
             }
 
             /// <summary>
             /// Sets the error and try notify.
             /// </summary>
             /// <param name="value">The value.</param>
-            protected override void SetErrorAndTryNotify(string value)
+            protected override void SetErrorMessageAndTryNotify(string value)
             {
-                _ErrorLocator(this).SetValueAndTryNotify(value);
+                _ErrorMessageLocator(this).SetValueAndTryNotify(value);
             }
 
 
-            #region Property string Error Setup
 
-            /// <summary>
-            /// The _ error
-            /// </summary>
-            protected Property<string> _Error =
-              new Property<string> { LocatorFunc = _ErrorLocator };
-            /// <summary>
-            /// The _ error locator
-            /// </summary>
-            [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-            static Func<BindableBase, ValueContainer<string>> _ErrorLocator =
-                RegisterContainerLocator<string>(
-                "Error",
-                model =>
-                {
-                    model._Error =
-                        model._Error
-                        ??
-                        new Property<string> { LocatorFunc = _ErrorLocator };
-                    return model._Error.Container =
-                        model._Error.Container
-                        ??
-                        new ValueContainer<string>("Error", model);
-                });
 
+            #region Property string ErrorMessage Setup        
+            protected Property<string> _ErrorMessage = new Property<string> { LocatorFunc = _ErrorMessageLocator };
+            static Func<BindableBase, ValueContainer<string>> _ErrorMessageLocator = RegisterContainerLocator<string>(nameof(ErrorMessage), model => model.Initialize(nameof(ErrorMessage), ref model._ErrorMessage, ref _ErrorMessageLocator, _ErrorMessageDefaultValueFactory));
+            static Func<string> _ErrorMessageDefaultValueFactory = () => default(string);
             #endregion
 
 
@@ -1208,7 +1223,7 @@ namespace MVVMSidekick
             /// <param name="propertyName">属性名</param>
             /// <returns>值容器</returns>
             /// <exception cref="System.NotImplementedException"></exception>
-            public IValueContainer GetValueContainer(string propertyName)
+            public override IValueContainer GetValueContainer(string propertyName)
             {
                 Func<TSubClassType, IValueContainer> contianerGetterCreater;
                 if (!_plainPropertyContainerGetters.TryGetValue(propertyName, out contianerGetterCreater))
@@ -1255,38 +1270,6 @@ namespace MVVMSidekick
 
 
 
-
-            /// <summary>
-            /// 获取某一属性的验证错误信息
-            /// </summary>
-            /// <param name="propertyName">属性名</param>
-            /// <returns>错误信息字符串</returns>
-            protected override string GetColumnError(string propertyName)
-            {
-                if (_plainPropertyContainerGetters[propertyName]((TSubClassType)this).Errors.Count > 0)
-                {
-
-
-                    var error = string.Join(",", _plainPropertyContainerGetters[propertyName]((TSubClassType)this).Errors.Select(x => x.Message));
-                    var propertyContainer = this.GetValueContainer(propertyName);
-#if NETFX_CORE
-                    if (propertyContainer != null && typeof(INotifyDataErrorInfo).GetTypeInfo().IsAssignableFrom(propertyContainer.PropertyType.GetTypeInfo()))
-#else
-
-                    if (propertyContainer != null && typeof(INotifyDataErrorInfo).IsAssignableFrom(propertyContainer.PropertyType))
-#endif
-                    {
-                        INotifyDataErrorInfo di = this[propertyName] as INotifyDataErrorInfo;
-                        if (di != null)
-                        {
-                            error = error + "\r\n-----Inner " + propertyName + " as INotifyDataErrorInfo -------\r\n\t" + di.HasErrors.ToString();
-                        }
-                    }
-
-                    return error;
-                }
-                return null;
-            }
 
 
 
@@ -1432,30 +1415,42 @@ namespace MVVMSidekick
             /// Gets a value indicating whether this instance has errors.
             /// </summary>
             /// <value><c>true</c> if this instance has errors; otherwise, <c>false</c>.</value>
+            //public bool HasErrors
+            //{
+            //    get
+            //    {
+            //        //  return false;
+            //        RefreshErrors();
+            //        return !string.IsNullOrEmpty(this.ErrorMessage);
+
+            //    }
+            //}
+
+
             public bool HasErrors
             {
-                get
-                {
-                    //  return false;
-                    RefreshErrors();
-                    return !string.IsNullOrEmpty(this.Error);
-
-                }
+                get { return _HasErrorsLocator(this).Value; }
+                set { _HasErrorsLocator(this).SetValueAndTryNotify(value); }
             }
+            #region Property bool HasErrors Setup        
+            protected Property<bool> _HasErrors = new Property<bool> { LocatorFunc = _HasErrorsLocator };
+            static Func<BindableBase, ValueContainer<bool>> _HasErrorsLocator = RegisterContainerLocator<bool>(nameof(HasErrors), model => model.Initialize(nameof(HasErrors), ref model._HasErrors, ref _HasErrorsLocator, _HasErrorsDefaultValueFactory));
+            static Func<bool> _HasErrorsDefaultValueFactory = () => false;
+            #endregion
+
 
             /// <summary>
             /// Refreshes the errors.
             /// </summary>
-            private void RefreshErrors()
+            protected virtual void OnGenrateErrorsMessage(IEnumerable<ErrorEntity> errors, StringBuilder errorMessageBuilder)
             {
-                var sb = new StringBuilder();
+                var sb = errorMessageBuilder;
                 var rt = GetAllErrors().Select(x =>
                 {
-                    return sb.Append(x.Message).Append(":").AppendLine(x.Exception == null ? " " : x.Exception.ToString());
-                }
-                    )
+                    return sb.Append(x.PropertyName).Append("\t").Append(x.Message).Append("\t").AppendLine(x.Exception == null ? " " : x.Exception.ToString());
+                })
                     .ToArray();
-                this.SetErrorAndTryNotify(sb.ToString());
+                this.SetErrorMessageAndTryNotify(sb.ToString());
 
 
             }
@@ -1464,7 +1459,7 @@ namespace MVVMSidekick
             /// Gets all errors.
             /// </summary>
             /// <returns>ErrorEntity[].</returns>
-            public ErrorEntity[] GetAllErrors()
+            public IEnumerable<ErrorEntity> GetAllErrors()
             {
                 var errors = GetFieldNames()
                      .SelectMany(name => this.GetValueContainer(name).Errors)
@@ -1497,7 +1492,25 @@ namespace MVVMSidekick
 
         }
 
+        public class ValueContainerIndexer //:DynamicObject
+        {
+            public ValueContainerIndexer(IBindable model)
+            {
+                _model = model;
+            }
 
+            IBindable _model;
+
+            public IValueContainer this[string propertyName]
+            {
+                get
+                {
+                    return _model.GetValueContainer(propertyName);
+                }
+
+            }
+      
+        }
 
 
 
@@ -1759,7 +1772,7 @@ namespace MVVMSidekick
             /// Gets the error.
             /// </summary>
             /// <value>The error.</value>
-            string Error { get; }
+            string ErrorMessage { get; }
 
             //IDictionary<string,object >  Values { get; }
             /// <summary>
@@ -1773,6 +1786,8 @@ namespace MVVMSidekick
             /// <param name="name">The name.</param>
             /// <returns>System.Object.</returns>
             object this[string name] { get; set; }
+
+            IValueContainer GetValueContainer(string propertyName);
         }
 
 
@@ -2047,6 +2062,13 @@ namespace MVVMSidekick
         /// </summary>
         public class ErrorEntity
         {
+            public ErrorEntity()
+            {
+
+            }
+
+
+            public string PropertyName { get; set; }
             /// <summary>
             /// Gets or sets the message.
             /// </summary>
@@ -2144,6 +2166,8 @@ namespace MVVMSidekick
         /// </summary>
         public interface IValueContainer : IErrorInfo, INotifyChanges
         {
+            string PropertyName { get; }
+
             /// <summary>
             /// Gets the type of the property.
             /// </summary>
@@ -2159,6 +2183,9 @@ namespace MVVMSidekick
             /// </summary>
             /// <value><c>true</c> if this instance is copy to allowed; otherwise, <c>false</c>.</value>
             bool IsCopyToAllowed { get; set; }
+
+            void AddErrorEntry(string message, Exception exception = null);
+
         }
 
         /// <summary>
