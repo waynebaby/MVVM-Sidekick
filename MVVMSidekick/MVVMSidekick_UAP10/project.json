@@ -5,14 +5,8 @@
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
+    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.0.3",
     "System.Reactive": "3.0.0",
-    "System.Reactive.Core": "3.0.0",
-    "System.Reactive.Interfaces": "3.0.0",
-    "System.Reactive.Linq": "3.0.0",
-    "System.Reactive.PlatformServices": "3.0.0",
-    "System.Reactive.Windows.Threading": "3.0.0",
-    "System.Reactive.WindowsRuntime": "3.0.0",
     "Unity": "4.0.1"
   },
   "frameworks": {

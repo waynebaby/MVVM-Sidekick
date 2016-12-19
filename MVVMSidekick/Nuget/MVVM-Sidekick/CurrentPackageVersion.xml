@@ -1,19 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
   <version>
-    <id>1.7.1</id>
-    <releaseNotes>
-      -   Fix dependencies to other packages
-    </releaseNotes>
-  </version>
-  <version>
-    <id>1.7.0</id>
-    <releaseNotes>
-      -   Use System.Reactive Packages
-    </releaseNotes>
-  </version>
-  <version>
-
     <id>1.6.23</id>
     <releaseNotes>
       -   Add GlobalEventRouter to BindableBase.
@@ -42,9 +29,9 @@
   <version>
     <id>1.6.16</id>
     <releaseNotes>
-      -   Fixed a new bug cosed by 1.6.15 change.
-      In .15 you cannot show(new vm) which would wrongly give vm a testing stage manager.
-      Now it would be okay.
+      -   Fixed a new bug cosed by 1.6.15 change. 
+          In .15 you cannot show(new vm) which would wrongly give vm a testing stage manager.
+          Now it would be okay.
     </releaseNotes>
   </version>
   <version>
