@@ -1,4 +1,5 @@
-﻿using MVVMSidekick.EventRouting;
+﻿using MVVMSidekick.Commands;
+using MVVMSidekick.EventRouting;
 using MVVMSidekick.Reactive;
 using System;
 using System.Collections.Generic;
@@ -144,8 +145,8 @@ namespace $safeprojectname$
 		/// </summary>
 		private static void ConfigureCommandAndCommandExceptionHandler()
 		{
-			EventRouter.Instance.GetEventChannel<EventPattern<ReactiveCommandEventArgs>>()
-				.ObserveOnDispatcher()
+            EventRouter.Instance.GetEventChannel<EventPattern<EventCommandEventArgs>>()
+                .ObserveOnDispatcher()
 				.Subscribe(
 					e =>
 					{
