@@ -1,0 +1,45 @@
+﻿<mvvm:MVVMPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Validation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="using:MVVMSidekick.Views"
+    xmlns:vm="using:Validation.ViewModels"
+    xmlns:Behaviors="using:MVVMSidekick.Behaviors"
+    xmlns:Glue="using:Validation.Glue"
+    x:Class="Validation.MainPage"
+    mc:Ignorable="d">
+
+    <mvvm:MVVMPage.Resources>
+        <Glue:VisibilityVCErrorCountZeroConverter x:Key="VisibilityCountZeroConverter"/>
+        <Glue:VisibilityBoolConverter x:Key="VisibilityBoolConverter"/>
+    </mvvm:MVVMPage.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <d:DataContext>
+            <vm:MainPage_Model/>
+        </d:DataContext>
+        <StackPanel>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Margin="100" Text="{Binding Title}" />
+
+            <StackPanel>
+                <TextBlock >
+                    <Run Text="Main Form"/>
+                </TextBlock>
+                <TextBlock Text="{Binding Number1}"/>
+                <TextBlock Text="+"/>
+                <TextBlock Text="{Binding Number2}"/>
+                <TextBlock Text="="/>
+                <TextBox Text="{Binding NumberResult, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,50,0"/>
+                <TextBlock HorizontalAlignment="Right" Foreground="red" Visibility="{Binding ValueContainers[NumberResult].Errors.Count, Converter={StaticResource VisibilityCountZeroConverter}}">*</TextBlock>
+
+            </StackPanel>
+            <StackPanel Visibility="{Binding HasErrors, Converter={StaticResource VisibilityBoolConverter}, Mode=OneWay}">
+                <TextBlock>
+                    <Run Text="Message:"/>
+<Run Text="{Binding ErrorMessage}"/></TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</mvvm:MVVMPage>
