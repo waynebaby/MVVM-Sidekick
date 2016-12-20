@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.25</version>
+    <version>1.6.27-prelease</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,19 +38,26 @@
 
     </summary>
     <releaseNotes>
+	1.6.27-prelease
+		
+      - Rename Command Model Resource to Command Model State
+    
+
 	1.6.25
 		
       -  Validation:  To add a property validation error:  vm.GetValueContainer(x=&gt;propertyName).AddErrorEntry("message",ex);
  
- -  Validation: Add vm.ValueContainers[propertyName]  Visitor for binding.
-      Try Visit Errors property of value container!
-      Binidng:{Binding ValueContainers[PropertyName].Errors.Count}
+      -  Validation:  Add vm.ValueContainers[propertyName]  Visitor for binding.
+            Try Visit Errors property of value container!
+            Binidng:{Binding ValueContainers[PropertyName].Errors.Count}
     
 
 	1.6.24
 		
       -  Validation: vm.GenerateMessage() to join all the property error messages to single string: vm.ErrorMessage.
+
       -  Validation: override vm.OnGenrateErrorsMessage()  to rewrite the generation logic.
+
       -  Validation: Delete vm.GetColumnErrorMessage()
 
 

@@ -43,6 +43,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Testing\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BindableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BindableBaseExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CommandModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CommandModelExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueContainerIndexer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views.cs" />

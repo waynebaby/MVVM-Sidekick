@@ -269,10 +269,10 @@
   </CodeSnippet>
 
 
-  <!--View Model Command With Resource-->
+  <!--View Model Command With State-->
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Async Command With Resource</Title>
+      <Title>MVVM Sidekick View Model Async Command With State</Title>
       <Shortcut>propcmd</Shortcut>
       <Description>Command Model of MVVM </Description>
       <Author>Wayne Wang</Author>
@@ -293,26 +293,26 @@
           <Default>SomeCommand</Default>
         </Literal>
         <Literal>
-          <ID>resourceType</ID>
-          <ToolTip>Resource Type</ToolTip>
+          <ID>stateType</ID>
+          <ToolTip>State Type</ToolTip>
           <Default>String</Default>
         </Literal>
       </Declarations>
       <Code Language="csharp" >
         <![CDATA[
-        public CommandModel<$commandType$, $resourceType$> Command$commandName$
+        public CommandModel<$commandType$, $stateType$> Command$commandName$
         {
             get { return _Command$commandName$Locator(this).Value; }
             set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
         }
-        #region Property CommandModel<$commandType$, $resourceType$> Command$commandName$ Setup        
+        #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup        
         
-        protected Property<CommandModel<$commandType$, $resourceType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $resourceType$>>{ LocatorFunc = _Command$commandName$Locator};
-        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $resourceType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $resourceType$>>("Command$commandName$", model =>model.Initialize("Command$commandName$",ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
-        static Func<BindableBase,CommandModel<$commandType$, $resourceType$>> _Command$commandName$DefaultValueFactory =
+        protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>{ LocatorFunc = _Command$commandName$Locator};
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $stateType$>>("Command$commandName$", model =>model.Initialize("Command$commandName$",ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
+        static Func<BindableBase,CommandModel<$commandType$, $stateType$>> _Command$commandName$DefaultValueFactory =
             model => 
             {
-                var resource = "Command$commandName$";           // Command resource  
+                var state = "Command$commandName$";           // Command state  
                 var commandId = "Command$commandName$";
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
@@ -328,7 +328,7 @@
                     .Subscribe()
                     .DisposeWith(vm);
                     
-                var cmdmdl = cmd.CreateCommandModel(resource);
+                var cmdmdl = cmd.CreateCommandModel(state);
                 
                 cmdmdl.ListenToIsUIBusy(
                     model: vm, 
@@ -344,7 +344,7 @@
 
 <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Command With Resource for C# 6</Title>
+      <Title>MVVM Sidekick View Model Command With State for C# 6</Title>
       <Shortcut>propcmdb6</Shortcut>
       <Description>Async Command for MVVM-Sidekick</Description>
       <Author>Wayne Wang</Author>
@@ -365,26 +365,26 @@
           <Default>SomeCommand</Default>
         </Literal>
         <Literal>
-          <ID>resourceType</ID>
-          <ToolTip>Resource Type</ToolTip>
+          <ID>stateType</ID>
+          <ToolTip>State Type</ToolTip>
           <Default>String</Default>
         </Literal>
       </Declarations>
       <Code Language="csharp" >
         <![CDATA[
-        public CommandModel<$commandType$, $resourceType$> Command$commandName$
+        public CommandModel<$commandType$, $stateType$> Command$commandName$
         {
             get { return _Command$commandName$Locator(this).Value; }
             set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
         }
-        #region Property CommandModel<$commandType$, $resourceType$> Command$commandName$ Setup        
+        #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup        
         
-        protected Property<CommandModel<$commandType$, $resourceType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $resourceType$>>{ LocatorFunc = _Command$commandName$Locator};
-        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $resourceType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $resourceType$>>(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
-        static Func<BindableBase,CommandModel<$commandType$, $resourceType$>> _Command$commandName$DefaultValueFactory =
+        protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>{ LocatorFunc = _Command$commandName$Locator};
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $stateType$>>(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
+        static Func<BindableBase,CommandModel<$commandType$, $stateType$>> _Command$commandName$DefaultValueFactory =
             model => 
             {
-                var resource = nameof(Command$commandName$);           // Command resource  
+                var state = nameof(Command$commandName$);           // Command state  
                 var commandId = nameof(Command$commandName$);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
@@ -400,7 +400,7 @@
                     .Subscribe()
                     .DisposeWith(vm);
                     
-                var cmdmdl = cmd.CreateCommandModel(resource);
+                var cmdmdl = cmd.CreateCommandModel(state);
                 
                 cmdmdl.ListenToIsUIBusy(
                     model: vm, 
@@ -418,7 +418,7 @@
 
     <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Command With Resource for C# 6</Title>
+      <Title>MVVM Sidekick View Model Command With State for C# 6</Title>
       <Shortcut>propcmd6</Shortcut>
       <Description>Sync Command Model for MVVM-Sidekick</Description>
       <Author>Wayne Wang</Author>
@@ -439,26 +439,26 @@
           <Default>SomeCommand</Default>
         </Literal>
         <Literal>
-          <ID>resourceType</ID>
-          <ToolTip>Resource Type</ToolTip>
+          <ID>stateType</ID>
+          <ToolTip>State Type</ToolTip>
           <Default>String</Default>
         </Literal>
       </Declarations>
       <Code Language="csharp" >
         <![CDATA[
-        public CommandModel<$commandType$, $resourceType$> Command$commandName$
+        public CommandModel<$commandType$, $stateType$> Command$commandName$
         {
             get { return _Command$commandName$Locator(this).Value; }
             set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
         }
-        #region Property CommandModel<$commandType$, $resourceType$> Command$commandName$ Setup        
+        #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup        
         
-        protected Property<CommandModel<$commandType$, $resourceType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $resourceType$>>{ LocatorFunc = _Command$commandName$Locator};
-        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $resourceType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $resourceType$>>(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
-        static Func<BindableBase,CommandModel<$commandType$, $resourceType$>> _Command$commandName$DefaultValueFactory =
+        protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>{ LocatorFunc = _Command$commandName$Locator};
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $stateType$>>(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
+        static Func<BindableBase,CommandModel<$commandType$, $stateType$>> _Command$commandName$DefaultValueFactory =
             model => 
             {
-                var resource = nameof(Command$commandName$);           // Command resource  
+                var state = nameof(Command$commandName$);           // Command state  
                 var commandId = nameof(Command$commandName$);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
@@ -471,7 +471,7 @@
                     .Subscribe()
                     .DisposeWith(vm);
                     
-                var cmdmdl = cmd.CreateCommandModel(resource);                 
+                var cmdmdl = cmd.CreateCommandModel(state);                 
              
                 return cmdmdl;
             };
