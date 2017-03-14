@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>MVVM-Sidekick Blank Page (Windows Universal)</Name>
+    <Description>A Page Template supports MVVM-Sidekick</Description>
+    <Icon Package="{2581426E-BF4F-4A49-A42A-20EF9D51EF49}" ID="4007" />
+    <TemplateID>Microsoft.CS.UAP.BlankPage</TemplateID>
+    <TemplateGroupID>WinRT-Managed-UAP</TemplateGroupID>
+    <ProjectType>CSharp</ProjectType>
+    <NumberOfParentCategoriesToRollUp>10</NumberOfParentCategoriesToRollUp>
+    <DefaultName>BlankPage.xaml</DefaultName>
+    <ShowByDefault>false</ShowByDefault>
+    <SortOrder>40</SortOrder>
+    <PreviewImage>BlankPage.png</PreviewImage>
+    <TargetPlatformName>Windows</TargetPlatformName>
+    <RequiredPlatformVersion>6.4.0</RequiredPlatformVersion>
+    <AppIdFilter>blend</AppIdFilter>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectItem OpenInEditor="true" ReplaceParameters="true" ItemType="Page" SubType="Designer" CustomTool="MSBuild:Compile" TargetFileName="$fileinputname$.xaml">BlankPage.xaml</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="$fileinputname$.xaml.cs">BlankPage.xaml.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="ViewModels\$fileinputname$_Model.cs">View_Model.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="Startups\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

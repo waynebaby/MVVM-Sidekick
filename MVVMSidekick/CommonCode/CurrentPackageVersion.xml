@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
   <version>
-    <id>1.6.27-prelease</id>
+    <id>1.6.27</id>
     <releaseNotes>
       - Rename Command Model Resource to Command Model State
     </releaseNotes>

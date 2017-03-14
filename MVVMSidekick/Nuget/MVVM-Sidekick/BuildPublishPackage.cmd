@@ -21,7 +21,7 @@ cmd /c nuget.exe update -Self
 
 echo.
 echo Creating package...
- nuget.exe pack %1.nuspec -Verbose
+ nuget.exe pack %1.nuspec 
 rem copy %1.%2.nupkg  ..\NugetPrivateSource\Packages  /Y
 copy *.nupkg ..
 

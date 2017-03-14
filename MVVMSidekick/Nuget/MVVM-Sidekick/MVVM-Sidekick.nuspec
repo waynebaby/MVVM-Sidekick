@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.27-prelease</version>
+    <version>1.6.27</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,7 +38,7 @@
 
     </summary>
     <releaseNotes>
-	1.6.27-prelease
+	1.6.27
 		
       - Rename Command Model Resource to Command Model State
     

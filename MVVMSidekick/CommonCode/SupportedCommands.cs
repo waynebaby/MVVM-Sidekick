@@ -388,7 +388,6 @@ namespace CommonCode
 							var n = (char)('.' + 1);
 							var item = pksInVSIXSet.GetViewBetween(ida.Value, ida.Value + n).First();
 							versiona.Value = item.Remove(0, ida.Value.Length + 1);
-
 						}
 						Console.WriteLine(package);
 					}

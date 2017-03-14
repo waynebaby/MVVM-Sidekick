@@ -1,0 +1,32 @@
+﻿<mvvm:MVVMPage
+    x:Class="$safeprojectname$.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:$safeprojectname$"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="using:MVVMSidekick.Views"
+    xmlns:vm="using:$safeprojectname$.ViewModels"
+    Background="Black"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
+        <x:String x:Key="AppName">My Application</x:String>
+        <vm:MainPage_Model x:Key="DesignVM"/>
+    </Page.Resources>
+    <!--Begin App Bar Binding Patch. If you don't need Binding Top/Bottom Appbar please ignore these code -->
+    <!--<Page.DataContext>
+        <Binding  RelativeSource="{RelativeSource Mode=Self}" Path="ViewModel"/>
+    </Page.DataContext>
+    <mvvm:MVVMPage.ViewModel>
+        <Binding Source="{StaticResource DesignVM}" />
+    </mvvm:MVVMPage.ViewModel>
+    <mvvm:MVVMPage.BottomAppBar>
+		<AppBar d:DataContext="{StaticResource DesignVM}"><TextBlock TextWrapping="Wrap" Text="{Binding BindableInstanceId, Mode=OneWay}"/></AppBar>
+	</mvvm:MVVMPage.BottomAppBar>-->
+    <!--End App Bar Binding Patch. If you don't need Binding  Top/Bottom Appbar please ignore these code -->
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  DataContext="{StaticResource DesignVM}">
+        <TextBlock x:Name="pageTitle" Grid.Column="1" Margin="100" Text="{Binding Title}" Style="{StaticResource HeaderTextBlockStyle}"/>
+
+    </Grid>
+</mvvm:MVVMPage>

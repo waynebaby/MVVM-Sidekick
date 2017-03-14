@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="MVVM_Sidekick_Extensions_2017.waywa msft.ad685354-203d-4688-99e8-d2e6a488701b" Version="1.6.25" Language="en-US" Publisher="waywa msft" />
+    <DisplayName>MVVM-Sidekick VSIX 2017</DisplayName>
+    <Description xml:space="preserve">MVVM-Sidekick Extensions For VS 2017</Description>
+    <License>license.rtf</License>
+    <Icon>MVVMSidekickIcon.ico</Icon>
+    <PreviewImage>Preview.png</PreviewImage>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.Pro" />
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.Community" />
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.VSWinExpress" />
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.Enterprise" />
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.VSWinDesktopExpress" />
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.VWDExpress" />
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.IntegratedShell" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+  </Dependencies>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+</PackageManifest>
