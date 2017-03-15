@@ -62,7 +62,7 @@
     <packages repository="registry" keyName="NETCoreSDK" isPreunzipped="true">
       <package id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.0.0" skipAssemblyReferences="false" />
     </packages>
-    <packages repository="extension" repositoryId="MVVM_Sidekick_Extensions.2017.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24">
+    <packages repository="extension" repositoryId="MVVM-Sidekick-Extensions-2017">
       <package id="Microsoft.Bcl" version="1.1.10" />
       <package id="Microsoft.Bcl.Async" version="1.0.168" />
       <package id="Microsoft.Bcl.Build" version="1.0.21" />
