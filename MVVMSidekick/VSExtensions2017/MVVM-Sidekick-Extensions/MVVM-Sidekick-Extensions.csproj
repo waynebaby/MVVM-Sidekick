@@ -55,7 +55,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\ItemTemplates\UAP\MVVMSidekickViewWithVM\bin\ItemTemplates\CSharp\1033\BlankPage.zip">
-      <Link>ItemTemplates\XAML\BlankPage.zip</Link>
+      <Link>XAML\BlankPage.zip</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
