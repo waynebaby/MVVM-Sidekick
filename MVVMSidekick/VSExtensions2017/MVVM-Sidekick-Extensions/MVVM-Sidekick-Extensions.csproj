@@ -95,8 +95,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Nuget\MVVM-Sidekick\MVVM-Sidekick.1.6.27.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.6.27.nupkg</Link>
+    <Content Include="..\..\Nuget\MVVM-Sidekick.1.6.29.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.6.29.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">

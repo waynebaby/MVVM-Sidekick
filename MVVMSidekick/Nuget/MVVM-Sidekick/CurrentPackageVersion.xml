@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
   <version>
+    <id>1.6.29</id>
+    <releaseNotes>
+      - Current For WPF and UWP only
+      - .net Standard is coming soon
+    </releaseNotes>
+  </version>
+  <version>
     <id>1.6.27</id>
     <releaseNotes>
       - Rename Command Model Resource to Command Model State

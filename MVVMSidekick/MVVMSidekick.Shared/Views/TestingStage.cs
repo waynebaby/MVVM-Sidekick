@@ -97,11 +97,12 @@ namespace MVVMSidekick.Views
             return vm.Result;
 
         }
-        public Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel
+        public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel
         {
             var vm = targetViewModel ?? ServiceLocator.Instance.Resolve<TTarget>(viewMappingKey);
             var vmt = InternalTestShow(vm, viewMappingKey);
-            return Task.FromResult(new ShowAwaitableResult<TTarget>() { Closing = vm.WaitForClose(), ViewModel = vm });
+            return await TaskExHelper.FromResult(new ShowAwaitableResult<TTarget>() { Closing = vm.WaitForClose(), ViewModel = vm });
+
         }
 
 
