@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
   <version>
+    <id>1.6.30</id>
+    <releaseNotes>
+      - Fix one bug about Frame Designtime Support in wpf 
+    </releaseNotes>
+  </version>
+  <version>
     <id>1.6.29</id>
     <releaseNotes>
       - Current For WPF and UWP only

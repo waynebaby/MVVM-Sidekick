@@ -147,9 +147,13 @@ namespace MVVMSidekick.ViewModels
         /// <returns><c>true</c> if this instance can execute the specified parameter; otherwise, <c>false</c>.</returns>
         public bool CanExecute(object parameter)
         {
-            var s = CommandCore.CanExecute(parameter);
-            LastCanExecuteValue = s;
-            return s;
+            if (Utilities.Runtime.IsInDesignMode )
+            {
+                return false;
+            }
+            var s = CommandCore?.CanExecute(parameter);
+            LastCanExecuteValue = s??false;
+            return LastCanExecuteValue;
         }
 
         /// <summary>

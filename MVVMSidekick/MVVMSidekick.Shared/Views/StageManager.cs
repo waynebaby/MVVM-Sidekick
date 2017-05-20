@@ -148,7 +148,11 @@ namespace MVVMSidekick.Views
 
         public static void SetBeacon(DependencyObject obj, string value)
         {
-            obj.SetValue(BeaconProperty, value);
+            if (!Utilities.Runtime.IsInDesignMode)
+            {
+
+                obj.SetValue(BeaconProperty, value);
+            }
         }
 
         /// <summary>
@@ -234,11 +238,15 @@ namespace MVVMSidekick.Views
         /// <param name="target">The target.</param>
         public static void RegisterTargetBeacon(string name, FrameworkElement target)
         {
-            var view = LocateIView(target);
+            if (!Utilities.Runtime.IsInDesignMode)
+            {
 
-            var beacons = GetOrCreateBeacons(view);
-            beacons[name] = target;
 
+                var view = LocateIView(target);
+
+                var beacons = GetOrCreateBeacons(view);
+                beacons[name] = target;
+            }
 
         }
 

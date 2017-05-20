@@ -177,6 +177,10 @@
       <Link>Packages\CommonServiceLocator.1.3.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Microsoft.Bcl.1.1.8\Microsoft.Bcl.1.1.8.nupkg">
+      <Link>Packages\Microsoft.Bcl.1.1.8.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Rx-Xaml.2.2.5\Rx-Xaml.2.2.5.nupkg">
       <Link>Packages\Rx-Xaml.2.2.5.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -185,8 +189,8 @@
       <Link>Packages\Unity.2.1.505.2.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.6.29.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.6.29.nupkg</Link>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.6.30.3.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.6.30.3.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
