@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
   <version>
-    <id>1.6.30</id>
+    <id>1.6.32</id>
     <releaseNotes>
-      - Fix one bug about Frame Designtime Support in wpf 
+      - Fix one bug about Frame Designtime Support in wpf
+      - Default Value ViewModel。IsDisposingWhenUnloadRequired = true;
+      - Default Value ViewModel。IsDisposingWhenUnbindRequired = true;
     </releaseNotes>
   </version>
   <version>

@@ -425,7 +425,7 @@ namespace MVVMSidekick
         /// <para>值变化事件参数</para>
         /// </summary>
         /// <typeparam name="TProperty">Type of propery/变化属性的类型</typeparam>
-        public class ValueChangedEventArgs<TProperty> : PropertyChangedEventArgs
+        public class ValueChangedEventArgs<TProperty> : ValueChangedEventArgs
         {
             /// <summary>
             /// Constructor of ValueChangedEventArgs
@@ -434,7 +434,7 @@ namespace MVVMSidekick
             /// <param name="oldValue">The old value.</param>
             /// <param name="newValue">The new value.</param>
             public ValueChangedEventArgs(string propertyName, TProperty oldValue, TProperty newValue)
-                : base(propertyName)
+                : base(propertyName, oldValue, newValue)
             {
                 NewValue = newValue;
                 OldValue = oldValue;
@@ -451,6 +451,40 @@ namespace MVVMSidekick
             /// <value>The old value.</value>
             public TProperty OldValue { get; private set; }
         }
+
+
+        /// <summary>
+        /// <para>Event args that fired when property changed, with old value and new value field.</para>
+        /// <para>值变化事件参数</para>
+        /// </summary>
+        /// <typeparam name="TProperty">Type of propery/变化属性的类型</typeparam>
+        public class ValueChangedEventArgs : PropertyChangedEventArgs
+        {
+            /// <summary>
+            /// Constructor of ValueChangedEventArgs
+            /// </summary>
+            /// <param name="propertyName">Name of the property.</param>
+            /// <param name="oldValue">The old value.</param>
+            /// <param name="newValue">The new value.</param>
+            public ValueChangedEventArgs(string propertyName, object oldValue, object newValue)
+                : base(propertyName)
+            {
+                NewValueObject = newValue;
+                OldValueObject = oldValue;
+            }
+
+            /// <summary>
+            /// New Value
+            /// </summary>
+            /// <value>The new value.</value>
+            public object NewValueObject { get; private set; }
+            /// <summary>
+            /// Old Value
+            /// </summary>
+            /// <value>The old value.</value>
+            public object OldValueObject { get; private set; }
+        }
+
 
 
         ///// <summary>
@@ -946,10 +980,10 @@ namespace MVVMSidekick
                 }
 #if !(SILVERLIGHT_5 || WINDOWS_PHONE_8 || WINDOWS_PHONE_7 || NETFX_CORE)
 
-				else if (typeof(ICloneable).IsAssignableFrom(sourcetype))
-				{
-					target = (T)((ICloneable)source).Clone();
-				}
+                else if (typeof(ICloneable).IsAssignableFrom(sourcetype))
+                {
+                    target = (T)((ICloneable)source).Clone();
+                }
 #endif
                 else if (typeof(System.Collections.IList).GetTypeOrTypeInfo().IsAssignableFrom(sourcetype))
                 {
@@ -1822,7 +1856,7 @@ namespace MVVMSidekick
 
 
 
-    
+
     }
 
 }
