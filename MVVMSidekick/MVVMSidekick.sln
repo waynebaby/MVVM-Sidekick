@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonCode", "CommonCode\CommonCode.csproj", "{4D755FF7-84F5-4D29-A771-55F520F87814}"
 EndProject
@@ -47,6 +47,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation", "Samples\Validation\Validation.csproj", "{17375DDC-753B-42E8-B14F-6C3DFE9C5A34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMSidekick_net40", "MVVMSidekick_net40\MVVMSidekick_net40.csproj", "{CE6F8C18-0894-4F12-A9BF-FD82A1D210F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMSidekick.Test.Playground", "MVVMSidekick.Test.Playground\MVVMSidekick.Test.Playground.csproj", "{F34786C2-8987-438F-BBB8-D189B8A7EA5B}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -256,6 +258,32 @@ Global
 		{CE6F8C18-0894-4F12-A9BF-FD82A1D210F9}.Release|x64.Build.0 = Release|Any CPU
 		{CE6F8C18-0894-4F12-A9BF-FD82A1D210F9}.Release|x86.ActiveCfg = Release|Any CPU
 		{CE6F8C18-0894-4F12-A9BF-FD82A1D210F9}.Release|x86.Build.0 = Release|Any CPU
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|ARM.Build.0 = Debug|ARM
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|ARM.Deploy.0 = Debug|ARM
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|Mixed Platforms.Deploy.0 = Debug|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|x64.ActiveCfg = Debug|x64
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|x64.Build.0 = Debug|x64
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|x64.Deploy.0 = Debug|x64
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|x86.ActiveCfg = Debug|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|x86.Build.0 = Debug|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Debug|x86.Deploy.0 = Debug|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|Any CPU.ActiveCfg = Release|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|ARM.ActiveCfg = Release|ARM
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|ARM.Build.0 = Release|ARM
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|ARM.Deploy.0 = Release|ARM
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|Mixed Platforms.Build.0 = Release|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|Mixed Platforms.Deploy.0 = Release|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|x64.ActiveCfg = Release|x64
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|x64.Build.0 = Release|x64
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|x64.Deploy.0 = Release|x64
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|x86.ActiveCfg = Release|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|x86.Build.0 = Release|x86
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -275,6 +303,7 @@ Global
 		{CFCE545E-BDCE-4442-B76F-507F75389931} = {9A63239D-4816-4C82-B408-AAB6B0D5FE39}
 		{17375DDC-753B-42E8-B14F-6C3DFE9C5A34} = {CFCE545E-BDCE-4442-B76F-507F75389931}
 		{CE6F8C18-0894-4F12-A9BF-FD82A1D210F9} = {C2833223-E4B1-418D-9668-D8DC53213FCA}
+		{F34786C2-8987-438F-BBB8-D189B8A7EA5B} = {C5921E6D-635D-4D9B-A1C2-C84661D66CD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
