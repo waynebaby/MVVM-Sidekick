@@ -200,8 +200,8 @@ namespace MVVMSidekick.ViewModels
         public ViewModelBase()
         {
 
-            this.IsDisposingWhenUnloadRequired = true;
-            this.IsDisposingWhenUnbindRequired = true;
+            this.IsDisposingWhenUnloadRequired = false;
+            this.IsDisposingWhenUnbindRequired = false;
 
 
             GetValueContainer(x => x.UIBusyTaskCount)
