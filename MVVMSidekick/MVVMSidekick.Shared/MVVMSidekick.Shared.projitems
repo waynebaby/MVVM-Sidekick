@@ -38,7 +38,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ReactiveExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\IReactiveCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveCommand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveExtensionsEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Storages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Testing\Constants.cs" />

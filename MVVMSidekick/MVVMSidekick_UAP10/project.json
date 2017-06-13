@@ -4,11 +4,14 @@
     "Microsoft.Bcl": "1.1.10",
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.3",
-    "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
-    
-    "System.Reactive": "3.1.1",
-    "System.Reactive.WindowsRuntime": "3.1.1",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.0.3",
+    "Rx-Core": "2.2.5",
+    "Rx-Interfaces": "2.2.5",
+    "Rx-Linq": "2.2.5",
+    "Rx-Main": "2.2.5",
+    "Rx-PlatformServices": "2.2.5",
+    "Rx-XAML": "2.2.5",
     "Unity": "4.0.1"
   },
   "frameworks": {

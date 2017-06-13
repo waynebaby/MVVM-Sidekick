@@ -199,12 +199,11 @@ namespace MVVMSidekick.ViewModels
 		/// </summary>
 		public ViewModelBase()
 		{
+#if WPF
+				this.IsDisposingWhenUnloadRequired = true;
+#endif
 
-            this.IsDisposingWhenUnloadRequired = true;
-            this.IsDisposingWhenUnbindRequired = true;
-
-
-            GetValueContainer(x => x.UIBusyTaskCount)
+			GetValueContainer(x => x.UIBusyTaskCount)
 				.GetNewValueObservable()
 				.Select(e =>
 					e.EventArgs != 0)
