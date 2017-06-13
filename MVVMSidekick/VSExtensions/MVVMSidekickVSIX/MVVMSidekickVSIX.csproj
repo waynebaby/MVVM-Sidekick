@@ -137,6 +137,38 @@
       <Link>Packages\Microsoft.Bcl.Build.1.0.21.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.3.1.1\System.Reactive.3.1.1.nupkg">
+      <Link>Packages\System.Reactive.3.1.1.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.Core.3.1.1\System.Reactive.Core.3.1.1.nupkg">
+      <Link>Packages\System.Reactive.Core.3.1.1.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.Interfaces.3.1.1\System.Reactive.Interfaces.3.1.1.nupkg">
+      <Link>Packages\System.Reactive.Interfaces.3.1.1.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.Linq.3.1.1\System.Reactive.Linq.3.1.1.nupkg">
+      <Link>Packages\System.Reactive.Linq.3.1.1.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.PlatformServices.3.1.1\System.Reactive.PlatformServices.3.1.1.nupkg">
+      <Link>Packages\System.Reactive.PlatformServices.3.1.1.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.Windows.Threading.3.1.1\System.Reactive.Windows.Threading.3.1.1.nupkg">
+      <Link>Packages\System.Reactive.Windows.Threading.3.1.1.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Unity.4.0.1\Unity.4.0.1.nupkg">
+      <Link>Packages\Unity.4.0.1.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\CommonServiceLocator.1.3\CommonServiceLocator.1.3.nupkg">
+      <Link>Packages\CommonServiceLocator.1.3.0.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Rx-Core.2.2.5\Rx-Core.2.2.5.nupkg">
       <Link>Packages\Rx-Core.2.2.5.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -157,22 +189,6 @@
       <Link>Packages\Rx-PlatformServices.2.2.5.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Rx-XAML.2.2.5\Rx-XAML.2.2.5.nupkg">
-      <Link>Packages\Rx-XAML.2.2.5.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Unity.4.0.1\Unity.4.0.1.nupkg">
-      <Link>Packages\Unity.4.0.1.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\CommonServiceLocator.1.3\CommonServiceLocator.1.3.nupkg">
-      <Link>Packages\CommonServiceLocator.1.3.0.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Microsoft.Bcl.1.1.8\Microsoft.Bcl.1.1.8.nupkg">
-      <Link>Packages\Microsoft.Bcl.1.1.8.nupkg</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Rx-Xaml.2.2.5\Rx-Xaml.2.2.5.nupkg">
       <Link>Packages\Rx-Xaml.2.2.5.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -181,8 +197,12 @@
       <Link>Packages\Unity.2.1.505.2.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.6.30.3.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.6.30.3.nupkg</Link>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Rx-XAML.2.2.5\Rx-XAML.2.2.5.nupkg">
+      <Link>Packages\Rx-XAML.2.2.5.nupkg</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.6.33.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.6.33.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>

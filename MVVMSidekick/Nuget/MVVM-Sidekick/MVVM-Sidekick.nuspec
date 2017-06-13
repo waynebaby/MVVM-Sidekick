@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.30.3</version>
+    <version>1.6.33</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,9 +38,16 @@
 
     </summary>
     <releaseNotes>
-	1.6.30.3
+	1.6.33
 		
-      - Fix one bug about Frame Designtime Support in wpf 
+      - Use .net Foundation nuget Package if possiable
+    
+
+	1.6.32
+		
+      - Fix one bug about Frame Designtime Support in wpf
+      - Default Value ViewModel。IsDisposingWhenUnloadRequired = true;
+      - Default Value ViewModel。IsDisposingWhenUnbindRequired = true;
     
 
 	1.6.29
@@ -226,14 +233,10 @@
         <dependency version="[1.1.10,100.0)" id="Microsoft.Bcl" />
         <dependency version="[1.0.168,100.0)" id="Microsoft.Bcl.Async" />
         <dependency version="[1.0.21,100.0)" id="Microsoft.Bcl.Build" />
-        <dependency version="[5.0.0,100.0)" id="Microsoft.NETCore.UniversalWindowsPlatform" />
-        <dependency version="[1.0.3,100.0)" id="Microsoft.Xaml.Behaviors.Uwp.Managed" />
-        <dependency version="[2.2.5,100.0)" id="Rx-Core" />
-        <dependency version="[2.2.5,100.0)" id="Rx-Interfaces" />
-        <dependency version="[2.2.5,100.0)" id="Rx-Linq" />
-        <dependency version="[2.2.5,100.0)" id="Rx-Main" />
-        <dependency version="[2.2.5,100.0)" id="Rx-PlatformServices" />
-        <dependency version="[2.2.5,100.0)" id="Rx-XAML" />
+        <dependency version="[5.3.3,100.0)" id="Microsoft.NETCore.UniversalWindowsPlatform" />
+        <dependency version="[2.0.0,100.0)" id="Microsoft.Xaml.Behaviors.Uwp.Managed" />
+        <dependency version="[3.1.1,100.0)" id="System.Reactive" />
+        <dependency version="[3.1.1,100.0)" id="System.Reactive.WindowsRuntime" />
         <dependency version="[4.0.1,100.0)" id="Unity" />
       </group>
       <group targetFramework="net452">
@@ -241,12 +244,12 @@
         <dependency id="Microsoft.Bcl" version="[1.1.10,100.0)" />
         <dependency id="Microsoft.Bcl.Async" version="[1.0.168,100.0)" />
         <dependency id="Microsoft.Bcl.Build" version="[1.0.21,100.0)" />
-        <dependency id="Rx-Core" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Interfaces" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Linq" version="[2.2.5,100.0)" />
-        <dependency id="Rx-Main" version="[2.2.5,100.0)" />
-        <dependency id="Rx-PlatformServices" version="[2.2.5,100.0)" />
-        <dependency id="Rx-XAML" version="[2.2.5,100.0)" />
+        <dependency id="System.Reactive" version="[3.1.1,100.0)" />
+        <dependency id="System.Reactive.Core" version="[3.1.1,100.0)" />
+        <dependency id="System.Reactive.Interfaces" version="[3.1.1,100.0)" />
+        <dependency id="System.Reactive.Linq" version="[3.1.1,100.0)" />
+        <dependency id="System.Reactive.PlatformServices" version="[3.1.1,100.0)" />
+        <dependency id="System.Reactive.Windows.Threading" version="[3.1.1,100.0)" />
         <dependency id="Unity" version="[4.0.1,100.0)" />
       </group>
     </dependencies>
