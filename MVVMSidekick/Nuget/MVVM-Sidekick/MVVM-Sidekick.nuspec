@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.33</version>
+    <version>1.6.34</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,7 +38,7 @@
 
     </summary>
     <releaseNotes>
-	1.6.33
+	1.6.34
 		
       - Use .net Foundation nuget Package if possiable
     
@@ -235,8 +235,12 @@
         <dependency version="[1.0.21,100.0)" id="Microsoft.Bcl.Build" />
         <dependency version="[5.3.3,100.0)" id="Microsoft.NETCore.UniversalWindowsPlatform" />
         <dependency version="[2.0.0,100.0)" id="Microsoft.Xaml.Behaviors.Uwp.Managed" />
-        <dependency version="[3.1.1,100.0)" id="System.Reactive" />
-        <dependency version="[3.1.1,100.0)" id="System.Reactive.WindowsRuntime" />
+        <dependency version="[2.2.5,100.0)" id="Rx-Core" />
+        <dependency version="[2.2.5,100.0)" id="Rx-Interfaces" />
+        <dependency version="[2.2.5,100.0)" id="Rx-Linq" />
+        <dependency version="[2.2.5,100.0)" id="Rx-Main" />
+        <dependency version="[2.2.5,100.0)" id="Rx-PlatformServices" />
+        <dependency version="[2.2.5,100.0)" id="Rx-XAML" />
         <dependency version="[4.0.1,100.0)" id="Unity" />
       </group>
       <group targetFramework="net452">

@@ -44,9 +44,9 @@ namespace MVVMSidekick.Test.Playground.ViewModels
         #endregion
 
 
-
+        
         #region Life Time Event Handling
-
+    
         ///// <summary>
         ///// This will be invoked by view when this viewmodel instance is set to view's ViewModel property. 
         ///// </summary>
@@ -103,46 +103,6 @@ namespace MVVMSidekick.Test.Playground.ViewModels
 
         #endregion
 
-
-
-
-        public CommandModel<ReactiveCommand, String> CommandPage1
-        {
-            get { return _CommandPage1Locator(this).Value; }
-            set { _CommandPage1Locator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property CommandModel<ReactiveCommand, String> CommandPage1 Setup        
-
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandPage1 = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandPage1Locator };
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandPage1Locator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandPage1), model => model.Initialize(nameof(CommandPage1), ref model._CommandPage1, ref _CommandPage1Locator, _CommandPage1DefaultValueFactory));
-        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandPage1DefaultValueFactory =
-            model =>
-            {
-                var state = nameof(CommandPage1);           // Command state  
-                var commandId = nameof(CommandPage1);
-                var vm = CastToCurrentType(model);
-                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-
-                cmd.DoExecuteUIBusyTask(
-                        vm,
-                        async e =>
-                        {
-                            //Todo: Add Page1 logic here, or
-                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
-                        })
-                    .DoNotifyDefaultEventRouter(vm, commandId)
-                    .Subscribe()
-                    .DisposeWith(vm);
-
-                var cmdmdl = cmd.CreateCommandModel(state);
-
-                cmdmdl.ListenToIsUIBusy(
-                    model: vm,
-                    canExecuteWhenBusy: false);
-                return cmdmdl;
-            };
-
-        #endregion
 
     }
 

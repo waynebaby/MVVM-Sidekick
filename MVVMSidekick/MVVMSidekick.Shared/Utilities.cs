@@ -133,24 +133,27 @@ namespace MVVMSidekick
 			/// <returns>Task.</returns>
 			public static async Task Yield()
 			{
-#if SILVERLIGHT_5||WINDOWS_PHONE_7||NET40
+#if SILVERLIGHT_5 || WINDOWS_PHONE_7 || NET40
 				await TaskEx.Yield();
 
+#elif NETFX_CORE
+                await Task.CompletedTask;
+
 #else
-				await Task.Yield();
+                await Task.Yield();
 #endif
 
-			}
+            }
 
-			/// <summary>
-			/// Froms the result.
-			/// </summary>
-			/// <typeparam name="T"></typeparam>
-			/// <param name="result">The result.</param>
-			/// <returns>
-			/// Task&lt;T&gt;.
-			/// </returns>
-			public static async Task<T> FromResult<T>(T result)
+            /// <summary>
+            /// Froms the result.
+            /// </summary>
+            /// <typeparam name="T"></typeparam>
+            /// <param name="result">The result.</param>
+            /// <returns>
+            /// Task&lt;T&gt;.
+            /// </returns>
+            public static async Task<T> FromResult<T>(T result)
 			{
 #if SILVERLIGHT_5||WINDOWS_PHONE_7||NET40
 				return await TaskEx.FromResult(result);

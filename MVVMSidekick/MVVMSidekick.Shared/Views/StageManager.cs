@@ -56,7 +56,7 @@ namespace MVVMSidekick.Views
 
         static StageManager()
         {
-            NavigatorBeaconsKey = "NavigatorBeaconsKey";
+            NavigatorBeaconsKey = nameof(NavigatorBeaconsKey);
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="StageManager"/> class.
@@ -79,7 +79,7 @@ namespace MVVMSidekick.Views
 
 
 
-        IView _CurrentBindingView;
+        WeakReference _CurrentBindingView = new WeakReference(null);
         /// <summary>
         /// Get the currently binded view of this stagemanager. A stagemanager is for a certain view. If viewmodel is not binded to a view, the whole thing cannot work.
         /// </summary>
@@ -88,11 +88,11 @@ namespace MVVMSidekick.Views
             get
             {
 
-                return _CurrentBindingView;
+                return _CurrentBindingView.IsAlive ? _CurrentBindingView.Target as IView : null;
             }
             internal set
             {
-                _CurrentBindingView = value;
+                _CurrentBindingView = new WeakReference(value);
             }
         }
 
@@ -217,7 +217,7 @@ namespace MVVMSidekick.Views
         {
             Dictionary<string, FrameworkElement> dic;
 #if NETFX_CORE
-				if (!view.Resources.ContainsKey(NavigatorBeaconsKey))
+            if (!view.Resources.ContainsKey(NavigatorBeaconsKey))
 #else
             if (!view.Resources.Contains(NavigatorBeaconsKey))
 #endif

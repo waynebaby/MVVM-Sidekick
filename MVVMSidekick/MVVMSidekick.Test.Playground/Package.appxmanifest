@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="8d121d27-a38b-43cc-a041-95778ce0b7b2"
+    Name="da5531a0-5d08-404e-a66b-1bfa1bc6f5a4"
     Publisher="CN=waywa"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="8d121d27-a38b-43cc-a041-95778ce0b7b2" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="da5531a0-5d08-404e-a66b-1bfa1bc6f5a4" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>MVVMSidekick.Test.Playground</DisplayName>
