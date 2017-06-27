@@ -10,8 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BaeconBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BehaviorBaseForWinRT.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BehaviorHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BindToAppliactionBarIconButtonBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ItemsSelectionBindingBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListenToEventRouterTrigger.cs" />
@@ -25,20 +23,34 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\DependencyObservableVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ObservableVector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\Commands.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\Common.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\EventCommandBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\EventCommandEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\EventCommandHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\ICommandWithViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CallingCodeContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\CommonHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\DisposeEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\DisposeEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\FinalizableDisposable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\IDisposeGroup.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\EventRouting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\InstanceCounableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\InstanceCounter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\EventRouter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\EventRouterHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\NavigateCommandEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\RouterEventData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patterns\Patterns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlatformPatches.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Reactive\Reactive.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reactive\EventTuple.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reactive\EventTuple1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\IReactiveCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveExtensionsEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reactive\TaskExecutionWindowEventArg.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ITypeSpecifiedServiceLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ServiceLocatorEntryStruct.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Services.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Testing\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\Utilities.cs" />
@@ -77,10 +89,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\WindowViewDisguise.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Commands\" />
-    <Folder Include="$(MSBuildThisFileDirectory)EventRouting\" />
     <Folder Include="$(MSBuildThisFileDirectory)Patterns\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Services\" />
     <Folder Include="$(MSBuildThisFileDirectory)Utilities\" />
   </ItemGroup>
 </Project>

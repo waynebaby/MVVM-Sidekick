@@ -18,15 +18,11 @@ using Windows.UI.Xaml.Controls;
 
 namespace MVVMSidekick.Behaviors
 {
-#if NETFX_CORE
-	public class BaeconBehavior : BehaviorBase, IBehavior
-#else
+
 	/// <summary>
 	/// Bind a beacon to a Content Control, make it work as a stage.
 	/// </summary>
     public class BaeconBehavior : Behavior<ContentControl>
-
-#endif
 	{
 		/// <summary>
 		/// Gets or sets the name of the baecon.
@@ -48,27 +44,6 @@ namespace MVVMSidekick.Behaviors
 			DependencyProperty.Register("BaeconName", typeof(string), typeof(BaeconBehavior), new PropertyMetadata(""));
 
 
-
-#if NETFX_CORE
-		/// <summary>
-		///  Attach
-		/// </summary>
-		/// <param name="associatedObject">associated Object</param>
-		public override void Attach(DependencyObject associatedObject)
-		{
-			base.Attach(associatedObject);
-			this.OnBehaviorOnAttached(associatedObject as ContentControl);
-		}
-		/// <summary>
-		///   Detach
-		/// </summary>
-		public override void Detach()
-		{
-			this.OnBehaviorOnOnDetaching(AssociatedObject as ContentControl);
-			base.Detach();
-		}
-
-#else
 		/// <summary>
 		/// Called when [attached].
 		/// </summary>
@@ -89,7 +64,6 @@ namespace MVVMSidekick.Behaviors
             this.OnBehaviorOnOnDetaching(AssociatedObject);
             base.OnDetaching();
         }
-#endif
 
 
 		internal void OnBehaviorOnAttached(ContentControl target)

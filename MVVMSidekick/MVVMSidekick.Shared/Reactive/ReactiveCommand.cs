@@ -11,7 +11,7 @@ using System.Reactive.Linq;
 
 namespace MVVMSidekick.Reactive
 {
-    /// <summary>
+    /// <summary> 
     /// Reactive Command
     /// </summary>
     public  class ReactiveCommand : IReactiveCommand ,IDisposable

@@ -15,7 +15,7 @@ namespace MVVMSidekick.Reactive
         {
             //        _core = core;
             //        Model = model;
-        }
+        } 
 
     }
 

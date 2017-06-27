@@ -13,7 +13,7 @@ namespace MVVMSidekick.Reactive
 		IDisposable ListenCanExecuteObservable(IObservable<bool> canExecuteSeq);
 		IReactiveCommand OverwriteCanExecute(Func<object, bool> canExecuteFunc);
 		//IDisposable Subscribe(IObserver<EventPattern<EventCommandEventArgs>> observer);
-		Task ExecuteAsync(object parameter);
+		Task ExecuteAsync(object parameter); 
 	}
 
 

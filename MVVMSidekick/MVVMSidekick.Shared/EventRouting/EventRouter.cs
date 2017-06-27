@@ -14,26 +14,18 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading;
-using MVVMSidekick.ViewModels;
 using System.Reactive.Subjects;
-using MVVMSidekick.Utilities;
 using MVVMSidekick.Common;
 using System.Runtime.CompilerServices;
+using System.Reflection;
+using MVVMSidekick.Utilities;
 
 #if NETFX_CORE
 using System.Collections.Concurrent;
 
 #elif WPF
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Collections.Concurrent;
-using System.Windows.Navigation;
-
-using MVVMSidekick.Views;
-using System.Windows.Controls.Primitives;
 
 
 #elif SILVERLIGHT_5 || SILVERLIGHT_4
@@ -52,19 +44,18 @@ using System.Windows.Controls.Primitives;
 #endif
 
 
-				
+
 
 
 namespace MVVMSidekick
 {
 
-	namespace EventRouting
-	{
-
-		/// <summary>
-		/// 全局事件根
-		/// </summary>
-		public class EventRouter : InstanceCounableBase
+    namespace EventRouting
+    {
+        /// <summary>
+        /// 全局事件根
+        /// </summary>
+        public class EventRouter : InstanceCounableBase
 		{
 
 			/// <summary>
@@ -458,172 +449,6 @@ namespace MVVMSidekick
 			}
 
 
-		}
-		/// <summary>
-		/// 导航事件数据
-		/// </summary>
-		public class NavigateCommandEventArgs : EventArgs
-		{
-			/// <summary>
-			/// Initializes a new instance of the <see cref="NavigateCommandEventArgs" /> class.
-			/// </summary>
-			public NavigateCommandEventArgs()
-			{
-				ParameterDictionary = new Dictionary<string, object>();
-			}
-			/// <summary>
-			/// Initializes a new instance of the <see cref="NavigateCommandEventArgs" /> class.
-			/// </summary>
-			/// <param name="dic">The dic.</param>
-			public NavigateCommandEventArgs(IDictionary<string, object> dic)
-				: this()
-			{
-				foreach (var item in dic)
-				{
-
-					(ParameterDictionary as IDictionary<string, object>)[item.Key] = item.Value;
-				}
-
-			}
-			/// <summary>
-			/// Gets or sets the parameter dictionary.
-			/// </summary>
-			/// <value>The parameter dictionary.</value>
-			public Dictionary<string, object> ParameterDictionary { get; set; }
-
-			/// <summary>
-			/// Gets or sets the type of the source view.
-			/// </summary>
-			/// <value>The type of the source view.</value>
-			public Type SourceViewType { get; set; }
-
-			/// <summary>
-			/// Gets or sets the type of the target view.
-			/// </summary>
-			/// <value>The type of the target view.</value>
-			public Type TargetViewType { get; set; }
-
-			/// <summary>
-			/// Gets or sets the view model.
-			/// </summary>
-			/// <value>The view model.</value>
-			public IViewModel ViewModel { get; set; }
-
-			/// <summary>
-			/// Gets or sets the target frame.
-			/// </summary>
-			/// <value>The target frame.</value>
-			public Object TargetFrame { get; set; }
-		}
-
-		///// <summary>
-		///// 保存状态事件数据
-		///// </summary>
-		//public class SaveStateEventArgs : EventArgs
-		//{
-		//	/// <summary>
-		//	/// Gets or sets the view key identifier.
-		//	/// </summary>
-		//	/// <value>The view key identifier.</value>
-		//	public string ViewKeyId { get; set; }
-		//	/// <summary>
-		//	/// Gets or sets the state.
-		//	/// </summary>
-		//	/// <value>The state.</value>
-		//	public Dictionary<string, object> State { get; set; }
-		//}
-
-		/// <summary>
-		/// 事件路由的扩展方法集合
-		/// </summary>
-		public static class EventRouterHelper
-		{
-			/// <summary>
-			/// 触发事件
-			/// </summary>
-			/// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
-			/// <param name="source">事件来源</param>
-			/// <param name="eventArgs">事件数据</param>
-			/// <param name="callerMemberName">事件名</param>
-			public static void RaiseEvent<TEventArgs>(this BindableBase source, TEventArgs eventArgs, string callerMemberName = "")
-#if !NETFX_CORE
-			// where TEventArgs : EventArgs
-#endif
-
-			{
-				EventRouter.Instance.RaiseEvent(source, eventArgs, callerMemberName);
-			}
-
-		}
-
-
-
-
-		/// <summary>
-		/// 事件信息
-		/// </summary>
-		/// <typeparam name="TEventArgs">事件数据类型</typeparam>
-		public struct RouterEventData<TEventArgs>
-#if !NETFX_CORE
-		//: EventArgs
-		// where TEventArgs : EventArgs
-#endif
-
-		{
-			/// <summary>
-			/// Initializes a new instance of the <see cref="RouterEventData{TEventArgs}" /> struct.
-			/// </summary>
-			/// <param name="sender">The sender.</param>
-			/// <param name="eventName">Name of the event.</param>
-			/// <param name="eventArgs">The instance containing the event data.</param>
-			public RouterEventData(object sender, string eventName, TEventArgs eventArgs)
-			{
-
-				_Sender = sender;
-				_EventName = eventName;
-				_EventArgs = eventArgs;
-			}
-
-			/// <summary>
-			/// The _ sender
-			/// </summary>
-			private Object _Sender;
-			/// <summary>
-			/// 事件发送者
-			/// </summary>
-			/// <value>The sender.</value>
-			public Object Sender
-			{
-				get { return _Sender; }
-
-			}
-
-			/// <summary>
-			/// The _ event name
-			/// </summary>
-			private string _EventName;
-
-			/// <summary>
-			/// 事件名
-			/// </summary>
-			/// <value>The name of the event.</value>
-			public string EventName
-			{
-				get { return _EventName; }
-			}
-
-			/// <summary>
-			/// The _ event arguments
-			/// </summary>
-			private TEventArgs _EventArgs;
-			/// <summary>
-			/// 事件数据
-			/// </summary>
-			/// <value>The event arguments.</value>
-			public TEventArgs EventData
-			{
-				get { return _EventArgs; }
-			}
 		}
 
 
