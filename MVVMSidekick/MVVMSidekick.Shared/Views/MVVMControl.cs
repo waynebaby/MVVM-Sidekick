@@ -1,4 +1,5 @@
-﻿#if !STANDARDCORE
+﻿
+#if !STANDARDCORE
 
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,6 @@ using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #endif
-
 
 namespace MVVMSidekick.Views
 {

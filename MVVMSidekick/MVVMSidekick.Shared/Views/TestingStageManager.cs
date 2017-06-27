@@ -97,7 +97,7 @@ namespace MVVMSidekick.Views
             }
         }
 
-        public void InitParent(Func<DependencyObject> parentLocator)
+        public void InitParent(Func<object> parentLocator)
         {
    
         }

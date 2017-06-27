@@ -51,13 +51,31 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueContainerIndexer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IViewModelToViewMapperServiceLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PropertyBridge.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewModelLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewModelToViewMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewModelToViewMapperHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewModelToViewMapperServiceLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Views.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ControlViewDisguise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PageViewDisguise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewDisguise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IViewDisguise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MVVMControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MVVMPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MVVMWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Stage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IStage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\StageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IStageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TestingStage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TestingStageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DefaultViewDisguiseManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\WindowViewDisguise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VisualStates.cs" />
   </ItemGroup>
 </Project>

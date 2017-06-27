@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MVVMSidekick.ViewModels;
-using System.Reactive.Linq;
-using System.Windows;
-using System.IO;
+﻿// ***********************************************************************
+// Assembly         : MVVMSidekick_Wp8
+// Author           : waywa
+// Created          : 05-17-2014
+//
+// Last Modified By : waywa
+// Last Modified On : 01-04-2015
+// ***********************************************************************
+// <copyright file="Views.cs" company="">
+//     Copyright ©  2012
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using MVVMSidekick.Services;
 
 
 
 #if NETFX_CORE
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Media;
 
 
 #elif WPF
@@ -44,17 +45,19 @@ using System.Windows.Controls.Primitives;
 
 
 
-namespace MVVMSidekick.Views
+
+namespace MVVMSidekick
 {
-    public interface IStageManager
+
+
+    namespace Views
     {
-        IStage this[string beaconKey] { get; }
+        public interface IViewModelToViewMapperServiceLocator : ITypeSpecifiedServiceLocator<object>
+		{
 
-        IView CurrentBindingView { get; }
-        IStage DefaultStage { get; set; }
-
-        void InitParent(Func<Object> parentLocator);
-    }
+		}
 
 
+
+	}
 }

@@ -2,9 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 //using Windows.UI.Xaml;
 
-namespace MVVMSidekick.Views
+namespace MVVMSidekick.Views 
 {
     /// <summary>
     /// Interface IView
@@ -33,7 +34,7 @@ namespace MVVMSidekick.Views
         /// Gets the parent.
         /// </summary>
         /// <value>The parent.</value>
-        Object Parent { get; }
+        object  Parent { get; }
 
 
     }

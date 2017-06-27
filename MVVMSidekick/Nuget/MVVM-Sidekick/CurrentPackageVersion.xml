@@ -1,6 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
   <version>
+    <id>1.6.35</id>
+    <releaseNotes>
+      - Fix memory leak when Viewmodel Unload it dose not release IView,(Stage Manager set to null when unload)
+      - Default Value ViewModel。IsDisposingWhenUnloadRequired = false;
+      - Default Value ViewModel。IsDisposingWhenUnbindRequired = false;
+    </releaseNotes>
+  </version>
+  <version>
+    <id>1.6.34</id>
+    <releaseNotes>
+      - Use .net Foundation nuget Package if possiable
+    </releaseNotes>
+  </version>
+  <version>
     <id>1.6.32</id>
     <releaseNotes>
       - Fix one bug about Frame Designtime Support in wpf

@@ -252,7 +252,7 @@ namespace MVVMSidekick.Views
             return targetViewModel;
         }
 
-
+         
         /// <summary>
         /// Show a view for view model and return a result when leave view
         /// </summary>

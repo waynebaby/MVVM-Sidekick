@@ -6,7 +6,7 @@ using MVVMSidekick.ViewModels;
 using System.Reactive.Linq;
 using System.Windows;
 using System.IO;
-
+ 
 
 
 #if NETFX_CORE

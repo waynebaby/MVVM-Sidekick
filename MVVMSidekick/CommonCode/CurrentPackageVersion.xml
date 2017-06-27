@@ -1,6 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
   <version>
+    <id>1.6.36.prereleased</id>
+    <releaseNotes>
+      - Try IViewDisguise attached propertises to let a non-mvvm page to act as a IView member.
+    </releaseNotes>
+  </version>
+  <version>
+    <id>1.6.35</id>
+    <releaseNotes>
+      - Fix memory leak when Viewmodel Unload it dose not release IView,(Stage Manager set to null when unload)
+      - Default Value ViewModel。IsDisposingWhenUnloadRequired = false;
+      - Default Value ViewModel。IsDisposingWhenUnbindRequired = false;
+    </releaseNotes>
+  </version>
+  <version>
     <id>1.6.34</id>
     <releaseNotes>
       - Use .net Foundation nuget Package if possiable

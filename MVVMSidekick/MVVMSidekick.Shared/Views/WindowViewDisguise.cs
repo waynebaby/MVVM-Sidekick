@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MVVMSidekick.ViewModels;
-using System.Reactive.Linq;
-using System.Windows;
-using System.IO;
-using MVVMSidekick.Services;
-
+﻿
 
 
 #if NETFX_CORE
@@ -19,14 +10,7 @@ using Windows.UI.Xaml.Media;
 
 #elif WPF
 using System.Windows.Controls;
-using System.Windows.Media;
-
-using System.Collections.Concurrent;
-using System.Windows.Navigation;
-
-using MVVMSidekick.Views;
-using System.Windows.Controls.Primitives;
-using MVVMSidekick.Utilities;
+using System.Windows;
 #elif SILVERLIGHT_5 || SILVERLIGHT_4
 						   using System.Windows.Media;
 using System.Windows.Controls;
@@ -42,19 +26,34 @@ using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #endif
 
-
-
 namespace MVVMSidekick.Views
 {
-    public interface IStageManager
+
+#if WPF
+    public class WindowViewDisguise : ViewDisguiseBase<Window, WindowViewDisguise>
     {
-        IStage this[string beaconKey] { get; }
+        public WindowViewDisguise(Window assocatedObject) : base(assocatedObject)
+        {
+        }
 
-        IView CurrentBindingView { get; }
-        IStage DefaultStage { get; set; }
+        public override ViewType ViewType => Views.ViewType.Page;
 
-        void InitParent(Func<Object> parentLocator);
+        public override object ContentObject
+        {
+            get { return base.AssocatedObject.Content; }
+            set { AssocatedObject.Content = value; }
+        }
+
+
+        public override object Parent
+        {
+            get
+            {
+
+                return this.AssocatedObject.Parent;
+
+            }
+        }
     }
-
-
+#endif
 }

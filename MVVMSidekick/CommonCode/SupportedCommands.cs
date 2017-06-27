@@ -198,7 +198,7 @@ namespace CommonCode
 					throw new FileNotFoundException();
 				}
 
-				var vsixPath = new FileInfo(extensionFile).Directory.GetFiles("*.csproj", SearchOption.AllDirectories).Single().FullName;
+				var vsixPath = new FileInfo(extensionFile).Directory.GetFiles("*.csproj").Single().FullName;
 
 				var dvsix = XDocument.Load(vsixPath);
 				var ns = dvsix.Root.Name.Namespace;
@@ -329,13 +329,13 @@ namespace CommonCode
 
 				var templateRootDir = args[1];
 				var templateDefFiles = Directory.GetFiles(templateRootDir, "*.vstemplate", SearchOption.AllDirectories);
-				var extensionFile = Directory.GetFiles(templateRootDir, "*.vsixmanifest", SearchOption.AllDirectories).FirstOrDefault();
+				var extensionFile = Directory.GetFiles(templateRootDir, "*.vsixmanifest",  SearchOption.AllDirectories).FirstOrDefault();
 				if (extensionFile == null)
 				{
 					throw new FileNotFoundException();
 				}
 
-				var vsixPath = new FileInfo(extensionFile).Directory.GetFiles("*.csproj", SearchOption.AllDirectories).Single().FullName;
+				var vsixPath = new FileInfo(extensionFile).Directory.GetFiles("*.csproj").Single().FullName;
 
 
 				var dvsix = XDocument.Load(vsixPath);

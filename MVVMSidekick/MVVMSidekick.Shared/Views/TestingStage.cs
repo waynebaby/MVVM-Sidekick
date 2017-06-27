@@ -106,7 +106,7 @@ namespace MVVMSidekick.Views
         }
 
 
-#endif
+#endif 
 
         Dictionary<Type, Func<IViewModel, Task<IViewModel>>> mockingActionsWhenShown
             = new Dictionary<Type, Func<IViewModel, Task<IViewModel>>>();

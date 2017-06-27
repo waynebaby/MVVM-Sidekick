@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +10,7 @@ using System.Windows;
 using System.IO;
 using MVVMSidekick.Services;
 
- 
+
 
 #if NETFX_CORE
 using Windows.UI.Xaml;
@@ -28,7 +30,7 @@ using MVVMSidekick.Views;
 using System.Windows.Controls.Primitives;
 using MVVMSidekick.Utilities;
 #elif SILVERLIGHT_5 || SILVERLIGHT_4
-using System.Windows.Media;
+						   using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
@@ -42,33 +44,27 @@ using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #endif
 
-
-
-
 namespace MVVMSidekick.Views
 {
-    public interface IStage
+    public class DefaultViewDisguiseManager
     {
-        string BeaconKey { get; }
-        bool CanGoBack { get; }
-        bool CanGoForward { get; }
-        Frame Frame { get; }
-        bool IsGoBackSupported { get; }
-        bool IsGoForwardSupported { get; }
-        FrameworkElement Target { get; }
 
-        Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel;
 
-#if SILVERLIGHT_5 || WINDOWS_PHONE_7 || WINDOWS_PHONE_8
-        Dictionary<string, IViewModel> NavigateRequestContexts { get; set; }
-#endif
-#if WPF
-        Task<TResult> ShowAndReturnResult<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel<TResult>;
-        Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel;
-#endif
+        public static IViewDisguise GetViewDisguise(DependencyObject obj)
+        {
+            return (IViewDisguise)obj.GetValue(ViewDisguiseProperty);
+        }
+
+        public static void SetViewDisguise(DependencyObject obj, IViewDisguise value)
+        {
+            obj.SetValue(ViewDisguiseProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for ViewDisguise.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ViewDisguiseProperty =
+            DependencyProperty.RegisterAttached(nameof(GetViewDisguise).Remove(0, 3), typeof(IViewDisguise), typeof(DefaultViewDisguiseManager), new PropertyMetadata(null));
+
+
 
     }
-
-
-
 }

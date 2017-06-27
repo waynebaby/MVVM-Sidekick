@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.34</version>
+    <version>1.6.36.prereleased</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,6 +38,18 @@
 
     </summary>
     <releaseNotes>
+	1.6.36.prereleased
+		
+      - Try IViewDisguise attached propertises to let a non-mvvm page to act as a IView member.
+    
+
+	1.6.35
+		
+      - Fix memory leak when Viewmodel Unload it dose not release IView,(Stage Manager set to null when unload)
+      - Default Value ViewModel。IsDisposingWhenUnloadRequired = false;
+      - Default Value ViewModel。IsDisposingWhenUnbindRequired = false;
+    
+
 	1.6.34
 		
       - Use .net Foundation nuget Package if possiable

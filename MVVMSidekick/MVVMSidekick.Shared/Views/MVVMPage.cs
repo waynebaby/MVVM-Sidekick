@@ -47,7 +47,6 @@ using System.Windows.Controls.Primitives;
 namespace MVVMSidekick.Views
 {
 
-
 #if WINDOWS_PHONE_7 || WINDOWS_PHONE_8
 		/// <summary>
 		/// Class MVVMPage.
@@ -70,36 +69,43 @@ namespace MVVMSidekick.Views
         //: this(null)
         {
 #if WPF
-            Loaded += ViewHelper.ViewLoadCallBack;
-            Unloaded += ViewHelper.ViewUnloadCallBack;
+				Loaded += ViewHelper.ViewLoadCallBack;
+				Unloaded += ViewHelper.ViewUnloadCallBack;
 #endif
         }
 
 
 
 #if WPF
-        /// <summary>
-        /// Frame of this view
-        /// </summary>
+			/// <summary>
+			/// Frame of this view
+			/// </summary>
 
-        public Frame Frame
-        {
-            get { return (Frame)GetValue(FrameProperty); }
-            set { SetValue(FrameProperty, value); }
-        }
-
-
-        // Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
-        /// <summary>
-        /// Frame Property
-        /// </summary>
-        public static readonly DependencyProperty FrameProperty =
-            DependencyProperty.Register("Frame", typeof(Frame), typeof(MVVMPage), new PropertyMetadata(null));
+			public Frame Frame
+			{
+				get { return (Frame)GetValue(FrameProperty); }
+				set { SetValue(FrameProperty, value); }
+			}
 
 
+			// Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
+			/// <summary>
+			/// Frame Property
+			/// </summary>
+			public static readonly DependencyProperty FrameProperty =
+				DependencyProperty.Register("Frame", typeof(Frame), typeof(MVVMPage), new PropertyMetadata(null));
 
+
+		
 #endif
+        Object IView.Parent
+        {
+            get
+            {
+                return Frame;
 
+            }
+        }
         //			/// <summary>
         //			/// Initializes a new instance of the <see cref="MVVMPage" /> class.
         //			/// </summary>
@@ -131,104 +137,97 @@ namespace MVVMSidekick.Views
 
 
 
-        Object IView.Parent
-        {
-            get
-            {
-                return Frame;
 
-            }
-        }
 #if !WPF
-            //WPF Pages' Content are objects but others are FE .
-            /// <summary>
-            /// Gets or sets the content object.
-            /// </summary>
-            /// <value>The content object.</value>
-            public object ContentObject
-			{
-				get { return Content; }
-				set { Content = value as FrameworkElement; }
+        //WPF Pages' Content are objects but others are FE .
+        /// <summary>
+        /// Gets or sets the content object.
+        /// </summary>
+        /// <value>The content object.</value>
+        public object ContentObject
+        {
+            get { return Content; }
+            set { Content = value as FrameworkElement; }
 
-			}
+        }
 
-			/// <summary>
-			/// The is loaded
-			/// </summary>
-			bool IsLoaded = false;
+        /// <summary>
+        /// The is loaded
+        /// </summary>
+        bool IsLoaded = false;
 
-			//WPF navigates page instances but other navgates with parameters
-			/// <summary>
-			/// Handles the <see cref="E:NavigatedTo" /> event.
-			/// </summary>
-			/// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
-			protected override void OnNavigatedTo(NavigationEventArgs e)
-			{
+        //WPF navigates page instances but other navgates with parameters
+        /// <summary>
+        /// Handles the <see cref="E:NavigatedTo" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
 
-				base.OnNavigatedTo(e);
-				RoutedEventHandler loadEvent = null;
+            base.OnNavigatedTo(e);
+            RoutedEventHandler loadEvent = null;
 
-				loadEvent =  (_1, _2) =>
-				{																 
-					EventRouting.EventRouter.Instance.RaiseEvent(this, e);	//VM Is Ready after this
-					IsLoaded = true;
-					this.Loaded -= loadEvent;									 
+            loadEvent = (_1, _2) =>
+            {
+                EventRouting.EventRouter.Instance.RaiseEvent(this, e);  //VM Is Ready after this
+                IsLoaded = true;
+                this.Loaded -= loadEvent;
 
-				};
-
-			
-
-				this.Loaded += loadEvent;
-
-				Loaded += ViewHelper.ViewLoadCallBack;
-				Unloaded += ViewHelper.ViewUnloadCallBack;
-
-			}
+            };
 
 
 
+            this.Loaded += loadEvent;
 
-			/// <summary>
-			/// Handles the <see cref="E:NavigatedFrom" /> event.
-			/// </summary>
-			/// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
-			protected override void OnNavigatedFrom(NavigationEventArgs e)
-			{
-				base.OnNavigatedFrom(e);
+            Loaded += ViewHelper.ViewLoadCallBack;
+            Unloaded += ViewHelper.ViewUnloadCallBack;
+
+        }
+
+
+
+
+        /// <summary>
+        /// Handles the <see cref="E:NavigatedFrom" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
 
 #if SILVERLIGHT_5
 				if (ViewModel.StageManager.DefaultStage.NavigateRequestContexts.ContainsKey(e.Uri.ToString()))
 #else
-				if (e.NavigationMode == NavigationMode.Back)
+            if (e.NavigationMode == NavigationMode.Back)
 #endif
 
-				{
-
-					if (ViewModel != null)
-					{
-
-						ViewModel.Dispose();
-					}
-
-
-				}
-
-			}
-#else
-        /// <summary>
-        /// the first object of view content.
-        /// </summary>
-        public object ContentObject
-        {
-            get
             {
-                return Content;
+
+                if (ViewModel != null)
+                {
+
+                    ViewModel.Dispose();
+                }
+
+
             }
-            set
-            {
-                Content = value;
-            }
+
         }
+#else
+			/// <summary>
+			/// the first object of view content.
+			/// </summary>
+			public object ContentObject
+			{
+				get
+				{
+					return Content;
+				}
+				set
+				{
+					Content = value;
+				}
+			}
 #endif
 
 
@@ -294,50 +293,50 @@ namespace MVVMSidekick.Views
                 {
                     var p = o as MVVMPage;
 #if !WPF
-						if (p.IsLoaded)
-						{
-							ViewHelper.ViewModelChangedCallback(o, e);
-						}
-#else
+                    if (p.IsLoaded)
+                    {
                         ViewHelper.ViewModelChangedCallback(o, e);
-#endif
                     }
+#else
+						ViewHelper.ViewModelChangedCallback(o, e);
+#endif
+                }
 
                 ));
 
 
 #if NETFX_CORE
 
-			/// <summary>
-			/// Populates the page with content passed during navigation.  Any saved state is also
-			/// provided when recreating a page from a prior session.
-			/// </summary>
-			/// <param name="navigationParameter">The parameter value passed to
-			/// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
-			/// </param>
-			/// <param name="pageState">A dictionary of state preserved by this page during an earlier
-			/// session.  This will be null the first time a page is visited.</param>
-			protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
-			{
-				if (ViewModel != null)
-				{
-					ViewModel.LoadState(navigationParameter, pageState);
-				}
-			}
+        /// <summary>
+        /// Populates the page with content passed during navigation.  Any saved state is also
+        /// provided when recreating a page from a prior session.
+        /// </summary>
+        /// <param name="navigationParameter">The parameter value passed to
+        /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested.
+        /// </param>
+        /// <param name="pageState">A dictionary of state preserved by this page during an earlier
+        /// session.  This will be null the first time a page is visited.</param>
+        protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.LoadState(navigationParameter, pageState);
+            }
+        }
 
-			/// <summary>
-			/// Preserves state associated with this page in case the application is suspended or the
-			/// page is discarded from the navigation cache.
-			/// </summary>
-			/// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
-			protected virtual void SaveState(Dictionary<String, Object> pageState)
-			{
-				if (ViewModel != null)
-				{
-					ViewModel.SaveState(pageState);
+        /// <summary>
+        /// Preserves state associated with this page in case the application is suspended or the
+        /// page is discarded from the navigation cache.
+        /// </summary>
+        /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
+        protected virtual void SaveState(Dictionary<String, Object> pageState)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.SaveState(pageState);
 
-				}
-			}
+            }
+        }
 #endif
 
 
@@ -350,8 +349,9 @@ namespace MVVMSidekick.Views
             get { return ViewType.Page; }
         }
 
+
+
+
     }
-
-
-}
 #endif
+}

@@ -105,7 +105,7 @@ namespace MVVMSidekick.Views
         /// Initializes the parent.
         /// </summary>
         /// <param name="parentLocator">The parent locator.</param>
-        public void InitParent(Func<DependencyObject> parentLocator)
+        public void InitParent(Func<Object> parentLocator)
         {
             _parentLocator = parentLocator;
             DefaultStage = this[""];
@@ -113,7 +113,7 @@ namespace MVVMSidekick.Views
 
 
 
-        Func<DependencyObject> _parentLocator;
+        Func<Object> _parentLocator;
 
 
         #region Attached Property

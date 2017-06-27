@@ -209,8 +209,8 @@
       <Link>Packages\Rx-XAML.2.2.5.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.6.34.nupkg">
-      <Link>Packages\MVVM-Sidekick.1.6.34.nupkg</Link>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.1.6.36.prereleased.nupkg">
+      <Link>Packages\MVVM-Sidekick.1.6.36.prereleased.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
