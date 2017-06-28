@@ -66,11 +66,14 @@ namespace MVVMSidekick.ViewModels
     using Views;
     using MVVMSidekick.Common;
     using System.Reactive;
-    using System.Diagnostics;   /// <summary>
-                                /// Class ViewModelBase.
-                                /// </summary>
-                                /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
-                                /// <typeparam name="TResult">The type of the t result.</typeparam>
+    using System.Diagnostics;
+    using Windows.UI.Xaml.Navigation;
+
+    /// <summary>
+    /// Class ViewModelBase.
+    /// </summary>
+    /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
+    /// <typeparam name="TResult">The type of the t result.</typeparam>
     public partial class ViewModelBase<TViewModel, TResult> : ViewModelBase<TViewModel>, IViewModel<TResult>
         where TViewModel : ViewModelBase<TViewModel, TResult>, IViewModel<TResult>
     {
@@ -687,6 +690,15 @@ namespace MVVMSidekick.ViewModels
                 return null;
             }
             return dp.Dispatcher;
+
+        }
+
+        public virtual void OnPageNavigatedTo(NavigationEventArgs e)
+        {
+            
+        }
+        public virtual void OnPageNavigatedFrom(NavigationEventArgs e)
+        {
 
         }
 #else

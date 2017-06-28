@@ -53,15 +53,41 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\ServiceLocatorEntryStruct.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Services.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Testing\Constants.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Utilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\ColllectionHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\EventHandlerHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\ExpressionHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\LimitedConcurrencyLevelTaskScheduler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\ReflectionCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Runtime.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\TaskExHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\TypeInfoHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BindableBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BindableBaseExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CommandModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CommandModelExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DisposeGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DisposeGroupBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ErrorEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IBindable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IErrorInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\INotifyChanges.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\INotifyChanges1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IValueCanGet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IValueCanSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IValueContainer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IViewModel1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IViewModelLifetime.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NoResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Property.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ShowAwaitableResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueChangedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueChangedEventArgs1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueContainerIndexer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModels.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ICommandModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IViewModelToViewMapperServiceLocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\PropertyBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewHelper.cs" />
@@ -90,6 +116,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Patterns\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Utilities\" />
   </ItemGroup>
 </Project>

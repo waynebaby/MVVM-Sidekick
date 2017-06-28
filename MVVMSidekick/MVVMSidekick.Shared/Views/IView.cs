@@ -35,21 +35,7 @@ namespace MVVMSidekick.Views
         /// </summary>
         /// <value>The parent.</value>
         object  Parent { get; }
-
-
+        
     }
-
-
-    /// <summary>
-    /// Interface IView
-    /// </summary>
-    /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
-    public interface IView<TViewModel> : IView, IDisposable where TViewModel : IViewModel
-    {
-        /// <summary>
-        /// Gets or sets the specific typed view model.
-        /// </summary>
-        /// <value>The specific typed view model.</value>
-        TViewModel SpecificTypedViewModel { get; set; }
-    }
+    
 }

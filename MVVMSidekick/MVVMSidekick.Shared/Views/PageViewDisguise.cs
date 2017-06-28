@@ -60,5 +60,64 @@ namespace MVVMSidekick.Views
 #endif
             }
         }
+
+
+#if !WPF
+        /// <summary>
+        /// The is loaded
+        /// </summary>
+        bool IsLoaded = false;
+        //WPF navigates page instances but other navgates with parameters
+        /// <summary>
+        /// Handles the <see cref="E:NavigatedTo" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
+        public void OnNavigatedTo(NavigationEventArgs e)
+        {
+
+            RoutedEventHandler loadEvent = null;
+
+            loadEvent = (_1, _2) =>
+            {
+                EventRouting.EventRouter.Instance.RaiseEvent(this, e);  //VM Is Ready after this
+                IsLoaded = true;
+                AssocatedObject.Loaded -= loadEvent;
+
+            };
+
+
+
+            AssocatedObject.Loaded += loadEvent;
+
+            AssocatedObject.Loaded += ViewHelper.ViewLoadCallBack;
+            AssocatedObject.Unloaded += ViewHelper.ViewUnloadCallBack;
+
+        }
+        /// <summary>
+        /// Handles the <see cref="E:NavigatedFrom" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
+        public void  OnNavigatedFrom(NavigationEventArgs e)
+        {
+
+#if SILVERLIGHT_5
+				if (ViewModel.StageManager.DefaultStage.NavigateRequestContexts.ContainsKey(e.Uri.ToString()))
+#else
+            if (e.NavigationMode == NavigationMode.Back)
+#endif
+            {
+
+                if (ViewModel != null)
+                {
+
+                    ViewModel.Dispose();
+                }
+
+
+            }
+
+        }
+#endif
+
     }
 }

@@ -106,38 +106,7 @@ namespace MVVMSidekick.Views
 
             }
         }
-        //			/// <summary>
-        //			/// Initializes a new instance of the <see cref="MVVMPage" /> class.
-        //			/// </summary>
-        //			/// <param name="viewModel">The view model.</param>
-        //			public MVVMPage(IViewModel viewModel)
-        //			{
-        //				ViewModel = viewModel;
-        //				Unloaded += ViewHelper.ViewUnloadCallBack;
-        //#if WPF
-        //				Loaded += async (o, e) =>
-        //					{
-        //						if (viewModel != null)
-        //						{
-        //							if (!object.ReferenceEquals(ViewModel, viewModel))
-        //							{
-        //								ViewModel = viewModel;
-        //							}
-        //						}
-
-        //						if (ViewModel != null)
-        //						{
-        //							await ViewModel.OnBindedViewLoad(this);
-        //						}
-
-        //					};
-        //#endif
-
-        //			}
-
-
-
-
+        
 #if !WPF
         //WPF Pages' Content are objects but others are FE .
         /// <summary>
@@ -155,7 +124,6 @@ namespace MVVMSidekick.Views
         /// The is loaded
         /// </summary>
         bool IsLoaded = false;
-
         //WPF navigates page instances but other navgates with parameters
         /// <summary>
         /// Handles the <see cref="E:NavigatedTo" /> event.
@@ -182,11 +150,7 @@ namespace MVVMSidekick.Views
             Loaded += ViewHelper.ViewLoadCallBack;
             Unloaded += ViewHelper.ViewUnloadCallBack;
 
-        }
-
-
-
-
+        }        
         /// <summary>
         /// Handles the <see cref="E:NavigatedFrom" /> event.
         /// </summary>
@@ -213,6 +177,8 @@ namespace MVVMSidekick.Views
             }
 
         }
+
+
 #else
 			/// <summary>
 			/// the first object of view content.
