@@ -110,7 +110,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\IStageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TestingStage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TestingStageManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\DefaultViewDisguiseManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewDisguiseManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\WindowViewDisguise.cs" />
   </ItemGroup>

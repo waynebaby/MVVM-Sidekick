@@ -63,10 +63,7 @@ namespace MVVMSidekick.Views
 
 
 #if !WPF
-        /// <summary>
-        /// The is loaded
-        /// </summary>
-        bool IsLoaded = false;
+
         //WPF navigates page instances but other navgates with parameters
         /// <summary>
         /// Handles the <see cref="E:NavigatedTo" /> event.
@@ -80,7 +77,6 @@ namespace MVVMSidekick.Views
             loadEvent = (_1, _2) =>
             {
                 EventRouting.EventRouter.Instance.RaiseEvent(this, e);  //VM Is Ready after this
-                IsLoaded = true;
                 AssocatedObject.Loaded -= loadEvent;
 
             };
@@ -109,7 +105,7 @@ namespace MVVMSidekick.Views
 
                 if (ViewModel != null)
                 {
-
+                    ViewModel.OnPageNavigatedFrom(e);
                     ViewModel.Dispose();
                 }
 
@@ -117,7 +113,14 @@ namespace MVVMSidekick.Views
             }
 
         }
+        public void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            ViewModel.OnPageNavigatingFrom(e);
+
+        }
+
 #endif
+
 
     }
 }

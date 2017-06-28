@@ -106,5 +106,9 @@ namespace MVVMSidekick.Views
         public abstract ViewType ViewType { get; }
         public abstract object ContentObject { get; set; }
         public abstract object Parent { get; }
+
+        
+
+
     }
 }

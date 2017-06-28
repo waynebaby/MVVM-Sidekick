@@ -131,8 +131,9 @@ namespace MVVMSidekick.Views
         /// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
+            
             base.OnNavigatedTo(e);
+            
             RoutedEventHandler loadEvent = null;
 
             loadEvent = (_1, _2) =>

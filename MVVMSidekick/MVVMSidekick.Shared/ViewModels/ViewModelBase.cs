@@ -29,6 +29,7 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 #if NETFX_CORE
 using Windows.UI.Xaml.Controls;
+    using Windows.UI.Xaml.Navigation;
 
 
 #elif WPF
@@ -67,7 +68,6 @@ namespace MVVMSidekick.ViewModels
     using MVVMSidekick.Common;
     using System.Reactive;
     using System.Diagnostics;
-    using Windows.UI.Xaml.Navigation;
 
     /// <summary>
     /// Class ViewModelBase.
@@ -700,6 +700,10 @@ namespace MVVMSidekick.ViewModels
         public virtual void OnPageNavigatedFrom(NavigationEventArgs e)
         {
 
+        }
+        public virtual void OnPageNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+           
         }
 #else
 

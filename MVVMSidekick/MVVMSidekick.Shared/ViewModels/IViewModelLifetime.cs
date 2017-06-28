@@ -99,6 +99,7 @@ namespace MVVMSidekick
 #if !WPF
             void OnPageNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e);
             void OnPageNavigatedFrom(Windows.UI.Xaml.Navigation.NavigationEventArgs e);
+            void OnPageNavigatingFrom(Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e);
 #endif
 
         }

@@ -46,23 +46,39 @@ using System.Windows.Controls.Primitives;
 
 namespace MVVMSidekick.Views
 {
-    public class DefaultViewDisguiseManager
+    public static class ViewDisguiseManager
     {
 
 
-        public static IViewDisguise GetViewDisguise(DependencyObject obj)
+        public static IViewDisguise GetViewDisguise(this DependencyObject obj)
         {
             return (IViewDisguise)obj.GetValue(ViewDisguiseProperty);
         }
 
-        public static void SetViewDisguise(DependencyObject obj, IViewDisguise value)
+        public static void SetViewDisguise(this DependencyObject obj, IViewDisguise value)
+        {
+            obj.SetValue(ViewDisguiseProperty, value);
+        }
+
+        public static PageViewDisguise GetViewDisguise(this Page obj)
+        {
+            var dis = (PageViewDisguise)obj.GetValue(ViewDisguiseProperty);
+            if (dis==null)
+            {
+                dis = new PageViewDisguise(obj);
+                obj.SetValue(ViewDisguiseProperty, dis);
+            }
+            return dis;
+        }
+
+        public static void SetViewDisguise(this Page obj, PageViewDisguise value)
         {
             obj.SetValue(ViewDisguiseProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for ViewDisguise.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ViewDisguiseProperty =
-            DependencyProperty.RegisterAttached(nameof(GetViewDisguise).Remove(0, 3), typeof(IViewDisguise), typeof(DefaultViewDisguiseManager), new PropertyMetadata(null));
+            DependencyProperty.RegisterAttached(nameof(GetViewDisguise).Remove(0, 3), typeof(IViewDisguise), typeof(ViewDisguiseManager), new PropertyMetadata(null));
 
 
 

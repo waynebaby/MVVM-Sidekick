@@ -58,43 +58,59 @@ namespace MVVMSidekick
         /// 		 class ViewModelToViewMapperHelper
         /// </summary>
         public static class ViewModelToViewMapperHelper
-		{
+        {
 
-			internal static Dictionary<Type, Func<IViewModel>> ViewToVMMapping = new Dictionary<Type, Func<IViewModel>>();
+            internal static Dictionary<Type, Func<IViewModel>> ViewToVMMapping = new Dictionary<Type, Func<IViewModel>>();
 
-			/// <summary>
-			/// Gets the default view model.
-			/// </summary>
-			/// <param name="view">The view.</param>
-			/// <returns></returns>
-			public static IViewModel GetDefaultViewModel(this IView view)
-			{
-				Func<IViewModel> func;
-				var vt = view.GetType();
-				if (ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(vt, out func))
-				{
+            /// <summary>
+            /// Gets the default view model.
+            /// </summary>
+            /// <param name="view">The view.</param>
+            /// <returns></returns>
+            public static IViewModel GetDefaultViewModel(this IView view)
+            {
+                Func<IViewModel> func;
+                Type viewType = null;
+                switch (view)
+                {
+                    case PageViewDisguise pd:
+                        viewType = pd.AssocatedObject.GetType();
+                        break;
+                    case ControlViewDisguise pd:
+                        viewType = pd.AssocatedObject.GetType();
+                        break;
+#if WPF
+                    case WindowViewDisguise pd:
+                        viewType = pd.AssocatedObject.GetType();
+                        break;
+#endif
+                    default:
+                        break;
+                }
+                if (ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(viewType, out func))
+                {
 
-					return func();
-				}
-				return null;
-			}
+                    return func();
+                }
+                return null;
+            }
 
-			/// <summary>
-			/// Gets the view mapper.
-			/// </summary>
-			/// <typeparam name="TViewModel">The type of the view model.</typeparam>
-			/// <param name="vmRegisterEntry">The vm register entry.</param>
-			/// <returns></returns>
-			public static ViewModelToViewMapper<TViewModel> GetViewMapper<TViewModel>(this MVVMSidekick.Services.ServiceLocatorEntryStruct<TViewModel> vmRegisterEntry)
-				  where TViewModel : IViewModel
-			{
-				return new ViewModelToViewMapper<TViewModel>();
-			}
-
-
-		}
+            /// <summary>
+            /// Gets the view mapper.
+            /// </summary>
+            /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+            /// <param name="vmRegisterEntry">The vm register entry.</param>
+            /// <returns></returns>
+            public static ViewModelToViewMapper<TViewModel> GetViewMapper<TViewModel>(this MVVMSidekick.Services.ServiceLocatorEntryStruct<TViewModel> vmRegisterEntry)
+                  where TViewModel : IViewModel
+            {
+                return new ViewModelToViewMapper<TViewModel>();
+            }
 
 
+        }
 
-	}
+
+
+    }
 }

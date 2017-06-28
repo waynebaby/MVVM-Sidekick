@@ -313,8 +313,8 @@ namespace MVVMSidekick
 			/// </summary>
 			/// <typeparam name="TPage"></typeparam>
 			/// <returns></returns>
-			public ViewModelToViewMapper<TModel> MapToDefault<TPage>() where TPage : MVVMPage
-			{
+			public ViewModelToViewMapper<TModel> MapToDefault<TPage>() where TPage : Windows.UI.Xaml.Controls.Page
+            {
 
 				MapViewToViewModel<TPage>();
 
@@ -327,8 +327,8 @@ namespace MVVMSidekick
 			/// </summary>
 			/// <param name="viewMappingKey">mapping key</param>
 			/// <returns></returns>
-			public ViewModelToViewMapper<TModel> MapToDefault<TPage>(string viewMappingKey) where TPage : MVVMPage
-			{
+			public ViewModelToViewMapper<TModel> MapToDefault<TPage>(string viewMappingKey) where TPage : Windows.UI.Xaml.Controls.Page
+            {
 
 				MapViewToViewModel<TPage>();
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, typeof(TPage));
