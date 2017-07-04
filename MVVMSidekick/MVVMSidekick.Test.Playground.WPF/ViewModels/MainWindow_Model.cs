@@ -105,6 +105,45 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
         #endregion
 
 
+        public CommandModel<ReactiveCommand, String> CommandOpenWindows
+        {
+            get { return _CommandOpenWindowsLocator(this).Value; }
+            set { _CommandOpenWindowsLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandOpenWindows Setup        
+
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandOpenWindows = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandOpenWindowsLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandOpenWindowsLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandOpenWindows), model => model.Initialize(nameof(CommandOpenWindows), ref model._CommandOpenWindows, ref _CommandOpenWindowsLocator, _CommandOpenWindowsDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandOpenWindowsDefaultValueFactory =
+            model =>
+            {
+                var state = nameof(CommandOpenWindows);           // Command state  
+                var commandId = nameof(CommandOpenWindows);
+                var vm = CastToCurrentType(model);
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+
+                cmd.DoExecuteUIBusyTask(
+                        vm,
+                        async e =>
+                        {
+                            //Todo: Add OpenWindows logic here, or
+                            await vm.StageManager.DefaultStage.Show<Window1_Model>();
+                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
+                        })
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+
+                var cmdmdl = cmd.CreateCommandModel(state);
+
+                cmdmdl.ListenToIsUIBusy(
+                    model: vm,
+                    canExecuteWhenBusy: false);
+                return cmdmdl;
+            };
+
+        #endregion
+
     }
 
 }

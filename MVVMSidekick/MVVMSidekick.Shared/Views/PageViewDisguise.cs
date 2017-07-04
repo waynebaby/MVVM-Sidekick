@@ -69,9 +69,8 @@ namespace MVVMSidekick.Views
         /// Handles the <see cref="E:NavigatedTo" /> event.
         /// </summary>
         /// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
-        public void OnNavigatedTo(NavigationEventArgs e)
+        public virtual void OnNavigatedTo(NavigationEventArgs e)
         {
-
             RoutedEventHandler loadEvent = null;
 
             loadEvent = (_1, _2) =>
@@ -84,7 +83,6 @@ namespace MVVMSidekick.Views
 
 
             AssocatedObject.Loaded += loadEvent;
-
             AssocatedObject.Loaded += ViewHelper.ViewLoadCallBack;
             AssocatedObject.Unloaded += ViewHelper.ViewUnloadCallBack;
 
@@ -93,7 +91,7 @@ namespace MVVMSidekick.Views
         /// Handles the <see cref="E:NavigatedFrom" /> event.
         /// </summary>
         /// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
-        public void  OnNavigatedFrom(NavigationEventArgs e)
+        public virtual void OnNavigatedFrom(NavigationEventArgs e)
         {
 
 #if SILVERLIGHT_5
@@ -109,11 +107,11 @@ namespace MVVMSidekick.Views
                     ViewModel.Dispose();
                 }
 
-
+               
             }
 
         }
-        public void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        public virtual void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             ViewModel.OnPageNavigatingFrom(e);
 

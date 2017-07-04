@@ -94,7 +94,12 @@ namespace MVVMSidekick
 				= async (o, e) =>
 				{
 					IView v = o as IView;
-					if (v != null)
+                    if (v == null)
+                    {
+                        var dp = o as DependencyObject;
+                        v = dp.GetViewDisguise();
+                    }
+                    if (v != null)
 					{
 						var m = v.ViewModel as IViewModelLifetime;
 						if (m != null)
@@ -111,6 +116,11 @@ namespace MVVMSidekick
 				= async (o, e) =>
 				{
 					IView v = o as IView;
+                    if (v==null)
+                    {
+                        var dp = o as DependencyObject;
+                        v = dp.GetViewDisguise();
+                    }
 					if (v != null)
 					{
 						var m = v.ViewModel as IViewModelLifetime;

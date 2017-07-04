@@ -29,5 +29,16 @@ namespace MVVMSidekick.Startups
 
         }
 
+        //public static void ConfigMainWindow()
+        //{
+        //    ViewModelLocator<MainWindow_Model>
+        //        .Instance
+        //        .Register(context =>
+        //            new Window1_Model())
+        //        .GetViewMapper()
+        //        .MapToDefault<Window1>();
+
+        //}
+
     }
 }

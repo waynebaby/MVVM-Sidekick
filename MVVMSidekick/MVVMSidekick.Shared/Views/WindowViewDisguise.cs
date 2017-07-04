@@ -34,6 +34,8 @@ namespace MVVMSidekick.Views
     {
         public WindowViewDisguise(Window assocatedObject) : base(assocatedObject)
         {
+            assocatedObject.Loaded += ViewHelper.ViewLoadCallBack;
+            assocatedObject.Unloaded += ViewHelper.ViewUnloadCallBack;
         }
 
         public override ViewType ViewType => Views.ViewType.Page;

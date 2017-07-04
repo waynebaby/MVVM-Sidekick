@@ -304,7 +304,7 @@ namespace MVVMSidekick.Views
         /// The default target property
         /// </summary>
         public static readonly DependencyProperty DefaultTargetProperty =
-            DependencyProperty.Register("DefaultTarget", typeof(IStage), typeof(StageManager), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof (DefaultStage), typeof(IStage), typeof(StageManager), new PropertyMetadata(null));
 
 
 

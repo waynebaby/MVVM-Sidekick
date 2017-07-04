@@ -22,29 +22,60 @@ namespace MVVMSidekick.Test.Playground
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : MVVMPage
+    public sealed partial class MainPage : Page
     {
+
         public MainPage()
         {
             this.InitializeComponent();
-			this.ViewModel = StrongTypeViewModel =  ViewModelLocator<MainPage_Model>.Instance.Resolve(); 
-            this.RegisterPropertyChangedCallback(ViewModelProperty, (_, __) =>
-            {
-                StrongTypeViewModel = this.ViewModel as MainPage_Model;
-            });
+
         }
 
 
-    public MainPage_Model StrongTypeViewModel
+
+        #region IView Disguise
+        public MainPage_Model StrongTypeViewModel
         {
             get { return (MainPage_Model)GetValue(StrongTypeViewModelProperty); }
             set { SetValue(StrongTypeViewModelProperty, value); }
         }
 
         public static readonly DependencyProperty StrongTypeViewModelProperty =
-                    DependencyProperty.Register("StrongTypeViewModel", typeof(MainPage_Model), typeof(MainPage), new PropertyMetadata(null));
+                    DependencyProperty.Register(nameof(StrongTypeViewModel), typeof(MainPage_Model), typeof(MainPage), new PropertyMetadata(null));
 
 
+
+        PageViewDisguise ViewDisguise { get { return this.GetViewDisguise(); } }
+
+        long strongTypeRegisterToken = 0;
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            ViewDisguise.UnregisterPropertyChangedCallback(PageViewDisguise.ViewModelProperty, strongTypeRegisterToken);
+
+            ViewDisguise.OnNavigatedFrom(e);
+            base.OnNavigatedFrom(e);
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            ViewDisguise.OnNavigatedTo(e);
+            strongTypeRegisterToken = ViewDisguise.RegisterPropertyChangedCallback(PageViewDisguise.ViewModelProperty, (_, __) =>
+            {
+                this.StrongTypeViewModel = ViewDisguise.ViewModel as MainPage_Model;
+            });
+
+            this.ViewDisguise.ViewModel = StrongTypeViewModel = ViewModelLocator<MainPage_Model>.Instance.Resolve();
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            ViewDisguise.OnNavigatingFrom(e);
+        }
+
+        #endregion
 
     }
 }

@@ -98,7 +98,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Views.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ControlViewDisguise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\PageViewDisguise.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewDisguise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewDisguiseBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IViewDisguise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\MVVMControl.cs" />

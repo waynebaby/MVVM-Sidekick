@@ -5,6 +5,7 @@ using MVVMSidekick.Views;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.Services;
 using MVVMSidekick.Commands;
+using MVVMSidekick.Test.Playground.WPF;
 using MVVMSidekick.Test.Playground.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -24,31 +25,14 @@ using System.Windows.Shapes;
 namespace MVVMSidekick.Test.Playground.WPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Window1 : MVVMWindow
     {
-        public MainWindow()
+        public Window1()
         {
-            ViewDisguise.ViewModel = null;
             InitializeComponent();
-            ViewDisguise.ViewModel = Resources["DesignVM"] as IViewModel;
-            this.Loaded += MainWindow_Loaded;
         }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        #region IView Disguise
-
-
-        WindowViewDisguise ViewDisguise { get { return this.GetViewDisguise(); } }
-
-        #endregion
     }
-
-
-
 }
+

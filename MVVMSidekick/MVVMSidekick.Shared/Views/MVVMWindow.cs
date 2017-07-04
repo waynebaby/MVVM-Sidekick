@@ -83,35 +83,8 @@ namespace MVVMSidekick.Views
         /// Is auto owner set needed property
         /// </summary>
         public static readonly DependencyProperty IsAutoOwnerSetNeededProperty =
-            DependencyProperty.Register("IsAutoOwnerSetNeeded", typeof(bool), typeof(MVVMWindow), new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(IsAutoOwnerSetNeeded), typeof(bool), typeof(MVVMWindow), new PropertyMetadata(true));
 
-
-
-        ///// <summary>
-        /////  MVVM Window constructor
-        ///// </summary>
-        ///// <param name="viewModel"> view model</param>
-        //public MVVMWindow(IViewModel viewModel)
-        //{
-        //	ViewModel = viewModel;
-        //	Unloaded += ViewHelper.ViewUnloadCallBack;
-        //	Loaded += async (_1, _2) =>
-        //	{
-
-        //		if (viewModel != null)
-        //		{
-        //			if (!object.ReferenceEquals(ViewModel, viewModel))
-        //			{
-        //				ViewModel = viewModel;
-        //			}
-        //		}													   
-
-        //		if (ViewModel != null)
-        //		{
-        //			await ViewModel.OnBindedViewLoad(this);
-        //		}
-        //	};
-        //}
 
         /// <summary>
         /// the first content object of view.
@@ -127,20 +100,6 @@ namespace MVVMSidekick.Views
                 Content = value;
             }
         }
-
-
-
-
-        //public IViewModel DesigningViewModel
-        //{
-        //	get { return (IViewModel)GetValue(DesigningViewModelProperty); }
-        //	set { SetValue(DesigningViewModelProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for DesigningViewModel.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty DesigningViewModelProperty =
-        //	DependencyProperty.Register("DesigningViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, ViewHelper.DesigningViewModelChangedCallBack));
-
 
         /// <summary>
         /// View Model
@@ -188,7 +147,7 @@ namespace MVVMSidekick.Views
         /// View Model Property
         /// </summary>
         public static readonly DependencyProperty ViewModelProperty =
-            DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
+            DependencyProperty.Register(nameof(ViewModel), typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
 
         /// <summary>
         /// Type of View

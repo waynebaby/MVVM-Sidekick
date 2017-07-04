@@ -20,5 +20,6 @@
         </Grid.ChildrenTransitions>
             <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
+        <Button HorizontalAlignment="Center" Command="{Binding CommandNext}">Next</Button>
     </Grid>
 </Page>

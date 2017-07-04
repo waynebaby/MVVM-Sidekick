@@ -60,10 +60,13 @@ namespace MVVMSidekick.Views
             obj.SetValue(ViewDisguiseProperty, value);
         }
 
+
+
+
         public static PageViewDisguise GetViewDisguise(this Page obj)
         {
             var dis = (PageViewDisguise)obj.GetValue(ViewDisguiseProperty);
-            if (dis==null)
+            if (dis == null)
             {
                 dis = new PageViewDisguise(obj);
                 obj.SetValue(ViewDisguiseProperty, dis);
@@ -75,6 +78,27 @@ namespace MVVMSidekick.Views
         {
             obj.SetValue(ViewDisguiseProperty, value);
         }
+
+
+
+#if WPF
+
+        public static WindowViewDisguise GetViewDisguise(this Window obj)
+        {
+            var dis = (WindowViewDisguise)obj.GetValue(ViewDisguiseProperty);
+            if (dis == null)
+            {
+                dis = new WindowViewDisguise(obj);
+                obj.SetValue(ViewDisguiseProperty, dis);
+            }
+            return dis;
+        }
+
+        public static void SetViewDisguise(this Window obj, WindowViewDisguise value)
+        {
+            obj.SetValue(ViewDisguiseProperty, value);
+        }
+#endif
 
         // Using a DependencyProperty as the backing store for ViewDisguise.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ViewDisguiseProperty =

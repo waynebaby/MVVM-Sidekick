@@ -1,4 +1,4 @@
-﻿<mvvm:MVVMWindow x:Class="MVVMSidekick.Test.Playground.WPF.MainWindow"
+﻿<Window x:Class="MVVMSidekick.Test.Playground.WPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="{Binding DataContext.Title, ElementName=grid}"
@@ -11,6 +11,6 @@
     </FrameworkElement.Resources>
     <Grid x:Name="grid" DataContext="{StaticResource DesignVM}">
         <TextBlock Text="{Binding Title}"></TextBlock>
-
+        <Button Margin="40" Command="{Binding CommandOpenWindows}"> Pop</Button>
     </Grid>
-</mvvm:MVVMWindow>
+</Window>

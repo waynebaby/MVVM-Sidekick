@@ -13,25 +13,27 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
-namespace MVVMSidekick.Test.Playground.ViewModels
+namespace MVVMSidekick.Test.Playground.WPF.ViewModels
 {
 
-    [DataContract]
-    public class BlankPage1_Model : ViewModelBase<BlankPage1_Model>
+    public class Window1_Model : ViewModelBase<Window1_Model>
     {
-        // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property。
-        // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性
+        // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property propcmd for command
+        // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性 propcmd 输入命令
 
-        public String Title
+        public Window1_Model()
         {
-            get { return _TitleLocator(this).Value; }
-            set { _TitleLocator(this).SetValueAndTryNotify(value); }
+            if (IsInDesignMode)
+            {
+
+            }
+
         }
-        #region Property String Title Setup
-        protected Property<String> _Title = new Property<String> { LocatorFunc = _TitleLocator };
-        static Func<BindableBase, ValueContainer<String>> _TitleLocator = RegisterContainerLocator<String>("Title", model => model.Initialize("Title", ref model._Title, ref _TitleLocator, _TitleDefaultValueFactory));
-        static Func<BindableBase, String> _TitleDefaultValueFactory = m => m.ToString();
-        #endregion
+
+
+        //propvm tab tab string tab Title
+
+
 
 
 
@@ -92,47 +94,6 @@ namespace MVVMSidekick.Test.Playground.ViewModels
         //}
 
         #endregion
-
-
-
-        public CommandModel<ReactiveCommand, String> CommandNext
-        {
-            get { return _CommandNextLocator(this).Value; }
-            set { _CommandNextLocator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property CommandModel<ReactiveCommand, String> CommandNext Setup        
-
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandNext = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandNextLocator };
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNextLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandNext), model => model.Initialize(nameof(CommandNext), ref model._CommandNext, ref _CommandNextLocator, _CommandNextDefaultValueFactory));
-        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNextDefaultValueFactory =
-            model =>
-            {
-                var state = nameof(CommandNext);           // Command state  
-                var commandId = nameof(CommandNext);
-                var vm = CastToCurrentType(model);
-                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-
-                cmd.DoExecuteUIBusyTask(
-                        vm,
-                        async e =>
-                        {
-                            await vm.StageManager.DefaultStage.Show<BlankPage1_Model>();
-                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
-                        })
-                    .DoNotifyDefaultEventRouter(vm, commandId)
-                    .Subscribe()
-                    .DisposeWith(vm);
-
-                var cmdmdl = cmd.CreateCommandModel(state);
-
-                cmdmdl.ListenToIsUIBusy(
-                    model: vm,
-                    canExecuteWhenBusy: false);
-                return cmdmdl;
-            };
-
-        #endregion
-
 
     }
 
