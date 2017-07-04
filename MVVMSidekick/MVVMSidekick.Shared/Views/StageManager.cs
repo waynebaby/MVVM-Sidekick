@@ -185,12 +185,12 @@ namespace MVVMSidekick.Views
         internal FrameworkElement LocateTargetContainer(IView view, ref string targetContainerName, IViewModel sourceVM)
         {
             targetContainerName = targetContainerName ?? "";
-            var viewele = view as FrameworkElement;
+            var viewele = view.ViewContentControlObject as FrameworkElement;
             FrameworkElement target = null;
 
 
 
-            var dic = GetOrCreateBeacons(sourceVM.StageManager.CurrentBindingView as FrameworkElement);
+            var dic = GetOrCreateBeacons(sourceVM.StageManager.CurrentBindingView.ViewContentControlObject as FrameworkElement);
             dic.TryGetValue(targetContainerName, out target);
 
 

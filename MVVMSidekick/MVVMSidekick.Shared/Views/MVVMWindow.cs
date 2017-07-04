@@ -116,7 +116,7 @@ namespace MVVMSidekick.Views
         /// <summary>
         /// the first content object of view.
         /// </summary>
-        public object ContentObject
+        public object ViewContentObject
         {
             get
             {
@@ -208,6 +208,7 @@ namespace MVVMSidekick.Views
         }
 
 
+        public object ViewContentControlObject =>this;
     }
 
 

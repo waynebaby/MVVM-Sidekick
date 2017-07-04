@@ -143,7 +143,7 @@ namespace MVVMSidekick
 				{
 					dynamic item = o;
 					var oiview = o as IView;
-					var fele = (oiview.ContentObject as FrameworkElement);
+					var fele = (oiview.ViewContentObject as FrameworkElement);
 					if (fele == null)
 					{
 						return;
@@ -152,7 +152,7 @@ namespace MVVMSidekick
 					{
 						return;
 					}
-					(oiview.ContentObject as FrameworkElement).DataContext = e.NewValue;
+					(oiview.ViewContentObject as FrameworkElement).DataContext = e.NewValue;
 					var nv = e.NewValue as IViewModel;
 					var ov = e.OldValue as IViewModel;
 					if (ov != null)
@@ -173,10 +173,10 @@ namespace MVVMSidekick
 			/// <returns>FrameworkElement.</returns>
 			internal static FrameworkElement GetContentAndCreateIfNull(this IView control)
 			{
-				var c = (control.ContentObject as FrameworkElement);
+				var c = (control.ViewContentObject as FrameworkElement);
 				if (c == null)
 				{
-					control.ContentObject = c = new Grid();
+					control.ViewContentObject = c = new Grid();
 				}
 				return c;
 			}

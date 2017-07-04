@@ -46,16 +46,16 @@ using System.Windows.Controls.Primitives;
 
 namespace MVVMSidekick.Views
 {
-    public abstract class ViewDisguiseBase<TView, TViewDisguise> : DependencyObject, IViewDisguise
-        where TView : FrameworkElement
-        where TViewDisguise : ViewDisguiseBase<TView, TViewDisguise>
+    public abstract class ViewDisguiseBase<TViewElement, TViewDisguise> : DependencyObject, IViewDisguise
+        where TViewElement : FrameworkElement
+        where TViewDisguise : ViewDisguiseBase<TViewElement, TViewDisguise>
     {
-        public ViewDisguiseBase(TView assocatedObject)
+        public ViewDisguiseBase(TViewElement assocatedObject)
         {
             _assocatedObject = assocatedObject;
         }
-        public TView AssocatedObject { get => _assocatedObject; }
-        TView _assocatedObject;
+        public TViewElement AssocatedObject { get => _assocatedObject; }
+        TViewElement _assocatedObject;
 
         /// <summary>
         /// Gets or sets the view model.
@@ -104,11 +104,9 @@ namespace MVVMSidekick.Views
 
 
         public abstract ViewType ViewType { get; }
-        public abstract object ContentObject { get; set; }
+        public abstract object ViewContentObject { get; set; }
         public abstract object Parent { get; }
 
-        
-
-
+        public object ViewContentControlObject => _assocatedObject;
     }
 }

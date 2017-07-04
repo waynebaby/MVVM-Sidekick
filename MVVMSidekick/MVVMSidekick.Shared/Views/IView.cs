@@ -28,8 +28,9 @@ namespace MVVMSidekick.Views
         /// Gets or sets the content object.
         /// </summary>
         /// <value>The content object.</value>
-        Object ContentObject { get; set; }
+        Object ViewContentObject { get; set; }
 
+        Object ViewContentControlObject { get; }
         /// <summary>
         /// Gets the parent.
         /// </summary>

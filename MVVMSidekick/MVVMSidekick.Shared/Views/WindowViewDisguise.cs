@@ -38,7 +38,7 @@ namespace MVVMSidekick.Views
 
         public override ViewType ViewType => Views.ViewType.Page;
 
-        public override object ContentObject
+        public override object ViewContentObject
         {
             get { return base.AssocatedObject.Content; }
             set { AssocatedObject.Content = value; }

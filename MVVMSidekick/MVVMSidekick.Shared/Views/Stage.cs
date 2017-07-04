@@ -648,7 +648,7 @@ Please check startup function of this mapping is well configured and be proper c
                          targetViewModel = (TTarget)view.ViewModel;
                      }
 
-                     parameter.ViewModel = targetViewModel;
+                     view.ViewModel= parameter.ViewModel = targetViewModel;
                      targetViewModel?.OnPageNavigatedTo(e.EventData);
                      t.TrySetResult(null);
                  });

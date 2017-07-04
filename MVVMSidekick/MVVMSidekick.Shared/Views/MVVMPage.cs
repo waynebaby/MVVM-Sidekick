@@ -113,7 +113,7 @@ namespace MVVMSidekick.Views
         /// Gets or sets the content object.
         /// </summary>
         /// <value>The content object.</value>
-        public object ContentObject
+        public object ViewContentObject
         {
             get { return Content; }
             set { Content = value as FrameworkElement; }
@@ -184,7 +184,7 @@ namespace MVVMSidekick.Views
 			/// <summary>
 			/// the first object of view content.
 			/// </summary>
-			public object ContentObject
+			public object ViewContentObject
 			{
 				get
 				{
@@ -316,9 +316,7 @@ namespace MVVMSidekick.Views
             get { return ViewType.Page; }
         }
 
-
-
-
+        public object ViewContentControlObject =>this;
     }
 #endif
 }
