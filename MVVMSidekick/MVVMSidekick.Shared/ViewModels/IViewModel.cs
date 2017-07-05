@@ -171,13 +171,13 @@ namespace MVVMSidekick
             /// Set: Will VM be Disposed when unbind from View.
             /// </summary>
             /// <value><c>true</c> if this instance is disposing when unbind required; otherwise, <c>false</c>.</value>
-            bool IsDisposingWhenUnbindRequired { get; }
+            bool IsDisposingWhenUnbindRequired { get; set; }
 
             /// <summary>
             /// Set: Will VM be Disposed when unload from View.
             /// </summary>
             /// <value><c>true</c> if this instance is disposing when unload required; otherwise, <c>false</c>.</value>
-            bool IsDisposingWhenUnloadRequired { get; }
+            bool IsDisposingWhenUnloadRequired { get; set; }
 
 #if NETFX_CORE
 

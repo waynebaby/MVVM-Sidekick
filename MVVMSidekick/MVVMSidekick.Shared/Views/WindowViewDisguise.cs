@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Media;
 #elif WPF
 using System.Windows.Controls;
 using System.Windows;
+using MVVMSidekick.ViewModels;
 #elif SILVERLIGHT_5 || SILVERLIGHT_4
 						   using System.Windows.Media;
 using System.Windows.Controls;
@@ -36,8 +37,22 @@ namespace MVVMSidekick.Views
         {
             assocatedObject.Loaded += ViewHelper.ViewLoadCallBack;
             assocatedObject.Unloaded += ViewHelper.ViewUnloadCallBack;
+
         }
 
+
+        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (e.Property == ViewModelProperty)
+            {
+                var vm = e.NewValue as IViewModel;
+                if (vm != null)
+                {
+                    vm.IsDisposingWhenUnloadRequired = true;
+                }
+            }
+            base.OnPropertyChanged(e);
+        }
         public override ViewType ViewType => Views.ViewType.Page;
 
         public override object ViewContentObject

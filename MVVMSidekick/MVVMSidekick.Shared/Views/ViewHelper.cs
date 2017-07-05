@@ -130,18 +130,6 @@ namespace MVVMSidekick
 						}
 					}
 				};
-			/// <summary>
-			/// The designing view model changed call back
-			/// </summary>
-			internal static PropertyChangedCallback DesigningViewModelChangedCallBack
-				= (o, e) =>
-					  {
-						  var oiview = o as IView;
-						  if (Utilities.Runtime.IsInDesignMode)
-						  {
-							  oiview.ViewModel = e.NewValue as IViewModel;
-						  }
-					  };
 
 
 

@@ -59,11 +59,9 @@ namespace MVVMSidekick.Views
         {
             obj.SetValue(ViewDisguiseProperty, value);
         }
+        
 
-
-
-
-        public static PageViewDisguise GetViewDisguise(this Page obj)
+        public static PageViewDisguise GetOrCreateViewDisguise(this Page obj)
         {
             var dis = (PageViewDisguise)obj.GetValue(ViewDisguiseProperty);
             if (dis == null)
@@ -78,12 +76,27 @@ namespace MVVMSidekick.Views
         {
             obj.SetValue(ViewDisguiseProperty, value);
         }
+        
 
+        public static ControlViewDisguise GetOrCreateViewDisguise(this UserControl obj)
+        {
+            var dis = (ControlViewDisguise)obj.GetValue(ViewDisguiseProperty);
+            if (dis == null)
+            {
+                dis = new ControlViewDisguise(obj);
+                obj.SetValue(ViewDisguiseProperty, dis);
+            }
+            return dis;
+        }
 
+        public static void SetViewDisguise(this UserControl obj, PageViewDisguise value)
+        {
+            obj.SetValue(ViewDisguiseProperty, value);
+        }
 
 #if WPF
 
-        public static WindowViewDisguise GetViewDisguise(this Window obj)
+        public static WindowViewDisguise GetOrCreateViewDisguise(this Window obj)
         {
             var dis = (WindowViewDisguise)obj.GetValue(ViewDisguiseProperty);
             if (dis == null)

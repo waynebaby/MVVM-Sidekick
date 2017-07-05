@@ -52,7 +52,7 @@ namespace MVVMSidekick.Test.Playground
 
 
 
-        PageViewDisguise ViewDisguise { get { return this.GetViewDisguise(); } }
+        PageViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
 
         long strongTypeRegisterToken = 0;
         protected override void OnNavigatedFrom(NavigationEventArgs e)

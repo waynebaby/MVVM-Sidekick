@@ -273,7 +273,7 @@ namespace MVVMSidekick.Views
                     tryView = VisualTreeHelper.GetParent(view) as FrameworkElement;
                     view = tryView;
                 }
-                if (view is IView)
+                if (view is IView || view.GetViewDisguise()!=null)
                 {
                     break;
                 }

@@ -14,6 +14,6 @@
             <vm:MainPage_Model/>
         </d:FrameworkElement.DataContext>
         <TextBlock x:Name="pageTitle" Grid.Column="1" Margin="100" Text="{Binding Title}" />
-        <Button Command="{Binding CommandSomeCommand}">OOKKXXYYGO</Button>
+        <Button Command="{Binding CommandSomeCommand}" Content="{Binding CommandSomeCommand.State}"></Button>
     </Grid>
 </Page>

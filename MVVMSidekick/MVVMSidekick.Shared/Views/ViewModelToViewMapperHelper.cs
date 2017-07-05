@@ -85,6 +85,7 @@ namespace MVVMSidekick
                         break;
 #endif
                     default:
+                        viewType = view.GetType();
                         break;
                 }
                 if (ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(viewType, out func))

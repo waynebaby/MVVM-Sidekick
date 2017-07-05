@@ -4,13 +4,30 @@
         Title="{Binding DataContext.Title, ElementName=grid}"
         Height="350" Width="525"
         xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"        
-        xmlns:vm="clr-namespace:MVVMSidekick.Test.Playground.WPF.ViewModels" >
-    
-    <FrameworkElement.Resources >
-        <vm:MainWindow_Model x:Key="DesignVM" />
-    </FrameworkElement.Resources>
-    <Grid x:Name="grid" DataContext="{StaticResource DesignVM}">
-        <TextBlock Text="{Binding Title}"></TextBlock>
-        <Button Margin="40" Command="{Binding CommandOpenWindows}"> Pop</Button>
+        xmlns:vm="clr-namespace:MVVMSidekick.Test.Playground.WPF.ViewModels" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"         
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        mc:Ignorable="d" >
+
+
+    <Grid x:Name="grid" d:DataContext="{d:DesignInstance {x:Type vm:Page1_Model}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="167*"/>
+            <RowDefinition Height="152*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="182*"/>
+            <ColumnDefinition Width="335*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="{Binding Title}" Grid.ColumnSpan="2" Grid.RowSpan="2"></TextBlock>
+        <StackPanel Margin="40,40,18,40" Grid.RowSpan="2">
+            <Button Command="{Binding CommandOpenWindows}" Content="PopWindow"  Height="65"/>
+            <Button Command="{Binding CommandOpenWindows}" Content="ChangeFrame"  Height="65"/>
+            <Button Command="{Binding CommandOpenWindows}" Content="Change"  Height="65"/>
+        </StackPanel>
+        <Frame Background="red" Margin="15,27,10,13.957" mvvm:StageManager.Beacon="Frame" Grid.Column="1"></Frame>
+        <ContentControl  Margin="15,153,10,40" mvvm:StageManager.Beacon="ContentControl" Grid.Column="1" Grid.RowSpan="2">
+            <Border Background="Blue" Margin="4,22,-4,-22"></Border>
+        </ContentControl>
     </Grid>
 </Window>

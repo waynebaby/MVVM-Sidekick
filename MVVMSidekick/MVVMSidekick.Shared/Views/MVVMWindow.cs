@@ -6,7 +6,7 @@ using MVVMSidekick.ViewModels;
 using System.Reactive.Linq;
 using System.Windows;
 using System.IO;
- 
+
 
 
 #if NETFX_CORE
@@ -147,7 +147,15 @@ namespace MVVMSidekick.Views
         /// View Model Property
         /// </summary>
         public static readonly DependencyProperty ViewModelProperty =
-            DependencyProperty.Register(nameof(ViewModel), typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
+            DependencyProperty.Register(nameof(ViewModel), typeof(IViewModel), typeof(MVVMWindow), new PropertyMetadata(null, (o, e) =>
+            {
+                var viewModel = e.NewValue as IViewModel;
+                if (viewModel!=null)
+                {
+                    viewModel.IsDisposingWhenUnloadRequired = true;
+                }
+                ViewHelper.ViewModelChangedCallback(o, e);
+            }));
 
         /// <summary>
         /// Type of View
@@ -167,7 +175,7 @@ namespace MVVMSidekick.Views
         }
 
 
-        public object ViewContentControlObject =>this;
+        public object ViewContentControlObject => this;
     }
 
 

@@ -144,6 +144,85 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
 
         #endregion
 
+
+        public CommandModel<ReactiveCommand, String> CommandNavigatePage
+        {
+            get { return _CommandNavigatePageLocator(this).Value; }
+            set { _CommandNavigatePageLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandNavigatePage Setup        
+
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandNavigatePage = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandNavigatePageLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNavigatePageLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandNavigatePage), model => model.Initialize(nameof(CommandNavigatePage), ref model._CommandNavigatePage, ref _CommandNavigatePageLocator, _CommandNavigatePageDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNavigatePageDefaultValueFactory =
+            model =>
+            {
+                var state = nameof(CommandNavigatePage);           // Command state  
+                var commandId = nameof(CommandNavigatePage);
+                var vm = CastToCurrentType(model);
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+
+                cmd.DoExecuteUIBusyTask(
+                        vm,
+                        async e =>
+                        {
+                            await vm.StageManager["ContenControl"].Show<Control1_Model>();
+
+                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
+                        })
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+
+                var cmdmdl = cmd.CreateCommandModel(state);
+
+                cmdmdl.ListenToIsUIBusy(
+                    model: vm,
+                    canExecuteWhenBusy: false);
+                return cmdmdl;
+            };
+
+        #endregion
+
+
+        public CommandModel<ReactiveCommand, String> CommandShowCtrol
+        {
+            get { return _CommandShowCtrolLocator(this).Value; }
+            set { _CommandShowCtrolLocator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel<ReactiveCommand, String> CommandShowCtrol Setup        
+
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandShowCtrol = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandShowCtrolLocator };
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandShowCtrolLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandShowCtrol), model => model.Initialize(nameof(CommandShowCtrol), ref model._CommandShowCtrol, ref _CommandShowCtrolLocator, _CommandShowCtrolDefaultValueFactory));
+        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandShowCtrolDefaultValueFactory =
+            model =>
+            {
+                var state = nameof(CommandShowCtrol);           // Command state  
+                var commandId = nameof(CommandShowCtrol);
+                var vm = CastToCurrentType(model);
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+
+                cmd.DoExecuteUIBusyTask(
+                        vm,
+                        async e =>
+                        {
+                            //Todo: Add ShowCtrol logic here, or
+                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
+                        })
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+
+                var cmdmdl = cmd.CreateCommandModel(state);
+
+                cmdmdl.ListenToIsUIBusy(
+                    model: vm,
+                    canExecuteWhenBusy: false);
+                return cmdmdl;
+            };
+
+        #endregion
+
     }
 
 }

@@ -31,6 +31,8 @@ namespace MVVMSidekick.Views
     {
         public PageViewDisguise(Page assocatedObject) : base(assocatedObject)
         {
+
+
         }
 
         public override ViewType ViewType => Views.ViewType.Page;

@@ -5,6 +5,7 @@ using MVVMSidekick.Views;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.Services;
 using MVVMSidekick.Commands;
+using MVVMSidekick.Test.Playground.WPF;
 using MVVMSidekick.Test.Playground.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -24,32 +25,17 @@ using System.Windows.Shapes;
 namespace MVVMSidekick.Test.Playground.WPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Page1.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Page1 : Page
     {
-        public MainWindow()
+        public Page1()
         {
-            ViewDisguise.ViewModel = null;
-            InitializeComponent();
-            ViewDisguise.ViewModel = ServiceLocator.Instance.Resolve<MainWindow_Model>();
-            this.Loaded += MainWindow_Loaded;
-            
+            InitializeComponent();          
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
+        PageViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
 
-        #region IView Disguise
-
-
-        WindowViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
-
-        #endregion
     }
-
-
-
 }
+

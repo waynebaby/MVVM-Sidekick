@@ -220,7 +220,14 @@ namespace MVVMSidekick.Views
                 view = targetViewModel.StageManager.CurrentBindingView as IView;
 
             }
-            view = view ?? ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel) as IView;
+
+            var tempControl = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
+
+            view = view ?? tempControl as IView;
+            if (view == null)
+            {
+                view = (tempControl as FrameworkElement)?.GetViewDisguise();
+            }
             return view;
         }
 
@@ -240,6 +247,8 @@ namespace MVVMSidekick.Views
             IView view = null;
             view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
             targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+            targetViewModel = targetViewModel ?? view.GetDefaultViewModel() as TTarget;
+
             if (view.ViewType == ViewType.Page)
             {
                 var mvpg = view as MVVMPage;
@@ -252,7 +261,7 @@ namespace MVVMSidekick.Views
             return targetViewModel;
         }
 
-         
+
         /// <summary>
         /// Show a view for view model and return a result when leave view
         /// </summary>
@@ -267,6 +276,7 @@ namespace MVVMSidekick.Views
             IView view = null;
             view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
             targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+            targetViewModel = targetViewModel ?? view.GetDefaultViewModel() as TTarget;
 
             if (view.ViewType == ViewType.Page)
             {
@@ -293,8 +303,9 @@ namespace MVVMSidekick.Views
         {
             IView view = null;
             view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
-
             targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+            targetViewModel = targetViewModel ?? view.GetDefaultViewModel() as TTarget;
+
             if (view.ViewType == ViewType.Page)
             {
                 var mvpg = view as MVVMPage;
@@ -536,6 +547,8 @@ Cannot find ANY mapping from View Model [{0}] to ANY View.
 Please check startup function of this mapping is well configured and be proper called while application starting",
                     targetViewModel.GetType().ToString()));
             }
+
+
             if (view.ViewType == ViewType.Page)
             {
                 var pg = view as MVVMPage;
@@ -684,9 +697,6 @@ Please check startup function of this mapping is well configured and be proper c
                 {
                     targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
 
-
-
-
                     return await targetViewModel.WaitForCloseWithResult();
                 }
 
@@ -776,7 +786,7 @@ Please check startup function of this mapping is well configured and be proper c
                 else
 #endif
 
-                   if (target is ContentControl)
+                if (target is ContentControl)
                 {
                     var targetCControl = target as ContentControl;
                     //var oldcontent = targetCControl.Content as IDisposable;

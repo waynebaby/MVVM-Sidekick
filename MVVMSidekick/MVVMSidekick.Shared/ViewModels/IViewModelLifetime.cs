@@ -53,7 +53,7 @@ namespace MVVMSidekick
     namespace ViewModels
     {
         using MVVMSidekick.Common;
-      
+
         /// <summary>
         /// Interface IViewModelLifetime
         /// </summary>
@@ -96,7 +96,9 @@ namespace MVVMSidekick
             /// </summary>
             IDisposeGroup UnloadDisposeGroup { get; }
 
-#if !WPF
+#if WPF
+
+#elif WINDOWS_UWP
             void OnPageNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e);
             void OnPageNavigatedFrom(Windows.UI.Xaml.Navigation.NavigationEventArgs e);
             void OnPageNavigatingFrom(Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e);

@@ -358,13 +358,13 @@ namespace MVVMSidekick.ViewModels
         /// Set: Will VM be Disposed when unbind from View.
         /// </summary>
         /// <value><c>true</c> if this instance is disposing when unbind required; otherwise, <c>false</c>.</value>
-        public bool IsDisposingWhenUnbindRequired { get; protected set; }
+        public bool IsDisposingWhenUnbindRequired { get; set; }
 
         /// <summary>
         /// Set: Will VM be Disposed when unload from View.
         /// </summary>
         /// <value><c>true</c> if this instance is disposing when unload required; otherwise, <c>false</c>.</value>
-        public bool IsDisposingWhenUnloadRequired { get; protected set; }
+        public bool IsDisposingWhenUnloadRequired { get; set; }
 
 
 #if NETFX_CORE
@@ -504,7 +504,7 @@ namespace MVVMSidekick.ViewModels
 
 #elif NET45
 
-				await Dispatcher.BeginInvoke(action).Task;
+            await Dispatcher.BeginInvoke(action).Task;
 #else
 			await TaskExHelper.Yield();
 			Dispatcher.BeginInvoke(action);
@@ -707,24 +707,24 @@ namespace MVVMSidekick.ViewModels
         }
 #else
 
-		/// <summary>
-		/// Gets the current view dispatcher.
-		/// </summary>
-		/// <returns>Dispatcher.</returns>
-		private Dispatcher GetCurrentViewDispatcher()
-		{
-			DependencyObject dp = null;
-			if (this.StageManager == null)
-			{
-				return null;
-			}
-			else if ((dp = (this.StageManager.CurrentBindingView as DependencyObject)) == null)
-			{
-				return null;
-			}
-			return dp.Dispatcher;
+        /// <summary>
+        /// Gets the current view dispatcher.
+        /// </summary>
+        /// <returns>Dispatcher.</returns>
+        private Dispatcher GetCurrentViewDispatcher()
+        {
+            DependencyObject dp = null;
+            if (this.StageManager == null)
+            {
+                return null;
+            }
+            else if ((dp = (this.StageManager.CurrentBindingView as DependencyObject)) == null)
+            {
+                return null;
+            }
+            return dp.Dispatcher;
 
-		}
+        }
 #endif
 #if NETFX_CORE
         /// <summary>
@@ -753,28 +753,28 @@ namespace MVVMSidekick.ViewModels
 
 
 #elif WPF
-			/// <summary>
-			/// Explode the dispatcher of current view.
-			/// </summary>
-			public Dispatcher Dispatcher
-			{
-				get
-				{
-					var current = GetCurrentViewDispatcher();
-					if (current != null)
-					{
-						return current;
-					}
-					if (Application.Current == null)
-					{
-						return null;
-					}
+        /// <summary>
+        /// Explode the dispatcher of current view.
+        /// </summary>
+        public Dispatcher Dispatcher
+        {
+            get
+            {
+                var current = GetCurrentViewDispatcher();
+                if (current != null)
+                {
+                    return current;
+                }
+                if (Application.Current == null)
+                {
+                    return null;
+                }
 
-					return Application.Current.Dispatcher;
-				}
+                return Application.Current.Dispatcher;
+            }
 
-							
-			}
+
+        }
 #elif SILVERLIGHT_5 || WINDOWS_PHONE_8
 		/// <summary>
 		/// Gets the dispatcher.

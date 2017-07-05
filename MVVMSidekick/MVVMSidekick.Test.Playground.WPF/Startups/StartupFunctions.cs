@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using MVVMSidekick.Views;
+using MVVMSidekick.Test.Playground.WPF.ViewModels;
+using MVVMSidekick.Test.Playground.WPF;
+
 namespace MVVMSidekick.Startups
 {
     internal static partial class StartupFunctions
@@ -29,16 +33,16 @@ namespace MVVMSidekick.Startups
 
         }
 
-        //public static void ConfigMainWindow()
-        //{
-        //    ViewModelLocator<MainWindow_Model>
-        //        .Instance
-        //        .Register(context =>
-        //            new Window1_Model())
-        //        .GetViewMapper()
-        //        .MapToDefault<Window1>();
+        public static void ConfigMainWindow()
+        {
+            ViewModelLocator<MainWindow_Model>
+                .Instance
+                .Register(context =>
+                    new MainWindow_Model())
+                .GetViewMapper()
+                .MapToDefault<MainWindow>();
 
-        //}
+        }
 
     }
 }
