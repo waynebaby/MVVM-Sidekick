@@ -31,7 +31,7 @@ namespace MVVMSidekick.Views
 {
 
 #if WPF
-    public class WindowViewDisguise : ViewDisguiseBase<Window, WindowViewDisguise>
+    public class WindowViewDisguise : ViewDisguiseBase<Window, WindowViewDisguise>, IWindowView
     {
         public WindowViewDisguise(Window assocatedObject) : base(assocatedObject)
         {
@@ -39,6 +39,22 @@ namespace MVVMSidekick.Views
             assocatedObject.Unloaded += ViewHelper.ViewUnloadCallBack;
 
         }
+        /// <summary>
+        /// Is auto owner set needed.  if true, set window's owner to parent view window.
+        /// </summary>
+        public bool IsAutoOwnerSetNeeded
+        {
+            get { return (bool)GetValue(IsAutoOwnerSetNeededProperty); }
+            set { SetValue(IsAutoOwnerSetNeededProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsAutoOwnerSetNeeded.  This enables animation, styling, binding, etc...
+
+        /// <summary>
+        /// Is auto owner set needed property
+        /// </summary>
+        public static readonly DependencyProperty IsAutoOwnerSetNeededProperty =
+            DependencyProperty.Register(nameof(IsAutoOwnerSetNeeded), typeof(bool), typeof(WindowViewDisguise), new PropertyMetadata(true));
 
 
         protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
@@ -53,7 +69,7 @@ namespace MVVMSidekick.Views
             }
             base.OnPropertyChanged(e);
         }
-        public override ViewType ViewType => Views.ViewType.Page;
+ 
 
         public override object ViewContentObject
         {

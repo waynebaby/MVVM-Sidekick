@@ -88,7 +88,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ICommandModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IControlView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IPageView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IViewModelToViewMapperServiceLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IWindowView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\PropertyBridge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewModelLocator.cs" />
@@ -111,7 +114,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\TestingStage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TestingStageManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewDisguiseManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\WindowViewDisguise.cs" />
   </ItemGroup>
   <ItemGroup>

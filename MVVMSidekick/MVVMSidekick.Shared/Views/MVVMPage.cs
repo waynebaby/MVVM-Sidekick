@@ -56,7 +56,7 @@ namespace MVVMSidekick.Views
     /// <summary>
     /// Class MVVMPage.
     /// </summary>
-    public class MVVMPage : Page, IView
+    public class MVVMPage : Page, IView, IPageView
 #endif
     {
 
@@ -81,7 +81,7 @@ namespace MVVMSidekick.Views
 			/// Frame of this view
 			/// </summary>
 
-			public Frame Frame
+			public Object FrameObject
 			{
 				get { return (Frame)GetValue(FrameProperty); }
 				set { SetValue(FrameProperty, value); }
@@ -93,7 +93,7 @@ namespace MVVMSidekick.Views
 			/// Frame Property
 			/// </summary>
 			public static readonly DependencyProperty FrameProperty =
-				DependencyProperty.Register("Frame", typeof(Frame), typeof(MVVMPage), new PropertyMetadata(null));
+				DependencyProperty.Register(nameof(FrameObject), typeof(Object), typeof(MVVMPage), new PropertyMetadata(null));
 
 
 		
@@ -102,11 +102,11 @@ namespace MVVMSidekick.Views
         {
             get
             {
-                return Frame;
+                return FrameObject;
 
             }
         }
-        
+
 #if !WPF
         //WPF Pages' Content are objects but others are FE .
         /// <summary>
@@ -131,9 +131,9 @@ namespace MVVMSidekick.Views
         /// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            
+
             base.OnNavigatedTo(e);
-            
+
             RoutedEventHandler loadEvent = null;
 
             loadEvent = (_1, _2) =>
@@ -151,7 +151,7 @@ namespace MVVMSidekick.Views
             Loaded += ViewHelper.ViewLoadCallBack;
             Unloaded += ViewHelper.ViewUnloadCallBack;
 
-        }        
+        }
         /// <summary>
         /// Handles the <see cref="E:NavigatedFrom" /> event.
         /// </summary>
@@ -304,19 +304,27 @@ namespace MVVMSidekick.Views
 
             }
         }
+
+        void IPageView.OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+        }
+
+        void IPageView.OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+        }
+
+        void IPageView.OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+
+        }
 #endif
 
 
-        /// <summary>
-        /// Gets the type of the view.
-        /// </summary>
-        /// <value>The type of the view.</value>
-        public ViewType ViewType
-        {
-            get { return ViewType.Page; }
-        }
-
-        public object ViewContentControlObject =>this;
+        public object ViewObject => this;
     }
 #endif
 }

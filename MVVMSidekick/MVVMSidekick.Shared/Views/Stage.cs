@@ -213,7 +213,7 @@ namespace MVVMSidekick.Views
 
 #if WPF
 
-        private static IView InternalLocateViewIfNotSet<TTarget>(TTarget targetViewModel, string viewMappingKey, IView view) where TTarget : class, IViewModel
+        private  IView InternalLocateViewIfNotSet<TTarget>(TTarget targetViewModel, string viewMappingKey, IView view) where TTarget : class, IViewModel
         {
             if (targetViewModel != null && targetViewModel.StageManager != null)
             {
@@ -224,10 +224,14 @@ namespace MVVMSidekick.Views
             var tempControl = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
 
             view = view ?? tempControl as IView;
-            if (view == null)
-            {
-                view = (tempControl as FrameworkElement)?.GetViewDisguise();
-            }
+
+            view = view ?? (tempControl as DependencyObject)?.GetOrCreateViewDisguise();
+
+
+
+
+
+
             return view;
         }
 
@@ -248,13 +252,6 @@ namespace MVVMSidekick.Views
             view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
             targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
             targetViewModel = targetViewModel ?? view.GetDefaultViewModel() as TTarget;
-
-            if (view.ViewType == ViewType.Page)
-            {
-                var mvpg = view as MVVMPage;
-                mvpg.Frame = Frame;
-            }
-
             SetVMAfterLoad(targetViewModel, view);
             InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
             await targetViewModel.WaitForClose();
@@ -278,11 +275,7 @@ namespace MVVMSidekick.Views
             targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
             targetViewModel = targetViewModel ?? view.GetDefaultViewModel() as TTarget;
 
-            if (view.ViewType == ViewType.Page)
-            {
-                var mvpg = view as MVVMPage;
-                mvpg.Frame = Frame;
-            }
+
 
             SetVMAfterLoad(targetViewModel, view);
 
@@ -306,11 +299,6 @@ namespace MVVMSidekick.Views
             targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
             targetViewModel = targetViewModel ?? view.GetDefaultViewModel() as TTarget;
 
-            if (view.ViewType == ViewType.Page)
-            {
-                var mvpg = view as MVVMPage;
-                mvpg.Frame = Frame;
-            }
 
             SetVMAfterLoad(targetViewModel, view);
             InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
@@ -549,11 +537,10 @@ Please check startup function of this mapping is well configured and be proper c
             }
 
 
-            if (view.ViewType == ViewType.Page)
+            if (view is IPageView)
             {
-                var pg = view as MVVMPage;
 
-                pg.ViewModel = targetViewModel;
+                view.ViewModel = targetViewModel;
             }
             view.ViewModel = targetViewModel;
 
@@ -661,7 +648,7 @@ Please check startup function of this mapping is well configured and be proper c
                          targetViewModel = (TTarget)view.ViewModel;
                      }
 
-                     view.ViewModel= parameter.ViewModel = targetViewModel;
+                     view.ViewModel = parameter.ViewModel = targetViewModel;
                      targetViewModel?.OnPageNavigatedTo(e.EventData);
                      t.TrySetResult(null);
                  });
@@ -756,79 +743,66 @@ Please check startup function of this mapping is well configured and be proper c
         private void InternalShowView(IView view, FrameworkElement target, IViewModel sourceVM)
         {
 
-            if (view is UserControl || view is Page)
+            switch (target)
             {
-
-#if WINDOWS_UWP
-                if (target is ContentDialog)
-                {
-                    var targetCControl = target as ContentDialog;
-                    //var oldcontent = targetCControl.Content as IDisposable;			
-                    targetCControl.Content = view;
-                    //targetCControl.
-                    var viewModel = view.ViewModel;
-
-                    IDisposable dis = null;
-
-                    dis = Observable.FromAsync(x => viewModel.WaitForClose())
-                            .ObserveOnDispatcher()
-                            .Subscribe(_ =>
-                            {
-
-                                targetCControl.Hide();
-                                targetCControl.Content = null;
-                                dis?.Dispose();
-                            });
-
-                    //actionList.Add(() => targetCControl.Closing -= eh);
-                    var t = targetCControl.ShowAsync();
-                }
-                else
-#endif
-
-                if (target is ContentControl)
-                {
-                    var targetCControl = target as ContentControl;
-                    //var oldcontent = targetCControl.Content as IDisposable;
-
-
-                    targetCControl.Content = view;
-                }
-                else if (target is Panel)
-                {
-                    var targetPanelControl = target as Panel;
-
-                    targetPanelControl.Children.Add(view as UIElement);
-                }
-                else
-                {
-                    throw new InvalidOperationException(string.Format("This view {0} is not support show in {1} ", view.GetType(), target.GetType()));
-                }
-            }
 #if WPF
-            else if (view is MVVMWindow)
-            {
-                var viewWindow = view as MVVMWindow;
+                case FrameworkElement targetWindow when view is IWindowView:
+                    var viewWindow = view.ViewObject as Window;
+                    IWindowView iviewWindow = view as IWindowView;
 
-                //viewWindow.HorizontalAlignment = HorizontalAlignment.Center;
-                //viewWindow.VerticalAlignment = VerticalAlignment.Center;
-                var targetWindow = target as Window;
-                if (targetWindow == null)
-                {
-                    targetWindow = sourceVM.StageManager.CurrentBindingView as Window;
+                    if (targetWindow == null)
+                    {
+                        targetWindow = sourceVM.StageManager.CurrentBindingView as Window;
+                    }
+                    if (iviewWindow.IsAutoOwnerSetNeeded)
+                    {
+                        //viewWindow.Owner = targetWindow;
+                    }
+                    viewWindow.Show();
+                    break;
+                case Frame targetFrame:
 
-                }
-                if (viewWindow.IsAutoOwnerSetNeeded)
-                {
-                    viewWindow.Owner = targetWindow;
-                }
-                viewWindow.Show();
+                    var ipv = (view as IPageView);
 
-            }
+                    if (ipv!=null)
+                    {
+                        ipv.FrameObject = this.Target;
+                    }
+                    targetFrame.Navigate(view.ViewObject);
+
+                    break;
 #endif
+#if WINDOWS_UWP
+                    case ContentDialog targetCDControl:
+                        targetCDControl.Content = view.ViewObject;
+                        var viewModel = view.ViewModel;
+                        IDisposable closeFromViewModel = null;
+                        closeFromViewModel = Observable.FromAsync(x => viewModel.WaitForClose())
+                                .ObserveOnDispatcher()
+                                .Subscribe(_ =>
+                                {
+                                    viewModel.IsDisposingWhenUnloadRequired = true;
+                                    targetCDControl.Hide();
+                                    targetCDControl.Content = null;
+                                    closeFromViewModel?.Dispose();
+                                    closeFromViewModel = null;
+                                });
+                        var t = targetCDControl.ShowAsync();
+                        break;
+#endif
+                case ContentControl targetCControl:
+                    targetCControl.Content = view.ViewObject;
+                    break;
+                case Panel targetPanelControl:
+                    targetPanelControl.Children.Add(view.ViewObject as UIElement);
+                    break;
+
+                default:
+                    throw new InvalidOperationException(string.Format("This view {0} is not support show in {1} ", view.GetType(), target.GetType()));
+            }
+
+
         }
 
-
     }
-
 }

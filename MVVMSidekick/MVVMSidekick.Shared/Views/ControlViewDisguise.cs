@@ -27,21 +27,19 @@ using System.Windows.Controls.Primitives;
 
 namespace MVVMSidekick.Views
 {
-    public class ControlViewDisguise : ViewDisguiseBase<UserControl, ControlViewDisguise>
+    public class ControlViewDisguise : ViewDisguiseBase<UserControl, ControlViewDisguise>, IControlView
     {
         public ControlViewDisguise(UserControl assocatedObject) : base(assocatedObject)
         {
         }
-
-        public override ViewType ViewType => Views.ViewType.Page;
-
+        
         public override object ViewContentObject
         {
             get { return base.AssocatedObject.Content; }
             set
             {
 #if NETFX_CORE
-     AssocatedObject.Content = value as UIElement;
+                AssocatedObject.Content = value as UIElement;
 #else
                 AssocatedObject.Content = value;
 #endif

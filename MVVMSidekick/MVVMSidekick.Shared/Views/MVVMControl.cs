@@ -53,7 +53,7 @@ namespace MVVMSidekick.Views
     /// <summary>
     /// Class MVVMControl.
     /// </summary>
-    public class MVVMControl : UserControl, IView
+    public class MVVMControl : UserControl, IView,IControlView
     {
 
         /// <summary>
@@ -232,16 +232,8 @@ namespace MVVMSidekick.Views
             DependencyProperty.Register("ViewModel", typeof(IViewModel), typeof(MVVMControl), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
 
 
-        /// <summary>
-        /// Gets the type of the view.
-        /// </summary>
-        /// <value>The type of the view.</value>
-        public ViewType ViewType
-        {
-            get { return ViewType.Control; }
-        }
 
-        public object ViewContentControlObject =>this;
+        public object ViewObject =>this;
     }
 
 

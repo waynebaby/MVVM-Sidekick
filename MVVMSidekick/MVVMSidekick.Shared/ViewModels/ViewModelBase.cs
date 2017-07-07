@@ -284,7 +284,8 @@ namespace MVVMSidekick.ViewModels
             if (view != null)
             {
                 StageManager = new StageManager(this) { CurrentBindingView = view };
-                StageManager.InitParent(() => view.Parent);
+                StageManager.InitParent(()
+                    => view.Parent);
             }
             //StageManager.DisposeWith(this);
             await TaskExHelper.Yield();
@@ -324,7 +325,8 @@ namespace MVVMSidekick.ViewModels
             if (view != null)
             {
                 StageManager = new StageManager(this) { CurrentBindingView = view };
-                StageManager.InitParent(() => view.Parent);
+                StageManager.InitParent(() => 
+                    view.Parent);
             }
 
             await TaskExHelper.Yield();

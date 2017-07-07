@@ -18,11 +18,7 @@ namespace MVVMSidekick.Views
         /// <value>The view model.</value>
         IViewModel ViewModel { get; set; }
 
-        /// <summary>
-        /// Gets the type of the view.
-        /// </summary>
-        /// <value>The type of the view.</value>
-        ViewType ViewType { get; }
+
 
         /// <summary>
         /// Gets or sets the content object.
@@ -30,7 +26,7 @@ namespace MVVMSidekick.Views
         /// <value>The content object.</value>
         Object ViewContentObject { get; set; }
 
-        Object ViewContentControlObject { get; }
+        Object ViewObject { get; }
         /// <summary>
         /// Gets the parent.
         /// </summary>

@@ -59,7 +59,36 @@ namespace MVVMSidekick.Views
         {
             obj.SetValue(ViewDisguiseProperty, value);
         }
-        
+
+        public static IViewDisguise GetOrCreateViewDisguise(this DependencyObject obj)
+        {
+            var dis = (IViewDisguise)obj.GetValue(ViewDisguiseProperty);
+            if (dis == null)
+            {
+                switch (obj)
+                {
+                    case Page p:
+                        dis = p.GetOrCreateViewDisguise();
+                        break;
+
+                    case UserControl c:
+                        dis = c.GetOrCreateViewDisguise();
+                        break;
+
+#if WPF
+                    case Window w:
+                        dis = w.GetOrCreateViewDisguise();
+                        break;
+#endif
+                    default:
+                        throw new InvalidOperationException($"This kind of view ({ obj?.GetType()?.Name ?? "null"}) is not supported");
+                }
+                obj.SetValue(ViewDisguiseProperty, dis);
+            }
+            return dis;
+        }
+
+
 
         public static PageViewDisguise GetOrCreateViewDisguise(this Page obj)
         {
@@ -76,7 +105,7 @@ namespace MVVMSidekick.Views
         {
             obj.SetValue(ViewDisguiseProperty, value);
         }
-        
+
 
         public static ControlViewDisguise GetOrCreateViewDisguise(this UserControl obj)
         {

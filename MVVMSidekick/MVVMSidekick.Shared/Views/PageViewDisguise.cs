@@ -9,7 +9,9 @@ using Windows.UI.Xaml.Media;
 
 
 #elif WPF
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 #elif SILVERLIGHT_5 || SILVERLIGHT_4
 						   using System.Windows.Media;
 using System.Windows.Controls;
@@ -27,15 +29,18 @@ using System.Windows.Controls.Primitives;
 
 namespace MVVMSidekick.Views
 {
-    public class PageViewDisguise : ViewDisguiseBase<Page, PageViewDisguise>
+    public class PageViewDisguise : ViewDisguiseBase<Page, PageViewDisguise>, IPageView
     {
         public PageViewDisguise(Page assocatedObject) : base(assocatedObject)
         {
-
+#if WPF
+            AssocatedObject.Loaded += ViewHelper.ViewLoadCallBack;
+            AssocatedObject.Unloaded += ViewHelper.ViewUnloadCallBack;
+#endif
 
         }
 
-        public override ViewType ViewType => Views.ViewType.Page;
+
 
         public override object ViewContentObject
         {
@@ -50,19 +55,45 @@ namespace MVVMSidekick.Views
             }
         }
 
+#if WPF
 
+        public  override object Parent
+        {
+            get
+            {
+                return FrameObject;
+            }
+        }
+        /// <summary>
+        /// Frame of this view
+        /// </summary>
+
+        public object FrameObject
+        {
+            get { return GetValue(FrameProperty); }
+            set { SetValue(FrameProperty, value); }
+        }
+
+
+        // Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
+        /// <summary>
+        /// Frame Property
+        /// </summary>
+        public static readonly DependencyProperty FrameProperty =
+            DependencyProperty.Register(nameof(FrameObject), typeof(object), typeof(PageViewDisguise), new PropertyMetadata(null));
+#else
         public override object Parent
         {
             get
             {
-#if WPF
-                return this.AssocatedObject.Parent;
-#else
-                return this.AssocatedObject.Frame;
-#endif
-            }
-        }
 
+                return this.AssocatedObject.Parent;
+
+                return this.AssocatedObject.Frame;
+
+    }
+}
+#endif
 
 #if !WPF
 

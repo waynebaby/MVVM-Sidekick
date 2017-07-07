@@ -9,8 +9,13 @@
     x:Class="MVVMSidekick.Test.Playground.WPF.Page1"
         Height="350" Width="525"
  >
-    <!--<FrameworkElement.Resources>
-        <vm:Page1_Model x:Key="DesignVM" />
-    </FrameworkElement.Resources>-->
-    <Grid x:Name="grid"         d:DataContext="{d:DesignInstance {x:Type vm:Page1_Model}}"/>
+
+    <Grid x:Name="grid"         d:DataContext="{d:DesignInstance {x:Type vm:Page1_Model}}">
+
+        <Button Command="{Binding CommandNext}">
+            <TextBlock> NEXT Control <Run Text="{Binding BindableInstanceId, Mode=OneWay}"></Run></TextBlock>
+        </Button>
+
+
+    </Grid>
 </Page>

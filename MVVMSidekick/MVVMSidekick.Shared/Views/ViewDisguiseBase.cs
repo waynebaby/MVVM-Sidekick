@@ -103,10 +103,9 @@ namespace MVVMSidekick.Views
             DependencyProperty.Register(nameof(ViewModel), typeof(IViewModel), typeof(TViewDisguise), new PropertyMetadata(null, ViewHelper.ViewModelChangedCallback));
 
 
-        public abstract ViewType ViewType { get; }
         public abstract object ViewContentObject { get; set; }
         public abstract object Parent { get; }
 
-        public object ViewContentControlObject => _assocatedObject;
+        public object ViewObject => _assocatedObject;
     }
 }

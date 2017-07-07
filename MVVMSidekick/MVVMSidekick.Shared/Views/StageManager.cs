@@ -108,7 +108,7 @@ namespace MVVMSidekick.Views
         public void InitParent(Func<Object> parentLocator)
         {
             _parentLocator = parentLocator;
-            DefaultStage = this[""];
+  
         }
 
 
@@ -184,13 +184,15 @@ namespace MVVMSidekick.Views
 
         internal FrameworkElement LocateTargetContainer(IView view, ref string targetContainerName, IViewModel sourceVM)
         {
+
+
             targetContainerName = targetContainerName ?? "";
-            var viewele = view.ViewContentControlObject as FrameworkElement;
+            var viewele = view.ViewObject as FrameworkElement;
             FrameworkElement target = null;
 
 
 
-            var dic = GetOrCreateBeacons(sourceVM.StageManager.CurrentBindingView.ViewContentControlObject as FrameworkElement);
+            var dic = GetOrCreateBeacons(sourceVM.StageManager.CurrentBindingView.ViewObject as FrameworkElement);
             dic.TryGetValue(targetContainerName, out target);
 
 
@@ -201,11 +203,23 @@ namespace MVVMSidekick.Views
 
             if (target == null)
             {
-                var vieweleCt = viewele as ContentControl;
-                if (vieweleCt != null)
+#if WPF
+                if (string.IsNullOrWhiteSpace(targetContainerName) && view is IWindowView)
                 {
-                    target = vieweleCt.Content as FrameworkElement;
+
+                    target = sourceVM.StageManager.CurrentBindingView.ViewObject as FrameworkElement;
+
                 }
+                else
+#endif
+                {
+                    var vieweleCt = viewele as ContentControl;
+                    if (vieweleCt != null)
+                    {
+                        target = vieweleCt.Content as FrameworkElement;
+                    }
+                }
+
             }
             return target;
         }
@@ -273,7 +287,7 @@ namespace MVVMSidekick.Views
                     tryView = VisualTreeHelper.GetParent(view) as FrameworkElement;
                     view = tryView;
                 }
-                if (view is IView || view.GetViewDisguise()!=null)
+                if (view is IView || view.GetViewDisguise() != null)
                 {
                     break;
                 }
@@ -295,16 +309,11 @@ namespace MVVMSidekick.Views
         /// </value>
         public IStage DefaultStage
         {
-            get { return (IStage)GetValue(DefaultTargetProperty); }
-            set { SetValue(DefaultTargetProperty, value); }
+            get { return this[""]; }
+          
         }
 
-        // Using a DependencyProperty as the backing store for DefaultTarget.  This enables animation, styling, binding, etc...
-        /// <summary>
-        /// The default target property
-        /// </summary>
-        public static readonly DependencyProperty DefaultTargetProperty =
-            DependencyProperty.Register(nameof (DefaultStage), typeof(IStage), typeof(StageManager), new PropertyMetadata(null));
+
 
 
 

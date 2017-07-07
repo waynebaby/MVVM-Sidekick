@@ -54,7 +54,7 @@ namespace MVVMSidekick.Views
     /// <summary>
     ///  MVVM Window  class
     /// </summary>
-    public class MVVMWindow : Window, IView
+    public class MVVMWindow : Window, IView,IWindowView
     {
 
         /// <summary>
@@ -157,13 +157,6 @@ namespace MVVMSidekick.Views
                 ViewHelper.ViewModelChangedCallback(o, e);
             }));
 
-        /// <summary>
-        /// Type of View
-        /// </summary>
-        public ViewType ViewType
-        {
-            get { return ViewType.Window; }
-        }
 
         Object IView.Parent
         {
@@ -175,7 +168,7 @@ namespace MVVMSidekick.Views
         }
 
 
-        public object ViewContentControlObject => this;
+        public object ViewObject => this;
     }
 
 

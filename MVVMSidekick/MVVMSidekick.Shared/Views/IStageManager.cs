@@ -51,7 +51,7 @@ namespace MVVMSidekick.Views
         IStage this[string beaconKey] { get; }
 
         IView CurrentBindingView { get; }
-        IStage DefaultStage { get; set; }
+        IStage DefaultStage { get; }
 
         void InitParent(Func<Object> parentLocator);
     }

@@ -166,7 +166,7 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
                         vm,
                         async e =>
                         {
-                            await vm.StageManager["ContenControl"].Show<Control1_Model>();
+                            await vm.StageManager["Frame"].Show<Page1_Model>();
 
                             await MVVMSidekick.Utilities.TaskExHelper.Yield();
                         })
@@ -207,6 +207,8 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
                         async e =>
                         {
                             //Todo: Add ShowCtrol logic here, or
+                            await vm.StageManager["ContentControl"].Show<Control1_Model>();
+
                             await MVVMSidekick.Utilities.TaskExHelper.Yield();
                         })
                     .DoNotifyDefaultEventRouter(vm, commandId)
