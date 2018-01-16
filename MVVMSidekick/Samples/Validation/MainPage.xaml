@@ -17,9 +17,9 @@
     </mvvm:MVVMPage.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-        <d:DataContext>
+        <Grid.DataContext>
             <vm:MainPage_Model/>
-        </d:DataContext>
+        </Grid.DataContext>
         <StackPanel>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Margin="100" Text="{Binding Title}" />
 
