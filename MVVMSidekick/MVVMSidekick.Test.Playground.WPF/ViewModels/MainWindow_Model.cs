@@ -30,8 +30,6 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
 
         }
 
-
-
         //propvm tab tab string tab Title
         public String Title
         {
@@ -39,7 +37,7 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
             set { _TitleLocator(this).SetValueAndTryNotify(value); }
         }
         #region Property String Title Setup
-        protected Property<String> _Title = new Property<String> { LocatorFunc = _TitleLocator };
+        protected Property<String> _Title = new Property<String>(_TitleLocator);
         static Func<BindableBase, ValueContainer<String>> _TitleLocator = RegisterContainerLocator<String>("Title", model => model.Initialize("Title", ref model._Title, ref _TitleLocator, _TitleDefaultValueFactory));
         static Func<String> _TitleDefaultValueFactory = () => "Title is Here";
         #endregion
@@ -112,7 +110,7 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
         }
         #region Property CommandModel<ReactiveCommand, String> CommandOpenWindows Setup        
 
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandOpenWindows = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandOpenWindowsLocator };
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandOpenWindows = new Property<CommandModel<ReactiveCommand, String>>(_CommandOpenWindowsLocator);
         static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandOpenWindowsLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandOpenWindows), model => model.Initialize(nameof(CommandOpenWindows), ref model._CommandOpenWindows, ref _CommandOpenWindowsLocator, _CommandOpenWindowsDefaultValueFactory));
         static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandOpenWindowsDefaultValueFactory =
             model =>
@@ -152,7 +150,7 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
         }
         #region Property CommandModel<ReactiveCommand, String> CommandNavigatePage Setup        
 
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandNavigatePage = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandNavigatePageLocator };
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandNavigatePage = new Property<CommandModel<ReactiveCommand, String>>(_CommandNavigatePageLocator);
         static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNavigatePageLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandNavigatePage), model => model.Initialize(nameof(CommandNavigatePage), ref model._CommandNavigatePage, ref _CommandNavigatePageLocator, _CommandNavigatePageDefaultValueFactory));
         static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNavigatePageDefaultValueFactory =
             model =>
@@ -192,7 +190,7 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
         }
         #region Property CommandModel<ReactiveCommand, String> CommandShowCtrol Setup        
 
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandShowCtrol = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandShowCtrolLocator };
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandShowCtrol = new Property<CommandModel<ReactiveCommand, String>>(_CommandShowCtrolLocator);
         static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandShowCtrolLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandShowCtrol), model => model.Initialize(nameof(CommandShowCtrol), ref model._CommandShowCtrol, ref _CommandShowCtrolLocator, _CommandShowCtrolDefaultValueFactory));
         static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandShowCtrolDefaultValueFactory =
             model =>

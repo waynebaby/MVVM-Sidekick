@@ -40,7 +40,7 @@ namespace EventRoutingSample.ViewModels
 			set { _TitleLocator(this).SetValueAndTryNotify(value); }
 		}
 		#region Property String Title Setup
-		protected Property<String> _Title = new Property<String> { LocatorFunc = _TitleLocator };
+		protected Property<String> _Title = new Property<String>( _TitleLocator };
 		static Func<BindableBase, ValueContainer<String>> _TitleLocator = RegisterContainerLocator<String>("Title", model => model.Initialize("Title", ref model._Title, ref _TitleLocator, _TitleDefaultValueFactory));
 		static Func<String> _TitleDefaultValueFactory = () => "Title is Here";
 		#endregion
@@ -52,7 +52,7 @@ namespace EventRoutingSample.ViewModels
 			set { _LastHeartBeatLocator(this).SetValueAndTryNotify(value); }
 		}
 		#region Property string LastHeartBeat Setup        
-		protected Property<string> _LastHeartBeat = new Property<string> { LocatorFunc = _LastHeartBeatLocator };
+		protected Property<string> _LastHeartBeat = new Property<string>( _LastHeartBeatLocator };
 		static Func<BindableBase, ValueContainer<string>> _LastHeartBeatLocator = RegisterContainerLocator<string>("LastHeartBeat", model => model.Initialize("LastHeartBeat", ref model._LastHeartBeat, ref _LastHeartBeatLocator, _LastHeartBeatDefaultValueFactory));
 		static Func<string> _LastHeartBeatDefaultValueFactory = () => { return default(string); };
 		#endregion
@@ -82,7 +82,7 @@ namespace EventRoutingSample.ViewModels
 		}
 		#region Property CommandModel<ReactiveCommand, String> CommandNavigateToDisposeBehaviorTest Setup        
 
-		protected Property<CommandModel<ReactiveCommand, String>> _CommandNavigateToDisposeBehaviorTest = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandNavigateToDisposeBehaviorTestLocator };
+		protected Property<CommandModel<ReactiveCommand, String>> _CommandNavigateToDisposeBehaviorTest = new Property<CommandModel<ReactiveCommand, String>>( _CommandNavigateToDisposeBehaviorTestLocator };
 		static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNavigateToDisposeBehaviorTestLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandNavigateToDisposeBehaviorTest), model => model.Initialize(nameof(CommandNavigateToDisposeBehaviorTest), ref model._CommandNavigateToDisposeBehaviorTest, ref _CommandNavigateToDisposeBehaviorTestLocator, _CommandNavigateToDisposeBehaviorTestDefaultValueFactory));
 		static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNavigateToDisposeBehaviorTestDefaultValueFactory =
 			model =>

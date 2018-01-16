@@ -108,7 +108,7 @@ namespace MVVMSidekick.ViewModels
         public static ValueContainer<T> Initialize<T>(this BindableBase model, string propertyName, ref Property<T> reference, ref Func<BindableBase, ValueContainer<T>> locator, Func<T> defaultValueFactory = null)
         {
             if (reference == null)
-                reference = new Property<T> { LocatorFunc = locator };
+                reference = new Property<T>( locator);
             if (reference.Container == null)
             {
                 reference.Container = new ValueContainer<T>(propertyName, model);

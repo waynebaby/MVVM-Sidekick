@@ -66,6 +66,10 @@ namespace MVVMSidekick
             {
 
             }
+            public Property(Func<BindableBase, ValueContainer<TProperty>> locatorFunc)
+            {
+                LocatorFunc = locatorFunc;
+            }
 
             /// <summary>
             /// <para>Locate or create the value container of this model intances</para>
@@ -87,7 +91,7 @@ namespace MVVMSidekick
             /// <value>The locator function.</value>
             public Func<BindableBase, ValueContainer<TProperty>> LocatorFunc
             {
-                internal get;
+               internal get;
                 set;
             }
 

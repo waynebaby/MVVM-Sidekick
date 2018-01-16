@@ -133,7 +133,7 @@ namespace MVVMSidekick.ViewModels
         /// The _ result
         /// </summary>
         protected Property<TResult> _Result =
-          new Property<TResult> { LocatorFunc = _ResultLocator };
+          new Property<TResult>( _ResultLocator);
         /// <summary>
         /// The _ result locator
         /// </summary>
@@ -146,7 +146,7 @@ namespace MVVMSidekick.ViewModels
                     model._Result =
                         model._Result
                         ??
-                        new Property<TResult> { LocatorFunc = _ResultLocator };
+                        new Property<TResult>( _ResultLocator);
                     return model._Result.Container =
                         model._Result.Container
                         ??
@@ -430,7 +430,7 @@ namespace MVVMSidekick.ViewModels
         /// <summary>
         /// The _ is UI busy
         /// </summary>
-        protected Property<bool> _IsUIBusy = new Property<bool> { LocatorFunc = _IsUIBusyLocator };
+        protected Property<bool> _IsUIBusy = new Property<bool>( _IsUIBusyLocator);
         /// <summary>
         /// The _ is UI busy locator
         /// </summary>
@@ -453,7 +453,7 @@ namespace MVVMSidekick.ViewModels
             set { _UIBusyTaskCountLocator(this).SetValueAndTryNotify(value); }
         }
         #region Property int UIBusyTaskCount Setup
-        private Property<int> _UIBusyTaskCount = new Property<int> { LocatorFunc = _UIBusyTaskCountLocator };
+        private Property<int> _UIBusyTaskCount = new Property<int>( _UIBusyTaskCountLocator);
         private static Func<BindableBase, ValueContainer<int>> _UIBusyTaskCountLocator = RegisterContainerLocator<int>("UIBusyTaskCount", model => model.Initialize("UIBusyTaskCount", ref model._UIBusyTaskCount, ref _UIBusyTaskCountLocator, _UIBusyTaskCountDefaultValueFactory));
         private static Func<int> _UIBusyTaskCountDefaultValueFactory = null;
         #endregion

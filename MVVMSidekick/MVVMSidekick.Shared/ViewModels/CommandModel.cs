@@ -90,7 +90,7 @@ namespace MVVMSidekick.ViewModels
         /// The _ last can execute value
         /// </summary>
         protected Property<bool> _LastCanExecuteValue =
-          new Property<bool> { LocatorFunc = _LastCanExecuteValueLocator };
+          new Property<bool>(_LastCanExecuteValueLocator);
         /// <summary>
         /// The _ last can execute value locator
         /// </summary>
@@ -103,7 +103,7 @@ namespace MVVMSidekick.ViewModels
                 model._LastCanExecuteValue =
                     model._LastCanExecuteValue
                     ??
-                    new Property<bool> { LocatorFunc = _LastCanExecuteValueLocator };
+                    new Property<bool>(_LastCanExecuteValueLocator);
                 return model._LastCanExecuteValue.Container =
                     model._LastCanExecuteValue.Container
                     ??
@@ -125,7 +125,7 @@ namespace MVVMSidekick.ViewModels
             set { _StateLocator(this).SetValueAndTryNotify(value); }
         }
         #region Property TState State Setup        
-        protected Property<TState> _State = new Property<TState> { LocatorFunc = _StateLocator };
+        protected Property<TState> _State = new Property<TState>(_StateLocator);
         static Func<BindableBase, ValueContainer<TState>> _StateLocator = RegisterContainerLocator<TState>(nameof(State), model => model.Initialize(nameof(State), ref model._State, ref _StateLocator, _StateDefaultValueFactory));
         static Func<TState> _StateDefaultValueFactory = () => default(TState);
         #endregion
@@ -147,12 +147,12 @@ namespace MVVMSidekick.ViewModels
         /// <returns><c>true</c> if this instance can execute the specified parameter; otherwise, <c>false</c>.</returns>
         public bool CanExecute(object parameter)
         {
-            if (Utilities.Runtime.IsInDesignMode )
+            if (Utilities.Runtime.IsInDesignMode)
             {
                 return false;
             }
             var s = CommandCore?.CanExecute(parameter);
-            LastCanExecuteValue = s??false;
+            LastCanExecuteValue = s ?? false;
             return LastCanExecuteValue;
         }
 

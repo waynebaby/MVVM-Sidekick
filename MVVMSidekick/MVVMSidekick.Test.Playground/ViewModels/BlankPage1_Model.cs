@@ -28,7 +28,7 @@ namespace MVVMSidekick.Test.Playground.ViewModels
             set { _TitleLocator(this).SetValueAndTryNotify(value); }
         }
         #region Property String Title Setup
-        protected Property<String> _Title = new Property<String> { LocatorFunc = _TitleLocator };
+        protected Property<String> _Title = new Property<String>( _TitleLocator);
         static Func<BindableBase, ValueContainer<String>> _TitleLocator = RegisterContainerLocator<String>("Title", model => model.Initialize("Title", ref model._Title, ref _TitleLocator, _TitleDefaultValueFactory));
         static Func<BindableBase, String> _TitleDefaultValueFactory = m => m.ToString();
         #endregion
@@ -102,7 +102,7 @@ namespace MVVMSidekick.Test.Playground.ViewModels
         }
         #region Property CommandModel<ReactiveCommand, String> CommandNext Setup        
 
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandNext = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandNextLocator };
+        protected Property<CommandModel<ReactiveCommand, String>> _CommandNext = new Property<CommandModel<ReactiveCommand, String>>( _CommandNextLocator);
         static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNextLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandNext), model => model.Initialize(nameof(CommandNext), ref model._CommandNext, ref _CommandNextLocator, _CommandNextDefaultValueFactory));
         static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNextDefaultValueFactory =
             model =>
