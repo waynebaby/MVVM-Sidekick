@@ -96,18 +96,27 @@ namespace MVVMSidekick.Views
 				DependencyProperty.Register(nameof(FrameObject), typeof(Object), typeof(MVVMPage), new PropertyMetadata(null));
 
 
-		
+		   Object IView.Parent
+            {
+                get
+                {
+                    return FrameObject;
+
+                }
+            }
 #endif
+
+
+#if !WPF
+
         Object IView.Parent
         {
             get
             {
-                return FrameObject;
+                return Frame;
 
             }
         }
-
-#if !WPF
         //WPF Pages' Content are objects but others are FE .
         /// <summary>
         /// Gets or sets the content object.

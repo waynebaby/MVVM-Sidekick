@@ -15,7 +15,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MVVMSidekick.Utilities;
+#if NET40
 using Microsoft.Practices.Unity;
+#else
+using Unity;
+#endif
 using MVVMSidekick.Views;
 #if NETFX_CORE
 
