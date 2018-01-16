@@ -44,7 +44,7 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
         #region Property CommandModel<ReactiveCommand, String> CommandNext Setup        
 
         protected Property<CommandModel<ReactiveCommand, String>> _CommandNext = new Property<CommandModel<ReactiveCommand, String>>( _CommandNextLocator);
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNextLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandNext), model => model.Initialize(nameof(CommandNext), ref model._CommandNext, ref _CommandNextLocator, _CommandNextDefaultValueFactory));
+        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNextLocator = RegisterContainerLocator(nameof(CommandNext), (model,n) => model.Initialize(n, ref model._CommandNext, ref _CommandNextLocator, _CommandNextDefaultValueFactory));
         static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNextDefaultValueFactory =
             model =>
             {

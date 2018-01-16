@@ -227,7 +227,7 @@ namespace MVVMSidekick.ViewModels
 
 
         #region Property string ErrorMessage Setup        
-        protected Property<string> _ErrorMessage = new Property<string>( _ErrorMessageLocator);
+        protected Property<string> _ErrorMessage = new Property<string>(_ErrorMessageLocator);
         static Func<BindableBase, ValueContainer<string>> _ErrorMessageLocator = RegisterContainerLocator<string>(nameof(ErrorMessage), model => model.Initialize(nameof(ErrorMessage), ref model._ErrorMessage, ref _ErrorMessageLocator, _ErrorMessageDefaultValueFactory));
         static Func<string> _ErrorMessageDefaultValueFactory = () => default(string);
         #endregion
@@ -251,7 +251,11 @@ namespace MVVMSidekick.ViewModels
             _plainPropertyContainerGetters[propertyName] = getOrCreateLocatorMethod;
             return o => getOrCreateLocatorMethod((TSubClassType)o);
         }
-
+        protected static Func<BindableBase, ValueContainer<TProperty>> RegisterContainerLocator<TProperty>(string propertyName, Func<TSubClassType, string, ValueContainer<TProperty>> getOrCreateLocatorMethod)
+        {
+            _plainPropertyContainerGetters[propertyName] = o => getOrCreateLocatorMethod((TSubClassType)o, propertyName);
+            return o => getOrCreateLocatorMethod((TSubClassType)o, propertyName);
+        }
 
         /// <summary>
         /// 根据属性名取得一个值容器
@@ -518,7 +522,7 @@ namespace MVVMSidekick.ViewModels
             set { _HasErrorsLocator(this).SetValueAndTryNotify(value); }
         }
         #region Property bool HasErrors Setup        
-        protected Property<bool> _HasErrors = new Property<bool>( _HasErrorsLocator);
+        protected Property<bool> _HasErrors = new Property<bool>(_HasErrorsLocator);
         static Func<BindableBase, ValueContainer<bool>> _HasErrorsLocator = RegisterContainerLocator<bool>(nameof(HasErrors), model => model.Initialize(nameof(HasErrors), ref model._HasErrors, ref _HasErrorsLocator, _HasErrorsDefaultValueFactory));
         static Func<bool> _HasErrorsDefaultValueFactory = () => false;
         #endregion
@@ -569,8 +573,8 @@ namespace MVVMSidekick.ViewModels
             set { _LocalEventRouterLocator(this).SetValueAndTryNotify(value); }
         }
         #region Property EventRouter LocalEventRouter Setup
-        protected Property<EventRouter> _LocalEventRouter = new Property<EventRouter>( _LocalEventRouterLocator);
-    static Func<BindableBase, ValueContainer<EventRouter>> _LocalEventRouterLocator = RegisterContainerLocator<EventRouter>("LocalEventRouter", model => model.Initialize("LocalEventRouter", ref model._LocalEventRouter, ref _LocalEventRouterLocator, _LocalEventRouterDefaultValueFactory));
+        protected Property<EventRouter> _LocalEventRouter = new Property<EventRouter>(_LocalEventRouterLocator);
+        static Func<BindableBase, ValueContainer<EventRouter>> _LocalEventRouterLocator = RegisterContainerLocator<EventRouter>("LocalEventRouter", model => model.Initialize("LocalEventRouter", ref model._LocalEventRouter, ref _LocalEventRouterLocator, _LocalEventRouterDefaultValueFactory));
         static Func<EventRouter> _LocalEventRouterDefaultValueFactory = () => { return new EventRouter(); };
         #endregion
 

@@ -4,7 +4,7 @@
   <CodeSnippet Format="1.0.0">
     <Header>                                
       <Title>MVVM Sidekick View Model Property</Title>
-      <Shortcut>propvm</Shortcut>
+      <Shortcut>propvm4</Shortcut>
       <Description>Property of View Model for XAML MVVM </Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
@@ -33,8 +33,7 @@
         }
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>(_$property$Locator);
-        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator<$type$>("$property$", model =>model.Initialize("$property$",ref model._$property$, ref _$property$Locator,_$property$DefaultValueFactory));         
-        static Func<$type$> _$property$DefaultValueFactory = ()=> default($type$);
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator("$property$", (m,pn)=>m.Initialize(pn,ref model._$property$, ref _$property$Locator,()=> default($type$))); 
         #endregion
 ]]>
       </Code>
@@ -44,7 +43,7 @@
   <CodeSnippet Format="1.0.0">
     <Header>
       <Title>MVVM Sidekick View Model Property for C# 6</Title>
-      <Shortcut>propvm6</Shortcut>
+      <Shortcut>propvm</Shortcut>
       <Description>Property of View Model for WPF &amp; Silverlight MVVM </Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
@@ -73,8 +72,7 @@
         }
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>( _$property$Locator);
-        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator<$type$>(nameof($property$), model =>model.Initialize(nameof($property$),ref model._$property$, ref _$property$Locator,_$property$DefaultValueFactory));         
-        static Func<$type$> _$property$DefaultValueFactory = ()=> default($type$);
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator(nameof($property$), model =>model.Initialize(nameof($property$),ref model._$property$, ref _$property$Locator,()=> default($type$)));         
         #endregion
 ]]>
       </Code>
@@ -83,6 +81,51 @@
   <CodeSnippet Format="1.0.0">
     <Header>
       <Title>MVVM Sidekick View Model Property with complex value factory for </Title>
+      <Shortcut>propcvm4</Shortcut>
+      <Description>Property of View Model for XAML MVVM </Description>
+      <Author>Wayne Wang</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>type</ID>
+          <ToolTip>Property Type</ToolTip>
+          <Default>int</Default>
+        </Literal>
+        <Literal>
+          <ID>property</ID>
+          <ToolTip>Property Name</ToolTip>
+          <Default>MyProperty</Default>
+        </Literal>
+
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[        public $type$ $property$
+        {
+            get { return _$property$Locator(this).Value; }
+            set { _$property$Locator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property $type$ $property$ Setup        
+        protected Property<$type$> _$property$ = new Property<$type$>(_$property$Locator);
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator("$property$", (m,pn)=>m.Initialize(pn,ref model._$property$, ref _$property$Locator,  
+            model=>
+            { 
+                var vm = CastToCurrentType(model);
+                //TODO: Add the logic that produce default value from vm current status.
+                return default($type$); 
+            }));         
+        #endregion
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>MVVM Sidekick View Model Property with complex value factory for C# 6</Title>
       <Shortcut>propcvm</Shortcut>
       <Description>Property of View Model for XAML MVVM </Description>
       <Author>Wayne Wang</Author>
@@ -112,60 +155,13 @@
         }
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>(_$property$Locator);
-        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator<$type$>("$property$", model =>model.Initialize("$property$",ref model._$property$, ref _$property$Locator,_$property$DefaultValueFactory));         
-        static Func<BindableBase,$type$> _$property$DefaultValueFactory = 
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator(nameof($property$), model =>model.Initialize(nameof($property$),ref model._$property$, ref _$property$Locator,
             model=>
             { 
                 var vm = CastToCurrentType(model);
                 //TODO: Add the logic that produce default value from vm current status.
                 return default($type$); 
-            };
-        #endregion
-]]>
-      </Code>
-    </Snippet>
-  </CodeSnippet>
-
-  <CodeSnippet Format="1.0.0">
-    <Header>
-      <Title>MVVM Sidekick View Model Property with complex value factory for C# 6</Title>
-      <Shortcut>propcvm6</Shortcut>
-      <Description>Property of View Model for XAML MVVM </Description>
-      <Author>Wayne Wang</Author>
-      <SnippetTypes>
-        <SnippetType>Expansion</SnippetType>
-      </SnippetTypes>
-    </Header>
-    <Snippet>
-      <Declarations>
-        <Literal>
-          <ID>type</ID>
-          <ToolTip>Property Type</ToolTip>
-          <Default>int</Default>
-        </Literal>
-        <Literal>
-          <ID>property</ID>
-          <ToolTip>Property Name</ToolTip>
-          <Default>MyProperty</Default>
-        </Literal>
-
-      </Declarations>
-      <Code Language="csharp">
-        <![CDATA[        public $type$ $property$
-        {
-            get { return _$property$Locator(this).Value; }
-            set { _$property$Locator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property $type$ $property$ Setup        
-        protected Property<$type$> _$property$ = new Property<$type$>(_$property$Locator);
-        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator<$type$>(nameof($property$), model =>model.Initialize(nameof($property$),ref model._$property$, ref _$property$Locator,_$property$DefaultValueFactory));         
-        static Func<BindableBase,$type$> _$property$DefaultValueFactory = 
-            model=>
-            { 
-                var vm = CastToCurrentType(model);
-                //TODO: Add the logic that produce default value from vm current status.
-                return default($type$); 
-            };
+            }));         
         #endregion
 ]]>
       </Code>
@@ -251,18 +247,11 @@
             { 
                 //Add design time test data init here. These will not execute in runtime.
             }
-            
-            
         }
 
         //Use propvm + tab +tab  to create a new property of bindable here:
            
-
-    }
-     
-        
-        
-        
+    }     
 ]]>
       </Code>
     </Snippet>
@@ -273,7 +262,7 @@
   <CodeSnippet Format="1.0.0">
     <Header>
       <Title>MVVM Sidekick View Model Async Command With State</Title>
-      <Shortcut>propcmd</Shortcut>
+      <Shortcut>propcmd4</Shortcut>
       <Description>Command Model of MVVM </Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
@@ -308,8 +297,7 @@
         #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup        
         
         protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>(_Command$commandName$Locator);
-        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $stateType$>>("Command$commandName$", model =>model.Initialize("Command$commandName$",ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
-        static Func<BindableBase,CommandModel<$commandType$, $stateType$>> _Command$commandName$DefaultValueFactory =
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator("Command$commandName$", model =>model.Initialize("Command$commandName$",ref model._Command$commandName$, ref _Command$commandName$Locator,
             model => 
             {
                 var state = "Command$commandName$";           // Command state  
@@ -334,8 +322,7 @@
                     model: vm, 
                     canExecuteWhenBusy: false);
                 return cmdmdl;
-            };
-
+            }));         
         #endregion
 ]]>
       </Code>
@@ -345,7 +332,7 @@
 <CodeSnippet Format="1.0.0">
     <Header>
       <Title>MVVM Sidekick View Model Command With State for C# 6</Title>
-      <Shortcut>propcmdb6</Shortcut>
+      <Shortcut>propcmdb</Shortcut>
       <Description>Async Command for MVVM-Sidekick</Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
@@ -380,8 +367,7 @@
         #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup        
         
         protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>(_Command$commandName$Locator);
-        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $stateType$>>(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
-        static Func<BindableBase,CommandModel<$commandType$, $stateType$>> _Command$commandName$DefaultValueFactory =
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,
             model => 
             {
                 var state = nameof(Command$commandName$);           // Command state  
@@ -406,8 +392,7 @@
                     model: vm, 
                     canExecuteWhenBusy: false);
                 return cmdmdl;
-            };
-
+            }));       
         #endregion
 ]]>
       </Code>
@@ -419,7 +404,7 @@
     <CodeSnippet Format="1.0.0">
     <Header>
       <Title>MVVM Sidekick View Model Command With State for C# 6</Title>
-      <Shortcut>propcmd6</Shortcut>
+      <Shortcut>propcmd</Shortcut>
       <Description>Sync Command Model for MVVM-Sidekick</Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
@@ -454,9 +439,7 @@
         #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup        
         
         protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>(_Command$commandName$Locator);
-        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator<CommandModel<$commandType$, $stateType$>>(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,_Command$commandName$DefaultValueFactory));         
-        static Func<BindableBase,CommandModel<$commandType$, $stateType$>> _Command$commandName$DefaultValueFactory =
-            model => 
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,            model => 
             {
                 var state = nameof(Command$commandName$);           // Command state  
                 var commandId = nameof(Command$commandName$);
@@ -474,8 +457,7 @@
                 var cmdmdl = cmd.CreateCommandModel(state);                 
              
                 return cmdmdl;
-            };
-
+            }));    
         #endregion
 ]]>
       </Code>
