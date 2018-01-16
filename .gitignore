@@ -132,3 +132,4 @@ project.lock.json
 /MVVMSidekick/Samples/TableGame-Sidekick/TableGame-Sidekick.WPF.Test/FakesAssemblies
 UpgradeLog*.*
 /MVVMSidekick/CommonCode/CommonCode.vshost.exe.manifest
+.vs
