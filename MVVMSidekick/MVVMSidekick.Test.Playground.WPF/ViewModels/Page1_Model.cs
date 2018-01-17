@@ -36,19 +36,19 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
 
 
 
-        public CommandModel<ReactiveCommand, String> CommandNext
+        public CommandModel CommandNext
         {
-            get { return _CommandNextLocator(this).Value; }
-            set { _CommandNextLocator(this).SetValueAndTryNotify(value); }
+            get => _CommandNextLocator(this).Value;
+            set => _CommandNextLocator(this).SetValueAndTryNotify(value);
         }
-        #region Property CommandModel<ReactiveCommand, String> CommandNext Setup        
+        #region Property CommandModel CommandNext Setup        
 
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandNext = new Property<CommandModel<ReactiveCommand, String>>( _CommandNextLocator);
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNextLocator = RegisterContainerLocator(nameof(CommandNext), (model,n) => model.Initialize(n, ref model._CommandNext, ref _CommandNextLocator, _CommandNextDefaultValueFactory));
-        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNextDefaultValueFactory =
+        protected Property<CommandModel> _CommandNext = new Property<CommandModel>(_CommandNextLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandNextLocator = RegisterContainerLocator(nameof(CommandNext), (model, n) => model.Initialize(n, ref model._CommandNext, ref _CommandNextLocator, _CommandNextDefaultValueFactory));
+        static Func<BindableBase, CommandModel> _CommandNextDefaultValueFactory =
             model =>
             {
-                var state = nameof(CommandNext);           // Command state  
+                var state = default (object);           // Command state  
                 var commandId = nameof(CommandNext);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
@@ -73,7 +73,7 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
             };
 
         #endregion
-        
+
     }
 
 }

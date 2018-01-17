@@ -1,4 +1,5 @@
 ﻿using MVVMSidekick.Commands;
+using MVVMSidekick.Reactive;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -204,4 +205,42 @@ namespace MVVMSidekick.ViewModels
         }
     }
 
+    /// <summary>
+    /// 用于封装ICommand的ViewModel。一般包括一个Command实例和对应此实例的一组状态
+    /// </summary>
+    /// <typeparam name="TCommand">ICommand 详细类型</typeparam>
+    public class CommandModel<TCommand> : CommandModel<TCommand, Object> where TCommand : ICommand
+    {   /// <summary>
+        /// Initializes a new instance of the <see cref="CommandModel{TCommand, TResource}"/> class.
+        /// </summary>
+        public CommandModel() : base()
+        { }
+        /// <summary>
+        /// 构造器
+        /// </summary>
+        /// <param name="commandCore">ICommand核心</param>
+        /// <param name="resource">初始资源</param>
+        public CommandModel(TCommand commandCore, Object state) : base(commandCore, state)
+        { }
+    }
+
+
+    /// <summary>
+    /// 用于封装ReactiveCommand的ViewModel。一般包括一个Command实例和对应此实例的一组状态
+    /// </summary>
+    /// <typeparam name="TCommand">ICommand 详细类型</typeparam>
+    public class CommandModel : CommandModel<ReactiveCommand, Object>
+    {   /// <summary>
+        /// Initializes a new instance of the <see cref="CommandModel{TCommand, TResource}"/> class.
+        /// </summary>
+        public CommandModel() : base()
+        { }
+        /// <summary>
+        /// 构造器
+        /// </summary>
+        /// <param name="commandCore">ReactiveCommand</param>
+        /// <param name="resource">初始资源</param>
+        public CommandModel(ReactiveCommand commandCore, Object state) : base(commandCore, state)
+        { }
+    }
 }

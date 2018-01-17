@@ -3,7 +3,7 @@
   <!--View Model Property-->
   <CodeSnippet Format="1.0.0">
     <Header>                                
-      <Title>MVVM Sidekick View Model Property</Title>
+      <Title>MVVM-Sidekick Property</Title>
       <Shortcut>propvm4</Shortcut>
       <Description>Property of View Model for XAML MVVM </Description>
       <Author>Wayne Wang</Author>
@@ -42,7 +42,7 @@
 
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Property for C# 6</Title>
+      <Title>MVVM-Sidekick Property for C# 6+</Title>
       <Shortcut>propvm</Shortcut>
       <Description>Property of View Model for WPF &amp; Silverlight MVVM </Description>
       <Author>Wayne Wang</Author>
@@ -80,7 +80,7 @@
   </CodeSnippet>
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Property with complex value factory for </Title>
+      <Title>MVVM-Sidekick Property with complex value factory for </Title>
       <Shortcut>propcvm4</Shortcut>
       <Description>Property of View Model for XAML MVVM </Description>
       <Author>Wayne Wang</Author>
@@ -125,7 +125,7 @@
 
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Property with complex value factory for C# 6</Title>
+      <Title>MVVM-Sidekick Property with complex value factory for C# 6+</Title>
       <Shortcut>propcvm</Shortcut>
       <Description>Property of View Model for XAML MVVM </Description>
       <Author>Wayne Wang</Author>
@@ -170,7 +170,7 @@
   <!--View Model Class-->
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Class</Title>
+      <Title>MVVM-Sidekick Class</Title>
       <Shortcut>classvm</Shortcut>
       <Description>View Model for WPF &amp; Silverlight MVVM </Description>
       <Author>Wayne Wang</Author>
@@ -219,7 +219,7 @@
   <!--Bindable Class-->
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick Bindable Class</Title>
+      <Title>MVVM-Sidekick Bindable Class</Title>
       <Shortcut>classvm</Shortcut>
       <Description>Bindable type for WPF &amp; Silverlight MVVM </Description>
       <Author>Wayne Wang</Author>
@@ -261,7 +261,7 @@
   <!--View Model Command With State-->
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Async Command With State</Title>
+      <Title>MVVM-Sidekick Async Command With State</Title>
       <Shortcut>propcmd4</Shortcut>
       <Description>Command Model of MVVM </Description>
       <Author>Wayne Wang</Author>
@@ -331,8 +331,128 @@
 
 <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Command With State for C# 6</Title>
+      <Title>MVVM-Sidekick Lightly Confiugured Command With UI Busy Awareness for C# 6+</Title>
       <Shortcut>propcmdb</Shortcut>
+      <Description>Async Command for MVVM-Sidekick</Description>
+      <Author>Wayne Wang</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+  
+        <Literal>
+          <ID>commandName</ID>
+          <ToolTip>Command Name</ToolTip>
+          <Default>SomeCommand</Default>
+        </Literal>
+       
+      </Declarations>
+      <Code Language="csharp" >
+        <![CDATA[
+        public CommandModel Command$commandName$
+        {
+            get { return _Command$commandName$Locator(this).Value; }
+            set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel Command$commandName$ Setup        
+        
+        protected Property<CommandModel> _Command$commandName$ = new Property<CommandModel>(_Command$commandName$Locator);
+        static Func<BindableBase,ValueContainer<CommandModel>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,
+            model => 
+            {
+                object state = nameof(Command$commandName$);          // Command state  
+                var commandId = nameof(Command$commandName$);
+                var vm = CastToCurrentType(model);
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                
+                cmd.DoExecuteUIBusyTask(
+                        vm,
+                        async e =>
+                        {
+                            //Todo: Add $commandName$ logic here, or
+                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
+                        })
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+                    
+                var cmdmdl = cmd.CreateCommandModel(state);
+                
+                cmdmdl.ListenToIsUIBusy(
+                    model: vm, 
+                    canExecuteWhenBusy: false);
+                return cmdmdl;
+            }));       
+        #endregion
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+
+
+    <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>MVVM-Sidekick Lightly Confiugured Command for C# 6+</Title>
+      <Shortcut>propcmd</Shortcut>
+      <Description>Sync Command Model for MVVM-Sidekick</Description>
+      <Author>Wayne Wang</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+       
+        <Literal>
+          <ID>commandName</ID>
+          <ToolTip>Command Name</ToolTip>
+          <Default>SomeCommand</Default>
+        </Literal>
+     
+      </Declarations>
+      <Code Language="csharp" >
+        <![CDATA[
+        public CommandModel Command$commandName$
+        {
+            get { return _Command$commandName$Locator(this).Value; }
+            set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
+        }
+        #region Property CommandModel Command$commandName$ Setup        
+        
+        protected Property<CommandModel> _Command$commandName$ = new Property<CommandModel>(_Command$commandName$Locator);
+        static Func<BindableBase,ValueContainer<CommandModel>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,            model => 
+            {
+                object state = nameof(Command$commandName$);          // Command state  
+                var commandId = nameof(Command$commandName$);
+                var vm = CastToCurrentType(model);
+                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                
+                cmd.Do( e =>
+                        {
+                            //Todo: Add $commandName$ logic here                           
+                        })
+                    .DoNotifyDefaultEventRouter(vm, commandId)
+                    .Subscribe()
+                    .DisposeWith(vm);
+                    
+                var cmdmdl = cmd.CreateCommandModel(state);                 
+             
+                return cmdmdl;
+            }));    
+        #endregion
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>MVVM-Sidekick Fullly Confiugured Command With Generic State and With UI Busy Awareness for C# 6+</Title>
+      <Shortcut>propcmdbfull</Shortcut>
       <Description>Async Command for MVVM-Sidekick</Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
@@ -370,7 +490,7 @@
         static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,
             model => 
             {
-                var state = nameof(Command$commandName$);           // Command state  
+                var state = default($stateType$);           // Command state  
                 var commandId = nameof(Command$commandName$);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
@@ -401,10 +521,10 @@
 
 
 
-    <CodeSnippet Format="1.0.0">
+  <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM Sidekick View Model Command With State for C# 6</Title>
-      <Shortcut>propcmd</Shortcut>
+      <Title>MVVM-Sidekick Fullly Confiugured Command With Generic State for C# 6+</Title>
+      <Shortcut>propcmdFull</Shortcut>
       <Description>Sync Command Model for MVVM-Sidekick</Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
@@ -441,7 +561,7 @@
         protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>(_Command$commandName$Locator);
         static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,            model => 
             {
-                var state = nameof(Command$commandName$);           // Command state  
+                var state = default($stateType$);           // Command state  
                 var commandId = nameof(Command$commandName$);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
@@ -463,7 +583,6 @@
       </Code>
     </Snippet>
   </CodeSnippet>
-
 
 
 

@@ -38,7 +38,7 @@ namespace Validation.ViewModels
             set { _TitleLocator(this).SetValueAndTryNotify(value); }
         }
         #region Property String Title Setup
-        protected Property<String> _Title = new Property<String>( _TitleLocator };
+        protected Property<String> _Title = new Property<String> { LocatorFunc = _TitleLocator };
         static Func<BindableBase, ValueContainer<String>> _TitleLocator = RegisterContainerLocator<String>("Title", model => model.Initialize("Title", ref model._Title, ref _TitleLocator, _TitleDefaultValueFactory));
         static Func<String> _TitleDefaultValueFactory = () => "Title is Here";
         #endregion
@@ -114,7 +114,7 @@ namespace Validation.ViewModels
             set { _Number1Locator(this).SetValueAndTryNotify(value); }
         }
         #region Property Decimal Number1 Setup        
-        protected Property<Decimal> _Number1 = new Property<Decimal>( _Number1Locator };
+        protected Property<Decimal> _Number1 = new Property<Decimal> { LocatorFunc = _Number1Locator };
         static Func<BindableBase, ValueContainer<Decimal>> _Number1Locator = RegisterContainerLocator<Decimal>(nameof(Number1), model => model.Initialize(nameof(Number1), ref model._Number1, ref _Number1Locator, _Number1DefaultValueFactory));
         static Func<Decimal> _Number1DefaultValueFactory = () => default(Decimal);
         #endregion
@@ -127,7 +127,7 @@ namespace Validation.ViewModels
             set { _Number2Locator(this).SetValueAndTryNotify(value); }
         }
         #region Property decimal Number2 Setup        
-        protected Property<decimal> _Number2 = new Property<decimal>( _Number2Locator };
+        protected Property<decimal> _Number2 = new Property<decimal> { LocatorFunc = _Number2Locator };
         static Func<BindableBase, ValueContainer<decimal>> _Number2Locator = RegisterContainerLocator<decimal>(nameof(Number2), model => model.Initialize(nameof(Number2), ref model._Number2, ref _Number2Locator, _Number2DefaultValueFactory));
         static Func<decimal> _Number2DefaultValueFactory = () => default(decimal);
         #endregion
@@ -142,7 +142,7 @@ namespace Validation.ViewModels
             set { _NumberResultLocator(this).SetValueAndTryNotify(value); }
         }
         #region Property string NumberResult Setup        
-        protected Property<string> _NumberResult = new Property<string>( _NumberResultLocator };
+        protected Property<string> _NumberResult = new Property<string> { LocatorFunc = _NumberResultLocator };
         static Func<BindableBase, ValueContainer<string>> _NumberResultLocator = RegisterContainerLocator<string>(nameof(NumberResult), model => model.Initialize(nameof(NumberResult), ref model._NumberResult, ref _NumberResultLocator, _NumberResultDefaultValueFactory));
         static Func<string> _NumberResultDefaultValueFactory = () => default(string);
         #endregion

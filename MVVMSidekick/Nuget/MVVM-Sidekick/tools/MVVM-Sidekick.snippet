@@ -384,7 +384,7 @@
         static Func<BindableBase,CommandModel<$commandType$, $stateType$>> _Command$commandName$DefaultValueFactory =
             model => 
             {
-                var state = nameof(Command$commandName$);           // Command state  
+                object state = nameof(Command$commandName$);           // Command state  
                 var commandId = nameof(Command$commandName$);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core

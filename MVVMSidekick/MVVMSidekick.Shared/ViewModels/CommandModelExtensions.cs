@@ -42,6 +42,19 @@ namespace MVVMSidekick.ViewModels
             return new CommandModel<TCommand, TResource>(command, resource);
         }
 
+        /// <summary>
+        /// 根据ICommand实例创建CommandModel
+        /// </summary>
+        /// <typeparam name="TCommand">ICommand实例的具体类型</typeparam>
+        /// <typeparam name="TResource">附加资源类型</typeparam>
+        /// <param name="command">ICommand实例</param>
+        /// <param name="resource">资源实例</param>
+        /// <returns>CommandModel实例</returns>
+        public static CommandModel CreateCommandModel (this ReactiveCommand command, object resource)
+          
+        {
+            return new CommandModel(command, resource);
+        }
 
 
         /// <summary>

@@ -95,19 +95,20 @@ namespace MVVMSidekick.Test.Playground.ViewModels
 
 
 
-        public CommandModel<ReactiveCommand, String> CommandNext
+        public CommandModel CommandNext
         {
             get { return _CommandNextLocator(this).Value; }
             set { _CommandNextLocator(this).SetValueAndTryNotify(value); }
         }
-        #region Property CommandModel<ReactiveCommand, String> CommandNext Setup        
+        #region Property CommandModel CommandNext Setup        
 
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandNext = new Property<CommandModel<ReactiveCommand, String>>( _CommandNextLocator);
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNextLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandNext), model => model.Initialize(nameof(CommandNext), ref model._CommandNext, ref _CommandNextLocator, _CommandNextDefaultValueFactory));
-        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNextDefaultValueFactory =
+        protected Property<CommandModel> _CommandNext = new Property<CommandModel>( _CommandNextLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandNextLocator = RegisterContainerLocator<CommandModel>(nameof(CommandNext), model => model.Initialize(nameof(CommandNext), ref model._CommandNext, ref _CommandNextLocator, _CommandNextDefaultValueFactory));
+        static Func<BindableBase, CommandModel> _CommandNextDefaultValueFactory =
             model =>
             {
-                var state = nameof(CommandNext);           // Command state  
+                object state = nameof(CommandNext);           // Command state  
+
                 var commandId = nameof(CommandNext);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core

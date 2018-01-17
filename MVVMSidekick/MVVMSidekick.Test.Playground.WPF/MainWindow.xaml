@@ -11,12 +11,6 @@
 
 
     <Grid x:Name="grid" d:DataContext="{d:DesignInstance {x:Type vm:MainWindow_Model}}">
-        <DataGrid>
-            <DataGrid.Columns>
-                <DataGridTemplateColumn/>
-            </DataGrid.Columns>
-           
-        </DataGrid>
         <Grid.RowDefinitions>
             <RowDefinition Height="167*"/>
             <RowDefinition Height="152*"/>

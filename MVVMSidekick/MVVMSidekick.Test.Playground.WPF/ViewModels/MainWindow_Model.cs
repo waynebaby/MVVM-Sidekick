@@ -103,19 +103,20 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
         #endregion
 
 
-        public CommandModel<ReactiveCommand, String> CommandOpenWindows
+        public CommandModel CommandOpenWindows
         {
             get { return _CommandOpenWindowsLocator(this).Value; }
             set { _CommandOpenWindowsLocator(this).SetValueAndTryNotify(value); }
         }
-        #region Property CommandModel<ReactiveCommand, String> CommandOpenWindows Setup        
+        #region Property CommandModel CommandOpenWindows Setup        
 
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandOpenWindows = new Property<CommandModel<ReactiveCommand, String>>(_CommandOpenWindowsLocator);
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandOpenWindowsLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandOpenWindows), model => model.Initialize(nameof(CommandOpenWindows), ref model._CommandOpenWindows, ref _CommandOpenWindowsLocator, _CommandOpenWindowsDefaultValueFactory));
-        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandOpenWindowsDefaultValueFactory =
+        protected Property<CommandModel> _CommandOpenWindows = new Property<CommandModel>(_CommandOpenWindowsLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandOpenWindowsLocator = RegisterContainerLocator<CommandModel>(nameof(CommandOpenWindows), model => model.Initialize(nameof(CommandOpenWindows), ref model._CommandOpenWindows, ref _CommandOpenWindowsLocator, _CommandOpenWindowsDefaultValueFactory));
+        static Func<BindableBase, CommandModel> _CommandOpenWindowsDefaultValueFactory =
             model =>
             {
-                var state = nameof(CommandOpenWindows);           // Command state  
+                object state = nameof(CommandOpenWindows);           // Command state  
+
                 var commandId = nameof(CommandOpenWindows);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
@@ -143,19 +144,20 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
         #endregion
 
 
-        public CommandModel<ReactiveCommand, String> CommandNavigatePage
+        public CommandModel CommandNavigatePage
         {
             get { return _CommandNavigatePageLocator(this).Value; }
             set { _CommandNavigatePageLocator(this).SetValueAndTryNotify(value); }
         }
-        #region Property CommandModel<ReactiveCommand, String> CommandNavigatePage Setup        
+        #region Property CommandModel CommandNavigatePage Setup        
 
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandNavigatePage = new Property<CommandModel<ReactiveCommand, String>>(_CommandNavigatePageLocator);
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNavigatePageLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandNavigatePage), model => model.Initialize(nameof(CommandNavigatePage), ref model._CommandNavigatePage, ref _CommandNavigatePageLocator, _CommandNavigatePageDefaultValueFactory));
-        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNavigatePageDefaultValueFactory =
+        protected Property<CommandModel> _CommandNavigatePage = new Property<CommandModel>(_CommandNavigatePageLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandNavigatePageLocator = RegisterContainerLocator<CommandModel>(nameof(CommandNavigatePage), model => model.Initialize(nameof(CommandNavigatePage), ref model._CommandNavigatePage, ref _CommandNavigatePageLocator, _CommandNavigatePageDefaultValueFactory));
+        static Func<BindableBase, CommandModel> _CommandNavigatePageDefaultValueFactory =
             model =>
             {
-                var state = nameof(CommandNavigatePage);           // Command state  
+                object state = nameof(CommandNavigatePage);           // Command state  
+
                 var commandId = nameof(CommandNavigatePage);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
@@ -183,19 +185,20 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
         #endregion
 
 
-        public CommandModel<ReactiveCommand, String> CommandShowCtrol
+        public CommandModel CommandShowCtrol
         {
             get { return _CommandShowCtrolLocator(this).Value; }
             set { _CommandShowCtrolLocator(this).SetValueAndTryNotify(value); }
         }
-        #region Property CommandModel<ReactiveCommand, String> CommandShowCtrol Setup        
+        #region Property CommandModel CommandShowCtrol Setup        
 
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandShowCtrol = new Property<CommandModel<ReactiveCommand, String>>(_CommandShowCtrolLocator);
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandShowCtrolLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandShowCtrol), model => model.Initialize(nameof(CommandShowCtrol), ref model._CommandShowCtrol, ref _CommandShowCtrolLocator, _CommandShowCtrolDefaultValueFactory));
-        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandShowCtrolDefaultValueFactory =
+        protected Property<CommandModel> _CommandShowCtrol = new Property<CommandModel>(_CommandShowCtrolLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandShowCtrolLocator = RegisterContainerLocator<CommandModel>(nameof(CommandShowCtrol), model => model.Initialize(nameof(CommandShowCtrol), ref model._CommandShowCtrol, ref _CommandShowCtrolLocator, _CommandShowCtrolDefaultValueFactory));
+        static Func<BindableBase, CommandModel> _CommandShowCtrolDefaultValueFactory =
             model =>
             {
-                var state = nameof(CommandShowCtrol);           // Command state  
+                object state = nameof(CommandShowCtrol);           // Command state  
+
                 var commandId = nameof(CommandShowCtrol);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core

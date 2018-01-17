@@ -105,19 +105,20 @@ namespace MVVMSidekick.Test.Playground.ViewModels
 
 
 
-        public CommandModel<ReactiveCommand, String> CommandSomeCommand
+        public CommandModel CommandSomeCommand
         {
             get { return _CommandSomeCommandLocator(this).Value; }
             set { _CommandSomeCommandLocator(this).SetValueAndTryNotify(value); }
         }
-        #region Property CommandModel<ReactiveCommand, String> CommandSomeCommand Setup        
+        #region Property CommandModel CommandSomeCommand Setup        
 
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandSomeCommand = new Property<CommandModel<ReactiveCommand, String>>( _CommandSomeCommandLocator);
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandSomeCommandLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandSomeCommand), model => model.Initialize(nameof(CommandSomeCommand), ref model._CommandSomeCommand, ref _CommandSomeCommandLocator, _CommandSomeCommandDefaultValueFactory));
-        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandSomeCommandDefaultValueFactory =
+        protected Property<CommandModel> _CommandSomeCommand = new Property<CommandModel>( _CommandSomeCommandLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandSomeCommandLocator = RegisterContainerLocator<CommandModel>(nameof(CommandSomeCommand), model => model.Initialize(nameof(CommandSomeCommand), ref model._CommandSomeCommand, ref _CommandSomeCommandLocator, _CommandSomeCommandDefaultValueFactory));
+        static Func<BindableBase, CommandModel> _CommandSomeCommandDefaultValueFactory =
             model =>
             {
-                var state = nameof(CommandSomeCommand);           // Command state  
+                object state = nameof(CommandSomeCommand);           // Command state  
+
                 var commandId = nameof(CommandSomeCommand);
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
