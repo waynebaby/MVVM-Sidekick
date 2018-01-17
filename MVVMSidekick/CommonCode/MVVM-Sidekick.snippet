@@ -67,8 +67,8 @@
       <Code Language="csharp">
         <![CDATA[        public $type$ $property$
         {
-            get { return _$property$Locator(this).Value; }
-            set { _$property$Locator(this).SetValueAndTryNotify(value); }
+            get => _$property$Locator(this).Value;
+            set => _$property$Locator(this).SetValueAndTryNotify(value); 
         }
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>( _$property$Locator);
@@ -150,8 +150,8 @@
       <Code Language="csharp">
         <![CDATA[        public $type$ $property$
         {
-            get { return _$property$Locator(this).Value; }
-            set { _$property$Locator(this).SetValueAndTryNotify(value); }
+            get => _$property$Locator(this).Value; 
+            set => _$property$Locator(this).SetValueAndTryNotify(value); 
         }
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>(_$property$Locator);
@@ -261,7 +261,7 @@
   <!--View Model Command With State-->
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>MVVM-Sidekick Async Command With State</Title>
+      <Title>MVVM-Sidekick Async Command With Generic State</Title>
       <Shortcut>propcmd4</Shortcut>
       <Description>Command Model of MVVM </Description>
       <Author>Wayne Wang</Author>
@@ -351,11 +351,8 @@
       </Declarations>
       <Code Language="csharp" >
         <![CDATA[
-        public CommandModel Command$commandName$
-        {
-            get { return _Command$commandName$Locator(this).Value; }
-            set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
-        }
+        public CommandModel Command$commandName$ => _Command$commandName$Locator(this).Value; 
+        
         #region Property CommandModel Command$commandName$ Setup        
         
         protected Property<CommandModel> _Command$commandName$ = new Property<CommandModel>(_Command$commandName$Locator);
@@ -415,11 +412,8 @@
       </Declarations>
       <Code Language="csharp" >
         <![CDATA[
-        public CommandModel Command$commandName$
-        {
-            get { return _Command$commandName$Locator(this).Value; }
-            set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
-        }
+        public CommandModel Command$commandName$ => _Command$commandName$Locator(this).Value; 
+       
         #region Property CommandModel Command$commandName$ Setup        
         
         protected Property<CommandModel> _Command$commandName$ = new Property<CommandModel>(_Command$commandName$Locator);
@@ -479,13 +473,9 @@
       </Declarations>
       <Code Language="csharp" >
         <![CDATA[
-        public CommandModel<$commandType$, $stateType$> Command$commandName$
-        {
-            get { return _Command$commandName$Locator(this).Value; }
-            set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup        
-        
+        public CommandModel<$commandType$, $stateType$> Command$commandName$ => _Command$commandName$Locator(this).Value; 
+       
+        #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup              
         protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>(_Command$commandName$Locator);
         static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,
             model => 
@@ -551,13 +541,9 @@
       </Declarations>
       <Code Language="csharp" >
         <![CDATA[
-        public CommandModel<$commandType$, $stateType$> Command$commandName$
-        {
-            get { return _Command$commandName$Locator(this).Value; }
-            set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup        
-        
+        public CommandModel<$commandType$, $stateType$> Command$commandName$ => _Command$commandName$Locator(this).Value; 
+       
+        #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup 
         protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>(_Command$commandName$Locator);
         static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), model =>model.Initialize(nameof(Command$commandName$),ref model._Command$commandName$, ref _Command$commandName$Locator,            model => 
             {

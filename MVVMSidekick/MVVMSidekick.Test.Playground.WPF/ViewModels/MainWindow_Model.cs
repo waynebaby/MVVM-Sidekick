@@ -103,11 +103,8 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
         #endregion
 
 
-        public CommandModel CommandOpenWindows
-        {
-            get { return _CommandOpenWindowsLocator(this).Value; }
-            set { _CommandOpenWindowsLocator(this).SetValueAndTryNotify(value); }
-        }
+        public CommandModel CommandOpenWindows => _CommandOpenWindowsLocator(this).Value;
+     
         #region Property CommandModel CommandOpenWindows Setup        
 
         protected Property<CommandModel> _CommandOpenWindows = new Property<CommandModel>(_CommandOpenWindowsLocator);
