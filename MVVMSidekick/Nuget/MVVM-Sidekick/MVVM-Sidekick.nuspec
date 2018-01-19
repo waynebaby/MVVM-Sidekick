@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>1.6.36.prereleased</version>
+    <version>2.0.1</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,6 +38,11 @@
 
     </summary>
     <releaseNotes>
+	2.0.1
+		
+      - Changed more features and code snippets.
+    
+
 	1.6.36.prereleased
 		
       - Try IViewDisguise attached propertises to let a non-mvvm page to act as a IView member.
@@ -46,8 +51,8 @@
 	1.6.35
 		
       - Fix memory leak when Viewmodel Unload it dose not release IView,(Stage Manager set to null when unload)
-      - Default Value ViewModel。IsDisposingWhenUnloadRequired = false;
-      - Default Value ViewModel。IsDisposingWhenUnbindRequired = false;
+      - Default Value ViewModel.IsDisposingWhenUnloadRequired = false;
+      - Default Value ViewModel.IsDisposingWhenUnbindRequired = false;
     
 
 	1.6.34
@@ -58,8 +63,8 @@
 	1.6.32
 		
       - Fix one bug about Frame Designtime Support in wpf
-      - Default Value ViewModel。IsDisposingWhenUnloadRequired = true;
-      - Default Value ViewModel。IsDisposingWhenUnbindRequired = true;
+      - Default Value ViewModel.IsDisposingWhenUnloadRequired = true;
+      - Default Value ViewModel.IsDisposingWhenUnbindRequired = true;
     
 
 	1.6.29
@@ -163,7 +168,6 @@
     <tags>Rx Reactive Extensions MVVM UWP UAP Win8 Win10 APP IoT  Metro Modern UI</tags>
     <dependencies>
       <group targetFramework="net45">
-        <dependency id="CommonServiceLocator" version="[2.0.2,100.0)" />
         <dependency id="Microsoft.Bcl" version="[1.1.10,100.0)" />
         <dependency id="Microsoft.Bcl.Async" version="[1.0.168,100.0)" />
         <dependency id="Microsoft.Bcl.Build" version="[1.0.21,100.0)" />
@@ -250,18 +254,6 @@
         <dependency version="[3.1.1,100.0)" id="System.Reactive.PlatformServices" />
         <dependency version="[3.1.1,100.0)" id="System.Reactive.Windows.Threading" />
         <dependency version="[5.5.5,100.0)" id="Unity" />
-      </group>
-      <group targetFramework="net452">
-        <dependency id="Microsoft.Bcl" version="[1.1.10,100.0)" />
-        <dependency id="Microsoft.Bcl.Async" version="[1.0.168,100.0)" />
-        <dependency id="Microsoft.Bcl.Build" version="[1.0.21,100.0)" />
-        <dependency id="System.Reactive" version="[3.1.1,100.0)" />
-        <dependency id="System.Reactive.Core" version="[3.1.1,100.0)" />
-        <dependency id="System.Reactive.Interfaces" version="[3.1.1,100.0)" />
-        <dependency id="System.Reactive.Linq" version="[3.1.1,100.0)" />
-        <dependency id="System.Reactive.PlatformServices" version="[3.1.1,100.0)" />
-        <dependency id="System.Reactive.Windows.Threading" version="[3.1.1,100.0)" />
-        <dependency id="Unity" version="[5.5.5,100.0)" />
       </group>
     </dependencies>
   </metadata>

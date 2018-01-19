@@ -2,9 +2,9 @@
 <root>
   <project>MVVMSidekick_net45</project>
   <project>MVVMSidekick_net40</project>
-  <project>MVVMSidekick_Metro</project>
-  <project>MVVMSidekick_Sl</project>
   <project>MVVMSidekick_UAP10</project>
+  <!--<project>MVVMSidekick_Metro</project>
+  <project>MVVMSidekick_Sl</project>
   <project>MVVMSidekick_Wp8</project>
-  <project>MVVMSidekick_Wpa81</project>
+  <project>MVVMSidekick_Wpa81</project>-->
 </root>

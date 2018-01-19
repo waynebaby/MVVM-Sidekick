@@ -527,13 +527,7 @@ namespace MVVMSidekick.ViewModels
         /// <returns>Task&lt;Tout&gt;.</returns>
         public virtual async Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true)
         {
-            //TaskCompletionSource<Tout> taskComplet = new TaskCompletionSource<Tout>();
-            //Tout result = default(Tout);
-            //Action action =
-            //  async () =>
-            //  {
-            //      taskComplet.SetResult();
-            //  };
+
 
             var cmdarh = inputContext as EventPattern<EventCommandEventArgs>;
             if (cmdarh != null)
@@ -560,6 +554,7 @@ namespace MVVMSidekick.ViewModels
                     catch (Exception ex)
                     {
                         cmdarh.EventArgs.Completion.SetException(ex);
+                        EventRouter.Instance.RaiseEvent(this, ex);
                         throw;
                     }
 

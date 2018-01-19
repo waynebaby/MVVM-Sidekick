@@ -8,12 +8,11 @@ namespace MVVMSidekick.Reactive
 {
 	public interface IReactiveCommand : ICommand, ICommandWithViewModel	,IObservable<EventPattern<EventCommandEventArgs>> 
 	{
-		//bool CanExecute(object parameter);
 		IObservable<bool> CanExecuteObserveable { get; }
 		IDisposable ListenCanExecuteObservable(IObservable<bool> canExecuteSeq);
 		IReactiveCommand OverwriteCanExecute(Func<object, bool> canExecuteFunc);
-		//IDisposable Subscribe(IObserver<EventPattern<EventCommandEventArgs>> observer);
-		Task ExecuteAsync(object parameter); 
+		Task ExecuteAsync(object parameter);
+        string CommandId { get; set; }
 	}
 
 

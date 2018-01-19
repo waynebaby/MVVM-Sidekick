@@ -32,105 +32,33 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
 
 
         //propvm tab tab string tab Title
+        
+        public CommandModel CommandNext => _CommandNextLocator(this).Value;
+        #region Property CommandModel CommandNext Setup                
+        protected Property<CommandModel> _CommandNext = new Property<CommandModel>(_CommandNextLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandNextLocator = RegisterContainerLocator(nameof(CommandNext), m => m.Initialize(nameof(CommandNext), ref m._CommandNext, ref _CommandNextLocator,
+              model =>
+              {
+                  object state = nameof(CommandNext);
+                  var commandId = nameof(CommandNext);
+                  var vm = CastToCurrentType(model);
+                  var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
 
+                  cmd.DoExecuteUITask(
+                          vm,
+                          async e =>
+                          {
+                              var v = vm.StageManager.DefaultStage.Show<Control1_Model>();
+                              await MVVMSidekick.Utilities.TaskExHelper.Yield();
+                          })
+                      .DoNotifyDefaultEventRouter(vm, commandId)
+                      .Subscribe()
+                      .DisposeWith(vm);
 
+                  var cmdmdl = cmd.CreateCommandModel(state);
 
-
-
-        public CommandModel CommandNext
-        {
-            get { return _CommandNextLocator(this).Value; }
-            set { _CommandNextLocator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property CommandModel CommandNext Setup        
-
-        protected Property<CommandModel> _CommandNext = new Property<CommandModel>( _CommandNextLocator);
-        static Func<BindableBase, ValueContainer<CommandModel>> _CommandNextLocator = RegisterContainerLocator<CommandModel>(nameof(CommandNext), model => model.Initialize(nameof(CommandNext), ref model._CommandNext, ref _CommandNextLocator, _CommandNextDefaultValueFactory));
-        static Func<BindableBase, CommandModel> _CommandNextDefaultValueFactory =
-            model =>
-            {
-                object state = nameof(CommandNext);           // Command state  
-                var commandId = nameof(CommandNext);
-                var vm = CastToCurrentType(model);
-                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
-
-                cmd.DoExecuteUIBusyTask(
-                        vm,
-                        async e =>
-                        {
-                            var v = vm.StageManager.DefaultStage.Show<Control1_Model>();
-                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
-                        })
-                    .DoNotifyDefaultEventRouter(vm, commandId)
-                    .Subscribe()
-                    .DisposeWith(vm);
-
-                var cmdmdl = cmd.CreateCommandModel(state);
-
-                cmdmdl.ListenToIsUIBusy(
-                    model: vm,
-                    canExecuteWhenBusy: false);
-                return cmdmdl;
-            };
-
-        #endregion
-
-        #region Life Time Event Handling
-
-        ///// <summary>
-        ///// This will be invoked by view when this viewmodel instance is set to view's ViewModel property. 
-        ///// </summary>
-        ///// <param name="view">Set target</param>
-        ///// <param name="oldValue">Value before set.</param>
-        ///// <returns>Task awaiter</returns>
-        //protected override Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
-        //{
-        //    return base.OnBindedToView(view, oldValue);
-        //}
-
-        ///// <summary>
-        ///// This will be invoked by view when this instance of viewmodel in ViewModel property is overwritten.
-        ///// </summary>
-        ///// <param name="view">Overwrite target view.</param>
-        ///// <param name="newValue">The value replacing </param>
-        ///// <returns>Task awaiter</returns>
-        //protected override Task OnUnbindedFromView(MVVMSidekick.Views.IView view, IViewModel newValue)
-        //{
-        //    return base.OnUnbindedFromView(view, newValue);
-        //}
-
-        ///// <summary>
-        ///// This will be invoked by view when the view fires Load event and this viewmodel instance is already in view's ViewModel property
-        ///// </summary>
-        ///// <param name="view">View that firing Load event</param>
-        ///// <returns>Task awaiter</returns>
-        //protected override Task OnBindedViewLoad(MVVMSidekick.Views.IView view)
-        //{
-        //    return base.OnBindedViewLoad(view);
-        //}
-
-        ///// <summary>
-        ///// This will be invoked by view when the view fires Unload event and this viewmodel instance is still in view's  ViewModel property
-        ///// </summary>
-        ///// <param name="view">View that firing Unload event</param>
-        ///// <returns>Task awaiter</returns>
-        //protected override Task OnBindedViewUnload(MVVMSidekick.Views.IView view)
-        //{
-        //    return base.OnBindedViewUnload(view);
-        //}
-
-        ///// <summary>
-        ///// <para>If dispose actions got exceptions, will handled here. </para>
-        ///// </summary>
-        ///// <param name="exceptions">
-        ///// <para>The exception and dispose infomation</para>
-        ///// </param>
-        //protected override async void OnDisposeExceptions(IList<DisposeInfo> exceptions)
-        //{
-        //    base.OnDisposeExceptions(exceptions);
-        //    await TaskExHelper.Yield();
-        //}
-
+                  return cmdmdl;
+              }));
         #endregion
 
     }

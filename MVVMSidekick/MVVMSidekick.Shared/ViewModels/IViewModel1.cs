@@ -71,11 +71,5 @@ namespace MVVMSidekick
             /// <value>The result.</value>
             TResult Result { get; set; }
         }
-
-
-
-
-
     }
-
 }

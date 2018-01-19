@@ -62,8 +62,8 @@
       <package id="Rx-PlatformServices" version="2.2.5" />
       <package id="Rx-Xaml" version="2.2.5" />
       <package id="CommonServiceLocator" version="1.3" />
-      <package id="Unity" version="4.0.1" />
-      <package id="MVVM-Sidekick" version="1.6.36.prereleased" />
+      <package id="Unity" version="2.1.505.2" />
+      <package id="MVVM-Sidekick" version="2.0.1" />
     </packages>
   </WizardData>
 </VSTemplate>

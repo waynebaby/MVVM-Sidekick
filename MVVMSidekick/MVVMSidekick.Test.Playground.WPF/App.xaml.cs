@@ -22,7 +22,23 @@ namespace MVVMSidekick.Test.Playground.WPF
     {
         public static void InitNavigationConfigurationInThisAssembly()
         {
-            MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
+            Startups.StartupFunctions.RunAllConfig();
+            #region Debug Trace
+#if DEBUG
+            EventRouting.EventRouter.Instance.GetEventChannel<Exception>()
+                .Subscribe(e =>
+                {
+                    System.Diagnostics.Debug.WriteLine($@"
+==============={DateTime.Now}
+EventName:
+    {e.EventName}
+Exception Detail:
+    {e.EventData}
+==============
+");
+                });
+#endif
+            #endregion
         }
 
         protected override void OnStartup(StartupEventArgs e)
