@@ -168,8 +168,8 @@
       <Link>Packages\Unity.2.1.505.2.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.2.0.1.nupkg">
-      <Link>Packages\MVVM-Sidekick.2.0.1.nupkg</Link>
+    <Content Include="D:\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.2.0.2-alpha.nupkg">
+      <Link>Packages\MVVM-Sidekick.2.0.2-alpha.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>

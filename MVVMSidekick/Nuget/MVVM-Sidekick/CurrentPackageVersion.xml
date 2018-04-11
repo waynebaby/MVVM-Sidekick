@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <versions>
   <version>
-    <id>2.0.0.prereleased</id>
+    <id>2.0.2-alpha</id>
     <releaseNotes>
       - Changed more features and code snippets.
     </releaseNotes>
@@ -17,8 +17,8 @@
     <id>1.6.35</id>
     <releaseNotes>
       - Fix memory leak when Viewmodel Unload it dose not release IView,(Stage Manager set to null when unload)
-      - Default Value ViewModel。IsDisposingWhenUnloadRequired = false;
-      - Default Value ViewModel。IsDisposingWhenUnbindRequired = false;
+      - Default Value ViewModel.IsDisposingWhenUnloadRequired = false;
+      - Default Value ViewModel.IsDisposingWhenUnbindRequired = false;
     </releaseNotes>
   </version>
   <version>
@@ -31,8 +31,8 @@
     <id>1.6.32</id>
     <releaseNotes>
       - Fix one bug about Frame Designtime Support in wpf
-      - Default Value ViewModel。IsDisposingWhenUnloadRequired = true;
-      - Default Value ViewModel。IsDisposingWhenUnbindRequired = true;
+      - Default Value ViewModel.IsDisposingWhenUnloadRequired = true;
+      - Default Value ViewModel.IsDisposingWhenUnbindRequired = true;
     </releaseNotes>
   </version>
   <version>
