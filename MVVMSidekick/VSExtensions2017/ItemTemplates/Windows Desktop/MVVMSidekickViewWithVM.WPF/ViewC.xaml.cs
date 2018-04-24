@@ -27,13 +27,15 @@ namespace $rootnamespace$
     /// <summary>
     /// Interaction logic for $safeitemname$.xaml
     /// </summary>
-    public partial class $safeitemname$ : MVVMControl
+    public partial class $safeitemname$ : Control
     {
         public $safeitemname$()
 		{
 
 			InitializeComponent();
         }
+
+        public ControlViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
     }
 }
 

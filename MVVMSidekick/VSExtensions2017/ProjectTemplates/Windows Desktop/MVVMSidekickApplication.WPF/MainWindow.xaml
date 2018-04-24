@@ -1,16 +1,14 @@
-﻿<mvvm:MVVMWindow x:Class="$safeprojectname$.$safeitemname$"
+﻿<Window x:Class="$safeprojectname$.$safeitemname$"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="{Binding DataContext.Title, ElementName=grid}"
         Height="350" Width="525"
-        xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"        
-        xmlns:vm="clr-namespace:$safeprojectname$.ViewModels" >
-    
-    <FrameworkElement.Resources >
-        <vm:$safeitemname$_Model x:Key="DesignVM" />
-    </FrameworkElement.Resources>
-    <Grid x:Name="grid" DataContext="{StaticResource DesignVM}">
-
+        xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"
+        xmlns:vm="clr-namespace:$safeprojectname$.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        mc:Ignorable="d">
+    <Grid x:Name="grid" d:DataContext="{d:DesignInstance Type=vm:$safeitemname$_Model }" >
 
     </Grid>
-</mvvm:MVVMWindow>
+</Window>

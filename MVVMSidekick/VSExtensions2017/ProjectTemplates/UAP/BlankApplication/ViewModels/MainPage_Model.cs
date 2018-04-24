@@ -24,29 +24,27 @@ namespace $safeprojectname$.ViewModels
 
         public MainPage_Model()
         {
-            if (IsInDesignMode )
+            if (IsInDesignMode)
             {
                 Title = "Title is a little different in Design mode";
             }
-        
+
         }
 
         //propvm tab tab string tab Title
-        public String Title
-        {
-            get { return _TitleLocator(this).Value; }
-            set { _TitleLocator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property String Title Setup
-        protected Property<String> _Title = new Property<String> { LocatorFunc = _TitleLocator };
-        static Func<BindableBase, ValueContainer<String>> _TitleLocator = RegisterContainerLocator<String>("Title", model => model.Initialize("Title", ref model._Title, ref _TitleLocator, _TitleDefaultValueFactory));
-        static Func<String> _TitleDefaultValueFactory = ()=>"Title is Here";
+
+        public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
+        #region Property string Title Setup        
+        protected Property<string> _Title = new Property<string>(_TitleLocator);
+        static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => default(string)));
         #endregion
 
 
-        
+
+
         #region Life Time Event Handling
-    
+
+        #region OnBindedToView
         ///// <summary>
         ///// This will be invoked by view when this viewmodel instance is set to view's ViewModel property. 
         ///// </summary>
@@ -57,7 +55,9 @@ namespace $safeprojectname$.ViewModels
         //{
         //    return base.OnBindedToView(view, oldValue);
         //}
+        #endregion
 
+        #region OnUnbindedFromView
         ///// <summary>
         ///// This will be invoked by view when this instance of viewmodel in ViewModel property is overwritten.
         ///// </summary>
@@ -68,6 +68,9 @@ namespace $safeprojectname$.ViewModels
         //{
         //    return base.OnUnbindedFromView(view, newValue);
         //}
+        #endregion
+
+        #region OnBindedViewLoad
 
         ///// <summary>
         ///// This will be invoked by view when the view fires Load event and this viewmodel instance is already in view's ViewModel property
@@ -78,6 +81,9 @@ namespace $safeprojectname$.ViewModels
         //{
         //    return base.OnBindedViewLoad(view);
         //}
+        #endregion
+
+        #region OnBindedViewUnload
 
         ///// <summary>
         ///// This will be invoked by view when the view fires Unload event and this viewmodel instance is still in view's  ViewModel property
@@ -88,6 +94,9 @@ namespace $safeprojectname$.ViewModels
         //{
         //    return base.OnBindedViewUnload(view);
         //}
+        #endregion
+
+        #region OnDisposeExceptions
 
         ///// <summary>
         ///// <para>If dispose actions got exceptions, will handled here. </para>
@@ -100,6 +109,7 @@ namespace $safeprojectname$.ViewModels
         //    base.OnDisposeExceptions(exceptions);
         //    await TaskExHelper.Yield();
         //}
+        #endregion
 
         #endregion
 

@@ -1,4 +1,4 @@
-﻿<mvvm:MVVMPage 
+﻿<Page 
     x:Name="pageRoot"
     x:Class="$rootnamespace$.$safeitemname$"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -21,4 +21,4 @@
             <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
     </Grid>
-</mvvm:MVVMPage>
+</Page>

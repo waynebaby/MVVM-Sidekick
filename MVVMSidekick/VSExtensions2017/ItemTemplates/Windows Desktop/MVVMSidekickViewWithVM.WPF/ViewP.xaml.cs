@@ -27,12 +27,14 @@ namespace $rootnamespace$
     /// <summary>
     /// Interaction logic for $safeitemname$.xaml
     /// </summary>
-    public partial class $safeitemname$ : MVVMPage
+    public partial class $safeitemname$ : Page
     {
         public $safeitemname$()
 		{				 
 			InitializeComponent();
         }
     }
+
+    public PageViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
 }
 

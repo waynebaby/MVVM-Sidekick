@@ -26,12 +26,19 @@ namespace $safeprojectname$
     /// <summary>
     /// Interaction logic for $safeitemrootname$.xaml
     /// </summary>
-    public partial class $safeitemrootname$ : MVVMWindow
+    public partial class $safeitemrootname$ : Window
     {
         public $safeitemrootname$()	           
         {
-            InitializeComponent();
+
+            this.InitializeComponent();
+            ViewDisguise.ViewModel = ServiceLocator.Instance.Resolve<MainWindow_Model>();
+            
         }
 	 
+        #region IView Disguise
+        public  WindowViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
+        #endregion
+
     }
 }

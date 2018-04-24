@@ -29,20 +29,19 @@ namespace $rootnamespace$
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class $safeitemname$ : MVVMPage
+    public sealed partial class $safeitemname$ : Page
     {
 	
 
 
 		public $safeitemname$()
         {
-
-			this.InitializeComponent();
-            this.RegisterPropertyChangedCallback(ViewModelProperty, (_, __) =>
+            this.InitializeComponent();
+            ViewDisguise.RegisterPropertyChangedCallback(PageViewDisguise.ViewModelProperty, (_, __) =>
             {
-                StrongTypeViewModel = this.ViewModel as $safeitemname$_Model;
+                StrongTypeViewModel = ViewDisguise.ViewModel as $safeitemname$_Model;
             });
-            StrongTypeViewModel = this.ViewModel as $safeitemname$_Model;
+            StrongTypeViewModel = ViewDisguise.ViewModel as $safeitemname$_Model;
         }
 
 
@@ -53,20 +52,31 @@ namespace $rootnamespace$
         }
 
         public static readonly DependencyProperty StrongTypeViewModelProperty =
-                    DependencyProperty.Register("StrongTypeViewModel", typeof($safeitemname$_Model ), typeof($safeitemname$), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(StrongTypeViewModel), typeof($safeitemname$_Model ), typeof($safeitemname$), new PropertyMetadata(null));
 
 
+        #region IView Disguise
+        PageViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
+#endregion
 
-
-protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            ViewDisguise.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            ViewDisguise.OnNavigatedFrom(e);
             base.OnNavigatedFrom(e);
         }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            ViewDisguise.OnNavigatingFrom(e);
+            base.OnNavigatingFrom(e);
+        }
+
 	   
     }
 }
