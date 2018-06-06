@@ -16,11 +16,17 @@ namespace CommonCode
 			{
 
 				cmd.Execute(args);
+
 			}
 			catch (Exception ex)
 			{
 
-				Console.WriteLine(ex); 
+				Console.WriteLine(ex);
+
+                if (args.LastOrDefault() =="pause")
+                {
+                    Console.ReadLine();
+                }
 			}
 
 

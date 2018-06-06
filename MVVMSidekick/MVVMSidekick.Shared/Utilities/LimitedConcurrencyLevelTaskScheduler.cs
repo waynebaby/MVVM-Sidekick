@@ -121,7 +121,7 @@ namespace MVVMSidekick
 			{
 
 #if NETFX_CORE
-				await ThreadPool.RunAsync((_1) =>
+				await Windows.System.Threading.ThreadPool.RunAsync((_1) =>
 #else
 				await TaskExHelper.Yield();
 				ThreadPool.QueueUserWorkItem(_ =>

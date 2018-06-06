@@ -1,12 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <versions>
   <version>
-    <id>2.0.2-alpha</id>
+    <id>2.0.6</id>
     <releaseNotes>
       - Changed more features and code snippets.
     </releaseNotes>
   </version>
-
   <version>
     <id>1.6.36.prereleased</id>
     <releaseNotes>
@@ -51,7 +50,7 @@
   <version>
     <id>1.6.25</id>
     <releaseNotes>
-      -  Validation:  To add a property validation error:  vm.GetValueContainer(x=>propertyName).AddErrorEntry("message",ex);
+      -  Validation:  To add a property validation error:  vm.GetValueContainer(x=&gt;propertyName).AddErrorEntry("message",ex);
  
       -  Validation:  Add vm.ValueContainers[propertyName]  Visitor for binding.
             Try Visit Errors property of value container!
@@ -117,7 +116,6 @@
       -   Fixed View Factory cannot Createinstance Bug cos by removed  new(vm) Constructor.
     </releaseNotes>
   </version>
-
   <version>
     <id>1.6.13</id>
     <releaseNotes>
@@ -130,21 +128,18 @@
       - Fixed "ListenCanExecuteObservable" is not working issue #8  https://github.com/waynebaby/MVVM-Sidekick/issues/8
     </releaseNotes>
   </version>
-
   <version>
     <id>1.6.11</id>
     <releaseNotes>
       - Fix wrong reference clearance which might cause nullreference exception when Page Cache mode is Required.
     </releaseNotes>
   </version>
-
   <version>
     <id>1.6.10</id>
     <releaseNotes>
       - Try fixed behavior sdk reference to nuget package for UWP 10586.
     </releaseNotes>
   </version>
-
   <version>
     <id>1.6.6</id>
     <releaseNotes>
@@ -153,5 +148,4 @@
       - As Unity Finally updated it's released version, we go release.
     </releaseNotes>
   </version>
-
 </versions>

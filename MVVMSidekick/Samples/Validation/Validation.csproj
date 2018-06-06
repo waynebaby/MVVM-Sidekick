@@ -131,12 +131,6 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\MVVMSidekick_UAP10\MVVMSidekick_UAP10.csproj">
-      <Project>{e3f7bd12-e681-4552-8f3b-473f325b1a2b}</Project>
-      <Name>MVVMSidekick_UAP10</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

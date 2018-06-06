@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reactive.Linq;
+using System.Collections.Concurrent;
 #if NETFX_CORE
 using System.Collections.Concurrent;
 

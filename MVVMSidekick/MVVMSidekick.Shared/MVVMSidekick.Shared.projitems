@@ -35,18 +35,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\IDisposeGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\InstanceCounableBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\InstanceCounter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\EventRouter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\EventRouterHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\NavigateCommandEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\RouterEventData.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRounting\EventRouter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRounting\EventRouterHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRounting\NavigateCommandEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRounting\RouterEventData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patterns\Patterns.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PlatformPatches.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\EventTuple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\EventTuple1.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\IReactiveCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveExtensionsEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\TaskExecutionWindowEventArg.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ITypeSpecifiedServiceLocator.cs" />
@@ -69,6 +67,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DisposeGroupBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ErrorEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IBindable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ICommandModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IErrorInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\INotifyChanges.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\INotifyChanges1.cs" />
@@ -87,7 +86,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueContainerIndexer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ICommandModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IControlView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IPageView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IViewModelToViewMapperServiceLocator.cs" />
@@ -117,6 +115,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\WindowViewDisguise.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)EventRouting\" />
     <Folder Include="$(MSBuildThisFileDirectory)Patterns\" />
   </ItemGroup>
 </Project>
