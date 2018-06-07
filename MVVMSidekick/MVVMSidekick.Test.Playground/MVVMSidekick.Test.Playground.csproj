@@ -1,24 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{E61B9805-9DD0-4068-BF5E-0DDDCF5AD0A2}</ProjectGuid>
+    <ProjectGuid>{CCD8612F-2E96-491A-837E-A7727F98B855}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MVVMSidekick.Test.Playground</RootNamespace>
     <AssemblyName>MVVMSidekick.Test.Playground</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17134.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
-    <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>MVVMSidekick.Test.Playground_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -66,44 +88,24 @@
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BlankPage1.xaml.cs">
-      <DependentUpon>BlankPage1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Startups\BlankPage1.cs" />
-    <Compile Include="ViewModels\BlankPage1_Model.cs" />
-    <Compile Include="ViewModels\MainPage_Model.cs" />
-    <Compile Include="Startups\StartupFunctions.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BlankPage1.xaml.cs">
+      <DependentUpon>BlankPage1.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startups\BlankPage1.cs" />
+    <Compile Include="Startups\StartupFunctions.cs" />
+    <Compile Include="ViewModels\BlankPage1_Model.cs" />
+    <Compile Include="ViewModels\MainPage_Model.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -127,8 +129,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="BlankPage1.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -136,32 +138,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.Portable.Compatibility">
-      <Version>1.0.2</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.5</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Win32.Registry">
-      <Version>4.5.0</Version>
+      <Version>6.1.4</Version>
     </PackageReference>
     <PackageReference Include="MVVM-Sidekick">
       <Version>2.0.7</Version>
-    </PackageReference>
-    <PackageReference Include="System.Reflection.Emit.ILGeneration">
-      <Version>4.3.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.Reflection.Primitives">
-      <Version>4.3.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.Reflection.TypeExtensions">
-      <Version>4.5.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.Runtime">
-      <Version>4.3.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.Security.Permissions">
-      <Version>4.5.0</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
