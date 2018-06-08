@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>2.0.7</version>
+    <version>2.0.17</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,7 +38,7 @@
 
     </summary>
     <releaseNotes>
-	2.0.6
+	2.0.16
 		
       - Changed more features and code snippets.
     
@@ -173,6 +173,7 @@
         <dependency version="[4.0.0,100.0)" id="System.Reactive" />
         <dependency version="[4.0.0,100.0)" id="System.Reactive.PlatformServices" />
         <dependency version="[4.0.0,100.0)" id="System.Reactive.Windows.Threading" />
+        <dependency version="[4.5.0,100.0)" id="System.ValueTuple" />
         <dependency version="[5.8.6,100.0)" id="Unity" />
       </group>
       <group targetFramework="net46">
@@ -182,6 +183,7 @@
         <dependency id="System.Reactive.Linq" version="[4.0.0,100.0)" />
         <dependency id="System.Reactive.PlatformServices" version="[4.0.0,100.0)" />
         <dependency id="System.Reactive.Windows.Threading" version="[4.0.0,100.0)" />
+        <dependency id="System.ValueTuple" version="[4.5.0,100.0)" />
         <dependency id="Unity" version="[5.8.6,100.0)" />
       </group>
     </dependencies>

@@ -24,11 +24,11 @@ namespace MVVMSidekick.Test.Playground.ViewModels
 
         public MainPage_Model()
         {
-            if (IsInDesignMode )
+            if (IsInDesignMode)
             {
                 Title = "Title is a little different in Design mode";
             }
-        
+
         }
 
         //propvm tab tab string tab Title
@@ -38,9 +38,9 @@ namespace MVVMSidekick.Test.Playground.ViewModels
             set { _TitleLocator(this).SetValueAndTryNotify(value); }
         }
         #region Property String Title Setup
-        protected Property<String> _Title = new Property<String>( _TitleLocator);
+        protected Property<String> _Title = new Property<String>(_TitleLocator);
         static Func<BindableBase, ValueContainer<String>> _TitleLocator = RegisterContainerLocator<String>("Title", model => model.Initialize("Title", ref model._Title, ref _TitleLocator, _TitleDefaultValueFactory));
-        static Func<String> _TitleDefaultValueFactory = ()=>"Title is Here";
+        static Func<String> _TitleDefaultValueFactory = () => "Title is Here";
         #endregion
 
 
@@ -105,44 +105,33 @@ namespace MVVMSidekick.Test.Playground.ViewModels
 
 
 
-        public CommandModel CommandSomeCommand
-        {
-            get { return _CommandSomeCommandLocator(this).Value; }
-            set { _CommandSomeCommandLocator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property CommandModel CommandSomeCommand Setup        
+        public CommandModel CommandSomeCommand => _CommandSomeCommandLocator(this).Value;
+        #region Property CommandModel CommandSomeCommand Setup                
+        protected Property<CommandModel> _CommandSomeCommand = new Property<CommandModel>(_CommandSomeCommandLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandSomeCommandLocator = RegisterContainerLocator(nameof(CommandSomeCommand), m => m.Initialize(nameof(CommandSomeCommand), ref m._CommandSomeCommand, ref _CommandSomeCommandLocator,
+              model =>
+              {
+                  object state = nameof(CommandSomeCommand);
+                  var commandId = nameof(CommandSomeCommand);
+                  var vm = CastToCurrentType(model);
+                  var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
 
-        protected Property<CommandModel> _CommandSomeCommand = new Property<CommandModel>( _CommandSomeCommandLocator);
-        static Func<BindableBase, ValueContainer<CommandModel>> _CommandSomeCommandLocator = RegisterContainerLocator<CommandModel>(nameof(CommandSomeCommand), model => model.Initialize(nameof(CommandSomeCommand), ref model._CommandSomeCommand, ref _CommandSomeCommandLocator, _CommandSomeCommandDefaultValueFactory));
-        static Func<BindableBase, CommandModel> _CommandSomeCommandDefaultValueFactory =
-            model =>
-            {
-                object state = nameof(CommandSomeCommand);           // Command state  
+                  cmd.DoExecuteUITask(
+                          vm,
+                          async (e, cancelToken) =>
+                          {
+                              await vm.StageManager.DefaultStage.Show<BlankPage1_Model>();
+                              await MVVMSidekick.Utilities.TaskExHelper.Yield();
+                              return (object)null;
+                          })
+                      .DoNotifyDefaultEventRouter(vm, commandId)
+                      .Subscribe()
+                      .DisposeWith(vm);
 
-                var commandId = nameof(CommandSomeCommand);
-                var vm = CastToCurrentType(model);
-                var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
+                  var cmdmdl = cmd.CreateCommandModel(state);
 
-                cmd.DoExecuteUIBusyTask(
-                        vm,
-                        async e =>
-                        {
-                            //Todo: Add SomeCommand logic here, or
-                            await vm.StageManager.DefaultStage.Show<BlankPage1_Model>();
-                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
-                        })
-                    .DoNotifyDefaultEventRouter(vm, commandId)
-                    .Subscribe()
-                    .DisposeWith(vm);
-
-                var cmdmdl = cmd.CreateCommandModel(state);
-
-                cmdmdl.ListenToIsUIBusy(
-                    model: vm,
-                    canExecuteWhenBusy: false);
-                return cmdmdl;
-            };
-
+                  return cmdmdl;
+              }));
         #endregion
 
 

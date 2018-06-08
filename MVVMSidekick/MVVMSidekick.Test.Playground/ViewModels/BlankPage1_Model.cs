@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using System.Threading;
 
 namespace MVVMSidekick.Test.Playground.ViewModels
 {
@@ -29,7 +30,7 @@ namespace MVVMSidekick.Test.Playground.ViewModels
         }
         #region Property String Title Setup
         protected Property<String> _Title = new Property<String>( _TitleLocator);
-        static Func<BindableBase, ValueContainer<String>> _TitleLocator = RegisterContainerLocator<String>("Title", model => model.Initialize("Title", ref model._Title, ref _TitleLocator, _TitleDefaultValueFactory));
+        static Func<BindableBase, ValueContainer<String>> _TitleLocator = RegisterContainerLocator("Title", model => model.Initialize("Title", ref model._Title, ref _TitleLocator, _TitleDefaultValueFactory));
         static Func<BindableBase, String> _TitleDefaultValueFactory = m => m.ToString();
         #endregion
 
@@ -103,7 +104,7 @@ namespace MVVMSidekick.Test.Playground.ViewModels
         #region Property CommandModel CommandNext Setup        
 
         protected Property<CommandModel> _CommandNext = new Property<CommandModel>( _CommandNextLocator);
-        static Func<BindableBase, ValueContainer<CommandModel>> _CommandNextLocator = RegisterContainerLocator<CommandModel>(nameof(CommandNext), model => model.Initialize(nameof(CommandNext), ref model._CommandNext, ref _CommandNextLocator, _CommandNextDefaultValueFactory));
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandNextLocator = RegisterContainerLocator(nameof(CommandNext), model => model.Initialize(nameof(CommandNext), ref model._CommandNext, ref _CommandNextLocator, _CommandNextDefaultValueFactory));
         static Func<BindableBase, CommandModel> _CommandNextDefaultValueFactory =
             model =>
             {
@@ -114,12 +115,14 @@ namespace MVVMSidekick.Test.Playground.ViewModels
                 var cmd = new ReactiveCommand(canExecute: true) { ViewModel = model }; //New Command Core
 
                 cmd.DoExecuteUIBusyTask(
+
                         vm,
-                        async e =>
+                        async (e, c) =>
                         {
                             await vm.StageManager.DefaultStage.Show<BlankPage1_Model>();
                             await MVVMSidekick.Utilities.TaskExHelper.Yield();
-                        })
+                        }, 
+                        default(CancellationToken))
                     .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()
                     .DisposeWith(vm);

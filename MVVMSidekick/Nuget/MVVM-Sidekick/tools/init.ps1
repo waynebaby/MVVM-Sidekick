@@ -1,6 +1,4 @@
-﻿
- 
-param($installPath, $toolsPath, $package, $project)
+﻿param($installPath, $toolsPath, $package)
 
 
 
@@ -18,8 +16,8 @@ Foreach ($vsVersion in $vsVersions)
     $myCodeSnippetsFolder = "$MYDOC\Visual Studio $vsVersion\Code Snippets\Visual C#\My Code Snippets\"  
     if (Test-Path $myCodeSnippetsFolder)  
     {  
-			echo $source
-			echo $myCodeSnippetsFolder 
+			echo 'Copying From ' + $source
+			echo 'Copying To ' $myCodeSnippetsFolder 
             copy $source $myCodeSnippetsFolder  
     }  
 }  

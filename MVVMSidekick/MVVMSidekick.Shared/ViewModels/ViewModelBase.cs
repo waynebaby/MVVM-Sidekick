@@ -105,10 +105,7 @@ namespace MVVMSidekick.ViewModels
             this.AddDisposeAction(
                 () =>
                 {
-                    if (closingCallback != null)
-                    {
-                        closingCallback();
-                    }
+                    closingCallback?.Invoke();
                     t.SetResult(Result);
                 }
                 );
@@ -471,10 +468,7 @@ namespace MVVMSidekick.ViewModels
             this.AddDisposeAction(
                 () =>
                 {
-                    if (closingCallback != null)
-                    {
-                        closingCallback();
-                    }
+                    closingCallback?.Invoke();
                     t.SetResult(null);
                 }
                 );
@@ -602,21 +596,7 @@ namespace MVVMSidekick.ViewModels
         }
 
 
-        /// <summary>
-        /// Executes the task.
-        /// </summary>
-        /// <typeparam name="Tin">The type of the tin.</typeparam>
-        /// <typeparam name="Tout">The type of the tout.</typeparam>
-        /// <param name="taskBody">The task body.</param>
-        /// <param name="inputContext">The input context.</param>
-        /// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
-        /// <returns>Task&lt;Tout&gt;.</returns>
-        public virtual async Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true)
-        {
-            return await ExecuteTask<Tin, Tout>(async (i, c) => await taskBody(i), inputContext, CancellationToken.None, UIBusyWhenExecuting);
-
-        }
-
+   
         /// <summary>
         /// Executes the task.
         /// </summary>

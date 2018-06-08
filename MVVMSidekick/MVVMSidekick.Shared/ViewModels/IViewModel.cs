@@ -125,16 +125,6 @@ namespace MVVMSidekick
             Task ExecuteTask<Tin>(Func<Tin, CancellationToken, Task> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true);
 
 
-            /// <summary>
-            /// Executes the task.
-            /// </summary>
-            /// <typeparam name="Tin">The type of the in.</typeparam>
-            /// <typeparam name="Tout">The type of the out.</typeparam>
-            /// <param name="taskBody">The task body.</param>
-            /// <param name="inputContext">The input context.</param>
-            /// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
-            /// <returns>out value</returns>
-            Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, Task<Tout>> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true);
 
             /// <summary>
             /// Executes the task.

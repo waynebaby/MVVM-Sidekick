@@ -60,7 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="BindableBase.cs" />
-    <None Include="project.json1" />
     <None Include="Startups\StartupFunctions.cs" />
     <None Include="ViewModels\MainPage_Model.cs" />
     <None Include="App.xaml.cs">
