@@ -111,7 +111,7 @@ namespace MVVMSidekick
             /// <param name="cancellationToken">The cancellation token.</param>
             /// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
             /// <returns></returns>
-            Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true);
+            Task<Tout> ExecuteFunctionTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true);
 
             /// <summary>
             /// Executes the task.
@@ -143,7 +143,7 @@ namespace MVVMSidekick
             /// <param name="taskBody">The task body.</param>
             /// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
             /// <returns></returns>
-            Task<Tout> ExecuteTask<Tout>(Func<Task<Tout>> taskBody, bool UIBusyWhenExecuting = true);
+            Task<Tout> ExecuteCaculation<Tout>(Func<Task<Tout>> taskBody, bool UIBusyWhenExecuting = true);
 
             /// <summary>
             /// Executes the task.

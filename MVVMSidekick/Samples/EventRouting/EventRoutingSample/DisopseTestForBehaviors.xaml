@@ -2,9 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="DisopseTestForBehaviors" Height="350" Width="525"
-        xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick"
+        xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_net46"
            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
-          xmlns:beh="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick"
+          xmlns:beh="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick_net46"
       
         xmlns:vm="clr-namespace:EventRoutingSample.ViewModels" >
     <FrameworkElement.Resources>

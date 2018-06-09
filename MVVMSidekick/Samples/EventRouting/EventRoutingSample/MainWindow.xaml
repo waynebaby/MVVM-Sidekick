@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_net46"        
         xmlns:vm="clr-namespace:EventRoutingSample.ViewModels" 
-        xmlns:beh="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick"
+        xmlns:beh="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick_net46"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Class="EventRoutingSample.MainWindow"
         Title="{Binding DataContext.Title, ElementName=grid}"
         Height="350" Width="525"

@@ -27,6 +27,7 @@ using System.Reactive.Threading.Tasks;
 using MVVMSidekick.EventRouting;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using MVVMSidekick.Commands;
 #if NETFX_CORE
 
 
@@ -80,13 +81,10 @@ namespace MVVMSidekick
             /// <returns>
             /// same value sequence inputed
             /// </returns>
-            public static IObservable<T> DoNotifyEventRouter<T>(this IObservable<T> sequence, EventRouter eventRouter, object source = null, [CallerMemberName] string registerName = null)
+            public static IObservable<T> DoNotifyEventRouter<T>(this IObservable<T> sequence, EventRouter eventRouter = null, object source = null, [CallerMemberName] string registerName = null)
             {
                 return
-                    sequence.Do(
-                            v => eventRouter.RaiseEvent(source, v, registerName)
-
-                        );
+                    sequence.Do(v => eventRouter.RaiseEvent(source, v, registerName));
 
             }
 
@@ -108,72 +106,131 @@ namespace MVVMSidekick
 
 
 
-            /// <summary>
-            /// Does the execute UI task.
-            /// </summary>
-            /// <typeparam name="Tin">The type of the in.</typeparam>
-            /// <typeparam name="Tout">The type of the out.</typeparam>
-            /// <param name="sequence">The sequence.</param>
-            /// <param name="vm">The vm.</param>
-            /// <param name="taskBody">The task body.</param>
-            /// <param name="cancellationToken">The cancellation token.</param>
-            /// <returns>
-            /// IObservable&lt;Task&lt;Tout&gt;&gt;.
-            /// </returns>
-            public static IObservable<(Task<object> Task, Object InputContext, CancellationToken CancellationToken)> DoExecuteUITask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task<Tout>> taskBody, CancellationToken cancellationToken = default(CancellationToken))
+
+            public static IObservable<(Task<Tout> Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIFunctionTask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task<Tout>> taskBody, CancellationToken cancellationToken = default(CancellationToken))
             {
                 return sequence.Select
                     (
-                          inContext => (vm.ExecuteTask(taskBody, inContext, cancellationToken, false).ContinueWith(t => t.Result as object), inContext as object, cancellationToken)
+                          inContext => (vm.ExecuteFunctionTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
                     );
             }
-            /// <summary>
-            /// Does the execute UI busy task.
-            /// </summary>
-            /// <typeparam name="Tin">The type of the in.</typeparam>
-            /// <param name="sequence">The sequence.</param>
-            /// <param name="vm">The vm.</param>
-            /// <param name="taskBody">The task body.</param>
-            /// <param name="cancellationToken">The cancellation token.</param>
-            /// <returns>
-            /// IObservable&lt;Task&gt;.
-            /// </returns>
-            public static IObservable<(Task<object> Task, Object InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken = default(CancellationToken))
+
+            public static IObservable<(Task<Tout> Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIFunctionTask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task<Tout>> taskBody)
             {
-                return sequence.Select
-                (
-                    inContext => (Task: vm.ExecuteTask(taskBody, inContext, cancellationToken, true).ContinueWith(t => (object)null), InputContext: inContext as object, CancellationToken: cancellationToken)
-                );
+                return DoExecuteUIFunctionTask(sequence, vm, (inContext, cancel) => taskBody(inContext));
             }
 
-            /// <summary>
-            /// Does the execute UI task.
-            /// </summary>
-            /// <typeparam name="Tin">The type of the in.</typeparam>
-            /// <typeparam name="Tout">The type of the out.</typeparam>
-            /// <param name="sequence">The sequence.</param>
-            /// <param name="vm">The vm.</param>
-            /// <param name="taskBody">The task body.</param>
-            /// <param name="cancellationToken">The cancellation token.</param>
-            /// <returns>
-            /// IObservable&lt;Task&lt;Tout&gt;&gt;.
-            /// </returns>
-            public static IObservable<(Task<object> Task, Object InputContext, CancellationToken CancellationToken)> DoExecuteUITask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task<Tout>> taskBody)
+            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIActionTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken = default(CancellationToken))
             {
-                return DoExecuteUITask(sequence, vm, (inContext, cancel) => taskBody(inContext));
+                return sequence.Select
+                    (
+                          inContext => (vm.ExecuteTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
+                    );
             }
-            /// <summary>
-            /// Does the execute UI busy task.
-            /// </summary>
-            /// <typeparam name="Tin">The type of the in.</typeparam>
-            /// <param name="sequence">The sequence.</param>
-            /// <param name="vm">The vm.</param>
-            /// <param name="taskBody">The task body.</param>
-            /// <param name="cancellationToken">The cancellation token.</param>
-            /// <returns>
-            /// IObservable&lt;Task&gt;.
-            /// </returns>
-            public static IObservable<(Task<object> Task, Object InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
+
+            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIActionTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
+            {
+                return DoExecuteUIActionTask(sequence, vm, (inContext, cancel) => taskBody(inContext));
+            }
+
+
+
+
+
+
+
+
+            public static IObservable<(Task<Tout> Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyFunctionTask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task<Tout>> taskBody, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                return sequence.Select
+                    (
+                          inContext => (vm.ExecuteFunctionTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
+                    );
+            }
+
+            public static IObservable<(Task<Tout> Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyFunctionTask<Tin, Tout>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task<Tout>> taskBody)
+            {
+                return DoExecuteUIBusyFunctionTask(sequence, vm, (inContext, cancel) => taskBody(inContext));
+            }
+
+            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyActionTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                return sequence.Select
+                    (
+                          inContext => (vm.ExecuteTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
+                    );
+            }
+
+            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyActionTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
+            {
+                return DoExecuteUIBusyActionTask(sequence, vm, (inContext, cancel) => taskBody(inContext));
+            }
+
+
+
+
+            //public static IObservable<(Task Task, EventPattern<EventCommandEventArgs> InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyCommand(
+            //    this IObservable<EventPattern<EventCommandEventArgs>> sequence,
+            //    IViewModel vm,
+            //    Func<EventPattern<EventCommandEventArgs>, CancellationToken, Task> taskBody,
+            //    CancellationToken cancellationToken = default(CancellationToken),
+            //    [CallerMemberName] string registerName = null,
+            //    [CallerFilePathAttribute] string filePath = null,
+            //    [CallerLineNumber] int line = 0)
+            //{
+            //    return sequence
+            //        .ObserveOnDispatcher()
+
+            //        .Select(inContext =>
+            //           {
+            //               var value =
+            //                (
+            //                    vm.ExecuteTask(
+            //                        async (i, c) =>
+            //                        {
+
+            //                        },
+            //                        inContext,
+            //                        cancellationToken,
+            //                        true),
+            //                   inContext,
+            //                   cancellationToken);
+
+            //               return value;
+            //           }
+
+            //        )
+            //        .ObserveOnDispatcher();
+            //}
+
+
+
+
+            [Obsolete(@"Try use DoExecuteUIBusyActionTask() instead. If you are using with EventCommand, please delete DoNotifyDefaultEventRouter() in following lines.")]
+            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                return sequence.Select
+                    (
+                          inContext => (vm.ExecuteTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
+                    );
+            }
+            [Obsolete(@"Try use DoExecuteUIBusyActionTask() instead. If you are using with EventCommand, please delete DoNotifyDefaultEventRouter() in following lines.")]
+            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
+            {
+                return DoExecuteUIBusyTask(sequence, vm, (inContext, cancel) => taskBody(inContext));
+            }
+
+
+            [Obsolete(@"Try use DoExecuteUIActionTask() instead. If you are using with EventCommand, please delete DoNotifyDefaultEventRouter() in following lines.")]
+            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                return sequence.Select
+                    (
+                          inContext => (vm.ExecuteTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
+                    );
+            }
+            [Obsolete(@"Try use DoExecuteUIActionTask() instead. If you are using with EventCommand, please delete DoNotifyDefaultEventRouter() in following lines.")]
+            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
             {
                 return DoExecuteUIBusyTask(sequence, vm, (inContext, cancel) => taskBody(inContext));
             }
@@ -184,37 +241,8 @@ namespace MVVMSidekick
 
 
 
-            ///// <summary>
-            ///// Does the execute UI busy task.
-            ///// </summary>
-            ///// <typeparam name="Tin">The type of the tin.</typeparam>
-            ///// <param name="sequence">The sequence.</param>
-            ///// <param name="vm">The vm.</param>
-            ///// <param name="taskBody">The task body.</param>
-            ///// <returns>
-            ///// IObservable&lt;Task&gt;.
-            ///// </returns>
-            //public static IObservable<Task> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
-            //{
-            //	return sequence.Select
-            //	(
-            //		inContext => vm.ExecuteTask(taskBody, inContext, true)
-            //	);
-            //}
 
-            ///// <summary>Does the execute UI task.</summary>
-            ///// <typeparam name="Tin">The type of the in.</typeparam>
-            ///// <param name="sequence">The sequence.</param>
-            ///// <param name="vm">The vm.</param>
-            ///// <param name="taskBody">The task body.</param>
-            ///// <returns>IObservable&lt;Task&gt;.</returns>
-            //public static IObservable<Task> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
-            //{
-            //	return sequence.Select
-            //   (
-            //	   inContext => vm.ExecuteTask(taskBody, inContext, false)
-            //   );
-            //}
+
 
             /// <summary>
             /// <para>Create a instance of IObservable that fires when property changed event is raised.</para>

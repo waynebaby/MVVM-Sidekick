@@ -130,7 +130,7 @@ namespace MVVMSidekick.ViewModels
         /// The _ result
         /// </summary>
         protected Property<TResult> _Result =
-          new Property<TResult>( _ResultLocator);
+          new Property<TResult>(_ResultLocator);
         /// <summary>
         /// The _ result locator
         /// </summary>
@@ -143,7 +143,7 @@ namespace MVVMSidekick.ViewModels
                     model._Result =
                         model._Result
                         ??
-                        new Property<TResult>( _ResultLocator);
+                        new Property<TResult>(_ResultLocator);
                     return model._Result.Container =
                         model._Result.Container
                         ??
@@ -322,7 +322,7 @@ namespace MVVMSidekick.ViewModels
             if (view != null)
             {
                 StageManager = new StageManager(this) { CurrentBindingView = view };
-                StageManager.InitParent(() => 
+                StageManager.InitParent(() =>
                     view.Parent);
             }
 
@@ -427,7 +427,7 @@ namespace MVVMSidekick.ViewModels
         /// <summary>
         /// The _ is UI busy
         /// </summary>
-        protected Property<bool> _IsUIBusy = new Property<bool>( _IsUIBusyLocator);
+        protected Property<bool> _IsUIBusy = new Property<bool>(_IsUIBusyLocator);
         /// <summary>
         /// The _ is UI busy locator
         /// </summary>
@@ -450,7 +450,7 @@ namespace MVVMSidekick.ViewModels
             set { _UIBusyTaskCountLocator(this).SetValueAndTryNotify(value); }
         }
         #region Property int UIBusyTaskCount Setup
-        private Property<int> _UIBusyTaskCount = new Property<int>( _UIBusyTaskCountLocator);
+        private Property<int> _UIBusyTaskCount = new Property<int>(_UIBusyTaskCountLocator);
         private static Func<BindableBase, ValueContainer<int>> _UIBusyTaskCountLocator = RegisterContainerLocator<int>("UIBusyTaskCount", model => model.Initialize("UIBusyTaskCount", ref model._UIBusyTaskCount, ref _UIBusyTaskCountLocator, _UIBusyTaskCountDefaultValueFactory));
         private static Func<int> _UIBusyTaskCountDefaultValueFactory = null;
         #endregion
@@ -519,21 +519,28 @@ namespace MVVMSidekick.ViewModels
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="UIBusyWhenExecuting">if set to <c>true</c> [UI busy when executing].</param>
         /// <returns>Task&lt;Tout&gt;.</returns>
-        public virtual async Task<Tout> ExecuteTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true)
+        public virtual async Task<Tout> ExecuteFunctionTask<Tin, Tout>(Func<Tin, CancellationToken, Task<Tout>> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true)
         {
 
+            CancellationTokenSource tempCSource;
 
             var cmdarh = inputContext as EventPattern<EventCommandEventArgs>;
             if (cmdarh != null)
             {
+                tempCSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, cmdarh.EventArgs.Cancellation.Token);
                 var oldBody = taskBody;
                 taskBody = async (i, c) =>
                 {
                     try
                     {
 
+                        if (c.IsCancellationRequested)
+                        {
+                            cmdarh.EventArgs.Completion.TrySetCanceled();
+                            return default(Tout);
+                        }
+                        
                         var rval = await oldBody(i, c);
-
 
                         if (c.IsCancellationRequested)
                         {
@@ -554,6 +561,51 @@ namespace MVVMSidekick.ViewModels
 
                 };
             }
+            else
+            {
+                tempCSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                var oldBody = taskBody;
+                taskBody = async (i, c) =>
+                {
+                    try
+                    {
+
+                        if (c.IsCancellationRequested)
+                        {
+                            return default(Tout);
+                        }
+
+                        var rval = await oldBody(i, c);
+
+
+                        return rval;
+                    }
+                    catch (Exception ex)
+                    {
+                        EventRouter.Instance.RaiseEvent(this, ex);
+                        throw;
+                    }
+
+                };
+            }
+            //Add Executing and executed events
+            {
+                var oldBody = taskBody;
+                taskBody = async (i, c) =>
+                {
+                    (Tin InputContext, CancellationTokenSource CancellationSource) TaskExecuting = (inputContext, tempCSource);
+                    EventRouter.Instance.RaiseEvent(this, TaskExecuting, nameof(TaskExecuting));
+
+                    var valueTask = oldBody(inputContext, cancellationToken);
+                    var value = await valueTask;
+                    var TaskExecuted = (InputContext: inputContext, Task: valueTask as Task);
+                    EventRouter.Instance.RaiseEvent(this, TaskExecuted, nameof(TaskExecuted));
+                    return value;
+
+                };
+            }
+
+
 
             if (UIBusyWhenExecuting)
             {
@@ -564,8 +616,8 @@ namespace MVVMSidekick.ViewModels
                 {
                     UIBusyTaskCount++;
 
-                    return await taskBody(inputContext, cancellationToken);
 
+                    return await taskBody(inputContext, cancellationToken);
                 }
             }
             else
@@ -592,11 +644,11 @@ namespace MVVMSidekick.ViewModels
         public virtual async Task ExecuteTask<Tin>(Func<Tin, CancellationToken, Task> taskBody, Tin inputContext, CancellationToken cancellationToken, bool UIBusyWhenExecuting = true)
         {
 
-            await ExecuteTask<Tin, object>(async (i, c) => { await taskBody(i, c); return null; }, inputContext, cancellationToken, UIBusyWhenExecuting);
+            await ExecuteFunctionTask<Tin, object>(async (i, c) => { await taskBody(i, c); return null; }, inputContext, cancellationToken, UIBusyWhenExecuting);
         }
 
 
-   
+
         /// <summary>
         /// Executes the task.
         /// </summary>
@@ -609,7 +661,7 @@ namespace MVVMSidekick.ViewModels
         /// </returns>
         public virtual async Task ExecuteTask<Tin>(Func<Tin, Task> taskBody, Tin inputContext, bool UIBusyWhenExecuting = true)
         {
-            await ExecuteTask<Tin, object>(async (i, c) => { await taskBody(i); return null; }, inputContext, CancellationToken.None, UIBusyWhenExecuting);
+            await ExecuteFunctionTask<Tin, object>(async (i, c) => { await taskBody(i); return null; }, inputContext, CancellationToken.None, UIBusyWhenExecuting);
 
         }
 
@@ -622,9 +674,9 @@ namespace MVVMSidekick.ViewModels
         /// <returns>
         /// Task&lt;Tout&gt;.
         /// </returns>
-        public virtual async Task<Tout> ExecuteTask<Tout>(Func<Task<Tout>> taskBody, bool UIBusyWhenExecuting = true)
+        public virtual async Task<Tout> ExecuteCaculation<Tout>(Func<Task<Tout>> taskBody, bool UIBusyWhenExecuting = true)
         {
-            return await ExecuteTask<object, Tout>(
+            return await ExecuteFunctionTask<object, Tout>(
                 async (i, c) =>
                 {
                     return await taskBody();
@@ -643,7 +695,7 @@ namespace MVVMSidekick.ViewModels
         /// <returns>Task.</returns>
         public virtual async Task ExecuteTask(Func<Task> taskBody, bool UIBusyWhenExecuting = true)
         {
-            await ExecuteTask<object, object>(
+            await ExecuteFunctionTask<object, object>(
                 async (i, c) =>
                 {
                     await taskBody();

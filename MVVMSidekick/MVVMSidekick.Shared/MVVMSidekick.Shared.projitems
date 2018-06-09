@@ -35,10 +35,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\IDisposeGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\InstanceCounableBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\InstanceCounter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EventRounting\EventRouter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EventRounting\EventRouterHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EventRounting\NavigateCommandEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EventRounting\RouterEventData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\EventRouter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\EventRouterHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\NavigateCommandEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventRouting\RouterEventData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patterns\Patterns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\EventTuple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\EventTuple1.cs" />

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -146,16 +147,25 @@ namespace MVVMSidekick.Test.Playground
 		/// </summary>
 		private static void ConfigureCommandAndCommandExceptionHandler()
 		{
-            EventRouter.Instance.GetEventChannel<Task>()
+            EventRouter.Instance.GetEventChannel<(EventPattern<EventCommandEventArgs> InputContext, CancellationTokenSource CancellationTokenSource)>()
                 .ObserveOnDispatcher()
 				.Subscribe(
 					e =>
 					{
-							//Command Fired Messages
+                        //Command Firing Messages
+                        e.EventData.CancellationTokenSource.Cancel();
 					}
 				);
+            EventRouter.Instance.GetEventChannel<(EventPattern<EventCommandEventArgs> InputContext, Task Task)>()
+                .ObserveOnDispatcher()
+                .Subscribe(
+                    e =>
+                    {
+                                    //Command Executed Messages
+                    }
+                );
 
-			EventRouter.Instance.GetEventChannel<Exception>()
+            EventRouter.Instance.GetEventChannel<Exception>()
 				.ObserveOnDispatcher()
 				.Subscribe(
 					e =>

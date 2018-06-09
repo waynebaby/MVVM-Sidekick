@@ -93,40 +93,40 @@
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="D:\_NoneSystemData\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Expression.Interaction.3.0.40218.0\Expression.Interaction.3.0.40218.0.nupkg">
+    <Content Include="C:\Github\MVVM-Sidekick\MVVMSidekick\packages\Expression.Interaction.3.0.40218.0\Expression.Interaction.3.0.40218.0.nupkg">
       <Link>Packages\Expression.Interaction.3.0.40218.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\_NoneSystemData\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.4.0.0\System.Reactive.4.0.0.nupkg">
+    <Content Include="C:\Github\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.4.0.0\System.Reactive.4.0.0.nupkg">
       <Link>Packages\System.Reactive.4.0.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\_NoneSystemData\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.Interfaces.4.0.0\System.Reactive.Interfaces.4.0.0.nupkg">
+    <Content Include="C:\Github\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.Interfaces.4.0.0\System.Reactive.Interfaces.4.0.0.nupkg">
       <Link>Packages\System.Reactive.Interfaces.4.0.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\_NoneSystemData\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.Linq.4.0.0\System.Reactive.Linq.4.0.0.nupkg">
+    <Content Include="C:\Github\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.Linq.4.0.0\System.Reactive.Linq.4.0.0.nupkg">
       <Link>Packages\System.Reactive.Linq.4.0.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\_NoneSystemData\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.PlatformServices.4.0.0\System.Reactive.PlatformServices.4.0.0.nupkg">
+    <Content Include="C:\Github\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.PlatformServices.4.0.0\System.Reactive.PlatformServices.4.0.0.nupkg">
       <Link>Packages\System.Reactive.PlatformServices.4.0.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\_NoneSystemData\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.Windows.Threading.4.0.0\System.Reactive.Windows.Threading.4.0.0.nupkg">
+    <Content Include="C:\Github\MVVM-Sidekick\MVVMSidekick\packages\System.Reactive.Windows.Threading.4.0.0\System.Reactive.Windows.Threading.4.0.0.nupkg">
       <Link>Packages\System.Reactive.Windows.Threading.4.0.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\_NoneSystemData\GitHub\MVVM-Sidekick\MVVMSidekick\packages\System.ValueTuple.4.5.0\System.ValueTuple.4.5.0.nupkg">
+    <Content Include="C:\Github\MVVM-Sidekick\MVVMSidekick\packages\System.ValueTuple.4.5.0\System.ValueTuple.4.5.0.nupkg">
       <Link>Packages\System.ValueTuple.4.5.0.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\_NoneSystemData\GitHub\MVVM-Sidekick\MVVMSidekick\packages\Unity.5.8.6\Unity.5.8.6.nupkg">
+    <Content Include="C:\Github\MVVM-Sidekick\MVVMSidekick\packages\Unity.5.8.6\Unity.5.8.6.nupkg">
       <Link>Packages\Unity.5.8.6.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\_NoneSystemData\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.2.0.17.nupkg">
-      <Link>Packages\MVVM-Sidekick.2.0.17.nupkg</Link>
+    <Content Include="C:\Github\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.2.0.24.nupkg">
+      <Link>Packages\MVVM-Sidekick.2.0.24.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>

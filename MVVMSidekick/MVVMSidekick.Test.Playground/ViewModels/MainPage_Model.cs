@@ -120,9 +120,9 @@ namespace MVVMSidekick.Test.Playground.ViewModels
                           vm,
                           async (e, cancelToken) =>
                           {
-                              await vm.StageManager.DefaultStage.Show<BlankPage1_Model>();
+                             var t= vm.StageManager.DefaultStage.Show<BlankPage1_Model>();
                               await MVVMSidekick.Utilities.TaskExHelper.Yield();
-                              return (object)null;
+
                           })
                       .DoNotifyDefaultEventRouter(vm, commandId)
                       .Subscribe()

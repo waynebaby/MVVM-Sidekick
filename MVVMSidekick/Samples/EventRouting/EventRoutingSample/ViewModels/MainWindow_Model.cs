@@ -72,49 +72,34 @@ namespace EventRoutingSample.ViewModels
         }
 
 
+        public CommandModel CommandNavigateToDisposeBehaviorTest => _CommandNavigateToDisposeBehaviorTestLocator(this).Value;
+        #region Property CommandModel CommandNavigateToDisposeBehaviorTest Setup                
+        protected Property<CommandModel> _CommandNavigateToDisposeBehaviorTest = new Property<CommandModel>(_CommandNavigateToDisposeBehaviorTestLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandNavigateToDisposeBehaviorTestLocator = RegisterContainerLocator(nameof(CommandNavigateToDisposeBehaviorTest), m => m.Initialize(nameof(CommandNavigateToDisposeBehaviorTest), ref m._CommandNavigateToDisposeBehaviorTest, ref _CommandNavigateToDisposeBehaviorTestLocator,
+              model =>
+              {
+                  object state = nameof(CommandNavigateToDisposeBehaviorTest);
+                  var commandId = nameof(CommandNavigateToDisposeBehaviorTest);
+                  var vm = CastToCurrentType(model);
+                  var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
 
+                  cmd.DoExecuteUIBusyActionTask(
+                          vm,
+                          async (e, cancelToken) =>
+                          {
+                              await vm.StageManager.DefaultStage.Show<DisopseTestForBehaviors_Model>();
+                          })
+                      .DoNotifyDefaultEventRouter(vm, commandId)
+                      .Subscribe()
+                      .DisposeWith(vm);
 
+                  var cmdmdl = cmd.CreateCommandModel(state);
 
-        public CommandModel<ReactiveCommand, String> CommandNavigateToDisposeBehaviorTest
-        {
-            get { return _CommandNavigateToDisposeBehaviorTestLocator(this).Value; }
-            set { _CommandNavigateToDisposeBehaviorTestLocator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property CommandModel<ReactiveCommand, String> CommandNavigateToDisposeBehaviorTest Setup        
-
-        protected Property<CommandModel<ReactiveCommand, String>> _CommandNavigateToDisposeBehaviorTest = new Property<CommandModel<ReactiveCommand, String>> { LocatorFunc = _CommandNavigateToDisposeBehaviorTestLocator };
-        static Func<BindableBase, ValueContainer<CommandModel<ReactiveCommand, String>>> _CommandNavigateToDisposeBehaviorTestLocator = RegisterContainerLocator<CommandModel<ReactiveCommand, String>>(nameof(CommandNavigateToDisposeBehaviorTest), model => model.Initialize(nameof(CommandNavigateToDisposeBehaviorTest), ref model._CommandNavigateToDisposeBehaviorTest, ref _CommandNavigateToDisposeBehaviorTestLocator, _CommandNavigateToDisposeBehaviorTestDefaultValueFactory));
-        static Func<BindableBase, CommandModel<ReactiveCommand, String>> _CommandNavigateToDisposeBehaviorTestDefaultValueFactory =
-            model =>
-            {
-                var resource = nameof(CommandNavigateToDisposeBehaviorTest);           // Command resource  
-                var commandId = nameof(CommandNavigateToDisposeBehaviorTest);
-                var vm = CastToCurrentType(model);
-                var cmd = new ReactiveCommand(true) { ViewModel = model }; //New Command Core
-
-                cmd.DoExecuteUIBusyTask(
-                        vm,
-                        async e =>
-                        {
-                            //Todo: Add NavigateToDisposeBehaviorTest logic here, or
-                            await vm.StageManager.DefaultStage.Show<DisopseTestForBehaviors_Model>();
-                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
-                        })
-                    .DoNotifyDefaultEventRouter(vm, commandId)
-                    .Subscribe()
-                    .DisposeWith(vm);
-
-                var cmdmdl = cmd.CreateCommandModel(resource);
-
-                cmdmdl.ListenToIsUIBusy(
-                    model: vm,
-                    canExecuteWhenBusy: false);
-                return cmdmdl;
-            };
-
+                  return cmdmdl;
+              }));
         #endregion
 
-
+   
 
     }
 
