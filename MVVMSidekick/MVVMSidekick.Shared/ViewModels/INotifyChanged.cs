@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.ComponentModel;
 #if NETFX_CORE
 
 
@@ -56,7 +57,7 @@ namespace MVVMSidekick
         /// Interface INotifyChanges
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public interface INotifyChanges<T> : INotifyChanges
+        public interface INotifyChanged<T> : INotifyChanged
         {
             /// <summary>
             /// Occurs when [value changed].
@@ -65,7 +66,21 @@ namespace MVVMSidekick
 
         }
 
+        /// <summary>
+        /// Interface INotifyChanges
+        /// </summary>
+        public interface INotifyChanged
+        {
+            /// <summary>
+            /// Occurs when [value changed with name only].
+            /// </summary>
+            event PropertyChangedEventHandler ValueChangedWithName;
+            /// <summary>
+            /// Occurs when [value changed with nothing].
+            /// </summary>
+      
 
+        }
 
 
 

@@ -55,7 +55,7 @@ namespace MVVMSidekick
         /// <summary>
         /// Interface IValueContainer
         /// </summary>
-        public interface IValueContainer : IErrorInfo, INotifyChanges
+        public interface IValueContainer : IErrorInfo, INotifyChanged,INotifyChanging
         {
             string PropertyName { get; }
 

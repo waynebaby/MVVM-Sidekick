@@ -53,23 +53,39 @@ namespace MVVMSidekick
 
     namespace ViewModels
     {
+
+
         /// <summary>
-        /// Interface INotifyChanges
+        /// Interface INotifyChanging
         /// </summary>
-        public interface INotifyChanges
+        /// <typeparam name="T"></typeparam>
+        public interface INotifyChanging<T> : INotifyChanging
         {
             /// <summary>
-            /// Occurs when [value changed with name only].
+            /// Occurs when [value changed].
             /// </summary>
-            event PropertyChangedEventHandler ValueChangedWithNameOnly;
-            /// <summary>
-            /// Occurs when [value changed with nothing].
-            /// </summary>
-            event EventHandler ValueChangedWithNothing;
+            event EventHandler<ValueChangingEventArgs<T>> ValueChanging;
 
         }
+     
+
+        /// <summary>
+        /// Interface INotifyChanging
+        /// </summary>
+        public interface INotifyChanging
+        {
+            /// <summary>
+            /// Occurs when [value changing with name only].
+            /// </summary>
+            event PropertyChangingEventHandler ValueChangingWithName;
+
+            /// <summary>
+            /// Occurs when [value changing with name and CancellationTokenSource].
+            /// </summary>
+            event EventHandler<ValueChangingEventArgs> ValueChangingWithNameAndCancellation;
 
 
+        }
 
 
 

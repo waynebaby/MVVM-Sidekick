@@ -588,7 +588,7 @@ namespace MVVMSidekick.ViewModels
     /// </summary>
     [DataContract]
     public abstract class BindableBase
-        : DisposeGroupBase, INotifyPropertyChanged, IBindable
+        : DisposeGroupBase, INotifyPropertyChanged, IBindable , INotifyPropertyChanging
     {
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
@@ -710,15 +710,12 @@ namespace MVVMSidekick.ViewModels
         /// Raises the property changed.
         /// </summary>
         /// <param name="lazyEAFactory">The lazy ea factory.</param>
-        protected internal void RaisePropertyChanged(Func<PropertyChangedEventArgs> lazyEAFactory)
+        protected internal void RaisePropertyChanged(PropertyChangedEventArgs e)
         {
 
 
-            if (this.PropertyChanged != null)
-            {
-                var ea = lazyEAFactory();
-                this.PropertyChanged(this, ea);
-            }
+
+            this.PropertyChanged?.Invoke(this, e);
 
 
         }
@@ -728,6 +725,27 @@ namespace MVVMSidekick.ViewModels
         /// <para> VM属性任何绑定用值被修改后,在启用通知情况下触发此事件</para>
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+
+        /// <summary>
+        /// Raises the property changed.
+        /// </summary>
+        /// <param name="lazyEAFactory">The lazy ea factory.</param>
+        protected internal void RaisePropertyChanging(PropertyChangingEventArgs e)
+        {
+
+
+
+            this.PropertyChanging?.Invoke(this, e);
+
+
+        }
+
+        /// <summary>
+        /// <para>Event that raised when properties were changed and Notification was activited</para>
+        /// <para> VM属性任何绑定用值被修改后,在启用通知情况下触发此事件</para>
+        /// </summary>
+        public event PropertyChangingEventHandler PropertyChanging;
 
 
         #endregion

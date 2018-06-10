@@ -250,7 +250,7 @@ namespace MVVMSidekick.ViewModels
         {
             foreach (var item in GetFieldNames())
             {
-                RaisePropertyChanged(() => new PropertyChangedEventArgs(item));
+                RaisePropertyChanged( new PropertyChangedEventArgs(item));
             }
             return OnBindedViewLoad(view);
         }
@@ -596,10 +596,14 @@ namespace MVVMSidekick.ViewModels
                     (Tin InputContext, CancellationTokenSource CancellationSource) TaskExecuting = (inputContext, tempCSource);
                     EventRouter.Instance.RaiseEvent(this, TaskExecuting, nameof(TaskExecuting));
 
-                    var valueTask = oldBody(inputContext, cancellationToken);
+                    await Task.Yield();
+                    var valueTask = oldBody(inputContext, tempCSource.Token);
                     var value = await valueTask;
                     var TaskExecuted = (InputContext: inputContext, Task: valueTask as Task);
+
                     EventRouter.Instance.RaiseEvent(this, TaskExecuted, nameof(TaskExecuted));
+                    await Task.Yield();
+
                     return value;
 
                 };

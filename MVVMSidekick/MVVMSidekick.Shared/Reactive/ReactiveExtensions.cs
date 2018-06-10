@@ -325,12 +325,12 @@ namespace MVVMSidekick
             /// </summary>
             /// <param name="source">The source.</param>
             /// <returns>IObservable&lt;System.Object&gt;.</returns>
-            public static IObservable<object> GetNullObservable(this INotifyChanges source)
+            public static IObservable<object> GetNullObservable(this INotifyChanged source)
             {
 
                 var eventArgSeq = Observable.FromEventPattern(
-                        eh => source.ValueChangedWithNothing += eh,
-                        eh => source.ValueChangedWithNothing -= eh);
+                        eh => source.ValueChangedWithNoDetailedInfomation += eh,
+                        eh => source.ValueChangedWithNoDetailedInfomation -= eh);
                 return eventArgSeq.Select(
                             x => null as object
                         );
@@ -341,12 +341,12 @@ namespace MVVMSidekick
             /// </summary>
             /// <param name="source">The source.</param>
             /// <returns>IObservable&lt;System.String&gt;.</returns>
-            public static IObservable<string> GetNamedObservable(this INotifyChanges source)
+            public static IObservable<string> GetNamedObservable(this INotifyChanged source)
             {
 
                 var eventArgSeq = Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
-                        eh => source.ValueChangedWithNameOnly += eh,
-                        eh => source.ValueChangedWithNameOnly -= eh);
+                        eh => source.ValueChangedWithName += eh,
+                        eh => source.ValueChangedWithName -= eh);
                 return eventArgSeq.Select(
                             x => x.EventArgs.PropertyName
                         );

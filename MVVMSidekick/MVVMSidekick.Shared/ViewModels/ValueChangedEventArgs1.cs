@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.ComponentModel;
+using System;
 #if NETFX_CORE
 
 
@@ -57,34 +58,31 @@ namespace MVVMSidekick
         /// <para>值变化事件参数</para>
         /// </summary>
         /// <typeparam name="TProperty">Type of propery/变化属性的类型</typeparam>
-        public class ValueChangedEventArgs : PropertyChangedEventArgs
+        public abstract class ValueChangedEventArgs : PropertyChangedEventArgs
         {
             /// <summary>
             /// Constructor of ValueChangedEventArgs
             /// </summary>
             /// <param name="propertyName">Name of the property.</param>
-            /// <param name="oldValue">The old value.</param>
+            /// <param name="originalValue">The old value.</param>
             /// <param name="newValue">The new value.</param>
-            public ValueChangedEventArgs(string propertyName, object oldValue, object newValue)
+            public ValueChangedEventArgs(string propertyName, object originalValue, object newValue)
                 : base(propertyName)
             {
-                NewValueObject = newValue;
-                OldValueObject = oldValue;
+
             }
 
             /// <summary>
             /// New Value
             /// </summary>
             /// <value>The new value.</value>
-            public object NewValueObject { get; private set; }
+            public abstract object GetNewValueObject();
             /// <summary>
             /// Old Value
             /// </summary>
             /// <value>The old value.</value>
-            public object OldValueObject { get; private set; }
+            public abstract object GetCurrentValueObject();
         }
-
-
 
 
 

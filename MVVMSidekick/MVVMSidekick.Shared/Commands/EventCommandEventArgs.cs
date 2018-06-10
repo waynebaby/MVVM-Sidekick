@@ -95,8 +95,8 @@ namespace MVVMSidekick
 
 
 
-            public TaskCompletionSource<EventCommandEventArgs> Completion => new TaskCompletionSource<EventCommandEventArgs>();
-            public CancellationTokenSource Cancellation => new CancellationTokenSource();
+            public TaskCompletionSource<EventCommandEventArgs> Completion { get; } =new TaskCompletionSource<EventCommandEventArgs>();
+            public CancellationTokenSource Cancellation { get; } = new CancellationTokenSource();
 
 
 

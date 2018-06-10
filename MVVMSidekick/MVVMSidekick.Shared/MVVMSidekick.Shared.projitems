@@ -10,8 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BaeconBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BindToAppliactionBarIconButtonBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ItemsSelectionBindingBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListenToEventRouterTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\SendToEventRouterAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\CollectionExtensions.cs" />
@@ -69,8 +67,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IBindable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ICommandModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IErrorInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\INotifyChanges.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\INotifyChanges1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\INotifyChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\INotifyChanging.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IValueCanGet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IValueCanSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IValueContainer.cs" />
@@ -82,6 +80,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ShowAwaitableResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueChangedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueChangedEventArgs1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueChangingEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ValueContainerIndexer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />

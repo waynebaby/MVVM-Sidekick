@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using MVVMSidekick.Reactive;
+using System.Threading.Tasks;
 #if NETFX_CORE
 
 
@@ -63,7 +64,7 @@ namespace MVVMSidekick
         /// <para>值容器</para>
         /// </summary>
         /// <typeparam name="TProperty">Type of the property value /属性的类型</typeparam>
-        public class ValueContainer<TProperty> : IErrorInfo, IValueCanSet<TProperty>, IValueCanGet<TProperty>, IValueContainer, INotifyChanges<TProperty>, INotifyPropertyChanged
+        public class ValueContainer<TProperty> : IErrorInfo, IValueCanSet<TProperty>, IValueCanGet<TProperty>, IValueContainer, INotifyChanged<TProperty>, INotifyChanging<TProperty>//, INotifyPropertyChanged ,INotifyPropertyChanging
         {
 
 
@@ -139,11 +140,12 @@ namespace MVVMSidekick
 
             #endregion
 
-            /// <summary>
-            /// <para>Event that raised when value was changed</para>
-            /// <para>值变更时触发的事件</para>
-            /// </summary>
+
             public event EventHandler<ValueChangedEventArgs<TProperty>> ValueChanged;
+            public event PropertyChangedEventHandler ValueChangedWithName;
+            public event PropertyChangingEventHandler ValueChangingWithName;
+            public event EventHandler<ValueChangingEventArgs> ValueChangingWithNameAndCancellation;
+            public event EventHandler<ValueChangingEventArgs<TProperty>> ValueChanging;
 
             /// <summary>
             /// <para>Gets comparer instance of new/old value, for notifition.</para>
@@ -177,14 +179,14 @@ namespace MVVMSidekick
             }
 
             /// <summary>
-            /// <para>Save the value and try raise the value changed event</para>
+            /// <para>Save the value and try raise the value changed event. Warning, it will start an Async UI thread task, which will not cause UI busy</para>
             /// <para>保存值并且尝试触发更改事件</para>
             /// </summary>
             /// <param name="value">New value/属性值</param>
             /// <returns>ValueContainer&lt;TProperty&gt;.</returns>
             public ValueContainer<TProperty> SetValueAndTryNotify(TProperty value)
             {
-                InternalPropertyChange(this.Model, value, ref _value, PropertyName);
+                InternalPropertyChange(this.Model, value, PropertyName);
                 return this;
             }
 
@@ -206,39 +208,67 @@ namespace MVVMSidekick
             /// <summary>
             /// Internals the property change.
             /// </summary>
-            /// <param name="objectInstance">The object instance.</param>
+            /// <param name="modelInstance">The model instance.</param>
             /// <param name="newValue">The new value.</param>
-            /// <param name="currentValue">The current value.</param>
+
             /// <param name="message">The message.</param>
-            private void InternalPropertyChange(BindableBase objectInstance, TProperty newValue, ref TProperty currentValue, string message)
+            private async void InternalPropertyChange(BindableBase modelInstance, TProperty newValue, string message)
             {
+
+
+                //find out there will be a changing by makesure they are not equal
                 var changing = (this.EqualityComparer != null) ?
-                    !this.EqualityComparer(newValue, currentValue) :
-                    !Object.Equals(newValue, currentValue);
+                    !this.EqualityComparer(newValue, _value) :
+                    !Object.Equals(newValue, _value);
 
-
-                if (changing)
+                if (!changing)
                 {
-                    var oldvalue = currentValue;
-                    currentValue = newValue;
-
-                    ValueChangedEventArgs<TProperty> arg = null;
-
-                    Func<PropertyChangedEventArgs> lzf =
-                        () =>
-                        {
-                            arg = arg ?? new ValueChangedEventArgs<TProperty>(message, oldvalue, newValue);
-                            return arg;
-                        };
-
-
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
-                    objectInstance.RaisePropertyChanged(lzf);
-                    ValueChanged?.Invoke(this, lzf() as ValueChangedEventArgs<TProperty>);
-                    ValueChangedWithNameOnly?.Invoke(this, new PropertyChangedEventArgs(message));
-                    ValueChangedWithNothing?.Invoke(this, EventArgs.Empty);
-
+                    return;
                 }
+                //fire changing event ask if anyone against changing
+
+                var changingArg = new ValueChangingEventArgs<TProperty>(message, _value, newValue);
+
+                modelInstance.RaisePropertyChanging(changingArg);
+                await Task.Yield();
+                if (changingArg.Cancellation.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                if (ValueChanging != null)
+                {
+                    ValueChanging.Invoke(this, changingArg);
+                    await Task.Yield();
+                    if (changingArg.Cancellation.IsCancellationRequested)
+                    {
+                        return;
+                    }
+                }
+
+                if (ValueChangingWithNameAndCancellation != null)
+                {
+                    ValueChangingWithNameAndCancellation.Invoke(this, changingArg);
+                    await Task.Yield();
+                    if (changingArg.Cancellation.IsCancellationRequested)
+                    {
+                        return;
+                    }
+                }
+
+
+                ValueChangingWithName?.Invoke(this, changingArg);
+
+                var oldvalue = _value;
+                _value = newValue;
+
+                ValueChangedEventArgs<TProperty> arg = new ValueChangedEventArgs<TProperty>(message, oldvalue, newValue);
+
+                modelInstance.RaisePropertyChanged(arg);
+                ValueChanged?.Invoke(this, arg);
+                ValueChangedWithName?.Invoke(this, new PropertyChangedEventArgs(message));
+
+
             }
 
             public void AddErrorEntry(string message, Exception exception = null)
@@ -332,16 +362,7 @@ namespace MVVMSidekick
 
 
 
-            /// <summary>
-            /// Occurs when [value changed with name only].
-            /// </summary>
-            public event PropertyChangedEventHandler ValueChangedWithNameOnly;
 
-            /// <summary>
-            /// Occurs when [value changed with nothing].
-            /// </summary>
-            public event EventHandler ValueChangedWithNothing;
-            public event PropertyChangedEventHandler PropertyChanged;
         }
 
 

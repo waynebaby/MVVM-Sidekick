@@ -59,7 +59,7 @@ namespace MVVMSidekick
         /// <summary>
         /// Interface IViewModel
         /// </summary>
-        public partial interface IViewModel : IBindable, INotifyPropertyChanged, IViewModelLifetime
+        public partial interface IViewModel : IBindable, INotifyPropertyChanged,INotifyPropertyChanging, IViewModelLifetime
         {
 #if NETFX_CORE
             /// <summary>
