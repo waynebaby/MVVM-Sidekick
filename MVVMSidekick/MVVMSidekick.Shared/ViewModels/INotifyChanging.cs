@@ -74,17 +74,14 @@ namespace MVVMSidekick
         /// </summary>
         public interface INotifyChanging
         {
-            /// <summary>
-            /// Occurs when [value changing with name only].
-            /// </summary>
-            event PropertyChangingEventHandler ValueChangingWithName;
+
 
             /// <summary>
             /// Occurs when [value changing with name and CancellationTokenSource].
             /// </summary>
-            event EventHandler<ValueChangingEventArgs> ValueChangingWithNameAndCancellation;
+            event EventHandler<ValueChangingEventArgs> NonGenericValueChanging;
 
-
+         
         }
 
 

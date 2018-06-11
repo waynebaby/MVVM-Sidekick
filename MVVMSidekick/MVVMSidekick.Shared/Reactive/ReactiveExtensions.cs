@@ -70,6 +70,8 @@ namespace MVVMSidekick
         {
 
 
+
+
             /// <summary>
             /// Register a Do action to the observer, Notify the value in this sequence to EventRouter
             /// </summary>
@@ -169,78 +171,6 @@ namespace MVVMSidekick
 
 
 
-            //public static IObservable<(Task Task, EventPattern<EventCommandEventArgs> InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyCommand(
-            //    this IObservable<EventPattern<EventCommandEventArgs>> sequence,
-            //    IViewModel vm,
-            //    Func<EventPattern<EventCommandEventArgs>, CancellationToken, Task> taskBody,
-            //    CancellationToken cancellationToken = default(CancellationToken),
-            //    [CallerMemberName] string registerName = null,
-            //    [CallerFilePathAttribute] string filePath = null,
-            //    [CallerLineNumber] int line = 0)
-            //{
-            //    return sequence
-            //        .ObserveOnDispatcher()
-
-            //        .Select(inContext =>
-            //           {
-            //               var value =
-            //                (
-            //                    vm.ExecuteTask(
-            //                        async (i, c) =>
-            //                        {
-
-            //                        },
-            //                        inContext,
-            //                        cancellationToken,
-            //                        true),
-            //                   inContext,
-            //                   cancellationToken);
-
-            //               return value;
-            //           }
-
-            //        )
-            //        .ObserveOnDispatcher();
-            //}
-
-
-
-
-            [Obsolete(@"Try use DoExecuteUIBusyActionTask() instead. If you are using with EventCommand, please delete DoNotifyDefaultEventRouter() in following lines.")]
-            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                return sequence.Select
-                    (
-                          inContext => (vm.ExecuteTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
-                    );
-            }
-            [Obsolete(@"Try use DoExecuteUIBusyActionTask() instead. If you are using with EventCommand, please delete DoNotifyDefaultEventRouter() in following lines.")]
-            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUIBusyTask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
-            {
-                return DoExecuteUIBusyTask(sequence, vm, (inContext, cancel) => taskBody(inContext));
-            }
-
-
-            [Obsolete(@"Try use DoExecuteUIActionTask() instead. If you are using with EventCommand, please delete DoNotifyDefaultEventRouter() in following lines.")]
-            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, CancellationToken, Task> taskBody, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                return sequence.Select
-                    (
-                          inContext => (vm.ExecuteTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
-                    );
-            }
-            [Obsolete(@"Try use DoExecuteUIActionTask() instead. If you are using with EventCommand, please delete DoNotifyDefaultEventRouter() in following lines.")]
-            public static IObservable<(Task Task, Tin InputContext, CancellationToken CancellationToken)> DoExecuteUITask<Tin>(this IObservable<Tin> sequence, IViewModel vm, Func<Tin, Task> taskBody)
-            {
-                return DoExecuteUIBusyTask(sequence, vm, (inContext, cancel) => taskBody(inContext));
-            }
-
-
-
-
-
-
-
 
 
 
@@ -269,7 +199,7 @@ namespace MVVMSidekick
             /// <returns>
             /// IObservable&lt;EventPattern&lt;NotifyCollectionChangedEventArgs&gt;&gt;.
             /// </returns>
-            public static IObservable<EventPattern<NotifyCollectionChangedEventArgs>> GetEventObservable<T>(this ObservableCollection<T> source, BindableBase model)
+            public static IObservable<EventPattern<NotifyCollectionChangedEventArgs>> GetCollectionChangedEventObservable<T>(this ObservableCollection<T> source, BindableBase model)
             {
                 var rval = Observable
                   .FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>
@@ -279,37 +209,15 @@ namespace MVVMSidekick
                       ).Where(_ => model.IsNotificationActivated);
                 return rval;
             }
-            /// <summary>Gets the new value observable.</summary>
-            /// <typeparam name="TValue">The type of the value.</typeparam>
-            /// <param name="source">The source.</param>
-            /// <returns>
-            /// IObservable&lt;EventTuple&lt;ValueContainer&lt;TValue&gt;, TValue&gt;&gt;.
-            /// </returns>
-            public static IObservable<EventTuple<ValueContainer<TValue>, TValue>> GetNewValueObservable<TValue>
-                (
-                    this ValueContainer<TValue> source
 
-                )
-            {
 
-                return Observable.FromEventPattern<EventHandler<ValueChangedEventArgs<TValue>>, ValueChangedEventArgs<TValue>>(
-                        eh => source.ValueChanged += eh,
-                        eh => source.ValueChanged -= eh)
-                        .Select(
-                            x => EventTuple.Create(source, x.EventArgs.NewValue)
-
-                        );
-
-            }
-
-            /// <summary>Gets the event observable.</summary>
+            /// <summary>Gets the value changed event observable.</summary>
             /// <typeparam name="TValue">The type of the t service.</typeparam>
             /// <param name="source">The source.</param>
             /// <returns>
             /// IObservable&lt;EventTuple&lt;ValueContainer&lt;TValue&gt;, ValueChangedEventArgs&lt;TValue&gt;&gt;&gt;.
             /// </returns>
-            public static IObservable<EventTuple<ValueContainer<TValue>, ValueChangedEventArgs<TValue>>>
-                GetEventObservable<TValue>(this ValueContainer<TValue> source)
+            public static IObservable<EventTuple<ValueContainer<TValue>, ValueChangedEventArgs<TValue>>> GetValueChangedEventObservable<TValue>(this ValueContainer<TValue> source)
             {
 
                 var eventArgSeq = Observable.FromEventPattern<EventHandler<ValueChangedEventArgs<TValue>>, ValueChangedEventArgs<TValue>>(
@@ -320,82 +228,140 @@ namespace MVVMSidekick
                         );
                 ;
             }
-            /// <summary>
-            /// Gets the null observable.
-            /// </summary>
-            /// <param name="source">The source.</param>
-            /// <returns>IObservable&lt;System.Object&gt;.</returns>
-            public static IObservable<object> GetNullObservable(this INotifyChanged source)
+
+            public static IObservable<EventTuple<IValueContainer, ValueChangedEventArgs>> GetValueChangedNonGenericEventObservable(this IValueContainer source)
             {
 
-                var eventArgSeq = Observable.FromEventPattern(
-                        eh => source.ValueChangedWithNoDetailedInfomation += eh,
-                        eh => source.ValueChangedWithNoDetailedInfomation -= eh);
+                var eventArgSeq = Observable.FromEventPattern<EventHandler<ValueChangedEventArgs>, ValueChangedEventArgs>(
+                        eh => source.NonGenericValueChanged += eh,
+                        eh => source.NonGenericValueChanged -= eh);
                 return eventArgSeq.Select(
-                            x => null as object
+                            x => EventTuple.Create(source as IValueContainer, x.EventArgs as ValueChangedEventArgs)
                         );
                 ;
             }
-            /// <summary>
-            /// Gets the named observable.
-            /// </summary>
-            /// <param name="source">The source.</param>
-            /// <returns>IObservable&lt;System.String&gt;.</returns>
-            public static IObservable<string> GetNamedObservable(this INotifyChanged source)
+            public static IObservable<EventTuple<IValueContainer, ValueChangingEventArgs>> GetValueChangingNonGenericEventObservable(this IValueContainer source)
             {
 
-                var eventArgSeq = Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
-                        eh => source.ValueChangedWithName += eh,
-                        eh => source.ValueChangedWithName -= eh);
+                var eventArgSeq = Observable.FromEventPattern<EventHandler<ValueChangingEventArgs>, ValueChangingEventArgs>(
+                        eh => source.NonGenericValueChanging += eh,
+                        eh => source.NonGenericValueChanging -= eh);
                 return eventArgSeq.Select(
-                            x => x.EventArgs.PropertyName
+                            x => EventTuple.Create(source as IValueContainer, x.EventArgs as ValueChangingEventArgs)
                         );
                 ;
             }
 
+            /// <summary>Gets the value changing event observable.</summary>
+            /// <typeparam name="TValue">The type of the t service.</typeparam>
+            /// <param name="source">The source.</param>
+            /// <returns>
+            /// IObservable&lt;EventTuple&lt;ValueContainer&lt;TValue&gt;, ValueChangedEventArgs&lt;TValue&gt;&gt;&gt;.
+            /// </returns>
+            public static IObservable<EventTuple<ValueContainer<TValue>, ValueChangingEventArgs<TValue>>> GetValueChangingdEventObservable<TValue>(this ValueContainer<TValue> source)
+            {
+
+                var eventArgSeq = Observable.FromEventPattern<EventHandler<ValueChangingEventArgs<TValue>>, ValueChangingEventArgs<TValue>>(
+                        eh => source.ValueChanging += eh,
+                        eh => source.ValueChanging -= eh);
+                return eventArgSeq.Select(
+                            x => EventTuple.Create(source, x.EventArgs)
+                       );
+                ;
+            }
+
+
+
+
+
             /// <summary>
-            /// Listens to the changed properties and merge the event to a sequence.
+            /// 
             /// </summary>
-            /// <typeparam name="TModel">The type of the source model.</typeparam>
-            /// <param name="source">The source model.</param>
-            /// <param name="properties">The properties expressions.</param>
-            /// <returns>Event sequence</returns>
-            public static IObservable<EventTuple<object, string>> ListenChanged<TModel>(this TModel source,
-                    params Expression<Func<TModel, object>>[] properties
-                ) where TModel : BindableBase<TModel>
+            /// <typeparam name="TModel"></typeparam>
+            /// <param name="source"></param>
+            /// <param name="properties"></param>
+            /// <returns></returns>
+            public static IObservable<EventTuple<IValueContainer, ValueChangedEventArgs>> ListenValueChangedEvents<TModel>(this TModel source,
+                   params Expression<Func<TModel, object>>[] properties
+               ) where TModel : BindableBase<TModel>
             {
 
                 return source.GetValueContainers(properties)
                     .ToObservable()
-                    .SelectMany(x => x.GetNamedObservable().Select(y =>
-                        new EventTuple<object, string>()
-                        {
-                            Source = source,
-                            EventArgs = y
-                        }));
-
-
+                    .SelectMany(x => x.GetValueChangedNonGenericEventObservable());
             }
 
 
             /// <summary>
-            /// Alsoes the listen changed with.
+            /// Also Listen the changed with these properties.
             /// </summary>
             /// <typeparam name="TModel">The type of the model.</typeparam>
             /// <param name="sequence">The event sequence.</param>
             /// <param name="secondSource">The second source.</param>
             /// <param name="properties">The properties.</param>
             /// <returns>Merged event Sequence</returns>
-            public static IObservable<EventTuple<object, string>> AlsoListenChangedWith<TModel>(this IObservable<EventTuple<object, string>> sequence,
+            public static IObservable<EventTuple<IValueContainer, ValueChangedEventArgs>> AlsoListenValueChangedWith<TModel>(
+                this IObservable<EventTuple<IValueContainer, ValueChangedEventArgs>> sequence,
                 TModel secondSource,
                 params Expression<Func<TModel, object>>[] properties
                 ) where TModel : BindableBase<TModel>
             {
 
-                var another = ListenChanged(secondSource);
+                var another = ListenValueChangedEvents(secondSource);
                 return Observable.Merge(sequence, another);
 
             }
+
+
+
+
+
+            /// <summary>
+            /// Listen the changing with these properties of model instance.
+            /// </summary>
+            /// <typeparam name="TModel"></typeparam>
+            /// <param name="source"></param>
+            /// <param name="properties"></param>
+            /// <returns></returns>
+            public static IObservable<EventTuple<IValueContainer, ValueChangingEventArgs>> ListenValueChangingEvents<TModel>(this TModel source,
+                   params Expression<Func<TModel, object>>[] properties
+               ) where TModel : BindableBase<TModel>
+            {
+
+                return source.GetValueContainers(properties)
+                    .ToObservable()
+                    .SelectMany(x => x.GetValueChangingNonGenericEventObservable());
+            }
+
+
+            /// <summary>
+            /// Also Listen the changing with these properties of another model instance.
+            /// </summary>
+            /// <typeparam name="TModel">The type of the model.</typeparam>
+            /// <param name="sequence">The event sequence.</param>
+            /// <param name="secondSource">The second source.</param>
+            /// <param name="properties">The properties.</param>
+            /// <returns>Merged event Sequence</returns>
+            public static IObservable<EventTuple<IValueContainer, ValueChangingEventArgs>> AlsoListenValueChangingWith<TModel>(
+                this IObservable<EventTuple<IValueContainer, ValueChangingEventArgs>> sequence,
+                TModel secondSource,
+                params Expression<Func<TModel, object>>[] properties
+                ) where TModel : BindableBase<TModel>
+            {
+
+                var another = ListenValueChangingEvents(secondSource);
+                return Observable.Merge(sequence, another);
+
+            }
+
+
+
+
+
+
+
+
+
 
             /// <summary>
             /// Cast a value container as a observer.
@@ -408,24 +374,7 @@ namespace MVVMSidekick
                 return Observer.Create<TValue>(v => source.SetValueAndTryNotify(v));
 
             }
-            /// <summary>
-            /// 转化
-            /// </summary>
-            /// <typeparam name="TEventArgs"></typeparam>
-            /// <param name="source"></param>
-            /// <returns></returns>
-            [Obsolete("The source is already moved to  IObservable<RouterEventData<TEventArgs>>")]
-            public static IObservable<RouterEventData<TEventArgs>>
-                GetRouterEventObservable<TEventArgs>(this MVVMSidekick.EventRouting.EventRouter.EventChannel<TEventArgs> source)
-#if !NETFX_CORE
- where TEventArgs : EventArgs
-#endif
-            {
 
-
-                return source;
-
-            }
             /// <summary>
             /// Bind Command to IsUIBusy property.
             /// </summary>
@@ -442,8 +391,8 @@ namespace MVVMSidekick
             {
 
                 var eventSeq = model.GetValueContainer(x => x.IsUIBusy)
-                        .GetNewValueObservable()
-                        .Select(e => canExecuteWhenBusy ? canExecuteWhenBusy : (!e.EventArgs));
+                        .GetValueChangedEventObservable()
+                        .Select(e => canExecuteWhenBusy ? canExecuteWhenBusy : (!e.EventArgs.NewValue));
 
 
                 if (and_also_listen_to_this_sequence != null)
@@ -462,6 +411,7 @@ namespace MVVMSidekick
 
                 return command;
             }
+
 
         }
     }

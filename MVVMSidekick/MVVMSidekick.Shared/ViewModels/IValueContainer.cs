@@ -77,6 +77,9 @@ namespace MVVMSidekick
 
             void AddErrorEntry(string message, Exception exception = null);
 
+
+            Object Model { get; }
+
         }
 
 

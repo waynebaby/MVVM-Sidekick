@@ -162,7 +162,8 @@ namespace MVVMSidekick
                 {
 
                     base.AddDisposeAction(() => Binder = null);
-                    this.GetValueContainer(x => x.Items).GetNullObservable()
+                    this.GetValueContainer(x => x.Items)
+                        .GetValueChangedEventObservable()
                         .Subscribe(_ => ResetSelection())
                         .DisposeWith(this);
 

@@ -74,7 +74,7 @@ namespace MVVMSidekick
             /// <summary>
             /// Occurs when [value changed with name only].
             /// </summary>
-            event PropertyChangedEventHandler ValueChangedWithName;
+            event EventHandler<ValueChangedEventArgs> NonGenericValueChanged;
             /// <summary>
             /// Occurs when [value changed with nothing].
             /// </summary>

@@ -41,6 +41,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\EventTuple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\EventTuple1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\IReactiveCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reactive\MVVMRxExtensionsObsoleted.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Reactive\ReactiveExtensionsEx.cs" />

@@ -126,7 +126,7 @@ namespace MVVMSidekick
                 Model = model;
                 Value = initValue;
                 _Errors = new ObservableCollection<ErrorEntity>();
-                _Errors.GetEventObservable(model)
+                _Errors.GetCollectionChangedEventObservable(model)
                     .Subscribe
                     (
                         e =>
@@ -138,14 +138,35 @@ namespace MVVMSidekick
 
             }
 
+            event EventHandler<ValueChangedEventArgs> INotifyChanged.NonGenericValueChanged
+            {
+                add
+                {
+                    throw new NotImplementedException();
+                }
+
+                remove
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            event EventHandler<ValueChangingEventArgs> INotifyChanging.NonGenericValueChanging
+            {
+                add
+                {
+                    throw new NotImplementedException();
+                }
+
+                remove
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             #endregion
 
 
-            public event EventHandler<ValueChangedEventArgs<TProperty>> ValueChanged;
-            public event PropertyChangedEventHandler ValueChangedWithName;
-            public event PropertyChangingEventHandler ValueChangingWithName;
-            public event EventHandler<ValueChangingEventArgs> ValueChangingWithNameAndCancellation;
-            public event EventHandler<ValueChangingEventArgs<TProperty>> ValueChanging;
 
             /// <summary>
             /// <para>Gets comparer instance of new/old value, for notifition.</para>
@@ -246,18 +267,16 @@ namespace MVVMSidekick
                     }
                 }
 
-                if (ValueChangingWithNameAndCancellation != null)
+                if (NonGenericValueChanging != null)
                 {
-                    ValueChangingWithNameAndCancellation.Invoke(this, changingArg);
+                    NonGenericValueChanging.Invoke(this, changingArg);
                     await Task.Yield();
                     if (changingArg.Cancellation.IsCancellationRequested)
                     {
                         return;
                     }
                 }
-
-
-                ValueChangingWithName?.Invoke(this, changingArg);
+                
 
                 var oldvalue = _value;
                 _value = newValue;
@@ -266,7 +285,7 @@ namespace MVVMSidekick
 
                 modelInstance.RaisePropertyChanged(arg);
                 ValueChanged?.Invoke(this, arg);
-                ValueChangedWithName?.Invoke(this, new PropertyChangedEventArgs(message));
+     
 
 
             }
@@ -282,6 +301,11 @@ namespace MVVMSidekick
                     Message = message
                 });
 
+            }
+
+            void IValueContainer.AddErrorEntry(string message, Exception exception)
+            {
+                throw new NotImplementedException();
             }
 
 
@@ -340,6 +364,10 @@ namespace MVVMSidekick
             }
 
 
+            public event EventHandler<ValueChangedEventArgs> NonGenericValueChanged;
+            public event EventHandler<ValueChangingEventArgs> NonGenericValueChanging;
+            public event EventHandler<ValueChangedEventArgs<TProperty>> ValueChanged;
+            public event EventHandler<ValueChangingEventArgs<TProperty>> ValueChanging;
 
 #if NETFX_CORE
             bool _IsCopyToAllowed = !typeof(ICommand).GetTypeInfo().IsAssignableFrom(typeof(TProperty).GetTypeInfo());
@@ -348,6 +376,7 @@ namespace MVVMSidekick
             /// The _ is copy to allowed
             /// </summary>
             bool _IsCopyToAllowed = !typeof(ICommand).IsAssignableFrom(typeof(TProperty));
+
 #endif
             /// <summary>
             /// <para>Can be copied by CopyTo method</para>
@@ -362,7 +391,9 @@ namespace MVVMSidekick
 
 
 
+            object IValueContainer.Model =>this.Model;
 
+          
         }
 
 

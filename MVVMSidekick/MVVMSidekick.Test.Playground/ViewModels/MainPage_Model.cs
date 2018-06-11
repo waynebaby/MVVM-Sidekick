@@ -105,6 +105,7 @@ namespace MVVMSidekick.Test.Playground.ViewModels
 
 
 
+
         public CommandModel CommandSomeCommand => _CommandSomeCommandLocator(this).Value;
         #region Property CommandModel CommandSomeCommand Setup                
         protected Property<CommandModel> _CommandSomeCommand = new Property<CommandModel>(_CommandSomeCommandLocator);
@@ -120,9 +121,9 @@ namespace MVVMSidekick.Test.Playground.ViewModels
                           vm,
                           async (e, cancelToken) =>
                           {
-                             var t= vm.StageManager.DefaultStage.Show<BlankPage1_Model>();
+                              //Todo: Add SomeCommand logic here  
                               await MVVMSidekick.Utilities.TaskExHelper.Yield();
-
+                         
                           })
                       .DoNotifyDefaultEventRouter(vm, commandId)
                       .Subscribe()
@@ -133,8 +134,6 @@ namespace MVVMSidekick.Test.Playground.ViewModels
                   return cmdmdl;
               }));
         #endregion
-
-
     }
 
 }
