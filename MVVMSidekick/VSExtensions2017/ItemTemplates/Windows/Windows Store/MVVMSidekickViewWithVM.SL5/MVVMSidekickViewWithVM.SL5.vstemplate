@@ -28,15 +28,8 @@
     <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
   </WizardExtension>
   <WizardData>
-    <packages repository="extension" repositoryId="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e">
-      <package id="Microsoft.Bcl" version="1.1.10" />
-      <package id="Microsoft.Bcl.Async" version="1.0.168" />
-      <package id="Microsoft.Bcl.Build" version="1.0.21" />
-      <package id="Rx-Core" version="2.2.5" />
-      <package id="Rx-Interfaces" version="2.2.5" />
-      <package id="Rx-Linq" version="2.2.5" />
-      <package id="Rx-Main" version="2.2.5" />
-      <package id="Rx-PlatformServices" version="2.2.5" />
+    <packages>
+      <package id="MVVM - Sidekick" version="2.0.46" />
     </packages>
   </WizardData>
 </VSTemplate>

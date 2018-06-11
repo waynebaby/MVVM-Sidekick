@@ -58,14 +58,12 @@
     <FullClassName>Microsoft.VisualStudio.Universal.TemplateWizards.PlatformVersion.Wizard</FullClassName>
   </WizardExtension>
   <WizardData>
-    <packages repository="registry" keyName="NETCoreSDK" isPreunzipped="true">
-      <package id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.0.0" skipAssemblyReferences="false" />
+    <packages>
+      <package id="MVVM - Sidekick" version="2.0.46" />
     </packages>
-    <packages repository="extension" repositoryId="MVVM-Sidekick-Extensions-2017">
-     
-      <package id="MVVM-Sidekick" version="2.0.7" />
-
+    <packages>
+      <package id="MVVM - Sidekick" version="2.0.46" />
     </packages>
-        <UsePackageReferences>true</UsePackageReferences>
+    <UsePackageReferences>true</UsePackageReferences>
   </WizardData>
 </VSTemplate>

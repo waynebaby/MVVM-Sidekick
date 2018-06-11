@@ -28,9 +28,8 @@
     <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
   </WizardExtension>
   <WizardData>
-    <packages >
-
-      <package id="MVVM-Sidekick" version="2.0.7" />
+    <packages>
+      <package id="MVVM - Sidekick" version="2.0.46" />
     </packages>
   </WizardData>
 </VSTemplate>

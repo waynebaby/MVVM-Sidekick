@@ -284,14 +284,13 @@
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
                 
-                cmd.DoExecuteUIBusyTask(
+                cmd.DoExecuteUIBusyActionTask(
                         vm,
                         async (e,cancelToken) =>
                         {
                             //Todo: Add $commandName$ logic here, or
                             await MVVMSidekick.Utilities.TaskExHelper.Yield();
                         })
-                    .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()
                     .DisposeWith(vm);
                     
@@ -340,14 +339,13 @@
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
                 
-                cmd.DoExecuteUIBusyTask(
+                cmd.DoExecuteUIBusyActionTask(
                         vm,
                         async (e,cancelToken)  =>
                         {
                               //Todo: Add $commandName$ logic here, or
                               await MVVMSidekick.Utilities.TaskExHelper.Yield();
                         })
-                    .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()
                     .DisposeWith(vm);
                     
@@ -390,7 +388,7 @@
         <![CDATA[        public CommandModel Command$commandName$ => _Command$commandName$Locator(this).Value;        
         #region Property CommandModel Command$commandName$ Setup                
         protected Property<CommandModel> _Command$commandName$ = new Property<CommandModel>(_Command$commandName$Locator);
-        static Func<BindableBase,ValueContainer<CommandModel>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), m =>m.Initialize(nameof(Command$commandName$),ref m._Command$commandName$, ref _Command$commandName$Locator,
+        static Func<BindableBase,ValueContainer<CommandModel>> _CommanDoExecuteUIBusyActionTaskd$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), m =>m.Initialize(nameof(Command$commandName$),ref m._Command$commandName$, ref _Command$commandName$Locator,
             model => 
             {
                 object state = nameof(Command$commandName$);      
@@ -398,14 +396,13 @@
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
                 
-                cmd.DoExecuteUITask( 
+                cmd.DoExecuteUIBusyActionTask( 
                         vm,          
                         async (e,cancelToken)  =>
                         {
                             //Todo: Add $commandName$ logic here  
                             await MVVMSidekick.Utilities.TaskExHelper.Yield();                            
                         })
-                    .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()
                     .DisposeWith(vm);
                     
@@ -461,14 +458,13 @@
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
                 
-                cmd.DoExecuteUIBusyTask(
+                cmd.DoExecuteUIBusyActionTask(
                         vm,
                         async (e,cancelToken)  =>
                         {
                             //Todo: Add $commandName$ logic here, or
                             await MVVMSidekick.Utilities.TaskExHelper.Yield();
                         })
-                    .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()
                     .DisposeWith(vm);
                     
@@ -528,14 +524,13 @@
                 var vm = CastToCurrentType(model);
                 var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
                 
-                cmd.DoExecuteUIBusyTask(
+                cmd.DoExecuteUIBusyActionTask(
                       vm,
                       async (e,cancelToken)  =>
                       {
                           //Todo: Add $commandName$ logic here, or
                           await MVVMSidekick.Utilities.TaskExHelper.Yield();
                       })
-                  .DoNotifyDefaultEventRouter(vm, commandId)
                   .Subscribe()
                   .DisposeWith(vm);
                     

@@ -82,8 +82,8 @@ Global
 		{4D755FF7-84F5-4D29-A771-55F520F87814}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D755FF7-84F5-4D29-A771-55F520F87814}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D755FF7-84F5-4D29-A771-55F520F87814}.Release|ARM.ActiveCfg = Release|Any CPU
-		{4D755FF7-84F5-4D29-A771-55F520F87814}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{4D755FF7-84F5-4D29-A771-55F520F87814}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4D755FF7-84F5-4D29-A771-55F520F87814}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4D755FF7-84F5-4D29-A771-55F520F87814}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{4D755FF7-84F5-4D29-A771-55F520F87814}.Release|x64.ActiveCfg = Release|Any CPU
 		{4D755FF7-84F5-4D29-A771-55F520F87814}.Release|x86.ActiveCfg = Release|Any CPU
 		{DC5113AC-E6A3-4BA1-92A0-E6981563AB7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -286,7 +286,7 @@ Global
 		{CCD8612F-2E96-491A-837E-A7727F98B855} = {C5921E6D-635D-4D9B-A1C2-C84661D66CD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6543509F-3E3A-484C-84FB-200D8F3981EF}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
+		SolutionGuid = {6543509F-3E3A-484C-84FB-200D8F3981EF}
 	EndGlobalSection
 EndGlobal

@@ -285,7 +285,7 @@ namespace MVVMSidekick
 
                 modelInstance.RaisePropertyChanged(arg);
                 ValueChanged?.Invoke(this, arg);
-     
+                NonGenericValueChanged?.Invoke(this, arg);
 
 
             }

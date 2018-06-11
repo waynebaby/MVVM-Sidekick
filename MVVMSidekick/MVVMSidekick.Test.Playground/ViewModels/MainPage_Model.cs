@@ -117,7 +117,7 @@ namespace MVVMSidekick.Test.Playground.ViewModels
                   var vm = CastToCurrentType(model);
                   var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
 
-                  cmd.DoExecuteUITask(
+                  cmd.DoExecuteUIBusyActionTask(
                           vm,
                           async (e, cancelToken) =>
                           {
@@ -134,6 +134,8 @@ namespace MVVMSidekick.Test.Playground.ViewModels
                   return cmdmdl;
               }));
         #endregion
+
+        
     }
 
 }
