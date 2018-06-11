@@ -205,9 +205,9 @@ namespace MVVMSidekick.ViewModels
 
 
             GetValueContainer(x => x.UIBusyTaskCount)
-                .GetNewValueObservable()
+                .GetValueChangedEventObservable()
                 .Select(e =>
-                    e.EventArgs != 0)
+                    e.EventArgs.NewValue != 0)
                 .DistinctUntilChanged()
                 .Subscribe(isBusy =>
                     IsUIBusy = isBusy)
@@ -250,7 +250,7 @@ namespace MVVMSidekick.ViewModels
         {
             foreach (var item in GetFieldNames())
             {
-                RaisePropertyChanged( new PropertyChangedEventArgs(item));
+                RaisePropertyChanged(new PropertyChangedEventArgs(item));
             }
             return OnBindedViewLoad(view);
         }
@@ -539,7 +539,7 @@ namespace MVVMSidekick.ViewModels
                             cmdarh.EventArgs.Completion.TrySetCanceled();
                             return default(Tout);
                         }
-                        
+
                         var rval = await oldBody(i, c);
 
                         if (c.IsCancellationRequested)
@@ -594,14 +594,32 @@ namespace MVVMSidekick.ViewModels
                 taskBody = async (i, c) =>
                 {
                     (Tin InputContext, CancellationTokenSource CancellationSource) TaskExecuting = (inputContext, tempCSource);
-                    EventRouter.Instance.RaiseEvent(this, TaskExecuting, nameof(TaskExecuting));
 
+                    LocalEventRouter.RaiseEvent(this, TaskExecuting, nameof(TaskExecuting));
                     await Task.Yield();
+
+                    if (tempCSource.IsCancellationRequested)
+                    {
+                       return default(Tout);
+                    }
+
+                    GlobalEventRouter.RaiseEvent(this, TaskExecuting, nameof(TaskExecuting));
+                    await Task.Yield();
+
+                    if (tempCSource.IsCancellationRequested)
+                    {
+                        return default(Tout);
+                    }
+
                     var valueTask = oldBody(inputContext, tempCSource.Token);
                     var value = await valueTask;
+
                     var TaskExecuted = (InputContext: inputContext, Task: valueTask as Task);
 
-                    EventRouter.Instance.RaiseEvent(this, TaskExecuted, nameof(TaskExecuted));
+                    LocalEventRouter.RaiseEvent(this, TaskExecuted, nameof(TaskExecuted));
+                    await Task.Yield();
+
+                    GlobalEventRouter.RaiseEvent(this, TaskExecuted, nameof(TaskExecuted));
                     await Task.Yield();
 
                     return value;

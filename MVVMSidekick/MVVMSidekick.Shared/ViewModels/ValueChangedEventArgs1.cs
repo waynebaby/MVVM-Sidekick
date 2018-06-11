@@ -81,7 +81,7 @@ namespace MVVMSidekick
             /// Old Value
             /// </summary>
             /// <value>The old value.</value>
-            public abstract object GetCurrentValueObject();
+            public abstract object GetOriginalValueObject();
         }
 
 

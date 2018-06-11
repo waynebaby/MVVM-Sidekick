@@ -42,129 +42,10 @@
 		
       - Changed more features and code snippets.
     
-
-	1.6.36.prereleased
-		
-      - Try IViewDisguise attached propertises to let a non-mvvm page to act as a IView member.
     
 
-	1.6.35
-		
-      - Fix memory leak when Viewmodel Unload it dose not release IView,(Stage Manager set to null when unload)
-      - Default Value ViewModel.IsDisposingWhenUnloadRequired = false;
-      - Default Value ViewModel.IsDisposingWhenUnbindRequired = false;
-    
-
-	1.6.34
-		
-      - Use .net Foundation nuget Package if possiable
-    
-
-	1.6.32
-		
-      - Fix one bug about Frame Designtime Support in wpf
-      - Default Value ViewModel.IsDisposingWhenUnloadRequired = true;
-      - Default Value ViewModel.IsDisposingWhenUnbindRequired = true;
-    
-
-	1.6.29
-		
-      - Current For WPF and UWP only
-      - .net Standard is coming soon
-    
-
-	1.6.27
-		
-      - Rename Command Model Resource to Command Model State
-    
-
-	1.6.25
-		
-      -  Validation:  To add a property validation error:  vm.GetValueContainer(x=&gt;propertyName).AddErrorEntry("message",ex);
- 
-      -  Validation:  Add vm.ValueContainers[propertyName]  Visitor for binding.
-            Try Visit Errors property of value container!
-            Binidng:{Binding ValueContainers[PropertyName].Errors.Count}
-    
-
-	1.6.24
-		
-      -  Validation: vm.GenerateMessage() to join all the property error messages to single string: vm.ErrorMessage.
-
-      -  Validation: override vm.OnGenrateErrorsMessage()  to rewrite the generation logic.
-
-      -  Validation: Delete vm.GetColumnErrorMessage()
-
-
-    
-
-	1.6.23
-		
-      -   Add GlobalEventRouter to BindableBase.
-    
-
-	1.6.22
-		
-      -   Modify DependencyCollectionViewGroupingManager behavior when reset group in Metro/WPA81/UAP10
-    
-
-	1.6.21
-		
-      -   Added DependencyCollectionView in Metro/WPA81/UAP10
-    
-
-	1.6.18
-		
-      -   Added ExecuteAsync(object parameter) in ReactiveCommand  (Command.CommandCore) to be awaited.
-      -   Added Code snippet for command in BindableBase.
-      -   Added ContentDialog in UWP support (as a Stage)
-    
-
-	1.6.16
-		
-      -   Fixed a new bug cosed by 1.6.15 change. 
-          In .15 you cannot show(new vm) which would wrongly give vm a testing stage manager.
-          Now it would be okay.
-    
-
-	1.6.15
-		
-      -   Fixed  View model of Page Got duplicate Call to OnBindedViewLoad()
-    
-
-	1.6.14
-		
-      -   Fixed ListenToEventRouterDataBehavior Not working in wpf bug.
-      -   Fixed View Factory cannot Createinstance Bug cos by removed  new(vm) Constructor.
-    
-
-	1.6.13
-		
-      - Deleted  Views new(vm) Constructor.  You might need update your template and deleted your contructor dependented on this.
-    
-
-	1.6.12
-		
-      - Fixed "ListenCanExecuteObservable" is not working issue #8  https://github.com/waynebaby/MVVM-Sidekick/issues/8
-    
-
-	1.6.11
-		
-      - Fix wrong reference clearance which might cause nullreference exception when Page Cache mode is Required.
-    
-
-	1.6.10
-		
-      - Try fixed behavior sdk reference to nuget package for UWP 10586.
-    
-
-	1.6.6
-		
-      - Added AddOrUpdateByKey and RemoveByKey to KeyedObservableCollection&lt;TKey, TValue&gt;
-      - Removed ReactiveCommand.CanExecuteObserver property and added new method instead ReactiveCommand.ListenCanExecuteObservable(observable&gt;bool&lt;)
-      - As Unity Finally updated it's released version, we go release.
-    
 </releaseNotes>
+    
     <tags>Rx Reactive Extensions MVVM UWP UAP Win8 Win10 APP IoT  Metro Modern UI</tags>
     <dependencies>
       <group targetFramework="uap10.0">
@@ -187,6 +68,9 @@
         <dependency id="Unity" version="[5.8.6,100.0)" />
       </group>
     </dependencies>
+    <repository type="git"
+               url="https://github.com/waynebaby/MVVM-Sidekick"
+               commit="17caacc71d2cfa40f6ce10d4f0bbec8ea68f4cda" />
   </metadata>
   <files>
     <file src="tools\" target="tools" />

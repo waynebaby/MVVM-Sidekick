@@ -62,13 +62,13 @@ namespace MVVMSidekick
             /// Constructor of ValueChangedEventArgs
             /// </summary>
             /// <param name="propertyName">Name of the property.</param>
-            /// <param name="currentlValue">The current value.</param>
+            /// <param name="originalValuel">The current value.</param>
             /// <param name="newValue">The new value.</param>
-            public ValueChangedEventArgs(string propertyName, TProperty currentlValue, TProperty newValue)
-            : base(propertyName, currentlValue, newValue)
+            public ValueChangedEventArgs(string propertyName, TProperty originalValuel, TProperty newValue)
+            : base(propertyName, originalValuel, newValue)
             {
                 NewValue = newValue;
-                CurrentValue = currentlValue;
+                OriginalValueValue = originalValuel;
             }
 
             /// <summary>
@@ -80,16 +80,16 @@ namespace MVVMSidekick
             /// Current Value
             /// </summary>
             /// <value>The old value.</value>
-            public TProperty CurrentValue { get; private set; }
+            public TProperty OriginalValueValue { get; private set; }
 
             public override object GetNewValueObject()
             {
                 return NewValue;
             }
 
-            public override object GetCurrentValueObject()
+            public override object GetOriginalValueObject()
             {
-                return CurrentValue;
+                return OriginalValueValue;
             }
         }
 

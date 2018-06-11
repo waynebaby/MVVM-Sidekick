@@ -76,7 +76,7 @@ namespace MVVMSidekick
             /// Old Value
             /// </summary>
             /// <value>The old value.</value>
-            public abstract object GetOriginalValueObject();
+            public abstract object GetCurrentValueObject();
 
             public CancellationTokenSource Cancellation { get; } = new CancellationTokenSource();
         }
@@ -93,13 +93,13 @@ namespace MVVMSidekick
             /// Constructor of ValueChangedEventArgs
             /// </summary>
             /// <param name="propertyName">Name of the property.</param>
-            /// <param name="originalValue">The old value.</param>
+            /// <param name="currentValue">The old value.</param>
             /// <param name="newValue">The new value.</param>
-            public ValueChangingEventArgs(string propertyName, TProperty originalValue, TProperty newValue)
-            : base(propertyName, originalValue, newValue)
+            public ValueChangingEventArgs(string propertyName, TProperty currentValue, TProperty newValue)
+            : base(propertyName, currentValue, newValue)
             {
                 NewValue = newValue;
-                OriginalValue = originalValue;
+                CurrentValue = currentValue;
             }
 
             /// <summary>
@@ -111,16 +111,16 @@ namespace MVVMSidekick
             /// Old Value
             /// </summary>
             /// <value>The old value.</value>
-            public TProperty OriginalValue { get; private set; }
+            public TProperty CurrentValue { get; private set; }
 
             public override object GetNewValueObject()
             {
                 return NewValue;
             }
 
-            public override object GetOriginalValueObject()
+            public override object GetCurrentValueObject()
             {
-                return OriginalValue;
+                return CurrentValue;
             }
         }
 
