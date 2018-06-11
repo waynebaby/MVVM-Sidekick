@@ -1,8 +1,7 @@
-﻿<Control x:Class="$rootnamespace$.$safeitemname$"
+﻿<UserControl x:Class="$rootnamespace$.$safeitemname$"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="{Binding DataContext.Title, ElementName=grid}"
-        Height="350" Width="525"
+        Height="480" Width="640"
         xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_net46"
         xmlns:vm="clr-namespace:$rootnamespace$.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,4 +10,4 @@
     <Grid x:Name="grid" d:DataContext="{d:DesignInstance Type=vm:$safeitemname$_Model }" >
 
     </Grid>
-</Control>
+</UserControl>

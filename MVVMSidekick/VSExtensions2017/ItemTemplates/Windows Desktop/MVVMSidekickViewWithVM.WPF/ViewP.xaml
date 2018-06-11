@@ -1,7 +1,7 @@
 ﻿<Page x:Class="$rootnamespace$.$safeitemname$"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Height="350" Width="525"
+        Height="480" Width="640"
         Title="{Binding DataContext.Title, ElementName=grid}"
         xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_net46"
         xmlns:vm="clr-namespace:$rootnamespace$.ViewModels"

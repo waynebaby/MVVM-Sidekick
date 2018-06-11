@@ -33,8 +33,10 @@ namespace $rootnamespace$
 		{				 
 			InitializeComponent();
         }
+
+        public PageViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
+
     }
 
-    public PageViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
 }
 
