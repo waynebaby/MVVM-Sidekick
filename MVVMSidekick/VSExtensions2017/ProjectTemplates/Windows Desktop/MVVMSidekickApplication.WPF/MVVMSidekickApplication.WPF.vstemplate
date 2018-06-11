@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-    <Name>MVVM-Sidekick Blank WPF 4.5 Application</Name>
-    <Description>A Blank Windows Presentation Framework 4.5 Application template works with MVVM Sidekick</Description>
+    <Name>MVVM-Sidekick Blank WPF 4.6 Application</Name>
+    <Description>A Blank Windows Presentation Framework 4.6 Application template works with MVVM Sidekick</Description>
     <Icon>MVVMSidekickApplication.WPF.ico</Icon>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType></ProjectSubType>
-    <RequiredFrameworkVersion>4.5</RequiredFrameworkVersion>
+    <RequiredFrameworkVersion>4.6</RequiredFrameworkVersion>
     <SortOrder>1</SortOrder>
     <TemplateID>Microsoft.CS.WPF.MVVMSidekickBlankApp</TemplateID>
     <TemplateGroupID>Windows</TemplateGroupID>
@@ -44,8 +44,14 @@
     <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
   </WizardExtension>
   <WizardData>
-    <packages>
-      <package id="MVVM-Sidekick" version="2.0.47" />
+    <packages repository="extension" repositoryId="MVVM-Sidekick-Extensions-2017">
+      <package id="MVVM-Sidekick" version="2.0.48" />
+      <package id="Unity" version="5.8.6" />
+      <package id="System.Reactive" version="4.0.0" />
+      <package id="System.Reactive.Interfaces" version="4.0.0" />
+      <package id="System.Reactive.Linq" version="4.0.0" />
+      <package id="System.Reactive.PlatformServices" version="4.0.0" />
+      <package id="System.Reactive.Windows.Threading" version="4.0.0" />
     </packages>
   </WizardData>
 </VSTemplate>

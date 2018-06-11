@@ -5,7 +5,7 @@ xcopy lib\*.*  ..\..\packages\MVVM-Sidekick.%ver%\lib  /s /i /y
 cd..\..\
 commoncode\commonCode UPVer nuget\mvvm-sidekick\MVVM-Sidekick.nuspec
 
-rem commoncode\commonCode DPEXT commonCode\ProjectsForNugetPackages.xml  VSExtensions2017   
+commoncode\commonCode DPEXT commonCode\ProjectsForNugetPackages.xml  VSExtensions2017   
 
 commoncode\commonCode DPTML VSExtensions2017
 

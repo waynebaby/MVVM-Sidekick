@@ -379,7 +379,7 @@ namespace CommonCode
 
 
 
-        
+
                   packageFile.Save(configPath);
                   d.Save(args[1]);
               }
@@ -409,23 +409,23 @@ namespace CommonCode
 
                 var templateRootDir = args[1];
                 var templateDefFiles = Directory.GetFiles(templateRootDir, "*.vstemplate", SearchOption.AllDirectories);
-                //var extensionFile = Directory.GetFiles(templateRootDir, "*.vsixmanifest", SearchOption.AllDirectories).FirstOrDefault();
-                //if (extensionFile == null)
-                //{
-                //    throw new FileNotFoundException();
-                //}
+                var extensionFile = Directory.GetFiles(templateRootDir, "*.vsixmanifest", SearchOption.AllDirectories).FirstOrDefault();
+                if (extensionFile == null)
+                {
+                    throw new FileNotFoundException();
+                }
 
-                //var vsixPath = new FileInfo(extensionFile).Directory.GetFiles("*.csproj").Single().FullName;
+                var vsixPath = new FileInfo(extensionFile).Directory.GetFiles("*.csproj").Single().FullName;
 
 
-                //var dvsix = XDocument.Load(vsixPath);
-              //  var ns = dvsix.Root.Name.Namespace;
-                //var itemGroup = dvsix.Descendants()
-                //    .Where(x => x.Name.LocalName == "None" && x.Attributes().Any(a => a.Name.LocalName == "Include" && a.Value.EndsWith(".vsixmanifest")))
-                //    .Select(x => x.Parent)
-                //    .Single();
+                var dvsix = XDocument.Load(vsixPath);
+                var ns = dvsix.Root.Name.Namespace;
+                var itemGroup = dvsix.Descendants()
+                    .Where(x => x.Name.LocalName == "None" && x.Attributes().Any(a => a.Name.LocalName == "Include" && a.Value.EndsWith(".vsixmanifest")))
+                    .Select(x => x.Parent)
+                    .Single();
 
-              //  var incs = itemGroup.Elements().Where(x => x.Name.LocalName == "Content" && x.Attributes().Any(a => a.Name.LocalName == "Include" && a.Value.EndsWith(".nupkg")));
+                var incs = itemGroup.Elements().Where(x => x.Name.LocalName == "Content" && x.Attributes().Any(a => a.Name.LocalName == "Include" && a.Value.EndsWith(".nupkg")));
 
                 /*    
 				<Content Include="..\..\packages\Microsoft.Bcl.1.1.9\Microsoft.Bcl.1.1.9.nupkg">
@@ -433,9 +433,9 @@ namespace CommonCode
 				  <IncludeInVSIX>true</IncludeInVSIX>
 				</Content>*/
 
-                //var pksInVSIX = incs.SelectMany(x => x.Attributes().Where(a => a.Name.LocalName == "Include").Select(a => a.Value))
-                //    .Select(x => Path.GetFileNameWithoutExtension(x));
-                //var pksInVSIXSet = new SortedSet<string>(pksInVSIX);
+                var pksInVSIX = incs.SelectMany(x => x.Attributes().Where(a => a.Name.LocalName == "Include").Select(a => a.Value))
+                    .Select(x => Path.GetFileNameWithoutExtension(x));
+                var pksInVSIXSet = new SortedSet<string>(pksInVSIX);
 
                 /*    <packages repository="extension" repositoryId="MVVM_Sidekick_Extensions.waywa msft.d1fabcfa-5ffc-4756-b047-5cfbd2931a24">
 							<package id="Rx-Core" version="2.2.5"  />
@@ -451,38 +451,37 @@ namespace CommonCode
                     var nodes =
                         docp.doc
                                 .Descendants()
-                                .Where(
-                                    x =>
-                                        x.Name.LocalName == "packages"
-                                        //&& x.Attributes().Any(a => a.Name.LocalName == "repository" && a.Value == "extension")
-                                        //&& x.Attributes().Any(a => a.Name.LocalName == "repositoryId" && a.Value.Contains("MVVM") && a.Value.Contains("Sidekick"))
+                                .Where(x=>x.Name.LocalName == "packages")
+                              .ToLookup(
+                                    x => x.Attributes().Any(a => a.Name.LocalName == "repository" && a.Value == "extension")
+                                        && x.Attributes().Any(a => a.Name.LocalName == "repositoryId" && a.Value.Contains("MVVM") && a.Value.Contains("Sidekick"))
                                         );
-                    foreach (var node in nodes)
+                    foreach (var node in nodes[false])
                     {
-                        node.RemoveAll();
+                        node.RemoveNodes();
                         var e = XElement.Parse($@"<package id=""MVVM-Sidekick"" version=""{mainValue.Value}"" />");
-                        e.Name =  XName.Get("package", node.Name.NamespaceName);
+                        e.Name = XName.Get("package", node.Name.NamespaceName);
                         node.Add(e);
                     }
 
 
-                    //var packages = nodes.SelectMany(x => x.Elements().Where(p => p.Name.LocalName == "package"));
-                    //foreach (var package in packages)
-                    //{
-                    //    var ida = package.Attributes().Single(x => x.Name.LocalName == "id");
-                    //    var versiona = package.Attributes().Single(x => x.Name.LocalName == "version");
-                    //    var tryPack = string.Format("{0}.{1}", ida.Value, versiona.Value);
-                    //    if (!pksInVSIXSet.Contains(tryPack))
-                    //    {
-                    //        var n = (char)('.' + 1);
-                    //        var item = pksInVSIXSet.GetViewBetween(ida.Value, ida.Value + n).FirstOrDefault();
-                    //        if (item != null)
-                    //        {
-                    //            versiona.Value = item.Remove(0, ida.Value.Length + 1);
-                    //        }
-                    //    }
-                    //    Console.WriteLine(package);
-                    //}
+                    var packages = nodes[true].SelectMany(x => x.Elements().Where(p => p.Name.LocalName == "package"));
+                    foreach (var package in packages)
+                    {
+                        var ida = package.Attributes().Single(x => x.Name.LocalName == "id");
+                        var versiona = package.Attributes().Single(x => x.Name.LocalName == "version");
+                        var tryPack = string.Format("{0}.{1}", ida.Value, versiona.Value);
+                        if (!pksInVSIXSet.Contains(tryPack))
+                        {
+                            var n = (char)('.' + 1);
+                            var item = pksInVSIXSet.GetViewBetween(ida.Value, ida.Value + n).FirstOrDefault();
+                            if (item != null)
+                            {
+                                versiona.Value = item.Remove(0, ida.Value.Length + 1);
+                            }
+                        }
+                        Console.WriteLine(package);
+                    }
 
                     docp.doc.Save(docp.path);
                 }
