@@ -27,7 +27,7 @@ namespace $rootnamespace$
     /// <summary>
     /// Interaction logic for $safeitemname$.xaml
     /// </summary>
-    public partial class $safeitemname$ : Control
+    public partial class $safeitemname$ : UserControl
     {
         public $safeitemname$()
 		{
