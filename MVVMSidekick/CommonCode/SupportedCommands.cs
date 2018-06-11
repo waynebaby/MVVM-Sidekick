@@ -460,7 +460,7 @@ namespace CommonCode
                     foreach (var node in nodes)
                     {
                         node.RemoveAll();
-                        var e = XElement.Parse($@"<package id=""MVVM - Sidekick"" version=""{mainValue.Value}"" />");
+                        var e = XElement.Parse($@"<package id=""MVVM-Sidekick"" version=""{mainValue.Value}"" />");
                         e.Name =  XName.Get("package", node.Name.NamespaceName);
                         node.Add(e);
                     }

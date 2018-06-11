@@ -59,10 +59,10 @@
   </WizardExtension>
   <WizardData>
     <packages>
-      <package id="MVVM - Sidekick" version="2.0.46" />
+      <package id="MVVM-Sidekick" version="2.0.47" />
     </packages>
     <packages>
-      <package id="MVVM - Sidekick" version="2.0.46" />
+      <package id="MVVM-Sidekick" version="2.0.47" />
     </packages>
     <UsePackageReferences>true</UsePackageReferences>
   </WizardData>

@@ -281,11 +281,11 @@ namespace MVVMSidekick
                 var oldvalue = _value;
                 _value = newValue;
 
-                ValueChangedEventArgs<TProperty> arg = new ValueChangedEventArgs<TProperty>(message, oldvalue, newValue);
+                ValueChangedEventArgs<TProperty> changedArg = new ValueChangedEventArgs<TProperty>(message, oldvalue, newValue);
 
-                modelInstance.RaisePropertyChanged(arg);
-                ValueChanged?.Invoke(this, arg);
-                NonGenericValueChanged?.Invoke(this, arg);
+                modelInstance.RaisePropertyChanged(changedArg);
+                ValueChanged?.Invoke(this, changedArg);
+                NonGenericValueChanged?.Invoke(this, changedArg);
 
 
             }
