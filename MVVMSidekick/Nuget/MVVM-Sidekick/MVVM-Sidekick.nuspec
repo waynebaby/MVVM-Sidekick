@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>2.0.48</version>
+    <version>2.0.50</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,8 +38,9 @@
 
     </summary>
     <releaseNotes>
-	2.0.48
+	2.0.50
 		
+      - Fixed x86 Dll Missing
       - Changed more features and code snippets.
       - Added PropertyChanging support. You can also cancel a change.
       - Added Command Executing support. you can cancel a command before anything been done.
