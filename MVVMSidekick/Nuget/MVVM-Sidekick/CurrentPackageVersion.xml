@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <versions>
   <version>
-    <id>2.0.49</id>
+    <id>2.0.50</id>
+    <releaseNotes>
+      - Fixed Command failed to enable bug (Imported by PropertyChanging async cancellation check).
+    </releaseNotes>
+  </version>
+  <version>
+    <id>2.0.50</id>
     <releaseNotes>
       - Fixed x86 Dll Missing
       - Changed more features and code snippets.
