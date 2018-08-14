@@ -114,7 +114,7 @@ namespace MVVMSidekick.ViewModels
                 reference.Container = new ValueContainer<T>(propertyName, model);
                 if (defaultValueFactory != null)
                 {
-                    reference.Container.Value = defaultValueFactory();
+                    reference.Container.SetValue(defaultValueFactory());
                 }
             }
             return reference.Container;
@@ -132,7 +132,9 @@ namespace MVVMSidekick.ViewModels
         /// <returns>ValueContainer&lt;T&gt;.</returns>
         public static ValueContainer<T> Initialize<T>(this BindableBase model, string propertyName, ref Property<T> reference, ref Func<BindableBase, ValueContainer<T>> locator, Func<BindableBase, T> defaultValueFactory = null)
         {
-            return Initialize(model, propertyName, ref reference, ref locator, () => (defaultValueFactory != null) ? defaultValueFactory(model) : default(T));
+            return Initialize(model, propertyName, ref reference, ref locator, 
+                () => 
+                (defaultValueFactory != null) ? defaultValueFactory(model) : default(T));
         }
     }
 

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>2.0.51</version>
+    <version>2.0.52</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,6 +38,11 @@
 
     </summary>
     <releaseNotes>
+	2.0.52
+		
+      - Fixed DefaultValueFactory Failed to execute bug. (Alsp Imported by PropertyChanging async cancellation check)
+    
+
 	2.0.51
 		
       - Fixed Command failed to enable bug (Imported by PropertyChanging async cancellation check).

@@ -151,7 +151,7 @@ namespace Validation.ViewModels
         protected override async Task OnBindedViewLoad(IView view)
         {
             //检查规则
-            this.ListenChanged(x => x.NumberResult)
+            this.ListenValueChangedEvents(x => x.NumberResult)
                 .Select(_ => this.Number1 + this.Number2)
                 .Subscribe(targetValue =>
                 {
@@ -177,8 +177,6 @@ namespace Validation.ViewModels
                     {
                         GenrateErrorMessage();
                     }
-
-
                 })
                 .DisposeWhenUnload(this);
 

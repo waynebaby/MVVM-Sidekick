@@ -153,6 +153,7 @@ namespace MVVMSidekick.ViewModels
                 return false;
             }
             var s = CommandCore?.CanExecute(parameter);
+            var cv = LastCanExecuteValue;
             _LastCanExecuteValue.Container.SetValue( s ?? false);
             return LastCanExecuteValue;
         }

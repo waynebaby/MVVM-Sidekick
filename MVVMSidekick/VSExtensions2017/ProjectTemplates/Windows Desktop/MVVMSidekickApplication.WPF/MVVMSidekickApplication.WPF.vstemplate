@@ -45,7 +45,7 @@
   </WizardExtension>
   <WizardData>
     <packages repository="extension" repositoryId="MVVM-Sidekick-Extensions-2017">
-      <package id="MVVM-Sidekick" version="2.0.51" />
+      <package id="MVVM-Sidekick" version="2.0.52" />
       <package id="Unity" version="5.8.6" />
       <package id="System.Reactive" version="4.0.0" />
       <package id="System.Reactive.Interfaces" version="4.0.0" />

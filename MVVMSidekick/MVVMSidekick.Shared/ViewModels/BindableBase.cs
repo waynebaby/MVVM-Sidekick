@@ -81,15 +81,13 @@ namespace MVVMSidekick.ViewModels
         {
             if (property != null)
             {
-                var oldContainer = property.Container;
-                if (oldContainer != null)
+
+                if (property.Container != null)
                 {
 
+                    var newContainer = property.LocateValueContainer(property.Container.Model);
+                    property.Container.SetValueAndTryNotify(newContainer.Value);
 
-                    property.Container = null;
-                    property.LocateValueContainer(oldContainer.Model);
-                    oldContainer.SetValueAndTryNotify(property.Container.Value);
-                    property.Container = oldContainer;
                 }
             }
 
@@ -406,10 +404,10 @@ namespace MVVMSidekick.ViewModels
             }
 #if !(SILVERLIGHT_5 || WINDOWS_PHONE_8 || WINDOWS_PHONE_7 || NETFX_CORE)
 
-                else if (typeof(ICloneable).IsAssignableFrom(sourcetype))
-                {
-                    target = (T)((ICloneable)source).Clone();
-                }
+            else if (typeof(ICloneable).IsAssignableFrom(sourcetype))
+            {
+                target = (T)((ICloneable)source).Clone();
+            }
 #endif
             else if (typeof(System.Collections.IList).GetTypeOrTypeInfo().IsAssignableFrom(sourcetype))
             {
@@ -567,15 +565,18 @@ namespace MVVMSidekick.ViewModels
         /// <value>The event router.</value>
 
 
+
         public override EventRouter LocalEventRouter
         {
-            get { return _LocalEventRouterLocator(this).Value; }
-            set { _LocalEventRouterLocator(this).SetValueAndTryNotify(value); }
+            get =>
+                _LocalEventRouterLocator(this).Value;
+            set =>
+                _LocalEventRouterLocator(this).SetValueAndTryNotify(value);
         }
-        #region Property EventRouter LocalEventRouter Setup
+        #region Property EventRouter LocalEventRouter Setup        
         protected Property<EventRouter> _LocalEventRouter = new Property<EventRouter>(_LocalEventRouterLocator);
-        static Func<BindableBase, ValueContainer<EventRouter>> _LocalEventRouterLocator = RegisterContainerLocator<EventRouter>("LocalEventRouter", model => model.Initialize("LocalEventRouter", ref model._LocalEventRouter, ref _LocalEventRouterLocator, _LocalEventRouterDefaultValueFactory));
-        static Func<EventRouter> _LocalEventRouterDefaultValueFactory = () => { return new EventRouter(); };
+        static Func<BindableBase, ValueContainer<EventRouter>> _LocalEventRouterLocator = RegisterContainerLocator(nameof(LocalEventRouter), m => m.Initialize(nameof(LocalEventRouter), ref m._LocalEventRouter, ref _LocalEventRouterLocator, () =>
+            new EventRouter()));
         #endregion
 
 
@@ -588,7 +589,7 @@ namespace MVVMSidekick.ViewModels
     /// </summary>
     [DataContract]
     public abstract class BindableBase
-        : DisposeGroupBase, INotifyPropertyChanged, IBindable , INotifyPropertyChanging
+        : DisposeGroupBase, INotifyPropertyChanged, IBindable, INotifyPropertyChanging
     {
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
