@@ -18,13 +18,11 @@ using System.Reflection;
 using System.Reactive.Linq;
 using System.Collections.Concurrent;
 #if NETFX_CORE
-using System.Collections.Concurrent;
 
 #elif WPF
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Collections.Concurrent;
 using System.Windows.Navigation;
 
 using MVVMSidekick.Views;

@@ -121,8 +121,8 @@
       <Link>Packages\Unity.5.8.6.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="D:\_NoneSystemData\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.2.0.52.nupkg">
-      <Link>Packages\MVVM-Sidekick.2.0.52.nupkg</Link>
+    <Content Include="D:\_NoneSystemData\GitHub\MVVM-Sidekick\MVVMSidekick\Nuget\MVVM-Sidekick.2.0.56.nupkg">
+      <Link>Packages\MVVM-Sidekick.2.0.56.nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>

@@ -503,7 +503,7 @@ namespace MVVMSidekick.ViewModels
             await Dispatcher.BeginInvoke(action).Task;
 #else
 			await TaskExHelper.Yield();
-			Dispatcher.BeginInvoke(action);
+			var _ =Dispatcher.BeginInvoke(action);
 
 #endif
 
