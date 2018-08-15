@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="MVVM-Sidekick-Extensions-2017" Version="2.0.54" Language="en-US" Publisher="waywa msft" />
+        <Identity Id="MVVM-Sidekick-Extensions-2017" Version="2.0.55" Language="en-US" Publisher="waywa msft" />
         <DisplayName>MVVM-Sidekick VSIX 2017</DisplayName>
         <Description xml:space="preserve">MVVM-Sidekick Extensions For VS 2017
 </Description>

@@ -124,7 +124,7 @@ namespace MVVMSidekick
                 PropertyName = info;
                 PropertyType = typeof(TProperty);
                 Model = model;
-                Value = initValue;
+                SetValue(initValue);
                 _Errors = new ObservableCollection<ErrorEntity>();
                 _Errors.GetCollectionChangedEventObservable(model)
                     .Subscribe
@@ -136,32 +136,6 @@ namespace MVVMSidekick
                     )
                     .DisposeWith(model);
 
-            }
-
-            event EventHandler<ValueChangedEventArgs> INotifyChanged.NonGenericValueChanged
-            {
-                add
-                {
-                    throw new NotImplementedException();
-                }
-
-                remove
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            event EventHandler<ValueChangingEventArgs> INotifyChanging.NonGenericValueChanging
-            {
-                add
-                {
-                    throw new NotImplementedException();
-                }
-
-                remove
-                {
-                    throw new NotImplementedException();
-                }
             }
 
             #endregion
@@ -251,9 +225,14 @@ namespace MVVMSidekick
                 var changingArg = new ValueChangingEventArgs<TProperty>(message, _value, newValue);
 
                 modelInstance.RaisePropertyChanging(changingArg);
+                var oldvalue = _value;
+                _value = newValue;
+
                 await Task.Yield();
                 if (changingArg.Cancellation.IsCancellationRequested)
                 {
+
+                    _value= oldvalue ;
                     return;
                 }
 
@@ -263,6 +242,7 @@ namespace MVVMSidekick
                     await Task.Yield();
                     if (changingArg.Cancellation.IsCancellationRequested)
                     {
+                        _value = oldvalue;
                         return;
                     }
                 }
@@ -271,15 +251,16 @@ namespace MVVMSidekick
                 {
                     NonGenericValueChanging.Invoke(this, changingArg);
                     await Task.Yield();
+                 
                     if (changingArg.Cancellation.IsCancellationRequested)
                     {
+                        _value = oldvalue;
                         return;
                     }
                 }
-                
 
-                var oldvalue = _value;
-                _value = newValue;
+
+   
 
                 ValueChangedEventArgs<TProperty> changedArg = new ValueChangedEventArgs<TProperty>(message, oldvalue, newValue);
 
@@ -391,9 +372,9 @@ namespace MVVMSidekick
 
 
 
-            object IValueContainer.Model =>this.Model;
+            object IValueContainer.Model => this.Model;
 
-          
+
         }
 
 

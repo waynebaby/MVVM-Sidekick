@@ -28,6 +28,10 @@ namespace Validation.ViewModels
             {
                 Title = "Title is a little different in Design mode";
             }
+            var n = new SomeBindable() {  N1=1000,N2=5555};
+
+            Number1 = n.N1;
+            Number2 = n.N2;
 
         }
 
@@ -192,6 +196,38 @@ namespace Validation.ViewModels
             errorMessageBuilder.AppendLine().AppendLine("Bye");
 
         }
+    }
+
+
+
+
+    public class SomeBindable : BindableBase<SomeBindable>
+    {
+        public SomeBindable()
+        {
+            // Use propery to init value here:
+            if (IsInDesignMode)
+            {
+                //Add design time test data init here. These will not execute in runtime.
+            }
+        }
+
+
+        public decimal N1 { get => _N1Locator(this).Value; set => 
+                _N1Locator(this).SetValueAndTryNotify(value); }
+        #region Property decimal N1 Setup        
+        protected Property<decimal> _N1 = new Property<decimal>(_N1Locator);
+        static Func<BindableBase, ValueContainer<decimal>> _N1Locator = RegisterContainerLocator(nameof(N1), m => m.Initialize(nameof(N1), ref m._N1, ref _N1Locator, () => default(decimal)));
+        #endregion
+
+
+        public decimal N2 { get => _N2Locator(this).Value; set => _N2Locator(this).SetValueAndTryNotify(value); }
+        #region Property decimal N2 Setup        
+        protected Property<decimal> _N2 = new Property<decimal>(_N2Locator);
+        static Func<BindableBase, ValueContainer<decimal>> _N2Locator = RegisterContainerLocator(nameof(N2), m => m.Initialize(nameof(N2), ref m._N2, ref _N2Locator, () => default(decimal)));
+        #endregion
+
+        //Use propvm + tab +tab  to create a new property of bindable here
     }
 
 }

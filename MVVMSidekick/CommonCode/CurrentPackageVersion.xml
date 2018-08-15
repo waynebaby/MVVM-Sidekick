@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <versions>
   <version>
-    <id>2.0.56</id>
+    <id>2.0.55</id>
+    <releaseNotes>
+      - Fixed BinableBase Class Value will not take effect in the thread instantly (Also Imported by PropertyChanging async cancellation check)
+    </releaseNotes>
+    <id>2.0.52</id>
     <releaseNotes>
       - Fixed DefaultValueFactory Failed to execute bug. (Also Imported by PropertyChanging async cancellation check)
     </releaseNotes>
