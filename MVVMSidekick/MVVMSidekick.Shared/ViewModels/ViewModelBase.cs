@@ -14,18 +14,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.ComponentModel;
-using System.Linq.Expressions;
 using System.Runtime.Serialization;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Windows.Input;
 using MVVMSidekick.Commands;
-using System.Runtime.CompilerServices;
 using MVVMSidekick.Reactive;
-using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 #if NETFX_CORE
 using Windows.UI.Xaml.Controls;
@@ -62,12 +56,11 @@ using System.Windows.Threading;
 namespace MVVMSidekick.ViewModels
 {
     using EventRouting;
+    using MVVMSidekick.Common;
+    using System.Reactive;
     using System.Reactive.Disposables;
     using Utilities;
     using Views;
-    using MVVMSidekick.Common;
-    using System.Reactive;
-    using System.Diagnostics;
 
     /// <summary>
     /// Class ViewModelBase.
@@ -91,7 +84,7 @@ namespace MVVMSidekick.ViewModels
         /// Gets a value indicating whether [have return value].
         /// </summary>
         /// <value><c>true</c> if [have return value]; otherwise, <c>false</c>.</value>
-        public override bool HaveReturnValue { get { return true; } }
+        public override bool HaveReturnValue => true;
 
         /// <summary>
         /// Waits for close with result.
@@ -100,9 +93,9 @@ namespace MVVMSidekick.ViewModels
         /// <returns>Task&lt;TResult&gt;.</returns>
         public async Task<TResult> WaitForCloseWithResult(Action closingCallback = null)
         {
-            var t = new TaskCompletionSource<TResult>();
+            TaskCompletionSource<TResult> t = new TaskCompletionSource<TResult>();
 
-            this.AddDisposeAction(
+            AddDisposeAction(
                 () =>
                 {
                     closingCallback?.Invoke();
@@ -121,8 +114,8 @@ namespace MVVMSidekick.ViewModels
         /// <value>The result.</value>
         public TResult Result
         {
-            get { return _ResultLocator(this).Value; }
-            set { _ResultLocator(this).SetValueAndTryNotify(value); }
+            get => _ResultLocator(this).Value;
+            set => _ResultLocator(this).SetValueAndTryNotify(value);
         }
 
         #region Property TResult Result Setup
@@ -135,7 +128,7 @@ namespace MVVMSidekick.ViewModels
         /// The _ result locator
         /// </summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        static Func<BindableBase, ValueContainer<TResult>> _ResultLocator =
+        private static Func<BindableBase, ValueContainer<TResult>> _ResultLocator =
             RegisterContainerLocator<TResult>(
                 "Result",
                 model =>
@@ -162,28 +155,19 @@ namespace MVVMSidekick.ViewModels
     [DataContract]
     public abstract partial class ViewModelBase<TViewModel> : BindableBase<TViewModel>, IViewModel where TViewModel : ViewModelBase<TViewModel>
     {
-        IDisposeGroup _UnbindDisposeGroup = new DisposeGroup();
-
-        IDisposeGroup _UnloadDisposeGroup = new DisposeGroup();
+        private IDisposeGroup _UnbindDisposeGroup = new DisposeGroup();
+        private IDisposeGroup _UnloadDisposeGroup = new DisposeGroup();
         /// <summary>
         /// Resource Group that need dispose when Unbind from UI;
         /// </summary>
 
-        public IDisposeGroup UnbindDisposeGroup
-        {
-            get { return _UnbindDisposeGroup; }
-            //set { _UnbindDisposeGroup = value; }
-        }
+        public IDisposeGroup UnbindDisposeGroup => _UnbindDisposeGroup;
 
         /// <summary>
         /// Resource Group that need dispose when Unload from UI;
         /// </summary>											   
 
-        public IDisposeGroup UnloadDisposeGroup
-        {
-            get { return _UnloadDisposeGroup; }
-            //set { _UnloadDisposeGroup = value; }
-        }
+        public IDisposeGroup UnloadDisposeGroup => _UnloadDisposeGroup;
 
 
         /// <summary>
@@ -200,8 +184,8 @@ namespace MVVMSidekick.ViewModels
         public ViewModelBase()
         {
 
-            this.IsDisposingWhenUnloadRequired = false;
-            this.IsDisposingWhenUnbindRequired = false;
+            IsDisposingWhenUnloadRequired = false;
+            IsDisposingWhenUnbindRequired = false;
 
 
             GetValueContainer(x => x.UIBusyTaskCount)
@@ -248,7 +232,7 @@ namespace MVVMSidekick.ViewModels
         /// <returns>Task.</returns>
         Task IViewModelLifetime.OnBindedViewLoad(IView view)
         {
-            foreach (var item in GetFieldNames())
+            foreach (string item in GetFieldNames())
             {
                 RaisePropertyChanged(new PropertyChangedEventArgs(item));
             }
@@ -342,7 +326,7 @@ namespace MVVMSidekick.ViewModels
                 UnloadDisposeGroup.Dispose();
                 if (IsDisposingWhenUnloadRequired)
                 {
-                    this.Dispose();
+                    Dispose();
                 }
                 await TaskExHelper.Yield();
             }
@@ -363,7 +347,7 @@ namespace MVVMSidekick.ViewModels
         /// Set: Will VM be Disposed when unload from View.
         /// </summary>
         /// <value><c>true</c> if this instance is disposing when unload required; otherwise, <c>false</c>.</value>
-        public bool IsDisposingWhenUnloadRequired { get; set; }
+        public bool IsDisposingWhenUnloadRequired { get;  set; }
 
 
 #if NETFX_CORE
@@ -395,7 +379,7 @@ namespace MVVMSidekick.ViewModels
         /// <summary>
         /// The _ stage manager
         /// </summary>
-        MVVMSidekick.Views.IStageManager _StageManager = new TestingStageManager();
+        private MVVMSidekick.Views.IStageManager _StageManager = new TestingStageManager();
 
         /// <summary>
         /// Gets or sets the stage manager.												 I
@@ -404,15 +388,15 @@ namespace MVVMSidekick.ViewModels
         //[Microsoft.Practices.Unity.Dependency(Testing.Constants.DependencyKeyForTesting)]
         public MVVMSidekick.Views.IStageManager StageManager
         {
-            get { return _StageManager; }
-            set { _StageManager = value; }
+            get => _StageManager;
+            set => _StageManager = value;
         }
 
         /// <summary>
         /// 是否有返回值
         /// </summary>
         /// <value><c>true</c> if [have return value]; otherwise, <c>false</c>.</value>
-        public virtual bool HaveReturnValue { get { return false; } }
+        public virtual bool HaveReturnValue => false;
         /// <summary>
         /// 本UI是否处于忙状态
         /// </summary>
@@ -420,22 +404,24 @@ namespace MVVMSidekick.ViewModels
 
         public bool IsUIBusy
         {
-            get { return _IsUIBusyLocator(this).Value; }
-            set { _IsUIBusyLocator(this).SetValueAndTryNotify(value); }
+            get => _IsUIBusyLocator(this).Value;
+            set => _IsUIBusyLocator(this).SetValueAndTryNotify(value);
         }
         #region Property bool IsUIBusy Setup
         /// <summary>
         /// The _ is UI busy
         /// </summary>
         protected Property<bool> _IsUIBusy = new Property<bool>(_IsUIBusyLocator);
+
         /// <summary>
         /// The _ is UI busy locator
         /// </summary>
-        static Func<BindableBase, ValueContainer<bool>> _IsUIBusyLocator = RegisterContainerLocator<bool>("IsUIBusy", model => model.Initialize("IsUIBusy", ref model._IsUIBusy, ref _IsUIBusyLocator, _IsUIBusyDefaultValueFactory));
+        private static Func<BindableBase, ValueContainer<bool>> _IsUIBusyLocator = RegisterContainerLocator<bool>("IsUIBusy", model => model.Initialize("IsUIBusy", ref model._IsUIBusy, ref _IsUIBusyLocator, _IsUIBusyDefaultValueFactory));
+
         /// <summary>
         /// The _ is UI busy default value factory
         /// </summary>
-        static Func<bool> _IsUIBusyDefaultValueFactory = null;
+        private static Func<bool> _IsUIBusyDefaultValueFactory = null;
         #endregion
 
 
@@ -446,8 +432,8 @@ namespace MVVMSidekick.ViewModels
         /// <value>The UI busy task count.</value>
         private int UIBusyTaskCount
         {
-            get { return _UIBusyTaskCountLocator(this).Value; }
-            set { _UIBusyTaskCountLocator(this).SetValueAndTryNotify(value); }
+            get => _UIBusyTaskCountLocator(this).Value;
+            set => _UIBusyTaskCountLocator(this).SetValueAndTryNotify(value);
         }
         #region Property int UIBusyTaskCount Setup
         private Property<int> _UIBusyTaskCount = new Property<int>(_UIBusyTaskCountLocator);
@@ -463,9 +449,9 @@ namespace MVVMSidekick.ViewModels
         /// <returns>Task.</returns>
         public async Task WaitForClose(Action closingCallback = null)
         {
-            var t = new TaskCompletionSource<object>();
+            TaskCompletionSource<object> t = new TaskCompletionSource<object>();
 
-            this.AddDisposeAction(
+            UnloadDisposeGroup.AddDisposeAction(
                 () =>
                 {
                     closingCallback?.Invoke();
@@ -481,7 +467,7 @@ namespace MVVMSidekick.ViewModels
         /// </summary>
         public void CloseViewAndDispose()
         {
-            this.StageManager?.CurrentBindingView?.SelfClose();
+            StageManager?.CurrentBindingView?.SelfClose();
             Dispose();
         }
 
@@ -524,11 +510,11 @@ namespace MVVMSidekick.ViewModels
 
             CancellationTokenSource tempCSource;
 
-            var cmdarh = inputContext as EventPattern<EventCommandEventArgs>;
+            EventPattern<EventCommandEventArgs> cmdarh = inputContext as EventPattern<EventCommandEventArgs>;
             if (cmdarh != null)
             {
                 tempCSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, cmdarh.EventArgs.Cancellation.Token);
-                var oldBody = taskBody;
+                Func<Tin, CancellationToken, Task<Tout>> oldBody = taskBody;
                 taskBody = async (i, c) =>
                 {
                     try
@@ -540,7 +526,7 @@ namespace MVVMSidekick.ViewModels
                             return default(Tout);
                         }
 
-                        var rval = await oldBody(i, c);
+                        Tout rval = await oldBody(i, c);
 
                         if (c.IsCancellationRequested)
                         {
@@ -564,7 +550,7 @@ namespace MVVMSidekick.ViewModels
             else
             {
                 tempCSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                var oldBody = taskBody;
+                Func<Tin, CancellationToken, Task<Tout>> oldBody = taskBody;
                 taskBody = async (i, c) =>
                 {
                     try
@@ -575,7 +561,7 @@ namespace MVVMSidekick.ViewModels
                             return default(Tout);
                         }
 
-                        var rval = await oldBody(i, c);
+                        Tout rval = await oldBody(i, c);
 
 
                         return rval;
@@ -590,7 +576,7 @@ namespace MVVMSidekick.ViewModels
             }
             //Add Executing and executed events
             {
-                var oldBody = taskBody;
+                Func<Tin, CancellationToken, Task<Tout>> oldBody = taskBody;
                 taskBody = async (i, c) =>
                 {
                     (Tin InputContext, CancellationTokenSource CancellationSource) TaskExecuting = (inputContext, tempCSource);
@@ -600,7 +586,7 @@ namespace MVVMSidekick.ViewModels
 
                     if (tempCSource.IsCancellationRequested)
                     {
-                       return default(Tout);
+                        return default(Tout);
                     }
 
                     GlobalEventRouter.RaiseEvent(this, TaskExecuting, nameof(TaskExecuting));
@@ -611,10 +597,10 @@ namespace MVVMSidekick.ViewModels
                         return default(Tout);
                     }
 
-                    var valueTask = oldBody(inputContext, tempCSource.Token);
-                    var value = await valueTask;
+                    Task<Tout> valueTask = oldBody(inputContext, tempCSource.Token);
+                    Tout value = await valueTask;
 
-                    var TaskExecuted = (InputContext: inputContext, Task: valueTask as Task);
+                    (Tin InputContext, Task Task) TaskExecuted = (InputContext: inputContext, Task: valueTask as Task);
 
                     LocalEventRouter.RaiseEvent(this, TaskExecuted, nameof(TaskExecuted));
                     await Task.Yield();
@@ -765,11 +751,11 @@ namespace MVVMSidekick.ViewModels
         private Dispatcher GetCurrentViewDispatcher()
         {
             DependencyObject dp = null;
-            if (this.StageManager == null)
+            if (StageManager == null)
             {
                 return null;
             }
-            else if ((dp = (this.StageManager.CurrentBindingView as DependencyObject)) == null)
+            else if ((dp = (StageManager.CurrentBindingView as DependencyObject)) == null)
             {
                 return null;
             }
@@ -811,7 +797,7 @@ namespace MVVMSidekick.ViewModels
         {
             get
             {
-                var current = GetCurrentViewDispatcher();
+                Dispatcher current = GetCurrentViewDispatcher();
                 if (current != null)
                 {
                     return current;

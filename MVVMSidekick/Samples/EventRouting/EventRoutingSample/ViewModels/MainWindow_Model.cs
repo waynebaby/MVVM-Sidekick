@@ -87,6 +87,8 @@ namespace EventRoutingSample.ViewModels
                           vm,
                           async (e, cancelToken) =>
                           {
+                              await vm.StageManager.DefaultStage.Show<DisopseTestForBehaviors_Model>(isWaitingForDispose: true);
+                              await vm.StageManager.DefaultStage.Show<DisopseTestForBehaviors_Model>();
                               await vm.StageManager.DefaultStage.Show<DisopseTestForBehaviors_Model>();
                           })
                       .DoNotifyDefaultEventRouter(vm, commandId)
@@ -99,7 +101,7 @@ namespace EventRoutingSample.ViewModels
               }));
         #endregion
 
-   
+
 
     }
 

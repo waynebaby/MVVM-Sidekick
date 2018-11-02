@@ -97,7 +97,7 @@ namespace MVVMSidekick.Views
             return vm.Result;
 
         }
-        public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel
+        public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null, bool isWaitingForDispose = false) where TTarget : class, IViewModel
         {
             var vm = targetViewModel ?? ServiceLocator.Instance.Resolve<TTarget>(viewMappingKey);
             var vmt = InternalTestShow(vm, viewMappingKey);
@@ -123,10 +123,15 @@ namespace MVVMSidekick.Views
 
         }
 
-        public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel
+        public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null, bool isWaitingForDispose = false ,bool autoDisposeWhenUnload =true) where TTarget : class, IViewModel
         {
             var vm = targetViewModel ?? ServiceLocator.Instance.Resolve<TTarget>(viewMappingKey);
-            return await InternalTestShow(vm, viewMappingKey);
+            var w = InternalTestShow(vm, viewMappingKey);
+            if (isWaitingForDispose)
+            {
+                return await w;
+            }
+            return vm;
         }
 
         private async Task<TTarget> InternalTestShow<TTarget>(TTarget vm, string viewMappingKey) where TTarget : class, IViewModel

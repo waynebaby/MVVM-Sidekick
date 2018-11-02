@@ -8,7 +8,7 @@ using System.Windows;
 using System.IO;
 using MVVMSidekick.Services;
 
- 
+
 
 #if NETFX_CORE
 using Windows.UI.Xaml;
@@ -57,15 +57,13 @@ namespace MVVMSidekick.Views
         bool IsGoForwardSupported { get; }
         FrameworkElement Target { get; }
 
-        Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel;
+        Task<TTarget> Show<TTarget>(
+            TTarget targetViewModel = null, 
+            string viewMappingKey = null, 
+            bool isWaitingForDispose = false,
+            bool autoDisposeWhenViewUnload=true) where TTarget : class, IViewModel;
 
-#if SILVERLIGHT_5 || WINDOWS_PHONE_7 || WINDOWS_PHONE_8
-        Dictionary<string, IViewModel> NavigateRequestContexts { get; set; }
-#endif
-#if WPF
-        Task<TResult> ShowAndReturnResult<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel<TResult>;
-        Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel;
-#endif
+
 
     }
 

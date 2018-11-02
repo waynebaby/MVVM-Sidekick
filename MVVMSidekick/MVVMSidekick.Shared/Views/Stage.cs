@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MVVMSidekick.ViewModels;
 using System.Reactive.Linq;
-using System.Windows;
-using System.IO;
-using MVVMSidekick.Services;
 
 
 
@@ -14,11 +10,12 @@ using MVVMSidekick.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Media;
 using Windows.Foundation;
 
 
 #elif WPF
+using System.Windows;
+
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -67,8 +64,8 @@ namespace MVVMSidekick.Views
             //SetupNavigateFrame();
         }
 
-        StageManager _navigator;
-        FrameworkElement _target;
+        private StageManager _navigator;
+        private FrameworkElement _target;
 
 
 
@@ -81,8 +78,8 @@ namespace MVVMSidekick.Views
         /// </value>
         public Frame Frame
         {
-            get { return (Frame)GetValue(FrameProperty); }
-            private set { SetValue(FrameProperty, value); }
+            get => (Frame)GetValue(FrameProperty);
+            private set => SetValue(FrameProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
@@ -102,7 +99,7 @@ namespace MVVMSidekick.Views
         /// </value>
         public FrameworkElement Target
         {
-            get { return _target; }
+            get => _target;
             private set
             {
                 _target = value;
@@ -139,24 +136,11 @@ namespace MVVMSidekick.Views
         /// <summary>
         /// Is go forward supported
         /// </summary>
-        public bool IsGoForwardSupported
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsGoForwardSupported => false;
         /// <summary>
         /// Can go forward
         /// </summary>
-        public bool CanGoForward
-        {
-            get
-            {
-                return false;
-            }
-
-        }
+        public bool CanGoForward => false;
 #endif
 
         /// <summary>
@@ -165,13 +149,7 @@ namespace MVVMSidekick.Views
         /// <value>
         /// <c>true</c> if this instance is go back supported; otherwise, <c>false</c>.
         /// </value>
-        public bool IsGoBackSupported
-        {
-            get
-            {
-                return Frame != null;
-            }
-        }
+        public bool IsGoBackSupported => Frame != null;
 
 
         /// <summary>
@@ -180,14 +158,7 @@ namespace MVVMSidekick.Views
         /// <value>
         /// <c>true</c> if this instance can go back; otherwise, <c>false</c>.
         /// </value>
-        public bool CanGoBack
-        {
-            get
-            {
-                return IsGoBackSupported ? Frame.CanGoBack : false;
-            }
-
-        }
+        public bool CanGoBack => IsGoBackSupported ? Frame.CanGoBack : false;
 
 
 
@@ -199,8 +170,8 @@ namespace MVVMSidekick.Views
         /// </value>
         public string BeaconKey
         {
-            get { return (string)GetValue(BeaconKeyProperty); }
-            private set { SetValue(BeaconKeyProperty, value); }
+            get => (string)GetValue(BeaconKeyProperty);
+            private set => SetValue(BeaconKeyProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for BeaconKey.  This enables animation, styling, binding, etc...			
@@ -213,7 +184,7 @@ namespace MVVMSidekick.Views
 
 #if WPF
 
-        private  IView InternalLocateViewIfNotSet<TTarget>(TTarget targetViewModel, string viewMappingKey, IView view) where TTarget : class, IViewModel
+        private IView InternalLocateViewIfNotSet<TTarget>(TTarget targetViewModel, string viewMappingKey, IView view) where TTarget : class, IViewModel
         {
             if (targetViewModel != null && targetViewModel.StageManager != null)
             {
@@ -245,67 +216,73 @@ namespace MVVMSidekick.Views
         /// <param name="targetViewModel"></param>
         /// <param name="viewMappingKey"></param>
         /// <returns></returns>
-        public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
+        public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null, bool isWaitingForDispose = false,bool autoDisposeWhenViewUnload=true)
              where TTarget : class, IViewModel
         {
             IView view = null;
             view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
             targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
             targetViewModel = targetViewModel ?? view.GetDefaultViewModel() as TTarget;
+
+            targetViewModel.IsDisposingWhenUnloadRequired = autoDisposeWhenViewUnload;
             SetVMAfterLoad(targetViewModel, view);
             InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-            await targetViewModel.WaitForClose();
+
+            if (isWaitingForDispose)
+            {
+                await targetViewModel.WaitForClose();
+            }
             return targetViewModel;
         }
 
 
-        /// <summary>
-        /// Show a view for view model and return a result when leave view
-        /// </summary>
-        /// <typeparam name="TTarget">View Model Type</typeparam>
-        /// <typeparam name="TResult">result Type</typeparam>
-        /// <param name="targetViewModel">View Model instance</param>
-        /// <param name="viewMappingKey">mapping key</param>
-        /// <returns></returns>
-        public async Task<TResult> ShowAndReturnResult<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
-            where TTarget : class, IViewModel<TResult>
-        {
-            IView view = null;
-            view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
-            targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-            targetViewModel = targetViewModel ?? view.GetDefaultViewModel() as TTarget;
+        ///// <summary>
+        ///// Show a view for view model and return a result when leave view
+        ///// </summary>
+        ///// <typeparam name="TTarget">View Model Type</typeparam>
+        ///// <typeparam name="TResult">result Type</typeparam>
+        ///// <param name="targetViewModel">View Model instance</param>
+        ///// <param name="viewMappingKey">mapping key</param>
+        ///// <returns></returns>
+        //public async Task<TResult> ShowAndReturnResult<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
+        //    where TTarget : class, IViewModel<TResult>
+        //{
+        //    IView view = null;
+        //    view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
+        //    targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+        //    targetViewModel = targetViewModel ?? view.GetDefaultViewModel() as TTarget;
 
 
 
-            SetVMAfterLoad(targetViewModel, view);
+        //    SetVMAfterLoad(targetViewModel, view);
 
-            InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-            return await targetViewModel.WaitForCloseWithResult();
-        }
-
-
-        /// <summary>
-        /// Show a view model and return the view model after leave view.
-        /// </summary>
-        /// <typeparam name="TTarget">view model type</typeparam>
-        /// <param name="targetViewModel">view model instance</param>
-        /// <param name="viewMappingKey">mapping key</param>
-        /// <returns></returns>
-        public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-            where TTarget : class, IViewModel
-        {
-            IView view = null;
-            view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
-            targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-            targetViewModel = targetViewModel ?? view.GetDefaultViewModel() as TTarget;
+        //    InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+        //    return await targetViewModel.WaitForCloseWithResult();
+        //}
 
 
-            SetVMAfterLoad(targetViewModel, view);
-            InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+        ///// <summary>
+        ///// Show a view model and return the view model after leave view.
+        ///// </summary>
+        ///// <typeparam name="TTarget">view model type</typeparam>
+        ///// <param name="targetViewModel">view model instance</param>
+        ///// <param name="viewMappingKey">mapping key</param>
+        ///// <returns></returns>
+        //public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null, bool isWaitingForDispose = false)
+        //    where TTarget : class, IViewModel
+        //{
+        //    IView view = null;
+        //    view = InternalLocateViewIfNotSet<TTarget>(targetViewModel, viewMappingKey, view);
+        //    targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+        //    targetViewModel = targetViewModel ?? view.GetDefaultViewModel() as TTarget;
 
 
-            return await TaskExHelper.FromResult(new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel });
-        }
+        //    SetVMAfterLoad(targetViewModel, view);
+        //    InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+
+
+        //    return await TaskExHelper.FromResult(new ShowAwaitableResult<TTarget> { Closing = isWaitingForDispose ? targetViewModel.WaitForClose() : Task.CompletedTask, ViewModel = targetViewModel });
+        //}
 #endif
 #if SILVERLIGHT_5 || WINDOWS_PHONE_7 || WINDOWS_PHONE_8
 
@@ -565,19 +542,18 @@ Please check startup function of this mapping is well configured and be proper c
         /// <typeparam name="TTarget"></typeparam>
         /// <param name="targetViewModel"></param>
         /// <param name="viewMappingKey"></param>
+        /// <param name="isWaitingForDispose"></param>
         /// <returns></returns>
-        public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
+        public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null, bool isWaitingForDispose = false, bool autoDisposeWhenViewUnload = true)
              where TTarget : class, IViewModel
         {
-
-
-            var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
+            //bool isInstancePassedThough = targetViewModel == null;
+            object item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
             Type type;
             IView view;
             if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
             {
-
-                var frame = Target as Frame;
+                Frame frame = Target as Frame;
                 if (frame != null)
                 {
                     targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
@@ -595,18 +571,22 @@ Please check startup function of this mapping is well configured and be proper c
             }
 
             targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+            targetViewModel.IsDisposingWhenUnloadRequired = autoDisposeWhenViewUnload;
             SetVMAfterLoad(targetViewModel, view);
             InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-            await targetViewModel.WaitForClose();
+            if (isWaitingForDispose)
+            {
+                await targetViewModel.WaitForClose();
+            }
             return targetViewModel;
 
         }
 
         private static async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Type type, Windows.UI.Xaml.Controls.Frame frame) where TTarget : class, IViewModel
         {
-            var parameter = new StageNavigationContext<TTarget>() { ViewModel = targetViewModel };
-            var t = new TaskCompletionSource<object>();
-            var dip = EventRouting.EventRouter.Instance
+            StageNavigationContext<TTarget> parameter = new StageNavigationContext<TTarget>() { ViewModel = targetViewModel };
+            TaskCompletionSource<object> t = new TaskCompletionSource<object>();
+            IDisposable dip = EventRouting.EventRouter.Instance
                  .GetEventChannel<NavigationEventArgs>()
 
                  .Where(e =>
@@ -636,7 +616,7 @@ Please check startup function of this mapping is well configured and be proper c
                      }
                      else
                      {
-                         var solveV = view.GetDefaultViewModel();
+                         IViewModel solveV = view.GetDefaultViewModel();
                          if (solveV != null)
                          {
                              targetViewModel = parameter.ViewModel = (TTarget)solveV;
@@ -658,84 +638,94 @@ Please check startup function of this mapping is well configured and be proper c
             dip.DisposeWith(targetViewModel);
             return targetViewModel;
         }
-        class StageNavigationContext<T> where T : IViewModel
+
+        private class StageNavigationContext<T> where T : IViewModel
         {
             public T ViewModel { get; set; }
 
         }
 
-        /// <summary>
-        /// Show a viewmodel and return a result when leave.
-        /// </summary>
-        /// <typeparam name="TTarget"></typeparam>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="targetViewModel"></param>
-        /// <param name="viewMappingKey"></param>
-        /// <returns></returns>
-        public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
-            where TTarget : class, IViewModel<TResult>
-        {
-            var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-            Type type;
-            if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
-            {
-                Frame frame;
-                if ((frame = Target as Frame) != null)
-                {
-                    targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
+        ///// <summary>
+        ///// Show a viewmodel and return a result when leave.
+        ///// </summary>
+        ///// <typeparam name="TTarget"></typeparam>
+        ///// <typeparam name="TResult"></typeparam>
+        ///// <param name="targetViewModel"></param>
+        ///// <param name="viewMappingKey"></param>
 
-                    return await targetViewModel.WaitForCloseWithResult();
-                }
+        ///// <returns></returns>
+        //public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null, bool isWaitingForDispose = false)
+        //    where TTarget : class, IViewModel<TResult>
+        //{
+        //    object item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
+        //    Type type;
+        //    if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
+        //    {
+        //        Frame frame;
+        //        if ((frame = Target as Frame) != null)
+        //        {
+        //            targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
 
-            }
+        //            return await targetViewModel.WaitForCloseWithResult();
+        //        }
 
-
-            IView view = item as IView;
-            targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-            SetVMAfterLoad(targetViewModel, view);
-            InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-            return await targetViewModel.WaitForCloseWithResult();
-        }
-
-        /// <summary>
-        /// show a view model mapped view and return the viewmodel 
-        /// </summary>
-        /// <typeparam name="TTarget"></typeparam>
-        /// <param name="targetViewModel"></param>
-        /// <param name="viewMappingKey"></param>
-        /// <returns></returns>
-
-        public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-            where TTarget : class, IViewModel
-        {
-            var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-            Type type;
-            if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
-            {
-                Frame frame;
-                if ((frame = Target as Frame) != null)
-                {
-                    targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
-
-                    return new ShowAwaitableResult<TTarget>
-                    {
-                        Closing = targetViewModel.WaitForClose(),
-                        ViewModel = targetViewModel
-                    };
-                }
-
-            }
+        //    }
 
 
-            IView view = item as IView;
+        //    IView view = item as IView;
+        //    targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+        //    SetVMAfterLoad(targetViewModel, view);
+        //    InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+        //    if (isWaitingForDispose)
+        //    {
+        //        return await targetViewModel.WaitForCloseWithResult();
+        //    }
+        //    else
+        //    {
+        //        return targetViewModel.Result;
+        //    }
 
-            targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-            SetVMAfterLoad(targetViewModel, view);
-            InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+        //}
 
-            var tr = targetViewModel.WaitForClose();
-            return new ShowAwaitableResult<TTarget> { Closing = tr, ViewModel = targetViewModel };
-        }
+        ///// <summary>
+        ///// show a view model mapped view and return the viewmodel 
+        ///// </summary>
+        ///// <typeparam name="TTarget"></typeparam>
+        ///// <param name="targetViewModel"></param>
+        ///// <param name="viewMappingKey"></param>
+        ///// <returns></returns>
+
+        //public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
+        //    where TTarget : class, IViewModel
+        //{
+        //    object item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
+        //    Type type;
+        //    if ((type = item as Type) != null) //only MVVMPage Can be registered as Type
+        //    {
+        //        Frame frame;
+        //        if ((frame = Target as Frame) != null)
+        //        {
+        //            targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
+
+        //            return new ShowAwaitableResult<TTarget>
+        //            {
+        //                Closing = targetViewModel.WaitForClose(),
+        //                ViewModel = targetViewModel
+        //            };
+        //        }
+
+        //    }
+
+
+        //    IView view = item as IView;
+
+        //    targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
+        //    SetVMAfterLoad(targetViewModel, view);
+        //    InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+
+        //    Task tr = targetViewModel.WaitForClose();
+        //    return new ShowAwaitableResult<TTarget> { Closing = tr, ViewModel = targetViewModel };
+        //}
 #endif
 
 
@@ -764,7 +754,7 @@ Please check startup function of this mapping is well configured and be proper c
 
                     var ipv = (view as IPageView);
 
-                    if (ipv!=null)
+                    if (ipv != null)
                     {
                         ipv.FrameObject = this.Target;
                     }
@@ -773,22 +763,22 @@ Please check startup function of this mapping is well configured and be proper c
                     break;
 #endif
 #if WINDOWS_UWP
-                    case ContentDialog targetCDControl:
-                        targetCDControl.Content = view.ViewObject;
-                        var viewModel = view.ViewModel;
-                        IDisposable closeFromViewModel = null;
-                        closeFromViewModel = Observable.FromAsync(x => viewModel.WaitForClose())
-                                .ObserveOnDispatcher()
-                                .Subscribe(_ =>
-                                {
-                                    viewModel.IsDisposingWhenUnloadRequired = true;
-                                    targetCDControl.Hide();
-                                    targetCDControl.Content = null;
-                                    closeFromViewModel?.Dispose();
-                                    closeFromViewModel = null;
-                                });
-                        var t = targetCDControl.ShowAsync();
-                        break;
+                case ContentDialog targetCDControl:
+                    targetCDControl.Content = view.ViewObject;
+                    IViewModel viewModel = view.ViewModel;
+                    IDisposable closeFromViewModel = null;
+                    closeFromViewModel = Observable.FromAsync(x => viewModel.WaitForClose())
+                            .ObserveOnDispatcher()
+                            .Subscribe(_ =>
+                            {
+                                viewModel.IsDisposingWhenUnloadRequired = true;
+                                targetCDControl.Hide();
+                                targetCDControl.Content = null;
+                                closeFromViewModel?.Dispose();
+                                closeFromViewModel = null;
+                            });
+                    IAsyncOperation<ContentDialogResult> t = targetCDControl.ShowAsync();
+                    break;
 #endif
                 case ContentControl targetCControl:
                     targetCControl.Content = view.ViewObject;
