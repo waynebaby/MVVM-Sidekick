@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>2.0.67</version>
+    <version>2.0.69</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,7 +38,7 @@
 
     </summary>
     <releaseNotes>
-	2.0.67
+	2.0.69
 		
       - Changed Behavior: IStage.Show&lt;TViewModel&gt;() now accept new parameter: (autoDisposeWhenUnload: true/false) to indicate viewmodel will be disposed when View is unloaded. default value is true
       - Changed Behavior: WaitForClose will bound to View's Unload but not VM's Dispose
