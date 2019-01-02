@@ -59,12 +59,12 @@ namespace MVVMSidekick.Views
         public Stage(FrameworkElement target, string beaconKey, StageManager stageManager)
         {
             Target = target;
-            _navigator = stageManager;
+            _stageManager = stageManager;
             BeaconKey = beaconKey;
             //SetupNavigateFrame();
         }
 
-        private StageManager _navigator;
+        private StageManager _stageManager;
         private FrameworkElement _target;
 
 
@@ -97,13 +97,13 @@ namespace MVVMSidekick.Views
         /// <value>
         /// The target.
         /// </value>
-        public FrameworkElement Target
+        public Object Target
         {
             get => _target;
             private set
             {
-                _target = value;
-                Frame = _target as Frame;
+                _target = value as FrameworkElement;
+              
 
 
             }
@@ -226,7 +226,7 @@ namespace MVVMSidekick.Views
 
             targetViewModel.IsDisposingWhenUnloadRequired = autoDisposeWhenViewUnload;
             SetVMAfterLoad(targetViewModel, view);
-            InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+            InternalShowView(view, Target as FrameworkElement, _stageManager.CurrentBindingView.ViewModel);
 
             if (isWaitingForDispose)
             {
@@ -573,7 +573,7 @@ Please check startup function of this mapping is well configured and be proper c
             targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
             targetViewModel.IsDisposingWhenUnloadRequired = autoDisposeWhenViewUnload;
             SetVMAfterLoad(targetViewModel, view);
-            InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+            InternalShowView(view, Target as FrameworkElement, _stageManager.CurrentBindingView.ViewModel);
             if (isWaitingForDispose)
             {
                 await targetViewModel.WaitForClose();

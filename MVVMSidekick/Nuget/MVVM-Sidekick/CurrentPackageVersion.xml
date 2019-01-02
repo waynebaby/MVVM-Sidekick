@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <versions>
   <version>
-    <id>2.0.66</id>
+    <id>2.0.71</id>
     <releaseNotes>
       - Changed Behavior: IStage.Show&lt;TViewModel&gt;() now accept new parameter: (autoDisposeWhenUnload: true/false) to indicate viewmodel will be disposed when View is unloaded. default value is true
       - Changed Behavior: WaitForClose will bound to View's Unload but not VM's Dispose

@@ -1,4 +1,5 @@
-﻿#if !NETFX_CORE
+﻿#if !__IOS__
+#if !NETFX_CORE
 using MVVMSidekick.EventRouting;
 using MVVMSidekick.ViewModels;
 using System;
@@ -371,3 +372,4 @@ namespace MVVMSidekick.Behaviors
 	}
 
 }
+#endif

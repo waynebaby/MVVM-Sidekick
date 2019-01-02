@@ -3,10 +3,10 @@
     "Microsoft.Bcl": "1.1.10",
     "Microsoft.Bcl.Async": "1.0.168",
     "Microsoft.Bcl.Build": "1.0.21",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "6.1.5",
-    "System.Reactive": "4.0.0",
-    "System.Reactive.PlatformServices": "4.0.0",
-    "System.Reactive.Windows.Threading": "4.0.0",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "6.1.9",
+    "System.Reactive": "4.1.2",
+    "System.Reactive.PlatformServices": "4.1.2",
+    "System.Reactive.Windows.Threading": "4.1.2",
     "Unity": "5.8.6"
   },
   "frameworks": {
