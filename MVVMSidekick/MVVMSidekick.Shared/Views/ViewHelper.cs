@@ -71,9 +71,9 @@ namespace MVVMSidekick
 			public static object GetDefaultDesigningViewModel(this IView view)
 			{
 
-#if !NETFX_CORE && ! WPF
-                         throw new NotImplementedException("Not supported current platform yet");
-#endif
+#if Xamarin_Forms
+                throw new System.NotImplementedException("Not supported current platform yet");
+#else
                 var f = view as FrameworkElement;
 				object rval = null;
 #if NETFX_CORE
@@ -89,12 +89,13 @@ namespace MVVMSidekick
 					rval = f.Resources[DEFAULT_VM_NAME];
 				}
 				return rval;
-			}
+#endif
+            }
 
-			/// <summary>
-			/// The view unload call back
-			/// </summary>
-			internal static RoutedEventHandler ViewUnloadCallBack
+            /// <summary>
+            /// The view unload call back
+            /// </summary>
+            internal static RoutedEventHandler ViewUnloadCallBack
 				= async (o, e) =>
 				{
 					IView v = o as IView;

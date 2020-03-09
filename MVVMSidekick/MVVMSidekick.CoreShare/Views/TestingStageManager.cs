@@ -1,12 +1,6 @@
-﻿using System;
+﻿using MVVMSidekick.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MVVMSidekick.ViewModels;
-using System.Reactive.Linq;
-using System.Windows;
-using System.IO;
-using MVVMSidekick.Services;
 
 
 
@@ -48,15 +42,13 @@ namespace MVVMSidekick.Views
 {
     public class TestingStageManager : IStageManager
     {
-
-        Dictionary<string, IStage> _currentStages = new Dictionary<string, IStage>();
+        private Dictionary<string, IStage> _currentStages = new Dictionary<string, IStage>();
 
         public IStage this[string beaconKey]
         {
             get
             {
-                IStage stage = null;
-                _currentStages.TryGetValue(beaconKey, out stage);
+                _currentStages.TryGetValue(beaconKey, out IStage stage);
                 if (stage == null)
                 {
                     stage = new TestingStage()
@@ -66,7 +58,6 @@ namespace MVVMSidekick.Views
                         CanGoForward = true,
                         IsGoBackSupported = true,
                         IsGoForwardSupported = true,
-                        Frame = null,
                         Target = null
                     };
                     _currentStages[beaconKey] = stage;
@@ -78,27 +69,21 @@ namespace MVVMSidekick.Views
 
         public IView CurrentBindingView
         {
-            get;set;
+            get; set;
         }
 
         public IStage DefaultStage
         {
-            get
-            {
-                return this[""];
-            }
+            get => this[""];
 
-            set
-            {
-                _currentStages[""] = value;
-            }
+            set => _currentStages[""] = value;
         }
 
         public IViewModel ViewModel { get; set; }
 
         public void InitParent(Func<object> parentLocator)
         {
-   
+
         }
     }
 }

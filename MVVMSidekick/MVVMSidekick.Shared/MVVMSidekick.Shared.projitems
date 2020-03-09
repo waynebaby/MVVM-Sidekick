@@ -15,6 +15,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Patterns\Patterns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Testing\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\PropertyBridge.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\StageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TestingStage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewModelLocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewModelToViewMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewModelToViewMapperHelper.cs" />
