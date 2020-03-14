@@ -10,7 +10,7 @@ using MVVMSidekick.Services;
 
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -46,6 +46,51 @@ using System.Windows.Controls.Primitives;
 
 namespace MVVMSidekick.Views
 {
+
+    public class TestingStageManager : IStageManager
+    {
+        private Dictionary<string, IStage> _currentStages = new Dictionary<string, IStage>();
+        public IStage this[string beaconKey]
+        {
+            get
+            {
+                _currentStages.TryGetValue(beaconKey, out IStage stage);
+                if (stage == null)
+                {
+                    stage = new TestingStage()
+                    {
+                        BeaconKey = beaconKey,
+                        CanGoBack = true,
+                        CanGoForward = true,
+                        IsGoBackSupported = true,
+                        IsGoForwardSupported = true,
+                        Target = null
+                    };
+                    _currentStages[beaconKey] = stage;
+                }
+                return stage;
+            }
+        }
+
+        public IView CurrentBindingView
+        {
+            get; set;
+        }
+
+        public IStage DefaultStage
+        {
+            get => null;
+
+            set { }
+        }
+
+        public IViewModel ViewModel { get; set; }
+
+        public void InitParent(Func<object> parentLocator)
+        {
+
+        }
+    }
     public class TestingStage : IStage
     {
 
@@ -82,30 +127,26 @@ namespace MVVMSidekick.Views
             get; set;
         }
 
-        public FrameworkElement Target
+        public Object Target
         {
             get; set;
         }
-#if SILVERLIGHT_5 || WINDOWS_PHONE_7 || WINDOWS_PHONE_8
-        public Dictionary<string, IViewModel> NavigateRequestContexts { get; set; }
-#endif
+
 #if WPF
         public async Task<TResult> ShowAndReturnResult<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel<TResult>
         {
             var vm = targetViewModel ?? ServiceLocator.Instance.Resolve<TTarget>(viewMappingKey);
-            vm = await InternalTestShow(vm, viewMappingKey);
+            vm = await InternalTestShow(vm).ConfigureAwait(true);
             return vm.Result;
 
         }
-        public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null, bool isWaitingForDispose = false) where TTarget : class, IViewModel
+        public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel
         {
             var vm = targetViewModel ?? ServiceLocator.Instance.Resolve<TTarget>(viewMappingKey);
-            var vmt = InternalTestShow(vm, viewMappingKey);
-            return await TaskExHelper.FromResult(new ShowAwaitableResult<TTarget>() { Closing = vm.WaitForClose(), ViewModel = vm });
+            var vmt = InternalTestShow(vm).ConfigureAwait(true);
+            return await Task.FromResult(new ShowAwaitableResult<TTarget>() { Closing = vm.WaitForClose(), ViewModel = vm }).ConfigureAwait(true);
 
         }
-
-
 #endif 
 
         Dictionary<Type, Func<IViewModel, Task<IViewModel>>> mockingActionsWhenShown
@@ -115,7 +156,7 @@ namespace MVVMSidekick.Views
             Func<IViewModel, Task<IViewModel>> asyncAction = async (m) =>
               {
                   var inp = m as TTarget;
-                  var rval = await mockingActionWhenShowing(inp);
+                  var rval = await mockingActionWhenShowing(inp).ConfigureAwait(true);
                   inp.CloseViewAndDispose();
                   return rval;
               };
@@ -123,28 +164,28 @@ namespace MVVMSidekick.Views
 
         }
 
-        public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null, bool isWaitingForDispose = false ,bool autoDisposeWhenUnload =true) where TTarget : class, IViewModel
+        public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null, bool isWaitingForDispose = false, bool autoDisposeWhenUnload = true) where TTarget : class, IViewModel
         {
             var vm = targetViewModel ?? ServiceLocator.Instance.Resolve<TTarget>(viewMappingKey);
-            var w = InternalTestShow(vm, viewMappingKey);
+            var w = InternalTestShow(vm);
             if (isWaitingForDispose)
             {
-                return await w;
+                return await w.ConfigureAwait(true);
             }
             return vm;
         }
 
-        private async Task<TTarget> InternalTestShow<TTarget>(TTarget vm, string viewMappingKey) where TTarget : class, IViewModel
+        private async Task<TTarget> InternalTestShow<TTarget>(TTarget vm ) where TTarget : class, IViewModel
         {
 
             Func<IViewModel, Task<IViewModel>> mockingAction = null;
             if (mockingActionsWhenShown.TryGetValue(typeof(TTarget), out mockingAction))
             {
-                await mockingAction(vm);
+                await mockingAction(vm).ConfigureAwait(true);
             }
             else
             {
-                await vm.OnBindedViewLoad(null);
+                await vm.OnBindedViewLoad(null).ConfigureAwait(true);
             }
             return vm;
         }

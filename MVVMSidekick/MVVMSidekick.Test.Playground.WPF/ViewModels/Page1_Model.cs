@@ -16,7 +16,7 @@ using System.Runtime.Serialization;
 namespace MVVMSidekick.Test.Playground.WPF.ViewModels
 {
 
-    public class Page1_Model : ViewModelBase<Page1_Model>
+    public class Page1_Model : ViewModel<Page1_Model>
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property propcmd for command
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性 propcmd 输入命令
@@ -58,7 +58,7 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
                         async e =>
                         {
                             var v = vm.StageManager.DefaultStage.Show<Page1_Model>();
-                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
+                            await Task.Yield();
                         })
                     .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()

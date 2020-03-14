@@ -15,7 +15,7 @@ using MVVMSidekick.ViewModels;
 
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -62,7 +62,7 @@ namespace MVVMSidekick
 			/// <summary>
 			/// The default vm name
 			/// </summary>
-			public static readonly string DEFAULT_VM_NAME = "DesignVM";
+			public const string DefaultVMName = "DesignVM";
 			/// <summary>
 			/// Gets the default designing view model.
 			/// </summary>
@@ -70,27 +70,30 @@ namespace MVVMSidekick
 			/// <returns>System.Object.</returns>
 			public static object GetDefaultDesigningViewModel(this IView view)
 			{
-				var f = view as FrameworkElement;
+
+
+                var f = view as FrameworkElement;
 				object rval = null;
-#if NETFX_CORE
-				if (!f.Resources.ContainsKey(DEFAULT_VM_NAME))
-#else
-				if (!f.Resources.Contains(DEFAULT_VM_NAME))
+#if WINDOWS_UWP
+				if (!f?.Resources.ContainsKey(DefaultVMName)??false)
+#elif WPF
+				if (!f?.Resources.Contains(DefaultVMName)??false)
 #endif
 				{
 					return null;
 				}
 				else
 				{
-					rval = f.Resources[DEFAULT_VM_NAME];
+					rval = f.Resources[DefaultVMName];
 				}
 				return rval;
-			}
 
-			/// <summary>
-			/// The view unload call back
-			/// </summary>
-			internal static RoutedEventHandler ViewUnloadCallBack
+            }
+
+            /// <summary>
+            /// The view unload call back
+            /// </summary>
+            internal static RoutedEventHandler ViewUnloadCallBack
 				= async (o, e) =>
 				{
 					IView v = o as IView;

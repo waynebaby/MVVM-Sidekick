@@ -1,7 +1,7 @@
 ﻿
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -47,9 +47,9 @@ namespace MVVMSidekick.Views
             get { return base.AssocatedObject.Content; }
             set
             {
-#if NETFX_CORE
+#if WINDOWS_UWP
                 AssocatedObject.Content = value as UIElement;
-#else
+#elif WPF
                 AssocatedObject.Content = value;
 #endif
             }
@@ -81,25 +81,23 @@ namespace MVVMSidekick.Views
         /// </summary>
         public static readonly DependencyProperty FrameProperty =
             DependencyProperty.Register(nameof(FrameObject), typeof(object), typeof(PageViewDisguise), new PropertyMetadata(null));
-#else
+#elif WINDOWS_UWP
         public override object Parent
         {
             get
             {
 
-                return this.AssocatedObject.Parent;
+                return this.AssocatedObject.Parent ?? this.AssocatedObject.Frame;
 
-                return this.AssocatedObject.Frame;
-
-    }
-}
+            }
+        }
 #endif
 
 #if !WPF
 
         //WPF navigates page instances but other navgates with parameters
         /// <summary>
-        /// Handles the <see cref="E:NavigatedTo" /> event.
+        /// Handles the <see cref="NavigatedTo" /> event.
         /// </summary>
         /// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
         public virtual void OnNavigatedTo(NavigationEventArgs e)
@@ -121,17 +119,15 @@ namespace MVVMSidekick.Views
 
         }
         /// <summary>
-        /// Handles the <see cref="E:NavigatedFrom" /> event.
+        /// Handles the <see cref="NavigatedFrom" /> event.
         /// </summary>
         /// <param name="e">The <see cref="NavigationEventArgs" /> instance containing the event data.</param>
         public virtual void OnNavigatedFrom(NavigationEventArgs e)
         {
 
-#if SILVERLIGHT_5
-				if (ViewModel.StageManager.DefaultStage.NavigateRequestContexts.ContainsKey(e.Uri.ToString()))
-#else
-            if (e.NavigationMode == NavigationMode.Back)
-#endif
+
+            if (e?.NavigationMode == NavigationMode.Back)
+
             {
 
                 if (ViewModel != null)
@@ -140,7 +136,7 @@ namespace MVVMSidekick.Views
                     ViewModel.Dispose();
                 }
 
-               
+
             }
 
         }

@@ -17,7 +17,7 @@ using MVVMSidekick.EventRouting;
 namespace EventRoutingSample.ViewModels
 {
 
-    public class MainWindow_Model : ViewModelBase<MainWindow_Model>
+    public class MainWindow_Model : ViewModel<MainWindow_Model>
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property propcmd for command
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性 propcmd 输入命令
@@ -57,20 +57,18 @@ namespace EventRoutingSample.ViewModels
         static Func<string> _LastHeartBeatDefaultValueFactory = () => { return default(string); };
         #endregion
 
-        protected override Task OnBindedViewLoad(IView view)
+        protected override Task OnBindedToView(IView view, IViewModel oldValue)
         {
             EventRouter.Instance.GetEventChannel<Object>()
-                .Where(e =>
-                    e.EventName == "Global HeartBeat")
-                .Subscribe(
-                    e =>
-                        LastHeartBeat = e.EventData.ToString()
-                )
-                .DisposeWhenUnload(this);
-
-            return base.OnBindedViewLoad(view);
+    .Where(e =>
+        e.EventName == "Global HeartBeat")
+    .Subscribe(
+        e =>
+            LastHeartBeat = e.EventData.ToString()
+    )
+    .DisposeWhenUnload(this);
+            return base.OnBindedToView(view, oldValue);
         }
-
 
         public CommandModel CommandNavigateToDisposeBehaviorTest => _CommandNavigateToDisposeBehaviorTestLocator(this).Value;
         #region Property CommandModel CommandNavigateToDisposeBehaviorTest Setup                

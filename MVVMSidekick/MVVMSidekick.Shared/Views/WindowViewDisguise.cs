@@ -1,7 +1,7 @@
 ﻿
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Media;
 using System.Windows.Controls;
 using System.Windows;
 using MVVMSidekick.ViewModels;
+using System;
 #elif SILVERLIGHT_5 || SILVERLIGHT_4
 						   using System.Windows.Media;
 using System.Windows.Controls;
@@ -33,8 +34,13 @@ namespace MVVMSidekick.Views
 #if WPF
     public class WindowViewDisguise : ViewDisguiseBase<Window, WindowViewDisguise>, IWindowView
     {
+      
         public WindowViewDisguise(Window assocatedObject) : base(assocatedObject)
         {
+            if (assocatedObject is null)
+            {
+                throw new InvalidOperationException();
+            }
             assocatedObject.Loaded += ViewHelper.ViewLoadCallBack;
             assocatedObject.Unloaded += ViewHelper.ViewUnloadCallBack;
 

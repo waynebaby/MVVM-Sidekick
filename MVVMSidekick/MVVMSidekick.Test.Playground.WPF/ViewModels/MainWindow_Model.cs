@@ -16,7 +16,7 @@ using System.Runtime.Serialization;
 namespace MVVMSidekick.Test.Playground.WPF.ViewModels
 {
 
-    public class MainWindow_Model : ViewModelBase<MainWindow_Model>
+    public class MainWindow_Model : ViewModel<MainWindow_Model>
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property propcmd for command
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性 propcmd 输入命令
@@ -124,7 +124,7 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
                         {
                             //Todo: Add OpenWindows logic here, or
                             await vm.StageManager.DefaultStage.Show<Window1_Model>();
-                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
+                            await Task.Yield();
                         })
                     .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()
@@ -165,7 +165,6 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
                         {
                             await vm.StageManager["Frame"].Show<Page1_Model>();
 
-                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
                         })
                     .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()
@@ -207,7 +206,6 @@ namespace MVVMSidekick.Test.Playground.WPF.ViewModels
                             //Todo: Add ShowCtrol logic here, or
                             await vm.StageManager["ContentControl"].Show<Control1_Model>();
 
-                            await MVVMSidekick.Utilities.TaskExHelper.Yield();
                         })
                     .DoNotifyDefaultEventRouter(vm, commandId)
                     .Subscribe()

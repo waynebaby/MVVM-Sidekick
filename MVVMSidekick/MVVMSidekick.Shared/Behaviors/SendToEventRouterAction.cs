@@ -1,6 +1,5 @@
 ﻿using System;
-#if !NETFX_CORE
-using Microsoft.Expression.Interactivity.Core;
+#if WPF
 
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,9 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 
-#else
+#elif WINDOWS_UWP
 using Windows.UI.Xaml;
 using System.Reflection;
 #endif
@@ -21,9 +20,9 @@ using MVVMSidekick.Utilities;
 namespace MVVMSidekick.Behaviors
 {
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 	public class SendToEventRouterAction : DependencyObject, Microsoft.Xaml.Interactivity.IAction
-#else
+#elif WPF
     public class SendToEventRouterAction : TriggerAction<DependencyObject>
 #endif
     {
@@ -66,7 +65,7 @@ namespace MVVMSidekick.Behaviors
         /// <summary>
         /// Target Event Router
         /// </summary>	
-      
+
         public static readonly DependencyProperty EventRouterProperty =
         DependencyProperty.Register("EventRouter", typeof(EventRouter), typeof(SendToEventRouterAction), new PropertyMetadata(null));
 
@@ -137,7 +136,7 @@ namespace MVVMSidekick.Behaviors
 
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 		public object Execute(object sender, object parameter)
 		{
 			var et = EventDataType;
@@ -148,7 +147,7 @@ namespace MVVMSidekick.Behaviors
 				{
 					et = EventData.GetType();
 				}
-				else if (!et.GetTypeOrTypeInfo().IsAssignableFrom(EventData.GetType().GetTypeInfo()))
+				else if (!et.GetType().GetTypeInfo().IsAssignableFrom(EventData.GetType().GetTypeInfo()))
 				{
 					return null;
 				}
@@ -159,7 +158,7 @@ namespace MVVMSidekick.Behaviors
 			targetEventRouter.GetEventChannel(et).RaiseEvent(sender, this.EventRoutingName, EventData, IsEventFiringToAllBaseClassesChannels, IsEventFiringToAllImplementedInterfacesChannels);
 			return null;
 		}
-#else
+#elif WPF
 
         /// <summary>
         /// Invokes the specified parameter.
@@ -178,7 +177,7 @@ namespace MVVMSidekick.Behaviors
                     et = typeof(object);
                 }
 
-                if (!et.GetTypeOrTypeInfo().IsAssignableFrom(EventDataType.GetType()))
+                if (!et.GetType().IsAssignableFrom(EventDataType.GetType()))
                 {
                     return;
                 }

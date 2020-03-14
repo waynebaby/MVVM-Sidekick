@@ -27,12 +27,15 @@ namespace MVVMSidekick.Test.Playground.WPF
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : MVVMWindow
+    public partial class Window1 : Window
     {
         public Window1()
         {
             InitializeComponent();
         }
+        #region IView Disguise
+        WindowViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
+        #endregion
     }
 }
 

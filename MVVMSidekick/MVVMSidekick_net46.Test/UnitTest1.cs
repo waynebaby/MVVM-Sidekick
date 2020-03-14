@@ -32,7 +32,7 @@ namespace MVVMSidekick_net46.Test
         }
 
 
-        public class SomeViewModel : ViewModelBase<SomeViewModel>
+        public class SomeViewModel : ViewModel<SomeViewModel>
         {
             public SomeViewModel()
             {

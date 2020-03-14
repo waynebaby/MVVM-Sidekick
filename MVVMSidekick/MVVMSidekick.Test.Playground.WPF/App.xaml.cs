@@ -22,7 +22,10 @@ namespace MVVMSidekick.Test.Playground.WPF
     {
         public static void InitNavigationConfigurationInThisAssembly()
         {
+            ServiceLocator.Instance.Register<ITellDesignTimeService>(new InRuntime());
+            ServiceLocator.Instance.Register<IStageManager,StageManager>();
             Startups.StartupFunctions.RunAllConfig();
+
             #region Debug Trace
 #if DEBUG
             EventRouting.EventRouter.Instance.GetEventChannel<Exception>()

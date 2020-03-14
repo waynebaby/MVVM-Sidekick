@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MVVMSidekick.ViewModels;
-using System.Reactive.Linq;
 using System.Windows;
-using System.IO;
-using MVVMSidekick.Services;
 
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -56,7 +51,7 @@ namespace MVVMSidekick.Views
 
         static StageManager()
         {
-            NavigatorBeaconsKey = nameof(NavigatorBeaconsKey);
+
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="StageManager"/> class.
@@ -64,36 +59,27 @@ namespace MVVMSidekick.Views
         /// <param name="viewModel">The view model.</param>
         public StageManager(IViewModel viewModel)
         {
-            _ViewModel = viewModel;
-
-
+            ViewModel = viewModel;
         }
-        IViewModel _ViewModel;
+        public StageManager()
+        { }
+
+        public IViewModel ViewModel { get; set; }
 
         /// <summary>
         /// This Key is a prefix for register keys. 
         /// The stage registeration store the String-Element-Mapping in view's Resource Dictionary(Resource property). 
         /// This can help not to overwrite the resources already defined.
         /// </summary>
-        public static string NavigatorBeaconsKey;
-
-
-
-        WeakReference _CurrentBindingView = new WeakReference(null);
+        public const string NavigatorBeaconsKey= nameof(NavigatorBeaconsKey);
+        private WeakReference _CurrentBindingView = new WeakReference(null);
         /// <summary>
         /// Get the currently binded view of this stagemanager. A stagemanager is for a certain view. If viewmodel is not binded to a view, the whole thing cannot work.
         /// </summary>
         public IView CurrentBindingView
         {
-            get
-            {
-
-                return _CurrentBindingView.IsAlive ? _CurrentBindingView.Target as IView : null;
-            }
-            internal set
-            {
-                _CurrentBindingView = new WeakReference(value);
-            }
+            get => _CurrentBindingView.IsAlive ? _CurrentBindingView.Target as IView : null;
+            set => _CurrentBindingView = new WeakReference(value);
         }
 
 
@@ -105,15 +91,13 @@ namespace MVVMSidekick.Views
         /// Initializes the parent.
         /// </summary>
         /// <param name="parentLocator">The parent locator.</param>
-        public void InitParent(Func<Object> parentLocator)
+        public void InitParent(Func<object> parentLocator)
         {
             _parentLocator = parentLocator;
-  
+
         }
 
-
-
-        Func<Object> _parentLocator;
+        private Func<object> _parentLocator;
 
 
         #region Attached Property
@@ -121,7 +105,7 @@ namespace MVVMSidekick.Views
         /// <summary>
         /// Gets the beacon.
         /// </summary>
-        /// <param name="obj">The object.</param>
+        /// <param name="dobj">The object.</param>
         /// <returns></returns>
 #if WPF
         [AttachedPropertyBrowsableForType(typeof(ContentControl))]
@@ -131,13 +115,13 @@ namespace MVVMSidekick.Views
 
 
 
-        public static string GetBeacon(DependencyObject obj)
+        public static string GetBeacon(DependencyObject dobj)
         {
-            return (string)obj.GetValue(BeaconProperty);
+            return (string)dobj?.GetValue(BeaconProperty);
         }
 
         /// <summary>Sets the beacon.</summary>
-        /// <param name="obj">The object.</param>
+        /// <param name="dobj">The object.</param>
         /// <param name="value">The value.</param>
 #if WPF
         [AttachedPropertyBrowsableForType(typeof(ContentControl))]
@@ -146,12 +130,12 @@ namespace MVVMSidekick.Views
 #endif
 
 
-        public static void SetBeacon(DependencyObject obj, string value)
+        public static void SetBeacon(DependencyObject dobj, string value)
         {
-            if (!Utilities.Runtime.IsInDesignMode)
+            if (!PlatformServiceHelper.IsInDesignMode)
             {
 
-                obj.SetValue(BeaconProperty, value);
+                dobj?.SetValue(BeaconProperty, value);
             }
         }
 
@@ -162,8 +146,8 @@ namespace MVVMSidekick.Views
             DependencyProperty.RegisterAttached("Beacon", typeof(string), typeof(StageManager), new PropertyMetadata(null,
                    (o, p) =>
                    {
-                       var name = (p.NewValue as string);
-                       var target = o as FrameworkElement;
+                       string name = (p.NewValue as string);
+                       FrameworkElement target = o as FrameworkElement;
 
                        target.Loaded +=
                            (_1, _2)
@@ -187,13 +171,12 @@ namespace MVVMSidekick.Views
 
 
             targetContainerName = targetContainerName ?? "";
-            var viewele = view.ViewObject as FrameworkElement;
-            FrameworkElement target = null;
+            FrameworkElement viewele = view.ViewObject as FrameworkElement;
 
 
 
-            var dic = GetOrCreateBeacons(sourceVM.StageManager.CurrentBindingView.ViewObject as FrameworkElement);
-            dic.TryGetValue(targetContainerName, out target);
+            Dictionary<string, FrameworkElement> dic = GetOrCreateBeacons(sourceVM.StageManager.CurrentBindingView.ViewObject as FrameworkElement);
+            dic.TryGetValue(targetContainerName, out FrameworkElement target);
 
 
             if (target == null)
@@ -213,7 +196,7 @@ namespace MVVMSidekick.Views
                 else
 #endif
                 {
-                    var vieweleCt = viewele as ContentControl;
+                    ContentControl vieweleCt = viewele as ContentControl;
                     if (vieweleCt != null)
                     {
                         target = vieweleCt.Content as FrameworkElement;
@@ -230,9 +213,9 @@ namespace MVVMSidekick.Views
         private static Dictionary<string, FrameworkElement> GetOrCreateBeacons(FrameworkElement view)
         {
             Dictionary<string, FrameworkElement> dic;
-#if NETFX_CORE
+#if WINDOWS_UWP
             if (!view.Resources.ContainsKey(NavigatorBeaconsKey))
-#else
+#elif WPF
             if (!view.Resources.Contains(NavigatorBeaconsKey))
 #endif
             {
@@ -240,7 +223,9 @@ namespace MVVMSidekick.Views
                 view.Resources.Add(NavigatorBeaconsKey, dic);
             }
             else
+            {
                 dic = view.Resources[NavigatorBeaconsKey] as Dictionary<string, FrameworkElement>;
+            }
 
             return dic;
         }
@@ -252,13 +237,13 @@ namespace MVVMSidekick.Views
         /// <param name="target">The target.</param>
         public static void RegisterTargetBeacon(string name, FrameworkElement target)
         {
-            if (!Utilities.Runtime.IsInDesignMode)
+            if (!PlatformServiceHelper.IsInDesignMode)
             {
 
 
-                var view = LocateIView(target);
+                FrameworkElement view = LocateIView(target);
 
-                var beacons = GetOrCreateBeacons(view);
+                Dictionary<string, FrameworkElement> beacons = GetOrCreateBeacons(view);
                 beacons[name] = target;
             }
 
@@ -266,7 +251,7 @@ namespace MVVMSidekick.Views
 
         private static FrameworkElement LocateIView(FrameworkElement target)
         {
-            var view = target;
+            FrameworkElement view = target;
 
             while (view != null)
             {
@@ -276,7 +261,7 @@ namespace MVVMSidekick.Views
                 //		return tryView;
                 //	}
 
-                var tryView = view.Parent as FrameworkElement;
+                FrameworkElement tryView = view.Parent as FrameworkElement;
 
                 if (tryView != null)
                 {
@@ -307,11 +292,8 @@ namespace MVVMSidekick.Views
         /// <value>
         /// The default stage.
         /// </value>
-        public IStage DefaultStage
-        {
-            get { return this[""]; }
-          
-        }
+        public IStage DefaultStage => this[""];
+
 
 
 
@@ -329,13 +311,15 @@ namespace MVVMSidekick.Views
         {
             get
             {
-                var fr = LocateTargetContainer(CurrentBindingView, ref beaconKey, _ViewModel);
+                FrameworkElement fr = LocateTargetContainer(CurrentBindingView, ref beaconKey, ViewModel);
                 if (fr != null)
                 {
                     return new Stage(fr, beaconKey, this);
                 }
                 else
+                {
                     return null;
+                }
             }
         }
     }

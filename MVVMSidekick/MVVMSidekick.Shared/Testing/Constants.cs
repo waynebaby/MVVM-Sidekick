@@ -10,7 +10,7 @@ namespace MVVMSidekick.Testing
     /// <summary>
     /// 
     /// </summary>
-    public class Constants
+    public static class Constants
     {
         public const string DependencyKeyForTesting = "TestingStageManager";
 

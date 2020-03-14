@@ -6,7 +6,7 @@ using System.Reactive.Linq;
 
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -59,12 +59,12 @@ namespace MVVMSidekick.Views
         public Stage(FrameworkElement target, string beaconKey, StageManager stageManager)
         {
             Target = target;
-            _navigator = stageManager;
+            _stageManager = stageManager;
             BeaconKey = beaconKey;
             //SetupNavigateFrame();
         }
 
-        private StageManager _navigator;
+        private StageManager _stageManager;
         private FrameworkElement _target;
 
 
@@ -97,13 +97,13 @@ namespace MVVMSidekick.Views
         /// <value>
         /// The target.
         /// </value>
-        public FrameworkElement Target
+        public Object Target
         {
             get => _target;
             private set
             {
-                _target = value;
-                Frame = _target as Frame;
+                _target = value as FrameworkElement;
+
 
 
             }
@@ -131,7 +131,7 @@ namespace MVVMSidekick.Views
             }
 
         }
-#else
+#elif WINDOWS_UWP
 
         /// <summary>
         /// Is go forward supported
@@ -226,11 +226,11 @@ namespace MVVMSidekick.Views
 
             targetViewModel.IsDisposingWhenUnloadRequired = autoDisposeWhenViewUnload;
             SetVMAfterLoad(targetViewModel, view);
-            InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+            InternalShowView(view, Target as FrameworkElement, _stageManager.CurrentBindingView.ViewModel);
 
             if (isWaitingForDispose)
             {
-                await targetViewModel.WaitForClose();
+                await targetViewModel.WaitForClose().ConfigureAwait(true);
             }
             return targetViewModel;
         }
@@ -284,222 +284,6 @@ namespace MVVMSidekick.Views
         //    return await TaskExHelper.FromResult(new ShowAwaitableResult<TTarget> { Closing = isWaitingForDispose ? targetViewModel.WaitForClose() : Task.CompletedTask, ViewModel = targetViewModel });
         //}
 #endif
-#if SILVERLIGHT_5 || WINDOWS_PHONE_7 || WINDOWS_PHONE_8
-
-
-        public Dictionary<string, IViewModel> NavigateRequestContexts
-        {
-            get
-            {
-
-                return GetNavigateRequestContexts(Frame);
-            }
-
-            set
-            {
-                SetNavigateRequestContexts(Frame, value);
-            }
-
-        }
-
-        /// <summary>
-        /// Gets the navigate request contexts.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <returns></returns>
-        public static Dictionary<string, IViewModel> GetNavigateRequestContexts(DependencyObject obj)
-        {
-            return (Dictionary<string, IViewModel>)obj.GetValue(NavigateRequestContextsProperty);
-        }
-
-        /// <summary>
-        /// Sets the navigate request contexts.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="value">The value.</param>
-        public static void SetNavigateRequestContexts(DependencyObject obj, Dictionary<string, IViewModel> value)
-        {
-            obj.SetValue(NavigateRequestContextsProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for NavigateRequestContexts.  This enables animation, styling, binding, etc...
-        /// <summary>
-        /// The navigate request contexts property
-        /// </summary>
-        public static readonly DependencyProperty NavigateRequestContextsProperty =
-            DependencyProperty.RegisterAttached("NavigateRequestContexts", typeof(Dictionary<string, IViewModel>), typeof(Stage), new PropertyMetadata(new Dictionary<string, IViewModel>()));
-
-        /// <summary>
-        /// Shows the specified target view model.
-        /// </summary>
-        /// <typeparam name="TTarget">The type of the target.</typeparam>
-        /// <param name="targetViewModel">The target view model.</param>
-        /// <param name="viewMappingKey">The view mapping key.</param>
-        /// <returns></returns>
-        public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-             where TTarget : class, IViewModel
-        {
-
-            var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-
-
-
-            Tuple<Uri, Func<IView>> uriData;
-            uriData = item as Tuple<Uri, Func<IView>>;
-            if (uriData != null) //only sl like page Can be registered as uri
-            {
-                Frame frame;
-                if ((frame = Target as Frame) != null)
-                {
-                    targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
-                    await targetViewModel.WaitForClose();
-                    return targetViewModel;
-                }
-                else
-                {
-                    item = uriData.Item2();
-                }
-            }
-
-            IView view = item as IView;
-            targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-            SetVMAfterLoad(targetViewModel, view);
-            InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-            await targetViewModel.WaitForClose();
-            return targetViewModel;
-        }
-
-
-        //public async Task<TResult> Show<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null)
-        //	where TTarget : class,IViewModel<TResult>
-        //{
-
-        //	var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-
-        //	Tuple<Uri, Func<IView>> uriData;
-        //	if ((uriData = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
-        //	{
-        //		Frame frame;
-        //		if ((frame = Target as Frame) != null)
-        //		{
-        //			targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
-
-        //			return await targetViewModel.WaitForCloseWithResult();
-        //		}
-        //		else
-        //		{
-        //			item = uriData.Item2();
-        //		}
-        //	}
-        //	IView view = item as IView;
-        //	targetViewModel = targetViewModel ?? view.ViewModel as TTarget;		
-        //	SetVMAfterLoad(targetViewModel, view);								
-        //	InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-        //	return await targetViewModel.WaitForCloseWithResult();
-        //}
-
-        private async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, Tuple<Uri, Func<IView>> uriData, Frame frame) where TTarget : class, IViewModel
-        {
-            var t = new TaskCompletionSource<object>();
-            var guid = Guid.NewGuid();
-            var newUriWithParameter = new Uri(uriData.Item1.ToString() + "?CallBackGuid=" + guid.ToString(), UriKind.Relative);
-
-            var dis = EventRouting.EventRouter.Instance.GetEventChannel<System.Windows.Navigation.NavigationEventArgs>()
-
-                .Where(e =>
-                        e.EventData.Uri == newUriWithParameter)
-                .Subscribe(e =>
-                {
-                    var key = newUriWithParameter.ToString();
-
-                    lock (NavigateRequestContexts)
-                    {
-                        IViewModel vm = null;
-
-                        if (NavigateRequestContexts.TryGetValue(key, out vm))
-                        {
-                            targetViewModel = vm as TTarget;
-                        }
-
-                        var page = e.Sender as MVVMPage;
-
-                        if (targetViewModel != null)
-                        {
-                            page.ViewModel = targetViewModel;
-
-                        }
-                        else
-                        {
-                            var solveV = page.GetDefaultViewModel();
-                            if (solveV != null)
-                            {
-
-                                page.ViewModel = solveV;
-                            }
-
-                        }
-
-                        targetViewModel = (TTarget)page.ViewModel;
-                        NavigateRequestContexts[key] = targetViewModel;
-                    }
-                    if (!t.Task.IsCompleted)
-                    {
-
-                        targetViewModel.AddDisposeAction(() =>
-                        {
-                            lock (NavigateRequestContexts)
-                            {
-                                NavigateRequestContexts.Remove(key);
-                            }
-
-                        });
-                        t.SetResult(null);
-                    }
-                }
-                );
-
-
-
-            frame.Navigate(newUriWithParameter);
-            await t.Task;
-            dis.DisposeWith(targetViewModel);
-            return targetViewModel;
-        }
-
-
-
-        //public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModel<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null)
-        //	where TTarget : class,IViewModel
-        //{
-        //	var item = ViewModelToViewMapperServiceLocator<TTarget>.Instance.Resolve(viewMappingKey, targetViewModel);
-        //	Tuple<Uri, Func<IView>> uriData;
-        //	if ((uriData = item as Tuple<Uri, Func<IView>>) != null) //only sl like page Can be registered as uri
-        //	{
-        //		Frame frame;
-        //		if ((frame = Target as Frame) != null)
-        //		{
-        //			targetViewModel = await FrameNavigate<TTarget>(targetViewModel, uriData, frame);
-
-        //			return new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel };
-
-        //		}
-        //		else
-        //		{
-        //			item = uriData.Item2();
-
-        //		}
-        //	}
-
-
-        //	IView view = item as IView;
-        //	targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
-        //	SetVMAfterLoad(targetViewModel, view);
-        //	InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
-        //	var tr = targetViewModel.WaitForClose();
-        //	return new ShowAwaitableResult<TTarget> { Closing = targetViewModel.WaitForClose(), ViewModel = targetViewModel };
-        //}
-
-#endif
 
 
         private static void SetVMAfterLoad<TTarget>(TTarget targetViewModel, IView view) where TTarget : class, IViewModel
@@ -507,10 +291,9 @@ namespace MVVMSidekick.Views
             if (view == null)
             {
                 throw new InvalidOperationException(
-                    string.Format(@"
-Cannot find ANY mapping from View Model [{0}] to ANY View.
-Please check startup function of this mapping is well configured and be proper called while application starting",
-                    targetViewModel.GetType().ToString()));
+                    $@"
+Cannot find ANY mapping from View Model [{targetViewModel.GetType().ToString()}] to ANY View.
+Please check startup function of this mapping is well configured and be proper called while application starting");
             }
 
 
@@ -532,7 +315,7 @@ Please check startup function of this mapping is well configured and be proper c
 
         }
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 
 
 
@@ -556,9 +339,9 @@ Please check startup function of this mapping is well configured and be proper c
                 Frame frame = Target as Frame;
                 if (frame != null)
                 {
-                    targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame);
+                    targetViewModel = await FrameNavigate<TTarget>(targetViewModel, type, frame).ConfigureAwait(true);
 
-                    await targetViewModel.WaitForClose();
+                    await targetViewModel.WaitForClose().ConfigureAwait(true);
                     return targetViewModel;
                 }
 
@@ -573,10 +356,10 @@ Please check startup function of this mapping is well configured and be proper c
             targetViewModel = targetViewModel ?? view.ViewModel as TTarget;
             targetViewModel.IsDisposingWhenUnloadRequired = autoDisposeWhenViewUnload;
             SetVMAfterLoad(targetViewModel, view);
-            InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
+            InternalShowView(view, Target as FrameworkElement, _stageManager.CurrentBindingView.ViewModel);
             if (isWaitingForDispose)
             {
-                await targetViewModel.WaitForClose();
+                await targetViewModel.WaitForClose().ConfigureAwait(true);
             }
             return targetViewModel;
 
@@ -597,10 +380,6 @@ Please check startup function of this mapping is well configured and be proper c
                      IView view = null;
                      switch (e.Sender)
                      {
-                         case MVVMPage mvvmPage:
-                             page = mvvmPage;
-                             view = mvvmPage;
-                             break;
                          case PageViewDisguise disguise:
                              page = disguise.AssocatedObject;
                              view = disguise;
@@ -629,12 +408,12 @@ Please check startup function of this mapping is well configured and be proper c
                      }
 
                      view.ViewModel = parameter.ViewModel = targetViewModel;
-                     targetViewModel?.OnPageNavigatedTo(e.EventData);
+                     (targetViewModel as IViewModelWithPlatformService)?.OnPageNavigatedTo(e.EventData);
                      t.TrySetResult(null);
                  });
 
             frame.Navigate(type, parameter);
-            await t.Task;
+            await t.Task.ConfigureAwait(true);
             dip.DisposeWith(targetViewModel);
             return targetViewModel;
         }
@@ -765,11 +544,12 @@ Please check startup function of this mapping is well configured and be proper c
 #if WINDOWS_UWP
                 case ContentDialog targetCDControl:
                     targetCDControl.Content = view.ViewObject;
-                    IViewModel viewModel = view.ViewModel;
+                    IViewModel viewModel = view.ViewModel?? sourceVM.StageManager.ViewModel;
                     IDisposable closeFromViewModel = null;
-                    closeFromViewModel = Observable.FromAsync(x => viewModel.WaitForClose())
-                            .ObserveOnDispatcher()
-                            .Subscribe(_ =>
+                    closeFromViewModel = Observable
+                        .FromAsync(x => viewModel.WaitForClose())
+                        .ObserveOnDispatcher()
+                        .Subscribe(_ =>
                             {
                                 viewModel.IsDisposingWhenUnloadRequired = true;
                                 targetCDControl.Hide();
@@ -788,7 +568,7 @@ Please check startup function of this mapping is well configured and be proper c
                     break;
 
                 default:
-                    throw new InvalidOperationException(string.Format("This view {0} is not support show in {1} ", view.GetType(), target.GetType()));
+                    throw new InvalidOperationException($"This view {view.GetType()} is not support show in {target.GetType()} ");
             }
 
 

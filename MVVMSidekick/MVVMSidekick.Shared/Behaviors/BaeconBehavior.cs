@@ -1,5 +1,6 @@
-﻿#if ! NETFX_CORE
-using Microsoft.Expression.Interactivity.Core;
+﻿#if WPF
+
+using Microsoft.Xaml.Behaviors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Interactivity;
 
-#else
+
+#elif WINDOWS_UWP
 using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
@@ -73,9 +74,9 @@ namespace MVVMSidekick.Behaviors
 				return;
 			}
 			DependencyProperty targetProperty = MVVMSidekick.Views.StageManager.BeaconProperty;
-#if NETFX_CORE||SILVERLIGHT
+#if WINDOWS_UWP 
 			string path = "BaeconName";
-#else
+#elif WPF
             string path = BaeconBehavior.BaeconNameProperty.Name;
 #endif
 
@@ -93,9 +94,9 @@ namespace MVVMSidekick.Behaviors
 			}
 
 			DependencyProperty targetProperty = MVVMSidekick.Views.StageManager.BeaconProperty;
-#if NETFX_CORE ||SILVERLIGHT
+#if WINDOWS_UWP 
 			BindingOperations.SetBinding(target, targetProperty, null);
-#else
+#elif WPF
             BindingOperations.ClearBinding(target, targetProperty);
 #endif
 

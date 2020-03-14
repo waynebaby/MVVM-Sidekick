@@ -155,9 +155,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MVVM-Sidekick">
-      <Version>2.0.48</Version>
-    </PackageReference>
+    <ProjectReference Include="..\MVVMSidekick.Core\MVVMSidekick.Core.csproj">
+      <Project>{0b990a49-ed72-43c7-a4b5-923537e1d5ac}</Project>
+      <Name>MVVMSidekick.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MVVMSidekick_net46\MVVMSidekick_net46.csproj">
+      <Project>{04854fcf-4ad8-49cc-aa83-abbf07f278bd}</Project>
+      <Name>MVVMSidekick_net46</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

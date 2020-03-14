@@ -16,7 +16,7 @@ using MVVMSidekick.ViewModels;
 
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 
 
 #elif WPF
@@ -57,16 +57,18 @@ namespace MVVMSidekick
         /// Struct ViewModelToViewMapper
         /// </summary>
         /// <typeparam name="TModel">The type of the t model.</typeparam>
-        public struct ViewModelToViewMapper<TModel>
+        public class ViewModelToViewMapper<TModel>
             where TModel : IViewModel
         {
 
-            /// <summary>
-            /// Maps the view to view model.
-            /// </summary>
-            /// <typeparam name="TView">The type of the t view.</typeparam>
-            public static void MapViewToViewModel<TView>()
-            {
+			/// <summary>
+			/// Maps the view to view model.
+			/// </summary>
+			/// <typeparam name="TView">The type of the t view.</typeparam>
+#pragma warning disable CA1000 // Do not declare static members on generic types
+			public static void MapViewToViewModel<TView>()
+#pragma warning restore CA1000 // Do not declare static members on generic types
+			{
                 Func<IViewModel> func;
                 if (!ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(typeof(TView), out func))
                 {
@@ -157,89 +159,11 @@ namespace MVVMSidekick
 				ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel)d), alwaysNew);
 				return this;
 			}
-#else
-            /// <summary>
-            /// Maps to default control.
-            /// </summary>
-            /// <typeparam name="TControl">The type of the control.</typeparam>
-            /// <param name="instance">The instance.</param>
-            /// <returns></returns>
-            public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(TControl instance) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(instance);
-                return this;
-            }
-
-            /// <summary>
-            /// Maps to control.
-            /// </summary>
-            /// <typeparam name="TControl">The type of the control.</typeparam>
-            /// <param name="viewMappingKey">The view mapping key.</param>
-            /// <param name="instance">The instance.</param>
-            /// <returns></returns>
-            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, TControl instance) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, instance);
-                return this;
-            }
+#elif WINDOWS_UWP
 
 
-            /// <summary>
-            /// Maps to default control.
-            /// </summary>
-            /// <typeparam name="TControl">The type of the control.</typeparam>
-            /// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
-            /// <returns></returns>
-            public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(bool alwaysNew = true) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => (TControl)Activator.CreateInstance(typeof(TControl)), alwaysNew);
-                return this;
-            }
-            /// <summary>
-            /// Maps to control.
-            /// </summary>
-            /// <typeparam name="TControl">The type of the control.</typeparam>
-            /// <param name="viewMappingKey">The view mapping key.</param>
-            /// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
-            /// <returns></returns>
-            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, bool alwaysNew = true) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => (TControl)Activator.CreateInstance(typeof(TControl)), alwaysNew);
-                return this;
-            }
 
-            /// <summary>
-            /// Maps to default control.
-            /// </summary>
-            /// <typeparam name="TControl">The type of the control.</typeparam>
-            /// <param name="factory">The factory.</param>
-            /// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
-            /// <returns></returns>
-            public ViewModelToViewMapper<TModel> MapToDefaultControl<TControl>(Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(null, d => factory((TModel)d), alwaysNew);
-                return this;
-            }
 
-            /// <summary>
-            /// Maps to control.
-            /// </summary>
-            /// <typeparam name="TControl">The type of the control.</typeparam>
-            /// <param name="viewMappingKey">The view mapping key.</param>
-            /// <param name="factory">The factory.</param>
-            /// <param name="alwaysNew">if set to <c>true</c> [always new].</param>
-            /// <returns></returns>
-            public ViewModelToViewMapper<TModel> MapToControl<TControl>(string viewMappingKey, Func<TModel, TControl> factory, bool alwaysNew = true) where TControl : MVVMControl
-            {
-                MapViewToViewModel<TControl>();
-                ViewModelToViewMapperServiceLocator<TModel>.Instance.Register(viewMappingKey, d => factory((TModel)d), alwaysNew);
-                return this;
-            }
 #endif
 
 #if WINDOWS_PHONE_8 || WINDOWS_PHONE_7 || SILVERLIGHT_5
@@ -304,7 +228,7 @@ namespace MVVMSidekick
 
 
 #endif
-#if NETFX_CORE
+#if WINDOWS_UWP
 
 
             /// <summary>
@@ -339,7 +263,7 @@ namespace MVVMSidekick
 #endif
 
 
-        }
+		}
 
 
 

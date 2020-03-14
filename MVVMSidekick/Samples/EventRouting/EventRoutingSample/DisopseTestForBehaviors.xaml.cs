@@ -27,12 +27,15 @@ namespace EventRoutingSample
 	/// <summary>
 	/// Interaction logic for DisopseTestForBehaviors.xaml
 	/// </summary>
-	public partial class DisopseTestForBehaviors : MVVMWindow
+	public partial class DisopseTestForBehaviors : Window
 	{
 		public DisopseTestForBehaviors()
 		{
 			InitializeComponent();
 		}
+		#region IView Disguise
+		WindowViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
+		#endregion
 	}
 }
 

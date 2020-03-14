@@ -1,7 +1,7 @@
 ﻿
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -38,9 +38,9 @@ namespace MVVMSidekick.Views
             get { return base.AssocatedObject.Content; }
             set
             {
-#if NETFX_CORE
+#if WINDOWS_UWP
                 AssocatedObject.Content = value as UIElement;
-#else
+#elif WPF
                 AssocatedObject.Content = value;
 #endif
             }

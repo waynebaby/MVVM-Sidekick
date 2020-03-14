@@ -6,12 +6,12 @@ namespace MVVMSidekick.Views
     public interface IPageView :IView
     {
 
-#if !WPF
+#if WINDOWS_UWP
 
         void OnNavigatedFrom(Windows.UI.Xaml.Navigation.NavigationEventArgs e);
         void OnNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e);
         void OnNavigatingFrom(Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e);
-#else
+#elif WPF
         object FrameObject { get; set; }
 #endif
     }

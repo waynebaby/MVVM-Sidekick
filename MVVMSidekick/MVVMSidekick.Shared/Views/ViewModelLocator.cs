@@ -23,7 +23,7 @@ using MVVMSidekick.Services;
 
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -81,7 +81,9 @@ namespace MVVMSidekick
 			/// <value>
 			/// The instance.
 			/// </value>
+#pragma warning disable CA1000 // Do not declare static members on generic types
 			public static ViewModelLocator<TViewModel> Instance { get; set; }
+#pragma warning restore CA1000 // Do not declare static members on generic types
 
 		}
 

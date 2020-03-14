@@ -26,17 +26,19 @@ namespace EventRoutingSample
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : MVVMWindow
+	public partial class MainWindow : Window
 	{
 		public MainWindow()
-			
+
 		{
+
 			InitializeComponent();
+			ViewDisguise.ViewModel = ServiceLocator.Instance.Resolve<MainWindow_Model>();
 		}
 
-		private void ListenToEventRouterDataBehavior_Changed(object sender, EventArgs e)
-		{
 
-		}
+		#region IView Disguise
+		WindowViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
+		#endregion
 	}
 }

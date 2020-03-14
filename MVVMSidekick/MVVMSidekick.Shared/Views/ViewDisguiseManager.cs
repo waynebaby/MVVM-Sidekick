@@ -12,7 +12,7 @@ using MVVMSidekick.Services;
 
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -50,22 +50,22 @@ namespace MVVMSidekick.Views
     {
 
 
-        public static IViewDisguise GetViewDisguise(this DependencyObject obj)
+        public static IViewDisguise GetViewDisguise(this DependencyObject dobj)
         {
-            return (IViewDisguise)obj.GetValue(ViewDisguiseProperty);
+            return (IViewDisguise)dobj?.GetValue(ViewDisguiseProperty);
         }
 
-        public static void SetViewDisguise(this DependencyObject obj, IViewDisguise value)
+        public static void SetViewDisguise(this DependencyObject dobj, IViewDisguise value)
         {
-            obj.SetValue(ViewDisguiseProperty, value);
+            dobj?.SetValue(ViewDisguiseProperty, value);
         }
 
-        public static IViewDisguise GetOrCreateViewDisguise(this DependencyObject obj)
+        public static IViewDisguise GetOrCreateViewDisguise(this DependencyObject dobj)
         {
-            var dis = (IViewDisguise)obj.GetValue(ViewDisguiseProperty);
+            var dis = (IViewDisguise)dobj?.GetValue(ViewDisguiseProperty);
             if (dis == null)
             {
-                switch (obj)
+                switch (dobj)
                 {
                     case Page p:
                         dis = p.GetOrCreateViewDisguise();
@@ -81,64 +81,64 @@ namespace MVVMSidekick.Views
                         break;
 #endif
                     default:
-                        throw new InvalidOperationException($"This kind of view ({ obj?.GetType()?.Name ?? "null"}) is not supported");
+                        throw new InvalidOperationException($"This kind of view ({ dobj?.GetType()?.Name ?? "null"}) is not supported");
                 }
-                obj.SetValue(ViewDisguiseProperty, dis);
+                dobj.SetValue(ViewDisguiseProperty, dis);
             }
             return dis;
         }
 
 
 
-        public static PageViewDisguise GetOrCreateViewDisguise(this Page obj)
+        public static PageViewDisguise GetOrCreateViewDisguise(this Page dobj)
         {
-            var dis = (PageViewDisguise)obj.GetValue(ViewDisguiseProperty);
+            var dis = (PageViewDisguise)dobj?.GetValue(ViewDisguiseProperty);
             if (dis == null)
             {
-                dis = new PageViewDisguise(obj);
-                obj.SetValue(ViewDisguiseProperty, dis);
+                dis = new PageViewDisguise(dobj);
+                dobj.SetValue(ViewDisguiseProperty, dis);
             }
             return dis;
         }
 
-        public static void SetViewDisguise(this Page obj, PageViewDisguise value)
+        public static void SetViewDisguise(this Page dobj, PageViewDisguise value)
         {
-            obj.SetValue(ViewDisguiseProperty, value);
+            dobj?.SetValue(ViewDisguiseProperty, value);
         }
 
 
-        public static ControlViewDisguise GetOrCreateViewDisguise(this UserControl obj)
+        public static ControlViewDisguise GetOrCreateViewDisguise(this UserControl dobj)
         {
-            var dis = (ControlViewDisguise)obj.GetValue(ViewDisguiseProperty);
+            var dis = (ControlViewDisguise)dobj?.GetValue(ViewDisguiseProperty);
             if (dis == null)
             {
-                dis = new ControlViewDisguise(obj);
-                obj.SetValue(ViewDisguiseProperty, dis);
+                dis = new ControlViewDisguise(dobj);
+                dobj.SetValue(ViewDisguiseProperty, dis);
             }
             return dis;
         }
 
-        public static void SetViewDisguise(this UserControl obj, PageViewDisguise value)
+        public static void SetViewDisguise(this UserControl dobj, PageViewDisguise value)
         {
-            obj.SetValue(ViewDisguiseProperty, value);
+            dobj?.SetValue(ViewDisguiseProperty, value);
         }
 
 #if WPF
 
-        public static WindowViewDisguise GetOrCreateViewDisguise(this Window obj)
+        public static WindowViewDisguise GetOrCreateViewDisguise(this Window dobj)
         {
-            var dis = (WindowViewDisguise)obj.GetValue(ViewDisguiseProperty);
+            var dis = (WindowViewDisguise)dobj?.GetValue(ViewDisguiseProperty);
             if (dis == null)
             {
-                dis = new WindowViewDisguise(obj);
-                obj.SetValue(ViewDisguiseProperty, dis);
+                dis = new WindowViewDisguise(dobj);
+                dobj?.SetValue(ViewDisguiseProperty, dis);
             }
             return dis;
         }
 
-        public static void SetViewDisguise(this Window obj, WindowViewDisguise value)
+        public static void SetViewDisguise(this Window dobj, WindowViewDisguise value)
         {
-            obj.SetValue(ViewDisguiseProperty, value);
+            dobj?.SetValue(ViewDisguiseProperty, value);
         }
 #endif
 

@@ -14,7 +14,7 @@
 
 
 
-//#if NETFX_CORE
+//#if WINDOWS_UWP
 //using Windows.UI.Xaml;
 
 

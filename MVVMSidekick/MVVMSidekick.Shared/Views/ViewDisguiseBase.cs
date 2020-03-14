@@ -12,7 +12,7 @@ using MVVMSidekick.Services;
 
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -61,16 +61,16 @@ namespace MVVMSidekick.Views
         /// Gets or sets the view model.
         /// </summary>
         /// <value>The view model.</value>
-        public IViewModel ViewModel
+        public IViewModelWithPlatformService ViewModel
         {
             get
             {
-                var vm = GetValue(ViewModelProperty) as IViewModel;
+                var vm = GetValue(ViewModelProperty) as IViewModelWithPlatformService;
                 var content = this.GetContentAndCreateIfNull();
                 if (vm == null)
                 {
 
-                    vm = content.DataContext as IViewModel;
+                    vm = content.DataContext as IViewModelWithPlatformService;
                     SetValue(ViewModelProperty, vm);
 
                 }
@@ -107,5 +107,13 @@ namespace MVVMSidekick.Views
         public abstract object Parent { get; }
 
         public object ViewObject => _assocatedObject;
+#pragma warning disable CA1033 // Interface methods should be callable by child types
+        void  IView.SelfClose()
+#pragma warning restore CA1033 // Interface methods should be callable by child types
+        {
+            this.SelfClose();
+        }
+        IViewModel IView.ViewModel { get => ViewModel; set => ViewModel = (IViewModelWithPlatformService)value; }
+
     }
 }

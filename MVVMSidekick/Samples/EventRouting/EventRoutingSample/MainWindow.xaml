@@ -1,17 +1,17 @@
-﻿<mvvm:MVVMWindow
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mvvm="clr-namespace:MVVMSidekick.Views;assembly=MVVMSidekick_net46"        
         xmlns:vm="clr-namespace:EventRoutingSample.ViewModels" 
         xmlns:beh="clr-namespace:MVVMSidekick.Behaviors;assembly=MVVMSidekick_net46"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Class="EventRoutingSample.MainWindow"
+            xmlns:b="http://schemas.microsoft.com/xaml/behaviors"  xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Class="EventRoutingSample.MainWindow"
         Title="{Binding DataContext.Title, ElementName=grid}"
         Height="350" Width="525"
         >
 
-    <mvvm:MVVMWindow.Resources >
+    <Window.Resources >
         <vm:MainWindow_Model x:Key="DesignVM" />
-    </mvvm:MVVMWindow.Resources>
+    </Window.Resources>
     <Grid x:Name="grid" DataContext="{StaticResource DesignVM}" ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="58*"/>
@@ -25,20 +25,22 @@
         </StackPanel>
         <StackPanel   Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,32">
             <Label Content="Behavior Received Globle Events" >
-           
+
 
             </Label>
             <TextBlock Text="{Binding ElementName=sourceE, Path=LastDataReceived}">
-                 <i:Interaction.Behaviors>
+                  <b:Interaction.Behaviors>
                     <beh:ListenToEventRouterDataBehavior  EventRoutingName="Global HeartBeat"  x:Name="sourceE" />
                     <!--<ei:DataStateBehavior/>-->
-                </i:Interaction.Behaviors>
+                </b:Interaction.Behaviors>
             </TextBlock>
+            <TextBlock Padding="15"><Run Text="{Binding BindableInstanceId, Mode=OneWay}"/></TextBlock>
+
         </StackPanel>
         <Button x:Name="button" 
          HorizontalAlignment="Left" Command="{Binding Path=CommandNavigateToDisposeBehaviorTest}" Height="20" Margin="29,21,0,0" Grid.Row="2" VerticalAlignment="Top" Width="158">
-          
+
             <TextBlock>Test Behavior Dispose</TextBlock>
         </Button>
     </Grid>
-</mvvm:MVVMWindow>
+</Window>

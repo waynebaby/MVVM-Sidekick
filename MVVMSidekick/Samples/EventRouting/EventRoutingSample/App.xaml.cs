@@ -2,6 +2,9 @@
 using System;
 using System.Windows;
 using MVVMSidekick.EventRouting;
+using MVVMSidekick.Services;
+using MVVMSidekick.ViewModels;
+using MVVMSidekick.Views;
 
 namespace EventRoutingSample
 {
@@ -12,6 +15,8 @@ namespace EventRoutingSample
 	{
 		public static void InitNavigationConfigurationInThisAssembly()
 		{
+			ServiceLocator.Instance.Register<ITellDesignTimeService>(new InRuntime());
+			ServiceLocator.Instance.Register<IStageManager, StageManager>();
 			MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
 		}
 

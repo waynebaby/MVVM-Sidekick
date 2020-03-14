@@ -17,7 +17,7 @@ using MVVMSidekick.ViewModels;
 
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 
 
 #elif WPF
@@ -85,7 +85,7 @@ namespace MVVMSidekick
                         break;
 #endif
                     default:
-                        viewType = view.GetType();
+                        viewType = view?.GetType();
                         break;
                 }
                 if (ViewModelToViewMapperHelper.ViewToVMMapping.TryGetValue(viewType, out func))

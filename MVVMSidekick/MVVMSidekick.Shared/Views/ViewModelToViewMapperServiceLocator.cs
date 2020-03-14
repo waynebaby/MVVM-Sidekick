@@ -15,7 +15,7 @@ using System;
 
 
 
-#if NETFX_CORE
+#if WINDOWS_UWP
 
 
 #elif WPF
@@ -76,7 +76,9 @@ namespace MVVMSidekick
 			/// Instance
 			/// </summary>
 
+#pragma warning disable CA1000 // Do not declare static members on generic types
 			public static IViewModelToViewMapperServiceLocator Instance
+#pragma warning restore CA1000 // Do not declare static members on generic types
 			{
 				get
 				{
