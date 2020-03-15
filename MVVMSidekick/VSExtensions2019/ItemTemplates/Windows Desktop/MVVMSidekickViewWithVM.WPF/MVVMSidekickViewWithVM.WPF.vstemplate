@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>MVVM-Sidekick Window View for WPF</Name>
+    <Description>MVVM-Sidekick Window View With VM for WPF Apps</Description>
+    <Icon>MVVMSidekickViewWithVM.WPF.ico</Icon>
+    <TemplateID>861933b0-7123-44d2-a49b-ee5fa112f142_Window</TemplateID>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>WPF</ProjectSubType>
+    <RequiredFrameworkVersion>4.6</RequiredFrameworkVersion>
+    <DefaultName>Window.xaml</DefaultName>
+    <SortOrder>1</SortOrder>
+    <TemplateGroupID>WPF</TemplateGroupID>
+    <BuildProjectOnLoad>false</BuildProjectOnLoad>
+    <ShowByDefault>false</ShowByDefault>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>System</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem ReplaceParameters="true" SubType="Designer" TargetFileName="$fileinputname$.xaml">View.xaml</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="$fileinputname$.xaml.cs">View.xaml.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="ViewModels\$fileinputname$_Model.cs">View_Model.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="Startups\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

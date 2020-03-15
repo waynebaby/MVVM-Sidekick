@@ -5,6 +5,9 @@ using System.Text;
 
 namespace MVVMSidekick.ViewModels
 {
+    public class Bindable<TBindable> : BindableBase<TBindable> where TBindable : Bindable<TBindable>
+   
+        {}
     public class ViewModel<TViewModel> : ViewModelBase<TViewModel>, IViewModelWithPlatformService where TViewModel : ViewModel<TViewModel>
     {
 

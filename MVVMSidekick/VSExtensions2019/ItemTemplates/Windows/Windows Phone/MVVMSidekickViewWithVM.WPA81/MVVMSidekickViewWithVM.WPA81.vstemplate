@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>MVVM-Sidekick Phone Page 8.1 (Windows Phone)</Name>
+    <Description>MVVM-Sidekick Page View With VM for Windows Store Apps  8.1 (Windows Phone)</Description>
+    <Icon>MVVMSidekickViewWithVM.WPA81.ico</Icon>
+    <TemplateID>Microsoft.CS.WindowsPhoneApp.MVVMSidekickBasicPageWithModel</TemplateID>
+    <TemplateGroupID>WindowsPhoneApp-Managed-Win81</TemplateGroupID>
+    <ProjectType>CSharp</ProjectType>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <DefaultName>BasicPage.xaml</DefaultName>
+    <ShowByDefault>false</ShowByDefault>
+    <SortOrder>1</SortOrder>
+    <TargetPlatformName>Windows</TargetPlatformName>
+    <RequiredPlatformVersion>6.3.0</RequiredPlatformVersion>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectItem OpenInEditor="true" ReplaceParameters="true" ItemType="Page" SubType="Designer" CustomTool="MSBuild:Compile" TargetFileName="$fileinputname$.xaml">BasicPage.xaml</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="$fileinputname$.xaml.cs">BasicPage.xaml.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="ViewModels\$fileinputname$_Model.cs">View_Model.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" SubType="Code" TargetFileName="Startups\$fileinputname$.cs">StartupFunctions.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="false" TargetFileName="$wizardcommonprefix$ReadMe.txt">ReadMe.txt</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="$wizardcommonprefix$NavigationHelper.cs">NavigationHelper.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="$wizardcommonprefix$RelayCommand.cs">RelayCommand.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="$wizardcommonprefix$ObservableDictionary.cs">ObservableDictionary.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="$wizardcommonprefix$SuspensionManager.cs">SuspensionManager.cs</ProjectItem>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.VisualStudio.WinRT.TemplateWizards, Version=14.0.0.0, Culture=Neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VisualStudio.WinRT.TemplateWizards.SmartItem.Wizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    <CommonOptional>ReadMe.txt</CommonOptional>
+    <CommonRequired>NavigationHelper.cs</CommonRequired>
+    <CommonRequired>RelayCommand.cs</CommonRequired>
+    <CommonRequired>ObservableDictionary.cs</CommonRequired>
+    <CommonRequired>SuspensionManager.cs</CommonRequired>
+  </WizardData>
+</VSTemplate>
