@@ -30,7 +30,7 @@
   </WizardExtension>
   <WizardData>
     <packages>
-      <package id="MVVM-Sidekick" version="2.0.70" />
+      <package id="MVVM-Sidekick" version="2.0.67" />
     </packages>
   </WizardData>
 </VSTemplate>

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="MVVM_Sidekick_Extensions.00645d42-a303-4b77-8ebb-9e1f2d04a98f" Version="1.0" Language="en-US" Publisher="Wayne Wang" />
-        <DisplayName>MVVM_Sidekick_Extensions</DisplayName>
-        <Description>Empty VSIX Project.</Description>
+        <Identity Id="MVVM-Sidekick-Extensions-2019" Version="2.1.0" Language="en-US" Publisher="Wayne Wang" />
+        <DisplayName>MVVM-Sidekick VSIX 2019</DisplayName>
+        <Description xml:space="preserve">MVVM-Sidekick Extensions For VS 2019</Description>
+        <License>license.rtf</License>
+        <Icon>smaller.png</Icon>
+        <PreviewImage>Preview.png</PreviewImage>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)" />

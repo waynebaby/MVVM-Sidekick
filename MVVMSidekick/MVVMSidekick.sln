@@ -87,6 +87,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VSExtensions2019", "VSExten
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM-Sidekick-Extensions", "VSExtensions2019\MVVM-Sidekick-Extensions\MVVM-Sidekick-Extensions.csproj", "{7E3611EE-B983-467A-AEA2-A85EEC06FAA8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVVMSidekick.Core", "MVVMSidekick.Core\MVVMSidekick.Core.csproj", "{75CDDD63-D052-444D-8203-3807ABD66A0E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{04854fcf-4ad8-49cc-aa83-abbf07f278bd}*SharedItemsImports = 4
@@ -398,6 +400,26 @@ Global
 		{7E3611EE-B983-467A-AEA2-A85EEC06FAA8}.Release|x64.Build.0 = Release|Any CPU
 		{7E3611EE-B983-467A-AEA2-A85EEC06FAA8}.Release|x86.ActiveCfg = Release|Any CPU
 		{7E3611EE-B983-467A-AEA2-A85EEC06FAA8}.Release|x86.Build.0 = Release|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Debug|ARM.Build.0 = Debug|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Debug|x64.Build.0 = Debug|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Debug|x86.Build.0 = Debug|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Release|ARM.ActiveCfg = Release|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Release|ARM.Build.0 = Release|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Release|x64.ActiveCfg = Release|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Release|x64.Build.0 = Release|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Release|x86.ActiveCfg = Release|Any CPU
+		{75CDDD63-D052-444D-8203-3807ABD66A0E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -428,6 +450,7 @@ Global
 		{886C60FB-EDBD-4C3E-8D00-418579E24794} = {CD0CEE42-965E-45C9-8507-322F2BC60CC1}
 		{2965541D-1A12-47EB-BC37-B0372B163501} = {2A82496D-632A-48EF-990A-DFF510FD197A}
 		{7E3611EE-B983-467A-AEA2-A85EEC06FAA8} = {F419F5EA-5DED-481A-ABE7-E63DF46CC459}
+		{75CDDD63-D052-444D-8203-3807ABD66A0E} = {C2833223-E4B1-418D-9668-D8DC53213FCA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F797AABC-8531-4C0F-A9B1-185EB41AD009}
