@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>MVVM-Sidekick</id>
+    <version>2.1.1</version>
+    <title>MVVM Sidekick Light-weight Framework</title>
+    <authors>Wayne Wang</authors>
+    <owners>Wayne Wang</owners>
+    <projectUrl>https://github.com/waynebaby/MVVM-Sidekick</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      MVVM-Sidekick https://github.com/waynebaby/MVVM-Sidekick/
+      =============
+      MVVM密友 https://github.com/waynebaby/MVVM-Sidekick/
+      ===================
+
+
+      A Modern light-weight MVVM framework based on RX and TPL await
+
+      轻量级MVVM框架,基于RX与 await等新技术
+
+
+
+    </description>
+    <summary>
+      https://github.com/waynebaby/MVVM-Sidekick/
+
+      The aim of this project: Using new techs offered by .Net 4.5 and Windows Runtime, design a suitable foundation for new tech environment, based on a cool ViewModelBase and ReactiveCommand.
+
+      目的是集合Reactive Command, Prism 等框架的优点，应对.Net 4.5 和 Windows Runtime带来的变化，为新技术环境量身打造一套以ViewModelBase/ReactiveCommand为核心的基础。
+
+
+
+      [微博] [twitter] [Mail]
+      [微博]: http://www.weibo.com/waynebabywang "WaynebabyWang"
+      [twitter]: http://twitter.com/waynebaby "Waynebaby"
+      [Mail]: mailto:blackshaman_wayne@hotmail.com "MSN Skype"
+
+    </summary>
+    <releaseNotes>
+	2.1.1
+		
+      - Breaking Change: Removed MVVMWindows,MVVMPage,MVVMControl. Move on to Disguise.
+      - Breaking Change: Moved Common lib to .Net Standard 2.0 Class.
+      - This package only works with VS 2017/2019 Template 2.1.0 +.
+       
+
+	2.0.72
+		
+      - Changed Behavior: IStage.Show&lt;TViewModel&gt;() now accept new parameter: (autoDisposeWhenUnload: true/false) to indicate viewmodel will be disposed when View is unloaded. default value is true
+      - Changed Behavior: WaitForClose will bound to View's Unload but not VM's Dispose
+    
+
+	2.0.61
+		
+      - Changed Behavior: IStage.Show&lt;TViewModel&gt;() now accept new parameter: (isWaitingForDispose: true/false) to indicate caller is waiting for viewmodel's dispose. default value is false
+    
+
+	2.0.55
+		
+      - Fixed BinableBase Class Value will not take effect in the thread instantly (Also Imported by PropertyChanging async cancellation check)
+    
+
+	2.0.51
+		
+      - Fixed Command failed to enable bug (Imported by PropertyChanging async cancellation check).
+    
+
+	2.0.50
+		
+      - Fixed x86 Dll Missing
+      - Changed more features and code snippets.
+      - Added PropertyChanging support. You can also cancel a change.
+      - Added Command Executing support. you can cancel a command before anything been done.
+    
+</releaseNotes>
+    <tags>Rx Reactive Extensions MVVM UWP UAP Win8 Win10 APP IoT  Metro Modern UI</tags>
+    <dependencies>
+      <group targetFramework="uap10.0">
+        <dependency version="[6.2.9,100.0)" id="Microsoft.NETCore.UniversalWindowsPlatform" />
+        <dependency version="[2.0.1,100.0)" id="Microsoft.Xaml.Behaviors.Uwp.Managed" />
+        <dependency version="[2.0.3,100.0)" id="NETStandard.Library" />
+        <dependency version="[4.3.2,100.0)" id="System.Reactive" />
+        <dependency version="[4.3.2,100.0)" id="System.Reactive.PlatformServices" />
+        <dependency version="[4.3.2,100.0)" id="System.Reactive.Windows.Threading" />
+        <dependency version="[4.5.0,100.0)" id="System.ValueTuple" />
+        <dependency version="[5.11.4,100.0)" id="Unity" />
+      </group>
+      <group targetFramework="net46">
+        <dependency id="Expression.Interaction" version="[3.0.40218.0,100.0)" />
+        <dependency id="Microsoft.NETCore.Platforms" version="[3.1.0,100.0)" />
+        <dependency id="Microsoft.Xaml.Behaviors.Wpf" version="[1.1.19,100.0)" />
+        <dependency id="NETStandard.Library" version="[2.0.3,100.0)" />
+        <dependency id="System.Reactive" version="[4.3.2,100.0)" />
+        <dependency id="System.Reactive.Interfaces" version="[4.3.2,100.0)" />
+        <dependency id="System.Reactive.Linq" version="[4.3.2,100.0)" />
+        <dependency id="System.Reactive.PlatformServices" version="[4.3.2,100.0)" />
+        <dependency id="System.Reactive.Windows.Threading" version="[4.3.2,100.0)" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="[4.7.0,100.0)" />
+        <dependency id="System.Threading.Tasks.Extensions" version="[4.5.3,100.0)" />
+        <dependency id="System.ValueTuple" version="[4.5.0,100.0)" />
+        <dependency id="Unity" version="[5.11.4,100.0)" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="tools\" target="tools" />
+    <file src="content\" target="content" />
+    <file src="src\" target="src" />
+    <file src="lib\" target="lib" />
+  </files>
+</package>
