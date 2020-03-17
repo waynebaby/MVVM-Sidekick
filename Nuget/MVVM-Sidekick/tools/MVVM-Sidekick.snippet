@@ -33,7 +33,7 @@
         }
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>(_$property$Locator);
-        static Func<Bindable,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator("$property$", (m,pn)=>m.Initialize(pn,ref m._$property$, ref _$property$Locator,()=> default($type$))); 
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator("$property$", (m,pn)=>m.Initialize(pn,ref m._$property$, ref _$property$Locator,()=> default($type$))); 
         #endregion
 ]]>
       </Code>
@@ -68,7 +68,7 @@
         <![CDATA[        public $type$ $property$ { get => _$property$Locator(this).Value; set => _$property$Locator(this).SetValueAndTryNotify(value); }
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>( _$property$Locator);
-        static Func<Bindable,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator(nameof($property$), m =>m.Initialize(nameof($property$),ref m._$property$, ref _$property$Locator,()=> default($type$)));         
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator(nameof($property$), m =>m.Initialize(nameof($property$),ref m._$property$, ref _$property$Locator,()=> default($type$)));         
         #endregion
 ]]>
       </Code>
@@ -106,7 +106,7 @@
         }
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>(_$property$Locator);
-        static Func<Bindable,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator("$property$", (m,pn)=>m.Initialize(pn,ref m._$property$, ref _$property$Locator,  
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator("$property$", (m,pn)=>m.Initialize(pn,ref m._$property$, ref _$property$Locator,  
             model=>
             { 
                 var vm = CastToCurrentType(model);
@@ -147,7 +147,7 @@
         <![CDATA[        public $type$ $property$ { get => _$property$Locator(this).Value; set => _$property$Locator(this).SetValueAndTryNotify(value);}
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>(_$property$Locator);
-        static Func<Bindable,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator(nameof($property$), m =>m.Initialize(nameof($property$),ref m._$property$, ref _$property$Locator,
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator(nameof($property$), m =>m.Initialize(nameof($property$),ref m._$property$, ref _$property$Locator,
             model=>
             { 
                 var vm = CastToCurrentType(model);
@@ -276,7 +276,7 @@
         }
         #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup               
         protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>(_Command$commandName$Locator);
-        static Func<Bindable,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator("Command$commandName$", m =>m.Initialize("Command$commandName$",ref m._Command$commandName$, ref _Command$commandName$Locator,
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator("Command$commandName$", m =>m.Initialize("Command$commandName$",ref m._Command$commandName$, ref _Command$commandName$Locator,
             model => 
             {
                 var state = "Command$commandName$";       
@@ -331,7 +331,7 @@
         <![CDATA[        public CommandModel Command$commandName$ => _Command$commandName$Locator(this).Value;         
         #region Property CommandModel Command$commandName$ Setup                
         protected Property<CommandModel> _Command$commandName$ = new Property<CommandModel>(_Command$commandName$Locator);
-        static Func<Bindable,ValueContainer<CommandModel>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), m =>m.Initialize(nameof(Command$commandName$),ref m._Command$commandName$, ref _Command$commandName$Locator,
+        static Func<BindableBase,ValueContainer<CommandModel>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), m =>m.Initialize(nameof(Command$commandName$),ref m._Command$commandName$, ref _Command$commandName$Locator,
             model => 
             {
                 object state = nameof(Command$commandName$);      
@@ -388,7 +388,7 @@
         <![CDATA[        public CommandModel Command$commandName$ => _Command$commandName$Locator(this).Value;        
         #region Property CommandModel Command$commandName$ Setup                
         protected Property<CommandModel> _Command$commandName$ = new Property<CommandModel>(_Command$commandName$Locator);
-        static Func<Bindable,ValueContainer<CommandModel>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), m =>m.Initialize(nameof(Command$commandName$),ref m._Command$commandName$, ref _Command$commandName$Locator,
+        static Func<BindableBase,ValueContainer<CommandModel>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), m =>m.Initialize(nameof(Command$commandName$),ref m._Command$commandName$, ref _Command$commandName$Locator,
             model => 
             {
                 object state = nameof(Command$commandName$);      
@@ -450,7 +450,7 @@
         public CommandModel<$commandType$, $stateType$> Command$commandName$ => _Command$commandName$Locator(this).Value;        
         #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup              
         protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>(_Command$commandName$Locator);
-        static Func<Bindable,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), m =>m.Initialize(nameof(Command$commandName$),ref m._Command$commandName$, ref _Command$commandName$Locator,
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), m =>m.Initialize(nameof(Command$commandName$),ref m._Command$commandName$, ref _Command$commandName$Locator,
             model => 
             {
                 var state = default($stateType$);       
@@ -516,7 +516,7 @@
         public CommandModel<$commandType$, $stateType$> Command$commandName$ => _Command$commandName$Locator(this).Value;        
         #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup 
         protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>(_Command$commandName$Locator);
-        static Func<Bindable,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), m =>m.Initialize(nameof(Command$commandName$),ref m._Command$commandName$, ref _Command$commandName$Locator,
+        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator(nameof(Command$commandName$), m =>m.Initialize(nameof(Command$commandName$),ref m._Command$commandName$, ref _Command$commandName$Locator,
             model => 
             {
                 var state = default($stateType$);       

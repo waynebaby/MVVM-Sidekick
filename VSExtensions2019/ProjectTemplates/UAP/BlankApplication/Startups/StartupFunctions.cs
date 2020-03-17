@@ -8,6 +8,7 @@ using MVVMSidekick.ViewModels;
 using MVVMSidekick.Views;
 using MVVMSidekick.Services;
 using $safeprojectname$;
+using $safeprojectname$.ViewModels;
 
 using System.Threading;
 

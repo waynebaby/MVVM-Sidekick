@@ -14,10 +14,16 @@
     <LocationField>Enabled</LocationField>
     <DefaultName>WPFApplication</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
+    <PromptForSaveOnCreation>false</PromptForSaveOnCreation>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
     <BuildProjectOnLoad>false</BuildProjectOnLoad>
     <ShowByDefault>false</ShowByDefault>
     <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <CreateInPlace>false</CreateInPlace>
+    <AppIdFilter>blend</AppIdFilter>
+    <LanguageTag>CSharp</LanguageTag>
+    <PlatformTag>Windows</PlatformTag>
+    <ProjectTypeTag>Desktop</ProjectTypeTag>
   </TemplateData>
   <TemplateContent>
     <Project File="WPFApplication.csproj" ReplaceParameters="true">
@@ -26,7 +32,7 @@
       <ProjectItem ReplaceParameters="true" TargetFileName="Properties\Resources.Designer.cs">Resources.Designer.cs</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="Properties\Settings.settings">Settings.settings</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Properties\Settings.Designer.cs">Settings.Designer.cs</ProjectItem>
-      <ProjectItem ReplaceParameters="true" SubType="Code" OpenOrder="20">MainWindow.xaml.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" OpenInEditor="!blend" SubType="Code" OpenOrder="20">MainWindow.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" OpenInEditor="true" OpenOrder="10">MainWindow.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true">App.xaml</ProjectItem>
       <ProjectItem ReplaceParameters="true" SubType="Code">App.xaml.cs</ProjectItem>
@@ -46,7 +52,7 @@
   <WizardData>
     <!--<packages repository="extension" repositoryId="MVVM-Sidekick-Extensions-2019">-->
     <packages>
-      <package id="MVVM-Sidekick" version="2.1.1" />
+      <package id="MVVM-Sidekick" version="2.1.15-prerelease" />
     </packages>
   </WizardData>
 </VSTemplate>

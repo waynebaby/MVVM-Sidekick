@@ -351,14 +351,20 @@ namespace CommonCode
                         .Where(x => x.Name.LocalName == "id" && x.Parent.Name.LocalName == "version")
                         .First();
 
-                  var vlist = (mainValue.Value.Split('.').Select(x => int.Parse(x)).Union(Enumerable.Repeat(0, 3)).Take(3).ToArray());
-
-                  vlist[2]++;
+                  var vlist = mainValue.Value.Split('.').Select(x => int.Parse(x)).ToArray();
+                  vlist[vlist.Length-1] = vlist[vlist.Length - 1] +1;
 
                   ver.Value = string.Join(".", vlist.Select(x => x.ToString()));
                   mainValue.Value = ver.Value;
 
 
+
+                  if (mainValue.Attribute(XName.Get("prerelease"))?.Value == "true")
+                  {
+                      ver.Value = ver.Value+"-prerelease";
+
+
+                  }
                   foreach (var currentPackage in packages)
                   {
                       var currentPackageVersion = currentPackage
@@ -405,6 +411,8 @@ namespace CommonCode
                       .Descendants()
                       .Where(x => x.Name.LocalName == "id" && x.Parent.Name.LocalName == "version")
                       .First();
+
+               
 
 
                 var templateRootDir = args[1];
@@ -459,7 +467,8 @@ namespace CommonCode
                     foreach (var node in nodes[false])
                     {
                         node.RemoveNodes();
-                        var e = XElement.Parse($@"<package id=""MVVM-Sidekick"" version=""{mainValue.Value}"" />");
+                        var prereleaseString = mainValue.Attribute(XName.Get("prerelease"))?.Value == "true" ? "-prerelease" : "";
+                        var e = XElement.Parse($@"<package id=""MVVM-Sidekick"" version=""{mainValue.Value}{prereleaseString}"" />");
                         e.Name = XName.Get("package", node.Name.NamespaceName);
                         node.Add(e);
                     }
