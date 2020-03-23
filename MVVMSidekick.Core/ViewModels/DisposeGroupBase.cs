@@ -97,12 +97,12 @@ namespace MVVMSidekick
             /// <value>The dispose information list.</value>
             public IList<DisposeEntry> DisposeInfoList { get { return _disposeInfoList.Value; } }
 
-            //protected static Func<DisposeGroupBase, List<DisposeInfo>> _locateDisposeInfos =
+            //protected static Func<DisposeGroupBase, List<DisposeEntry>> _locateDisposeInfos =
             //    m =>
             //    {
             //        if (m._disposeInfoList == null)
             //        {
-            //            Interlocked.CompareExchange(ref m._disposeInfoList, new List<DisposeInfo>(), null);
+            //            Interlocked.CompareExchange(ref m._disposeInfoList, new List<DisposeEntry>(), null);
 
             //        }
             //        return m._disposeInfoList;

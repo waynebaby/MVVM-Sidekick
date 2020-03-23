@@ -87,10 +87,10 @@ namespace EventRoutingSample.ViewModels
 		///// <param name="exceptions">
 		///// <para>The exception and dispose infomation</para>
 		///// </param>
-		//protected override async void OnDisposeExceptions(IList<DisposeInfo> exceptions)
+		//protected override async void OnDisposeExceptions(IList<DisposeEntry> exceptions)
 		//{
 		//    base.OnDisposeExceptions(exceptions);
-		//    await TaskExHelper.Yield();
+		//    await Task.Yield();
 		//}
 
 		#endregion

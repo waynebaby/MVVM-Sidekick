@@ -10,9 +10,9 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-        <d:FrameworkElement.DataContext>
+        <d:DataContext>
             <vm:MainPage_Model/>
-        </d:FrameworkElement.DataContext>
+        </d:DataContext>
         <TextBlock x:Name="pageTitle" Grid.Column="1" Margin="100" Text="{Binding Title}" />
 
     </Grid>

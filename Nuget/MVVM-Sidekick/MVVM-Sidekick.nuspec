@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>2.1.15-prerelease</version>
+    <version>2.1.22-prerelease</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,7 +38,7 @@
 
     </summary>
     <releaseNotes>
-	2.1.15
+	2.1.22
 		
       - Breaking Change: Removed MVVMWindows,MVVMPage,MVVMControl. Move on to Disguise.
       - Breaking Change: Moved Common lib to .Net Standard 2.0 Class.

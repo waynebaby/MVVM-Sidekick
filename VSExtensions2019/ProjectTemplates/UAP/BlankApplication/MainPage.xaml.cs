@@ -26,9 +26,8 @@ namespace $safeprojectname$
     {
         public MainPage()
         {
-            ViewDisguise.ViewModel = null;
-            this.InitializeComponent();
             ViewDisguise.ViewModel = ServiceLocator.Instance.Resolve<MainPage_Model>();
+            this.InitializeComponent();
             ViewDisguise.RegisterPropertyChangedCallback(
                 PageViewDisguise.ViewModelProperty, 
                 (_, __) =>

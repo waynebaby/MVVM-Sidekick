@@ -30,9 +30,9 @@ namespace $safeprojectname$
     {
         public $safeitemrootname$()	           
         {
-
-            this.InitializeComponent();
             ViewDisguise.ViewModel = ServiceLocator.Instance.Resolve<MainWindow_Model>();
+            this.InitializeComponent();
+
             
         }
 	 

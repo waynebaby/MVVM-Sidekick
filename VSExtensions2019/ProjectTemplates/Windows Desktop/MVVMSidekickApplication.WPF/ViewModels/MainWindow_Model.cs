@@ -34,7 +34,7 @@ namespace $safeprojectname$.ViewModels
         public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
 #region Property string Title Setup        
         protected Property<string> _Title = new Property<string>(_TitleLocator);
-        static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => default(string)));
+        static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => "Hello World!"));
 #endregion
 
 
@@ -102,10 +102,10 @@ namespace $safeprojectname$.ViewModels
         ///// <param name="exceptions">
         ///// <para>The exception and dispose infomation</para>
         ///// </param>
-        //protected override async void OnDisposeExceptions(IList<DisposeInfo> exceptions)
+        //protected override async void OnDisposeExceptions(IList<DisposeEntry> exceptions)
         //{
         //    base.OnDisposeExceptions(exceptions);
-        //    await TaskExHelper.Yield();
+        //    await Task.Yield();
         //}
         #endregion
 

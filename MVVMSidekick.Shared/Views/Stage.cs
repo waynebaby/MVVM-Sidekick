@@ -281,7 +281,7 @@ namespace MVVMSidekick.Views
         //    InternalShowView(view, Target, _navigator.CurrentBindingView.ViewModel);
 
 
-        //    return await TaskExHelper.FromResult(new ShowAwaitableResult<TTarget> { Closing = isWaitingForDispose ? targetViewModel.WaitForClose() : Task.CompletedTask, ViewModel = targetViewModel });
+        //    return await Task.FromResult(new ShowAwaitableResult<TTarget> { Closing = isWaitingForDispose ? targetViewModel.WaitForClose() : Task.CompletedTask, ViewModel = targetViewModel });
         //}
 #endif
 
