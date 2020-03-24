@@ -21,28 +21,28 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
 
 - task: CopyFiles@1
   inputs:
     sourceFolder: '$(Build.SourcesDirectory)'
-    contents: '**/?(*.cs)'
+    contents: '**/Nuget/?(*.nupkg)'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: CopyFiles@2
   inputs:
     sourceFolder: '$(Build.SourcesDirectory)'
-    contents: '/VSExtensions2019/MVVM-Sidekick-Extensions/**/$(BuildConfiguration)/**/?(*.msix)'
+    contents: '**/?(*.msix)'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
