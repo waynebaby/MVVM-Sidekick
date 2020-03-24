@@ -33,10 +33,16 @@ steps:
     configuration: '$(buildConfiguration)'
 
 
+- task: CopyFiles@1
+  inputs:
+    sourceFolder: '$(Build.SourcesDirectory)'
+    contents: '/Nuget/?(*.nuget)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
 - task: CopyFiles@2
   inputs:
     sourceFolder: '$(Build.SourcesDirectory)'
-    contents: '**/$(BuildConfiguration)/**/?(*.nuget|*.msix)'
+    contents: '/VSExtensions2019/MVVM-Sidekick-Extensions/**/$(BuildConfiguration)/**/?(*.msix)'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
