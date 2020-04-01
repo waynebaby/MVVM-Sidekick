@@ -180,9 +180,9 @@ namespace MVVMSidekick
                                 //Exception gotex = null;
                                 try
                                 {
-                                    if (DisposingEntry != null)
+                                    if (DisposeEntryDisposing != null)
                                     {
-                                        DisposingEntry(this, ea);
+                                        DisposeEntryDisposing(this, ea);
                                     }
                                     if (disposing || info.IsNeedCheckOnFinalizer)
                                     {
@@ -198,9 +198,9 @@ namespace MVVMSidekick
                                 }
                                 finally
                                 {
-                                    if (DisposedEntry != null)
+                                    if (DisposeEntryDisposed != null)
                                     {
-                                        DisposedEntry(this, ea);
+                                        DisposeEntryDisposed(this, ea);
                                     }
                                 }
 
@@ -242,12 +242,12 @@ namespace MVVMSidekick
             /// <summary>
             /// Occurs when [disposing entry].
             /// </summary>
-            public event EventHandler<DisposeEventArgs> DisposingEntry;
+            public event EventHandler<DisposeEventArgs> DisposeEntryDisposing;
 
             /// <summary>
             /// Occurs when [disposed entry].
             /// </summary>
-            public event EventHandler<DisposeEventArgs> DisposedEntry;
+            public event EventHandler<DisposeEventArgs> DisposeEntryDisposed;
         }
 
 

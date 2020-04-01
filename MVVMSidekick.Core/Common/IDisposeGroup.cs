@@ -42,11 +42,11 @@ namespace MVVMSidekick.Common
         /// <summary>
         /// Occurs when [disposing entry].
         /// </summary>
-        event EventHandler<DisposeEventArgs> DisposingEntry;
+        event EventHandler<DisposeEventArgs> DisposeEntryDisposing;
         /// <summary>
         /// Occurs when [disposed entry].
         /// </summary>
-        event EventHandler<DisposeEventArgs> DisposedEntry;
+        event EventHandler<DisposeEventArgs> DisposeEntryDisposed;
 
 
     }

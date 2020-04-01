@@ -5,6 +5,7 @@ using MVVMSidekick.Views;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.Services;
 using MVVMSidekick.Commands;
+using MVVMSidekick.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
