@@ -6,7 +6,7 @@ namespace MVVMSidekick.Common
 {
 
     /// <summary>
-    /// <para>Dispose action infomation struct</para>
+    /// <para>Dispose action information struct</para>
     /// <para>注册销毁方法时的相关信息</para>
     /// </summary>
     public struct DisposeEntry

@@ -70,7 +70,7 @@ namespace $safeprojectname$
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
-			//Init MVVM-Sidekick Navigations and Dependency Injections
+			//Init MVVM-Sidekick Navigation and Dependency Injections
 			InitConfigurationInThisAssembly();
 
 			Frame rootFrame = CreateOrSetupRootFrame(e);

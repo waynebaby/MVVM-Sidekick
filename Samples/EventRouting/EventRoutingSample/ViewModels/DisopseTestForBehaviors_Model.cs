@@ -85,7 +85,7 @@ namespace EventRoutingSample.ViewModels
 		///// <para>If dispose actions got exceptions, will handled here. </para>
 		///// </summary>
 		///// <param name="exceptions">
-		///// <para>The exception and dispose infomation</para>
+		///// <para>The exception and dispose information</para>
 		///// </param>
 		//protected override async void OnDisposeExceptions(IList<DisposeEntry> exceptions)
 		//{

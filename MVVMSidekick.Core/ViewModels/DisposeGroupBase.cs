@@ -227,7 +227,7 @@ namespace MVVMSidekick
             /// <para>If dispose actions got exceptions, will handled here. </para>
             /// <para>处理Dispose 时产生的Exception</para>
             /// </summary>
-            /// <param name="disposeInfoWithExceptions"><para>The exception and dispose infomation</para>
+            /// <param name="disposeInfoWithExceptions"><para>The exception and dispose information</para>
             /// <para>需要处理的异常信息</para></param>
 
             protected virtual void OnDisposeExceptions(IList<DisposeEntry> disposeInfoWithExceptions)
