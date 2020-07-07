@@ -20,7 +20,12 @@
   <Import Project="..\MVVMSidekick.Shared\MVVMSidekick.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MVVMSidekick.Core\MVVMSidekick.Core.csproj" />
+    <ProjectReference Include="..\MVVMSidekick.DependencyInjection.Unity\MVVMSidekick.DependencyInjection.Unity.csproj" />
   </ItemGroup>
 
 </Project>

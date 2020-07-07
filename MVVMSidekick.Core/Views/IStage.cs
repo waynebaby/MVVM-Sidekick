@@ -53,6 +53,8 @@ namespace MVVMSidekick.Views
         bool CanGoBack { get; }
         bool CanGoForward { get; }
 
+
+
         bool IsGoBackSupported { get; }
         bool IsGoForwardSupported { get; }
         Object Target { get; }

@@ -33,11 +33,6 @@ namespace MVVMSidekick
             {
             }
 
-
-            //public UnityServiceLocator(bool isForUnitTesting) : this(new UnityContainer())
-            //{
-            //}
-
             public UnityServiceLocator(IUnityContainer coreContainer)
             {
                 UnityContainer = coreContainer;
@@ -46,10 +41,7 @@ namespace MVVMSidekick
 
             public IUnityContainer UnityContainer { get; protected set; }
 
-            public override bool HasInstance<TService>(string name = null)
-            {
-                return name == null ? UnityContainer.IsRegistered(typeof(TService)) : UnityContainer.IsRegistered(typeof(TService), name);
-            }
+
 
             public override IServiceLocator Register<TService>(TService instance)
             {

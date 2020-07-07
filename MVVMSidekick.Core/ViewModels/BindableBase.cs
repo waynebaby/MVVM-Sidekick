@@ -823,6 +823,6 @@ namespace MVVMSidekick.ViewModels
         }
 
 
-        public bool IsInDesignMode => ServiceLocator.Instance.TryResolve<ITellDesignTimeService>(() => new InDesignTime()).IsInDesignMode;
+        public bool IsInDesignMode => ServiceLocator.Instance.TryResolve<ITellDesignTimeService>(() => new InDesignTime()).Service.IsInDesignMode;
     }
 }

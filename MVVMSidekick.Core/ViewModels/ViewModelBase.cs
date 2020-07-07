@@ -25,7 +25,7 @@ namespace MVVMSidekick.ViewModels
     /// </summary>
     /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
     /// <typeparam name="TResult">The type of the t result.</typeparam>
-    public  abstract partial class ViewModelBase<TViewModel, TResult> : ViewModelBase<TViewModel>, IViewModel<TResult>
+    public abstract partial class ViewModelBase<TViewModel, TResult> : ViewModelBase<TViewModel>, IViewModel<TResult>
         where TViewModel : ViewModelBase<TViewModel, TResult>, IViewModel<TResult>
     {
 
@@ -103,7 +103,7 @@ namespace MVVMSidekick.ViewModels
                         new ValueContainer<TResult>("Result", model);
                 });
 
-       
+
         #endregion
 
 
@@ -159,7 +159,7 @@ namespace MVVMSidekick.ViewModels
                 .Subscribe(isBusy =>
                     IsUIBusy = isBusy)
                 .DisposeWith(this);
-  
+
         }
 
 
@@ -221,7 +221,7 @@ namespace MVVMSidekick.ViewModels
         /// <returns>Task awaiter</returns>
         protected virtual async Task OnBindedToView(MVVMSidekick.Views.IView view, IViewModel oldValue)
         {
-         
+
             InitStageManager(view);
 
             await Task.Yield();
@@ -308,26 +308,17 @@ namespace MVVMSidekick.ViewModels
         /// Set: Will VM be Disposed when unload from View.
         /// </summary>
         /// <value><c>true</c> if this instance is disposing when unload required; otherwise, <c>false</c>.</value>
-        public bool IsDisposingWhenUnloadRequired { get;  set; }
+        public bool IsDisposingWhenUnloadRequired { get; set; }
 
 
 
-
-        /// <summary>
-        /// The _ stage manager
-        /// </summary>
-        private MVVMSidekick.Views.IStageManager _StageManager = new EmptyStageManager();
 
         /// <summary>
         /// Gets or sets the stage manager.												 I
         /// </summary>
         /// <value>The stage manager.</value>
         //[Microsoft.Practices.Unity.Dependency(Testing.Constants.DependencyKeyForTesting)]
-        public MVVMSidekick.Views.IStageManager StageManager
-        {
-            get => _StageManager;
-            set => _StageManager = value;
-        }
+        public virtual MVVMSidekick.Views.IStageManager StageManager { get; set; } = new EmptyStageManager();
 
         /// <summary>
         /// 是否有返回值
@@ -410,7 +401,7 @@ namespace MVVMSidekick.ViewModels
 
 
 
-      
+
 
         /// <summary>
         /// Executes the task.

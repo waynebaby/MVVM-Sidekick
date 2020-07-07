@@ -31,21 +31,19 @@ namespace MVVMSidekick
 
         public abstract class ServiceLocator : IServiceLocator
         {
-            static public string DefaultServiceLocatorInstanceTypeName = "MVVMSidekick.DependencyInjection";
-            static public string DefaultServiceLocatorInstanceAssemblyName = "MVVMSidekick.Services.UnityServiceLocator";
+            static string DefaultServiceLocatorInstanceTypeName = "MVVMSidekick.Services.UnityServiceLocator, MVVMSidekick.DependencyInjection.Unity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
 
-
-
-            static internal Lazy<ServiceLocator> _defaultInstance
-                = new Lazy<ServiceLocator>(
-                    () =>
+            public static Func<ServiceLocator> DefaultInstanceFactory =
+            () =>
                     {
-                        var type = AppDomain.CurrentDomain.GetAssemblies()
-                            .Where(x => x.GetName().Name.StartsWith(DefaultServiceLocatorInstanceAssemblyName ))
-                            .Select(x =>x.GetType(DefaultServiceLocatorInstanceTypeName )).Single();
+                  
+                        var type = Type.GetType(DefaultServiceLocatorInstanceTypeName);
                         return Activator.CreateInstance(type) as ServiceLocator;
 
-                    }, true);
+                    };
+            static internal Lazy<ServiceLocator> _defaultInstance
+                    = new Lazy<ServiceLocator>(DefaultInstanceFactory
+                       , true);
 
             static IServiceLocator _instance;
 
@@ -85,9 +83,6 @@ namespace MVVMSidekick
 
 
 
-
-
-            public abstract bool HasInstance<TService>(string name = null);
             public abstract IServiceLocator Register<TService>(TService instance);
             public abstract IServiceLocator Register<TService>(string name, TService instance);
             public abstract IServiceLocator Register<TFrom, TTo>(string name = null)
@@ -99,9 +94,21 @@ namespace MVVMSidekick
             public abstract Task<TService> ResolveAsyncFactoryAsync<TService>(string name = null, object parameter = null);
             public abstract TService ResolveFactory<TService>(string name = null, object parameter = null);
 
-            public TService TryResolve<TService>(Func<TService> backupPlan, string name = null)
+            public (TService Service, Exception Exception) TryResolve<TService>(Func<TService> backupPlan, string name = null)
             {
-                return HasInstance<TService>(name) ? Resolve<TService>(name) : backupPlan();
+                TService rval = default;
+                Exception exception = default;
+                try
+                {
+                    rval = Resolve<TService>();
+
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+
+                return (Object.Equals(rval, default(TService)) ? backupPlan() : rval, exception);
             }
         }
 

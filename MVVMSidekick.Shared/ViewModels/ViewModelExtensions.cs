@@ -3,7 +3,7 @@ using MVVMSidekick.Services;
 using MVVMSidekick.ViewModels;
 namespace MVVMSidekick.ViewModels
 {
-    public static class PlatformServiceHelper
+    public static class ViewModel
     {
 #if WINDOWS_UWP
         public static Windows.UI.Core.CoreDispatcher GetCurrentViewDispatcher(this IViewModel viewModel)
@@ -43,7 +43,12 @@ namespace MVVMSidekick.ViewModels
         /// <para>读取目前是否在设计时状态。</para>
         /// </summary>
         /// <value><c>true</c> if this instance is in design mode; otherwise, <c>false</c>.</value>
-        public static bool IsInDesignMode => ServiceLocator.Instance.TryResolve<ITellDesignTimeService>(() => new InDesignTime()).IsInDesignMode;
+        public static bool IsInDesignMode => ServiceLocator.Instance.TryResolve<ITellDesignTimeService>(() => new InDesignTime()).Service.IsInDesignMode;
+#endif
+#if BLAZOR
+
+
+  
 #endif
 
 

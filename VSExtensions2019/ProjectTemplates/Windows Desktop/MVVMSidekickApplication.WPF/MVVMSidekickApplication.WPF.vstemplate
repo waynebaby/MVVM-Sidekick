@@ -52,7 +52,7 @@
   <WizardData>
     <!--<packages repository="extension" repositoryId="MVVM-Sidekick-Extensions-2019">-->
     <packages>
-      <package id="MVVM-Sidekick" version="2.1.33-prerelease" />
+      <package id="MVVM-Sidekick" version="2.1.36-prerelease" />
     </packages>
   </WizardData>
 </VSTemplate>

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MVVMSidekick.Services;
 using MVVMSidekick.ViewModels;
 
 namespace MVVMSidekick_net46.Test
@@ -85,6 +87,15 @@ namespace MVVMSidekick_net46.Test
 
             Assert.AreEqual(123, s.MyProperty);
             Assert.AreEqual(123, s.MyProperty123);
+        }
+
+        [TestMethod]
+        public void ServiceLocatorDefaultInstance()
+        {
+            //var l = typeof(UnityServiceLocator).AssemblyQualifiedName;
+            //Debug.WriteLine(l);
+            var s = ServiceLocator.Instance;
+            Assert.IsNotNull(s);
         }
     }
 }

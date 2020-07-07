@@ -1,10 +1,10 @@
-﻿#if !BLAZOR
+﻿
 using System;
 using System.Collections.Generic;
 using MVVMSidekick.ViewModels;
 using System.Windows;
 
-
+#if !BLAZOR
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -101,7 +101,7 @@ namespace MVVMSidekick.Views
         private Func<object> _parentLocator;
 
 
-        #region Attached Property
+#region Attached Property
 
         /// <summary>
         /// Gets the beacon.
@@ -133,7 +133,7 @@ namespace MVVMSidekick.Views
 
         public static void SetBeacon(DependencyObject dobj, string value)
         {
-            if (!PlatformServiceHelper.IsInDesignMode)
+            if (!ViewModels.ViewModel.IsInDesignMode)
             {
 
                 dobj?.SetValue(BeaconProperty, value);
@@ -164,7 +164,7 @@ namespace MVVMSidekick.Views
 
 
 
-        #endregion
+#endregion
 
 
         internal FrameworkElement LocateTargetContainer(IView view, ref string targetContainerName, IViewModel sourceVM)
@@ -238,7 +238,7 @@ namespace MVVMSidekick.Views
         /// <param name="target">The target.</param>
         public static void RegisterTargetBeacon(string name, FrameworkElement target)
         {
-            if (!PlatformServiceHelper.IsInDesignMode)
+            if (!ViewModels.ViewModel.IsInDesignMode)
             {
 
 
@@ -325,5 +325,30 @@ namespace MVVMSidekick.Views
         }
     }
 
+}
+#else
+namespace MVVMSidekick.Views
+{
+    using Microsoft.AspNetCore.Components;
+    /// <summary>
+    /// The abstract  for frame/contentcontrol. VM can access this class to Show other vm and vm's mapped view.
+    /// </summary>
+    public class StageManager : IStageManager
+    {
+
+
+        public IStage this[string beaconKey] => throw new NotImplementedException();
+
+        public IViewModel ViewModel { get; set; }
+        public IView CurrentBindingView { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        [Inject]
+        public IStage DefaultStage { get; private set; }
+
+        public void InitParent(Func<object> parentLocator)
+        {
+
+        }
+    }
 }
 #endif

@@ -1,28 +1,42 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
+using MVVMSidekick.Reactive;
+using MVVMSidekick.Views;
 
 namespace MVVMSidekick.ViewModels
 {
-    public class Bindable<TBindable> : BindableBase<TBindable> where TBindable : Bindable<TBindable>
-   
-        {}
-    public class ViewModel<TViewModel> : ViewModelBase<TViewModel>, IViewModelWithPlatformService where TViewModel : ViewModel<TViewModel>
-    {
 
-        public ViewModel()
+#if BLAZOR
+    using Microsoft.AspNetCore.Components;
+    public class ViewModel<TViewModel, TPage> : ViewModelBase<TViewModel>,IViewModelWithPlatformService where TViewModel : ViewModel<TViewModel, TPage>
+        where TPage : ComponentBase
+    {
+        static ViewModel()
         {
 
 
         }
-        /// <summary>
-        /// Gets a value indicating whether this instance is in design mode.
-        /// </summary>
-        /// <value><c>true</c> if this instance is in design mode; otherwise, <c>false</c>.</value>
+
+        [Inject]
+        public override IStageManager StageManager { get => base.StageManager; set => base.StageManager = value; }
+        [Inject]
+        public IServiceProvider BlazorServiceProvider { get; set; }
+
+        public virtual void OnInitialized() { }
+        public virtual async Task OnInitializedAsync() => await Task.CompletedTask;
+        public virtual void OnParametersSet() { }
+        public virtual async Task OnParametersSetAsync() => await Task.CompletedTask;
 
 
-
+#else
+   {
+    public class ViewModel<TViewModel> : ViewModelBase<TViewModel>, IViewModelWithPlatformService where TViewModel : ViewModel<TViewModel>
+    {
+#endif
 
 
 #if WINDOWS_UWP
@@ -53,7 +67,7 @@ namespace MVVMSidekick.ViewModels
         }
 #elif WPF
         public System.Windows.Controls.Frame FrameObject { get; set; }
-
+#elif BLAZOR
 
 #endif
 

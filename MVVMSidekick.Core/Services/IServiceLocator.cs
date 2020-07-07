@@ -25,15 +25,9 @@ namespace MVVMSidekick
         /// </summary>
         public interface IServiceLocator
         {
-            /// <summary>
-            /// Determines whether the specified name has instance.
-            /// </summary>
-            /// <typeparam name="TService">The type of the t service.</typeparam>
-            /// <param name="name">The name.</param>
-            /// <returns><c>true</c> if the specified name has instance; otherwise, <c>false</c>.</returns>
-            bool HasInstance<TService>(string name = null);
 
-            TService TryResolve<TService>(Func<TService> backupPlan, String name = null);
+
+            (TService Service, Exception Exception) TryResolve<TService>(Func<TService> backupPlan, String name = null);
 
             /// <summary>
             /// Registers the typeMapping
