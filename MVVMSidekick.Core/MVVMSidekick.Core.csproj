@@ -10,11 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Reactive" Version="4.3.2" />
-    <PackageReference Include="Unity" Version="5.11.4" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cd $(ProjectDir)..&#xD;&#xA;&#xD;&#xA;xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y&#xD;&#xA;xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\netstandard2.0 /s  /i /y&#xD;&#xA;&#xD;&#xA;cd $(ProjectDir)&#xD;&#xA;&#xD;&#xA;..\CommonCode\CommonCode DPGRP  &quot;$(ProjectDir)\Packages.config&quot; ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec&#xD;&#xA;" />
-  </Target>
 
 </Project>

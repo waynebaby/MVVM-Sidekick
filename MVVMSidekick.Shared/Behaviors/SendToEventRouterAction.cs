@@ -1,4 +1,5 @@
 ﻿using System;
+#if !BLAZOR
 #if WPF
 
 using System.Collections.Generic;
@@ -193,3 +194,4 @@ namespace MVVMSidekick.Behaviors
 #endif
     }
 }
+#endif

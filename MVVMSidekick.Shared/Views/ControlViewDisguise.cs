@@ -1,4 +1,5 @@
 ﻿
+#if !BLAZOR
 
 
 #if WINDOWS_UWP
@@ -58,3 +59,4 @@ namespace MVVMSidekick.Views
         }
     }
 }
+#endif

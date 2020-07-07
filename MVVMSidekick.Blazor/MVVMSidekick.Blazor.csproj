@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;BLAZOR</DefineConstants>
+    <OutputPath>bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;BLAZOR</DefineConstants>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="cd $(ProjectDir)..&#xD;&#xA;&#xD;&#xA;xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y&#xD;&#xA;xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\netstandard2.0 /s  /i /y&#xD;&#xA;&#xD;&#xA;cd $(ProjectDir)&#xD;&#xA;&#xD;&#xA;..\CommonCode\CommonCode DPGRP  &quot;$(ProjectDir)\Packages.config&quot; ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec&#xD;&#xA;" />
+  </Target>
+
+  <Import Project="..\MVVMSidekick.Shared\MVVMSidekick.Shared.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\MVVMSidekick.Core\MVVMSidekick.Core.csproj" />
+  </ItemGroup>
+
+</Project>

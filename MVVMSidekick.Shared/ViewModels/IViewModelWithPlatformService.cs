@@ -41,6 +41,8 @@ namespace MVVMSidekick.ViewModels
 #elif WPF
         System.Windows.Controls.Frame FrameObject { get; set; }
 #endif
+
+
     }
 
 }

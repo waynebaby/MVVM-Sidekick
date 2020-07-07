@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !BLAZOR
+using System;
 using System.Collections.Generic;
 using MVVMSidekick.ViewModels;
 using System.Windows;
@@ -325,3 +326,4 @@ namespace MVVMSidekick.Views
     }
 
 }
+#endif

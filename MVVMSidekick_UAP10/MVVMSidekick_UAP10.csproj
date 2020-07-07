@@ -143,6 +143,10 @@
       <Project>{0b990a49-ed72-43c7-a4b5-923537e1d5ac}</Project>
       <Name>MVVMSidekick.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MVVMSidekick.DependencyInjection\MVVMSidekick.DependencyInjection.csproj">
+      <Project>{bb369ecf-d34c-49d6-94d7-3aea7981ae60}</Project>
+      <Name>MVVMSidekick.DependencyInjection</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\MVVMSidekick.Shared\MVVMSidekick.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -1,4 +1,5 @@
-﻿#if WPF
+﻿#if !BLAZOR
+#if WPF
 
 using Microsoft.Xaml.Behaviors;
 using System;
@@ -105,3 +106,5 @@ namespace MVVMSidekick.Behaviors
 
 	}
 }
+
+#endif

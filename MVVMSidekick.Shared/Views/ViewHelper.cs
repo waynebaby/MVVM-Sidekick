@@ -14,7 +14,7 @@
 using MVVMSidekick.ViewModels;
 
 
-
+#if !BLAZOR
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -30,19 +30,7 @@ using System.Windows;
 using MVVMSidekick.Views;
 using System.Windows.Controls.Primitives;
 using MVVMSidekick.Utilities;
-#elif SILVERLIGHT_5 || SILVERLIGHT_4
-						   using System.Windows.Media;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Navigation;
-using System.Windows.Controls.Primitives;
-#elif WINDOWS_PHONE_8 || WINDOWS_PHONE_7
-using System.Windows.Media;
-using System.Windows.Controls;
-using Microsoft.Phone.Controls;
-using System.Windows.Data;
-using System.Windows.Navigation;
-using System.Windows.Controls.Primitives;
+
 #endif
 
 
@@ -239,3 +227,4 @@ namespace MVVMSidekick
 
 	}
 }
+#endif

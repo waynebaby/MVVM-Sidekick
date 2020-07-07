@@ -36,6 +36,7 @@ namespace MVVMSidekick.ViewModels
         }
 #endif
 
+#if !BLAZOR
 
         /// <summary>
         /// <para>Gets if the code is running in design time. </para>
@@ -43,6 +44,9 @@ namespace MVVMSidekick.ViewModels
         /// </summary>
         /// <value><c>true</c> if this instance is in design mode; otherwise, <c>false</c>.</value>
         public static bool IsInDesignMode => ServiceLocator.Instance.TryResolve<ITellDesignTimeService>(() => new InDesignTime()).IsInDesignMode;
+#endif
+
+
 
     }
 }

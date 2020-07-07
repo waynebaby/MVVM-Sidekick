@@ -1,4 +1,5 @@
-﻿
+﻿#if !BLAZOR
+
 
 using System;
 using System.Collections.Generic;
@@ -117,3 +118,4 @@ namespace MVVMSidekick.Views
 
     }
 }
+#endif

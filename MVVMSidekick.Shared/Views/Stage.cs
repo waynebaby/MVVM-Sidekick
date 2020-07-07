@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !BLAZOR
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using MVVMSidekick.ViewModels;
@@ -576,3 +577,5 @@ Please check startup function of this mapping is well configured and be proper c
 
     }
 }
+
+#endif
