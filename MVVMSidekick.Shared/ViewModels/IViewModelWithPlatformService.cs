@@ -15,9 +15,8 @@ namespace MVVMSidekick.ViewModels
 
 
 #if BLAZOR
-  
-#else
-   
+    using Microsoft.AspNetCore.Components;
+
 #endif
     public interface IViewModelWithPlatformService : IViewModel
     {
@@ -48,11 +47,13 @@ namespace MVVMSidekick.ViewModels
         System.Windows.Controls.Frame FrameObject { get; set; }
 #elif BLAZOR
         IServiceProvider BlazorServiceProvider { get; set; }
-      
         void OnInitialized();
         Task OnInitializedAsync();
         void OnParametersSet();
         Task OnParametersSetAsync();
+        void OnAfterRender(bool firstRender);
+        Task OnAfterRenderAsync(bool firstRender);
+        Task SetParametersAsync(ParameterView parameters);
 #endif
 
 

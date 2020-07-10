@@ -12,28 +12,31 @@ namespace MVVMSidekick.ViewModels
 
 #if BLAZOR
     using Microsoft.AspNetCore.Components;
-    public class ViewModel<TViewModel, TPage> : ViewModelBase<TViewModel>,IViewModelWithPlatformService where TViewModel : ViewModel<TViewModel, TPage>
-        where TPage : ComponentBase
+    using Microsoft.Extensions.DependencyInjection;
+
+    public class ViewModel<TViewModel, TView> : ViewModelBase<TViewModel>, IViewModelWithPlatformService where TViewModel : ViewModel<TViewModel, TView>
+        where TView : ComponentBase
     {
-        static ViewModel()
+
+        public ViewModel(IServiceProvider serviceProvider)
         {
-
-
+            BlazorServiceProvider = serviceProvider;
+            StageManager = serviceProvider.GetService<IStageManager>();
         }
+        public TView Page { get; set; }
 
-        [Inject]
+
         public override IStageManager StageManager { get => base.StageManager; set => base.StageManager = value; }
-        [Inject]
         public IServiceProvider BlazorServiceProvider { get; set; }
-
         public virtual void OnInitialized() { }
-        public virtual async Task OnInitializedAsync() => await Task.CompletedTask;
+        public virtual Task OnInitializedAsync() => Task.CompletedTask;
         public virtual void OnParametersSet() { }
-        public virtual async Task OnParametersSetAsync() => await Task.CompletedTask;
-
-
+        public virtual Task OnParametersSetAsync() => Task.CompletedTask;
+        public virtual void OnAfterRender(bool firstRender) { }
+        public virtual Task OnAfterRenderAsync(bool firstRender) => Task.CompletedTask;
+        public virtual Task SetParametersAsync(ParameterView parameters) => Task.CompletedTask;
 #else
-   {
+
     public class ViewModel<TViewModel> : ViewModelBase<TViewModel>, IViewModelWithPlatformService where TViewModel : ViewModel<TViewModel>
     {
 #endif

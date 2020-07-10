@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MVVMSidekickViewWithVM_81.ModenUI")]
+[assembly: AssemblyTitle("MVVMSidekickViewWithVM.Blazor.3.1")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MVVMSidekickViewWithVM_81.ModenUI")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCompany("Wayne Wang")]
+[assembly: AssemblyProduct("MVVMSidekickViewWithVM.Blazor.3.1")]
+[assembly: AssemblyCopyright("Copyright © Wayne Wang 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1f9dd3b6-4027-41f2-9363-baea3f9bafe7")]
+[assembly: Guid("ea5824f7-4b48-4daf-bf85-d73f9be273fc")]
 
 // Version information for an assembly consists of the following four values:
 //

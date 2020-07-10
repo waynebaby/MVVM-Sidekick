@@ -326,29 +326,4 @@ namespace MVVMSidekick.Views
     }
 
 }
-#else
-namespace MVVMSidekick.Views
-{
-    using Microsoft.AspNetCore.Components;
-    /// <summary>
-    /// The abstract  for frame/contentcontrol. VM can access this class to Show other vm and vm's mapped view.
-    /// </summary>
-    public class StageManager : IStageManager
-    {
-
-
-        public IStage this[string beaconKey] => throw new NotImplementedException();
-
-        public IViewModel ViewModel { get; set; }
-        public IView CurrentBindingView { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        [Inject]
-        public IStage DefaultStage { get; private set; }
-
-        public void InitParent(Func<object> parentLocator)
-        {
-
-        }
-    }
-}
 #endif

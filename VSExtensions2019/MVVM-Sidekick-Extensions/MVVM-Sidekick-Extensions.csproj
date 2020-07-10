@@ -70,6 +70,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ItemTemplates\Blazor.3.1\MVVMSidekickViewWithVM.Blazor.3.1\MVVMSidekickViewWithVM.Blazor.3.1.csproj">
+      <Project>{EA5824F7-4B48-4DAF-BF85-D73F9BE273FC}</Project>
+      <Name>MVVMSidekickViewWithVM.Blazor.3.1</Name>
+      <VSIXSubPath>ItemTemplates</VSIXSubPath>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
     <ProjectReference Include="..\ItemTemplates\UAP\MVVMSidekickViewWithVM\MVVMSidekickViewWithVM.csproj">
       <Project>{776099A3-B775-4795-A5DB-7A2730E94875}</Project>
       <Name>MVVMSidekickViewWithVM</Name>

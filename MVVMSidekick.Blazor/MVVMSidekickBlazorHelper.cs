@@ -1,21 +1,38 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using MVVMSidekick;
+using MVVMSidekick.ViewModels;
 using MVVMSidekick.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MVVMSidekick.Blazor
+namespace Microsoft.Extensions.DependencyInjection
 {
-  public   static class  MVVMSidekickBlazorHelper
+    public static class MVVMSidekickBlazorHelper
     {
 
-        public static IServiceCollection AddMVVMSidekick(this IServiceCollection services, Action<ViewModelOptions> registerViewModels )
+
+
+        public static IServiceCollection AddMVVMSidekick<TViewModelRegistry>(this IServiceCollection services,
+            Action<IServiceProvider, MVVMSidekickOptions> optionsConfiguration = null) where TViewModelRegistry : MVVMSidekickViewModelRegistryBase, new()
         {
-            services.AddSingleton<IStage,Stage>();
-            services.AddSingleton<IStageManager,StageManager>();
-            var opt = new ViewModelOptions(services);
-            registerViewModels?.Invoke(opt);
-            services.AddSingleton(opt);
+            services.AddTransient<IStage, BlazorStage>();
+            services.AddTransient<IStageManager, BlazorStageManager>();
+
+
+
+            var builder = new TViewModelRegistry();
+            var opt = new MVVMSidekickOptions(services);
+            builder.ConfigureInstance(opt);
+
+            services.AddSingleton(sp =>
+            {
+                optionsConfiguration?.Invoke(sp, opt);
+                return opt;
+            });
+
+
+
             return services;
         }
     }

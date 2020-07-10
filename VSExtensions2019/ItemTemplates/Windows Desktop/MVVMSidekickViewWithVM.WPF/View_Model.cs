@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
-namespace  $rootnamespace$.ViewModels
+namespace  $safeprojectname$.ViewModels
 {
 
     public class $safeitemname$ : ViewModel<$safeitemname$>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <versions>
   <version>
-    <id prerelease="true">2.1.36</id>
+    <id prerelease="true">2.1.70</id>
     <releaseNotes>
       - Breaking Change: Removed MVVMWindows,MVVMPage,MVVMControl. Move on to Disguise.
       - Breaking Change: Moved Common lib to .Net Standard 2.0 Class.
