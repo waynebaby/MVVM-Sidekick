@@ -150,6 +150,7 @@ namespace MVVMSidekick
             /// <returns>ValueContainer&lt;TProperty&gt;.</returns>
             public ValueContainer<TProperty> SetValueAndTryNotify(TProperty value)
             {
+                WireINPCValue(value);
                 InternalPropertyChange(this.Model, value, PropertyName);
                 return this;
             }
@@ -164,6 +165,7 @@ namespace MVVMSidekick
             /// <returns>ValueContainer&lt;TProperty&gt;.</returns>
             public ValueContainer<TProperty> SetValue(TProperty value)
             {
+                WireINPCValue(value);
                 _value = value;
                 return this;
             }
@@ -197,11 +199,10 @@ namespace MVVMSidekick
                 var oldvalue = _value;
                 _value = newValue;
 
-                await Task.Yield();
                 if (changingArg.Cancellation.IsCancellationRequested)
                 {
 
-                    _value= oldvalue ;
+                    _value = oldvalue;
                     return;
                 }
 
@@ -220,7 +221,7 @@ namespace MVVMSidekick
                 {
                     NonGenericValueChanging.Invoke(this, changingArg);
                     await Task.Yield();
-                 
+
                     if (changingArg.Cancellation.IsCancellationRequested)
                     {
                         _value = oldvalue;
@@ -229,7 +230,7 @@ namespace MVVMSidekick
                 }
 
 
-   
+
 
                 ValueChangedEventArgs<TProperty> changedArg = new ValueChangedEventArgs<TProperty>(message, oldvalue, newValue);
 
@@ -238,6 +239,46 @@ namespace MVVMSidekick
                 NonGenericValueChanged?.Invoke(this, changedArg);
 
 
+            }
+
+            private void WireINPCValue(TProperty newValue)
+            {
+                var inpcNewValue = newValue as INotifyPropertyChanged;
+                var inpcOldValue = _value as INotifyPropertyChanged;
+
+                if (inpcNewValue != null)
+                {
+                    inpcNewValue.PropertyChanged += InpcValue_PropertyChanged;
+                }
+                if (inpcOldValue != null)
+                {
+                    inpcOldValue.PropertyChanged -= InpcValue_PropertyChanged;
+                }
+
+
+                var inpcingNewValue = newValue as INotifyPropertyChanging;
+                var inpcingOldValue = _value as INotifyPropertyChanging;
+
+                if (inpcingNewValue != null)
+                {
+                    inpcingNewValue.PropertyChanging += InpcingNewValue_PropertyChanging;
+                }
+                if (inpcingOldValue != null)
+                {
+                    inpcingOldValue.PropertyChanging -= InpcingNewValue_PropertyChanging;
+                }
+            }
+
+            private void InpcingNewValue_PropertyChanging(object sender, PropertyChangingEventArgs e)
+            {
+                Model.RaisePropertyChanging(e, sender);
+
+            }
+
+            private void InpcValue_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            {
+                Model.RaisePropertyChanged(e, sender);
+                Model.RaisePropertyChanged(new ValueChangedEventArgs<TProperty>(this.PropertyName, _value, _value));
             }
 
             public void AddErrorEntry(string message, Exception exception = null)

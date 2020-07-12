@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Components
 {
-    public  class MVVMSidekickComponentBase<TView,TViewModel> : ComponentBase 
-        where TView : MVVMSidekickComponentBase<TView,TViewModel>
+    public class MVVMSidekickComponentBase<TView, TViewModel> : ComponentBase
+        where TView : MVVMSidekickComponentBase<TView, TViewModel>
         where TViewModel : ViewModel<TViewModel, TView>
     {
 
         [Inject]
-        public TViewModel ViewModel{ get; set; }
+        public TViewModel ViewModel { get; set; }
 
+        /// <summary>
+        /// Shortcut for ViewModel
+        /// </summary>
+        protected TViewModel M { get => this.ViewModel; }
         public override async Task SetParametersAsync(ParameterView parameters)
         {
             await base.SetParametersAsync(parameters);
@@ -59,6 +63,10 @@ namespace Microsoft.AspNetCore.Components
             await ViewModel?.OnAfterRenderAsync(firstRender);
         }
 
-       
+        public void RequestRender()
+        {
+            base.ShouldRender();
+        }
+
     }
 }

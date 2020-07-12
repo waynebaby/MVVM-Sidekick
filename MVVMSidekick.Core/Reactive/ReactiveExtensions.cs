@@ -118,7 +118,7 @@ namespace MVVMSidekick
             {
                 return sequence.Select
                     (
-                          inContext => (vm.ExecuteFunctionTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
+                          inContext => (vm.ExecuteFunctionTask(taskBody, inContext, cancellationToken), inContext, cancellationToken)
                     );
             }
 
@@ -131,7 +131,7 @@ namespace MVVMSidekick
             {
                 return sequence.Select
                     (
-                          inContext => (vm.ExecuteTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
+                          inContext => (vm.ExecuteTask(taskBody, inContext, cancellationToken), inContext, cancellationToken)
                     );
             }
 
@@ -409,13 +409,15 @@ namespace MVVMSidekick
 
                 if (and_also_listen_to_this_sequence != null)
                 {
-                    eventSeq = eventSeq.CombineLatest(and_also_listen_to_this_sequence, (a, b) => a && b);
+                    eventSeq = eventSeq.CombineLatest(and_also_listen_to_this_sequence, 
+                        (a, b) => 
+                            a && b);
                 }
 
 
                 //See Test  CommandListenToUIBusy_Test
                 var mainSeq = Observable.Range(0, 1)
-                   .Select(x => (x == 0) ? !command.LastCanExecuteValue : command.LastCanExecuteValue)
+                   .Select(x => (x == 0) ? !command.CanExecuteValue : command.CanExecuteValue)
                    .Concat(eventSeq);
 
                 command.CommandCore.ListenCanExecuteObservable(mainSeq)

@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Extensions.DependencyInjection;
 using MVVMSidekick.Services;
 using MVVMSidekick.ViewModels;
 namespace MVVMSidekick.ViewModels
@@ -43,7 +44,7 @@ namespace MVVMSidekick.ViewModels
         /// <para>读取目前是否在设计时状态。</para>
         /// </summary>
         /// <value><c>true</c> if this instance is in design mode; otherwise, <c>false</c>.</value>
-        public static bool IsInDesignMode => ServiceLocator.Instance.TryResolve<ITellDesignTimeService>(() => new InDesignTime()).Service.IsInDesignMode;
+        public static bool IsInDesignMode => (ServiceProviderLocator.RootServiceProvider.GetService<ITellDesignTimeService>() ?? new InDesignTime()).IsInDesignMode;
 #endif
 #if BLAZOR
 

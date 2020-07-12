@@ -1,4 +1,5 @@
-﻿using MVVMSidekick.EventRouting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MVVMSidekick.EventRouting;
 using MVVMSidekick.Services;
 using MVVMSidekick.Utilities;
 using System;
@@ -689,13 +690,9 @@ namespace MVVMSidekick.ViewModels
         /// Raises the property changed.
         /// </summary>
         /// <param name="lazyEAFactory">The lazy ea factory.</param>
-        protected internal void RaisePropertyChanged(PropertyChangedEventArgs e)
+        protected internal void RaisePropertyChanged(PropertyChangedEventArgs e, object anotherObjectSurce = null)
         {
-
-
-
-            this.PropertyChanged?.Invoke(this, e);
-
+            this.PropertyChanged?.Invoke(anotherObjectSurce ?? this, e);
 
         }
 
@@ -710,14 +707,9 @@ namespace MVVMSidekick.ViewModels
         /// Raises the property changed.
         /// </summary>
         /// <param name="lazyEAFactory">The lazy ea factory.</param>
-        protected internal void RaisePropertyChanging(PropertyChangingEventArgs e)
+        protected internal void RaisePropertyChanging(PropertyChangingEventArgs e, object anotherObjectSurce = null)
         {
-
-
-
-            this.PropertyChanging?.Invoke(this, e);
-
-
+            this.PropertyChanging?.Invoke(anotherObjectSurce ?? this, e);
         }
 
         /// <summary>
@@ -823,6 +815,6 @@ namespace MVVMSidekick.ViewModels
         }
 
 
-        public bool IsInDesignMode => ServiceLocator.Instance.TryResolve<ITellDesignTimeService>(() => new InDesignTime()).Service.IsInDesignMode;
+        public bool IsInDesignMode => (ServiceProviderLocator.RootServiceProvider?.GetService<ITellDesignTimeService>() ?? new InDesignTime())?.IsInDesignMode ?? false;
     }
 }

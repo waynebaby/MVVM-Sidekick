@@ -8,7 +8,7 @@ using System.Reactive.Linq;
 using System.Windows;
 using System.IO;
 using MVVMSidekick.Services;
-
+using Microsoft.Extensions.DependencyInjection;
 
 
 #if WINDOWS_UWP
@@ -136,14 +136,14 @@ namespace MVVMSidekick.Views
 #if WPF
         public async Task<TResult> ShowAndReturnResult<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel<TResult>
         {
-            var vm = targetViewModel ?? ServiceLocator.Instance.Resolve<TTarget>(viewMappingKey);
+            var vm = targetViewModel ?? ServiceProviderLocator.RootServiceProvider.GetRequiredService<TTarget>(viewMappingKey);
             vm = await InternalTestShow(vm).ConfigureAwait(true);
             return vm.Result;
 
         }
         public async Task<ShowAwaitableResult<TTarget>> ShowAndGetViewModelImmediately<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel
         {
-            var vm = targetViewModel ?? ServiceLocator.Instance.Resolve<TTarget>(viewMappingKey);
+            var vm = targetViewModel ?? ServiceProviderLocator.RootServiceProvider.GetRequiredService<TTarget>(viewMappingKey);
             var vmt = InternalTestShow(vm).ConfigureAwait(true);
             return await Task.FromResult(new ShowAwaitableResult<TTarget>() { Closing = vm.WaitForClose(), ViewModel = vm }).ConfigureAwait(true);
 
@@ -167,7 +167,7 @@ namespace MVVMSidekick.Views
 
         public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null, bool isWaitingForDispose = false, bool autoDisposeWhenUnload = true) where TTarget : class, IViewModel
         {
-            var vm = targetViewModel ?? ServiceLocator.Instance.Resolve<TTarget>(viewMappingKey);
+            var vm = targetViewModel ?? ServiceProviderLocator.RootServiceProvider.GetRequiredService < TTarget >(viewMappingKey);
             var w = InternalTestShow(vm);
             if (isWaitingForDispose)
             {

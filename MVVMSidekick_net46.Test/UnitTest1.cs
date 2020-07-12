@@ -89,13 +89,13 @@ namespace MVVMSidekick_net46.Test
             Assert.AreEqual(123, s.MyProperty123);
         }
 
-        [TestMethod]
-        public void ServiceLocatorDefaultInstance()
-        {
-            //var l = typeof(UnityServiceLocator).AssemblyQualifiedName;
-            //Debug.WriteLine(l);
-            var s = ServiceLocator.Instance;
-            Assert.IsNotNull(s);
-        }
+        //[TestMethod]
+        //public void ServiceLocatorDefaultInstance()
+        //{
+        //    //var l = typeof(UnityServiceLocator).AssemblyQualifiedName;
+        //    //Debug.WriteLine(l);
+        //    var s = ServiceLocator.Instance;
+        //    Assert.IsNotNull(s);
+        //}
     }
 }

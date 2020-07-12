@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using MVVMSidekick;
+using MVVMSidekick.Services;
 using MVVMSidekick.ViewModels;
 using MVVMSidekick.Views;
 using System;
@@ -18,7 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddTransient<IStage, BlazorStage>();
             services.AddTransient<IStageManager, BlazorStageManager>();
-
+            services.AddSingleton<ITellDesignTimeService, InRuntime>();
 
 
             var builder = new TViewModelRegistry();
@@ -35,5 +37,12 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return services;
         }
+
+        public static WebAssemblyHost PushToMVVMSidekickRoot( this WebAssemblyHost host)
+        {
+            ServiceProviderLocator.RootServiceProvider = host.Services;
+            return host;
+        }
+
     }
 }

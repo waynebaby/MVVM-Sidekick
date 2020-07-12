@@ -14,7 +14,9 @@ using System.Reactive.Linq;
 namespace MVVMSidekick.ViewModels
 {
     using EventRouting;
+    using Microsoft.Extensions.DependencyInjection;
     using MVVMSidekick.Common;
+    using MVVMSidekick.Services;
     using System.Reactive;
     using System.Reactive.Disposables;
     using Utilities;
@@ -149,16 +151,16 @@ namespace MVVMSidekick.ViewModels
 
             IsDisposingWhenUnloadRequired = false;
             IsDisposingWhenUnbindRequired = false;
-
-
             GetValueContainer(x => x.UIBusyTaskCount)
-                .GetValueChangedEventObservable()
-                .Select(e =>
-                    e.EventArgs.NewValue != 0)
-                .DistinctUntilChanged()
-                .Subscribe(isBusy =>
-                    IsUIBusy = isBusy)
-                .DisposeWith(this);
+               .GetValueChangedEventObservable()
+               .Select(e =>
+                   e.EventArgs.NewValue != 0)
+               .DistinctUntilChanged()
+               .Subscribe(isBusy =>
+                   IsUIBusy = isBusy)
+               .DisposeWith(this);
+
+
 
         }
 
@@ -231,7 +233,7 @@ namespace MVVMSidekick.ViewModels
         {
             if (view != null)
             {
-                StageManager = Services.ServiceLocator.Instance.Resolve<IStageManager>();
+                StageManager = ServiceProviderLocator.RootServiceProvider?.GetService<IStageManager>();
                 StageManager.CurrentBindingView = view;
                 StageManager.ViewModel = this;
                 StageManager.InitParent(()
@@ -330,26 +332,13 @@ namespace MVVMSidekick.ViewModels
         /// </summary>
         /// <value><c>true</c> if this instance is UI busy; otherwise, <c>false</c>.</value>
 
-        public bool IsUIBusy
-        {
-            get => _IsUIBusyLocator(this).Value;
-            set => _IsUIBusyLocator(this).SetValueAndTryNotify(value);
-        }
-        #region Property bool IsUIBusy Setup
-        /// <summary>
-        /// The _ is UI busy
-        /// </summary>
+
+
+
+        public bool IsUIBusy { get => _IsUIBusyLocator(this).Value; set => _IsUIBusyLocator(this).SetValueAndTryNotify(value); }
+        #region Property bool IsUIBusy Setup        
         protected Property<bool> _IsUIBusy = new Property<bool>(_IsUIBusyLocator);
-
-        /// <summary>
-        /// The _ is UI busy locator
-        /// </summary>
-        private static Func<BindableBase, ValueContainer<bool>> _IsUIBusyLocator = RegisterContainerLocator<bool>("IsUIBusy", model => model.Initialize("IsUIBusy", ref model._IsUIBusy, ref _IsUIBusyLocator, _IsUIBusyDefaultValueFactory));
-
-        /// <summary>
-        /// The _ is UI busy default value factory
-        /// </summary>
-        private static Func<bool> _IsUIBusyDefaultValueFactory = null;
+        static Func<BindableBase, ValueContainer<bool>> _IsUIBusyLocator = RegisterContainerLocator(nameof(IsUIBusy), m => m.Initialize(nameof(IsUIBusy), ref m._IsUIBusy, ref _IsUIBusyLocator, () => default(bool)));
         #endregion
 
 
@@ -358,16 +347,13 @@ namespace MVVMSidekick.ViewModels
         /// Gets or sets the UI busy task count.
         /// </summary>
         /// <value>The UI busy task count.</value>
-        private int UIBusyTaskCount
-        {
-            get => _UIBusyTaskCountLocator(this).Value;
-            set => _UIBusyTaskCountLocator(this).SetValueAndTryNotify(value);
-        }
-        #region Property int UIBusyTaskCount Setup
-        private Property<int> _UIBusyTaskCount = new Property<int>(_UIBusyTaskCountLocator);
-        private static Func<BindableBase, ValueContainer<int>> _UIBusyTaskCountLocator = RegisterContainerLocator<int>("UIBusyTaskCount", model => model.Initialize("UIBusyTaskCount", ref model._UIBusyTaskCount, ref _UIBusyTaskCountLocator, _UIBusyTaskCountDefaultValueFactory));
-        private static Func<int> _UIBusyTaskCountDefaultValueFactory = null;
+
+        public int UIBusyTaskCount { get => _UIBusyTaskCountLocator(this).Value; set => _UIBusyTaskCountLocator(this).SetValueAndTryNotify(value); }
+        #region Property int UIBusyTaskCount Setup        
+        protected Property<int> _UIBusyTaskCount = new Property<int>(_UIBusyTaskCountLocator);
+        static Func<BindableBase, ValueContainer<int>> _UIBusyTaskCountLocator = RegisterContainerLocator(nameof(UIBusyTaskCount), m => m.Initialize(nameof(UIBusyTaskCount), ref m._UIBusyTaskCount, ref _UIBusyTaskCountLocator, () => default(int)));
         #endregion
+
 
 
         /// <summary>
