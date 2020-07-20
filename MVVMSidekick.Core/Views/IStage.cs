@@ -60,8 +60,8 @@ namespace MVVMSidekick.Views
         Object Target { get; }
 
         Task<TTarget> Show<TTarget>(
-            TTarget targetViewModel = null, 
             string viewMappingKey = null, 
+            Action<(IServiceProvider serviceProvider, TTarget viewModel)> additionalViewModelConfig = null, 
             bool isWaitingForDispose = false,
             bool autoDisposeWhenViewUnload=true) where TTarget : class, IViewModel;
 

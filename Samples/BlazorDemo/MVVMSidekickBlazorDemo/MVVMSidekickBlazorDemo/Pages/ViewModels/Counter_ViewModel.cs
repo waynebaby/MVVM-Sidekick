@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MVVMSidekickBlazorDemo.Pages.ViewModels
 {
@@ -67,7 +68,7 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
     }
 
     #region ViewModelRegistry
-    internal partial class ViewModelRegistry : MVVMSidekickViewModelRegistryBase
+    internal partial class ViewModelRegistry : MVVMSidekickStartupBase
     {
 
         internal static Action<MVVMSidekickOptions> CounterConfigEntry = AddConfigure(opt => opt.RegisterViewModel<Counter_ViewModel>());

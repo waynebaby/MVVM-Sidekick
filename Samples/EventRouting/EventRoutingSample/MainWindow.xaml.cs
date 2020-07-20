@@ -20,25 +20,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Extensions.DependencyInjection;
+using MVVMSidekick;
 
 namespace EventRoutingSample
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
-	{
-		public MainWindow()
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
 
-		{
+        {
 
-			InitializeComponent();
-			ViewDisguise.ViewModel = ServiceLocator.Instance.Resolve<MainWindow_Model>();
-		}
+            InitializeComponent();
+            ViewDisguise.ViewModel = ServiceProviderLocator.RootServiceProvider.GetService<MainWindow_Model>();
+        }
 
 
-		#region IView Disguise
-		WindowViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
-		#endregion
-	}
+        #region IView Disguise
+        WindowViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
+        #endregion
+    }
+
+
+  
 }

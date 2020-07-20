@@ -20,11 +20,11 @@ namespace $rootnamespace$.ViewModels
 {
 
 
-    public  class $fileinputname$_ViewModel :ViewModel<$fileinputname$_ViewModel, $fileinputname$>
+    public  class $fileinputname$_Model :ViewModel<$fileinputname$_Model, $fileinputname$>
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property。
 
-        public $fileinputname$_ViewModel(IServiceProvider serviceProvider) : base(serviceProvider)
+        public $fileinputname$_Model(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
@@ -36,10 +36,10 @@ namespace $rootnamespace$.ViewModels
     }
 
     #region ViewModelRegistry
-    internal partial class ViewModelRegistry : MVVMSidekickViewModelRegistryBase
+    internal partial class ViewModelRegistry : MVVMSidekickStartupBase
     {
 
-        internal static Action<MVVMSidekickOptions> $fileinputname$ConfigEntry = AddConfigure(opt => opt.RegisterViewModel<$fileinputname$_ViewModel> ());
+        internal static Action<MVVMSidekickOptions> $fileinputname$ConfigEntry = AddConfigure(opt => opt.RegisterViewModel<$fileinputname$_Model> ());
     }
     #endregion 
 }

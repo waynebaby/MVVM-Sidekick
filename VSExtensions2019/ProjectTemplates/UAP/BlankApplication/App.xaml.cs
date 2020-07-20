@@ -1,4 +1,5 @@
-﻿using MVVMSidekick.Commands;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MVVMSidekick.Commands;
 using MVVMSidekick.EventRouting;
 using MVVMSidekick.Reactive;
 using System;
@@ -49,8 +50,10 @@ namespace $safeprojectname$
 		{
 			if (!_inited)
 			{
-				MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
-				ConfigureCommandAndCommandExceptionHandler();
+                ServiceCollection services = new ServiceCollection();
+                services.AddMVVMSidekick<ViewModelRegistry>();
+                services.BuildServiceProvider().PushToMVVMSidekickRoot();
+                ConfigureCommandAndCommandExceptionHandler();
 				//You can init you Dependency Injection Here:
 				//ServiceLocator.Instance.Register<IDrawingService, DrawingService>();
 				_inited = true;	  

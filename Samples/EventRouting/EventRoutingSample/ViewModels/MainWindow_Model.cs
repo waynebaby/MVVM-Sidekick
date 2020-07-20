@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using MVVMSidekick.EventRouting;
+using MVVMSidekick;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EventRoutingSample.ViewModels
 {
@@ -94,7 +96,7 @@ namespace EventRoutingSample.ViewModels
                       .DisposeWith(vm);
 
                   var cmdmdl = cmd.CreateCommandModel(state);
-
+                  cmdmdl.WireExecutableToViewModelIsUIBusy(vm);
                   return cmdmdl;
               }));
         #endregion

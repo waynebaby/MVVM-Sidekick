@@ -131,9 +131,6 @@
     <PackageReference Include="System.ValueTuple">
       <Version>4.5.0</Version>
     </PackageReference>
-    <PackageReference Include="Unity">
-      <Version>5.11.4</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
@@ -142,10 +139,6 @@
     <ProjectReference Include="..\MVVMSidekick.Core\MVVMSidekick.Core.csproj">
       <Project>{0b990a49-ed72-43c7-a4b5-923537e1d5ac}</Project>
       <Name>MVVMSidekick.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MVVMSidekick.DependencyInjection.Unity\MVVMSidekick.DependencyInjection.Unity.csproj">
-      <Project>{f205b558-a470-45ae-b61c-971b5328e876}</Project>
-      <Name>MVVMSidekick.DependencyInjection.Unity</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\MVVMSidekick.Shared\MVVMSidekick.Shared.projitems" Label="Shared" />

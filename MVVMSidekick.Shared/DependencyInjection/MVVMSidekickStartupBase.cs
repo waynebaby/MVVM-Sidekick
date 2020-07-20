@@ -1,22 +1,19 @@
-﻿using MVVMSidekick.ViewModels;
+﻿using MVVMSidekick;
+using MVVMSidekick.ViewModels;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace MVVMSidekick
+namespace Microsoft.Extensions.DependencyInjection
 {
-    public abstract class MVVMSidekickViewModelRegistryBase
+    public abstract class MVVMSidekickStartupBase
     {
         public static Action<MVVMSidekickOptions> AddConfigure(Action<MVVMSidekickOptions> configure)
         {
             actionList.Add(configure);
             return configure;
         }
-        //public MVVMSidekickViewModelRegistryBase Configure(Action<MVVMSidekickOptions> configure)
-        //{
-        //    actionList.Add(configure);
-        //    return this;
-        //}
+
 
         private static ConcurrentBag<Action<MVVMSidekickOptions>> actionList = new ConcurrentBag<Action<MVVMSidekickOptions>>();
 
@@ -31,7 +28,6 @@ namespace MVVMSidekick
             }
        
         }
-
-
     }
+
 }

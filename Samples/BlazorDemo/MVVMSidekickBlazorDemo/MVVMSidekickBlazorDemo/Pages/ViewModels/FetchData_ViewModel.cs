@@ -17,6 +17,7 @@ using System.Runtime.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Net.Http.Json;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MVVMSidekickBlazorDemo.Pages.ViewModels
 {
@@ -92,7 +93,7 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
 
     }
     #region ViewModelRegistry
-    internal partial class ViewModelRegistry : MVVMSidekickViewModelRegistryBase
+    internal partial class ViewModelRegistry : MVVMSidekickStartupBase
     {
 
         internal static Action<MVVMSidekickOptions> FetchDataConfigEntry = AddConfigure(opt => opt.RegisterViewModel<FetchData_ViewModel>());

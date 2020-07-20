@@ -5,8 +5,8 @@
 @using MVVMSidekick.ViewModels;
 @using MVVMSidekickBlazorDemo.Pages.ViewModels;
 @code
-{ 
-     
+{
+
 
 
 
@@ -22,13 +22,13 @@
     case LoginDemo_ViewModel.LoginState.LoginError:
     case LoginDemo_ViewModel.LoginState.LoginSuccess:
         <h2>Login</h2>
-        <EditForm Model="M.LoginEntity" OnSubmit="M.CommandLoginIn.Execute">
+        <EditForm Model="M.LoginEntity" OnValidSubmit="M.CommandLoginIn.Execute">
             <p><InputText @bind-Value="@M.LoginEntity.UserName"></InputText></p>
             <p><InputText @bind-Value="@M.LoginEntity.Password" type="Password"></InputText></p>
 
             <p>
                 <button type="submit">Login</button>
-                <button @onclick="M.CommandLoginIn.Execute">Login2</button>
+
             </p><DataAnnotationsValidator />
             <ValidationSummary />
         </EditForm>
@@ -43,14 +43,10 @@
             <p><InputText @bind-Value="@M.RecoveryEntity.UserPhone"></InputText></p>
             <p>
                 <InputText @bind-Value="@M.RecoveryEntity.SMSCode" type="Password"></InputText>
-                @M.CommandRecoverySMS.CanExecuteValue
-
                 <button disabled="@(!(M.CountDownOfSMSResend==0))" @onclick="M.CommandRecoverySMS.Execute">@(M.CountDownOfSMSResend==0?"Send SMS":$"Resend in{M.CountDownOfSMSResend } ")</button>
-
             </p>
-
             <p>
-                <button type="submit">Login</button>
+                <button type="submit">Verify</button>
 
             </p><DataAnnotationsValidator />
             <ValidationSummary />
@@ -67,3 +63,4 @@
 {
     <button @onclick="M.CommandStartRecover.Execute">Reset My Password</button>
 }
+<button @onclick="M.CommandBackToIndex.Execute">Back to Index</button>

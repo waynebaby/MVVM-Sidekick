@@ -11,30 +11,19 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Collections.Concurrent;
 using System;
-using System.Threading.Tasks;
-using MVVMSidekick.Utilities;
-using MVVMSidekick.Views;
-using System.Globalization;
-using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
-using System.Net.Http.Headers;
-namespace MVVMSidekick
-{
-
-
-    namespace Services
-    {
-
-
-
-    }
-
-}
 
 
 namespace Microsoft.Extensions.DependencyInjection
-
 {
+    public interface INamedServiceCollection : IServiceCollection
+    {
+
+        ConcurrentDictionary<(string Name, Type ServiceType), Func<IServiceProvider, object>> FactoryData { get; }
+        IServiceCollection Core { get; }
+    }
+
 
 }
+

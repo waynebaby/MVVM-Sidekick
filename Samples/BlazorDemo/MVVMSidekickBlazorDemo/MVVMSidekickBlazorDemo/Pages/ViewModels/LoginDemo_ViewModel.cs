@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MVVMSidekickBlazorDemo.Pages.ViewModels
 {
@@ -227,6 +228,33 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
         #endregion
 
 
+        public CommandModel CommandBackToIndex => _CommandBackToIndexLocator(this).Value;
+        #region Property CommandModel CommandBackToIndex Setup                
+        protected Property<CommandModel> _CommandBackToIndex = new Property<CommandModel>(_CommandBackToIndexLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandBackToIndexLocator = RegisterContainerLocator(nameof(CommandBackToIndex), m => m.Initialize(nameof(CommandBackToIndex), ref m._CommandBackToIndex, ref _CommandBackToIndexLocator,
+              model =>
+              {
+                  object state = nameof(CommandBackToIndex);
+                  var commandId = nameof(CommandBackToIndex);
+                  var vm = CastToCurrentType(model);
+                  var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
+
+                  cmd.DoExecuteUIBusyActionTask(
+                          vm,
+                          async (e, cancelToken) =>
+                          {
+                              //Todo: Add BackToIndex logic here  
+                              await vm.StageManager.DefaultStage.Show<Index_ViewModel>();
+                          })
+                      .Subscribe()
+                      .DisposeWith(vm);
+
+                  var cmdmdl = cmd.CreateCommandModel(state);
+
+                  return cmdmdl;
+              }));
+        #endregion
+
         public enum LoginState
         {
             Login,
@@ -243,8 +271,8 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
 
     public class LoginEntity : Bindable<LoginEntity>
     {
-        [StringLength(20, MinimumLength = 8, ErrorMessage = "Length shoule between 8-20")]
         [Required]
+        [StringLength(20, MinimumLength = 8, ErrorMessage = "Length shoule between 8-20")]
         public string UserName { get => _UserNameLocator(this).Value; set => _UserNameLocator(this).SetValueAndTryNotify(value); }
         #region Property string  UserName Setup        
         protected Property<string> _UserName = new Property<string>(_UserNameLocator);
@@ -263,6 +291,8 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
     }
     public class RecoveryEntity : Bindable<RecoveryEntity>
     {
+
+        [Required]
         [StringLength(20, MinimumLength = 6, ErrorMessage = "Length shoule between 6-20")]
         [Phone]
         public string UserPhone { get => _UserPhoneLocator(this).Value; set => _UserPhoneLocator(this).SetValueAndTryNotify(value); }
@@ -271,8 +301,8 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
         static Func<BindableBase, ValueContainer<string>> _UserPhoneLocator = RegisterContainerLocator(nameof(UserPhone), m => m.Initialize(nameof(UserPhone), ref m._UserPhone, ref _UserPhoneLocator, () => default(string)));
         #endregion
 
+        [Required]
         [StringLength(5, MinimumLength = 5, ErrorMessage = "5 digital numbers")]
-
         public string SMSCode { get => _SMSCodeLocator(this).Value; set => _SMSCodeLocator(this).SetValueAndTryNotify(value); }
         #region Property string SMSCode Setup        
         protected Property<string> _SMSCode = new Property<string>(_SMSCodeLocator);
@@ -282,9 +312,8 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
     }
 
     #region ViewModelRegistry
-    internal partial class ViewModelRegistry : MVVMSidekickViewModelRegistryBase
+    internal partial class ViewModelRegistry : MVVMSidekickStartupBase
     {
-
         internal static Action<MVVMSidekickOptions> LoginDemoConfigEntry = AddConfigure(opt => opt.RegisterViewModel<LoginDemo_ViewModel>());
     }
     #endregion 

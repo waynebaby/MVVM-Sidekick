@@ -43,14 +43,26 @@ namespace MVVMSidekick.Views
 
         public NavigationManager NavigationManager { get; }
 
-        async Task<TTarget> IStage.Show<TTarget>(TTarget targetViewModel, string viewMappingKey, bool isWaitingForDispose, bool autoDisposeWhenViewUnload)
+
+
+        async Task<TTarget> IStage.Show<TTarget>(string viewMappingKey, Action<(IServiceProvider serviceProvider, TTarget viewModel)> additionalViewModelConfig, bool isWaitingForDispose, bool autoDisposeWhenViewUnload)
         {
+            if ( isWaitingForDispose ||autoDisposeWhenViewUnload)
+            {
+                throw new PlatformNotSupportedException("Platform not support 'isWaitingForDispose' or 'autoDisposeWhenViewUnload' features ");
+            }
+
+            var instancedViewModel = serviceProvider.GetService<TTarget>(viewMappingKey)?? serviceProvider.GetRequiredService<TTarget>();
+            
+            additionalViewModelConfig?.Invoke((serviceProvider, instancedViewModel));
+
             if (pageViewModelCacheOptions.ViewModelRoutingTable.TryGetValue(typeof(TTarget), out string template))
             {
                 NavigationManager.NavigateTo(template);
             }
             await Task.CompletedTask;
-            return serviceProvider.GetService<TTarget>();
+            return instancedViewModel;
+
         }
     }
 }

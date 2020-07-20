@@ -11,23 +11,16 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Concurrent;
 
-namespace MVVMSidekick
+
+namespace Microsoft.Extensions.DependencyInjection
 {
-
-
-    namespace Services
+    public static class ServiceProviderLocator
     {
-        public interface INamedServiceCollection : IServiceCollection
-        {
-
-             ConcurrentDictionary<(string Name, Type ServiceType), Func<IServiceProvider, object>> FactoryData { get; }
-            IServiceCollection Core { get; }
-        }
+        public static IServiceProvider RootServiceProvider { get; set; }
 
 
     }
+
 }

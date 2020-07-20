@@ -21,6 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EventRoutingSample
 {
@@ -37,5 +38,6 @@ namespace EventRoutingSample
 		WindowViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
 		#endregion
 	}
+
 }
 

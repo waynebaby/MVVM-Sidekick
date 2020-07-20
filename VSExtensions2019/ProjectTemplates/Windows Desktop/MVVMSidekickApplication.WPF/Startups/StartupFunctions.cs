@@ -7,33 +7,13 @@ using System.Reflection;
 using MVVMSidekick.ViewModels;
 using MVVMSidekick.Views;
 using MVVMSidekick.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MVVMSidekick.Startups
 {
-    internal static partial class StartupFunctions
-    {
-     	static List<Action> AllConfig ;
-
-		public static Action CreateAndAddToAllConfig(this Action action)
-		{
-			if (AllConfig == null)
-			{
-				AllConfig = new List<Action>();
-			}
-			AllConfig.Add(action);
-			return action;
-		}
-		public static void RunAllConfig()
-		{
-			ServiceLocator.Instance.Register<ITellDesignTimeService>(new InRuntime());
-			ServiceLocator.Instance.Register<IStageManager, StageManager>();
-			if (AllConfig==null) return;
-			foreach (var item in AllConfig)
-			{
-				item();
-			}
-
-		}
-
-    }
+	internal partial class ViewModelRegistry : MVVMSidekickStartupBase
+	{
+		internal static Action<MVVMSidekickOptions> MainWindowConfigEntry =
+			AddConfigure(opt => opt.RegisterViewAndModelMapping<MainWindow, MainWindow_Model>());
+	}
 }

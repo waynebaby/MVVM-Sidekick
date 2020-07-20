@@ -6,9 +6,10 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using MVVMSidekick.Commands;
 using MVVMSidekick.EventRouting;
-
+using MVVMSidekick.Startups
 namespace $safeprojectname$
 {
     /// <summary>
@@ -18,8 +19,10 @@ namespace $safeprojectname$
     {
         public static void InitNavigationConfigurationInThisAssembly()
 		{
-			MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
-		}
+            ServiceCollection services = new ServiceCollection();
+            services.AddMVVMSidekick<ViewModelRegistry>();
+            services.BuildServiceProvider().PushToMVVMSidekickRoot();
+        }
 
   		protected override void OnStartup(StartupEventArgs e)
 		{

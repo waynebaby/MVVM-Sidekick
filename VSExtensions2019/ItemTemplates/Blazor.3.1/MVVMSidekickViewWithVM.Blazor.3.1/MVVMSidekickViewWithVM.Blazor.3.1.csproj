@@ -60,7 +60,7 @@
   <ItemGroup>
     <None Include="BlankPage.razor">
       <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
+      <Generator>s</Generator>
     </None>
   </ItemGroup>
   <ItemGroup>

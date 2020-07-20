@@ -22,6 +22,7 @@ namespace YourProject
             ...        
             builder.Services.AddMVVMSidekick&lt;ViewModelRegistry&gt;();
             ...
+            await builder.Build().PushToMVVMSidekickRoot().RunAsync();
         }
     }
 }</textarea></p>

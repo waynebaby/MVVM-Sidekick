@@ -1,5 +1,6 @@
 ﻿using System.Reactive;
 using System.Reactive.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using MVVMSidekick.ViewModels;
 using MVVMSidekick.Views;
 using MVVMSidekick.Reactive;
@@ -16,10 +17,10 @@ namespace MVVMSidekick.Startups
 {
     internal static partial class StartupFunctions
     {
- 		static Action $safeitemname$Config =
+        static Action $safeitemname$Config =
 			CreateAndAddToAllConfig(Config$safeitemname$);
 
-		public static void Config$safeitemname$()
+        public static void Config$safeitemname$()
         {
             ViewModelLocator<$safeitemname$_Model>
                 .Instance
@@ -29,5 +30,10 @@ namespace MVVMSidekick.Startups
                 .MapToDefault<$safeitemname$>();
 
         }
+    internal partial class ViewModelRegistry : MVVMSidekickStartupBase
+    {
+        internal static Action<MVVMSidekickOptions> $safeitemname$ConfigEntry =
+            AddConfigure(opt => opt.RegisterViewAndModelMapping<$safeitemname$, $safeitemname$_Model>());
     }
+}
 }

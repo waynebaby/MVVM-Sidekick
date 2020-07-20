@@ -5,6 +5,10 @@ using MVVMSidekick.EventRouting;
 using MVVMSidekick.Services;
 using MVVMSidekick.ViewModels;
 using MVVMSidekick.Views;
+using Microsoft.Extensions.DependencyInjection;
+using EventRoutingSample.ViewModels;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using EventRoutingSample.Startups;
 
 namespace EventRoutingSample
 {
@@ -15,9 +19,10 @@ namespace EventRoutingSample
 	{
 		public static void InitNavigationConfigurationInThisAssembly()
 		{
-			ServiceLocator.Instance.Register<ITellDesignTimeService>(new InRuntime());
-			ServiceLocator.Instance.Register<IStageManager, StageManager>();
-			MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
+			ServiceCollection services = new ServiceCollection();
+			services.AddMVVMSidekick<ViewModelRegistry>();
+			services.BuildServiceProvider().PushToMVVMSidekickRoot();
+			
 		}
 
 		private void Application_Startup(object sender, StartupEventArgs e)

@@ -8,6 +8,7 @@ set url=https://github.com/waynebaby/MVVM-Sidekick
 attrib -R NuGet.exe
 
 :: Make sure the nupkg files are writeable and create backup
+
 IF EXIST *.nupkg (
 	echo.
 	echo Creating backup...

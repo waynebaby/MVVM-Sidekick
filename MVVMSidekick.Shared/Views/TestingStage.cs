@@ -50,6 +50,11 @@ namespace MVVMSidekick.Views
 
     public class TestingStageManager : IStageManager
     {
+        public TestingStageManager(IServiceProvider serviceProvider)
+        {
+            ServiceProvider = serviceProvider;
+        }
+
         private Dictionary<string, IStage> _currentStages = new Dictionary<string, IStage>();
         public IStage this[string beaconKey]
         {
@@ -58,15 +63,16 @@ namespace MVVMSidekick.Views
                 _currentStages.TryGetValue(beaconKey, out IStage stage);
                 if (stage == null)
                 {
-                    stage = new TestingStage()
-                    {
-                        BeaconKey = beaconKey,
-                        CanGoBack = true,
-                        CanGoForward = true,
-                        IsGoBackSupported = true,
-                        IsGoForwardSupported = true,
-                        Target = null
-                    };
+                    var tstage = ServiceProvider.GetRequiredService<IStage>(beaconKey) as TestingStage;
+                    stage = tstage;
+
+                    tstage.BeaconKey = beaconKey;
+                    tstage.CanGoBack = true;
+                    tstage.CanGoForward = true;
+                    tstage.IsGoBackSupported = true;
+                    tstage.IsGoForwardSupported = true;
+                    tstage.Target = null;
+
                     _currentStages[beaconKey] = stage;
                 }
                 return stage;
@@ -86,6 +92,7 @@ namespace MVVMSidekick.Views
         }
 
         public IViewModel ViewModel { get; set; }
+        public IServiceProvider ServiceProvider { get; }
 
         public void InitParent(Func<object> parentLocator)
         {
@@ -96,7 +103,10 @@ namespace MVVMSidekick.Views
     {
 
 
-
+        public TestingStage(IServiceProvider serviceProvider)
+        {
+            ServiceProvider = serviceProvider;
+        }
 
         public string BeaconKey
         {
@@ -132,6 +142,7 @@ namespace MVVMSidekick.Views
         {
             get; set;
         }
+        IServiceProvider ServiceProvider { get; }
 
 #if WPF
         public async Task<TResult> ShowAndReturnResult<TTarget, TResult>(TTarget targetViewModel = null, string viewMappingKey = null) where TTarget : class, IViewModel<TResult>
@@ -165,18 +176,9 @@ namespace MVVMSidekick.Views
 
         }
 
-        public async Task<TTarget> Show<TTarget>(TTarget targetViewModel = null, string viewMappingKey = null, bool isWaitingForDispose = false, bool autoDisposeWhenUnload = true) where TTarget : class, IViewModel
-        {
-            var vm = targetViewModel ?? ServiceProviderLocator.RootServiceProvider.GetRequiredService < TTarget >(viewMappingKey);
-            var w = InternalTestShow(vm);
-            if (isWaitingForDispose)
-            {
-                return await w.ConfigureAwait(true);
-            }
-            return vm;
-        }
 
-        private async Task<TTarget> InternalTestShow<TTarget>(TTarget vm ) where TTarget : class, IViewModel
+
+        private async Task<TTarget> InternalTestShow<TTarget>(TTarget vm) where TTarget : class, IViewModel
         {
 
             Func<IViewModel, Task<IViewModel>> mockingAction = null;
@@ -189,6 +191,19 @@ namespace MVVMSidekick.Views
                 await vm.OnBindedViewLoad(null).ConfigureAwait(true);
             }
             return vm;
+        }
+
+        async Task<TTarget> IStage.Show<TTarget>(string viewMappingKey, Action<(IServiceProvider serviceProvider, TTarget viewModel)> additionalViewModelConfig, bool isWaitingForDispose, bool autoDisposeWhenViewUnload)
+        {
+            var instancedViewModel = ServiceProviderLocator.RootServiceProvider.GetRequiredService<TTarget>(viewMappingKey);
+            additionalViewModelConfig?.Invoke((ServiceProvider, instancedViewModel));
+
+            var w = InternalTestShow(instancedViewModel);
+            if (isWaitingForDispose)
+            {
+                return await w.ConfigureAwait(true);
+            }
+            return instancedViewModel;
         }
     }
 }

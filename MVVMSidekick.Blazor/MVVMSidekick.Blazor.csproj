@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MVVMSidekick.Core\MVVMSidekick.Core.csproj" />
-    <ProjectReference Include="..\MVVMSidekick.DependencyInjection.Unity\MVVMSidekick.DependencyInjection.Unity.csproj" />
   </ItemGroup>
 
 </Project>
