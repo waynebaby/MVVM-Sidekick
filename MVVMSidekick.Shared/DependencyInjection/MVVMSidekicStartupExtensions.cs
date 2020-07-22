@@ -26,7 +26,6 @@ namespace Microsoft.Extensions.DependencyInjection
 #if BLAZOR
             services.AddTransient<IStage, BlazorStage>();
             services.AddTransient<IStageManager, BlazorStageManager>();
-
             services.AddSingleton(opt);
 #else
             services.AddTransient<IStage, Stage>();

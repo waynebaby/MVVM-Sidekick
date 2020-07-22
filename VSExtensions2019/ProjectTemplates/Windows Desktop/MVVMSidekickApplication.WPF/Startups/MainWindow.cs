@@ -8,6 +8,8 @@ using MVVMSidekick.ViewModels;
 using MVVMSidekick.Views;
 using MVVMSidekick.Services;
 using Microsoft.Extensions.DependencyInjection;
+using $safeprojectname$;
+using $safeprojectname$.ViewModels;
 
 namespace MVVMSidekick.Startups
 {

@@ -1,4 +1,13 @@
-﻿using System;
+﻿
+using UWPDemo.ViewModels;
+using System.Reactive;
+using System.Reactive.Linq;
+using MVVMSidekick.ViewModels;
+using MVVMSidekick.Views;
+using MVVMSidekick.Reactive;
+using MVVMSidekick.Services;
+using MVVMSidekick.Commands;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,45 +21,44 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using $safeprojectname$.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
-using MVVMSidekick.Views;
-using MVVMSidekick.Services;
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace $safeprojectname$
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+
+namespace UWPDemo
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class BlankPage1 : Page
     {
-        public MainPage()
+
+
+
+        public BlankPage1()
         {
-            ViewDisguise.ViewModel = ServiceProviderLocator.RootServiceProvider.GetService<MainPage_Model>();
             this.InitializeComponent();
-            ViewDisguise.RegisterPropertyChangedCallback(
-                PageViewDisguise.ViewModelProperty, 
-                (_, __) =>
-                {
-                    StrongTypeViewModel = ViewDisguise.ViewModel as MainPage_Model;
-                });
+            ViewDisguise.RegisterPropertyChangedCallback(PageViewDisguise.ViewModelProperty, (_, __) =>
+            {
+                StrongTypeViewModel = ViewDisguise.ViewModel as BlankPage1_Model;
+            });
+            StrongTypeViewModel = ViewDisguise.ViewModel as BlankPage1_Model;
         }
 
 
-        public MainPage_Model StrongTypeViewModel
+        public BlankPage1_Model StrongTypeViewModel
         {
-            get { return (MainPage_Model)GetValue(StrongTypeViewModelProperty); }
+            get { return (BlankPage1_Model)GetValue(StrongTypeViewModelProperty); }
             set { SetValue(StrongTypeViewModelProperty, value); }
         }
 
         public static readonly DependencyProperty StrongTypeViewModelProperty =
-                    DependencyProperty.Register(nameof(StrongTypeViewModel), typeof(MainPage_Model), typeof(MainPage), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(StrongTypeViewModel), typeof(BlankPage1_Model), typeof(BlankPage1), new PropertyMetadata(null));
 
 
         #region IView Disguise
         PageViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
-    #endregion
+        #endregion
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -69,5 +77,6 @@ namespace $safeprojectname$
             base.OnNavigatingFrom(e);
         }
 
-}
+
+    }
 }

@@ -13,8 +13,6 @@ using $safeprojectname$.ViewModels;
 
 using System.Threading;
 
-namespace MVVMSidekick.Startups
-{
 
 	namespace MVVMSidekick.Startups
 	{
@@ -25,4 +23,3 @@ namespace MVVMSidekick.Startups
 		}
 	}
 
-}

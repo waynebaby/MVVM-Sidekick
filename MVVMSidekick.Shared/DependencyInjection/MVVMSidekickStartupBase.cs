@@ -10,23 +10,23 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static Action<MVVMSidekickOptions> AddConfigure(Action<MVVMSidekickOptions> configure)
         {
-            actionList.Add(configure);
+            ActionList.Add(configure);
             return configure;
         }
 
 
-        private static ConcurrentBag<Action<MVVMSidekickOptions>> actionList = new ConcurrentBag<Action<MVVMSidekickOptions>>();
+        public static ConcurrentBag<Action<MVVMSidekickOptions>> ActionList { get; } = new ConcurrentBag<Action<MVVMSidekickOptions>>();
 
-        public IEnumerable<Action<MVVMSidekickOptions>> Actions { get => actionList; }
+
 
         virtual public void ConfigureInstance(MVVMSidekickOptions opt)
         {
-          
-            foreach (var item in Actions)
+
+            foreach (var item in ActionList)
             {
-                item?.Invoke( opt);
+                item?.Invoke(opt);
             }
-       
+
         }
     }
 

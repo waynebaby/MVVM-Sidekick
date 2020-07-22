@@ -325,7 +325,7 @@ Please check startup function of this mapping is well configured and be proper c
 
         }
 
-        private static async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, string mappingKey, Type type, Windows.UI.Xaml.Controls.Frame frame, IServiceProvider serviceProvider) where TTarget : class, IViewModel
+        private static async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, string mappingKey, Type viewType, Windows.UI.Xaml.Controls.Frame frame, IServiceProvider serviceProvider) where TTarget : class, IViewModel
         {
             StageNavigationContext<TTarget> parameter = new StageNavigationContext<TTarget>() { ViewModel = targetViewModel };
             TaskCompletionSource<object> t = new TaskCompletionSource<object>();
@@ -349,8 +349,8 @@ Please check startup function of this mapping is well configured and be proper c
                      }
 
                      var viewInstance = view.ViewContentObject;
-
-                     var configOfView = serviceProvider.GetService(typeof(ViewContentConfigurator<>).MakeGenericType(viewInstance.GetType())) as IViewContentConfigurator;
+       
+                     var configOfView = serviceProvider.GetService(typeof(ViewContentConfigurator<>).MakeGenericType(viewType)) as IViewContentConfigurator;
                      configOfView.Config(viewInstance);
 
 
@@ -377,7 +377,7 @@ Please check startup function of this mapping is well configured and be proper c
                      t.TrySetResult(null);
                  });
 
-            frame.Navigate(type, parameter);
+            frame.Navigate(viewType, parameter);
             await t.Task.ConfigureAwait(true);
             dip.DisposeWith(targetViewModel);
             return targetViewModel;

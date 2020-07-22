@@ -12,13 +12,13 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using $safeprojectname$.ViewModels;
+using UWPDemo.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using MVVMSidekick.Views;
 using MVVMSidekick.Services;
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace $safeprojectname$
+namespace UWPDemo
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -69,5 +69,9 @@ namespace $safeprojectname$
             base.OnNavigatingFrom(e);
         }
 
-}
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 }

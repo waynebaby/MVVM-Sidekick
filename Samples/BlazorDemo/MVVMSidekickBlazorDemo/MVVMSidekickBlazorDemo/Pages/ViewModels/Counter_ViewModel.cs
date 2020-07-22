@@ -23,20 +23,15 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
 
     public class Counter_ViewModel : ViewModel<Counter_ViewModel, Counter>
     {
-        // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property。
-
+        // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property
         public Counter_ViewModel(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
-
-
         public int CurrentCount { get => _CurrentCountLocator(this).Value; set => _CurrentCountLocator(this).SetValueAndTryNotify(value); }
         #region Property int CurrentCount Setup        
         protected Property<int> _CurrentCount = new Property<int>(_CurrentCountLocator);
         static Func<BindableBase, ValueContainer<int>> _CurrentCountLocator = RegisterContainerLocator(nameof(CurrentCount), m => m.Initialize(nameof(CurrentCount), ref m._CurrentCount, ref _CurrentCountLocator, () => default(int)));
         #endregion
-
-
 
         public CommandModel CommandIncrementCount => _CommandIncrementCountLocator(this).Value;
         #region Property CommandModel CommandIncrementCount Setup                
@@ -70,7 +65,6 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
     #region ViewModelRegistry
     internal partial class ViewModelRegistry : MVVMSidekickStartupBase
     {
-
         internal static Action<MVVMSidekickOptions> CounterConfigEntry = AddConfigure(opt => opt.RegisterViewModel<Counter_ViewModel>());
     }
     #endregion 

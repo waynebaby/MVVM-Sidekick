@@ -5,6 +5,7 @@ using MVVMSidekick.Views;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.Services;
 using MVVMSidekick.Commands;
+using MVVMSidekick.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,40 +13,66 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using Windows.UI;
 
-
-namespace $rootnamespace$.ViewModels
+namespace UWPDemo.ViewModels
 {
 
-    public class $safeitemname$ : ViewModel<$safeitemname$>
+    [DataContract]
+    public class BlankPage1_Model : ViewModel<BlankPage1_Model>
     {
-        // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property propcmd for command
-        // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性 propcmd 输入命令
-
-        public $safeitemname$()
+        public BlankPage1_Model()
         {
-            if (IsInDesignMode )
-            {
-             
-            }
-        
+
+            var rnd = new Random();
+            Color= ColorBank[rnd.Next(0, ColorBank.Length)];
         }
-          
 
-        //propvm tab tab string tab Title
-
+        // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property。
+        // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性
         public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
         #region Property string Title Setup        
         protected Property<string> _Title = new Property<string>(_TitleLocator);
         static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => default(string)));
         #endregion
 
+        static Color[] ColorBank = new[] { Colors.Red, Colors.Green, Colors.Blue, Colors.Pink, Colors.DeepSkyBlue, Colors.SkyBlue, Colors.Orange };
 
+        public Color Color { get => _ColorLocator(this).Value; set => _ColorLocator(this).SetValueAndTryNotify(value); }
+        #region Property Color Color Setup        
+        protected Property<Color> _Color = new Property<Color>(_ColorLocator);
+        static Func<BindableBase, ValueContainer<Color>> _ColorLocator = RegisterContainerLocator(nameof(Color), m => m.Initialize(nameof(Color), ref m._Color, ref _ColorLocator, () => default));
+        #endregion
+        public CommandModel CommandNextPage => _CommandNextPageLocator(this).Value;
+        #region Property CommandModel CommandNextPage Setup                
+        protected Property<CommandModel> _CommandNextPage = new Property<CommandModel>(_CommandNextPageLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandNextPageLocator = RegisterContainerLocator(nameof(CommandNextPage), m => m.Initialize(nameof(CommandNextPage), ref m._CommandNextPage, ref _CommandNextPageLocator,
+              model =>
+              {
+                  object state = nameof(CommandNextPage);
+                  var commandId = nameof(CommandNextPage);
+                  var vm = CastToCurrentType(model);
+                  var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
 
+                  cmd.DoExecuteUIBusyActionTask(
+                          vm,
+                          async (e, cancelToken) =>
+                          {
+                              await vm.StageManager.DefaultStage.Show<BlankPage1_Model>();
+                              await Task.CompletedTask;
+                          })
+                      .Subscribe()
+                      .DisposeWith(vm);
 
-    
+                  var cmdmdl = cmd.CreateCommandModel(state);
+
+                  return cmdmdl;
+              }));
+        #endregion
+
         #region Life Time Event Handling
-    
+
+        #region OnBindedToView
         ///// <summary>
         ///// This will be invoked by view when this viewmodel instance is set to view's ViewModel property. 
         ///// </summary>
@@ -56,7 +83,9 @@ namespace $rootnamespace$.ViewModels
         //{
         //    return base.OnBindedToView(view, oldValue);
         //}
+        #endregion
 
+        #region OnUnbindedFromView
         ///// <summary>
         ///// This will be invoked by view when this instance of viewmodel in ViewModel property is overwritten.
         ///// </summary>
@@ -67,6 +96,9 @@ namespace $rootnamespace$.ViewModels
         //{
         //    return base.OnUnbindedFromView(view, newValue);
         //}
+        #endregion
+
+        #region OnBindedViewLoad
 
         ///// <summary>
         ///// This will be invoked by view when the view fires Load event and this viewmodel instance is already in view's ViewModel property
@@ -77,6 +109,9 @@ namespace $rootnamespace$.ViewModels
         //{
         //    return base.OnBindedViewLoad(view);
         //}
+        #endregion
+
+        #region OnBindedViewUnload
 
         ///// <summary>
         ///// This will be invoked by view when the view fires Unload event and this viewmodel instance is still in view's  ViewModel property
@@ -87,6 +122,9 @@ namespace $rootnamespace$.ViewModels
         //{
         //    return base.OnBindedViewUnload(view);
         //}
+        #endregion
+
+        #region OnDisposeExceptions
 
         ///// <summary>
         ///// <para>If dispose actions got exceptions, will handled here. </para>
@@ -99,10 +137,10 @@ namespace $rootnamespace$.ViewModels
         //    base.OnDisposeExceptions(exceptions);
         //    await Task.Yield();
         //}
+        #endregion
 
         #endregion
 
     }
-
 }
 

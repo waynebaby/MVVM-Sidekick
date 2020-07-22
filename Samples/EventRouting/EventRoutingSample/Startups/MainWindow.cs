@@ -12,7 +12,7 @@ namespace EventRoutingSample.Startups
 {
     internal partial class ViewModelRegistry : MVVMSidekickStartupBase
     {
-        internal static Action<MVVMSidekickOptions> MainWindowConfigEntry =
+        internal  Action<MVVMSidekickOptions> MainWindowConfigEntry =
             AddConfigure(opt => opt.RegisterViewAndModelMapping<MainWindow,MainWindow_Model>());
     }
 }

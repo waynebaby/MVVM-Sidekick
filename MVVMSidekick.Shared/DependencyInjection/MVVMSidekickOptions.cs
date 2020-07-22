@@ -119,7 +119,7 @@ namespace Microsoft.Extensions.DependencyInjection
         void Config(object viewContent);
     }
 
-    public class ViewContentConfigurator<TView> : IViewContentConfigurator
+    public class ViewContentConfigurator<TView> : IViewContentConfigurator where TView : FrameworkElement
     {
 
 
@@ -134,8 +134,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public void Config(object viewContent)
         {
-            var vc = (TView)viewContent;
-            Action(ServiceProvider, vc);
+            var vc = (FrameworkElement)viewContent;
+            Action?.Invoke(ServiceProvider, vc.Parent as TView);
         }
     }
 

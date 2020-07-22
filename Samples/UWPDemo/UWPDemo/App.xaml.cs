@@ -28,7 +28,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
 
-namespace $safeprojectname$
+namespace UWPDemo
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -51,9 +51,13 @@ namespace $safeprojectname$
         {
             if (!_inited)
             {
-                ServiceCollection services = new ServiceCollection();
+                ServiceCollection services = new ServiceCollection(); 
+
                 services.AddMVVMSidekick<ViewModelRegistry>();
                 services.BuildServiceProvider().PushToMVVMSidekickRoot();
+
+             
+
                 ConfigureCommandAndCommandExceptionHandler();
                 //You can init you Dependency Injection Here:
                 //ServiceLocator.Instance.Register<IDrawingService, DrawingService>();

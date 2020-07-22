@@ -9,7 +9,7 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using MVVMSidekick.Commands;
 using MVVMSidekick.EventRouting;
-using MVVMSidekick.Startups
+using MVVMSidekick.Startups;
 namespace $safeprojectname$
 {
     /// <summary>

@@ -12,7 +12,7 @@ namespace EventRoutingSample.Startups
 {
     internal partial class ViewModelRegistry : MVVMSidekickStartupBase
     {
-        internal static Action<MVVMSidekickOptions> DisopseTestForBehaviorsConfigEntry =
+        internal  Action<MVVMSidekickOptions> DisopseTestForBehaviorsConfigEntry =
             AddConfigure(opt => opt.RegisterViewAndModelMapping<DisopseTestForBehaviors, DisopseTestForBehaviors_Model>());
     }
 }

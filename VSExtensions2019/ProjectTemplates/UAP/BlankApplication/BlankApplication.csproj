@@ -60,7 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Startups\StartupFunctions.cs" />
+    <None Include="Startups\MainPage.cs" />
     <None Include="ViewModels\MainPage_Model.cs" />
     <None Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
