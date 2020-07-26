@@ -25,7 +25,9 @@ namespace MVVMSidekickUWPDemo.ViewModels
 
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property
 
-        public Counter_Model() { }
+        public Counter_Model()
+        {
+        }
         public Counter_Model(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;

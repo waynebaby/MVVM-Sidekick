@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <versions>
   <version>
-    <id prerelease="true">2.1.170</id>
+    <id prerelease="true">2.1.173</id>
     <releaseNotes>
       - Breaking Change: Removed Unity Dependency in all the platforms we support.
       - Breaking Change: Removed ServcieLocator class, TypedServiceLocator class, ViewMapping classes.

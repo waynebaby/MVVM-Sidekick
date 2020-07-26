@@ -19,9 +19,9 @@
             <ColumnDefinition Width="200*"/>
             <ColumnDefinition Width="800*"/>
         </Grid.ColumnDefinitions>
-        <d:DataContext>
+        <Grid.DataContext>
             <vm:MainPage_Model/>
-        </d:DataContext>
+        </Grid.DataContext>
         <TextBlock x:Name="pageTitle" Margin="16,0,16,0" Text="{Binding Title}"  VerticalAlignment="Center" Height="19"  />
         <StackPanel Grid.RowSpan="1" Grid.Row="1">
             <StackPanel.Resources>
@@ -105,6 +105,6 @@
             <Button Command="{Binding CommandNaviToLoginDemo, Mode=OneWay}" >LoginDemo</Button>
             
         </StackPanel>
-        <Frame mvvm:StageManager.Beacon="NavigationFrame" Grid.Column="1" Margin="16,16,-5984,16" Padding="8" BorderBrush="#FFECA7A7" BorderThickness="2,2,2,2" Grid.RowSpan="2"></Frame>
+        <Frame mvvm:StageManager.Beacon="NavigationFrame" Grid.Column="1" Margin="16" Padding="8" BorderBrush="#FFECA7A7" BorderThickness="2,2,2,2" Grid.RowSpan="2"></Frame>
     </Grid>
 </Page>

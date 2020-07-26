@@ -10,9 +10,9 @@
     xmlns:vm="using:MVVMSidekickUWPDemo.ViewModels"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  >
-        <d:DataContext>
+        <FrameworkElement.DataContext>
     	    <vm:LoginDemo_Model/>
-        </d:DataContext>
+        </FrameworkElement.DataContext>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>

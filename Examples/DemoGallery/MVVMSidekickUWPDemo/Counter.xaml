@@ -8,18 +8,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:MVVMSidekickUWPDemo.ViewModels"
-    mc:Ignorable="d" Width="1000" Height="800">
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  >
-        <d:DataContext>
-    	    <vm:Counter_Model/>
-        </d:DataContext>
+    mc:Ignorable="d">
+    <Grid Background="#FFFFBBBB"  >
+        <FrameworkElement.DataContext>
+            <vm:Counter_Model/>
+        </FrameworkElement.DataContext>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
                   <Button Padding="8" FontSize="50" Width="400" Height="400" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding CommandIncrementCount, Mode=OneWay}">
-            <TextBlock Text="{Binding CurrentCount}" FontSize="100"></TextBlock></Button>
+            <TextBlock Text="{Binding CurrentCount, Mode=OneWay}" FontSize="100"></TextBlock></Button>
     
     </Grid>
 </Page>

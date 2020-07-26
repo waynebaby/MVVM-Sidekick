@@ -38,7 +38,7 @@ namespace MVVMSidekickWPFDemo.ViewModels
         public int CurrentCount { get => _CurrentCountLocator(this).Value; set => _CurrentCountLocator(this).SetValueAndTryNotify(value); }
         #region Property int CurrentCount Setup        
         protected Property<int> _CurrentCount = new Property<int>(_CurrentCountLocator);
-        static Func<BindableBase, ValueContainer<int>> _CurrentCountLocator = RegisterContainerLocator(nameof(CurrentCount), m => m.Initialize(nameof(CurrentCount), ref m._CurrentCount, ref _CurrentCountLocator, () => default(int)));
+        static Func<BindableBase, ValueContainer<int>> _CurrentCountLocator = RegisterContainerLocator(nameof(CurrentCount), m => m.Initialize(nameof(CurrentCount), ref m._CurrentCount, ref _CurrentCountLocator, () =>0));
         #endregion
 
         public CommandModel CommandIncrementCount => _CommandIncrementCountLocator(this).Value;

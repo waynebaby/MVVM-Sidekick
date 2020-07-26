@@ -9,16 +9,38 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:MVVMSidekickUWPDemo.ViewModels"
     mc:Ignorable="d">
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  >
-        <d:DataContext>
-    	    <vm:FetchData_Model/>
-        </d:DataContext>
+    <Page.Resources>
+        <DataTemplate x:Key="ForcastItemTemplate">
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="900" Height="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"  VerticalAlignment="Center" ><Run Text="Date:     " /><Run Text="{Binding Date}"/></TextBlock>
+                <TextBlock Grid.Column="1"  VerticalAlignment="Center"><Run Text="Summary:      " /><Run Text="{Binding Summary}"/></TextBlock>
+                <TextBlock Grid.Column="2"  VerticalAlignment="Center"><Run Text="TemperatureC:     " /><Run Text="{Binding TemperatureC}"/></TextBlock>
+                <TextBlock Grid.Column="3"  VerticalAlignment="Center"><Run Text="TemperatureF:     " /><Run Text="{Binding TemperatureF}"/></TextBlock>
+                
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Background="#FFFAFFC9"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="839*"/>
+            <RowDefinition Height="161*"/>
+        </Grid.RowDefinitions>
+        <FrameworkElement.DataContext>
+            <vm:FetchData_Model/>
+        </FrameworkElement.DataContext>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
-            <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
+        <ListView ItemTemplate="{StaticResource ForcastItemTemplate}" Padding="16" Margin="16" BorderThickness="2"   ItemsSource="{Binding Forecasts}" BorderBrush="#FFFFC0C0" />
+        <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource HeaderTextBlockStyle}" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,39" Grid.Row="1"/>
     </Grid>
 </Page>

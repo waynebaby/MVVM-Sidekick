@@ -17,10 +17,7 @@ namespace MVVMSidekick.Startups
 {
     internal partial class ViewModelRegistry : MVVMSidekickStartupBase
     {
-       
-
         internal Action<MVVMSidekickOptions> FetchDataConfigEntry =
             AddConfigure(opt => opt.RegisterViewAndModelMapping<FetchData, FetchData_Model>());
     }
-
 }
