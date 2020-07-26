@@ -52,7 +52,7 @@ namespace $safeprojectname$
             if (!_inited)
             {
                 ServiceCollection services = new ServiceCollection();
-                services.AddMVVMSidekick<ViewModelRegistry>();
+                services.AddMVVMSidekick(new ViewModelRegistry());
                 services.BuildServiceProvider().PushToMVVMSidekickRoot();
                 ConfigureCommandAndCommandExceptionHandler();
                 //You can init you Dependency Injection Here:

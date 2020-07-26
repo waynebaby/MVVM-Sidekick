@@ -19,9 +19,7 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using MVVMSidekick.Reactive;
 using System.Threading.Tasks;
-
-
-
+using System.Collections.Specialized;
 
 namespace MVVMSidekick
 {
@@ -151,6 +149,7 @@ namespace MVVMSidekick
             public ValueContainer<TProperty> SetValueAndTryNotify(TProperty value)
             {
                 WireINPCValue(value);
+                WireINCCValue(value);
                 InternalPropertyChange(this.Model, value, PropertyName);
                 return this;
             }
@@ -166,6 +165,8 @@ namespace MVVMSidekick
             public ValueContainer<TProperty> SetValue(TProperty value)
             {
                 WireINPCValue(value);
+                WireINCCValue(value);
+
                 _value = value;
                 return this;
             }
@@ -280,6 +281,34 @@ namespace MVVMSidekick
                 Model.RaisePropertyChanged(e, sender);
                 Model.RaisePropertyChanged(new ValueChangedEventArgs<TProperty>(this.PropertyName, _value, _value));
             }
+
+            private void WireINCCValue(TProperty newValue)
+            {
+                var inccNewValue = newValue as INotifyCollectionChanged;
+                var inccOldValue = _value as INotifyCollectionChanged;
+
+                if (inccNewValue != null)
+                {
+                    inccNewValue.CollectionChanged += InccValue_CollectionChanged;
+                }
+                if (inccOldValue != null)
+                {
+                    inccOldValue.CollectionChanged -= InccValue_CollectionChanged;
+                }
+
+
+            }
+
+            private void InccValue_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+            {
+                Model.RaisePropertyChanged(new PropertyChangedEventArgs(this.PropertyName), this);
+            }
+
+
+
+
+
+
 
             public void AddErrorEntry(string message, Exception exception = null)
             {

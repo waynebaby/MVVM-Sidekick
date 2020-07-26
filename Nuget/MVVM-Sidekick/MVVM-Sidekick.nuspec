@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>2.1.141-prerelease</version>
+    <version>2.1.170-prerelease</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,7 +38,16 @@
 
     </summary>
     <releaseNotes>
-	2.1.141
+	2.1.170
+		
+      - Breaking Change: Removed Unity Dependency in all the platforms we support.
+      - Breaking Change: Removed ServcieLocator class, TypedServiceLocator class, ViewMapping classes.
+      - Breaking Change: All Dependency Injection now depend on "Microsoft.Extensions.DelenedencyInjection" packages and dlls. Enjoy modern DI.
+	  - Breaking Change: Supports Blazor netcore 3.1 now. Please try with new vs template.
+      - This package only works with VS 2017/2019 Template 2.1.0 +.
+       
+
+	2.1.142
 		
       - Breaking Change: Removed MVVMWindows,MVVMPage,MVVMControl. Move on to Disguise.
       - Breaking Change: Moved Common lib to .Net Standard 2.0 Class.
@@ -79,40 +88,38 @@
     <dependencies>
       <group targetFramework="uap10.0">
         <dependency version="[3.1.6,100.0)" id="Microsoft.Extensions.DependencyInjection" />
-        <dependency version="[6.2.9,100.0)" id="Microsoft.NETCore.UniversalWindowsPlatform" />
+        <dependency version="[3.1.1,100.0)" id="Microsoft.NETCore.Platforms" />
+        <dependency version="[6.2.10,100.0)" id="Microsoft.NETCore.UniversalWindowsPlatform" />
         <dependency version="[2.0.1,100.0)" id="Microsoft.Xaml.Behaviors.Uwp.Managed" />
         <dependency version="[2.0.3,100.0)" id="NETStandard.Library" />
-        <dependency version="[4.3.2,100.0)" id="System.Reactive" />
-        <dependency version="[4.3.2,100.0)" id="System.Reactive.PlatformServices" />
-        <dependency version="[4.3.2,100.0)" id="System.Reactive.Windows.Threading" />
+        <dependency version="[4.4.1,100.0)" id="System.Reactive" />
+        <dependency version="[4.4.1,100.0)" id="System.Reactive.PlatformServices" />
+        <dependency version="[4.4.1,100.0)" id="System.Reactive.Windows.Threading" />
         <dependency version="[4.5.0,100.0)" id="System.ValueTuple" />
       </group>
       <group targetFramework="net46">
         <dependency id="Expression.Interaction" version="[3.0.40218.0,100.0)" />
         <dependency id="Microsoft.Bcl.AsyncInterfaces" version="[1.1.1,100.0)" />
-        <dependency id="Microsoft.Extensions.DependencyInjection" version="[3.1.5,100.0)" />
-        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[3.1.5,100.0)" />
-        <dependency id="Microsoft.NETCore.Platforms" version="[3.1.0,100.0)" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="[3.1.6,100.0)" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[3.1.6,100.0)" />
+        <dependency id="Microsoft.NETCore.Platforms" version="[3.1.1,100.0)" />
         <dependency id="Microsoft.Xaml.Behaviors.Wpf" version="[1.1.19,100.0)" />
         <dependency id="NETStandard.Library" version="[2.0.3,100.0)" />
-        <dependency id="System.Reactive" version="[4.3.2,100.0)" />
-        <dependency id="System.Reactive.Interfaces" version="[4.3.2,100.0)" />
-        <dependency id="System.Reactive.Linq" version="[4.3.2,100.0)" />
-        <dependency id="System.Reactive.PlatformServices" version="[4.3.2,100.0)" />
-        <dependency id="System.Reactive.Windows.Threading" version="[4.3.2,100.0)" />
-        <dependency id="System.Runtime.CompilerServices.Unsafe" version="[4.7.0,100.0)" />
+        <dependency id="System.Reactive" version="[4.4.1,100.0)" />
+        <dependency id="System.Reactive.Interfaces" version="[4.4.1,100.0)" />
+        <dependency id="System.Reactive.Linq" version="[4.4.1,100.0)" />
+        <dependency id="System.Reactive.PlatformServices" version="[4.4.1,100.0)" />
+        <dependency id="System.Reactive.Windows.Threading" version="[4.4.1,100.0)" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="[4.7.1,100.0)" />
         <dependency id="System.Threading.Tasks.Extensions" version="[4.5.4,100.0)" />
         <dependency id="System.ValueTuple" version="[4.5.0,100.0)" />
       </group>
       <group targetFramework="netstandard2.0">
-        <dependency id="System.Reactive" version="[4.3.2,100.0)" />
-        <dependency id="System.Reactive.Interfaces" version="[4.3.2,100.0)" />
-        <dependency id="System.Reactive.Linq" version="[4.3.2,100.0)" />
-        <dependency id="System.Reactive.PlatformServices" version="[4.3.2,100.0)" />
-        <dependency id="Unity" version="[5.11.4,100.0)" />
-        <dependency id="System.Runtime.CompilerServices.Unsafe" version="[4.7.0,100.0)" />
-        <dependency id="System.ValueTuple" version="[4.5.0,100.0)" />
-        <dependency id="Microsoft.Extensions.DependencyInjection" version="[3.1.5,100.0)" />
+        <dependency version="[3.2.1,100.0)" id="Microsoft.AspNetCore.Components.WebAssembly" />
+        <dependency version="[3.1.6,100.0)" id="Microsoft.Extensions.DependencyInjection" />
+        <dependency version="[3.1.1,100.0)" id="Microsoft.NETCore.Platforms" />
+        <dependency version="[2.1.169-prerelease,100.0)" id="MVVM-Sidekick" />
+        <dependency version="[4.4.1,100.0)" id="System.Reactive" />
       </group>
     </dependencies>
   </metadata>

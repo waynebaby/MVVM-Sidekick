@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Patterns\Patterns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Testing\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Bindable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BindableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IViewModelWithPlatformService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />

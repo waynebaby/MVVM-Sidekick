@@ -26,6 +26,20 @@ namespace MVVMSidekick.ViewModels
     [DataContract]
     public abstract class BindableBase<TSubClassType> : BindableBase, INotifyDataErrorInfo where TSubClassType : BindableBase<TSubClassType>
     {
+
+        
+    /// <summary>
+    /// Gets all errors.
+    /// </summary>
+    /// <returns>ErrorEntity[].</returns>
+    public  override IEnumerable<ErrorEntity> GetAllErrors()
+    {
+            var errors = GetFieldNames()
+                 .SelectMany(name => this.GetValueContainer(name).Errors)
+                 .Where(x => x != null)
+                 .ToArray();
+            return errors;
+        }
         protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
             _plainPropertyContainerGetters =
               new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
@@ -60,6 +74,7 @@ namespace MVVMSidekick.ViewModels
         }
 
 
+  
         /// <summary>
         /// Gets the bindable instance identifier.
         /// </summary>
@@ -527,18 +542,6 @@ namespace MVVMSidekick.ViewModels
 
         }
 
-        /// <summary>
-        /// Gets all errors.
-        /// </summary>
-        /// <returns>ErrorEntity[].</returns>
-        public IEnumerable<ErrorEntity> GetAllErrors()
-        {
-            var errors = GetFieldNames()
-                 .SelectMany(name => this.GetValueContainer(name).Errors)
-                 .Where(x => x != null)
-                 .ToArray();
-            return errors;
-        }
 
         //public override IDictionary<string,object >  Values
         //{
@@ -576,6 +579,8 @@ namespace MVVMSidekick.ViewModels
     public abstract class BindableBase
         : DisposeGroupBase, INotifyPropertyChanged, IBindable, INotifyPropertyChanging
     {
+
+        public abstract IEnumerable<ErrorEntity> GetAllErrors();
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
         /// </summary>

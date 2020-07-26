@@ -1,8 +1,0 @@
-﻿<Application
-    x:Class="MVVMSidekick_UAP10.Test.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MVVMSidekick_UAP10.Test"
-    RequestedTheme="Light">
-
-</Application>

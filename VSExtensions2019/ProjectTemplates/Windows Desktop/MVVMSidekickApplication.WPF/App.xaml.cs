@@ -20,7 +20,7 @@ namespace $safeprojectname$
         public static void InitNavigationConfigurationInThisAssembly()
 		{
             ServiceCollection services = new ServiceCollection();
-            services.AddMVVMSidekick<ViewModelRegistry>();
+            services.AddMVVMSidekick(new ViewModelRegistry());
             services.BuildServiceProvider().PushToMVVMSidekickRoot();
         }
 

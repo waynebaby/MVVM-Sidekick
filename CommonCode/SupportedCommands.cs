@@ -79,8 +79,46 @@ namespace CommonCode
                 }
                 else if (f1.EndsWith(".csproj"))
                 {
-                    framework = "uap10.0";
+                   
+                    if (f1.Contains("Blazor"))
+                    {
+                        framework = "netstandard2.0";
 
+                        elementFrag = new XElement("packages");
+
+                        var deps = XDocument.Load(f1)
+                            .Descendants().Single(x => x.Name.LocalName == "ItemGroup" && x.Elements().Any(y => y.Name.LocalName == "PackageReference"))
+                            .Elements();
+
+                        foreach (var item in deps)
+                        {
+                            elementFrag.Add(new XElement("package",
+                                new XAttribute("version", item.Attributes().Where(x=>x.Name.LocalName=="Version").Single().Value),
+                                new XAttribute("id", item.Attributes().Where(x=>x.Name.LocalName== "Include").Single().Value)
+                                ));
+                            //Console.WriteLine(item.Name );
+                        }
+                    }
+                    else
+                    {
+
+                        framework = "uap10.0";
+                        elementFrag = new XElement("packages");
+
+                        var deps = XDocument.Load(f1)
+                            .Descendants().Single(x => x.Name.LocalName == "ItemGroup" && x.Elements().Any(y => y.Name.LocalName == "PackageReference"))
+                            .Elements();
+
+                        foreach (var item in deps)
+                        {
+                            elementFrag.Add(new XElement("package",
+                                new XAttribute("version", item.Elements().Single().Value),
+                                new XAttribute("id", item.Attributes().Single().Value)
+                                ));
+                            //Console.WriteLine(item.Name );
+                        }
+
+                    }
                     //      Package file              <?xml version="1.0" encoding="utf-8"?>
                     //<packages>
                     //  <package id="CommonServiceLocator" version="2.0.3" targetFramework="net45" />
@@ -118,20 +156,6 @@ namespace CommonCode
                     //  </PackageReference>
                     //</ItemGroup>
 
-                    elementFrag = new XElement("packages");
-
-                    var deps = XDocument.Load(f1)
-                        .Descendants().Single(x => x.Name.LocalName == "ItemGroup" && x.Elements().Any(y => y.Name.LocalName == "PackageReference"))
-                        .Elements();
-
-                    foreach (var item in deps)
-                    {
-                        elementFrag.Add(new XElement("package",
-                            new XAttribute("version", item.Elements().Single().Value),
-                            new XAttribute("id", item.Attributes().Single().Value)
-                            ));
-                        //Console.WriteLine(item.Name );
-                    }
                 }
                 else
                 {

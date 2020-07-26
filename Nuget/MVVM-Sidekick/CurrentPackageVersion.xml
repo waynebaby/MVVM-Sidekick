@@ -1,7 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <versions>
   <version>
-    <id prerelease="true">2.1.140</id>
+    <id prerelease="true">2.1.169</id>
+    <releaseNotes>
+      - Breaking Change: Removed Unity Dependency in all the platforms we support.
+      - Breaking Change: Removed ServcieLocator class, TypedServiceLocator class, ViewMapping classes.
+      - Breaking Change: All Dependency Injection now depend on "Microsoft.Extensions.DelenedencyInjection" packages and dlls. Enjoy modern DI.
+	  - Breaking Change: Supports Blazor netcore 3.1 now. Please try with new vs template.
+      - This package only works with VS 2017/2019 Template 2.1.0 +.
+       </releaseNotes>
+  </version>
+  <version>
+    <id prerelease="true">2.1.142</id>
     <releaseNotes>
       - Breaking Change: Removed MVVMWindows,MVVMPage,MVVMControl. Move on to Disguise.
       - Breaking Change: Moved Common lib to .Net Standard 2.0 Class.

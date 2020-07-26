@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
 
 
-        public static IServiceCollection AddMVVMSidekick<TViewModelRegistry>(this IServiceCollection services,
+        public static IServiceCollection AddMVVMSidekick<TViewModelRegistry>(this IServiceCollection services, TViewModelRegistry instance,
         Action<MVVMSidekickOptions> optionalConfiguration = null)
             where TViewModelRegistry : MVVMSidekickStartupBase, new()
         {
@@ -33,7 +33,7 @@ namespace Microsoft.Extensions.DependencyInjection
 #endif
             services.AddSingleton<ITellDesignTimeService, InRuntime>();
 
-            var buildervm = new TViewModelRegistry();
+            var buildervm =  instance;
             buildervm.ConfigureInstance(opt);
             optionalConfiguration?.Invoke(opt);
             return services;

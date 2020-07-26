@@ -113,8 +113,11 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection">
       <Version>3.1.6</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.Platforms">
+      <Version>3.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.9</Version>
+      <Version>6.2.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1</Version>
@@ -123,13 +126,13 @@
       <Version>2.0.3</Version>
     </PackageReference>
     <PackageReference Include="System.Reactive">
-      <Version>4.3.2</Version>
+      <Version>4.4.1</Version>
     </PackageReference>
     <PackageReference Include="System.Reactive.PlatformServices">
-      <Version>4.3.2</Version>
+      <Version>4.4.1</Version>
     </PackageReference>
     <PackageReference Include="System.Reactive.Windows.Threading">
-      <Version>4.3.2</Version>
+      <Version>4.4.1</Version>
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
       <Version>4.5.0</Version>

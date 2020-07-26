@@ -22,7 +22,7 @@ namespace YourProject
         public static async Task Main(string[] args)
         {
             ...        
-            builder.Services.AddMVVMSidekick&lt;ViewModelRegistry&gt;();
+            builder.Services.AddMVVMSidekick(new ViewModelRegistry());
             ...
             await builder.Build().PushToMVVMSidekickRoot().RunAsync();
         }

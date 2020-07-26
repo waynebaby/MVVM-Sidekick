@@ -29,13 +29,17 @@ namespace $safeprojectname$.ViewModels
             }
         
         }
-
+        public $safeitemname$(IServiceProvider serviceProvider)
+        {
+            ServiceProvider = serviceProvider;
+        }
+        protected IServiceProvider ServiceProvider { get; }
 
         public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
-#region Property string Title Setup        
-        protected Property<string> _Title = new Property<string>(_TitleLocator);
-        static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => "Hello World!"));
-#endregion
+        #region Property string Title Setup        
+                protected Property<string> _Title = new Property<string>(_TitleLocator);
+                static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => "Hello World!"));
+        #endregion
 
 
 
