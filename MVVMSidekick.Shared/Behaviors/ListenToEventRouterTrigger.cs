@@ -1,4 +1,4 @@
-﻿
+﻿#if !BLAZOR
 #if WPF
 using MVVMSidekick.EventRouting;
 using MVVMSidekick.ViewModels;
@@ -215,3 +215,4 @@ namespace MVVMSidekick.Behaviors
 	}
 
 }
+#endif

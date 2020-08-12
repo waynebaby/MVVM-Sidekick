@@ -41,6 +41,8 @@ namespace MVVMSidekick
         public static class MVVMRxExtensions
         {
 
+           
+
 
 
 
@@ -76,7 +78,6 @@ namespace MVVMSidekick
             {
                 return DoNotifyEventRouter(sequence, EventRouter.Instance, source, registerName);
             }
-
 
 
 
@@ -118,7 +119,7 @@ namespace MVVMSidekick
             {
                 return sequence.Select
                     (
-                          inContext => (vm.ExecuteFunctionTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
+                          inContext => (vm.ExecuteFunctionTask(taskBody, inContext, cancellationToken), inContext, cancellationToken)
                     );
             }
 
@@ -131,7 +132,7 @@ namespace MVVMSidekick
             {
                 return sequence.Select
                     (
-                          inContext => (vm.ExecuteTask(taskBody, inContext, cancellationToken, false), inContext, cancellationToken)
+                          inContext => (vm.ExecuteTask(taskBody, inContext, cancellationToken), inContext, cancellationToken)
                     );
             }
 
@@ -146,21 +147,7 @@ namespace MVVMSidekick
 
 
 
-            /// <summary>
-            /// <para>Create a instance of IObservable that fires when property changed event is raised.</para>
-            /// <para>创建一个监视属性变化事件观察者IObservable实例。</para>
-            /// </summary>
-            /// <param name="bindable">The bindable.</param>
-            /// <returns>IObservable&lt;EventPattern&lt;PropertyChangedEventArgs&gt;&gt;.</returns>
-            public static IObservable<EventPattern<PropertyChangedEventArgs>> CreatePropertyChangedObservable(this BindableBase bindable)
-            {
-                return Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
-                        eh => bindable.PropertyChanged += eh,
-                        eh => bindable.PropertyChanged -= eh
-                    )
-                    .Where(_ => bindable.IsNotificationActivated);
-            }
-
+      
 
             /// <summary>
             /// Gets the event observable.
@@ -183,43 +170,54 @@ namespace MVVMSidekick
             }
 
 
-            /// <summary>Gets the value changed event observable.</summary>
-            /// <typeparam name="TValue">The type of the t service.</typeparam>
-            /// <param name="source">The source.</param>
-            /// <returns>
-            /// IObservable&lt;EventTuple&lt;ValueContainer&lt;TValue&gt;, ValueChangedEventArgs&lt;TValue&gt;&gt;&gt;.
-            /// </returns>
-            public static IObservable<EventTuple<ValueContainer<TValue>, ValueChangedEventArgs<TValue>>> GetValueChangedEventObservable<TValue>(this ValueContainer<TValue> source)
+
+            public static IObservable<(ValueContainer<TValue> ValueContainer, ValueChangedEventArgs<TValue> EventArgs)> GetValueChangedEventObservable<TValue>(this ValueContainer<TValue> source)
             {
 
                 var eventArgSeq = Observable.FromEventPattern<EventHandler<ValueChangedEventArgs<TValue>>, ValueChangedEventArgs<TValue>>(
                         eh => source.ValueChanged += eh,
                         eh => source.ValueChanged -= eh);
                 return eventArgSeq.Select(
-                            x => EventTuple.Create(source, x.EventArgs)
+                            x => (source, x.EventArgs)
                         );
                 ;
             }
 
-            public static IObservable<EventTuple<IValueContainer, ValueChangedEventArgs>> GetValueChangedNonGenericEventObservable(this IValueContainer source)
+            public static IObservable<(BindableBase Model, IValueContainer ValueContainer, ValueChangedEventArgs EventArgs)> GetValueChangedNonGenericEventObservable(this IValueContainer source)
             {
 
                 var eventArgSeq = Observable.FromEventPattern<EventHandler<ValueChangedEventArgs>, ValueChangedEventArgs>(
                         eh => source.NonGenericValueChanged += eh,
                         eh => source.NonGenericValueChanged -= eh);
                 return eventArgSeq.Select(
-                            x => EventTuple.Create(source as IValueContainer, x.EventArgs as ValueChangedEventArgs)
+                            x => (source.Model as BindableBase, source as IValueContainer, x.EventArgs as ValueChangedEventArgs)
                         );
                 ;
             }
-            public static IObservable<EventTuple<IValueContainer, ValueChangingEventArgs>> GetValueChangingNonGenericEventObservable(this IValueContainer source)
+
+                  /// <summary>
+            /// <para>Create a instance of IObservable that fires when property changed event is raised.</para>
+            /// <para>创建一个监视属性变化事件观察者IObservable实例。</para>
+            /// </summary>
+            /// <param name="bindable">The bindable.</param>
+            /// <returns>IObservable&lt;EventPattern&lt;PropertyChangedEventArgs&gt;&gt;.</returns>
+            public static IObservable<EventPattern<PropertyChangedEventArgs>> CreatePropertyChangedObservable(this BindableBase bindable)
+            {
+                return Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                        eh => bindable.PropertyChanged += eh,
+                        eh => bindable.PropertyChanged -= eh
+                    )
+                    .Where(_ => bindable.IsNotificationActivated);
+            }
+
+            public static IObservable<(BindableBase Model, IValueContainer ValueContainer, ValueChangingEventArgs EventArgs)> GetValueChangingNonGenericEventObservable(this IValueContainer source)
             {
 
                 var eventArgSeq = Observable.FromEventPattern<EventHandler<ValueChangingEventArgs>, ValueChangingEventArgs>(
                         eh => source.NonGenericValueChanging += eh,
                         eh => source.NonGenericValueChanging -= eh);
                 return eventArgSeq.Select(
-                            x => EventTuple.Create(source as IValueContainer, x.EventArgs as ValueChangingEventArgs)
+                            x => (source.Model as BindableBase, source as IValueContainer, x.EventArgs as ValueChangingEventArgs)
                         );
                 ;
             }
@@ -230,37 +228,31 @@ namespace MVVMSidekick
             /// <returns>
             /// IObservable&lt;EventTuple&lt;ValueContainer&lt;TValue&gt;, ValueChangedEventArgs&lt;TValue&gt;&gt;&gt;.
             /// </returns>
-            public static IObservable<EventTuple<ValueContainer<TValue>, ValueChangingEventArgs<TValue>>> GetValueChangingdEventObservable<TValue>(this ValueContainer<TValue> source)
+            public static IObservable<(BindableBase Model, ValueContainer<TValue> ValueContainer, ValueChangingEventArgs<TValue> EventArgs)> GetValueChangingdEventObservable<TValue>(this ValueContainer<TValue> source)
             {
 
                 var eventArgSeq = Observable.FromEventPattern<EventHandler<ValueChangingEventArgs<TValue>>, ValueChangingEventArgs<TValue>>(
                         eh => source.ValueChanging += eh,
                         eh => source.ValueChanging -= eh);
                 return eventArgSeq.Select(
-                            x => EventTuple.Create(source, x.EventArgs)
+                            x => (source.Model as BindableBase, source, x.EventArgs)
                        );
                 ;
             }
 
 
 
-
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <typeparam name="TModel"></typeparam>
-            /// <param name="source"></param>
-            /// <param name="properties"></param>
-            /// <returns></returns>
-            public static IObservable<EventTuple<IValueContainer, ValueChangedEventArgs>> ListenValueChangedEvents<TModel>(this TModel source,
+            public static IObservable<(TModel Model, IValueContainer ValueContainer,  ValueChangedEventArgs EventArgs)> ListenValueChangedEvents<TModel>(this TModel source,
                    params Expression<Func<TModel, object>>[] properties
                ) where TModel : BindableBase<TModel>
             {
 
                 return source.GetValueContainers(properties)
                     .ToObservable()
-                    .SelectMany(x => x.GetValueChangedNonGenericEventObservable());
+                    .SelectMany(x => x.GetValueChangedNonGenericEventObservable())
+                    .Select(x=> (x.Model as TModel,x.ValueContainer,x.EventArgs));
+
+
             }
 
 
@@ -272,8 +264,8 @@ namespace MVVMSidekick
             /// <param name="secondSource">The second source.</param>
             /// <param name="properties">The properties.</param>
             /// <returns>Merged event Sequence</returns>
-            public static IObservable<EventTuple<IValueContainer, ValueChangedEventArgs>> AlsoListenValueChangedWith<TModel>(
-                this IObservable<EventTuple<IValueContainer, ValueChangedEventArgs>> sequence,
+            public static IObservable<(TModel Model, IValueContainer ValueContainer,  ValueChangedEventArgs EventArgs)> AlsoListenValueChangedWith<TModel>(
+                this IObservable<(TModel Model, IValueContainer ValueContainer, ValueChangedEventArgs EventArgs)> sequence,
                 TModel secondSource,
                 params Expression<Func<TModel, object>>[] properties
                 ) where TModel : BindableBase<TModel>
@@ -295,14 +287,14 @@ namespace MVVMSidekick
             /// <param name="source"></param>
             /// <param name="properties"></param>
             /// <returns></returns>
-            public static IObservable<EventTuple<IValueContainer, ValueChangingEventArgs>> ListenValueChangingEvents<TModel>(this TModel source,
+            public static IObservable<(TModel Model, IValueContainer ValueContainer, ValueChangingEventArgs EventArgs)> ListenValueChangingEvents<TModel>(this TModel source,
                    params Expression<Func<TModel, object>>[] properties
                ) where TModel : BindableBase<TModel>
             {
 
                 return source.GetValueContainers(properties)
                     .ToObservable()
-                    .SelectMany(x => x.GetValueChangingNonGenericEventObservable());
+                    .SelectMany(x => x.GetValueChangingNonGenericEventObservable()).Select(x=>(x.Model as TModel,x.ValueContainer,x.EventArgs));
             }
 
 
@@ -314,8 +306,8 @@ namespace MVVMSidekick
             /// <param name="secondSource">The second source.</param>
             /// <param name="properties">The properties.</param>
             /// <returns>Merged event Sequence</returns>
-            public static IObservable<EventTuple<IValueContainer, ValueChangingEventArgs>> AlsoListenValueChangingWith<TModel>(
-                this IObservable<EventTuple<IValueContainer, ValueChangingEventArgs>> sequence,
+            public static IObservable<(TModel Model, IValueContainer ValueContainer, ValueChangingEventArgs EventArgs)> AlsoListenValueChangingWith<TModel>(
+                this IObservable<(TModel Model, IValueContainer ValueContainer, ValueChangingEventArgs EventArgs)> sequence,
                 TModel secondSource,
                 params Expression<Func<TModel, object>>[] properties
                 ) where TModel : BindableBase<TModel>
@@ -349,43 +341,6 @@ namespace MVVMSidekick
 
 
 
-            ///// <summary>
-            ///// Bind Command to IsUIBusy property.
-            ///// </summary>
-            ///// <typeparam name="TCommand">A sub class of ReactiveCommand</typeparam>
-            ///// <typeparam name="TResource">The resource type of CommandModel</typeparam>
-            ///// <typeparam name="TViewModel">The View Model type command wanna bind to</typeparam>
-            ///// <param name="command">Command itself</param>
-            ///// <param name="model">The View Model  command wanna bind to</param>
-            ///// <param name="canExecuteWhenBusy">if can execute when ui busy , input true</param>
-            ///// <returns>command instance itself</returns>
-            //public static CommandModel<TCommand, TResource> ListenToIsUIBusy<TCommand, TResource, TViewModel, TInjectedServices>(this CommandModel<TCommand, TResource> command, ViewModelBase<TViewModel,TInjectedServices> model, bool canExecuteWhenBusy = false, IObservable<bool> and_also_listen_to_this_sequence = null)
-            //    where TViewModel : ViewModelBase<TViewModel, TInjectedServices>
-            //    where TCommand : ReactiveCommand
-            //{
-
-            //    var eventSeq = model.GetValueContainer(x => x.IsUIBusy)
-            //            .GetValueChangedEventObservable()
-            //            .Select(e => canExecuteWhenBusy ? canExecuteWhenBusy : (!e.EventArgs.NewValue));
-
-
-            //    if (and_also_listen_to_this_sequence != null)
-            //    {
-            //        eventSeq = eventSeq.CombineLatest(and_also_listen_to_this_sequence, (a, b) => a && b);
-            //    }
-
-
-            //    //See Test  CommandListenToUIBusy_Test
-            //    var mainSeq = Observable.Range(0, 1)
-            //       .Select(x => (x == 0) ? !command.LastCanExecuteValue : command.LastCanExecuteValue)
-            //       .Concat(eventSeq);
-
-            //    command.CommandCore.ListenCanExecuteObservable(mainSeq)
-            //        .DisposeWith(model);
-
-            //    return command;
-            //}
-
 
             /// <summary>
             /// Bind Command to IsUIBusy property.
@@ -397,26 +352,18 @@ namespace MVVMSidekick
             /// <param name="model">The View Model  command wanna bind to</param>
             /// <param name="canExecuteWhenBusy">if can execute when ui busy , input true</param>
             /// <returns>command instance itself</returns>
-            public static CommandModel<TCommand, TResource> ListenToIsUIBusy<TCommand, TResource, TViewModel>(this CommandModel<TCommand, TResource> command, ViewModelBase<TViewModel> model, bool canExecuteWhenBusy = false, IObservable<bool> and_also_listen_to_this_sequence = null)
+            public static CommandModel<TCommand, TResource> WireExecutableToViewModelIsUIBusy<TCommand, TResource, TViewModel>(this CommandModel<TCommand, TResource> command, ViewModelBase<TViewModel> model, bool canExecuteWhenBusy = false, bool canExecuteWhenUIFree = true)
                 where TViewModel : ViewModelBase<TViewModel>
                 where TCommand : ReactiveCommand
             {
 
                 var eventSeq = model.GetValueContainer(x => x.IsUIBusy)
                         .GetValueChangedEventObservable()
-                        .Select(e => canExecuteWhenBusy ? canExecuteWhenBusy : (!e.EventArgs.NewValue));
+                        .Select(e =>
+                                e.EventArgs.NewValue ? canExecuteWhenBusy : canExecuteWhenUIFree);
 
-
-                if (and_also_listen_to_this_sequence != null)
-                {
-                    eventSeq = eventSeq.CombineLatest(and_also_listen_to_this_sequence, (a, b) => a && b);
-                }
-
-
-                //See Test  CommandListenToUIBusy_Test
-                var mainSeq = Observable.Range(0, 1)
-                   .Select(x => (x == 0) ? !command.LastCanExecuteValue : command.LastCanExecuteValue)
-                   .Concat(eventSeq);
+                var mainSeq = new[] { !command.CanExecuteValue, command.CanExecuteValue }
+                .ToObservable().Concat(eventSeq);
 
                 command.CommandCore.ListenCanExecuteObservable(mainSeq)
                     .DisposeWith(model);

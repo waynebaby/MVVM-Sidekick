@@ -51,6 +51,7 @@ namespace MVVMSidekick.ViewModels
             if (CanExecuteChanged != null)
             {
                 this.CanExecuteChanged(this, e);
+                CanExecute(null);
             }
 
         }
@@ -67,50 +68,14 @@ namespace MVVMSidekick.ViewModels
 
         }
 
-        //public CommandModel<TCommand, TResource> ConfigCommandCore(Action<TCommand> commandConfigAction)
-        //{
-        //    commandConfigAction(CommandCore);
-        //    return this;
-        //}
-
-
-        /// <summary>
-        /// 上一次是否能够运行的值
-        /// </summary>
-        /// <value><c>true</c> if [last can execute value]; otherwise, <c>false</c>.</value>
-        public bool LastCanExecuteValue
+        public bool CanExecuteValue
         {
-            get { return _LastCanExecuteValueLocator(this).Value; }
-            set { _LastCanExecuteValueLocator(this).SetValueAndTryNotify(value); }
+            get => CanExecute(null);
+            set => _CanExecuteValueLocator(this).SetValueAndTryNotify(value);
         }
-
-
-        #region Property bool LastCanExecuteValue Setup
-
-        /// <summary>
-        /// The _ last can execute value
-        /// </summary>
-        protected Property<bool> _LastCanExecuteValue =
-          new Property<bool>(_LastCanExecuteValueLocator);
-        /// <summary>
-        /// The _ last can execute value locator
-        /// </summary>
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        static Func<BindableBase, ValueContainer<bool>> _LastCanExecuteValueLocator =
-            RegisterContainerLocator<bool>(
-            "LastCanExecuteValue",
-            model =>
-            {
-                model._LastCanExecuteValue =
-                    model._LastCanExecuteValue
-                    ??
-                    new Property<bool>(_LastCanExecuteValueLocator);
-                return model._LastCanExecuteValue.Container =
-                    model._LastCanExecuteValue.Container
-                    ??
-                    new ValueContainer<bool>("LastCanExecuteValue", model);
-            });
-
+        #region Property bool CanExecuteValue Setup        
+        protected Property<bool> _CanExecuteValue = new Property<bool>(_CanExecuteValueLocator);
+        static Func<BindableBase, ValueContainer<bool>> _CanExecuteValueLocator = RegisterContainerLocator(nameof(CanExecuteValue), m => m.Initialize(nameof(CanExecuteValue), ref m._CanExecuteValue, ref _CanExecuteValueLocator, () => default(bool)));
         #endregion
 
 
@@ -150,12 +115,16 @@ namespace MVVMSidekick.ViewModels
         {
             if (IsInDesignMode)
             {
-                return false;
+                return true;
             }
-            var s = CommandCore?.CanExecute(parameter);
-            var cv = LastCanExecuteValue;
-            _LastCanExecuteValue.Container.SetValue( s ?? false);
-            return LastCanExecuteValue;
+            var s = CommandCore.CanExecute(parameter);
+            var cv = _CanExecuteValueLocator(this).Value;
+            if (s != cv)
+            {
+                CanExecuteValue = s;
+            }
+
+            return s;
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using MVVMSidekick.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +13,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using $safeprojectname$.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using MVVMSidekick.Views;
 using MVVMSidekick.Services;
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -26,7 +27,7 @@ namespace $safeprojectname$
     {
         public MainPage()
         {
-            ViewDisguise.ViewModel = ServiceLocator.Instance.Resolve<MainPage_Model>();
+            ViewDisguise.ViewModel = ServiceProviderLocator.RootServiceProvider.GetService<MainPage_Model>();
             this.InitializeComponent();
             ViewDisguise.RegisterPropertyChangedCallback(
                 PageViewDisguise.ViewModelProperty, 

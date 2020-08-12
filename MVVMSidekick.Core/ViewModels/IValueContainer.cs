@@ -23,7 +23,7 @@ namespace MVVMSidekick
         /// <summary>
         /// Interface IValueContainer
         /// </summary>
-        public interface IValueContainer : IErrorInfo, INotifyChanged,INotifyChanging
+        public interface IValueContainer : IErrorInfo, INotifyChanged, INotifyChanging
         {
             string PropertyName { get; }
 
@@ -43,7 +43,14 @@ namespace MVVMSidekick
             /// <value><c>true</c> if this instance is copy to allowed; otherwise, <c>false</c>.</value>
             bool IsCopyToAllowed { get; set; }
 
-            void AddErrorEntry(string message, Exception exception = null);
+            void AddErrorEntry(string ruleName, string message, Exception exception = null);
+
+            void RemoveErrorEntry(string ruleName);
+
+            void ClearErrorEntries();
+
+
+
 
 
             Object Model { get; }

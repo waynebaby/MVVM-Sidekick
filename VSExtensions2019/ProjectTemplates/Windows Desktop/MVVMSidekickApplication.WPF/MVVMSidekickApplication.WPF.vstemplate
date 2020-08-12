@@ -38,7 +38,7 @@
       <ProjectItem ReplaceParameters="true" SubType="Code">App.xaml.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true">App.config</ProjectItem>
       <Folder Name="Startups" TargetFolderName="Startups">
-        <ProjectItem ReplaceParameters="true" TargetFileName="StartupFunctions.cs">StartupFunctions.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MainWindow.cs">MainWindow.cs</ProjectItem>
       </Folder>
       <Folder Name="ViewModels" TargetFolderName="ViewModels">
         <ProjectItem ReplaceParameters="true" TargetFileName="MainWindow_Model.cs">MainWindow_Model.cs</ProjectItem>
@@ -52,7 +52,7 @@
   <WizardData>
     <!--<packages repository="extension" repositoryId="MVVM-Sidekick-Extensions-2019">-->
     <packages>
-      <package id="MVVM-Sidekick" version="2.1.32-prerelease" />
+      <package id="MVVM-Sidekick" version="2.1.214" />
     </packages>
   </WizardData>
 </VSTemplate>

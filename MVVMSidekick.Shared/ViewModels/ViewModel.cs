@@ -1,28 +1,45 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
+using MVVMSidekick.Reactive;
+using MVVMSidekick.Views;
 
 namespace MVVMSidekick.ViewModels
 {
-    public class Bindable<TBindable> : BindableBase<TBindable> where TBindable : Bindable<TBindable>
-   
-        {}
-    public class ViewModel<TViewModel> : ViewModelBase<TViewModel>, IViewModelWithPlatformService where TViewModel : ViewModel<TViewModel>
+
+#if BLAZOR
+    using Microsoft.AspNetCore.Components;
+    using Microsoft.Extensions.DependencyInjection;
+
+    public class ViewModel<TViewModel, TView> : ViewModelBase<TViewModel>, IViewModelWithPlatformService where TViewModel : ViewModel<TViewModel, TView>
+        where TView : ComponentBase
     {
 
-        public ViewModel()
+        public ViewModel(IServiceProvider serviceProvider)
         {
-
-
+            BlazorServiceProvider = serviceProvider;
+            StageManager = serviceProvider.GetService<IStageManager>();
         }
-        /// <summary>
-        /// Gets a value indicating whether this instance is in design mode.
-        /// </summary>
-        /// <value><c>true</c> if this instance is in design mode; otherwise, <c>false</c>.</value>
+        public TView Page { get; set; }
 
 
+        public override IStageManager StageManager { get => base.StageManager; set => base.StageManager = value; }
+        public IServiceProvider BlazorServiceProvider { get; set; }
+        public virtual void OnInitialized() { }
+        public virtual Task OnInitializedAsync() => Task.CompletedTask;
+        public virtual void OnParametersSet() { }
+        public virtual Task OnParametersSetAsync() => Task.CompletedTask;
+        public virtual void OnAfterRender(bool firstRender) { }
+        public virtual Task OnAfterRenderAsync(bool firstRender) => Task.CompletedTask;
+        public virtual Task SetParametersAsync(ParameterView parameters) => Task.CompletedTask;
+#else
 
+    public class ViewModel<TViewModel> : ViewModelBase<TViewModel>, IViewModelWithPlatformService where TViewModel : ViewModel<TViewModel>
+    {
+#endif
 
 
 #if WINDOWS_UWP
@@ -53,7 +70,7 @@ namespace MVVMSidekick.ViewModels
         }
 #elif WPF
         public System.Windows.Controls.Frame FrameObject { get; set; }
-
+#elif BLAZOR
 
 #endif
 

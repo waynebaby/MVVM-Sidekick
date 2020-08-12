@@ -1,6 +1,8 @@
-﻿using MVVMSidekick.Commands;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MVVMSidekick.Commands;
 using MVVMSidekick.EventRouting;
 using MVVMSidekick.Reactive;
+using MVVMSidekick.Startups;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,18 +46,20 @@ namespace $safeprojectname$
         }
 
 
-		static bool _inited = false;
-		public static void InitConfigurationInThisAssembly()
-		{
-			if (!_inited)
-			{
-				MVVMSidekick.Startups.StartupFunctions.RunAllConfig();
-				ConfigureCommandAndCommandExceptionHandler();
-				//You can init you Dependency Injection Here:
-				//ServiceLocator.Instance.Register<IDrawingService, DrawingService>();
-				_inited = true;	  
-			}
-		}
+        static bool _inited = false;
+        public static void InitConfigurationInThisAssembly()
+        {
+            if (!_inited)
+            {
+                ServiceCollection services = new ServiceCollection();
+                services.AddMVVMSidekick(new ViewModelRegistry());
+                services.BuildServiceProvider().PushToMVVMSidekickRoot();
+                ConfigureCommandAndCommandExceptionHandler();
+                //You can init you Dependency Injection Here:
+                //ServiceLocator.Instance.Register<IDrawingService, DrawingService>();
+                _inited = true;
+            }
+        }
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -64,18 +68,18 @@ namespace $safeprojectname$
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                this.DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif
-			//Init MVVM-Sidekick Navigation and Dependency Injections
-			InitConfigurationInThisAssembly();
+    #if DEBUG
+                if (System.Diagnostics.Debugger.IsAttached)
+                {
+                    this.DebugSettings.EnableFrameRateCounter = true;
+                }
+    #endif
+            //Init MVVM-Sidekick Navigation and Dependency Injections
+            InitConfigurationInThisAssembly();
 
-			Frame rootFrame = CreateOrSetupRootFrame(e);
+            Frame rootFrame = CreateOrSetupRootFrame(e);
 
-			if (rootFrame.Content == null)
+            if (rootFrame.Content == null)
             {
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
@@ -89,41 +93,41 @@ namespace $safeprojectname$
 
 
 
-		/// <summary>
-		/// Create Or setup Root Frame
-		/// </summary>
-		/// <param name="e">Details about the launch request and process.</param>
-		/// <returns>Root Frame</returns>
-		private Frame CreateOrSetupRootFrame(LaunchActivatedEventArgs e)
-		{
-			Frame rootFrame = Window.Current.Content as Frame;
+        /// <summary>
+        /// Create Or setup Root Frame
+        /// </summary>
+        /// <param name="e">Details about the launch request and process.</param>
+        /// <returns>Root Frame</returns>
+        private Frame CreateOrSetupRootFrame(LaunchActivatedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
 
-			// Do not repeat app initialization when the Window already has content,
-			// just ensure that the window is active
-			if (rootFrame == null)
-			{
-				// Create a Frame to act as the navigation context and navigate to the first page
-				rootFrame = new Frame();
+            // Do not repeat app initialization when the Window already has content,
+            // just ensure that the window is active
+            if (rootFrame == null)
+            {
+                // Create a Frame to act as the navigation context and navigate to the first page
+                rootFrame = new Frame();
 
-				rootFrame.NavigationFailed += OnNavigationFailed;
+                rootFrame.NavigationFailed += OnNavigationFailed;
 
-				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-				{
-					//TODO: Load state from previously suspended application
-				}
+                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                {
+                    //TODO: Load state from previously suspended application
+                }
 
-				// Place the frame in the current Window
-				Window.Current.Content = rootFrame;
-			}
+                // Place the frame in the current Window
+                Window.Current.Content = rootFrame;
+            }
 
-			return rootFrame;
-		}
-		/// <summary>
-		/// Invoked when Navigation to a certain page fails
-		/// </summary>
-		/// <param name="sender">The Frame which failed navigation</param>
-		/// <param name="e">Details about the navigation failure</param>
-		void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+            return rootFrame;
+        }
+        /// <summary>
+        /// Invoked when Navigation to a certain page fails
+        /// </summary>
+        /// <param name="sender">The Frame which failed navigation</param>
+        /// <param name="e">Details about the navigation failure</param>
+        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
@@ -145,8 +149,11 @@ namespace $safeprojectname$
         /// <summary>
         /// Configure event handler when command executed or exception happens
         /// </summary>
+        /// 
+
         private static void ConfigureCommandAndCommandExceptionHandler()
         {
+            #region Useful Code Snippets
             ////Command Firing Messages 
             //EventRouter.Instance.GetEventChannel<(EventPattern<EventCommandEventArgs> InputContext, CancellationTokenSource CancellationTokenSource)>()
             //    .ObserveOnDispatcher()
@@ -167,27 +174,28 @@ namespace $safeprojectname$
             //           
             //        }
             //    );
+            #endregion
 
             //Exception Monitoring
             EventRouter.Instance.GetEventChannel<Exception>()
-                .ObserveOnDispatcher()
-                .Subscribe(
-                    e =>
-                    {
+                    .ObserveOnDispatcher()
+                    .Subscribe(
+                        e =>
+                        {
                             //Exceptions Messages 
                             if (Exceptions.Count >= 20)
-                        {
-                            Exceptions.RemoveAt(0);
+                            {
+                                Exceptions.RemoveAt(0);
+                            }
+                            Exceptions.Add(Tuple.Create(DateTime.Now, e.EventData));
+                            Debug.WriteLine(e.EventData);
                         }
-                        Exceptions.Add(Tuple.Create(DateTime.Now, e.EventData));
-                        Debug.WriteLine(e.EventData);
-                    }
-                );
+                    );
         }
-    /// <summary>
-    /// Exception lists
-    /// </summary>
-    public static ObservableCollection<Tuple<DateTime,Exception>> Exceptions { get; set; } = new ObservableCollection<Tuple<DateTime, Exception>>();
-}
+        /// <summary>
+        /// Exception lists
+        /// </summary>
+        public static ObservableCollection<Tuple<DateTime, Exception>> Exceptions { get; set; } = new ObservableCollection<Tuple<DateTime, Exception>>();
+    }
 
 }

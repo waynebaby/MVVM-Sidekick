@@ -10,9 +10,9 @@
     xmlns:vm="using:$rootnamespace$.ViewModels"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  >
-        <d:DataContext>
+        <d:FrameworkElement.DataContext>
     	    <vm:$safeitemname$_Model/>
-        </d:DataContext>
+        </d:FrameworkElement.DataContext>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>

@@ -12,10 +12,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BaeconBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListenToEventRouterTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\SendToEventRouterAction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DependencyInjection\MVVMSidekickOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DependencyInjection\MVVMSidekickStartupBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DependencyInjection\MVVMSidekicStartupExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patterns\Patterns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Testing\Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Bindable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BindableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IViewModelWithPlatformService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PlatformServiceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ControlViewDisguise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\IPageView.cs" />

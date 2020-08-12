@@ -8,8 +8,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         mc:Ignorable="d">
     <Grid x:Name="grid" >
-        <d:DataContext>
+        <d:FrameworkElement.DataContext>
             <vm:$safeitemname$_Model/>
-        </d:DataContext>
+        </d:FrameworkElement.DataContext>
     </Grid>
 </UserControl>

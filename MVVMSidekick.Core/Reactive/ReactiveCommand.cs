@@ -32,10 +32,8 @@ namespace MVVMSidekick.Reactive
                 .Zip(_canExecuteSource.Skip(1),
                     (x, y) =>
                         x != y)
-                .Where(x =>
-                    x && CanExecuteChanged != null)
                 .Subscribe(_ =>
-                    CanExecuteChanged(this, EventArgs.Empty));
+                    CanExecuteChanged?.Invoke(this, EventArgs.Empty));
 
 
             _executeSource = new Subject<EventPattern<EventCommandEventArgs>>();

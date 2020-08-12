@@ -1,0 +1,30 @@
+﻿@page "/$safeitemname$"
+@inherits MVVMSidekickComponentBase<$safeitemname$, $safeitemname$_Model>;
+@using Microsoft.Extensions.Configuration;
+@using Microsoft.Extensions.DependencyInjection;
+@using MVVMSidekick.ViewModels;
+@using $rootnamespace$.ViewModels;
+<h1>Hello, world!</h1>
+
+<p>This is the new page "$safeitemname$". You can find View model related to this page in ViewModels folder.</p>
+<p>Current ViewModels Instance Id is "@ViewModel.BindableInstanceId" </p>
+<p>Don't forget configure in the Program.cs </p>
+<p>
+    &nbsp;</p>
+&nbsp;<p>
+<textarea rows="16" style="width:90%;padding-left:30px;font-size:20px;" cols="20" name="S1">
+using YourProject.Pages.ViewModels;
+...
+namespace YourProject
+{
+    public class Program
+    {
+        public static async Task Main(string[] args)
+        {
+            ...        
+            builder.Services.AddMVVMSidekick(new ViewModelRegistry());
+            ...
+            await builder.Build().PushToMVVMSidekickRoot().RunAsync();
+        }
+    }
+}</textarea></p>

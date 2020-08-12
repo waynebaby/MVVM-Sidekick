@@ -1,9 +1,10 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using MVVMSidekick.ViewModels;
 using System.Windows;
-
-
+using Microsoft.Extensions.DependencyInjection;
+#if !BLAZOR
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -15,10 +16,8 @@ using Windows.UI.Xaml.Media;
 #elif WPF
 using System.Windows.Controls;
 using System.Windows.Media;
-
 using System.Collections.Concurrent;
 using System.Windows.Navigation;
-
 using MVVMSidekick.Views;
 using System.Windows.Controls.Primitives;
 using MVVMSidekick.Utilities;
@@ -49,18 +48,18 @@ namespace MVVMSidekick.Views
     {
 
 
-        static StageManager()
+        public  StageManager(IServiceProvider serviceProvider)
         {
-
+            ServiceProvider = serviceProvider;
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="StageManager"/> class.
         /// </summary>
         /// <param name="viewModel">The view model.</param>
-        public StageManager(IViewModel viewModel)
-        {
-            ViewModel = viewModel;
-        }
+        //public StageManager(IViewModel viewModel)
+        //{
+        //    ViewModel = viewModel;
+        //}
         public StageManager()
         { }
 
@@ -100,7 +99,7 @@ namespace MVVMSidekick.Views
         private Func<object> _parentLocator;
 
 
-        #region Attached Property
+#region Attached Property
 
         /// <summary>
         /// Gets the beacon.
@@ -132,7 +131,7 @@ namespace MVVMSidekick.Views
 
         public static void SetBeacon(DependencyObject dobj, string value)
         {
-            if (!PlatformServiceHelper.IsInDesignMode)
+            if (!ViewModels.ViewModel.IsInDesignMode)
             {
 
                 dobj?.SetValue(BeaconProperty, value);
@@ -163,7 +162,7 @@ namespace MVVMSidekick.Views
 
 
 
-        #endregion
+#endregion
 
 
         internal FrameworkElement LocateTargetContainer(IView view, ref string targetContainerName, IViewModel sourceVM)
@@ -237,7 +236,7 @@ namespace MVVMSidekick.Views
         /// <param name="target">The target.</param>
         public static void RegisterTargetBeacon(string name, FrameworkElement target)
         {
-            if (!PlatformServiceHelper.IsInDesignMode)
+            if (!ViewModels.ViewModel.IsInDesignMode)
             {
 
 
@@ -294,6 +293,8 @@ namespace MVVMSidekick.Views
         /// </value>
         public IStage DefaultStage => this[""];
 
+         IServiceProvider ServiceProvider { get; }
+
 
 
 
@@ -314,7 +315,14 @@ namespace MVVMSidekick.Views
                 FrameworkElement fr = LocateTargetContainer(CurrentBindingView, ref beaconKey, ViewModel);
                 if (fr != null)
                 {
-                    return new Stage(fr, beaconKey, this);
+                    var stage = ServiceProvider.GetService<IStage>() as  Stage;
+                    if (stage ==null )
+                    {
+                        throw new InvalidOperationException("StageManager can only work with Stage. Please check your settings");
+                    }
+                    stage.InitStage(fr, beaconKey, this);
+
+                    return stage;
                 }
                 else
                 {
@@ -325,3 +333,4 @@ namespace MVVMSidekick.Views
     }
 
 }
+#endif

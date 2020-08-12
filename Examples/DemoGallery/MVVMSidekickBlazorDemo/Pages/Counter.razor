@@ -1,0 +1,14 @@
+﻿@page "/Counter"
+@inherits MVVMSidekickComponentBase<Counter, Counter_Model>;
+@using Microsoft.Extensions.Configuration;
+@using Microsoft.Extensions.DependencyInjection;
+@using MVVMSidekick.ViewModels;
+@using MVVMSidekickBlazorDemo.Pages.ViewModels;
+
+<h1>Counter</h1>
+
+<p>Current count: @M.CurrentCount</p>
+
+<button class="btn btn-primary" @onclick="M.CommandIncrementCount.Execute">Click me</button>
+
+

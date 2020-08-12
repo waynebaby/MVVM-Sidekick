@@ -1,8 +1,10 @@
 ﻿using MVVMSidekick.Services;
+using MVVMSidekick.Views;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Navigation;
 #endif
@@ -12,7 +14,10 @@ namespace MVVMSidekick.ViewModels
 
 
 
+#if BLAZOR
+    using Microsoft.AspNetCore.Components;
 
+#endif
     public interface IViewModelWithPlatformService : IViewModel
     {
 #if WINDOWS_UWP
@@ -40,7 +45,18 @@ namespace MVVMSidekick.ViewModels
 
 #elif WPF
         System.Windows.Controls.Frame FrameObject { get; set; }
+#elif BLAZOR
+        IServiceProvider BlazorServiceProvider { get; set; }
+        void OnInitialized();
+        Task OnInitializedAsync();
+        void OnParametersSet();
+        Task OnParametersSetAsync();
+        void OnAfterRender(bool firstRender);
+        Task OnAfterRenderAsync(bool firstRender);
+        Task SetParametersAsync(ParameterView parameters);
 #endif
+
+
     }
 
 }

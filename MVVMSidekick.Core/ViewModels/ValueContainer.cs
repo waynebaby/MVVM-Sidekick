@@ -19,9 +19,9 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using MVVMSidekick.Reactive;
 using System.Threading.Tasks;
-
-
-
+using System.Collections.Specialized;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace MVVMSidekick
 {
@@ -94,16 +94,8 @@ namespace MVVMSidekick
                 PropertyType = typeof(TProperty);
                 Model = model;
                 SetValue(initValue);
-                _Errors = new ObservableCollection<ErrorEntity>();
-                _Errors.GetCollectionChangedEventObservable(model)
-                    .Subscribe
-                    (
-                        e =>
-                        {
-                            model.RaiseErrorsChanged(PropertyName);
-                        }
-                    )
-                    .DisposeWith(model);
+                _Errors = new Dictionary<string, ErrorEntity>();
+
 
             }
 
@@ -150,6 +142,8 @@ namespace MVVMSidekick
             /// <returns>ValueContainer&lt;TProperty&gt;.</returns>
             public ValueContainer<TProperty> SetValueAndTryNotify(TProperty value)
             {
+                WireINPCValue(value);
+                WireINCCValue(value);
                 InternalPropertyChange(this.Model, value, PropertyName);
                 return this;
             }
@@ -164,6 +158,9 @@ namespace MVVMSidekick
             /// <returns>ValueContainer&lt;TProperty&gt;.</returns>
             public ValueContainer<TProperty> SetValue(TProperty value)
             {
+                WireINPCValue(value);
+                WireINCCValue(value);
+
                 _value = value;
                 return this;
             }
@@ -197,11 +194,10 @@ namespace MVVMSidekick
                 var oldvalue = _value;
                 _value = newValue;
 
-                await Task.Yield();
                 if (changingArg.Cancellation.IsCancellationRequested)
                 {
 
-                    _value= oldvalue ;
+                    _value = oldvalue;
                     return;
                 }
 
@@ -220,7 +216,7 @@ namespace MVVMSidekick
                 {
                     NonGenericValueChanging.Invoke(this, changingArg);
                     await Task.Yield();
-                 
+
                     if (changingArg.Cancellation.IsCancellationRequested)
                     {
                         _value = oldvalue;
@@ -229,7 +225,7 @@ namespace MVVMSidekick
                 }
 
 
-   
+
 
                 ValueChangedEventArgs<TProperty> changedArg = new ValueChangedEventArgs<TProperty>(message, oldvalue, newValue);
 
@@ -240,23 +236,101 @@ namespace MVVMSidekick
 
             }
 
-            public void AddErrorEntry(string message, Exception exception = null)
+            private void WireINPCValue(TProperty newValue)
             {
+                var inpcNewValue = newValue as INotifyPropertyChanged;
+                var inpcOldValue = _value as INotifyPropertyChanged;
 
-                Errors.Add(new ViewModels.ErrorEntity
+                if (inpcNewValue != null)
                 {
+                    inpcNewValue.PropertyChanged += InpcValue_PropertyChanged;
+                }
+                if (inpcOldValue != null)
+                {
+                    inpcOldValue.PropertyChanged -= InpcValue_PropertyChanged;
+                }
+
+
+                var inpcingNewValue = newValue as INotifyPropertyChanging;
+                var inpcingOldValue = _value as INotifyPropertyChanging;
+
+                if (inpcingNewValue != null)
+                {
+                    inpcingNewValue.PropertyChanging += InpcingNewValue_PropertyChanging;
+                }
+                if (inpcingOldValue != null)
+                {
+                    inpcingOldValue.PropertyChanging -= InpcingNewValue_PropertyChanging;
+                }
+            }
+
+            private void InpcingNewValue_PropertyChanging(object sender, PropertyChangingEventArgs e)
+            {
+                Model.RaisePropertyChanging(e, sender);
+
+            }
+
+            private void InpcValue_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            {
+                Model.RaisePropertyChanged(e, sender);
+                Model.RaisePropertyChanged(new ValueChangedEventArgs<TProperty>(this.PropertyName, _value, _value));
+            }
+
+            private void WireINCCValue(TProperty newValue)
+            {
+                var inccNewValue = newValue as INotifyCollectionChanged;
+                var inccOldValue = _value as INotifyCollectionChanged;
+
+                if (inccNewValue != null)
+                {
+                    inccNewValue.CollectionChanged += InccValue_CollectionChanged;
+                }
+                if (inccOldValue != null)
+                {
+                    inccOldValue.CollectionChanged -= InccValue_CollectionChanged;
+                }
+
+
+            }
+
+            private void InccValue_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+            {
+                Model.RaisePropertyChanged(new PropertyChangedEventArgs(this.PropertyName), this);
+            }
+
+
+
+
+            public void AddErrorEntry(string ruleName,string message, Exception exception = null)
+            {
+             
+                _Errors[ruleName]= new ViewModels.ErrorEntity
+                { 
+                    FriendlyName= PropertyName,
+                    RuleName =ruleName,
                     Exception = exception,
                     InnerErrorInfoSource = this,
                     PropertyName = PropertyName,
                     Message = message
-                });
-
+                };
+                Model.RaiseErrorsChanged(PropertyName);
             }
-
-            void IValueContainer.AddErrorEntry(string message, Exception exception)
+            public void RemoveErrorEntry(string ruleName)
             {
-                throw new NotImplementedException();
+
+                _Errors.Remove(ruleName);
+                Model.RaiseErrorsChanged(PropertyName);
             }
+            public void ClearErrorEntries()
+            {
+
+                _Errors.Clear();
+
+                Model.RaiseErrorsChanged(PropertyName);
+
+            }
+
+
 
 
             /// <summary>
@@ -301,15 +375,16 @@ namespace MVVMSidekick
             /// <summary>
             /// The _ errors
             /// </summary>
-            ObservableCollection<ErrorEntity> _Errors;
+            IDictionary<string ,ErrorEntity> _Errors;
+
 
             /// <summary>
             /// Gets the errors.
             /// </summary>
             /// <value>The errors.</value>
-            public ObservableCollection<ErrorEntity> Errors
+            public IReadOnlyDictionary<string, ErrorEntity> Errors
             {
-                get { return _Errors; }
+                get { return new ReadOnlyDictionary<string, ErrorEntity>(_Errors); }
 
             }
 

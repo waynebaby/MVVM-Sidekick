@@ -10,24 +10,13 @@ using $rootnamespace$.ViewModels;
 using System;
 using System.Net;
 using System.Windows;
-
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MVVMSidekick.Startups
 {
-    internal static partial class StartupFunctions
+    internal partial class ViewModelRegistry : MVVMSidekickStartupBase
     {
-		static Action $safeitemname$Config =
-			CreateAndAddToAllConfig(Config$safeitemname$);
-
-		public static void Config$safeitemname$()
-        {
-            ViewModelLocator<$safeitemname$_Model>
-                .Instance
-                .Register(context=>
-                    new $safeitemname$_Model())
-                .GetViewMapper()
-                .MapToDefault<$safeitemname$>();
-
-        }
+        internal Action<MVVMSidekickOptions> $safeitemname$ConfigEntry =
+            AddConfigure(opt => opt.RegisterViewAndModelMapping<$safeitemname$, $safeitemname$_Model>());
     }
 }

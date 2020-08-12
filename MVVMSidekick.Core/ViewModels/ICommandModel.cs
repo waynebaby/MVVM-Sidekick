@@ -90,7 +90,7 @@ namespace MVVMSidekick
             /// Gets or sets a value indicating whether [last can execute value].
             /// </summary>
             /// <value><c>true</c> if [last can execute value]; otherwise, <c>false</c>.</value>
-            bool LastCanExecuteValue { get; set; }
+            bool CanExecuteValue { get; set; }
             /// <summary>
             /// Gets or sets the resource.
             /// </summary>

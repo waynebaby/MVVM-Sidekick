@@ -1,4 +1,5 @@
-﻿using MVVMSidekick.EventRouting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MVVMSidekick.EventRouting;
 using MVVMSidekick.Services;
 using MVVMSidekick.Utilities;
 using System;
@@ -25,6 +26,21 @@ namespace MVVMSidekick.ViewModels
     [DataContract]
     public abstract class BindableBase<TSubClassType> : BindableBase, INotifyDataErrorInfo where TSubClassType : BindableBase<TSubClassType>
     {
+
+
+        /// <summary>
+        /// Gets all errors.
+        /// </summary>
+        /// <returns>ErrorEntity[].</returns>
+        public override IEnumerable<ErrorEntity> GetAllErrors()
+        {
+            var errors = GetFieldNames()
+                 .SelectMany(name => this.GetValueContainer(name).Errors)
+                 .Where(x => x.Value != null)
+                 .Select(x => x.Value)
+                 .ToArray();
+            return errors;
+        }
         protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
             _plainPropertyContainerGetters =
               new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
@@ -57,6 +73,7 @@ namespace MVVMSidekick.ViewModels
 
             //_BindableInstanceIdLocator(this).SetValueAndTryNotify( string.Format("{0}:{1}", this.GetType().Name, base._instanceIdOfThisType));
         }
+
 
 
         /// <summary>
@@ -321,6 +338,7 @@ namespace MVVMSidekick.ViewModels
 
         }
 
+
         /// <summary>
         /// 根据表达式树取得多个值容器
         /// </summary>
@@ -472,7 +490,7 @@ namespace MVVMSidekick.ViewModels
         {
             if (this.GetFieldNames().Contains(propertyName))
             {
-                return this.GetValueContainer(propertyName).Errors;
+                return this.GetValueContainer(propertyName).Errors.Values;
             }
             else
             {
@@ -498,17 +516,13 @@ namespace MVVMSidekick.ViewModels
         //}
 
 
-        public bool HasErrors
-        {
-            get { return _HasErrorsLocator(this).Value; }
-            set { _HasErrorsLocator(this).SetValueAndTryNotify(value); }
-        }
+
+
+        public bool HasErrors { get => _HasErrorsLocator(this).Value; set => _HasErrorsLocator(this).SetValueAndTryNotify(value); }
         #region Property bool HasErrors Setup        
         protected Property<bool> _HasErrors = new Property<bool>(_HasErrorsLocator);
-        static Func<BindableBase, ValueContainer<bool>> _HasErrorsLocator = RegisterContainerLocator<bool>(nameof(HasErrors), model => model.Initialize(nameof(HasErrors), ref model._HasErrors, ref _HasErrorsLocator, _HasErrorsDefaultValueFactory));
-        static Func<bool> _HasErrorsDefaultValueFactory = () => false;
+        static Func<BindableBase, ValueContainer<bool>> _HasErrorsLocator = RegisterContainerLocator(nameof(HasErrors), m => m.Initialize(nameof(HasErrors), ref m._HasErrors, ref _HasErrorsLocator, () => default(bool)));
         #endregion
-
 
         /// <summary>
         /// Refreshes the errors.
@@ -526,18 +540,6 @@ namespace MVVMSidekick.ViewModels
 
         }
 
-        /// <summary>
-        /// Gets all errors.
-        /// </summary>
-        /// <returns>ErrorEntity[].</returns>
-        public IEnumerable<ErrorEntity> GetAllErrors()
-        {
-            var errors = GetFieldNames()
-                 .SelectMany(name => this.GetValueContainer(name).Errors)
-                 .Where(x => x != null)
-                 .ToArray();
-            return errors;
-        }
 
         //public override IDictionary<string,object >  Values
         //{
@@ -575,6 +577,8 @@ namespace MVVMSidekick.ViewModels
     public abstract class BindableBase
         : DisposeGroupBase, INotifyPropertyChanged, IBindable, INotifyPropertyChanging
     {
+
+        public abstract IEnumerable<ErrorEntity> GetAllErrors();
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
         /// </summary>
@@ -689,13 +693,9 @@ namespace MVVMSidekick.ViewModels
         /// Raises the property changed.
         /// </summary>
         /// <param name="lazyEAFactory">The lazy ea factory.</param>
-        protected internal void RaisePropertyChanged(PropertyChangedEventArgs e)
+        protected internal void RaisePropertyChanged(PropertyChangedEventArgs e, object anotherObjectSurce = null)
         {
-
-
-
-            this.PropertyChanged?.Invoke(this, e);
-
+            this.PropertyChanged?.Invoke(anotherObjectSurce ?? this, e);
 
         }
 
@@ -710,14 +710,9 @@ namespace MVVMSidekick.ViewModels
         /// Raises the property changed.
         /// </summary>
         /// <param name="lazyEAFactory">The lazy ea factory.</param>
-        protected internal void RaisePropertyChanging(PropertyChangingEventArgs e)
+        protected internal void RaisePropertyChanging(PropertyChangingEventArgs e, object anotherObjectSurce = null)
         {
-
-
-
-            this.PropertyChanging?.Invoke(this, e);
-
-
+            this.PropertyChanging?.Invoke(anotherObjectSurce ?? this, e);
         }
 
         /// <summary>
@@ -823,6 +818,6 @@ namespace MVVMSidekick.ViewModels
         }
 
 
-        public bool IsInDesignMode => ServiceLocator.Instance.TryResolve<ITellDesignTimeService>(() => new InDesignTime()).IsInDesignMode;
+        public bool IsInDesignMode => (ServiceProviderLocator.RootServiceProvider?.GetService<ITellDesignTimeService>() ?? new InDesignTime())?.IsInDesignMode ?? false;
     }
 }

@@ -20,6 +20,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace $safeprojectname$
 {
@@ -30,7 +32,7 @@ namespace $safeprojectname$
     {
         public $safeitemrootname$()	           
         {
-            ViewDisguise.ViewModel = ServiceLocator.Instance.Resolve<MainWindow_Model>();
+            ViewDisguise.ViewModel = ServiceProviderLocator.RootServiceProvider.GetService<MainWindow_Model>();
             this.InitializeComponent();
 
             

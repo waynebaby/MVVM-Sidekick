@@ -9,12 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Reactive" Version="4.3.2" />
-    <PackageReference Include="Unity" Version="5.11.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.7" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="3.1.1" />
+    <PackageReference Include="System.Reactive" Version="4.4.1" />
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cd $(ProjectDir)..&#xD;&#xA;&#xD;&#xA;xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y&#xD;&#xA;xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\netstandard2.0 /s  /i /y&#xD;&#xA;&#xD;&#xA;cd $(ProjectDir)&#xD;&#xA;&#xD;&#xA;..\CommonCode\CommonCode DPGRP  &quot;$(ProjectDir)\Packages.config&quot; ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec&#xD;&#xA;" />
-  </Target>
 
 </Project>

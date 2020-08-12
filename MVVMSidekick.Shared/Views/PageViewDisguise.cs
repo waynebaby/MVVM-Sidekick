@@ -1,5 +1,6 @@
 ﻿
 
+#if !BLAZOR
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -151,3 +152,4 @@ namespace MVVMSidekick.Views
 
     }
 }
+#endif

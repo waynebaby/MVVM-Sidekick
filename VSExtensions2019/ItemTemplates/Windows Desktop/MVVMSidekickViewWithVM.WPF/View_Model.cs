@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
-namespace  $rootnamespace$.ViewModels
+
+namespace $rootnamespace$.ViewModels
 {
 
     public class $safeitemname$ : ViewModel<$safeitemname$>
@@ -21,22 +22,28 @@ namespace  $rootnamespace$.ViewModels
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property propcmd for command
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性 propcmd 输入命令
 
+
         public $safeitemname$()
         {
-            if (IsInDesignMode )
+            if (IsInDesignMode)
             {
-             
+                Title = "Title is a little different in Design mode";
             }
-        
+
         }
-          
+        public $safeitemname$(IServiceProvider serviceProvider)
+        {
+            ServiceProvider = serviceProvider;
+        }
+        protected IServiceProvider ServiceProvider { get; }
+
 
         //propvm tab tab string tab Title
 
         public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
         #region Property string Title Setup        
         protected Property<string> _Title = new Property<string>(_TitleLocator);
-        static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => default(string)));
+        static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => nameof($fileinputname$)));
         #endregion
 
 

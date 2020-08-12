@@ -62,6 +62,9 @@ namespace MVVMSidekick
 
             }
 
+            public string RuleName { get; set; }
+
+            public string FriendlyName { get; set; }
 
             public string PropertyName { get; set; }
             /// <summary>
@@ -85,8 +88,7 @@ namespace MVVMSidekick
             /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
             public override string ToString()
             {
-
-                return null;// string.Format("{0}，{1}，{2}", Message, Exception, InnerErrorInfoSource);
+                return $"{(string.IsNullOrEmpty(FriendlyName )? PropertyName:FriendlyName)}:{(Message ?? nameof(ErrorEntity))}";// string.Format("{0}，{1}，{2}", Message, Exception, InnerErrorInfoSource);
             }
         }
 
