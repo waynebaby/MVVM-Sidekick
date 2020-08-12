@@ -10,8 +10,8 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.1" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.1" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.6" />
-		<PackageReference Include="MVVM-Sidekick" Version="2.1.208-prerelease" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.7" />
+		<PackageReference Include="MVVM-Sidekick" Version="2.1.214" />
 		<PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
 	</ItemGroup>
 
