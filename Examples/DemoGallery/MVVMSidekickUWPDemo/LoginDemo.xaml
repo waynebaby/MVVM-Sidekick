@@ -10,9 +10,10 @@
     xmlns:vm="using:MVVMSidekickUWPDemo.ViewModels"
     mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  >
-        <FrameworkElement.DataContext>
-    	    <vm:LoginDemo_Model/>
-        </FrameworkElement.DataContext>
+        <d:FrameworkElement.DataContext>
+            <vm:LoginDemo_Model/>
+        </d:FrameworkElement.DataContext>
+ 
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
@@ -20,5 +21,6 @@
         </Grid.ChildrenTransitions>
             <TextBlock x:Name="pageTitle" Text="{Binding Title}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
+        <Button></Button>
     </Grid>
 </Page>

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>2.1.173-prerelease</version>
+    <version>2.1.214</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,13 +38,14 @@
 
     </summary>
     <releaseNotes>
-	2.1.173
+	2.1.214
 		
-      - Breaking Change: Removed Unity Dependency in all the platforms we support.
+      - Breaking Change: Removed Unity(The DI Framework) Dependency in all the platforms we support.
       - Breaking Change: Removed ServcieLocator class, TypedServiceLocator class, ViewMapping classes.
       - Breaking Change: All Dependency Injection now depend on "Microsoft.Extensions.DelenedencyInjection" packages and dlls. Enjoy modern DI.
 	  - Breaking Change: Supports Blazor netcore 3.1 now. Please try with new vs template.
-      - This package only works with VS 2017/2019 Template 2.1.0 +.
+	  - Enhanced Validation. See examples in github.
+      - This package only works with VS 2019 Template 2.1.0 +.   
        
 
 	2.1.142
@@ -100,8 +101,7 @@
       <group targetFramework="net46">
         <dependency id="Expression.Interaction" version="[3.0.40218.0,100.0)" />
         <dependency id="Microsoft.Bcl.AsyncInterfaces" version="[1.1.1,100.0)" />
-        <dependency id="Microsoft.Extensions.DependencyInjection" version="[3.1.6,100.0)" />
-        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[3.1.6,100.0)" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[3.1.7,100.0)" />
         <dependency id="Microsoft.NETCore.Platforms" version="[3.1.1,100.0)" />
         <dependency id="Microsoft.Xaml.Behaviors.Wpf" version="[1.1.19,100.0)" />
         <dependency id="NETStandard.Library" version="[2.0.3,100.0)" />
@@ -116,9 +116,7 @@
       </group>
       <group targetFramework="netstandard2.0">
         <dependency version="[3.2.1,100.0)" id="Microsoft.AspNetCore.Components.WebAssembly" />
-        <dependency version="[3.1.6,100.0)" id="Microsoft.Extensions.DependencyInjection" />
         <dependency version="[3.1.1,100.0)" id="Microsoft.NETCore.Platforms" />
-        <dependency version="[2.1.169-prerelease,100.0)" id="MVVM-Sidekick" />
         <dependency version="[4.4.1,100.0)" id="System.Reactive" />
       </group>
     </dependencies>

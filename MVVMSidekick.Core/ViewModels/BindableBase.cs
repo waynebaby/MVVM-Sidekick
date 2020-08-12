@@ -27,16 +27,17 @@ namespace MVVMSidekick.ViewModels
     public abstract class BindableBase<TSubClassType> : BindableBase, INotifyDataErrorInfo where TSubClassType : BindableBase<TSubClassType>
     {
 
-        
-    /// <summary>
-    /// Gets all errors.
-    /// </summary>
-    /// <returns>ErrorEntity[].</returns>
-    public  override IEnumerable<ErrorEntity> GetAllErrors()
-    {
+
+        /// <summary>
+        /// Gets all errors.
+        /// </summary>
+        /// <returns>ErrorEntity[].</returns>
+        public override IEnumerable<ErrorEntity> GetAllErrors()
+        {
             var errors = GetFieldNames()
                  .SelectMany(name => this.GetValueContainer(name).Errors)
-                 .Where(x => x != null)
+                 .Where(x => x.Value != null)
+                 .Select(x => x.Value)
                  .ToArray();
             return errors;
         }
@@ -74,7 +75,7 @@ namespace MVVMSidekick.ViewModels
         }
 
 
-  
+
         /// <summary>
         /// Gets the bindable instance identifier.
         /// </summary>
@@ -337,6 +338,7 @@ namespace MVVMSidekick.ViewModels
 
         }
 
+
         /// <summary>
         /// 根据表达式树取得多个值容器
         /// </summary>
@@ -488,7 +490,7 @@ namespace MVVMSidekick.ViewModels
         {
             if (this.GetFieldNames().Contains(propertyName))
             {
-                return this.GetValueContainer(propertyName).Errors;
+                return this.GetValueContainer(propertyName).Errors.Values;
             }
             else
             {
@@ -514,17 +516,13 @@ namespace MVVMSidekick.ViewModels
         //}
 
 
-        public bool HasErrors
-        {
-            get { return _HasErrorsLocator(this).Value; }
-            set { _HasErrorsLocator(this).SetValueAndTryNotify(value); }
-        }
+
+
+        public bool HasErrors { get => _HasErrorsLocator(this).Value; set => _HasErrorsLocator(this).SetValueAndTryNotify(value); }
         #region Property bool HasErrors Setup        
         protected Property<bool> _HasErrors = new Property<bool>(_HasErrorsLocator);
-        static Func<BindableBase, ValueContainer<bool>> _HasErrorsLocator = RegisterContainerLocator<bool>(nameof(HasErrors), model => model.Initialize(nameof(HasErrors), ref model._HasErrors, ref _HasErrorsLocator, _HasErrorsDefaultValueFactory));
-        static Func<bool> _HasErrorsDefaultValueFactory = () => false;
+        static Func<BindableBase, ValueContainer<bool>> _HasErrorsLocator = RegisterContainerLocator(nameof(HasErrors), m => m.Initialize(nameof(HasErrors), ref m._HasErrors, ref _HasErrorsLocator, () => default(bool)));
         #endregion
-
 
         /// <summary>
         /// Refreshes the errors.

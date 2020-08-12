@@ -31,9 +31,10 @@
             <RowDefinition Height="839*"/>
             <RowDefinition Height="161*"/>
         </Grid.RowDefinitions>
-        <FrameworkElement.DataContext>
+        <d:FrameworkElement.DataContext>
             <vm:FetchData_Model/>
-        </FrameworkElement.DataContext>
+        </d:FrameworkElement.DataContext>
+    
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>

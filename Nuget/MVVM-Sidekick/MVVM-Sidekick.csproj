@@ -83,7 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\" />
-    <Folder Include="lib\" />
     <Folder Include="src\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

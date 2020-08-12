@@ -19,9 +19,10 @@
             <ColumnDefinition Width="200*"/>
             <ColumnDefinition Width="800*"/>
         </Grid.ColumnDefinitions>
-        <Grid.DataContext>
+
+        <d:FrameworkElement.DataContext>
             <vm:MainPage_Model/>
-        </Grid.DataContext>
+        </d:FrameworkElement.DataContext>
         <TextBlock x:Name="pageTitle" Margin="16,0,16,0" Text="{Binding Title}"  VerticalAlignment="Center" Height="19"  />
         <StackPanel Grid.RowSpan="1" Grid.Row="1">
             <StackPanel.Resources>

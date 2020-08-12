@@ -11,6 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 #if WINDOWS_UWP
 
@@ -61,7 +63,8 @@ namespace MVVMSidekick
             /// Gets the errors.
             /// </summary>
             /// <value>The errors.</value>
-            ObservableCollection<ErrorEntity> Errors { get; }
+
+            IReadOnlyDictionary<string, ErrorEntity> Errors { get; }
         }
 
 

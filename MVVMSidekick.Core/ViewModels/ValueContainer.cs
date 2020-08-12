@@ -20,6 +20,8 @@ using System.Reactive.Linq;
 using MVVMSidekick.Reactive;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace MVVMSidekick
 {
@@ -92,16 +94,8 @@ namespace MVVMSidekick
                 PropertyType = typeof(TProperty);
                 Model = model;
                 SetValue(initValue);
-                _Errors = new ObservableCollection<ErrorEntity>();
-                _Errors.GetCollectionChangedEventObservable(model)
-                    .Subscribe
-                    (
-                        e =>
-                        {
-                            model.RaiseErrorsChanged(PropertyName);
-                        }
-                    )
-                    .DisposeWith(model);
+                _Errors = new Dictionary<string, ErrorEntity>();
+
 
             }
 
@@ -307,26 +301,36 @@ namespace MVVMSidekick
 
 
 
-
-
-
-            public void AddErrorEntry(string message, Exception exception = null)
+            public void AddErrorEntry(string ruleName,string message, Exception exception = null)
             {
-
-                Errors.Add(new ViewModels.ErrorEntity
-                {
+             
+                _Errors[ruleName]= new ViewModels.ErrorEntity
+                { 
+                    FriendlyName= PropertyName,
+                    RuleName =ruleName,
                     Exception = exception,
                     InnerErrorInfoSource = this,
                     PropertyName = PropertyName,
                     Message = message
-                });
-
+                };
+                Model.RaiseErrorsChanged(PropertyName);
             }
-
-            void IValueContainer.AddErrorEntry(string message, Exception exception)
+            public void RemoveErrorEntry(string ruleName)
             {
-                throw new NotImplementedException();
+
+                _Errors.Remove(ruleName);
+                Model.RaiseErrorsChanged(PropertyName);
             }
+            public void ClearErrorEntries()
+            {
+
+                _Errors.Clear();
+
+                Model.RaiseErrorsChanged(PropertyName);
+
+            }
+
+
 
 
             /// <summary>
@@ -371,15 +375,16 @@ namespace MVVMSidekick
             /// <summary>
             /// The _ errors
             /// </summary>
-            ObservableCollection<ErrorEntity> _Errors;
+            IDictionary<string ,ErrorEntity> _Errors;
+
 
             /// <summary>
             /// Gets the errors.
             /// </summary>
             /// <value>The errors.</value>
-            public ObservableCollection<ErrorEntity> Errors
+            public IReadOnlyDictionary<string, ErrorEntity> Errors
             {
-                get { return _Errors; }
+                get { return new ReadOnlyDictionary<string, ErrorEntity>(_Errors); }
 
             }
 

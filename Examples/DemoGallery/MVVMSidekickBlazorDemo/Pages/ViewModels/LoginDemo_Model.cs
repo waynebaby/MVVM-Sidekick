@@ -247,7 +247,16 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
                           async (e, cancelToken) =>
                           {
                               //Todo: Add BackToIndex logic here  
-                              await vm.StageManager.DefaultStage.Show<Index_Model>();
+                              try
+                              {
+
+                                await vm.StageManager.DefaultStage.Show<Index_Model>();
+                              }
+                              catch (Exception ex)
+                              {
+                                  Debug.WriteLine(ex);
+                                  throw;
+                              }
                           })
                       .Subscribe()
                       .DisposeWith(vm);
@@ -277,21 +286,32 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
 
         public LoginEntity()
         {
-            this.ListenValueChangedEvents(_ => _.UserName, _ => Password)
-                .Where(_ => UserName.Length + Password.Length < 10)
-                .Subscribe(e => GetValueContainer(x => x.UserName).AddErrorEntry("Input is Low"))
-                .DisposeWith(this);
+            this.ValidateOnChange(_ => _.UserName, _ => _.Password)
+                .FocusOnProperty(
+                    x => x.Password,
+                    x => x
+                        .Required()
+                        .StringLength(6, 10))
+                .FocusOnProperty(
+                    x => x.UserName,
+                    x => x
+                        .Required()
+                        .StringLength(8, 22))
+                .MismatchThenMessage(
+                    m => 
+                        m.UserName?.Length + m.Password?.Length > 25,
+                    () =>
+                        "the total Length Shoud Bigger Than 25");
+
         }
 
-        [Required]
-        [StringLength(20, MinimumLength = 8, ErrorMessage = "Length shoule between 8-20")]
+
         public string UserName { get => _UserNameLocator(this).Value; set => _UserNameLocator(this).SetValueAndTryNotify(value); }
         #region Property string  UserName Setup        
         protected Property<string> _UserName = new Property<string>(_UserNameLocator);
         static Func<BindableBase, ValueContainer<string>> _UserNameLocator = RegisterContainerLocator(nameof(UserName), m => m.Initialize(nameof(UserName), ref m._UserName, ref _UserNameLocator, () => default(string)));
         #endregion
-        [Required]
-        [StringLength(20, MinimumLength = 8, ErrorMessage = "Length shoule between 8-20")]
+
         public string Password { get => _PasswordLocator(this).Value; set => _PasswordLocator(this).SetValueAndTryNotify(value); }
         #region Property string Password Setup        
         protected Property<string> _Password = new Property<string>(_PasswordLocator);
@@ -303,6 +323,12 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
     }
     public class RecoveryEntity : Bindable<RecoveryEntity>
     {
+        public RecoveryEntity()
+        {
+            this.ValidateOnChange(x => x.UserPhone).Required().StringLength(6, 20);
+            this.ValidateOnChange(x => x.SMSCode).Required().StringLength(6, 20);
+
+        }
 
         [Required]
         [StringLength(20, MinimumLength = 6, ErrorMessage = "Length shoule between 6-20")]

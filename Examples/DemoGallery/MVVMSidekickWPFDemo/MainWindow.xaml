@@ -16,9 +16,9 @@
             <ColumnDefinition Width="200*"/>
             <ColumnDefinition Width="800*"/>
         </Grid.ColumnDefinitions>
-        <d:DataContext>
+        <d:FrameworkElement.DataContext>
             <vm:MainWindow_Model/>
-        </d:DataContext>
+        </d:FrameworkElement.DataContext>
         <StackPanel>
             <StackPanel.Resources>
                 <Style x:Key="FocusVisual">
@@ -89,11 +89,9 @@
                 <TextBlock> Counter</TextBlock>
             </Button>
             <Button Command="{Binding CommandNaviToFetchData, Mode=OneWay}" >
-
                 <TextBlock >FetchData</TextBlock>
             </Button>
             <Button Command="{Binding CommandNaviToLoginDemo, Mode=OneWay}" >
-
                 <TextBlock> LogInDemo</TextBlock>
             </Button>
 

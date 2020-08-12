@@ -56,7 +56,6 @@ namespace MVVMSidekick
             public static IViewModel GetDefaultViewModel(this IView view, string name = default)
             {
                 IServiceProvider serviceProvider = ServiceProviderLocator.RootServiceProvider;
-                Func<IViewModel> func;
                 Type viewType = null;
                 switch (view)
                 {

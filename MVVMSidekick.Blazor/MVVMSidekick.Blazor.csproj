@@ -22,9 +22,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.1" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.6" />
 		<PackageReference Include="Microsoft.NETCore.Platforms" Version="3.1.1" />
-		<PackageReference Include="MVVM-Sidekick" Version="2.1.169-prerelease" />
 		<PackageReference Include="System.Reactive" Version="4.4.1" />
 	</ItemGroup>
 

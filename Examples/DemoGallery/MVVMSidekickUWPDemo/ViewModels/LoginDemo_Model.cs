@@ -46,6 +46,35 @@ namespace MVVMSidekickUWPDemo.ViewModels
 
 
 
+        public CommandModel CommandSomeCommand => _CommandSomeCommandLocator(this).Value;
+        #region Property CommandModel CommandSomeCommand Setup                
+        protected Property<CommandModel> _CommandSomeCommand = new Property<CommandModel>(_CommandSomeCommandLocator);
+        static Func<BindableBase, ValueContainer<CommandModel>> _CommandSomeCommandLocator = RegisterContainerLocator(nameof(CommandSomeCommand), m => m.Initialize(nameof(CommandSomeCommand), ref m._CommandSomeCommand, ref _CommandSomeCommandLocator,
+              model =>
+              {
+                  object state = nameof(CommandSomeCommand);
+                  var commandId = nameof(CommandSomeCommand);
+                  var vm = CastToCurrentType(model);
+                  var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
+
+                  cmd.DoExecuteUIBusyActionTask(
+                          vm,
+                          async (e, cancelToken) =>
+                          {
+                            //Todo: Add SomeCommand logic here  
+                            await Task.CompletedTask;
+                          })
+                      .Subscribe()
+                      .DisposeWith(vm);
+
+                  var cmdmdl = cmd.CreateCommandModel(state);
+
+                  return cmdmdl;
+              }));
+        #endregion
+
+
+
         #region Life Time Event Handling
 
         #region OnBindedToView

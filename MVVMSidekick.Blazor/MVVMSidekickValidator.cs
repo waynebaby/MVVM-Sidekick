@@ -39,7 +39,7 @@ namespace Microsoft.AspNetCore.Components
                 foreach (var errorEntry in model.GetAllErrors())
                 {
                     FieldIdentifier fieldIdentifier = CurrentEditContext.Field(errorEntry.PropertyName);
-                    messages.Add(in fieldIdentifier, errorEntry.Message);
+                    messages.Add(in fieldIdentifier, errorEntry.ToString());
                 }
 
             };
@@ -50,7 +50,7 @@ namespace Microsoft.AspNetCore.Components
                   foreach (var errorEntry in model.GetAllErrors())
                   {
                       FieldIdentifier fieldIdentifier = CurrentEditContext.Field(errorEntry.PropertyName);
-                      messages.Add(in fieldIdentifier, errorEntry.Message);
+                      messages.Add(in fieldIdentifier, errorEntry.ToString());
                   }
               };
 

@@ -10,16 +10,18 @@
     xmlns:vm="using:MVVMSidekickUWPDemo.ViewModels"
     mc:Ignorable="d">
     <Grid Background="#FFFFBBBB"  >
-        <FrameworkElement.DataContext>
+        <d:FrameworkElement.DataContext>
             <vm:Counter_Model/>
-        </FrameworkElement.DataContext>
+        </d:FrameworkElement.DataContext>
+     
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
-                  <Button Padding="8" FontSize="50" Width="400" Height="400" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding CommandIncrementCount, Mode=OneWay}">
-            <TextBlock Text="{Binding CurrentCount, Mode=OneWay}" FontSize="100"></TextBlock></Button>
-    
+        <Button Padding="8" FontSize="50" Width="400" Height="400" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding CommandIncrementCount, Mode=OneWay}">
+            <TextBlock Text="{Binding CurrentCount, Mode=OneWay}" FontSize="100"></TextBlock>
+        </Button>
+
     </Grid>
 </Page>

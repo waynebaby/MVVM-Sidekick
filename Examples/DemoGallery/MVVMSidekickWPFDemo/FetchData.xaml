@@ -26,9 +26,9 @@
         </DataTemplate>
     </Page.Resources>
     <Grid x:Name="grid">
-        <d:DataContext>
+        <d:FrameworkElement.DataContext>
             <vm:FetchData_Model/>
-        </d:DataContext>
+        </d:FrameworkElement.DataContext>
         <ListView  FontSize="12" Padding="16" Margin="16" ItemsSource="{Binding Forecasts}" ItemTemplate="{DynamicResource ForcastItemTemplate}">
 
         </ListView>

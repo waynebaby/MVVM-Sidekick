@@ -47,10 +47,10 @@ namespace MVVMSidekick.Views
 
         async Task<TTarget> IStage.Show<TTarget>(string viewMappingKey, Action<(IServiceProvider serviceProvider, TTarget viewModel)> additionalViewModelConfig, bool isWaitingForDispose, bool autoDisposeWhenViewUnload)
         {
-            if ( isWaitingForDispose ||autoDisposeWhenViewUnload)
-            {
-                throw new PlatformNotSupportedException("Platform not support 'isWaitingForDispose' or 'autoDisposeWhenViewUnload' features ");
-            }
+            //if ( isWaitingForDispose ||autoDisposeWhenViewUnload)
+            //{
+            //    throw new PlatformNotSupportedException("Platform not support 'isWaitingForDispose' or 'autoDisposeWhenViewUnload' features ");
+            //}
 
             var instancedViewModel = serviceProvider.GetService<TTarget>(viewMappingKey)?? serviceProvider.GetRequiredService<TTarget>();
             

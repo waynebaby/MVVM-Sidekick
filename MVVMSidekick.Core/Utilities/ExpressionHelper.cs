@@ -99,7 +99,7 @@ namespace MVVMSidekick
         /// <summary>
         /// Class ExpressionHelper.
         /// </summary>
-        public class ExpressionHelper
+        public static class ExpressionHelper
 		{
 			/// <summary>
 			/// Gets the name of the property.
@@ -110,7 +110,7 @@ namespace MVVMSidekick
 			/// <returns>
 			/// System.String.
 			/// </returns>
-			public static string GetPropertyName<TSubClassType, TProperty>(Expression<Func<TSubClassType, TProperty>> expression)
+			public static string GetPropertyName<TSubClassType, TProperty>(this Expression<Func<TSubClassType, TProperty>> expression)
 			{
 				MemberExpression body = expression.Body as MemberExpression;
 				var propName = (body.Member is PropertyInfo) ? body.Member.Name : string.Empty;
@@ -128,7 +128,7 @@ namespace MVVMSidekick
 			/// System.String.
 			/// </returns>
 			/// <exception cref="System.InvalidOperationException">The expression inputed should be like \x=&gt;x.PropertyName\ but currently is not: + expression.ToString()</exception>
-			public static string GetPropertyName<TSubClassType>(Expression<Func<TSubClassType, object>> expression)
+			public static string GetPropertyName<TSubClassType>(this Expression<Func<TSubClassType, object>> expression)
 			{
 				MemberExpression body = expression.Body as MemberExpression;
 				if (body != null)

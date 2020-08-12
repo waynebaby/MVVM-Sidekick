@@ -9,9 +9,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         mc:Ignorable="d">
     <Grid x:Name="grid">
-        <d:DataContext>
+        <d:FrameworkElement.DataContext>
             <vm:Counter_Model/>
-        </d:DataContext>
+        </d:FrameworkElement.DataContext>
         <Button Command="{Binding CommandIncrementCount, Mode=OneWay}">
             <TextBlock><Run FontSize="60" Text="{Binding CurrentCount}"/></TextBlock></Button>
     </Grid>
