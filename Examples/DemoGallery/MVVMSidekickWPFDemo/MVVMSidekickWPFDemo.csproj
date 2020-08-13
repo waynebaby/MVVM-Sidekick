@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Glue\PasswordBoundHelper.cs" />
     <Compile Include="Glue\UpdatePasswordCommand.cs" />
+    <Compile Include="Glue\UpdateVisualStateCommand.cs" />
     <Compile Include="LoginDemo.xaml.cs">
       <DependentUpon>LoginDemo.xaml</DependentUpon>
     </Compile>

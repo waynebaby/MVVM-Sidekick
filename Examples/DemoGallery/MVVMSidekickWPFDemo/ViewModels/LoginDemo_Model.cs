@@ -23,11 +23,50 @@ namespace MVVMSidekickWPFDemo.ViewModels
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property。
 
-        public LoginDemo_Model(IServiceProvider serviceProvider) 
+        public LoginDemo_Model(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
+
+
+
+
+            this.ListenValueChangedEvents(_ => _.CurrentLoginState)
+                .Subscribe(_ =>
+                {
+                    switch (this.CurrentLoginState)
+                    {
+                        case LoginDemo_Model.LoginState.Login:
+                        case LoginDemo_Model.LoginState.LoginError:
+                        case LoginDemo_Model.LoginState.LoginSuccess:
+                            CurrentVisualState = "Logging";
+                            break;
+                        case LoginDemo_Model.LoginState.PasswordRecovery:
+                        case LoginDemo_Model.LoginState.PasswordRecoveryError:
+                        case LoginDemo_Model.LoginState.PasswordRecoverySuccess:
+                            CurrentVisualState = "Recovery";
+
+
+                            break;
+                        default:
+                            CurrentVisualState = "Logging";
+
+                            break;
+                    }
+
+
+                }).DisposeWith(this);
         }
         public LoginDemo_Model() { }
+
+
+
+
+        public String CurrentVisualState { get => _CurrentVisualStateLocator(this).Value; set => _CurrentVisualStateLocator(this).SetValueAndTryNotify(value); }
+        #region Property String CurrentVisualState Setup        
+        protected Property<String> _CurrentVisualState = new Property<String>(_CurrentVisualStateLocator);
+        static Func<BindableBase, ValueContainer<String>> _CurrentVisualStateLocator = RegisterContainerLocator(nameof(CurrentVisualState), m => m.Initialize(nameof(CurrentVisualState), ref m._CurrentVisualState, ref _CurrentVisualStateLocator, () => "Logging"));
+        #endregion
+
 
         public string RightUserName { get => _RightUserNameLocator(this).Value; set => _RightUserNameLocator(this).SetValueAndTryNotify(value); }
         #region Property string RightUserName Setup        
@@ -86,7 +125,7 @@ namespace MVVMSidekickWPFDemo.ViewModels
 
 
 
-        public ICommand CommandLoginIn { get => _CommandLoginInLocator(this).Value;  }
+        public ICommand CommandLoginIn { get => _CommandLoginInLocator(this).Value; }
         #region Property CommandModel CommandLoginIn Setup                
         protected Property<CommandModel> _CommandLoginIn = new Property<CommandModel>(_CommandLoginInLocator);
         static Func<BindableBase, ValueContainer<CommandModel>> _CommandLoginInLocator = RegisterContainerLocator(nameof(CommandLoginIn), m => m.Initialize(nameof(CommandLoginIn), ref m._CommandLoginIn, ref _CommandLoginInLocator,
@@ -116,7 +155,7 @@ namespace MVVMSidekickWPFDemo.ViewModels
                           })
                       .Subscribe()
                       .DisposeWith(vm);
-                  cmd.ListenCanExecuteObservable(vm.LoginEntity.ListenValueChangedEvents(x=>x.HasErrors).Select(x=>!vm.LoginEntity.HasErrors))
+                  cmd.ListenCanExecuteObservable(vm.LoginEntity.ListenValueChangedEvents(x => x.HasErrors).Select(x => !vm.LoginEntity.HasErrors))
                      .DisposeWith(vm);
                   var cmdmdl = cmd.CreateCommandModel(state);
                   return cmdmdl;
@@ -171,7 +210,7 @@ namespace MVVMSidekickWPFDemo.ViewModels
                             await Task.Delay(2000);
                             return e;
                         })
-                        .DoExecuteUIActionTask(vm, async (t, c) =>
+                        .DoExecuteUIBusyActionTask(vm, async (t, c) =>
                         {
 
                             var e = await t.Task;
@@ -187,8 +226,7 @@ namespace MVVMSidekickWPFDemo.ViewModels
 
 
                   var cmdmdl = cmd.CreateCommandModel(state);
-                  cmd.ListenCanExecuteObservable(vm.ListenValueChangedEvents(_ => _.CountDownOfSMSResend).Select(_ =>
-                    vm.CountDownOfSMSResend == 0));
+                  cmdmdl.WireExecutableToViewModelIsUIBusy(vm);
 
                   return cmdmdl;
               }));
@@ -257,7 +295,7 @@ namespace MVVMSidekickWPFDemo.ViewModels
                     x => x
                         .Required()
                         .StringLength(8, 22));
-              
+
 
         }
 
@@ -286,7 +324,7 @@ namespace MVVMSidekickWPFDemo.ViewModels
 
         }
 
-  
+
         public string UserPhone { get => _UserPhoneLocator(this).Value; set => _UserPhoneLocator(this).SetValueAndTryNotify(value); }
         #region Property string UserPhone Setup        
         protected Property<string> _UserPhone = new Property<string>(_UserPhoneLocator);

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>2.1.214</version>
+    <version>2.1.227</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -38,7 +38,7 @@
 
     </summary>
     <releaseNotes>
-	2.1.214
+	2.1.227
 		
       - Breaking Change: Removed Unity(The DI Framework) Dependency in all the platforms we support.
       - Breaking Change: Removed ServcieLocator class, TypedServiceLocator class, ViewMapping classes.
@@ -88,8 +88,8 @@
     <tags>Rx Reactive Extensions MVVM UWP UAP Win8 Win10 APP IoT  Metro Modern UI</tags>
     <dependencies>
       <group targetFramework="uap10.0">
-        <dependency version="[3.1.6,100.0)" id="Microsoft.Extensions.DependencyInjection" />
-        <dependency version="[3.1.1,100.0)" id="Microsoft.NETCore.Platforms" />
+        <dependency version="[3.1.7,100.0)" id="Microsoft.Extensions.DependencyInjection" />
+        <dependency version="[3.1.2,100.0)" id="Microsoft.NETCore.Platforms" />
         <dependency version="[6.2.10,100.0)" id="Microsoft.NETCore.UniversalWindowsPlatform" />
         <dependency version="[2.0.1,100.0)" id="Microsoft.Xaml.Behaviors.Uwp.Managed" />
         <dependency version="[2.0.3,100.0)" id="NETStandard.Library" />
@@ -102,7 +102,7 @@
         <dependency id="Expression.Interaction" version="[3.0.40218.0,100.0)" />
         <dependency id="Microsoft.Bcl.AsyncInterfaces" version="[1.1.1,100.0)" />
         <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[3.1.7,100.0)" />
-        <dependency id="Microsoft.NETCore.Platforms" version="[3.1.1,100.0)" />
+        <dependency id="Microsoft.NETCore.Platforms" version="[3.1.2,100.0)" />
         <dependency id="Microsoft.Xaml.Behaviors.Wpf" version="[1.1.19,100.0)" />
         <dependency id="NETStandard.Library" version="[2.0.3,100.0)" />
         <dependency id="System.Reactive" version="[4.4.1,100.0)" />
@@ -116,7 +116,7 @@
       </group>
       <group targetFramework="netstandard2.0">
         <dependency version="[3.2.1,100.0)" id="Microsoft.AspNetCore.Components.WebAssembly" />
-        <dependency version="[3.1.1,100.0)" id="Microsoft.NETCore.Platforms" />
+        <dependency version="[3.1.2,100.0)" id="Microsoft.NETCore.Platforms" />
         <dependency version="[4.4.1,100.0)" id="System.Reactive" />
       </group>
     </dependencies>

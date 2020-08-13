@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <versions>
   <version>
-    <id>2.1.213</id>
+    <id>2.1.226</id>
     <releaseNotes>
       - Breaking Change: Removed Unity(The DI Framework) Dependency in all the platforms we support.
       - Breaking Change: Removed ServcieLocator class, TypedServiceLocator class, ViewMapping classes.

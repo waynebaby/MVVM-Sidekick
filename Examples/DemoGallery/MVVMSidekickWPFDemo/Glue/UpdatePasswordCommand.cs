@@ -10,6 +10,10 @@ using System.Windows.Input;
 
 namespace MVVMSidekickWPFDemo.Glue
 {
+
+    /// <summary>
+    /// because the behavior is not stable in now-a-days, i have to create basic commands myself
+    /// </summary>
     public class UpdatePasswordCommand : FrameworkElement, ICommand
     {
 

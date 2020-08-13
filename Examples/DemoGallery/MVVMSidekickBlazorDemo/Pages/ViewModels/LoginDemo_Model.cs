@@ -85,8 +85,6 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
         #endregion
 
 
-
-
         public CommandModel CommandLoginIn => _CommandLoginInLocator(this).Value;
         #region Property CommandModel CommandLoginIn Setup                
         protected Property<CommandModel> _CommandLoginIn = new Property<CommandModel>(_CommandLoginInLocator);
@@ -250,7 +248,7 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
                               try
                               {
 
-                                await vm.StageManager.DefaultStage.Show<Index_Model>();
+                                  await vm.StageManager.DefaultStage.Show<Index_Model>();
                               }
                               catch (Exception ex)
                               {
@@ -298,7 +296,7 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
                         .Required()
                         .StringLength(8, 22))
                 .MismatchThenMessage(
-                    m => 
+                    m =>
                         m.UserName?.Length + m.Password?.Length > 25,
                     () =>
                         "the total Length Shoud Bigger Than 25");

@@ -1,5 +1,3 @@
-* Warning: For .Net 4.0 WPF / SL 5 users， please use Unity 2.X packages instead of latest Unity 3*
-* Warning: if you are using Windows Phone 8.1 project, and you found nuget update failed, please use prelease version of Unity cos P&P team lost WPA81 in nupkg folder name in the stable versions.* 
 
 MVVM-Sidekick
 =============
@@ -178,13 +176,3 @@ Ping Me：
 [Mail]: mailto:blackshaman_wayne@hotmail.com "MSN Skype"
 
 ----------------------------------
-###ChangeLog:
-
-####1.3.0.3 
-
-Fix an exception happend with Rx 2.2.5 running on Windows phone 8.1 dev preview  
-
-> 解决了一个在 Winphone 8.1 开发者预览上出现的 Rx 2.2.5异常
------------------------------
-
-
