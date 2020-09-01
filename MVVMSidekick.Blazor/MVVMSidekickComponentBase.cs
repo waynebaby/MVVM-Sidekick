@@ -1,36 +1,85 @@
-﻿using MVVMSidekick.Common;
+﻿using Microsoft.AspNetCore.Components;
+using MVVMSidekick.Common;
 using MVVMSidekick.ViewModels;
 using MVVMSidekick.Views;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNetCore.Components
+namespace MVVMSidekick.Views
 {
-    public class MVVMSidekickComponentBase<TView, TViewModel> : ComponentBase, IDisposable, IAsyncDisposable,IDisposeGroup
+
+
+    public class MVVMSidekickComponentBase<TView, TViewModel> : ComponentBase, IDisposable, IAsyncDisposable, IDisposeGroup
         where TView : MVVMSidekickComponentBase<TView, TViewModel>
         where TViewModel : ViewModel<TViewModel, TView>
     {
-        private bool disposedValue;
+
+        private static IList<Action<TView, TViewModel>> parameterSetters = typeof(TView).GetProperties()
+                .Select(x =>
+                    (Property: x,
+                    Attribute: x.GetCustomAttribute(typeof(ModelMappingAttribute), true) ?? x.GetCustomAttribute(typeof(ParameterAttribute), true)))
+                .Where(x => x.Attribute != null)
+                .Select(x => (x.Property, Attribute: (x.Attribute as ModelMappingAttribute)))
+                .Where(x => !(x.Attribute?.Ignore ?? false))
+                .Select(x => (SourceProperty: x.Property, TargetProperty: typeof(TViewModel).GetProperty(x.Attribute?.MapToProperty ?? x.Property.Name)))
+                .Where(x => x.TargetProperty != null)
+                //.Where(x => x.TargetProperty.PropertyType.IsAssignableFrom(x.SourceProperty.PropertyType))
+                .Select(x =>
+                {
+                    var expPS = Expression.Parameter(x.SourceProperty.DeclaringType);
+                    var expPSMA = Expression.MakeMemberAccess(expPS, x.SourceProperty);
+                    var expPT = Expression.Parameter(x.TargetProperty.DeclaringType);
+                    var expPTMA = Expression.MakeMemberAccess(expPT, x.TargetProperty);
+                    var expAssign = Expression.Assign(expPTMA, Expression.Convert(expPSMA, x.TargetProperty.PropertyType));
+                    var expLambda = Expression.Lambda<Action<TView, TViewModel>>(expAssign, expPS, expPT);
+                    return expLambda.Compile();
+                })
+                .ToList();
+
 
         public event EventHandler<DisposeEventArgs> DisposeEntryDisposing;
         public event EventHandler<DisposeEventArgs> DisposeEntryDisposed;
 
+
+        public MVVMSidekickComponentBase()
+        {
+        }
+
         [Inject]
-        public TViewModel ViewModel { get; set; }
+        public TViewModel ViewModel { get => viewModel; set => viewModel = value; }
 
         /// <summary>
         /// Shortcut for ViewModel
         /// </summary>
-        protected TViewModel M { get => this.ViewModel; }
+        protected TViewModel M { get => viewModel; }
 
         public IList<DisposeEntry> DisposeInfoList => throw new NotImplementedException();
+
+
+
+
+
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {
             await base.SetParametersAsync(parameters);
-            ViewModel.Page = this as TView;
+            if (M == null)
+            {
+                throw new InvalidOperationException("View Model is null, please make sure a instance was injected or passed as constructor paramerter");
+            }
+            M.Page = this as TView;
+
+            foreach (var setter in parameterSetters)
+            {
+                setter(M.Page, M);
+            }
+
         }
 
         protected override void OnParametersSet()
@@ -77,27 +126,26 @@ namespace Microsoft.AspNetCore.Components
         }
 
 
+        ////private bool disposedValue;
+        //protected virtual void Dispose(bool disposing)
+        //{
+        //    if (!disposedValue)
+        //    {
+        //        if (disposing)
+        //        {
+        //            // TODO: dispose managed state (managed objects)
+        //        }
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects)
-                }
+        //        // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+        //        // TODO: set large fields to null
+        //        disposedValue = true;
+        //    }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                disposedValue = true;
-            }
-        }
-
-
+        //}
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
+            //Dispose(disposing: true);
             dg.Dispose();
             GC.SuppressFinalize(this);
         }
@@ -117,7 +165,7 @@ namespace Microsoft.AspNetCore.Components
             dg.AddDisposeAction(action, needCheckInFinalizer, comment, member, file, line);
         }
 
-        private IDisposeGroup dg = new  DisposeGroup()  ;
-     
+        private IDisposeGroup dg = new DisposeGroup();
+        private TViewModel viewModel;
     }
 }

@@ -1,0 +1,51 @@
+﻿@page "/ParameterDemo/{P1}/{P2}/{P3}/{P4}/{AssignableTypedProperty:int}"
+@inherits MVVMSidekickComponentBase<ParameterDemo, ParameterDemo_Model>;
+@using Microsoft.Extensions.Configuration;
+@using Microsoft.Extensions.DependencyInjection;
+@using MVVMSidekick.ViewModels;
+@using MVVMSidekick.Views;
+@using MVVMSidekickBlazorDemo.Pages.ViewModels;
+<h1>Parameter Demo</h1>
+
+
+
+@code{
+    [Parameter]
+    public string P1 { get; set; }
+    [Parameter]
+    public string P2 { get; set; }
+    [Parameter]
+    [ModelMapping(Ignore = true)]
+    public string P3 { get; set; }
+    [Parameter]
+    [ModelMapping(MapToProperty = nameof(ParameterDemo_Model.DifferentNamedProperty))]
+    public string P4 { get; set; }
+    [Parameter]
+    public int AssignableTypedProperty { get; set; }
+
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        return base.SetParametersAsync(parameters);
+    }
+
+}
+<h2>Page Properties</h2>
+<li>@nameof(P1):@P1</li>
+<li>@nameof(P2):@P2</li>
+<li>@nameof(P3):@P3</li>
+<li>@nameof(P4):@P4</li>
+<li>@nameof(AssignableTypedProperty):@AssignableTypedProperty  （int）</li>
+
+
+
+
+<h2>VM Properties</h2>
+
+<li>@nameof(M.P1):@M.P1</li>
+<li>@nameof(M.P2):@M.P2</li>
+<li>@nameof(M.P3):@M.P3</li>
+<li>@nameof(M.DifferentNamedProperty):@M.DifferentNamedProperty</li>
+<li>@nameof(M.AssignableTypedProperty):@M.AssignableTypedProperty  (@M.GetValueContainer(x => x.AssignableTypedProperty).PropertyType.Name) </li>
+
+

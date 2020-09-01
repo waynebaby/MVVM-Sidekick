@@ -3,6 +3,7 @@
 @using Microsoft.Extensions.Configuration;
 @using Microsoft.Extensions.DependencyInjection;
 @using MVVMSidekick.ViewModels;
+@using MVVMSidekick.Views;
 @using MVVMSidekickBlazorDemo.Pages.ViewModels;
 @code
 {
@@ -30,7 +31,7 @@
                 <button type="submit">Login</button>
 
             </p><DataAnnotationsValidator />
-                <MVVMSidekickValidator/>
+            <MVVMSidekickValidator />
             <ValidationSummary />
         </EditForm>
 

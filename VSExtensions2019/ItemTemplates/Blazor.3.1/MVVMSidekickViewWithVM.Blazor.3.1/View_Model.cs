@@ -1,21 +1,21 @@
-﻿using System.Reactive;
-using System.Reactive.Linq;
-using MVVMSidekick;
+﻿using MVVMSidekick;
 using MVVMSidekick.ViewModels;
 using MVVMSidekick.Views;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.Services;
 using MVVMSidekick.Commands;
 using MVVMSidekick.Common;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
-using System.ComponentModel.DataAnnotations;
-
+using System.Reactive;
+using System.Reactive.Linq;
 namespace $rootnamespace$.ViewModels
 {
 
@@ -27,7 +27,7 @@ namespace $rootnamespace$.ViewModels
         public $fileinputname$_Model(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
-
+        
         public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
         #region Property string Title Setup        
         protected Property<string> _Title = new Property<string>(_TitleLocator);

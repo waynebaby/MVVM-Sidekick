@@ -1,14 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <versions>
   <version>
-    <id>2.1.226</id>
+    <id>2.1.245</id>
     <releaseNotes>
-      - Breaking Change: Removed Unity(The DI Framework) Dependency in all the platforms we support.
-      - Breaking Change: Removed ServcieLocator class, TypedServiceLocator class, ViewMapping classes.
-      - Breaking Change: All Dependency Injection now depend on "Microsoft.Extensions.DelenedencyInjection" packages and dlls. Enjoy modern DI.
-	  - Breaking Change: Supports Blazor netcore 3.1 now. Please try with new vs template.
-	  - Enhanced Validation. See examples in github.
-      - This package only works with VS 2019 Template 2.1.0 +.   
+      - For Blazor, now we support mapping property with [Parameter] attribute to same named properties in VM automaticly. 
+	  - You can also use [ModelMapping()]   
        </releaseNotes>
   </version>
   <version>
