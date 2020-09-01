@@ -23,7 +23,7 @@ namespace MVVMSidekick.Views
         private static IList<Action<TView, TViewModel>> parameterSetters = typeof(TView).GetProperties()
                 .Select(x =>
                     (Property: x,
-                    Attribute: x.GetCustomAttribute(typeof(ModelMappingAttribute), true) ?? x.GetCustomAttribute(typeof(ParameterAttribute), true)))
+                    Attribute: x.GetCustomAttribute(typeof(ModelMappingAttribute), true) ?? x.GetCustomAttribute(typeof(ParameterAttribute), true)?? x.GetCustomAttribute(typeof(CascadingParameterAttribute), true)))
                 .Where(x => x.Attribute != null)
                 .Select(x => (x.Property, Attribute: (x.Attribute as ModelMappingAttribute)))
                 .Where(x => !(x.Attribute?.Ignore ?? false))
