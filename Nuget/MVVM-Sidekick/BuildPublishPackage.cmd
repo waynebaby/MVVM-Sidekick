@@ -22,7 +22,7 @@ cmd /c nuget.exe update -Self
 
 echo.
 echo Creating package...
- nuget.exe pack %1.nuspec 
+ nuget.exe pack %1.nuspec -Symbols -SymbolPackageFormat snupkg
 rem copy %1.%2.nupkg  ..\NugetPrivateSource\Packages  /Y
 copy *.nupkg ..
 

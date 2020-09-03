@@ -133,3 +133,4 @@ project.lock.json
 UpgradeLog*.*
 /MVVMSidekick/CommonCode/CommonCode.vshost.exe.manifest
 .vs
+*.snupkg
