@@ -38,6 +38,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -97,7 +100,9 @@
 cd $(ProjectDir)
 copy $(ProjectDir)*.snippet  ..\Nuget\MVVM-Sidekick\tools /y
 
-copy $(TargetDir)*.xml ..\Nuget\MVVM-Sidekick\</PostBuildEvent>
+copy $(TargetDir)*.xml ..\Nuget\MVVM-Sidekick\
+
+git rev-parse HEAD &gt; CurrentGitVersion.txt</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

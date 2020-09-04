@@ -54,43 +54,58 @@ namespace MVVMSidekick.ViewModels
         /// <summary>
         /// Initializes the specified property name.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
         /// <param name="model">The model.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="reference">The reference.</param>
         /// <param name="locator">The locator.</param>
         /// <param name="defaultValueFactory">The default value factory.</param>
         /// <returns>ValueContainer&lt;T&gt;.</returns>
-        public static ValueContainer<T> Initialize<T>(this BindableBase model, string propertyName, ref Property<T> reference, ref Func<BindableBase, ValueContainer<T>> locator, Func<T> defaultValueFactory = null)
+        public static ValueContainer<TValue> Initialize<TValue>(this BindableBase model, string propertyName, ref Property<TValue> reference, ref Func<BindableBase, ValueContainer<TValue>> locator, Func<TValue> defaultValueFactory = null)
         {
-            if (reference == null)
-                reference = new Property<T>( locator);
-            if (reference.Container == null)
-            {
-                reference.Container = new ValueContainer<T>(propertyName, model);
-                if (defaultValueFactory != null)
-                {
-                    reference.Container.SetValue(defaultValueFactory());
-                }
-            }
-            return reference.Container;
+            return model.Initialize(propertyName, ref reference, ref locator, defaultValueFactory == null ? default(TValue) : defaultValueFactory.Invoke());
         }
+
 
         /// <summary>
         /// Initializes the specified property name.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
         /// <param name="model">The model.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="reference">The reference.</param>
         /// <param name="locator">The locator.</param>
         /// <param name="defaultValueFactory">The default value factory.</param>
         /// <returns>ValueContainer&lt;T&gt;.</returns>
-        public static ValueContainer<T> Initialize<T>(this BindableBase model, string propertyName, ref Property<T> reference, ref Func<BindableBase, ValueContainer<T>> locator, Func<BindableBase, T> defaultValueFactory = null)
+        public static ValueContainer<TValue> Initialize<TValue>(this BindableBase model, string propertyName, ref Property<TValue> reference, ref Func<BindableBase, ValueContainer<TValue>> locator, TValue defaultValue = default)
         {
-            return Initialize(model, propertyName, ref reference, ref locator, 
-                () => 
-                (defaultValueFactory != null) ? defaultValueFactory(model) : default(T));
+            if (reference == null)
+                reference = new Property<TValue>(locator);
+            if (reference.Container == null)
+            {
+                reference.Container = new ValueContainer<TValue>(propertyName, model);
+                reference.Container.SetValue(defaultValue);
+            }
+            return reference.Container;
+        }
+
+
+
+
+
+        /// <summary>
+        /// Initializes the specified property name.
+        /// </summary>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="model">The model.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="reference">The reference.</param>
+        /// <param name="locator">The locator.</param>
+        /// <param name="defaultValueFactory">The default value factory.</param>
+        /// <returns>ValueContainer&lt;T&gt;.</returns>
+        public static ValueContainer<TValue> Initialize<TModel, TValue>(this TModel model, string propertyName, ref Property<TValue> reference, ref Func<BindableBase, ValueContainer<TValue>> locator, Func<TModel, TValue> defaultValueFactory = null) where TModel : BindableBase
+        {
+            return model.Initialize(propertyName, ref reference, ref locator, defaultValueFactory == null ? default(TValue) : defaultValueFactory.Invoke(model));
         }
     }
 

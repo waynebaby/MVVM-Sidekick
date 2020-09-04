@@ -5,7 +5,7 @@
     <Header>                                
       <Title>MVVM-Sidekick Property</Title>
       <Shortcut>propvm4</Shortcut>
-      <Description>Property of View Model for XAML MVVM </Description>
+      <Description>Property of View Model for MVVM </Description>
       <Author>Wayne Wang</Author>
       <SnippetTypes>
         <SnippetType>Expansion</SnippetType>
@@ -33,7 +33,7 @@
         }
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>(_$property$Locator);
-        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator("$property$", (m,pn)=>m.Initialize(pn,ref m._$property$, ref _$property$Locator,()=> default($type$))); 
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator("$property$", (m,pn)=>m.Initialize(pn,ref m._$property$, ref _$property$Locator, default)); 
         #endregion
 ]]>
       </Code>
@@ -68,7 +68,7 @@
         <![CDATA[        public $type$ $property$ { get => _$property$Locator(this).Value; set => _$property$Locator(this).SetValueAndTryNotify(value); }
         #region Property $type$ $property$ Setup        
         protected Property<$type$> _$property$ = new Property<$type$>( _$property$Locator);
-        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator(nameof($property$), m =>m.Initialize(nameof($property$),ref m._$property$, ref _$property$Locator,()=> default($type$)));         
+        static Func<BindableBase,ValueContainer<$type$>> _$property$Locator= RegisterContainerLocator(nameof($property$), m =>m.Initialize(nameof($property$),ref m._$property$, ref _$property$Locator, default));         
         #endregion
 ]]>
       </Code>

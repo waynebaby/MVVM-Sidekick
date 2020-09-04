@@ -79,7 +79,6 @@ namespace MVVMSidekick
             /// <returns>Value Container of this property/值容器</returns>
             public ValueContainer<TProperty> LocateValueContainer(BindableBase model)
             {
-
                 return LocatorFunc(model);
             }
 
@@ -108,7 +107,6 @@ namespace MVVMSidekick
 
 
         }
-
 
 
 

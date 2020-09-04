@@ -359,6 +359,7 @@ namespace CommonCode
                   {
                       throw new IndexOutOfRangeException("nuget spec file not exists");
                   }
+                  var currentVersion = File.ReadLines(@"CommonCode\CurrentGitVersion.txt").FirstOrDefault();
                   var d = XDocument.Load(args[1]);
                   var rnotes = d.Descendants().First(x => x.Name.LocalName == "releaseNotes");
                   rnotes.Value = "";
@@ -407,6 +408,8 @@ namespace CommonCode
                       rnotes.Value = rnotes.Value + string.Format("\r\n\t{0}\r\n\t\t{1}\r\n", currentPackageVersion, currentPackageReleaseNotes);
                   }
 
+                  var currentRepo = d.Descendants().Where(x => x.Name.LocalName == "repository").Single();
+                  currentRepo.Attributes().Single(x => x.Name.LocalName == "commit").Value = currentVersion;
 
 
 

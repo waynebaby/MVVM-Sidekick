@@ -247,7 +247,9 @@ namespace MVVMSidekick
                ) where TModel : BindableBase<TModel>
             {
 
-                return source.GetValueContainers(properties)
+                var containers = source.GetValueContainers(properties);
+
+                return containers
                     .ToObservable()
                     .SelectMany(x => x.GetValueChangedNonGenericEventObservable())
                     .Select(x=> (x.Model as TModel,x.ValueContainer,x.EventArgs));

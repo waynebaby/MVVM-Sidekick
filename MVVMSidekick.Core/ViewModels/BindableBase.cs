@@ -50,10 +50,6 @@ namespace MVVMSidekick.ViewModels
 
         }
 
-        /// <summary>
-        /// The _plain property container getters
-        /// </summary>
-
 
 
 
@@ -347,14 +343,12 @@ namespace MVVMSidekick.ViewModels
         public IValueContainer[] GetValueContainers(params Expression<Func<TSubClassType, object>>[] expressions)
         {
 
-            var names = expressions.Select(expression =>
-                  MVVMSidekick
-                    .Utilities
-                    .ExpressionHelper
-                    .GetPropertyName<TSubClassType>(expression)
-                ).ToArray();
+            var names = expressions
+                .Select(expression => ExpressionHelper.GetPropertyName(expression))
+                .ToArray();
 
-            return GetValueContainers(names);
+            var rval= GetValueContainers(names);
+            return rval;
         }
 
 
@@ -567,6 +561,9 @@ namespace MVVMSidekick.ViewModels
 
 
     }
+
+
+
 
 
     /// <summary>
