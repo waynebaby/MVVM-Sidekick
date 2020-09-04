@@ -454,6 +454,9 @@ namespace CommonCode
 
 
                 var dvsix = XDocument.Load(vsixPath);
+                Console.WriteLine("dvsix");
+
+                Console.WriteLine(dvsix);
                 var ns = dvsix.Root.Name.Namespace;
                 var itemGroup = dvsix.Descendants()
                     .Where(x => x.Name.LocalName == "None" && x.Attributes().Any(a => a.Name.LocalName == "Include" && a.Value.EndsWith(".vsixmanifest")))
@@ -467,6 +470,12 @@ namespace CommonCode
 				  <Link>Packages\Microsoft.Bcl.1.1.9.nupkg</Link>
 				  <IncludeInVSIX>true</IncludeInVSIX>
 				</Content>*/
+                var dmnfst = XDocument.Load(extensionFile);
+                var vsixVersion = dmnfst.Descendants().Where(x => x.Name.LocalName == "Identity").Single().Attributes().Where(x=>x.Name.LocalName== "Version").Single();
+                var vls = vsixVersion.Value.Split('.').Select(x=>int.Parse(x)).ToArray();
+                vls[vls.Length - 1]++;
+                vsixVersion.Value = string.Join(".", vls);
+                dmnfst.Save(extensionFile);
 
                 var pksInVSIX = incs.SelectMany(x => x.Attributes().Where(a => a.Name.LocalName == "Include").Select(a => a.Value))
                     .Select(x => Path.GetFileNameWithoutExtension(x));

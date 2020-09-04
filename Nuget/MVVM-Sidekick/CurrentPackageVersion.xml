@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <versions>
   <version>
-    <id>2.1.250</id>
+    <id>2.1.254</id>
     <releaseNotes>
 		- For Blazor, now we support mapping property with [Parameter],[CascadingParameter] or [ModelMapping] attribute to same named properties in VM automaticly.
 		- You can also use [ModelMapping(Ignore = true)]/[ModelMapping(MapToProperty = nameof(ParameterDemo_Model.DifferentNamedProperty))] upon a page propery to disable / redirect value mapping.

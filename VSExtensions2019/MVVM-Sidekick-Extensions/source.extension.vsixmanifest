@@ -1,41 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-
-<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-    <Metadata>
-        <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="16.70" Language="en-US" Publisher="Wayne Wang in MSFT" />
-        <DisplayName>MVVM-Sidekick VSIX</DisplayName>
-        <Description xml:space="preserve">MVVM-Sidekick VSIX</Description>
-        <MoreInfo>https://github.com/waynebaby/MVVM-Sidekick/</MoreInfo>
-        <License>license.rtf</License>
-        <Icon>smaller.png</Icon>
-        <PreviewImage>Preview.png</PreviewImage>
-        <Tags>MVVM Win10 XAML WPF Blazor</Tags>
-    </Metadata>
-    <Installation AllUsers="true">
-        <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[11.0,12.0]" />
-        <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.Premium" />
-        <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.Ultimate" />
-        <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.VSWinExpress" />
-        <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.VPDExpress" />
-        <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.VSWinDesktopExpress" />
-        <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.VWDExpress" />
-        <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.IntegratedShell" />
-        <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.VSLS" />
-    </Installation>
-    <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[16.0,17.0)" DisplayName="Visual Studio core editor" />
-    </Prerequisites>
-    <Dependencies>
-        <Dependency d:Source="Installed" Id="NuGet.72c5d240-f742-48d4-a0f1-7016671e405b" DisplayName="NuGet Package Manager for Visual Studio 2019" Version="[16.0.50700.6726,17.0)" />
-    </Dependencies>
-    <Assets>
-
-        <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickViewWithVM" d:TargetPath="|MVVMSidekickViewWithVM;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
-        <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickViewWithVM.WPF" d:TargetPath="|MVVMSidekickViewWithVM.WPF;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
-        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="MVVMSidekickApplication.WPF" d:TargetPath="|MVVMSidekickApplication.WPF;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
-        <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="BlankApplication" d:TargetPath="|BlankApplication;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
-        <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickViewWithVM.Blazor.3.1" d:TargetPath="|MVVMSidekickViewWithVM.Blazor.3.1;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
-
-    </Assets>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="16.252" Language="en-US" Publisher="Wayne Wang in MSFT" />
+    <DisplayName>MVVM-Sidekick VSIX</DisplayName>
+    <Description xml:space="preserve">MVVM-Sidekick VSIX</Description>
+    <MoreInfo>https://github.com/waynebaby/MVVM-Sidekick/</MoreInfo>
+    <License>license.rtf</License>
+    <Icon>smaller.png</Icon>
+    <PreviewImage>Preview.png</PreviewImage>
+    <Tags>MVVM Win10 XAML WPF Blazor</Tags>
+  </Metadata>
+  <Installation AllUsers="true">
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[11.0,12.0]" />
+    <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.Premium" />
+    <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.Ultimate" />
+    <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.VSWinExpress" />
+    <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.VPDExpress" />
+    <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.VSWinDesktopExpress" />
+    <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.VWDExpress" />
+    <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.IntegratedShell" />
+    <InstallationTarget Version="[16.7,17.0)" Id="Microsoft.VisualStudio.VSLS" />
+  </Installation>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[16.0,17.0)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+  <Dependencies>
+    <Dependency d:Source="Installed" Id="NuGet.72c5d240-f742-48d4-a0f1-7016671e405b" DisplayName="NuGet Package Manager for Visual Studio 2019" Version="[16.0.50700.6726,17.0)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickViewWithVM" d:TargetPath="|MVVMSidekickViewWithVM;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickViewWithVM.WPF" d:TargetPath="|MVVMSidekickViewWithVM.WPF;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="MVVMSidekickApplication.WPF" d:TargetPath="|MVVMSidekickApplication.WPF;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="BlankApplication" d:TargetPath="|BlankApplication;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="MVVMSidekickViewWithVM.Blazor.3.1" d:TargetPath="|MVVMSidekickViewWithVM.Blazor.3.1;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+  </Assets>
 </PackageManifest>
