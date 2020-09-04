@@ -120,11 +120,12 @@ namespace MVVMSidekick.Views
             await ViewModel?.OnAfterRenderAsync(firstRender);
         }
 
-        public void RequestRender()
+        public void RequestRerender()
         {
-            base.ShouldRender();
+            base.StateHasChanged();
         }
 
+       
 
         ////private bool disposedValue;
         //protected virtual void Dispose(bool disposing)

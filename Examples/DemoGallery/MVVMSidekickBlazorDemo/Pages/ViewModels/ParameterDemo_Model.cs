@@ -31,8 +31,10 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
 
 
 
-
-
+        public override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
         public string P1 { get => _P1Locator(this).Value; set => _P1Locator(this).SetValueAndTryNotify(value); }
         #region Property string P1 Setup        
         protected Property<string> _P1 = new Property<string>(_P1Locator);

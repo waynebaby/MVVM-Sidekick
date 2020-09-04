@@ -26,14 +26,28 @@ namespace MVVMSidekick.ViewModels
         public TView Page { get; set; }
 
 
+
+        public bool? IsFirstRender { get => _IsFirstRenderLocator(this).Value; set => _IsFirstRenderLocator(this).SetValueAndTryNotify(value); }
+        #region Property bool? IsFirstRender Setup        
+        protected Property<bool?> _IsFirstRender = new Property<bool?>(_IsFirstRenderLocator);
+        static Func<BindableBase, ValueContainer<bool?>> _IsFirstRenderLocator = RegisterContainerLocator(nameof(IsFirstRender), m => m.Initialize(nameof(IsFirstRender), ref m._IsFirstRender, ref _IsFirstRenderLocator, default));
+        #endregion
+
+
         public override IStageManager StageManager { get => base.StageManager; set => base.StageManager = value; }
         public IServiceProvider BlazorServiceProvider { get; set; }
         public virtual void OnInitialized() { }
         public virtual Task OnInitializedAsync() => Task.CompletedTask;
         public virtual void OnParametersSet() { }
         public virtual Task OnParametersSetAsync() => Task.CompletedTask;
-        public virtual void OnAfterRender(bool firstRender) { }
-        public virtual Task OnAfterRenderAsync(bool firstRender) => Task.CompletedTask;
+        public virtual void OnAfterRender(bool firstRender)
+        {
+            IsFirstRender = firstRender;
+        }
+        public virtual Task OnAfterRenderAsync(bool firstRender)
+        {
+            IsFirstRender = firstRender; return Task.CompletedTask;
+        }
         public virtual Task SetParametersAsync(ParameterView parameters) => Task.CompletedTask;
 #else
 
