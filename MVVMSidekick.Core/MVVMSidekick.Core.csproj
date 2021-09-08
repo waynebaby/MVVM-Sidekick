@@ -9,6 +9,8 @@
     <AssemblyVersion Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</AssemblyVersion>
     <Version Condition=" '$(VersionSuffix)' == '' ">0.0.1.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</Version>
+    <PackageId>MVVM-Sidekick.Core</PackageId>
+    <Authors>Wayne Wang</Authors>
 
 
 

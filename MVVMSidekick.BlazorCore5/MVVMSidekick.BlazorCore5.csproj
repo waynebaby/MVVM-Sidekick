@@ -29,11 +29,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.8" />
+    <PackageReference Include="MVVMSidekick.Core" Version="1.2107.947.507" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\MVVMSidekick.Core\MVVMSidekick.Core.csproj" />
   </ItemGroup>
 
   <Import Project="..\MVVMSidekick.Shared\MVVMSidekick.Shared.projitems" Label="Shared" />

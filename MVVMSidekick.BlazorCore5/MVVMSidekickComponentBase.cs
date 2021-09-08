@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MVVMSidekick.Common;
 using MVVMSidekick.ViewModels;
+using MVVMSidekick.Reactive;
 using MVVMSidekick.Views;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Reactive.Linq;
 namespace MVVMSidekick.Views
 {
 
@@ -23,7 +24,7 @@ namespace MVVMSidekick.Views
         private static IList<Action<TView, TViewModel>> parameterSetters = typeof(TView).GetProperties()
                 .Select(x =>
                     (Property: x,
-                    Attribute: x.GetCustomAttribute(typeof(ModelMappingAttribute), true) ?? x.GetCustomAttribute(typeof(ParameterAttribute), true)?? x.GetCustomAttribute(typeof(CascadingParameterAttribute), true)))
+                    Attribute: x.GetCustomAttribute(typeof(ModelMappingAttribute), true) ?? x.GetCustomAttribute(typeof(ParameterAttribute), true) ?? x.GetCustomAttribute(typeof(CascadingParameterAttribute), true)))
                 .Where(x => x.Attribute != null)
                 .Select(x => (x.Property, Attribute: (x.Attribute as ModelMappingAttribute)))
                 .Where(x => !(x.Attribute?.Ignore ?? false))
@@ -96,12 +97,17 @@ namespace MVVMSidekick.Views
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            ViewModel?.OnInitialized();
+
             if (ViewModel != null)
             {
-                ViewModel.PropertyChanged += (o, a) => StateHasChanged();
-
+                ViewModel.OnInitialized();
+                //ViewModel.PropertyChanged += (o, a) => StateHasChanged();
+                ViewModel.CreatePropertyChangedObservable()
+                    .Throttle(TimeSpan.FromSeconds(1d / 60))
+                    .Subscribe(_=> StateHasChanged())
+                    .DisposeWith(ViewModel);
             }
+
         }
         protected override async Task OnInitializedAsync()
         {
@@ -119,14 +125,14 @@ namespace MVVMSidekick.Views
             await base.OnAfterRenderAsync(firstRender);
             await ViewModel?.OnAfterRenderAsync(firstRender);
         }
-        
+
 
         public void RequestRerender()
         {
             base.StateHasChanged();
         }
 
-       
+
 
         ////private bool disposedValue;
         //protected virtual void Dispose(bool disposing)

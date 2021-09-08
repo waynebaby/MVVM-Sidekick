@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageId>MVVMSidekick.BlazorCore3</PackageId>
+		<PackageId>MVVM-Sidekick.BlazorCore3</PackageId>
 		<Authors>Waynebaby Wang</Authors>
 		<Product>MVVMSidekick.BlazorCore3</Product>
     <VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.$([System.DateTime]::UtcNow.ToString(yyMM.HHmm.ssff))</VersionSuffix>
@@ -34,11 +34,8 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.1" />
 		<PackageReference Include="Microsoft.NETCore.Platforms" Version="3.1.2" />
+		<PackageReference Include="MVVMSidekick.Core" Version="1.2109.1036.1588" />
 		<PackageReference Include="System.Reactive" Version="4.4.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\MVVMSidekick.Core\MVVMSidekick.Core.csproj" />
 	</ItemGroup>
 
 </Project>
