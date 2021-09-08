@@ -34,7 +34,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.1" />
 		<PackageReference Include="Microsoft.NETCore.Platforms" Version="3.1.2" />
-		<PackageReference Include="MVVMSidekick.Core" Version="1.2109.1036.1588" />
+		<PackageReference Include="MVVM-Sidekick.Core" Version="1.2109.1106.1916" />
 		<PackageReference Include="System.Reactive" Version="4.4.1" />
 	</ItemGroup>
 

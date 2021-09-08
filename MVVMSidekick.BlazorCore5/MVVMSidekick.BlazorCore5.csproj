@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.8" />
-    <PackageReference Include="MVVMSidekick.Core" Version="1.2107.947.507" />
+    <PackageReference Include="MVVM-Sidekick.Core" Version="1.2109.1106.1916" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 
