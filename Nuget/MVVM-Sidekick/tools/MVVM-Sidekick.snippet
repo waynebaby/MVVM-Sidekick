@@ -239,73 +239,7 @@
   </CodeSnippet>
 
 
-  <!--View Model Command With State-->
-  <CodeSnippet Format="1.0.0">
-    <Header>
-      <Title>MVVM-Sidekick Async Command With Generic State</Title>
-      <Shortcut>propcmd4</Shortcut>
-      <Description>Command Model of MVVM </Description>
-      <Author>Wayne Wang</Author>
-      <SnippetTypes>
-        <SnippetType>Expansion</SnippetType>
-      </SnippetTypes>
-    </Header>
-    <Snippet>
-         <Declarations>
-        <Literal>
-          <ID>commandType</ID>
-          <ToolTip>Command Type</ToolTip>
-          <Default>ReactiveCommand</Default>
-        </Literal>
-        <Literal>
-          <ID>commandName</ID>
-          <ToolTip>Command Name</ToolTip>
-          <Default>SomeCommand</Default>
-        </Literal>
-        <Literal>
-          <ID>stateType</ID>
-          <ToolTip>State Type</ToolTip>
-          <Default>String</Default>
-        </Literal>
-      </Declarations>
-      <Code Language="csharp" >
-        <![CDATA[        public CommandModel<$commandType$, $stateType$> Command$commandName$
-        {
-            get { return _Command$commandName$Locator(this).Value; }
-            set { _Command$commandName$Locator(this).SetValueAndTryNotify(value); }
-        }
-        #region Property CommandModel<$commandType$, $stateType$> Command$commandName$ Setup               
-        protected Property<CommandModel<$commandType$, $stateType$>> _Command$commandName$ = new Property<CommandModel<$commandType$, $stateType$>>(_Command$commandName$Locator);
-        static Func<BindableBase,ValueContainer<CommandModel<$commandType$, $stateType$>>> _Command$commandName$Locator= RegisterContainerLocator("Command$commandName$", m =>m.Initialize("Command$commandName$",ref m._Command$commandName$, ref _Command$commandName$Locator,
-            model => 
-            {
-                var state = "Command$commandName$";       
-                var commandId = "Command$commandName$";
-                var vm = CastToCurrentType(model);
-                var cmd = new ReactiveCommand(canExecute: true, commandId: commandId) { ViewModel = model };
-                
-                cmd.DoExecuteUIBusyActionTask(
-                        vm,
-                        async (e,cancelToken) =>
-                        {
-                            //Todo: Add $commandName$ logic here, or
-                            await Task.CompletedTask;
-                        })
-                    .Subscribe()
-                    .DisposeWith(vm);
-                    
-                var cmdmdl = cmd.CreateCommandModel(state);
-                
-                cmdmdl.ListenToIsUIBusy(
-                    model: vm, 
-                    canExecuteWhenBusy: false);
-                return cmdmdl;
-            }));         
-        #endregion
-]]>
-      </Code>
-    </Snippet>
-  </CodeSnippet>
+
 
 <CodeSnippet Format="1.0.0">
     <Header>
@@ -350,10 +284,7 @@
                     .DisposeWith(vm);
                     
                 var cmdmdl = cmd.CreateCommandModel(state);
-                
-                cmdmdl.ListenToIsUIBusy(
-                    model: vm, 
-                    canExecuteWhenBusy: false);
+                cmdmdl.WireExecutableToViewModelIsUIBusy(vm, canExecuteWhenBusy:false,canExecuteWhenUIFree:true);
                 return cmdmdl;
             }));       
         #endregion
@@ -470,9 +401,7 @@
                     
                 var cmdmdl = cmd.CreateCommandModel(state);
                 
-                cmdmdl.ListenToIsUIBusy(
-                    model: vm, 
-                    canExecuteWhenBusy: false);
+                cmdmdl.WireExecutableToViewModelIsUIBusy(vm, canExecuteWhenBusy:false,canExecuteWhenUIFree:true);
                 return cmdmdl;
             }));       
         #endregion
@@ -535,7 +464,7 @@
                   .DisposeWith(vm);
                     
                 var cmdmdl = cmd.CreateCommandModel(state);                 
-             
+                cmdmdl.WireExecutableToViewModelIsUIBusy(vm, canExecuteWhenBusy:false,canExecuteWhenUIFree:true);
                 return cmdmdl;
             }));    
         #endregion

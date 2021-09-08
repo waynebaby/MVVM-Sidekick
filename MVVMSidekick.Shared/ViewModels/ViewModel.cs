@@ -15,7 +15,7 @@ namespace MVVMSidekick.ViewModels
     using Microsoft.Extensions.DependencyInjection;
 
     public class ViewModel<TViewModel, TView> : ViewModelBase<TViewModel>, IViewModelWithPlatformService where TViewModel : ViewModel<TViewModel, TView>
-        where TView : ComponentBase
+        where TView : MVVMSidekickComponentBase<TView, TViewModel>
     {
 
         public ViewModel(IServiceProvider serviceProvider)
@@ -26,8 +26,10 @@ namespace MVVMSidekick.ViewModels
         public TView Page { get; set; }
 
 
-
-        public bool? IsFirstRender { get => _IsFirstRenderLocator(this).Value; set => _IsFirstRenderLocator(this).SetValueAndTryNotify(value); }
+        /// <summary>
+        /// This property shows 3 status of a blazor page could have been, before render, server prerender or client render. As logic after ""
+        /// </summary>
+        public bool? IsFirstRender { get => _IsFirstRenderLocator(this).Value; protected set => _IsFirstRenderLocator(this).SetValueAndTryNotify(value); }
         #region Property bool? IsFirstRender Setup        
         protected Property<bool?> _IsFirstRender = new Property<bool?>(_IsFirstRenderLocator);
         static Func<BindableBase, ValueContainer<bool?>> _IsFirstRenderLocator = RegisterContainerLocator(nameof(IsFirstRender), m => m.Initialize(nameof(IsFirstRender), ref m._IsFirstRender, ref _IsFirstRenderLocator, default));
@@ -48,6 +50,14 @@ namespace MVVMSidekick.ViewModels
         {
             IsFirstRender = firstRender; return Task.CompletedTask;
         }
+
+        public void RequestRerender()
+        {
+            Page?.RequestRerender();
+        }
+
+
+
         public virtual Task SetParametersAsync(ParameterView parameters) => Task.CompletedTask;
 #else
 

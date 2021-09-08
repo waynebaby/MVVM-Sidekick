@@ -54,6 +54,9 @@ namespace MVVMSidekick.ViewModels
         void OnAfterRender(bool firstRender);
         Task OnAfterRenderAsync(bool firstRender);
         Task SetParametersAsync(ParameterView parameters);
+        void RequestRerender();
+        
+        bool? IsFirstRender { get; }
 #endif
 
 

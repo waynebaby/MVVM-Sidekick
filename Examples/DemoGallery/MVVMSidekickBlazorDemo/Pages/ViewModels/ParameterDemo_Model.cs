@@ -30,7 +30,10 @@ namespace MVVMSidekickBlazorDemo.Pages.ViewModels
         }
 
 
-
+        public override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+        }
         public override void OnInitialized()
         {
             base.OnInitialized();

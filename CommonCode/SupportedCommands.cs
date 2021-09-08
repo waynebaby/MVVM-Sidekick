@@ -79,8 +79,7 @@ namespace CommonCode
                 }
                 else if (f1.EndsWith(".csproj"))
                 {
-                   
-                    if (f1.Contains("Blazor"))
+                   if (f1.Contains("Blazor.3"))
                     {
                         framework = "netstandard2.0";
 
@@ -93,8 +92,8 @@ namespace CommonCode
                         foreach (var item in deps)
                         {
                             elementFrag.Add(new XElement("package",
-                                new XAttribute("version", item.Attributes().Where(x=>x.Name.LocalName=="Version").Single().Value),
-                                new XAttribute("id", item.Attributes().Where(x=>x.Name.LocalName== "Include").Single().Value)
+                                new XAttribute("version", item.Attributes().Where(x => x.Name.LocalName == "Version").Single().Value),
+                                new XAttribute("id", item.Attributes().Where(x => x.Name.LocalName == "Include").Single().Value)
                                 ));
                             //Console.WriteLine(item.Name );
                         }
@@ -377,7 +376,7 @@ namespace CommonCode
                         .First();
 
                   var vlist = mainValue.Value.Split('.').Select(x => int.Parse(x)).ToArray();
-                  vlist[vlist.Length-1] = vlist[vlist.Length - 1] +1;
+                  vlist[vlist.Length - 1] = vlist[vlist.Length - 1] + 1;
 
                   ver.Value = string.Join(".", vlist.Select(x => x.ToString()));
                   mainValue.Value = ver.Value;
@@ -386,7 +385,7 @@ namespace CommonCode
 
                   if (mainValue.Attribute(XName.Get("prerelease"))?.Value == "true")
                   {
-                      ver.Value = ver.Value+"-prerelease";
+                      ver.Value = ver.Value + "-prerelease";
 
 
                   }
@@ -439,7 +438,7 @@ namespace CommonCode
                       .Where(x => x.Name.LocalName == "id" && x.Parent.Name.LocalName == "version")
                       .First();
 
-               
+
 
 
                 var templateRootDir = args[1];
@@ -471,8 +470,8 @@ namespace CommonCode
 				  <IncludeInVSIX>true</IncludeInVSIX>
 				</Content>*/
                 var dmnfst = XDocument.Load(extensionFile);
-                var vsixVersion = dmnfst.Descendants().Where(x => x.Name.LocalName == "Identity").Single().Attributes().Where(x=>x.Name.LocalName== "Version").Single();
-                var vls = vsixVersion.Value.Split('.').Select(x=>int.Parse(x)).ToArray();
+                var vsixVersion = dmnfst.Descendants().Where(x => x.Name.LocalName == "Identity").Single().Attributes().Where(x => x.Name.LocalName == "Version").Single();
+                var vls = vsixVersion.Value.Split('.').Select(x => int.Parse(x)).ToArray();
                 vls[vls.Length - 1]++;
                 vsixVersion.Value = string.Join(".", vls);
                 dmnfst.Save(extensionFile);
@@ -495,18 +494,28 @@ namespace CommonCode
                     var nodes =
                         docp.doc
                                 .Descendants()
-                                .Where(x=>x.Name.LocalName == "packages")
+                                .Where(x => x.Name.LocalName == "packages")
                               .ToLookup(
                                     x => x.Attributes().Any(a => a.Name.LocalName == "repository" && a.Value == "extension")
                                         && x.Attributes().Any(a => a.Name.LocalName == "repositoryId" && a.Value.Contains("MVVM") && a.Value.Contains("Sidekick"))
                                         );
                     foreach (var node in nodes[false])
                     {
+            
                         node.RemoveNodes();
                         var prereleaseString = mainValue.Attribute(XName.Get("prerelease"))?.Value == "true" ? "-prerelease" : "";
-                        var e = XElement.Parse($@"<package id=""MVVM-Sidekick"" version=""{mainValue.Value}{prereleaseString}"" />");
-                        e.Name = XName.Get("package", node.Name.NamespaceName);
-                        node.Add(e);
+                        if (docp.path.Contains("Blazor.5"))
+                        {
+                            var e = XElement.Parse($@"<package id=""MVVM-Sidekick.BlazorCore5"" version=""0.2107.945.3963"" />");
+                            e.Name = XName.Get("package", node.Name.NamespaceName);
+                            node.Add(e);
+                        }
+                        else {
+                            var e = XElement.Parse($@"<package id=""MVVM-Sidekick"" version=""{mainValue.Value}{prereleaseString}"" />");
+                            e.Name = XName.Get("package", node.Name.NamespaceName);
+                            node.Add(e);
+                        }
+                       
                     }
 
 

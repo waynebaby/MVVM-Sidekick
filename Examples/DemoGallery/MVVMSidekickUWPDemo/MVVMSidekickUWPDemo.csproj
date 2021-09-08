@@ -187,7 +187,7 @@
       <Version>6.2.10</Version>
     </PackageReference>
     <PackageReference Include="MVVM-Sidekick">
-      <Version>2.1.214</Version>
+      <Version>2.1.246</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -2,7 +2,18 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-	</PropertyGroup>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>MVVMSidekick.BlazorCore3</PackageId>
+		<Authors>Waynebaby Wang</Authors>
+		<Product>MVVMSidekick.BlazorCore3</Product>
+    <VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.$([System.DateTime]::UtcNow.ToString(yyMM.HHmm.ssff))</VersionSuffix>
+    <VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' != '' ">0.$([System.DateTime]::UtcNow.ToString(yyMM.HHmm.ssff))</VersionSuffix>
+    <AssemblyVersion Condition=" '$(VersionSuffix)' == '' ">0.0.0.1</AssemblyVersion>
+    <AssemblyVersion Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</AssemblyVersion>
+    <Version Condition=" '$(VersionSuffix)' == '' ">0.0.1.0</Version>
+    <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</Version>
+
+  </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<DefineConstants>TRACE;BLAZOR</DefineConstants>
@@ -15,7 +26,7 @@
 	</PropertyGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="cd $(ProjectDir)..&#xD;&#xA;&#xD;&#xA;xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y&#xD;&#xA;xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\netstandard2.0 /s  /i /y&#xD;&#xA;&#xD;&#xA;cd $(ProjectDir)&#xD;&#xA;&#xD;&#xA;..\CommonCode\CommonCode DPGRP   &quot;$(ProjectPath)&quot;  ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec&#xD;&#xA;" />
+		<Exec Command="rem cd $(ProjectDir)..&#xD;&#xA;&#xD;&#xA;rem xcopy $(TargetDir)$(SolutionName)*.* Bin /s  /i /y&#xD;&#xA;rem xcopy $(TargetDir)$(SolutionName)*.* Nuget\MVVM-Sidekick\lib\netstandard2.0 /s  /i /y&#xD;&#xA;&#xD;&#xA;rem cd $(ProjectDir)&#xD;&#xA;&#xD;&#xA;rem ..\CommonCode\CommonCode DPGRP   &quot;$(ProjectPath)&quot;  ..\Nuget\MVVM-Sidekick\MVVM-Sidekick.nuspec&#xD;&#xA;" />
 	</Target>
 
 	<Import Project="..\MVVMSidekick.Shared\MVVMSidekick.Shared.projitems" Label="Shared" />
