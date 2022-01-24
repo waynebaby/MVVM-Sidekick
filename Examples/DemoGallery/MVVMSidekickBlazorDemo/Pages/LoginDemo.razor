@@ -19,50 +19,48 @@
 <p>The correct User Name should be: @M.RightUserName and the correct Password should be:@M.RightPassword</p>
 @switch (M.CurrentLoginState)
 {
-    case LoginDemo_Model.LoginState.Login:
-    case LoginDemo_Model.LoginState.LoginError:
-    case LoginDemo_Model.LoginState.LoginSuccess:
-        <h2>Login</h2>
-        <EditForm Model="M.LoginEntity" OnValidSubmit="M.CommandLoginIn.Execute">
-            <p><InputText @bind-Value="@M.LoginEntity.UserName"></InputText></p>
-            <p><InputText @bind-Value="@M.LoginEntity.Password" type="Password"></InputText></p>
+	case LoginDemo_Model.LoginState.Login:
+	case LoginDemo_Model.LoginState.LoginError:
+	case LoginDemo_Model.LoginState.LoginSuccess:
+		<h2>Login</h2>
+		<EditForm Model="M.LoginEntity" OnValidSubmit="M.CommandLoginIn.Execute">
+		 <p><InputText @bind-Value="@M.LoginEntity.UserName"></InputText></p>
+		 <p><InputText @bind-Value="@M.LoginEntity.Password" type="Password"></InputText></p>
+		 <p>
+		  <button type="submit">Login</button>
+		 </p><DataAnnotationsValidator />
+		 <MVVMSidekickValidator />
+		 <ValidationSummary />
+		</EditForm>
 
-            <p>
-                <button type="submit">Login</button>
+		break;
+	case LoginDemo_Model.LoginState.PasswordRecovery:
+	case LoginDemo_Model.LoginState.PasswordRecoveryError:
+	case LoginDemo_Model.LoginState.PasswordRecoverySuccess:
+		<h2>Recovery</h2>
 
-            </p><DataAnnotationsValidator />
-            <MVVMSidekickValidator />
-            <ValidationSummary />
-        </EditForm>
+		<EditForm Model="M.RecoveryEntity" OnValidSubmit="M.CommandStartRecover.Execute">
+		 <p><InputText @bind-Value="@M.RecoveryEntity.UserPhone"></InputText></p>
+		 <p>
+		  <InputText @bind-Value="@M.RecoveryEntity.SMSCode" type="Password"></InputText>
+		  <button disabled="@(!(M.CountDownOfSMSResend==0))" @onclick="M.CommandRecoverySMS.Execute">@(M.CountDownOfSMSResend==0?"Send SMS":$"Resend in{M.CountDownOfSMSResend } ")</button>
+		 </p>
+		 <p>
+		  <button type="submit">Verify</button>
 
-        break;
-    case LoginDemo_Model.LoginState.PasswordRecovery:
-    case LoginDemo_Model.LoginState.PasswordRecoveryError:
-    case LoginDemo_Model.LoginState.PasswordRecoverySuccess:
-        <h2>Recovery</h2>
+		 </p><DataAnnotationsValidator />
+		 <ValidationSummary />
+		</EditForm>
 
-        <EditForm Model="M.RecoveryEntity" OnValidSubmit="M.CommandStartRecover.Execute">
-            <p><InputText @bind-Value="@M.RecoveryEntity.UserPhone"></InputText></p>
-            <p>
-                <InputText @bind-Value="@M.RecoveryEntity.SMSCode" type="Password"></InputText>
-                <button disabled="@(!(M.CountDownOfSMSResend==0))" @onclick="M.CommandRecoverySMS.Execute">@(M.CountDownOfSMSResend==0?"Send SMS":$"Resend in{M.CountDownOfSMSResend } ")</button>
-            </p>
-            <p>
-                <button type="submit">Verify</button>
+		break;
+	default:
 
-            </p><DataAnnotationsValidator />
-            <ValidationSummary />
-        </EditForm>
-
-        break;
-    default:
-
-        break;
+		break;
 }
 
 <h3 style="color:red">@M.Message</h3>
 @if (M.CurrentLoginState == LoginDemo_Model.LoginState.LoginError)
 {
-    <button @onclick="M.CommandStartRecover.Execute">Reset My Password</button>
+	<button @onclick="M.CommandStartRecover.Execute">Reset My Password</button>
 }
 <button @onclick="M.CommandBackToIndex.Execute">Back to Index</button>
