@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="16.292" Language="en-US" Publisher="Wayne Wang in MSFT" />
+    <Identity Id="MVVMSidekickVSIX..0f0fc305-7a90-4119-8cf3-607efd11548e" Version="16.296" Language="en-US" Publisher="Wayne Wang in MSFT" />
     <DisplayName>MVVM-Sidekick VSIX</DisplayName>
     <Description xml:space="preserve">MVVM-Sidekick VSIX</Description>
     <MoreInfo>https://github.com/waynebaby/MVVM-Sidekick/</MoreInfo>
@@ -11,70 +11,67 @@
     <Tags>MVVM Win10 XAML WPF Blazor</Tags>
   </Metadata>
   <Installation AllUsers="true">
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 18.0)">
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[16.0,18.0)">
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[17.0,18.0)">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.Premium">
+    <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Premium">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.Ultimate">
+    <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Ultimate">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.VSWinExpress">
+    <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.VSWinExpress">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.VPDExpress">
+    <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.VPDExpress">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.VSWinDesktopExpress">
+    <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.VSWinDesktopExpress">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.VWDExpress">
+    <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.VWDExpress">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.IntegratedShell">
+    <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.IntegratedShell">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.VSLS">
+    <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.VSLS">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.Enterprise">
+    <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Enterprise">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 18.0)">
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[16.0,17.0)">
       <ProductArchitecture>x86</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[16.0,18.0)">
+    <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.Premium">
       <ProductArchitecture>x86</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.Premium">
+    <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.Ultimate">
       <ProductArchitecture>x86</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.Ultimate">
+    <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.VSWinExpress">
       <ProductArchitecture>x86</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.VSWinExpress">
+    <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.VPDExpress">
       <ProductArchitecture>x86</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.VPDExpress">
+    <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.VSWinDesktopExpress">
       <ProductArchitecture>x86</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.VSWinDesktopExpress">
+    <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.VWDExpress">
       <ProductArchitecture>x86</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.VWDExpress">
+    <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.IntegratedShell">
       <ProductArchitecture>x86</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.IntegratedShell">
+    <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.VSLS">
       <ProductArchitecture>x86</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.VSLS">
-      <ProductArchitecture>x86</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.Enterprise">
+    <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.Enterprise">
       <ProductArchitecture>x86</ProductArchitecture>
     </InstallationTarget>
   </Installation>
