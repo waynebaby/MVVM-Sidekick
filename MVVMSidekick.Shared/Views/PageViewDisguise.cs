@@ -28,6 +28,8 @@ using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 #endif
 
+
+
 namespace MVVMSidekick.Views
 {
     public class PageViewDisguise : ViewDisguiseBase<Page, PageViewDisguise>, IPageView
@@ -48,7 +50,7 @@ namespace MVVMSidekick.Views
             get { return base.AssocatedObject.Content; }
             set
             {
-#if WINDOWS_UWP
+#if WINDOWS_UWP || WinUI3
                 AssocatedObject.Content = value as UIElement;
 #elif WPF
                 AssocatedObject.Content = value;
@@ -82,7 +84,7 @@ namespace MVVMSidekick.Views
         /// </summary>
         public static readonly DependencyProperty FrameProperty =
             DependencyProperty.Register(nameof(FrameObject), typeof(object), typeof(PageViewDisguise), new PropertyMetadata(null));
-#elif WINDOWS_UWP
+#elif WINDOWS_UWP || WinUI3
         public override object Parent
         {
             get

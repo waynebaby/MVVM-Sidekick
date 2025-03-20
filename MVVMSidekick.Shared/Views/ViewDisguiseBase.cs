@@ -18,7 +18,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media;
-
+#elif WinUI3
+using Microsoft.UI.Xaml;
+using Microsoft.Xaml.Interactivity;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Controls;
 
 #elif WPF
 using System.Windows.Controls;

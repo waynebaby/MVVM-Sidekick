@@ -11,30 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using Microsoft.Extensions.DependencyInjection;
-using MVVMSidekick.ViewModels;
-using System;
-using System.Collections.Generic;
-
-
 #if !BLAZOR
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
-
-#elif WPF
-using System.Windows.Controls;
-using System.Windows.Media;
-
-using System.Collections.Concurrent;
-using System.Windows.Navigation;
-using System.Windows;
-using MVVMSidekick.Views;
-using System.Windows.Controls.Primitives;
-using MVVMSidekick.Utilities;
-
-#endif
 
 
 
@@ -101,7 +79,7 @@ namespace MVVMSidekick
 
                 var f = view as FrameworkElement;
                 object rval = null;
-#if WINDOWS_UWP
+#if WINDOWS_UWP ||WinUI3
                 if (!f?.Resources.ContainsKey(DefaultVMName) ?? false)
 #elif WPF
 				if (!f?.Resources.Contains(DefaultVMName)??false)

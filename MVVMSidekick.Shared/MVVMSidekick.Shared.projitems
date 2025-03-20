@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DependencyInjection\MVVMSidekicStartupExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Patterns\Patterns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Testing\Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Usings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Bindable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BindableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IViewModelWithPlatformService.cs" />
@@ -37,5 +38,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewModelToViewMapperHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewModelToViewMapperServiceLocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\WindowViewDisguise.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Directory.Build.props" />
   </ItemGroup>
 </Project>

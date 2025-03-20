@@ -377,70 +377,6 @@ namespace MVVMSidekick.ViewModels
             return x;
         }
 
-        /// <summary>
-        /// Copyrefs the specified source.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="source">The source.</param>
-        /// <param name="target">The target.</param>
-        static void Copyref<T>(T source, ref T target)
-        {
-
-
-            if (source == null)
-            {
-                target = source;
-                return;
-            }
-
-            var sourcetype = source.GetType().GetTypeInfo();
-            if (sourcetype.IsValueType || source is string)
-            {
-                target = source;
-            }
-
-
-            else if (typeof(ICloneable).IsAssignableFrom(sourcetype))
-            {
-                target = (T)((ICloneable)source).Clone();
-            }
-
-            else if (typeof(System.Collections.IList).GetType().GetTypeInfo().IsAssignableFrom(sourcetype))
-            {
-                var tarcol = target as System.Collections.IList;
-                var scol = source as System.Collections.IList;
-                if (tarcol == null)
-                {
-
-                    var newcol = sourcetype.IsArray ?
-                        Array.CreateInstance(sourcetype.GetElementType(), scol.Count) :
-                        System.Activator.CreateInstance(source.GetType(), new object[0]) as System.Collections.IList;
-
-
-                    tarcol = (System.Collections.IList)newcol;
-                }
-                else
-                {
-                    tarcol.Clear();
-                }
-                if (tarcol != null)
-                {
-
-
-                    foreach (var item in scol)
-                    {
-                        object newv = null;
-                        Copyref(item, ref newv);
-                        tarcol.Add(newv);
-                    }
-                    target = (T)tarcol;
-                }
-                else
-                {
-                    target = default(T);
-                }
-            }
-        }
 
         /// <summary>
         /// Copies to.
@@ -452,12 +388,7 @@ namespace MVVMSidekick.ViewModels
             {
                 var ctThis = GetValueContainer(item);
                 var ctTarget = target.GetValueContainer(item);
-                if (ctThis.IsCopyToAllowed)
-                {
-                    object temp = null;
-                    Copyref(this[item], ref temp);
-                    target[item] = temp;
-                }
+
 
 
             }

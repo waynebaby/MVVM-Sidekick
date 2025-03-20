@@ -113,7 +113,7 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 #endif
     }
-#if WINDOWS_UWP
+#if WINDOWS_UWP || WinUI3
     public interface IViewContentConfigurator
     {
         void Config(object viewContent);

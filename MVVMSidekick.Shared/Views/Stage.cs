@@ -1,47 +1,5 @@
 ﻿#if !BLAZOR
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using MVVMSidekick.ViewModels;
-using System.Reactive.Linq;
-using Microsoft.Extensions.DependencyInjection;
-using System.Runtime.CompilerServices;
 
-
-
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Windows.Foundation;
-
-
-#elif WPF
-using System.Windows;
-
-using System.Windows.Controls;
-using System.Windows.Media;
-
-using System.Collections.Concurrent;
-using System.Windows.Navigation;
-
-using MVVMSidekick.Views;
-using System.Windows.Controls.Primitives;
-using MVVMSidekick.Utilities;
-#elif SILVERLIGHT_5 || SILVERLIGHT_4
-using System.Windows.Media;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Navigation;
-using System.Windows.Controls.Primitives;
-#elif WINDOWS_PHONE_8 || WINDOWS_PHONE_7
-using System.Windows.Media;
-using System.Windows.Controls;
-using Microsoft.Phone.Controls;
-using System.Windows.Data;
-using System.Windows.Navigation;
-using System.Windows.Controls.Primitives;
-#endif
 
 
 
@@ -137,7 +95,7 @@ namespace MVVMSidekick.Views
             }
 
         }
-#elif WINDOWS_UWP
+#elif WINDOWS_UWP || WinUI3
 
         /// <summary>
         /// Is go forward supported
@@ -267,7 +225,7 @@ Please check startup function of this mapping is well configured and be proper c
 
         }
 
-#if WINDOWS_UWP
+#if WINDOWS_UWP || WinUI3
 
 
 
@@ -325,7 +283,7 @@ Please check startup function of this mapping is well configured and be proper c
 
         }
 
-        private static async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, string mappingKey, Type viewType, Windows.UI.Xaml.Controls.Frame frame, IServiceProvider serviceProvider) where TTarget : class, IViewModel
+        private static async Task<TTarget> FrameNavigate<TTarget>(TTarget targetViewModel, string mappingKey, Type viewType,   Frame frame, IServiceProvider serviceProvider) where TTarget : class, IViewModel
         {
             StageNavigationContext<TTarget> parameter = new StageNavigationContext<TTarget>() { ViewModel = targetViewModel };
             TaskCompletionSource<object> t = new TaskCompletionSource<object>();
@@ -513,7 +471,7 @@ Please check startup function of this mapping is well configured and be proper c
                     IDisposable closeFromViewModel = null;
                     closeFromViewModel = Observable
                         .FromAsync(x => viewModel.WaitForClose())
-                        .ObserveOnDispatcher()
+                        
                         .Subscribe(_ =>
                             {
                                 viewModel.IsDisposingWhenUnloadRequired = true;

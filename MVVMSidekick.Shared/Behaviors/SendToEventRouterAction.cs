@@ -1,27 +1,11 @@
-﻿using System;
+﻿
 #if !BLAZOR
-#if WPF
-
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using Microsoft.Xaml.Behaviors;
-
-#elif WINDOWS_UWP
-using Windows.UI.Xaml;
-using System.Reflection;
-#endif
-using MVVMSidekick.EventRouting;
-using MVVMSidekick.Utilities;
 
 
 namespace MVVMSidekick.Behaviors
 {
 
-#if WINDOWS_UWP
+#if WINDOWS_UWP ||WinUI3
 	public class SendToEventRouterAction : DependencyObject, Microsoft.Xaml.Interactivity.IAction
 #elif WPF
     public class SendToEventRouterAction : TriggerAction<DependencyObject>
@@ -137,7 +121,7 @@ namespace MVVMSidekick.Behaviors
 
 
 
-#if WINDOWS_UWP
+#if WINDOWS_UWP ||WinUI3
 		public object Execute(object sender, object parameter)
 		{
 			var et = EventDataType;

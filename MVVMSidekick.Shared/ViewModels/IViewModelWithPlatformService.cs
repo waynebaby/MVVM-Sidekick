@@ -5,9 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-#if WINDOWS_UWP
-using Windows.UI.Xaml.Navigation;
-#endif
+ 
 
 namespace MVVMSidekick.ViewModels
 {
@@ -20,11 +18,11 @@ namespace MVVMSidekick.ViewModels
 #endif
     public interface IViewModelWithPlatformService : IViewModel
     {
-#if WINDOWS_UWP
+#if WINDOWS_UWP || WinUI3
 
-        void OnPageNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e);
-        void OnPageNavigatedFrom(Windows.UI.Xaml.Navigation.NavigationEventArgs e);
-        void OnPageNavigatingFrom(Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e);
+        void OnPageNavigatedTo(NavigationEventArgs e);
+        void OnPageNavigatedFrom(NavigationEventArgs e);
+        void OnPageNavigatingFrom(NavigatingCancelEventArgs e);
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
         /// provided when recreating a page from a prior session.

@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>2.1.315</version>
+    <version>2.1.319</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
     <projectUrl>https://github.com/waynebaby/MVVM-Sidekick</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <repository type="git" url="https://github.com/waynebaby/MVVM-Sidekick" branch="master" commit="7c702c90ec467ad8dd7109adca5c1ebb31a9c1f7" />
+    <repository type="git" url="https://github.com/waynebaby/MVVM-Sidekick" branch="master" commit="677e4fb475596966663fc1e5bc806e36ed6f8cc1" />
     <description>
       MVVM-Sidekick https://github.com/waynebaby/MVVM-Sidekick/
       =============
@@ -39,7 +39,7 @@
 
     </summary>
     <releaseNotes>
-	2.1.315
+	2.1.319
 		
 		- For Blazor, now we support mapping property with [Parameter],[CascadingParameter] or [ModelMapping] attribute to same named properties in VM automaticly.
 		- You can also use [ModelMapping(Ignore = true)]/[ModelMapping(MapToProperty = nameof(ParameterDemo_Model.DifferentNamedProperty))] upon a page propery to disable / redirect value mapping.
@@ -85,31 +85,30 @@
     <tags>Rx Reactive Extensions MVVM UWP UAP Win8 Win10 APP IoT  Metro Modern UI</tags>
     <dependencies>
       <group targetFramework="uap10.0">
-        <dependency version="[3.1.7,100.0)" id="Microsoft.Extensions.DependencyInjection" />
-        <dependency version="[3.1.2,100.0)" id="Microsoft.NETCore.Platforms" />
-        <dependency version="[6.2.10,100.0)" id="Microsoft.NETCore.UniversalWindowsPlatform" />
-        <dependency version="[2.0.1,100.0)" id="Microsoft.Xaml.Behaviors.Uwp.Managed" />
+        <dependency version="[9.0.3,100.0)" id="Microsoft.Extensions.DependencyInjection" />
+        <dependency version="[7.0.4,100.0)" id="Microsoft.NETCore.Platforms" />
+        <dependency version="[6.2.14,100.0)" id="Microsoft.NETCore.UniversalWindowsPlatform" />
+        <dependency version="[3.0.0,100.0)" id="Microsoft.Xaml.Behaviors.Uwp.Managed" />
         <dependency version="[2.0.3,100.0)" id="NETStandard.Library" />
-        <dependency version="[4.4.1,100.0)" id="System.Reactive" />
-        <dependency version="[4.4.1,100.0)" id="System.Reactive.PlatformServices" />
-        <dependency version="[4.4.1,100.0)" id="System.Reactive.Windows.Threading" />
-        <dependency version="[4.5.0,100.0)" id="System.ValueTuple" />
+        <dependency version="[6.0.1,100.0)" id="System.Reactive" />
+        <dependency version="[6.0.1,100.0)" id="System.Reactive.PlatformServices" />
+        <dependency version="[4.6.1,100.0)" id="System.ValueTuple" />
       </group>
       <group targetFramework="net46">
         <dependency id="Expression.Interaction" version="[3.0.40218.0,100.0)" />
-        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="[1.1.1,100.0)" />
-        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[3.1.7,100.0)" />
-        <dependency id="Microsoft.NETCore.Platforms" version="[3.1.2,100.0)" />
-        <dependency id="Microsoft.Xaml.Behaviors.Wpf" version="[1.1.19,100.0)" />
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="[9.0.3,100.0)" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[9.0.3,100.0)" />
+        <dependency id="Microsoft.NETCore.Platforms" version="[7.0.4,100.0)" />
+        <dependency id="Microsoft.Xaml.Behaviors.Wpf" version="[1.1.135,100.0)" />
         <dependency id="NETStandard.Library" version="[2.0.3,100.0)" />
-        <dependency id="System.Reactive" version="[4.4.1,100.0)" />
-        <dependency id="System.Reactive.Interfaces" version="[4.4.1,100.0)" />
-        <dependency id="System.Reactive.Linq" version="[4.4.1,100.0)" />
-        <dependency id="System.Reactive.PlatformServices" version="[4.4.1,100.0)" />
-        <dependency id="System.Reactive.Windows.Threading" version="[4.4.1,100.0)" />
-        <dependency id="System.Runtime.CompilerServices.Unsafe" version="[4.7.1,100.0)" />
-        <dependency id="System.Threading.Tasks.Extensions" version="[4.5.4,100.0)" />
-        <dependency id="System.ValueTuple" version="[4.5.0,100.0)" />
+        <dependency id="System.Reactive" version="[6.0.1,100.0)" />
+        <dependency id="System.Reactive.Interfaces" version="[6.0.1,100.0)" />
+        <dependency id="System.Reactive.Linq" version="[6.0.1,100.0)" />
+        <dependency id="System.Reactive.PlatformServices" version="[6.0.1,100.0)" />
+        <dependency id="System.Reactive.Windows.Threading" version="[6.0.1,100.0)" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="[6.1.1,100.0)" />
+        <dependency id="System.Threading.Tasks.Extensions" version="[4.6.2,100.0)" />
+        <dependency id="System.ValueTuple" version="[4.6.1,100.0)" />
       </group>
       <!--<group targetFramework="netstandard2.0">
         <dependency version="[3.2.1,100.0)" id="Microsoft.AspNetCore.Components.WebAssembly" />

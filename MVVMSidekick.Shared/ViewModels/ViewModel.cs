@@ -66,24 +66,24 @@ namespace MVVMSidekick.ViewModels
 #endif
 
 
-#if WINDOWS_UWP
+#if WINDOWS_UWP || WinUI3
 
         public virtual void LoadState(object navigationParameter, Dictionary<string, object> pageState)
         {
 
         }
 
-        public virtual void OnPageNavigatedFrom(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        public virtual void OnPageNavigatedFrom( NavigationEventArgs e)
         {
 
         }
 
-        public virtual void OnPageNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        public virtual void OnPageNavigatedTo( NavigationEventArgs e)
         {
 
         }
 
-        public virtual void OnPageNavigatingFrom(Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
+        public virtual void OnPageNavigatingFrom( NavigatingCancelEventArgs e)
         {
     
         }

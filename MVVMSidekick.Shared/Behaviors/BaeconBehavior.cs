@@ -1,22 +1,7 @@
-﻿#if !BLAZOR
-#if WPF
-
-using Microsoft.Xaml.Behaviors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
+﻿
+#if !BLAZOR
 
 
-#elif WINDOWS_UWP
-using Microsoft.Xaml.Interactivity;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Controls;
-#endif
 
 namespace MVVMSidekick.Behaviors
 {
@@ -75,8 +60,8 @@ namespace MVVMSidekick.Behaviors
 				return;
 			}
 			DependencyProperty targetProperty = MVVMSidekick.Views.StageManager.BeaconProperty;
-#if WINDOWS_UWP 
-			string path = "BaeconName";
+#if WINDOWS_UWP || WinUI3
+            string path = "BaeconName";
 #elif WPF
             string path = BaeconBehavior.BaeconNameProperty.Name;
 #endif

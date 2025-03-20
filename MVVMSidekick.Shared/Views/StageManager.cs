@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using MVVMSidekick.ViewModels;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
+
+
 #if !BLAZOR
 
 #if WINDOWS_UWP
@@ -12,7 +14,13 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media;
 
-
+#elif WinUI3
+using Microsoft.UI.Xaml;
+using Microsoft.Xaml.Interactivity;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Media;
 #elif WPF
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -212,7 +220,7 @@ namespace MVVMSidekick.Views
         private static Dictionary<string, FrameworkElement> GetOrCreateBeacons(FrameworkElement view)
         {
             Dictionary<string, FrameworkElement> dic;
-#if WINDOWS_UWP
+#if WINDOWS_UWP || WinUI3
             if (!view.Resources.ContainsKey(NavigatorBeaconsKey))
 #elif WPF
             if (!view.Resources.Contains(NavigatorBeaconsKey))
@@ -315,7 +323,7 @@ namespace MVVMSidekick.Views
                 FrameworkElement fr = LocateTargetContainer(CurrentBindingView, ref beaconKey, ViewModel);
                 if (fr != null)
                 {
-                    var stage = ServiceProvider.GetService<IStage>() as  Stage;
+                    var stage = ServiceProvider.GetRequiredService<IStage>() as  Stage;
                     if (stage ==null )
                     {
                         throw new InvalidOperationException("StageManager can only work with Stage. Please check your settings");

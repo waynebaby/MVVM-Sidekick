@@ -1,35 +1,16 @@
 ﻿#if !BLAZOR
-#if WPF
-using MVVMSidekick.EventRouting;
-using MVVMSidekick.ViewModels;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading;
-using System.Windows;
-using Microsoft.Xaml.Behaviors;
-#elif WINDOWS_UWP
 
-using System.Reactive.Linq;
-using System.Linq;
-using System.Threading;
-using Microsoft.Xaml.Interactivity;
-using Windows.UI.Xaml;
-using System;
-using MVVMSidekick.EventRouting;
-using System.Collections.ObjectModel;
-using Windows.UI.Xaml.Data;
-#endif
+
+
 using MVVMSidekick.Common;
 
 namespace MVVMSidekick.Behaviors
 {
 
 
-#if WINDOWS_UWP
+#if WINDOWS_UWP || WinUI3
 
-	public class TypeNameStringToTypeConverter : IValueConverter
+    public class TypeNameStringToTypeConverter : IValueConverter
 	{
 		static TypeNameStringToTypeConverter()
 		{
