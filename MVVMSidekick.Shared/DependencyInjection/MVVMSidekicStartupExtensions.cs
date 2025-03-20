@@ -1,8 +1,9 @@
-﻿#if BLAZOR
-
+﻿
+#if WEBASM
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 #endif
+
 using Microsoft.Extensions.DependencyInjection;
 using MVVMSidekick;
 using MVVMSidekick.Services;
@@ -40,10 +41,17 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
 
-#if BLAZOR
+#if WEBASM
+ 
         public static WebAssemblyHost PushToMVVMSidekickRoot(this WebAssemblyHost host)
         {
             ServiceProviderLocator.RootServiceProvider = host.Services;
+            return host;
+        }
+#elif MAUI_BLAZOR
+        public static MauiApp PushToMVVMSidekickRoot(this MauiApp  host)
+        {
+            ServiceProviderLocator.RootServiceProvider = host.Services ;
             return host;
         }
 #else

@@ -83,6 +83,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMSidekick_WPFNetCore", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMSidekick_WinUI3", "MVVMSidekick_WinUI3\MVVMSidekick_WinUI3.csproj", "{AC88E8A1-8F26-A878-FAEC-773DBEE0D4C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMSidekick_MAUI", "MVVMSidekick_MAUI\MVVMSidekick_MAUI.csproj", "{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -488,6 +490,30 @@ Global
 		{AC88E8A1-8F26-A878-FAEC-773DBEE0D4C5}.Release|x64.Build.0 = Release|Any CPU
 		{AC88E8A1-8F26-A878-FAEC-773DBEE0D4C5}.Release|x86.ActiveCfg = Release|Any CPU
 		{AC88E8A1-8F26-A878-FAEC-773DBEE0D4C5}.Release|x86.Build.0 = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|ARM.Build.0 = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|x64.Build.0 = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Debug|x86.Build.0 = Debug|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|ARM.Build.0 = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|ARM64.Build.0 = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|x64.ActiveCfg = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|x64.Build.0 = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|x86.ActiveCfg = Release|Any CPU
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -521,6 +547,7 @@ Global
 		{F991A900-9B22-48BB-97C6-B2B4D3F5F830} = {E3DDA985-A657-49E8-A203-BFC9B49182AD}
 		{B7589E00-77F0-4654-ABF8-D8133E5C390B} = {C2833223-E4B1-418D-9668-D8DC53213FCA}
 		{AC88E8A1-8F26-A878-FAEC-773DBEE0D4C5} = {C2833223-E4B1-418D-9668-D8DC53213FCA}
+		{67C8C29D-952B-4FB3-AE15-F5132C6ECDFB} = {C2833223-E4B1-418D-9668-D8DC53213FCA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F797AABC-8531-4C0F-A9B1-185EB41AD009}
@@ -528,6 +555,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{04854fcf-4ad8-49cc-aa83-abbf07f278bd}*SharedItemsImports = 4
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{1c481586-9a46-408b-999a-7a35af5776e4}*SharedItemsImports = 5
+		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{67c8c29d-952b-4fb3-ae15-f5132c6ecdfb}*SharedItemsImports = 5
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{713ce5f7-c071-4550-b6b0-7a2fd8e870df}*SharedItemsImports = 13
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{a5b5880a-7085-4edb-92b9-b409cbf582a1}*SharedItemsImports = 4
 		MVVMSidekick.Shared\MVVMSidekick.Shared.projitems*{ac88e8a1-8f26-a878-faec-773dbee0d4c5}*SharedItemsImports = 5

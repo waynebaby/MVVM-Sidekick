@@ -1,11 +1,10 @@
-﻿
+﻿ 
 #if !BLAZOR
-
 
 namespace MVVMSidekick.Behaviors
 {
 
-#if WINDOWS_UWP ||WinUI3
+#if WINDOWS_UWP || WinUI3
 	public class SendToEventRouterAction : DependencyObject, Microsoft.Xaml.Interactivity.IAction
 #elif WPF
     public class SendToEventRouterAction : TriggerAction<DependencyObject>
@@ -121,7 +120,7 @@ namespace MVVMSidekick.Behaviors
 
 
 
-#if WINDOWS_UWP ||WinUI3
+#if WINDOWS_UWP || WinUI3
 		public object Execute(object sender, object parameter)
 		{
 			var et = EventDataType;
