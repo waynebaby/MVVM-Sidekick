@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿#if BLAZOR
+
+using Microsoft.AspNetCore.Components;
 using MVVMSidekick.Common;
 using MVVMSidekick.ViewModels;
 using MVVMSidekick.Reactive;
@@ -6,6 +8,7 @@ using MVVMSidekick.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -33,7 +36,7 @@ namespace MVVMSidekick.Views
                 //.Where(x => x.TargetProperty.PropertyType.IsAssignableFrom(x.SourceProperty.PropertyType))
                 .Select(x =>
                 {
-                    var expPS = System.Linq.Expressions.Expression.Parameter(x.SourceProperty.DeclaringType);
+                    var expPS = System.Linq.Expressions.  Expression.Parameter(x.SourceProperty.DeclaringType);
                     var expPSMA = System.Linq.Expressions.Expression.MakeMemberAccess(expPS, x.SourceProperty);
                     var expPT = System.Linq.Expressions.Expression.Parameter(x.TargetProperty.DeclaringType);
                     var expPTMA = System.Linq.Expressions.Expression.MakeMemberAccess(expPT, x.TargetProperty);
@@ -53,13 +56,13 @@ namespace MVVMSidekick.Views
         }
 
         [Inject]
-        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden)]
-        public TViewModel ViewModel { get; set; }
+        [DefaultValue(null)]
+        public TViewModel ViewModel { get => viewModel; set => viewModel = value; }
 
         /// <summary>
         /// Shortcut for ViewModel
         /// </summary>
-        protected TViewModel M { get => ViewModel; }
+        protected TViewModel M { get => viewModel; }
 
         public IList<DisposeEntry> DisposeInfoList => throw new NotImplementedException();
 
@@ -105,7 +108,7 @@ namespace MVVMSidekick.Views
                 //ViewModel.PropertyChanged += (o, a) => StateHasChanged();
                 ViewModel.CreatePropertyChangedObservable()
                     .Throttle(TimeSpan.FromSeconds(1d / 60))
-                    .Subscribe(_=> StateHasChanged())
+                    .Subscribe(async _=> await InvokeAsync(()=> StateHasChanged()))
                     .DisposeWith(ViewModel);
             }
 
@@ -178,3 +181,4 @@ namespace MVVMSidekick.Views
         private TViewModel viewModel;
     }
 }
+#endif

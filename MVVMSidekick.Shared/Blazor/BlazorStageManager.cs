@@ -1,4 +1,4 @@
-﻿
+﻿#if BLAZOR
 namespace MVVMSidekick.Views
 {
     using Microsoft.AspNetCore.Components;
@@ -29,3 +29,5 @@ namespace MVVMSidekick.Views
         }
     }
 }
+
+#endif

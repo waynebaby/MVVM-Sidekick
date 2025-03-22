@@ -1,4 +1,4 @@
-﻿
+﻿#if BLAZOR
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.DependencyInjection;
@@ -66,3 +66,4 @@ namespace MVVMSidekick.Views
         }
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if BLAZOR
+using System;
 using System.Linq.Expressions;
 
 namespace MVVMSidekick.Views
@@ -11,3 +12,5 @@ namespace MVVMSidekick.Views
 
     }
 }
+
+#endif

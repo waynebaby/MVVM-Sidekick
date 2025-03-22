@@ -21,7 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddMVVMSidekick<TViewModelRegistry>(this IServiceCollection services, TViewModelRegistry instance,
         Action<MVVMSidekickOptions> optionalConfiguration = null)
-            where TViewModelRegistry : MVVMSidekickStartupBase, new()
+            where TViewModelRegistry : MVVMSidekickStartupBase 
         {
             var opt = new MVVMSidekickOptions(services);
 #if BLAZOR

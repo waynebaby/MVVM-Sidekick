@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿#if BLAZOR
+
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MVVMSidekick.ViewModels;
 using System;
@@ -59,3 +61,4 @@ namespace Microsoft.AspNetCore.Components
 
     }
 }
+#endif

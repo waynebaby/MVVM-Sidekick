@@ -12,6 +12,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BaeconBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListenToEventRouterTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\SendToEventRouterAction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Blazor\BlazorStage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Blazor\BlazorStageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Blazor\ModelMappingAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Blazor\MVVMSidekickComponentBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Blazor\MVVMSidekickValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DependencyInjection\MVVMSidekickOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DependencyInjection\MVVMSidekickStartupBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DependencyInjection\MVVMSidekicStartupExtensions.cs" />

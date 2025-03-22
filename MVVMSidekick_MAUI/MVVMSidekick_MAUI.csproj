@@ -16,6 +16,19 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageId>MVVM-Sidekick.MAUIBlazor</PackageId>
+		<Authors>Waynebaby Wang</Authors>
+		<Company>Waynebaby Wang</Company>
+		<Product>MVVM-Sidekick.MAUIBlazor</Product>
+		<IncludeSymbols>True</IncludeSymbols>
+		<EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
+		<VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.$([System.DateTime]::UtcNow.ToString(yyMM.HHmm.ssff))</VersionSuffix>
+		<VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' != '' ">0.$([System.DateTime]::UtcNow.ToString(yyMM.HHmm.ssff))</VersionSuffix>
+		<AssemblyVersion Condition=" '$(VersionSuffix)' == '' ">0.0.0.1</AssemblyVersion>
+		<AssemblyVersion Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</AssemblyVersion>
+		<Version Condition=" '$(VersionSuffix)' == '' ">0.0.1.0</Version>
+		<Version Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|AnyCPU'">
