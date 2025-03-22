@@ -2,7 +2,7 @@
 <VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
     <Name>MVVM-Sidekick Blazor Component 5.x +</Name>
-    <Description>MVVM-Sidekick Blazor Component (net 5)</Description>
+    <Description>MVVM-Sidekick Blazor Component  </Description>
     <Icon Package="{AAB75614-2F8F-4DA6-B0A6-763C6DBB2969}" ID="13" />
     <TemplateGroupID>AspNetCore</TemplateGroupID>
     <TemplateID>a6ae1d10-8695-4f74-9053-b63d866b583c_Blazor</TemplateID>
@@ -29,6 +29,7 @@
   <WizardData>
     <packages>
       <package id="MVVM-Sidekick.BlazorCore5" version="0.2107.945.3963" />
+      <package id="MVVM-Sidekick" version="2.1.339" />
     </packages>
   </WizardData>
 </VSTemplate>

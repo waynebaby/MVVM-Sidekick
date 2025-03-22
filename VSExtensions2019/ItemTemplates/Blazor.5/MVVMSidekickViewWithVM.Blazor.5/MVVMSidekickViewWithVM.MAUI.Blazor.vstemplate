@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-    <Name>MVVM-Sidekick Blazor Component 5.x +</Name>
-    <Description>MVVM-Sidekick Blazor Component (net 5)</Description>
+    <Name>MVVM-Sidekick Blazor Component for MAUI</Name>
+    <Description>MVVM-Sidekick MAUI Blazor Component </Description>
     <Icon Package="{AAB75614-2F8F-4DA6-B0A6-763C6DBB2969}" ID="13" />
     <TemplateGroupID>AspNetCore</TemplateGroupID>
     <TemplateID>a6ae1d10-8695-4f74-9053-b63d866b583c_Blazor</TemplateID>
@@ -28,7 +28,7 @@
   </WizardExtension>
   <WizardData>
     <packages>
-      <package id="MVVM-Sidekick.BlazorCore5" version="0.2107.945.3963" />
+      <package id="MVVM-Sidekick.MAUIBlazor" version="0.2503.1052.5174" />
     </packages>
   </WizardData>
 </VSTemplate>

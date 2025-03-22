@@ -28,7 +28,7 @@
   </WizardExtension>
   <WizardData>
     <packages>
-      <package id="MVVM-Sidekick" version="2.1.327" />
+      <package id="MVVM-Sidekick" version="2.1.339" />
     </packages>
   </WizardData>
 </VSTemplate>

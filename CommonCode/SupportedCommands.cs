@@ -504,9 +504,15 @@ namespace CommonCode
             
                         node.RemoveNodes();
                         var prereleaseString = mainValue.Attribute(XName.Get("prerelease"))?.Value == "true" ? "-prerelease" : "";
-                        if (docp.path.Contains("Blazor.5"))
+                        if (docp.path.Contains("Blazor.5.vstemplate"))
                         {
                             var e = XElement.Parse($@"<package id=""MVVM-Sidekick.BlazorCore5"" version=""0.2107.945.3963"" />");
+                            e.Name = XName.Get("package", node.Name.NamespaceName);
+                            node.Add(e);
+                        }
+                        if (docp.path.Contains("MAUI.Blazor.vstemplate"))
+                        {
+                            var e = XElement.Parse($@"<package id=""MVVM-Sidekick.MAUIBlazor"" version=""0.2503.1052.5174"" />");
                             e.Name = XName.Get("package", node.Name.NamespaceName);
                             node.Add(e);
                         }

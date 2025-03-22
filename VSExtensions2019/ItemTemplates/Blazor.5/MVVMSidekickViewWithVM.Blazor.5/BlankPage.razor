@@ -9,10 +9,11 @@
 
 <p>This is the new page "$safeitemname$". You can find View model related to this page in ViewModels folder.</p>
 <p>Current ViewModels Instance Id is "@ViewModel.BindableInstanceId" </p>
-<p>Don't forget configure in the Program.cs </p>
-<p>
-    &nbsp;</p>
+<p>Don't forget configure in the Program.cs or MauiProgram.cs</p>
+
 &nbsp;<p>
+    <h5>
+    Program.cs for Blazor Web Assembly </h5>
 <textarea rows="16" style="width:90%;padding-left:30px;font-size:20px;" cols="20" name="S1">
 using YourProject.Pages.ViewModels;
 ...
@@ -26,6 +27,31 @@ namespace YourProject
             builder.Services.AddMVVMSidekick(new ViewModelRegistry());
             ...
             await builder.Build().PushToMVVMSidekickRoot().RunAsync();
+            
         }
     }
-}</textarea></p>
+}
+
+</textarea></p>
+<p>
+    <h5>
+    MauiProgram.cs for MAUI Blazor App</h5>
+<textarea rows="16" style="width:90%;padding-left:30px;font-size:20px;" cols="20" name="S1">
+using YourProject.Components.Pages.ViewModels;
+...
+namespace YourProject
+{
+    public static class MauiProgram
+    {
+        public static async Task Main(string[] args)
+        {
+            ...        
+            builder.Services.AddMVVMSidekick(new ViewModelRegistry());
+            builder.Build().PushToMVVMSidekickRoot();
+            return builder.Build();
+            
+        }
+    }
+}
+
+</textarea></p>
