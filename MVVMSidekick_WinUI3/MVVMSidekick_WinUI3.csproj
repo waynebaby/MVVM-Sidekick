@@ -5,6 +5,7 @@
     <UseWinUI>true</UseWinUI>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
+    <PackageOutputPath>..\packages</PackageOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);WinUI3</DefineConstants>

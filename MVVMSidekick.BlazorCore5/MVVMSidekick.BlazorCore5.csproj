@@ -15,7 +15,8 @@
     <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</Version>
     <IncludeSymbols>True</IncludeSymbols>
     <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
-
+    <BaseOutputPath>..\packages</BaseOutputPath>
+    <PackageOutputPath>..\packages</PackageOutputPath>
 
 
 

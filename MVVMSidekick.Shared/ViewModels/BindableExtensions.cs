@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace MVVMSidekick.ViewModels
 {
-#if !BLAZOR
+#if !WEBASM
     public static class BindableExtensions
     {
 

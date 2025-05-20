@@ -29,6 +29,7 @@
 		<AssemblyVersion Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</AssemblyVersion>
 		<Version Condition=" '$(VersionSuffix)' == '' ">0.0.1.0</Version>
 		<Version Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</Version>
+		<PackageOutputPath>..\packages</PackageOutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|AnyCPU'">
@@ -66,7 +67,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="9.0.3" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.50" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
 	</ItemGroup>
 
 	<ItemGroup>
