@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>MVVM-Sidekick</id>
-    <version>2.1.342</version>
+    <version>2.1.346</version>
     <title>MVVM Sidekick Light-weight Framework</title>
     <authors>Wayne Wang</authors>
     <owners>Wayne Wang</owners>
@@ -39,7 +39,7 @@
 
     </summary>
     <releaseNotes>
-	2.1.342
+	2.1.346
 		
 		- For Blazor, now we support mapping property with [Parameter],[CascadingParameter] or [ModelMapping] attribute to same named properties in VM automaticly.
 		- You can also use [ModelMapping(Ignore = true)]/[ModelMapping(MapToProperty = nameof(ParameterDemo_Model.DifferentNamedProperty))] upon a page propery to disable / redirect value mapping.

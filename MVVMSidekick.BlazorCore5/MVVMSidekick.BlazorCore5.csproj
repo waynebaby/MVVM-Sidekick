@@ -7,8 +7,8 @@
     <Authors>Waynebaby Wang</Authors>
     <Company>Waynebaby Wang</Company>
     <Product>MVVM-Sidekick.BlazorCore5</Product>
-    <VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.$([System.DateTime]::UtcNow.ToString(yyMM.HHmm.ssff))</VersionSuffix>
-    <VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' != '' ">0.$([System.DateTime]::UtcNow.ToString(yyMM.HHmm.ssff))</VersionSuffix>
+    <VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.$([System.DateTime]::UtcNow.ToString(yyMM.ddHH.mm))</VersionSuffix>
+    <VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' != '' ">0.$([System.DateTime]::UtcNow.ToString(yyMM.ddHH.mm))</VersionSuffix>
     <AssemblyVersion Condition=" '$(VersionSuffix)' == '' ">0.0.0.1</AssemblyVersion>
     <AssemblyVersion Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</AssemblyVersion>
     <Version Condition=" '$(VersionSuffix)' == '' ">0.0.1.0</Version>
