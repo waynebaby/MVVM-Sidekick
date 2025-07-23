@@ -9,7 +9,8 @@ using System.Windows.Input;
 namespace MVVMSidekick.ViewModels
 {
     /// <summary>
-    /// 可绑定的CommandVM 扩展方法集
+    /// <para>Extension methods for bindable Command ViewModels.</para>
+    /// <para>可绑定的CommandVM扩展方法集。</para>
     /// </summary>
     public static class CommandModelExtensions
     {

@@ -50,26 +50,26 @@ namespace MVVMSidekick.Common
         }
 
         /// <summary>
-        /// <para>Comment of this Calling .</para>
-        /// <para>对此次Calling 的附加说明</para>
+        /// <para>Comment of this Calling.</para>
+        /// <para>对此次调用的附加说明。</para>
         /// </summary>
         /// <value>The comment.</value>
         public string Comment { get; private set; }
         /// <summary>
-        /// <para>Caller Member Name of this Calling  registeration.</para>
-        /// <para>此次Calling 注册的来源</para>
+        /// <para>Caller Member Name of this Calling registration.</para>
+        /// <para>此次调用注册的来源。</para>
         /// </summary>
         /// <value>The caller.</value>
         public string Caller { get; private set; }
         /// <summary>
-        /// <para>Code file path of this Calling  registeration.</para>
-        /// <para>注册此次Calling 注册的代码文件</para>
+        /// <para>Code file path of this Calling registration.</para>
+        /// <para>注册此次调用的代码文件。</para>
         /// </summary>
         /// <value>The file.</value>
         public string File { get; private set; }
         /// <summary>
-        /// <para>Code line number of this Calling  registeration.</para>
-        /// <para>注册此次Calling 注册的代码行</para>
+        /// <para>Code line number of this Calling registration.</para>
+        /// <para>注册此次调用的代码行。</para>
         /// </summary>
         /// <value>The line.</value>
         public int Line { get; private set; }

@@ -19,28 +19,34 @@ namespace MVVMSidekick
     namespace Services
     {
         /// <summary>
-        /// Enum CacheType
+        /// <para>Cache type for service registration.</para>
+        /// <para>服务注册的缓存类型。</para>
         /// </summary>
         public enum CacheType
         {
             /// <summary>
-            /// The instance
+            /// <para>Instance cache.</para>
+            /// <para>实例缓存。</para>
             /// </summary>
             Instance,
             /// <summary>
-            /// The factory
+            /// <para>Factory cache.</para>
+            /// <para>工厂缓存。</para>
             /// </summary>
             Factory,
             /// <summary>
-            /// The lazy instance
+            /// <para>Lazy instance cache.</para>
+            /// <para>延迟实例缓存。</para>
             /// </summary>
             LazyInstance,
             /// <summary>
-            /// The asynchronous factory
+            /// <para>Asynchronous factory cache.</para>
+            /// <para>异步工厂缓存。</para>
             /// </summary>
             AsyncFactory,
             /// <summary>
-            /// The asynchronous lazy instance
+            /// <para>Asynchronous lazy instance cache.</para>
+            /// <para>异步延迟实例缓存。</para>
             /// </summary>
             AsyncLazyInstance
         }

@@ -19,9 +19,10 @@ namespace MVVMSidekick.Common
         public CallingCodeContext CallingCodeContext { get; set; }
 
         /// <summary>
-        /// 是否为托管资源，需要在析构器强制检查
+        /// <para>Indicates whether this is a managed resource and needs to be checked in the finalizer.</para>
+        /// <para>是否为托管资源，需要在析构器强制检查。</para>
         /// </summary>
-        /// <value><c>true</c> if this instance is need check on finalizer; otherwise, <c>false</c>.</value>
+        /// <value><c>true</c> if this instance needs check on finalizer; otherwise, <c>false</c>.</value>
         public bool IsNeedCheckOnFinalizer { get; set; }
 
         /// <summary>

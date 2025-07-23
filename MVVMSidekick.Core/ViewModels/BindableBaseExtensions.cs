@@ -7,8 +7,8 @@ using System.Text;
 namespace MVVMSidekick.ViewModels
 {
     /// <summary>
-    /// <para>Extension methods of models</para>
-    /// <para>为Model增加的一些快捷方法</para>
+    /// <para>Extension methods for models.</para>
+    /// <para>为模型扩展的一些方法。</para>
     /// </summary>
     public static class BindableBaseExtensions
     {

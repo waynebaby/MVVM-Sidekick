@@ -8,10 +8,11 @@ using System.Windows.Input;
 namespace MVVMSidekick.ViewModels
 {
     /// <summary>
-    /// 用于封装ICommand的ViewModel。一般包括一个Command实例和对应此实例的一组状态
+    /// <para>ViewModel wrapper for ICommand. Usually contains a Command instance and a set of states for this instance.</para>
+    /// <para>用于封装ICommand的ViewModel。一般包括一个Command实例和对应此实例的一组状态。</para>
     /// </summary>
-    /// <typeparam name="TCommand">ICommand 详细类型</typeparam>
-    /// <typeparam name="TState">配合Command 的状态类型，可以是执行结果或者参数</typeparam>
+    /// <typeparam name="TCommand">ICommand detailed type / ICommand 详细类型</typeparam>
+    /// <typeparam name="TState">State type for the Command / 配合Command的状态类型</typeparam>
     public class CommandModel<TCommand, TState> : BindableBase<CommandModel<TCommand, TState>>, ICommandModel<TCommand, TState>, ICommandWithViewModel
         where TCommand : ICommand
     {
@@ -81,10 +82,10 @@ namespace MVVMSidekick.ViewModels
 
 
         /// <summary>
-        /// State 状态
+        /// <para>Gets or sets the state for the command.</para>
+        /// <para>获取或设置命令的状态。</para>
         /// </summary>
-        /// <value>The resource.</value>
-
+        /// <value>The state.</value>
         public TState State
         {
             get { return _StateLocator(this).Value; }
@@ -176,9 +177,10 @@ namespace MVVMSidekick.ViewModels
     }
 
     /// <summary>
-    /// 用于封装ICommand的ViewModel。一般包括一个Command实例和对应此实例的一组状态
+    /// <para>ViewModel wrapper for ICommand. Usually contains a Command instance and a set of states for this instance.</para>
+    /// <para>用于封装ICommand的ViewModel。一般包括一个Command实例和对应此实例的一组状态。</para>
     /// </summary>
-    /// <typeparam name="TCommand">ICommand 详细类型</typeparam>
+    /// <typeparam name="TCommand">ICommand detailed type / ICommand 详细类型</typeparam>
     public class CommandModel<TCommand> : CommandModel<TCommand, Object> where TCommand : ICommand
     {   /// <summary>
         /// Initializes a new instance of the <see cref="CommandModel{TCommand, TResource}"/> class.
@@ -196,9 +198,10 @@ namespace MVVMSidekick.ViewModels
 
 
     /// <summary>
-    /// 用于封装ReactiveCommand的ViewModel。一般包括一个Command实例和对应此实例的一组状态
+    /// <para>ViewModel wrapper for ReactiveCommand. Usually contains a Command instance and a set of states for this instance.</para>
+    /// <para>用于封装ReactiveCommand的ViewModel。一般包括一个Command实例和对应此实例的一组状态。</para>
     /// </summary>
-    /// <typeparam name="TCommand">ICommand 详细类型</typeparam>
+    /// <typeparam name="TCommand">ICommand detailed type / ICommand 详细类型</typeparam>
     public class CommandModel : CommandModel<ReactiveCommand, Object>
     {   /// <summary>
         /// Initializes a new instance of the <see cref="CommandModel{TCommand, TResource}"/> class.

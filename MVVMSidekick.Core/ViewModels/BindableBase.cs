@@ -17,7 +17,7 @@ namespace MVVMSidekick.ViewModels
 {
     /// <summary>
     /// <para>Model type with detail subtype type parameter.</para>
-    /// <para>具有子类详细类型定义的model </para>
+    /// <para>具有子类详细类型定义的模型。</para>
     /// <example>
     /// public class Class1:BindableBase&lt;Class1&gt;  {}
     /// </example>
@@ -429,20 +429,10 @@ namespace MVVMSidekick.ViewModels
         /// Gets a value indicating whether this instance has errors.
         /// </summary>
         /// <value><c>true</c> if this instance has errors; otherwise, <c>false</c>.</value>
-        //public bool HasErrors
-        //{
-        //    get
-        //    {
-        //        //  return false;
-        //        RefreshErrors();
-        //        return !string.IsNullOrEmpty(this.ErrorMessage);
-
-        //    }
-        //}
-
-
-
-
+        /// <summary>
+        /// <para>Gets or sets a value indicating whether this instance has errors.</para>
+        /// <para>获取或设置一个值，指示此实例是否有错误。</para>
+        /// </summary>
         public bool HasErrors { get => _HasErrorsLocator(this).Value; set => _HasErrorsLocator(this).SetValueAndTryNotify(value); }
         #region Property bool HasErrors Setup        
         protected Property<bool> _HasErrors = new Property<bool>(_HasErrorsLocator);
@@ -499,7 +489,7 @@ namespace MVVMSidekick.ViewModels
 
     /// <summary>
     /// <para>Base type of bindable model.</para>
-    /// <para>ViewModel 基类</para>
+    /// <para>可绑定模型的基类。</para>
     /// </summary>
     [DataContract]
     public abstract class BindableBase
@@ -515,10 +505,18 @@ namespace MVVMSidekick.ViewModels
         {
             base.Dispose(disposing);
         }
+        /// <summary>
+        /// <para>Initializes a new instance of the <see cref="BindableBase"/> class.</para>
+        /// <para>初始化 <see cref="BindableBase"/> 类的新实例。</para>
+        /// </summary>
         public BindableBase()
         {
             ValueContainers = new ValueContainerIndexer(this);
         }
+        /// <summary>
+        /// <para>Gets the value containers for this model.</para>
+        /// <para>获取此模型的值容器。</para>
+        /// </summary>
         public ValueContainerIndexer ValueContainers { get; private set; }
 
         /// <summary>
@@ -526,9 +524,10 @@ namespace MVVMSidekick.ViewModels
         /// </summary>
         protected event EventHandler<DataErrorsChangedEventArgs> _ErrorsChanged;
         /// <summary>
-        /// Raises the errors changed.
+        /// <para>Raises the errors changed event.</para>
+        /// <para>引发错误更改事件。</para>
         /// </summary>
-        /// <param name="propertName">Name of the propert.</param>
+        /// <param name="propertName">Name of the property/属性名</param>
         protected internal void RaiseErrorsChanged(string propertName)
         {
             if (_ErrorsChanged != null)
@@ -746,6 +745,10 @@ namespace MVVMSidekick.ViewModels
         }
 
 
+        /// <summary>
+        /// <para>Gets or sets a value indicating whether this instance is in design mode.</para>
+        /// <para>获取或设置一个值，指示此实例是否处于设计模式。</para>
+        /// </summary>
         public bool IsInDesignMode => (ServiceProviderLocator.RootServiceProvider?.GetService<ITellDesignTimeService>() ?? new InDesignTime())?.IsInDesignMode ?? false;
     }
 }
