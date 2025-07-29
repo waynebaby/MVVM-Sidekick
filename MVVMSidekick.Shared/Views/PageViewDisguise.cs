@@ -32,8 +32,24 @@ using System.Windows.Controls.Primitives;
 
 namespace MVVMSidekick.Views
 {
+    /// <summary>
+    /// <para>页面视图伪装类，为Page控件提供IPageView接口的包装实现</para>
+    /// <para>Page view disguise class that provides IPageView interface wrapper implementation for Page control</para>
+    /// </summary>
+    /// <remarks>
+    /// <para>此类继承自ViewDisguiseBase，为Page控件提供MVVM模式的视图功能，包括页面导航、内容管理和生命周期事件处理</para>
+    /// <para>This class inherits from ViewDisguiseBase and provides MVVM pattern view functionality for Page control, including page navigation, content management, and lifecycle event handling</para>
+    /// </remarks>
     public class PageViewDisguise : ViewDisguiseBase<Page, PageViewDisguise>, IPageView
     {
+        /// <summary>
+        /// <para>初始化PageViewDisguise的新实例</para>
+        /// <para>Initializes a new instance of PageViewDisguise</para>
+        /// </summary>
+        /// <param name="assocatedObject">
+        /// <para>关联的Page对象</para>
+        /// <para>Associated Page object</para>
+        /// </param>
         public PageViewDisguise(Page assocatedObject) : base(assocatedObject)
         {
 #if WPF
@@ -43,8 +59,14 @@ namespace MVVMSidekick.Views
 
         }
 
-
-
+        /// <summary>
+        /// <para>获取或设置视图内容对象，用于管理Page的Content属性</para>
+        /// <para>Gets or sets the view content object for managing Page's Content property</para>
+        /// </summary>
+        /// <value>
+        /// <para>视图内容对象，根据平台类型进行相应转换</para>
+        /// <para>View content object, converted according to platform type</para>
+        /// </value>
         public override object ViewContentObject
         {
             get { return base.AssocatedObject.Content; }

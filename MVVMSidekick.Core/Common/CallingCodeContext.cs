@@ -14,12 +14,13 @@ namespace MVVMSidekick.Common
     {
         /// <summary>
         /// 创建一个当前调用上下文数据
+        /// Creates a current calling context data
         /// </summary>
-        /// <param name="autoFillProperties">if set to <c>true</c> [automatic fill properties].</param>
-        /// <param name="comment">注释</param>
-        /// <param name="caller">调用者</param>
-        /// <param name="file">文件</param>
-        /// <param name="line">行数</param>
+        /// <param name="autoFillProperties">是否自动填充属性 / If set to true, automatically fill properties</param>
+        /// <param name="comment">注释 / Comment</param>
+        /// <param name="caller">调用者 / Caller member name</param>
+        /// <param name="file">文件 / File path</param>
+        /// <param name="line">行数 / Line number</param>
         public CallingCodeContext(bool autoFillProperties, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
             : this()
         {
@@ -33,16 +34,15 @@ namespace MVVMSidekick.Common
 
         }
 
-
-
         /// <summary>
         /// 创建一个当前调用上下文数据
+        /// Creates a current calling context data
         /// </summary>
-        /// <param name="comment">注释</param>
-        /// <param name="caller">调用者</param>
-        /// <param name="file">文件</param>
-        /// <param name="line">行数</param>
-        /// <returns>数据</returns>
+        /// <param name="comment">注释 / Comment</param>
+        /// <param name="caller">调用者 / Caller member name</param>
+        /// <param name="file">文件 / File path</param>
+        /// <param name="line">行数 / Line number</param>
+        /// <returns>数据 / The context data</returns>
         public static CallingCodeContext Create(string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
         {
             return new CallingCodeContext

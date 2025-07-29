@@ -1,4 +1,9 @@
-﻿//using MVVMSidekick.Services;
+﻿/// <summary>
+/// <para>微软依赖注入服务提供者定位器，提供基于Microsoft.Extensions.DependencyInjection的服务定位功能</para>
+/// <para>Microsoft dependency injection service provider locator, providing service location functionality based on Microsoft.Extensions.DependencyInjection</para>
+/// </summary>
+
+//using MVVMSidekick.Services;
 //using System;
 //using System.Collections.Generic;
 //using System.Text;
@@ -9,13 +14,21 @@
 //namespace MVVMSidekick.Core.Services
 //{
 
+//    /// <summary>
+//    /// <para>微软依赖注入服务提供者定位器构建器</para>
+//    /// <para>Microsoft dependency injection service provider locator builder</para>
+//    /// </summary>
 //    public class MSDIServiceProviderServiceLocatorBuilder : ServiceLocatorBuilder
 //    {
 //        private readonly IServiceCollection services;
 //        private readonly ConcurrentDictionary<(string Name, Type ServiceType), Func<IServiceProvider, object>> factoryDataCore
 //             = new ConcurrentDictionary<(string Name, Type ServiceType), Func<IServiceProvider, object>>();
 
-
+//        /// <summary>
+//        /// <para>初始化MSDIServiceProviderServiceLocatorBuilder类的新实例</para>
+//        /// <para>Initializes a new instance of the MSDIServiceProviderServiceLocatorBuilder class</para>
+//        /// </summary>
+//        /// <param name="services">服务集合 / Service collection</param>
 //        public MSDIServiceProviderServiceLocatorBuilder(IServiceCollection services)
 //        {
 //            this.services = services;

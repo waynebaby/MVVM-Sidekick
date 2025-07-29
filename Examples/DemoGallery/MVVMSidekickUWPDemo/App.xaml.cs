@@ -31,11 +31,14 @@ using Windows.UI.Xaml.Navigation;
 namespace MVVMSidekickUWPDemo
 {
     /// <summary>
+    /// 提供特定于应用程序的行为，以补充默认的Application类。
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
         /// <summary>
+        /// 初始化单例应用程序对象。这是执行的创作代码的第一行，
+        /// 因此是 main() 或 WinMain() 的逻辑等效项。
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
@@ -45,8 +48,16 @@ namespace MVVMSidekickUWPDemo
             this.Suspending += OnSuspending;
         }
 
-
+        /// <summary>
+        /// 标识是否已初始化的静态字段
+        /// Static field that indicates whether initialization has been completed
+        /// </summary>
         static bool _inited = false;
+        
+        /// <summary>
+        /// 在此程序集中初始化配置
+        /// Initialize configuration in this assembly
+        /// </summary>
         public static void InitConfigurationInThisAssembly()
         {
             if (!_inited)
@@ -61,10 +72,12 @@ namespace MVVMSidekickUWPDemo
             }
         }
         /// <summary>
+        /// 在最终用户正常启动应用程序时调用。其他入口点
+        /// 将用于在启动应用程序以打开特定文件等情况下。
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
+        /// <param name="e">有关启动请求和过程的详细信息。 / Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
@@ -94,10 +107,11 @@ namespace MVVMSidekickUWPDemo
 
 
         /// <summary>
+        /// 创建或设置根框架
         /// Create Or setup Root Frame
         /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
-        /// <returns>Root Frame</returns>
+        /// <param name="e">有关启动请求和过程的详细信息。 / Details about the launch request and process.</param>
+        /// <returns>根框架 / Root Frame</returns>
         private Frame CreateOrSetupRootFrame(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
@@ -123,22 +137,25 @@ namespace MVVMSidekickUWPDemo
             return rootFrame;
         }
         /// <summary>
+        /// 导航到某个页面失败时调用
         /// Invoked when Navigation to a certain page fails
         /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
+        /// <param name="sender">导航失败的框架 / The Frame which failed navigation</param>
+        /// <param name="e">有关导航失败的详细信息 / Details about the navigation failure</param>
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
         /// <summary>
+        /// 在应用程序执行被挂起时调用。应用程序状态被保存，
+        /// 但不知道应用程序将被终止还是恢复，内存内容保持不变。
         /// Invoked when application execution is being suspended.  Application state is saved
         /// without knowing whether the application will be terminated or resumed with the contents
         /// of memory still intact.
         /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
+        /// <param name="sender">挂起请求的源。 / The source of the suspend request.</param>
+        /// <param name="e">有关挂起请求的详细信息。 / Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
@@ -147,10 +164,9 @@ namespace MVVMSidekickUWPDemo
         }
 
         /// <summary>
+        /// 配置命令执行或异常发生时的事件处理程序
         /// Configure event handler when command executed or exception happens
         /// </summary>
-        /// 
-
         private static void ConfigureCommandAndCommandExceptionHandler()
         {
             #region Useful Code Snippets
@@ -192,7 +208,9 @@ namespace MVVMSidekickUWPDemo
                         }
                     );
         }
+        
         /// <summary>
+        /// 异常列表
         /// Exception lists
         /// </summary>
         public static ObservableCollection<Tuple<DateTime, Exception>> Exceptions { get; set; } = new ObservableCollection<Tuple<DateTime, Exception>>();

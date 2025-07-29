@@ -18,12 +18,21 @@ using System.ComponentModel;
 namespace MVVMSidekick.Views
 {
 
-
+    /// <summary>
+    /// <para>MVVMSidekick组件基类，为Blazor组件提供MVVM支持</para>
+    /// <para>MVVMSidekick component base class, providing MVVM support for Blazor components</para>
+    /// </summary>
+    /// <typeparam name="TView">视图类型 / View type</typeparam>
+    /// <typeparam name="TViewModel">视图模型类型 / View model type</typeparam>
     public class MVVMSidekickComponentBase<TView, TViewModel> : ComponentBase, IDisposable, IAsyncDisposable, IDisposeGroup
         where TView : MVVMSidekickComponentBase<TView, TViewModel>
         where TViewModel : ViewModel<TViewModel, TView>
     {
 
+        /// <summary>
+        /// <para>参数设置器列表，用于自动映射视图参数到视图模型属性</para>
+        /// <para>Parameter setters list for automatically mapping view parameters to view model properties</para>
+        /// </summary>
         private static IList<Action<TView, TViewModel>> parameterSetters = typeof(TView).GetProperties()
                 .Select(x =>
                     (Property: x,
@@ -46,24 +55,44 @@ namespace MVVMSidekick.Views
                 })
                 .ToList();
 
-
+        /// <summary>
+        /// <para>销毁条目正在销毁事件</para>
+        /// <para>Dispose entry disposing event</para>
+        /// </summary>
         public event EventHandler<DisposeEventArgs> DisposeEntryDisposing;
+        
+        /// <summary>
+        /// <para>销毁条目已销毁事件</para>
+        /// <para>Dispose entry disposed event</para>
+        /// </summary>
         public event EventHandler<DisposeEventArgs> DisposeEntryDisposed;
 
-
+        /// <summary>
+        /// <para>初始化MVVMSidekickComponentBase类的新实例</para>
+        /// <para>Initializes a new instance of the MVVMSidekickComponentBase class</para>
+        /// </summary>
         public MVVMSidekickComponentBase()
         {
         }
 
+        /// <summary>
+        /// <para>获取或设置视图模型</para>
+        /// <para>Gets or sets the view model</para>
+        /// </summary>
         [Inject]
         [DefaultValue(null)]
         public TViewModel ViewModel { get => viewModel; set => viewModel = value; }
 
         /// <summary>
-        /// Shortcut for ViewModel
+        /// <para>视图模型的快捷方式</para>
+        /// <para>Shortcut for ViewModel</para>
         /// </summary>
         protected TViewModel M { get => viewModel; }
 
+        /// <summary>
+        /// <para>获取销毁信息列表</para>
+        /// <para>Gets the dispose info list</para>
+        /// </summary>
         public IList<DisposeEntry> DisposeInfoList => throw new NotImplementedException();
 
 

@@ -27,13 +27,18 @@ using Windows.UI.Xaml.Navigation;
 namespace MVVMSidekickUWPDemo
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// 计数器页面，用于演示MVVM-Sidekick框架在UWP中的基本用法
+    /// Counter page that demonstrates basic MVVM-Sidekick framework usage in UWP
     /// </summary>
     public sealed partial class Counter : Page
     {
 
 
 
+        /// <summary>
+        /// 初始化Counter页面实例
+        /// Initializes a new instance of the Counter page
+        /// </summary>
         public Counter()
         {
             this.InitializeComponent();
@@ -45,32 +50,59 @@ namespace MVVMSidekickUWPDemo
         }
 
 
+        /// <summary>
+        /// 获取或设置强类型的Counter视图模型
+        /// Gets or sets the strongly typed Counter view model
+        /// </summary>
         public Counter_Model StrongTypeViewModel
         {
             get { return (Counter_Model)GetValue(StrongTypeViewModelProperty); }
             set { SetValue(StrongTypeViewModelProperty, value); }
         }
 
+        /// <summary>
+        /// StrongTypeViewModel属性的依赖属性定义
+        /// Dependency property definition for the StrongTypeViewModel property
+        /// </summary>
         public static readonly DependencyProperty StrongTypeViewModelProperty =
         DependencyProperty.Register(nameof(StrongTypeViewModel), typeof(Counter_Model), typeof(Counter), new PropertyMetadata(null));
 
 
         #region IView Disguise
+        /// <summary>
+        /// 页面视图伪装，用于MVVM-Sidekick框架的视图生命周期管理
+        /// Page view disguise for MVVM-Sidekick framework view lifecycle management
+        /// </summary>
         PageViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
         #endregion
 
+        /// <summary>
+        /// 当页面被导航到时调用
+        /// Called when the page is navigated to
+        /// </summary>
+        /// <param name="e">导航事件参数 / Navigation event arguments</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             ViewDisguise.OnNavigatedTo(e);
         }
 
+        /// <summary>
+        /// 当页面导航离开时调用
+        /// Called when the page is navigated away from
+        /// </summary>
+        /// <param name="e">导航事件参数 / Navigation event arguments</param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             ViewDisguise.OnNavigatedFrom(e);
             base.OnNavigatedFrom(e);
         }
 
+        /// <summary>
+        /// 当页面即将导航离开时调用
+        /// Called when the page is about to navigate away
+        /// </summary>
+        /// <param name="e">导航取消事件参数 / Navigation canceling event arguments</param>
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             ViewDisguise.OnNavigatingFrom(e);

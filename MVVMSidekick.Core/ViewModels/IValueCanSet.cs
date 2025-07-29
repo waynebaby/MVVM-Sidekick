@@ -52,15 +52,23 @@ namespace MVVMSidekick
     namespace ViewModels
     {
         /// <summary>
-        /// Interface IValueCanSet
+        /// <para>定义可以设置值的接口</para>
+        /// <para>Interface that defines the ability to set a value</para>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">
+        /// <para>值的类型</para>
+        /// <para>The type of the value</para>
+        /// </typeparam>
         public interface IValueCanSet<in T>
         {
             /// <summary>
-            /// Sets the value.
+            /// <para>设置值</para>
+            /// <para>Sets the value</para>
             /// </summary>
-            /// <value>The value.</value>
+            /// <value>
+            /// <para>类型为 T 的值</para>
+            /// <para>The value of type T</para>
+            /// </value>
             T Value { set; }
         }
 

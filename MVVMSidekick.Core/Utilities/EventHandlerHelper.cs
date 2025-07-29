@@ -1,4 +1,9 @@
-﻿//// ***********************************************************************
+﻿/// <summary>
+/// <para>事件处理器帮助类，提供事件处理相关的实用功能</para>
+/// <para>Event handler helper class, providing utility functions related to event handling</para>
+/// </summary>
+
+//// ***********************************************************************
 //// Assembly         : MVVMSidekick_Wp8
 //// Author           : waywa
 //// Created          : 05-17-2014
@@ -20,7 +25,6 @@
 
 //namespace MVVMSidekick
 //{
-
 //    namespace Utilities
 //    {
 //        /// <summary>

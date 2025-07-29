@@ -25,15 +25,24 @@ using System.Windows.Shapes;
 namespace MVVMSidekickWPFDemo
 {
     /// <summary>
-    /// Interaction logic for LoginDemo.xaml
+    /// LoginDemo.xaml的交互逻辑，登录演示页面
+    /// Interaction logic for LoginDemo.xaml, login demonstration page
     /// </summary>
     public partial class LoginDemo : Page
     {
+        /// <summary>
+        /// 初始化LoginDemo页面的新实例
+        /// Initializes a new instance of LoginDemo page
+        /// </summary>
         public LoginDemo()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 获取页面视图伪装对象，用于MVVM绑定
+        /// Gets the page view disguise object for MVVM binding
+        /// </summary>
         public PageViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
 
     }

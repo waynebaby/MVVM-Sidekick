@@ -1,7 +1,21 @@
 ﻿using System.Reactive;
 using System.Reactive.Linq;
-using MVVMSidekick.ViewModels;
-using MVVMSidekick.Views;
+using MVVMSidekick.ViewMode        public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
+        
+        #region Property string Title Setup        
+        /// <summary>
+        /// Title属性的内部存储和定位器设置
+        /// Internal storage and locator setup for Title property
+        /// </summary>
+        protected Property<string> _Title = new Property<string>(_TitleLocator);
+        static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => nameof(FetchData_Model)));
+        #endregion
+
+        /// <summary>
+        /// 获取或设置天气预报集合
+        /// Gets or sets the weather forecasts collection
+        /// </summary>
+        public ObservableCollection<WeatherForecast> Forecasts { get => _ForecastsLocator(this).Value; set => _ForecastsLocator(this).SetValueAndTryNotify(value); }ng MVVMSidekick.Views;
 using MVVMSidekick.Reactive;
 using MVVMSidekick.Services;
 using MVVMSidekick.Commands;
@@ -17,12 +31,20 @@ using System.Runtime.Serialization;
 namespace MVVMSidekickUWPDemo.ViewModels
 {
 
+    /// <summary>
+    /// 获取数据视图模型，提供天气预报数据获取和显示功能
+    /// Fetch data view model providing weather forecast data retrieval and display functionality
+    /// </summary>
     [DataContract]
     public class FetchData_Model : ViewModel<FetchData_Model>
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property。
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性
 
+        /// <summary>
+        /// 初始化FetchData_Model的新实例，在设计模式下提供示例数据
+        /// Initializes a new instance of FetchData_Model with sample data in design mode
+        /// </summary>
         public FetchData_Model()
         {
             if (IsInDesignMode)
@@ -49,13 +71,27 @@ namespace MVVMSidekickUWPDemo.ViewModels
             }
 
         }
+        
+        /// <summary>
+        /// 使用服务提供程序初始化FetchData_Model的新实例
+        /// Initializes a new instance of FetchData_Model with service provider
+        /// </summary>
+        /// <param name="serviceProvider">服务提供程序 / Service provider</param>
         public FetchData_Model(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
         }
+        
+        /// <summary>
+        /// 获取服务提供程序
+        /// Gets the service provider
+        /// </summary>
         protected IServiceProvider ServiceProvider { get; }
 
-
+        /// <summary>
+        /// 获取或设置页面标题
+        /// Gets or sets the page title
+        /// </summary>
         public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
         #region Property string Title Setup        
         protected Property<string> _Title = new Property<string>(_TitleLocator);

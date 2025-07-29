@@ -97,18 +97,20 @@ namespace MVVMSidekick
 #endif
 
         /// <summary>
+        /// 表达式助手类，提供表达式相关的实用方法
         /// Class ExpressionHelper.
         /// </summary>
         public static class ExpressionHelper
 		{
 			/// <summary>
+			/// 从表达式中获取属性名称
 			/// Gets the name of the property.
 			/// </summary>
-			/// <typeparam name="TSubClassType">The type of the sub class type.</typeparam>
-			/// <typeparam name="TProperty">The type of the t property.</typeparam>
-			/// <param name="expression">The expression.</param>
+			/// <typeparam name="TSubClassType">子类类型 / The type of the sub class type.</typeparam>
+			/// <typeparam name="TProperty">属性类型 / The type of the t property.</typeparam>
+			/// <param name="expression">属性表达式 / The expression.</param>
 			/// <returns>
-			/// System.String.
+			/// 属性名称字符串 / System.String.
 			/// </returns>
 			public static string GetPropertyName<TSubClassType, TProperty>(this Expression<Func<TSubClassType, TProperty>> expression)
 			{
@@ -120,14 +122,15 @@ namespace MVVMSidekick
 
 
 			/// <summary>
-			/// Gets the name of the property.
+			/// 从对象表达式中获取属性名称
+			/// Gets the name of the property from object expression.
 			/// </summary>
-			/// <typeparam name="TSubClassType">The type of the sub class type.</typeparam>
-			/// <param name="expression">The expression.</param>
+			/// <typeparam name="TSubClassType">子类类型 / The type of the sub class type.</typeparam>
+			/// <param name="expression">对象属性表达式 / The object property expression.</param>
 			/// <returns>
-			/// System.String.
+			/// 属性名称字符串 / Property name string.
 			/// </returns>
-			/// <exception cref="System.InvalidOperationException">The expression inputed should be like \x=&gt;x.PropertyName\ but currently is not: + expression.ToString()</exception>
+			/// <exception cref="System.InvalidOperationException">输入的表达式应该像"x=>x.PropertyName"这样，但当前不是 / The expression inputed should be like "x=>x.PropertyName" but currently is not: + expression.ToString()</exception>
 			public static string GetPropertyName<TSubClassType>(this Expression<Func<TSubClassType, object>> expression)
 			{
 				MemberExpression body = expression.Body as MemberExpression;

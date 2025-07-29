@@ -16,13 +16,19 @@ using System.Runtime.Serialization;
 
 namespace MVVMSidekickWPFDemo.ViewModels
 {
-
+    /// <summary>
+    /// 获取数据视图模型类，演示数据加载和天气预报功能
+    /// Fetch data view model class demonstrating data loading and weather forecast functionality
+    /// </summary>
     public class FetchData_Model : ViewModel<FetchData_Model>
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property propcmd for command
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性 propcmd 输入命令
 
-
+        /// <summary>
+        /// 初始化FetchData_Model实例，在设计模式下创建示例数据
+        /// Initializes FetchData_Model instance with sample data in design mode
+        /// </summary>
         public FetchData_Model()
         {
             if (IsInDesignMode)
@@ -49,29 +55,56 @@ namespace MVVMSidekickWPFDemo.ViewModels
             }
 
         }
+        
+        /// <summary>
+        /// 使用服务提供者初始化FetchData_Model实例
+        /// Initializes FetchData_Model instance with service provider
+        /// </summary>
+        /// <param name="serviceProvider">服务提供者 / Service provider</param>
         public FetchData_Model(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
         }
+        
+        /// <summary>
+        /// 获取服务提供者
+        /// Gets the service provider
+        /// </summary>
         protected IServiceProvider ServiceProvider { get; }
 
 
         //propvm tab tab string tab Title
 
+        /// <summary>
+        /// 获取或设置标题
+        /// Gets or sets the title
+        /// </summary>
+        /// <summary>
+        /// 获取或设置标题
+        /// Gets or sets the title
+        /// </summary>
         public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
         #region Property string Title Setup        
         protected Property<string> _Title = new Property<string>(_TitleLocator);
         static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => default(string)));
         #endregion
 
-
-
+        /// <summary>
+        /// 获取或设置天气预报集合
+        /// Gets or sets the weather forecasts collection
+        /// </summary>
         public ObservableCollection<WeatherForecast> Forecasts { get => _ForecastsLocator(this).Value; set => _ForecastsLocator(this).SetValueAndTryNotify(value); }
         #region Property ObservableCollection<WeatherForecast>  Forecasts Setup        
         protected Property<ObservableCollection<WeatherForecast>> _Forecasts = new Property<ObservableCollection<WeatherForecast>>(_ForecastsLocator);
         static Func<BindableBase, ValueContainer<ObservableCollection<WeatherForecast>>> _ForecastsLocator = RegisterContainerLocator(nameof(Forecasts), m => m.Initialize(nameof(Forecasts), ref m._Forecasts, ref _ForecastsLocator, () => default(ObservableCollection<WeatherForecast>)));
         #endregion
 
+        /// <summary>
+        /// 重写视图加载方法，初始化天气预报数据
+        /// Override view loading method to initialize weather forecast data
+        /// </summary>
+        /// <param name="view">视图实例 / View instance</param>
+        /// <returns>异步任务 / Asynchronous task</returns>
         protected override async Task OnBindedViewLoad(IView view)
         {
 
@@ -171,37 +204,61 @@ namespace MVVMSidekickWPFDemo.ViewModels
     }
 
 
+    /// <summary>
+    /// 天气预报数据模型类，包含日期、温度和天气描述信息
+    /// Weather forecast data model class containing date, temperature and weather description information
+    /// </summary>
     public class WeatherForecast : BindableBase<WeatherForecast>
     {
+        /// <summary>
+        /// 初始化WeatherForecast实例，设置温度转换监听
+        /// Initializes WeatherForecast instance with temperature conversion listener
+        /// </summary>
         public WeatherForecast()
         {
             this.ListenValueChangedEvents(_ => _.TemperatureC)
                  .Subscribe(_ => TemperatureF = 32 + (int)(TemperatureC / 0.5556))
                  .DisposeWith(this);
         }
+        
+        /// <summary>
+        /// 获取或设置日期
+        /// Gets or sets the date
+        /// </summary>
+        /// <summary>
+        /// 获取或设置日期
+        /// Gets or sets the date
+        /// </summary>
         public DateTime Date { get => _DateLocator(this).Value; set => _DateLocator(this).SetValueAndTryNotify(value); }
         #region Property DateTime Date Setup        
         protected Property<DateTime> _Date = new Property<DateTime>(_DateLocator);
         static Func<BindableBase, ValueContainer<DateTime>> _DateLocator = RegisterContainerLocator(nameof(Date), m => m.Initialize(nameof(Date), ref m._Date, ref _DateLocator, () => default(DateTime)));
         #endregion
 
-
+        /// <summary>
+        /// 获取或设置摄氏温度
+        /// Gets or sets the temperature in Celsius
+        /// </summary>
         public int TemperatureC { get => _TemperatureCLocator(this).Value; set => _TemperatureCLocator(this).SetValueAndTryNotify(value); }
         #region Property int TemperatureC Setup        
         protected Property<int> _TemperatureC = new Property<int>(_TemperatureCLocator);
         static Func<BindableBase, ValueContainer<int>> _TemperatureCLocator = RegisterContainerLocator(nameof(TemperatureC), m => m.Initialize(nameof(TemperatureC), ref m._TemperatureC, ref _TemperatureCLocator, () => default(int)));
         #endregion
 
-
-
+        /// <summary>
+        /// 获取或设置天气描述
+        /// Gets or sets the weather summary
+        /// </summary>
         public string Summary { get => _SummaryLocator(this).Value; set => _SummaryLocator(this).SetValueAndTryNotify(value); }
         #region Property string Summary Setup        
         protected Property<string> _Summary = new Property<string>(_SummaryLocator);
         static Func<BindableBase, ValueContainer<string>> _SummaryLocator = RegisterContainerLocator(nameof(Summary), m => m.Initialize(nameof(Summary), ref m._Summary, ref _SummaryLocator, () => default(string)));
         #endregion
 
-
-
+        /// <summary>
+        /// 获取华氏温度（自动计算）
+        /// Gets the temperature in Fahrenheit (automatically calculated)
+        /// </summary>
         public int TemperatureF { get => _TemperatureFLocator(this).Value; private set { _TemperatureFLocator(this).Value = value; } }
         #region Property int TemperatureF Setup        
         protected Property<int> _TemperatureF = new Property<int>(_TemperatureFLocator);

@@ -26,24 +26,27 @@ using MVVMSidekick;
 namespace EventRoutingSample
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// <para>MainWindow.xaml 的交互逻辑</para>
+    /// <para>Interaction logic for MainWindow.xaml</para>
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// <para>初始化 MainWindow 类的新实例</para>
+        /// <para>Initializes a new instance of the MainWindow class</para>
+        /// </summary>
         public MainWindow()
-
         {
-
             InitializeComponent();
             ViewDisguise.ViewModel = ServiceProviderLocator.RootServiceProvider.GetService<MainWindow_Model>();
         }
 
-
         #region IView Disguise
+        /// <summary>
+        /// <para>获取视图伪装对象，用于MVVM模式下的视图管理</para>
+        /// <para>Gets the view disguise object for view management in MVVM pattern</para>
+        /// </summary>
         WindowViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
         #endregion
     }
-
-
-  
 }

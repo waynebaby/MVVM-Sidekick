@@ -55,14 +55,16 @@ namespace MVVMSidekick
     namespace ViewModels
     {
         /// <summary>
-        /// Interface IErrorInfo
+        /// 错误信息接口，提供错误信息的访问
+        /// Interface IErrorInfo - Provides access to error information
         /// </summary>
         public interface IErrorInfo
         {
             /// <summary>
+            /// 获取错误信息字典
             /// Gets the errors.
             /// </summary>
-            /// <value>The errors.</value>
+            /// <value>错误信息字典 / The errors.</value>
 
             IReadOnlyDictionary<string, ErrorEntity> Errors { get; }
         }

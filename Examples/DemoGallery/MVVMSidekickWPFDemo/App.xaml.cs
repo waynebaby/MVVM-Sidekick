@@ -15,14 +15,24 @@ using MVVMSidekickWPFDemo.ViewModels;
 namespace MVVMSidekickWPFDemo
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// App.xaml的交互逻辑，WPF应用程序的入口点
+    /// Interaction logic for App.xaml, entry point for WPF application
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// 初始化App的新实例，配置导航
+        /// Initializes a new instance of App, configures navigation
+        /// </summary>
         public App()
         {
             InitNavigationConfigurationInThisAssembly();
         }
+        
+        /// <summary>
+        /// 初始化当前程序集中的导航配置
+        /// Initializes navigation configuration in this assembly
+        /// </summary>
         public static void InitNavigationConfigurationInThisAssembly()
         {
 
@@ -32,13 +42,20 @@ namespace MVVMSidekickWPFDemo
             var s = ServiceProviderLocator.RootServiceProvider.GetRequiredService<MainWindow_Model>();
         }
 
+        /// <summary>
+        /// 应用程序启动时的处理
+        /// Handles application startup
+        /// </summary>
+        /// <param name="e">启动事件参数 / Startup event arguments</param>
         protected override void OnStartup(StartupEventArgs e)
         {
 
             ConfigureCommandAndCommandExceptionHandler();
             base.OnStartup(e);
         }
+        
         /// <summary>
+        /// 配置命令执行和异常处理的事件处理器
         /// Configure event handler when command executed or exception happens
         /// </summary>
         private static void ConfigureCommandAndCommandExceptionHandler()

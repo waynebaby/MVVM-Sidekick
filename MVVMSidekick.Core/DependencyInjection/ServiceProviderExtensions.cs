@@ -18,12 +18,25 @@ using MVVMSidekick.Services;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
+    /// <summary>
+    /// 服务提供程序扩展类，为依赖注入容器提供命名服务支持
+    /// Service provider extensions class providing named service support for dependency injection container
+    /// </summary>
     public static class ServiceProviderExtensions
     {
+        /// <summary>
+        /// 已添加命名服务支持的服务集合缓存
+        /// Cache of service collections that have named service support added
+        /// </summary>
         static ConcurrentDictionary<IServiceCollection, INamedServiceCollection> NamedServiceSupportAdded
                     = new System.Collections.Concurrent.ConcurrentDictionary<IServiceCollection, INamedServiceCollection>();
 
-
+        /// <summary>
+        /// 为服务集合配置命名服务支持
+        /// Configures named service support for service collection
+        /// </summary>
+        /// <param name="services">服务集合 / Service collection</param>
+        /// <returns>命名服务集合 / Named service collection</returns>
         public static INamedServiceCollection ConfigNamed(this IServiceCollection services)
         {
             return NamedServiceSupportAdded.GetOrAdd(services,
@@ -38,6 +51,15 @@ namespace Microsoft.Extensions.DependencyInjection
                 });
         }
 
+        /// <summary>
+        /// 添加单例服务实例到命名服务集合
+        /// Adds singleton service instance to named service collection
+        /// </summary>
+        /// <typeparam name="TService">服务类型 / Service type</typeparam>
+        /// <param name="services">命名服务集合 / Named service collection</param>
+        /// <param name="name">服务名称 / Service name</param>
+        /// <param name="instance">服务实例 / Service instance</param>
+        /// <returns>命名服务集合 / Named service collection</returns>
         public static INamedServiceCollection AddSingleton<TService>(this INamedServiceCollection services, string name, TService instance) where TService : class
         {
             if (String.IsNullOrEmpty(name))
@@ -54,6 +76,15 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
+        /// <summary>
+        /// 使用工厂方法添加单例服务到命名服务集合
+        /// Adds singleton service using factory method to named service collection
+        /// </summary>
+        /// <typeparam name="TService">服务类型 / Service type</typeparam>
+        /// <param name="services">命名服务集合 / Named service collection</param>
+        /// <param name="name">服务名称 / Service name</param>
+        /// <param name="implementationFactory">实现工厂方法 / Implementation factory method</param>
+        /// <returns>命名服务集合 / Named service collection</returns>
         public static INamedServiceCollection AddSingleton<TService>(this INamedServiceCollection services, string name, Func<IServiceProvider, TService> implementationFactory) where TService : class
         {
             if (String.IsNullOrEmpty(name))
@@ -76,6 +107,15 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
 
         }
+        
+        /// <summary>
+        /// 按类型添加单例服务到命名服务集合
+        /// Adds singleton service by type to named service collection
+        /// </summary>
+        /// <typeparam name="TService">服务类型 / Service type</typeparam>
+        /// <param name="services">命名服务集合 / Named service collection</param>
+        /// <param name="name">服务名称 / Service name</param>
+        /// <returns>命名服务集合 / Named service collection</returns>
         public static INamedServiceCollection AddSingleton<TService>(this INamedServiceCollection services, string name) where TService : class
         {
             if (String.IsNullOrEmpty(name))

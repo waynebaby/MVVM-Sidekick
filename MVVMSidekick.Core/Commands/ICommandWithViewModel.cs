@@ -23,10 +23,12 @@ namespace MVVMSidekick
     {
         /// <summary>
         /// 带有VM的Command接口
+        /// Interface for Commands that have an associated ViewModel
         /// </summary>
         public interface ICommandWithViewModel : ICommand
 		{
 			/// <summary>
+			/// 获取或设置视图模型
 			/// Gets or sets the view model.
 			/// </summary>
 			/// <value>The view model.</value>

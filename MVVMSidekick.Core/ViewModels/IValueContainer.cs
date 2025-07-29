@@ -21,10 +21,15 @@ namespace MVVMSidekick
     namespace ViewModels
     {
         /// <summary>
-        /// Interface IValueContainer
+        /// 值容器接口，用于管理属性值和相关操作
+        /// Interface IValueContainer - Interface for managing property values and related operations
         /// </summary>
         public interface IValueContainer : IErrorInfo, INotifyChanged, INotifyChanging
         {
+            /// <summary>
+            /// 获取属性名称
+            /// Gets the property name
+            /// </summary>
             string PropertyName { get; }
 
             /// <summary>

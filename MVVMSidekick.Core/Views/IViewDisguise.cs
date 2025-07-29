@@ -46,6 +46,10 @@ using System.Windows.Controls.Primitives;
 
 namespace MVVMSidekick.Views
 {
+    /// <summary>
+    /// <para>视图伪装接口，提供视图的伪装功能</para>
+    /// <para>Interface for view disguise that provides view disguising functionality</para>
+    /// </summary>
     public interface IViewDisguise:IView
     {
 

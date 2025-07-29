@@ -54,18 +54,27 @@ namespace MVVMSidekick
     namespace ViewModels
     {
         /// <summary>
-        /// <para>Event args that fired when property changed, with old value and new value field.</para>
-        /// <para>值变化事件参数</para>
+        /// <para>属性值已变化事件参数基类，包含旧值和新值字段</para>
+        /// <para>Base event args that fired when property changed, with old value and new value field</para>
         /// </summary>
-        /// <typeparam name="TProperty">Type of propery/变化属性的类型</typeparam>
         public abstract class ValueChangedEventArgs : PropertyChangedEventArgs
         {
             /// <summary>
-            /// Constructor of ValueChangedEventArgs
+            /// <para>ValueChangedEventArgs的构造函数</para>
+            /// <para>Constructor of ValueChangedEventArgs</para>
             /// </summary>
-            /// <param name="propertyName">Name of the property.</param>
-            /// <param name="originalValue">The old value.</param>
-            /// <param name="newValue">The new value.</param>
+            /// <param name="propertyName">
+            /// <para>属性名称</para>
+            /// <para>Name of the property</para>
+            /// </param>
+            /// <param name="originalValue">
+            /// <para>原始值</para>
+            /// <para>The original value</para>
+            /// </param>
+            /// <param name="newValue">
+            /// <para>新值</para>
+            /// <para>The new value</para>
+            /// </param>
             public ValueChangedEventArgs(string propertyName, object originalValue, object newValue)
                 : base(propertyName)
             {
@@ -73,14 +82,23 @@ namespace MVVMSidekick
             }
 
             /// <summary>
-            /// New Value
+            /// <para>获取新值的对象形式</para>
+            /// <para>Gets the new value as an object</para>
             /// </summary>
-            /// <value>The new value.</value>
+            /// <value>
+            /// <para>新值的对象表示</para>
+            /// <para>The new value as object</para>
+            /// </value>
             public abstract object GetNewValueObject();
+            
             /// <summary>
-            /// Old Value
+            /// <para>获取原始值的对象形式</para>
+            /// <para>Gets the original value as an object</para>
             /// </summary>
-            /// <value>The old value.</value>
+            /// <value>
+            /// <para>原始值的对象表示</para>
+            /// <para>The original value as object</para>
+            /// </value>
             public abstract object GetOriginalValueObject();
         }
 

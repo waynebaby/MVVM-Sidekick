@@ -23,12 +23,13 @@ namespace MVVMSidekick
 
     namespace Views
     {
+        /// <summary>
+        /// <para>视图模型到视图映射器服务定位器接口</para>
+        /// <para>Interface for ViewModel to View mapper service locator</para>
+        /// </summary>
         public interface IViewModelToViewMapperServiceLocator : ITypeSpecifiedServiceLocator<object>
 		{
 
 		}
-
-
-
 	}
 }

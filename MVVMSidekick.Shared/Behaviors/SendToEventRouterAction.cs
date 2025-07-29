@@ -1,23 +1,30 @@
-﻿ 
-#if !BLAZOR
+﻿#if !BLAZOR
 
 namespace MVVMSidekick.Behaviors
 {
 
 #if WINDOWS_UWP || WinUI3
+	/// <summary>
+	/// <para>发送到事件路由器动作，用于将事件发送到事件路由器</para>
+	/// <para>Send to event router action, used for sending events to event router</para>
+	/// </summary>
 	public class SendToEventRouterAction : DependencyObject, Microsoft.Xaml.Interactivity.IAction
 #elif WPF
+    /// <summary>
+    /// <para>发送到事件路由器动作，用于将事件发送到事件路由器</para>
+    /// <para>Send to event router action, used for sending events to event router</para>
+    /// </summary>
     public class SendToEventRouterAction : TriggerAction<DependencyObject>
 #endif
     {
 
-
-
         /// <summary>
-        /// Gets or sets the name of the event routing.
+        /// <para>获取或设置事件路由的名称</para>
+        /// <para>Gets or sets the name of the event routing</para>
         /// </summary>
         /// <value>
-        /// The name of the event routing.
+        /// <para>事件路由的名称</para>
+        /// <para>The name of the event routing</para>
         /// </value>
         public string EventRoutingName
         {

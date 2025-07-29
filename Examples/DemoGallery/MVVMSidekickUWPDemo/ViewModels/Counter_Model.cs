@@ -17,6 +17,10 @@ using System.Runtime.Serialization;
 namespace MVVMSidekickUWPDemo.ViewModels
 {
 
+    /// <summary>
+    /// 计数器视图模型，提供计数功能的演示
+    /// Counter view model providing counter functionality demonstration
+    /// </summary>
     [DataContract]
     public class Counter_Model : ViewModel<Counter_Model>
     {
@@ -25,23 +29,56 @@ namespace MVVMSidekickUWPDemo.ViewModels
 
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property
 
+        /// <summary>
+        /// 初始化Counter_Model的新实例
+        /// Initializes a new instance of Counter_Model
+        /// </summary>
         public Counter_Model()
         {
         }
+        
+        /// <summary>
+        /// 使用服务提供程序初始化Counter_Model的新实例
+        /// Initializes a new instance of Counter_Model with service provider
+        /// </summary>
+        /// <param name="serviceProvider">服务提供程序 / Service provider</param>
         public Counter_Model(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
         }
+        
+        /// <summary>
+        /// 获取服务提供程序
+        /// Gets the service provider
+        /// </summary>
         public IServiceProvider ServiceProvider { get; }
 
+        /// <summary>
+        /// 获取或设置当前计数值
+        /// Gets or sets the current count value
+        /// </summary>
         public int CurrentCount { get => _CurrentCountLocator(this).Value; set => _CurrentCountLocator(this).SetValueAndTryNotify(value); }
+        
         #region Property int CurrentCount Setup        
+        /// <summary>
+        /// CurrentCount属性的内部存储和定位器设置
+        /// Internal storage and locator setup for CurrentCount property
+        /// </summary>
         protected Property<int> _CurrentCount = new Property<int>(_CurrentCountLocator);
         static Func<BindableBase, ValueContainer<int>> _CurrentCountLocator = RegisterContainerLocator(nameof(CurrentCount), m => m.Initialize(nameof(CurrentCount), ref m._CurrentCount, ref _CurrentCountLocator, () => default(int)));
         #endregion
 
+        /// <summary>
+        /// 获取递增计数命令模型
+        /// Gets the increment count command model
+        /// </summary>
         public CommandModel CommandIncrementCount => _CommandIncrementCountLocator(this).Value;
+        
         #region Property CommandModel CommandIncrementCount Setup                
+        /// <summary>
+        /// CommandIncrementCount命令属性的内部存储和定位器设置，包含递增计数的业务逻辑
+        /// Internal storage and locator setup for CommandIncrementCount command property, containing increment count business logic
+        /// </summary>
         protected Property<CommandModel> _CommandIncrementCount = new Property<CommandModel>(_CommandIncrementCountLocator);
         static Func<BindableBase, ValueContainer<CommandModel>> _CommandIncrementCountLocator = RegisterContainerLocator(nameof(CommandIncrementCount), m => m.Initialize(nameof(CommandIncrementCount), ref m._CommandIncrementCount, ref _CommandIncrementCountLocator,
               model =>

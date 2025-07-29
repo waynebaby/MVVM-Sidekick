@@ -2,6 +2,10 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// 程序集信息配置文件，用于设置MVVMSidekick .NET Framework 4.6版本的程序集元数据
+/// Assembly information configuration file for setting up metadata for MVVMSidekick .NET Framework 4.6 version
+/// </summary>
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.

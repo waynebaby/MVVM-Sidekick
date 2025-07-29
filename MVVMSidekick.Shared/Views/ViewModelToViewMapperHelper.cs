@@ -1,4 +1,17 @@
-﻿#if !BLAZOR
+﻿/// <summary>
+/// <para>视图模型到视图映射器帮助器文件，提供视图与视图模型映射的辅助功能</para>
+/// <para>View model to view mapper helper file that provides auxiliary functions for view-to-view model mapping</para>
+/// </summary>
+/// <remarks>
+/// <para>这个文件包含ViewModelToViewMapperHelper静态类，用于处理视图与视图模型之间的映射关系</para>
+/// <para>This file contains the ViewModelToViewMapperHelper static class for handling mapping relationships between views and view models</para>
+/// <para>支持多平台包括WPF、UWP、Silverlight、Windows Phone等</para>
+/// <para>Supports multiple platforms including WPF, UWP, Silverlight, Windows Phone, etc.</para>
+/// <para>部分代码被注释，可能表示某些功能已被重构或禁用</para>
+/// <para>Some code is commented out, possibly indicating that certain features have been refactored or disabled</para>
+/// </remarks>
+
+#if !BLAZOR
 
 using System;
 using System.Collections.Generic;

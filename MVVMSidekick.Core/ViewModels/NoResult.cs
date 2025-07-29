@@ -53,7 +53,8 @@ namespace MVVMSidekick
     namespace ViewModels
     {
         /// <summary>
-        /// Struct NoResult
+        /// 无结果结构体，用于表示无返回值的操作
+        /// Struct NoResult - Used to represent operations with no return value
         /// </summary>
         [DataContract]
         public struct NoResult

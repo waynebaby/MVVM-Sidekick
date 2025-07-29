@@ -1,4 +1,17 @@
-﻿//#if !BLAZOR
+﻿/// <summary>
+/// <para>视图模型到视图映射器文件 - 此文件中的代码当前被注释，可能是遗留或备用实现</para>
+/// <para>View model to view mapper file - The code in this file is currently commented out, possibly legacy or backup implementation</para>
+/// </summary>
+/// <remarks>
+/// <para>这个文件包含了ViewModelToViewMapper泛型类的实现，用于建立视图模型与视图之间的映射关系</para>
+/// <para>This file contains the implementation of ViewModelToViewMapper generic class for establishing mapping relationships between view models and views</para>
+/// <para>支持多平台包括WPF、UWP、Silverlight、Windows Phone等</para>
+/// <para>Supports multiple platforms including WPF, UWP, Silverlight, Windows Phone, etc.</para>
+/// <para>由于代码被完全注释，可能表示此功能已被其他实现替代或暂时禁用</para>
+/// <para>Since the code is completely commented out, it may indicate this functionality has been replaced by other implementations or temporarily disabled</para>
+/// </remarks>
+
+//#if !BLAZOR
 
 //using System;
 //using MVVMSidekick.ViewModels;
@@ -43,17 +56,31 @@
 //    namespace Views
 //    {
 //        /// <summary>
-//        /// Struct ViewModelToViewMapper
+//        /// <para>视图模型到视图映射器类，用于建立视图模型与视图之间的映射关系</para>
+//        /// <para>View model to view mapper class for establishing mapping relationships between view models and views</para>
 //        /// </summary>
-//        /// <typeparam name="TModel">The type of the t model.</typeparam>
+//        /// <typeparam name="TModel">
+//        /// <para>视图模型类型，必须实现IViewModel接口</para>
+//        /// <para>The type of the view model that must implement IViewModel interface</para>
+//        /// </typeparam>
+//        /// <remarks>
+//        /// <para>Struct ViewModelToViewMapper</para>
+//        /// </remarks>
 //        public class ViewModelToViewMapper<TModel>
 //            where TModel : IViewModel
 //        {
-
+//
 //			/// <summary>
-//			/// Maps the view to view model.
+//			/// <para>将视图映射到视图模型，建立类型关联</para>
+//			/// <para>Maps the view to view model, establishing type association</para>
 //			/// </summary>
-//			/// <typeparam name="TView">The type of the t view.</typeparam>
+//			/// <typeparam name="TView">
+//			/// <para>视图类型</para>
+//			/// <para>The type of the view</para>
+//			/// </typeparam>
+//			/// <remarks>
+//			/// <para>Maps the view to view model.</para>
+//			/// </remarks>
 //#pragma warning disable CA1000 // Do not declare static members on generic types
 //			public static void MapViewToViewModel<TView>()
 //#pragma warning restore CA1000 // Do not declare static members on generic types

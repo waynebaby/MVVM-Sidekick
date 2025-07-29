@@ -53,39 +53,62 @@ namespace MVVMSidekick
     namespace ViewModels
     {
         /// <summary>
-        /// Class ErrorEntity.
+        /// 错误实体类，表示验证或业务逻辑错误信息
+        /// Error entity class that represents validation or business logic error information
         /// </summary>
         public class ErrorEntity
         {
+            /// <summary>
+            /// 初始化ErrorEntity类的新实例
+            /// Initializes a new instance of the ErrorEntity class
+            /// </summary>
             public ErrorEntity()
             {
-
             }
 
+            /// <summary>
+            /// 获取或设置规则名称
+            /// Gets or sets the rule name
+            /// </summary>
+            /// <value>规则名称 / The rule name</value>
             public string RuleName { get; set; }
 
+            /// <summary>
+            /// 获取或设置友好显示名称
+            /// Gets or sets the friendly display name
+            /// </summary>
+            /// <value>友好名称 / The friendly name</value>
             public string FriendlyName { get; set; }
 
+            /// <summary>
+            /// 获取或设置属性名称
+            /// Gets or sets the property name
+            /// </summary>
+            /// <value>属性名称 / The property name</value>
             public string PropertyName { get; set; }
             /// <summary>
+            /// 获取或设置消息
             /// Gets or sets the message.
             /// </summary>
-            /// <value>The message.</value>
+            /// <value>消息 / The message.</value>
             public string Message { get; set; }
             /// <summary>
+            /// 获取或设置异常
             /// Gets or sets the exception.
             /// </summary>
-            /// <value>The exception.</value>
+            /// <value>异常 / The exception.</value>
             public Exception Exception { get; set; }
             /// <summary>
+            /// 获取或设置内部错误信息源
             /// Gets or sets the inner error information source.
             /// </summary>
-            /// <value>The inner error information source.</value>
+            /// <value>内部错误信息源 / The inner error information source.</value>
             public IErrorInfo InnerErrorInfoSource { get; set; }
             /// <summary>
+            /// 返回表示此实例的 <see cref="System.String" />
             /// Returns a <see cref="System.String" /> that represents this instance.
             /// </summary>
-            /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+            /// <returns>表示此实例的 <see cref="System.String" /> / A <see cref="System.String" /> that represents this instance.</returns>
             public override string ToString()
             {
                 return $"{(string.IsNullOrEmpty(FriendlyName )? PropertyName:FriendlyName)}:{(Message ?? nameof(ErrorEntity))}";// string.Format("{0}，{1}，{2}", Message, Exception, InnerErrorInfoSource);

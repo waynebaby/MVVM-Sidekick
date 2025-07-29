@@ -17,12 +17,20 @@ using System.Runtime.Serialization;
 namespace MVVMSidekickUWPDemo.ViewModels
 {
 
+    /// <summary>
+    /// 登录演示视图模型，提供登录功能的演示
+    /// Login demo view model providing login functionality demonstration
+    /// </summary>
     [DataContract]
     public class LoginDemo_Model : ViewModel<LoginDemo_Model>
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property。
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性
 
+        /// <summary>
+        /// 初始化LoginDemo_Model的新实例，在设计模式下设置不同的标题
+        /// Initializes a new instance of LoginDemo_Model with different title in design mode
+        /// </summary>
         public LoginDemo_Model()
         {
             if (IsInDesignMode)
@@ -31,23 +39,49 @@ namespace MVVMSidekickUWPDemo.ViewModels
             }
 
         }
+        
+        /// <summary>
+        /// 使用服务提供程序初始化LoginDemo_Model的新实例
+        /// Initializes a new instance of LoginDemo_Model with service provider
+        /// </summary>
+        /// <param name="serviceProvider">服务提供程序 / Service provider</param>
         public LoginDemo_Model(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
         }
+        
+        /// <summary>
+        /// 获取服务提供程序
+        /// Gets the service provider
+        /// </summary>
         protected IServiceProvider ServiceProvider { get; }
 
-
+        /// <summary>
+        /// 获取或设置页面标题
+        /// Gets or sets the page title
+        /// </summary>
         public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
+        
         #region Property string Title Setup        
+        /// <summary>
+        /// Title属性的内部存储和定位器设置
+        /// Internal storage and locator setup for Title property
+        /// </summary>
         protected Property<string> _Title = new Property<string>(_TitleLocator);
         static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => nameof(LoginDemo_Model)));
         #endregion
 
-
-
+        /// <summary>
+        /// 获取某个命令的命令模型
+        /// Gets the command model for some command
+        /// </summary>
         public CommandModel CommandSomeCommand => _CommandSomeCommandLocator(this).Value;
+        
         #region Property CommandModel CommandSomeCommand Setup                
+        /// <summary>
+        /// CommandSomeCommand命令属性的内部存储和定位器设置，包含通用命令逻辑
+        /// Internal storage and locator setup for CommandSomeCommand command property, containing generic command logic
+        /// </summary>
         protected Property<CommandModel> _CommandSomeCommand = new Property<CommandModel>(_CommandSomeCommandLocator);
         static Func<BindableBase, ValueContainer<CommandModel>> _CommandSomeCommandLocator = RegisterContainerLocator(nameof(CommandSomeCommand), m => m.Initialize(nameof(CommandSomeCommand), ref m._CommandSomeCommand, ref _CommandSomeCommandLocator,
               model =>

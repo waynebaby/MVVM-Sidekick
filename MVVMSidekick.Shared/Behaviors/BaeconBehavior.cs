@@ -1,21 +1,21 @@
 ﻿
 #if !BLAZOR
 
-
-
 namespace MVVMSidekick.Behaviors
 {
-
 	/// <summary>
-	/// Bind a beacon to a Content Control, make it work as a stage.
+	/// <para>将信标绑定到内容控件，使其作为舞台工作</para>
+	/// <para>Bind a beacon to a Content Control, make it work as a stage</para>
 	/// </summary>
     public class BaeconBehavior : Behavior<ContentControl>
 	{
 		/// <summary>
-		/// Gets or sets the name of the baecon.
+		/// <para>获取或设置信标的名称</para>
+		/// <para>Gets or sets the name of the beacon</para>
 		/// </summary>
 		/// <value>
-		/// The name of the baecon.
+		/// <para>信标的名称</para>
+		/// <para>The name of the beacon</para>
 		/// </value>
 		public string BaeconName
 		{

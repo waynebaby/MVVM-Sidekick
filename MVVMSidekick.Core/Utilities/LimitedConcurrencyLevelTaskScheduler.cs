@@ -59,35 +59,48 @@ namespace MVVMSidekick
     namespace Utilities
     {
         /// <summary>
-        /// Provides a task scheduler that ensures a maximum concurrency level while
-        /// running on top of the ThreadPool.
+        /// <para>提供有限并发级别的任务调度器，确保在ThreadPool之上运行时保持最大并发级别</para>
+        /// <para>Provides a task scheduler that ensures a maximum concurrency level while running on top of the ThreadPool</para>
         /// </summary>
         public class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
         {
             /// <summary>
-            /// Whether the current thread is processing work items.
+            /// <para>当前线程是否正在处理工作项</para>
+            /// <para>Whether the current thread is processing work items</para>
             /// </summary>
             [ThreadStatic]
             private static bool _currentThreadIsProcessingItems;
+            
             /// <summary>
-            /// The list of tasks to be executed.
+            /// <para>要执行的任务列表</para>
+            /// <para>The list of tasks to be executed</para>
             /// </summary>
             private readonly LinkedList<Task> _tasks = new LinkedList<Task>(); // protected by lock(_tasks) 
+            
             /// <summary>
-            /// The maximum concurrency level allowed by this scheduler.
+            /// <para>此调度器允许的最大并发级别</para>
+            /// <para>The maximum concurrency level allowed by this scheduler</para>
             /// </summary>
             private readonly int _maxDegreeOfParallelism;
+            
             /// <summary>
-            /// Whether the scheduler is currently processing work items.
+            /// <para>调度器当前是否正在处理工作项</para>
+            /// <para>Whether the scheduler is currently processing work items</para>
             /// </summary>
             private int _delegatesQueuedOrRunning = 0; // protected by lock(_tasks) 
 
             /// <summary>
-            /// Initializes an instance of the LimitedConcurrencyLevelTaskScheduler class with the
-            /// specified degree of parallelism.
+            /// <para>使用指定的并行度初始化LimitedConcurrencyLevelTaskScheduler类的实例</para>
+            /// <para>Initializes an instance of the LimitedConcurrencyLevelTaskScheduler class with the specified degree of parallelism</para>
             /// </summary>
-            /// <param name="maxDegreeOfParallelism">The maximum degree of parallelism provided by this scheduler.</param>
-            /// <exception cref="System.ArgumentOutOfRangeException">maxDegreeOfParallelism</exception>
+            /// <param name="maxDegreeOfParallelism">
+            /// <para>此调度器提供的最大并行度</para>
+            /// <para>The maximum degree of parallelism provided by this scheduler</para>
+            /// </param>
+            /// <exception cref="System.ArgumentOutOfRangeException">
+            /// <para>当maxDegreeOfParallelism小于1时抛出</para>
+            /// <para>Thrown when maxDegreeOfParallelism is less than 1</para>
+            /// </exception>
             public LimitedConcurrencyLevelTaskScheduler(int maxDegreeOfParallelism)
             {
                 if (maxDegreeOfParallelism < 1) throw new ArgumentOutOfRangeException("maxDegreeOfParallelism");
@@ -95,9 +108,13 @@ namespace MVVMSidekick
             }
 
             /// <summary>
-            /// Queues a task to the scheduler.
+            /// <para>将任务排队到调度器</para>
+            /// <para>Queues a task to the scheduler</para>
             /// </summary>
-            /// <param name="task">The task to be queued.</param>
+            /// <param name="task">
+            /// <para>要排队的任务</para>
+            /// <para>The task to be queued</para>
+            /// </param>
             [SecurityCritical]
             protected sealed override void QueueTask(Task task)
             {
@@ -115,6 +132,7 @@ namespace MVVMSidekick
             }
 
             /// <summary>
+            /// 通知 ThreadPool 有待执行的工作
             /// Informs the ThreadPool that there's work to be executed for this scheduler.
             /// </summary>
             private async void NotifyThreadPoolOfPendingWork()
@@ -165,11 +183,12 @@ namespace MVVMSidekick
             }
 
             /// <summary>
+            /// 尝试在当前线程上执行指定的任务
             /// Attempts to execute the specified task on the current thread.
             /// </summary>
-            /// <param name="task">The task to be executed.</param>
-            /// <param name="taskWasPreviouslyQueued">if set to <c>true</c> [task was previously queued].</param>
-            /// <returns>Whether the task could be executed on the current thread.</returns>
+            /// <param name="task">要执行的任务 / The task to be executed.</param>
+            /// <param name="taskWasPreviouslyQueued">如果设置为 <c>true</c>，则任务之前已排队 / if set to <c>true</c> [task was previously queued].</param>
+            /// <returns>是否可以在当前线程上执行任务 / Whether the task could be executed on the current thread.</returns>
             [SecurityCritical]
             protected sealed override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
             {
@@ -184,10 +203,11 @@ namespace MVVMSidekick
             }
 
             /// <summary>
+            /// 尝试从调度器中移除先前调度的任务
             /// Attempts to remove a previously scheduled task from the scheduler.
             /// </summary>
-            /// <param name="task">The task to be removed.</param>
-            /// <returns>Whether the task could be found and removed.</returns>
+            /// <param name="task">要移除的任务 / The task to be removed.</param>
+            /// <returns>是否能找到并移除任务 / Whether the task could be found and removed.</returns>
             [SecurityCritical]
             protected sealed override bool TryDequeue(Task task)
             {
@@ -195,15 +215,17 @@ namespace MVVMSidekick
             }
 
             /// <summary>
+            /// 获取此调度器支持的最大并发级别
             /// Gets the maximum concurrency level supported by this scheduler.
             /// </summary>
-            /// <value>The maximum concurrency level.</value>
+            /// <value>最大并发级别 / The maximum concurrency level.</value>
             public sealed override int MaximumConcurrencyLevel { get { return _maxDegreeOfParallelism; } }
 
             /// <summary>
+            /// 获取当前在此调度器上调度的任务的可枚举对象
             /// Gets an enumerable of the tasks currently scheduled on this scheduler.
             /// </summary>
-            /// <returns>An enumerable of the tasks currently scheduled.</returns>
+            /// <returns>当前调度的任务的可枚举对象 / An enumerable of the tasks currently scheduled.</returns>
             /// <exception cref="System.NotSupportedException"></exception>
             [SecurityCritical]
             protected sealed override IEnumerable<Task> GetScheduledTasks()
