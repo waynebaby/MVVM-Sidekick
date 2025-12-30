@@ -26,18 +26,27 @@ using Microsoft.Extensions.DependencyInjection;
 namespace EventRoutingSample
 {
 	/// <summary>
-	/// Interaction logic for DisopseTestForBehaviors.xaml
+	/// <para>DisopseTestForBehaviors.xaml 的交互逻辑</para>
+	/// <para>Interaction logic for DisopseTestForBehaviors.xaml</para>
 	/// </summary>
 	public partial class DisopseTestForBehaviors : Window
 	{
+		/// <summary>
+		/// <para>初始化 DisopseTestForBehaviors 类的新实例</para>
+		/// <para>Initializes a new instance of the DisopseTestForBehaviors class</para>
+		/// </summary>
 		public DisopseTestForBehaviors()
 		{
 			InitializeComponent();
 		}
+		
 		#region IView Disguise
+		/// <summary>
+		/// <para>获取视图伪装对象，用于MVVM模式下的视图管理</para>
+		/// <para>Gets the view disguise object for view management in MVVM pattern</para>
+		/// </summary>
 		WindowViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
 		#endregion
 	}
-
 }
 

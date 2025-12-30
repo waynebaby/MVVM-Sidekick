@@ -20,7 +20,8 @@ using Validation.ViewModels;
 namespace Validation
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// <para>可以单独使用或在Frame内导航到的空页面</para>
+    /// <para>An empty page that can be used on its own or navigated to within a Frame</para>
     /// </summary>
     public sealed partial class MainPage : MVVMPage
     {
@@ -35,12 +36,20 @@ namespace Validation
         }
 
 
+    /// <summary>
+    /// <para>获取或设置强类型视图模型</para>
+    /// <para>Gets or sets the strong-typed view model</para>
+    /// </summary>
     public MainPage_Model StrongTypeViewModel
         {
             get { return (MainPage_Model)GetValue(StrongTypeViewModelProperty); }
             set { SetValue(StrongTypeViewModelProperty, value); }
         }
 
+        /// <summary>
+        /// <para>强类型视图模型依赖属性</para>
+        /// <para>Strong-typed view model dependency property</para>
+        /// </summary>
         public static readonly DependencyProperty StrongTypeViewModelProperty =
                     DependencyProperty.Register("StrongTypeViewModel", typeof(MainPage_Model), typeof(MainPage), new PropertyMetadata(null));
 

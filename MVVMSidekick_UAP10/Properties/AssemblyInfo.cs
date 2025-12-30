@@ -2,6 +2,10 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// UAP10平台程序集信息配置文件，用于设置MVVMSidekick UWP版本的程序集元数据
+/// UAP10 platform assembly information configuration file for setting up metadata for MVVMSidekick UWP version
+/// </summary>
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.

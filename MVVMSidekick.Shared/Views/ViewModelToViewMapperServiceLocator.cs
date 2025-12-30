@@ -1,4 +1,17 @@
-﻿//// ***********************************************************************
+﻿/// <summary>
+/// <para>视图模型到视图映射器服务定位器文件 - 此文件中的代码当前被注释，可能是遗留或备用实现</para>
+/// <para>View model to view mapper service locator file - The code in this file is currently commented out, possibly legacy or backup implementation</para>
+/// </summary>
+/// <remarks>
+/// <para>这个文件包含了ViewModelToViewMapperServiceLocator泛型类的实现，用于提供视图模型到视图映射的服务定位功能</para>
+/// <para>This file contains the implementation of ViewModelToViewMapperServiceLocator generic class for providing service location functionality for view model to view mapping</para>
+/// <para>支持多平台包括WPF、UWP、Silverlight、Windows Phone等</para>
+/// <para>Supports multiple platforms including WPF, UWP, Silverlight, Windows Phone, etc.</para>
+/// <para>由于代码被完全注释，可能表示此功能已被其他实现替代或暂时禁用</para>
+/// <para>Since the code is completely commented out, it may indicate this functionality has been replaced by other implementations or temporarily disabled</para>
+/// </remarks>
+
+//// ***********************************************************************
 //// Assembly         : MVVMSidekick_Wp8
 //// Author           : waywa
 //// Created          : 05-17-2014

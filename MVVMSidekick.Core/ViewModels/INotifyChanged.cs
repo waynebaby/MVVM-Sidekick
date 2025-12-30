@@ -54,12 +54,14 @@ namespace MVVMSidekick
     namespace ViewModels
     {
         /// <summary>
+        /// 泛型通知变更接口
         /// Interface INotifyChanges
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">值类型 / Value type</typeparam>
         public interface INotifyChanged<T> : INotifyChanged
         {
             /// <summary>
+            /// 当值发生变更时发生
             /// Occurs when [value changed].
             /// </summary>
             event EventHandler<ValueChangedEventArgs<T>> ValueChanged;
@@ -67,11 +69,13 @@ namespace MVVMSidekick
         }
 
         /// <summary>
+        /// 通知变更接口
         /// Interface INotifyChanges
         /// </summary>
         public interface INotifyChanged
         {
             /// <summary>
+            /// 当非泛型值发生变更时发生
             /// Occurs when [value changed with name only].
             /// </summary>
             event EventHandler<ValueChangedEventArgs> NonGenericValueChanged;

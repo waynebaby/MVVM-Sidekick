@@ -1,4 +1,9 @@
 ﻿
+/// <summary>
+/// <para>反应式扩展，提供MVVM反应式编程相关的扩展方法</para>
+/// <para>Reactive extensions, providing MVVM reactive programming related extension methods</para>
+/// </summary>
+
 // ***********************************************************************
 // Assembly         : MVVMSidekick
 // Author           : waywa
@@ -32,30 +37,29 @@ using MVVMSidekick.Commands;
 
 namespace MVVMSidekick
 {
-
     namespace Reactive
     {
         /// <summary>
-        /// 		 MVVMRxExtensions
+        /// <para>MVVM响应式扩展方法类，提供响应式编程的扩展功能</para>
+        /// <para>MVVM reactive extensions methods class, providing reactive programming extension functions</para>
         /// </summary>
         public static class MVVMRxExtensions
         {
-
-           
 
 
 
 
             /// <summary>
+            /// 向观察者注册 Do 操作，将此序列中的值通知给 EventRouter
             /// Register a Do action to the observer, Notify the value in this sequence to EventRouter
             /// </summary>
             /// <typeparam name="T"></typeparam>
-            /// <param name="sequence">value sequence</param>
-            /// <param name="eventRouter">target</param>
-            /// <param name="source">value source</param>
-            /// <param name="registerName">log name</param>
+            /// <param name="sequence">值序列 / value sequence</param>
+            /// <param name="eventRouter">目标路由器 / target</param>
+            /// <param name="source">值源 / value source</param>
+            /// <param name="registerName">注册名称 / log name</param>
             /// <returns>
-            /// same value sequence inputed
+            /// 输入的同一值序列 / same value sequence inputed
             /// </returns>
             public static IObservable<T> DoNotifyEventRouter<T>(this IObservable<T> sequence, EventRouter eventRouter = null, object source = null, [CallerMemberName] string registerName = null)
             {
@@ -65,14 +69,15 @@ namespace MVVMSidekick
             }
 
             /// <summary>
+            /// 向观察者注册 Do 操作，将此序列中的值通知给默认 EventRouter
             /// Register a Do action to the observer, Notify the value in this sequence to EventRouter
             /// </summary>
             /// <typeparam name="T"></typeparam>
-            /// <param name="sequence">value sequence</param>
-            /// <param name="source">value source</param>
-            /// <param name="registerName">log name</param>
+            /// <param name="sequence">值序列 / value sequence</param>
+            /// <param name="source">值源 / value source</param>
+            /// <param name="registerName">注册名称 / log name</param>
             /// <returns>
-            /// same value sequence inputed
+            /// 输入的同一值序列 / same value sequence inputed
             /// </returns>
             public static IObservable<T> DoNotifyDefaultEventRouter<T>(this IObservable<T> sequence, object source = null, [CallerMemberName] string registerName = null)
             {

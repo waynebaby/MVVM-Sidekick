@@ -15,12 +15,19 @@ using System.Runtime.Serialization;
 
 namespace MVVMSidekickWPFDemo.ViewModels
 {
-
+    /// <summary>
+    /// 主窗口视图模型类，提供导航和演示功能
+    /// Main window view model class providing navigation and demo functionality
+    /// </summary>
     public class MainWindow_Model : ViewModel<MainWindow_Model>
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property propcmd for command
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性 propcmd 输入命令
 
+        /// <summary>
+        /// 初始化MainWindow_Model实例，在设计模式下设置特殊标题
+        /// Initializes MainWindow_Model instance with special title in design mode
+        /// </summary>
         public MainWindow_Model()
         {
             if (IsInDesignMode)
@@ -30,16 +37,26 @@ namespace MVVMSidekickWPFDemo.ViewModels
 
         }
 
-
+        /// <summary>
+        /// 获取或设置窗口标题
+        /// Gets or sets the window title
+        /// </summary>
         public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
         #region Property string Title Setup        
         protected Property<string> _Title = new Property<string>(_TitleLocator);
         static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => "MVVM-Sidekick Demos"));
         #endregion
 
+        /// <summary>
+        /// 获取导航框架阶段
+        /// Gets the navigation frame stage
+        /// </summary>
         public IStage NavigationFrame => this.StageManager[nameof(NavigationFrame)];
 
-
+        /// <summary>
+        /// 获取导航到计数器页面的命令模型
+        /// Gets the command model for navigating to counter page
+        /// </summary>
         public CommandModel CommandNaviToCounter => _CommandNaviToCounterLocator(this).Value;
         #region Property CommandModel CommandNaviToCounter Setup                
         protected Property<CommandModel> _CommandNaviToCounter = new Property<CommandModel>(_CommandNaviToCounterLocator);
@@ -67,6 +84,10 @@ namespace MVVMSidekickWPFDemo.ViewModels
         #endregion
 
 
+        /// <summary>
+        /// 获取导航到数据获取页面的命令模型
+        /// Gets the command model for navigating to fetch data page
+        /// </summary>
         public CommandModel CommandNaviToFetchData => _CommandNaviToFetchDataLocator(this).Value;
         #region Property CommandModel CommandNaviToFetchData Setup                
         protected Property<CommandModel> _CommandNaviToFetchData = new Property<CommandModel>(_CommandNaviToFetchDataLocator);
@@ -96,6 +117,10 @@ namespace MVVMSidekickWPFDemo.ViewModels
 
 
 
+        /// <summary>
+        /// 获取导航到登录演示页面的命令模型
+        /// Gets the command model for navigating to login demo page
+        /// </summary>
         public CommandModel CommandNaviToLoginDemo => _CommandNaviToLoginDemoLocator(this).Value;
         #region Property CommandModel CommandNaviToLoginDemo Setup                
         protected Property<CommandModel> _CommandNaviToLoginDemo = new Property<CommandModel>(_CommandNaviToLoginDemoLocator);

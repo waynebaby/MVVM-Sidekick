@@ -20,19 +20,21 @@ namespace MVVMSidekick
     namespace Reactive
     {
         /// <summary>
+        /// 事件元组静态工厂类
         /// Class EventTuple.
         /// </summary>
         public static class EventTuple
         {
             /// <summary>
-            /// Creates the specified source.
+            /// 创建指定的事件元组
+            /// Creates the specified event tuple.
             /// </summary>
-            /// <typeparam name="TSource">The type of the t source.</typeparam>
-            /// <typeparam name="TEventArgs">The type of the t event arguments.</typeparam>
-            /// <param name="source">The source.</param>
-            /// <param name="eventArgs">The instance containing the event data.</param>
+            /// <typeparam name="TSource">源类型 / The type of the source.</typeparam>
+            /// <typeparam name="TEventArgs">事件参数类型 / The type of the event arguments.</typeparam>
+            /// <param name="source">源对象 / The source.</param>
+            /// <param name="eventArgs">包含事件数据的实例 / The instance containing the event data.</param>
             /// <returns>
-            /// EventTuple&lt;TSource, TEventArgs&gt;.
+            /// 事件元组实例 / EventTuple&lt;TSource, TEventArgs&gt;.
             /// </returns>
             public static EventTuple<TSource, TEventArgs> Create<TSource, TEventArgs>(TSource source, TEventArgs eventArgs)
             {

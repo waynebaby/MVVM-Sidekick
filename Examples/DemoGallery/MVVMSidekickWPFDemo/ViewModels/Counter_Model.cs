@@ -16,31 +16,59 @@ using System.Runtime.Serialization;
 
 namespace MVVMSidekickWPFDemo.ViewModels
 {
-
+    /// <summary>
+    /// 计数器视图模型类，演示基本的MVVM计数功能
+    /// Counter view model class demonstrating basic MVVM counting functionality
+    /// </summary>
     public class Counter_Model : ViewModel<Counter_Model>
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property propcmd for command
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性 propcmd 输入命令
 
-
+        /// <summary>
+        /// 初始化Counter_Model实例
+        /// Initializes Counter_Model instance
+        /// </summary>
         public Counter_Model()
         {
           
 
         }
+        
+        /// <summary>
+        /// 使用服务提供者初始化Counter_Model实例
+        /// Initializes Counter_Model instance with service provider
+        /// </summary>
+        /// <param name="serviceProvider">服务提供者 / Service provider</param>
         public Counter_Model(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
         }
+        
+        /// <summary>
+        /// 获取服务提供者
+        /// Gets the service provider
+        /// </summary>
         protected IServiceProvider ServiceProvider { get; }
 
-
+        /// <summary>
+        /// 获取或设置当前计数值
+        /// Gets or sets the current count value
+        /// </summary>
+        /// <summary>
+        /// 获取或设置当前计数值
+        /// Gets or sets the current count value
+        /// </summary>
         public int CurrentCount { get => _CurrentCountLocator(this).Value; set => _CurrentCountLocator(this).SetValueAndTryNotify(value); }
         #region Property int CurrentCount Setup        
         protected Property<int> _CurrentCount = new Property<int>(_CurrentCountLocator);
         static Func<BindableBase, ValueContainer<int>> _CurrentCountLocator = RegisterContainerLocator(nameof(CurrentCount), m => m.Initialize(nameof(CurrentCount), ref m._CurrentCount, ref _CurrentCountLocator, () =>0));
         #endregion
 
+        /// <summary>
+        /// 获取递增计数命令模型
+        /// Gets the increment count command model
+        /// </summary>
         public CommandModel CommandIncrementCount => _CommandIncrementCountLocator(this).Value;
         #region Property CommandModel CommandIncrementCount Setup                
         protected Property<CommandModel> _CommandIncrementCount = new Property<CommandModel>(_CommandIncrementCountLocator);

@@ -25,15 +25,24 @@ using System.Windows.Shapes;
 namespace MVVMSidekickWPFDemo
 {
     /// <summary>
-    /// Interaction logic for Counter.xaml
+    /// Counter.xaml的交互逻辑，计数器页面
+    /// Interaction logic for Counter.xaml, counter page
     /// </summary>
     public partial class Counter : Page
     {
+        /// <summary>
+        /// 初始化Counter页面的新实例
+        /// Initializes a new instance of Counter page
+        /// </summary>
         public Counter()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 获取页面视图伪装对象，用于MVVM绑定
+        /// Gets the page view disguise object for MVVM binding
+        /// </summary>
         public PageViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
 
     }

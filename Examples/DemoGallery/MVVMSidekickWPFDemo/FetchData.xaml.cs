@@ -25,15 +25,24 @@ using System.Windows.Shapes;
 namespace MVVMSidekickWPFDemo
 {
     /// <summary>
-    /// Interaction logic for FetchData.xaml
+    /// FetchData.xaml的交互逻辑，数据获取页面
+    /// Interaction logic for FetchData.xaml, data fetching page
     /// </summary>
     public partial class FetchData : Page
     {
+        /// <summary>
+        /// 初始化FetchData页面的新实例
+        /// Initializes a new instance of FetchData page
+        /// </summary>
         public FetchData()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 获取页面视图伪装对象，用于MVVM绑定
+        /// Gets the page view disguise object for MVVM binding
+        /// </summary>
         public PageViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
 
     }

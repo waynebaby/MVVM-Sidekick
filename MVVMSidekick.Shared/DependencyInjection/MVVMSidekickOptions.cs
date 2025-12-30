@@ -1,4 +1,6 @@
 ﻿
+// MVVM-Sidekick选项配置，提供依赖注入和配置功能
+// MVVM-Sidekick options configuration, providing dependency injection and configuration functionality
 
 using Microsoft.Extensions.DependencyInjection;
 using MVVMSidekick.ViewModels;
@@ -18,22 +20,44 @@ using Microsoft.AspNetCore.Components;
 #endif
 namespace Microsoft.Extensions.DependencyInjection
 {
+    /// <summary>
+    /// <para>MVVM-Sidekick选项类，用于配置MVVM框架的依赖注入和服务注册</para>
+    /// <para>MVVM-Sidekick options class, used for configuring dependency injection and service registration of MVVM framework</para>
+    /// </summary>
     public class MVVMSidekickOptions
     {
         private readonly IServiceCollection services;
 #if BLAZOR
+        /// <summary>
+        /// <para>视图模型路由表，用于Blazor平台的视图模型路由映射</para>
+        /// <para>View model routing table, used for view model routing mapping in Blazor platform</para>
+        /// </summary>
         internal Dictionary<Type, string> ViewModelRoutingTable = new Dictionary<Type, string>();
 #endif
+        /// <summary>
+        /// <para>初始化MVVMSidekickOptions类的新实例</para>
+        /// <para>Initializes a new instance of the MVVMSidekickOptions class</para>
+        /// </summary>
+        /// <param name="services">服务集合 / Service collection</param>
         public MVVMSidekickOptions(IServiceCollection services)
         {
             this.services = services;
         }
+        
+        /// <summary>
+        /// <para>注册视图模型到依赖注入容器</para>
+        /// <para>Registers view model to dependency injection container</para>
+        /// </summary>
+        /// <typeparam name="TViewModel">视图模型类型 / View model type</typeparam>
+        /// <param name="name">服务名称 / Service name</param>
+        /// <param name="viewModelConfig">视图模型配置委托 / View model configuration delegate</param>
+        /// <returns>MVVMSidekickOptions实例 / MVVMSidekickOptions instance</returns>
         public MVVMSidekickOptions RegisterViewModel<TViewModel>(string name = default, Action<IServiceProvider, TViewModel> viewModelConfig = default) where TViewModel : class, IViewModelWithPlatformService, IViewModel
         {
 
-
 #if BLAZOR
             services.ConfigNamed().AddSingleton<TViewModel>(name);
+            // 获取基类型枚举序列 / Gets base type enumerable sequence
             IEnumerable<Type> GetBaseTypeEnumerable(Type start)
             {
                 var current = start.BaseType;
@@ -113,7 +137,7 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 #endif
     }
-#if WINDOWS_UWP
+#if WINDOWS_UWP || WinUI3
     public interface IViewContentConfigurator
     {
         void Config(object viewContent);

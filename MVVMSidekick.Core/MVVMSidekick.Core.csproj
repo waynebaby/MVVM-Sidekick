@@ -3,14 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' == '' ">1.$([System.DateTime]::UtcNow.ToString(yyMM.HHmm.ssff))</VersionSuffix>
-    <VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' != '' ">1.$([System.DateTime]::UtcNow.ToString(yyMM.HHmm.ssff))</VersionSuffix>
+    <VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' == '' ">1.$([System.DateTime]::UtcNow.ToString(yyMM.ddHH.mm))</VersionSuffix>
+    <VersionSuffix Condition=" '$(BUILD_BUILDNUMBER)' != '' ">1.$([System.DateTime]::UtcNow.ToString(yyMM.ddHH.mm))</VersionSuffix>
     <AssemblyVersion Condition=" '$(VersionSuffix)' == '' ">0.0.0.1</AssemblyVersion>
     <AssemblyVersion Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</AssemblyVersion>
     <Version Condition=" '$(VersionSuffix)' == '' ">0.0.1.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</Version>
     <PackageId>MVVM-Sidekick.Core</PackageId>
     <Authors>Wayne Wang</Authors>
+    <IncludeSymbols>True</IncludeSymbols>
 
 
 
@@ -18,14 +19,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>..\packages\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.7" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="3.1.2" />
-    <PackageReference Include="System.Reactive" Version="4.4.1" />
-    <PackageReference Include="System.Runtime" Version="4.3.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
+    <PackageReference Include="System.Reactive" Version="6.0.1" />
   </ItemGroup>
 
 </Project>

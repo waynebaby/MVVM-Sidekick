@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿#if BLAZOR
+
+using Microsoft.AspNetCore.Components;
 using MVVMSidekick.Common;
 using MVVMSidekick.ViewModels;
 using MVVMSidekick.Reactive;
@@ -12,15 +14,25 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reactive.Linq;
+using System.ComponentModel;
 namespace MVVMSidekick.Views
 {
 
-
+    /// <summary>
+    /// <para>MVVMSidekick组件基类，为Blazor组件提供MVVM支持</para>
+    /// <para>MVVMSidekick component base class, providing MVVM support for Blazor components</para>
+    /// </summary>
+    /// <typeparam name="TView">视图类型 / View type</typeparam>
+    /// <typeparam name="TViewModel">视图模型类型 / View model type</typeparam>
     public class MVVMSidekickComponentBase<TView, TViewModel> : ComponentBase, IDisposable, IAsyncDisposable, IDisposeGroup
         where TView : MVVMSidekickComponentBase<TView, TViewModel>
         where TViewModel : ViewModel<TViewModel, TView>
     {
 
+        /// <summary>
+        /// <para>参数设置器列表，用于自动映射视图参数到视图模型属性</para>
+        /// <para>Parameter setters list for automatically mapping view parameters to view model properties</para>
+        /// </summary>
         private static IList<Action<TView, TViewModel>> parameterSetters = typeof(TView).GetProperties()
                 .Select(x =>
                     (Property: x,
@@ -33,33 +45,54 @@ namespace MVVMSidekick.Views
                 //.Where(x => x.TargetProperty.PropertyType.IsAssignableFrom(x.SourceProperty.PropertyType))
                 .Select(x =>
                 {
-                    var expPS = Expression.Parameter(x.SourceProperty.DeclaringType);
-                    var expPSMA = Expression.MakeMemberAccess(expPS, x.SourceProperty);
-                    var expPT = Expression.Parameter(x.TargetProperty.DeclaringType);
-                    var expPTMA = Expression.MakeMemberAccess(expPT, x.TargetProperty);
-                    var expAssign = Expression.Assign(expPTMA, Expression.Convert(expPSMA, x.TargetProperty.PropertyType));
-                    var expLambda = Expression.Lambda<Action<TView, TViewModel>>(expAssign, expPS, expPT);
+                    var expPS = System.Linq.Expressions.  Expression.Parameter(x.SourceProperty.DeclaringType);
+                    var expPSMA = System.Linq.Expressions.Expression.MakeMemberAccess(expPS, x.SourceProperty);
+                    var expPT = System.Linq.Expressions.Expression.Parameter(x.TargetProperty.DeclaringType);
+                    var expPTMA = System.Linq.Expressions.Expression.MakeMemberAccess(expPT, x.TargetProperty);
+                    var expAssign = System.Linq.Expressions.Expression.Assign(expPTMA, System.Linq.Expressions.Expression.Convert(expPSMA, x.TargetProperty.PropertyType));
+                    var expLambda = System.Linq.Expressions.Expression.Lambda<Action<TView, TViewModel>>(expAssign, expPS, expPT);
                     return expLambda.Compile();
                 })
                 .ToList();
 
-
+        /// <summary>
+        /// <para>销毁条目正在销毁事件</para>
+        /// <para>Dispose entry disposing event</para>
+        /// </summary>
         public event EventHandler<DisposeEventArgs> DisposeEntryDisposing;
+        
+        /// <summary>
+        /// <para>销毁条目已销毁事件</para>
+        /// <para>Dispose entry disposed event</para>
+        /// </summary>
         public event EventHandler<DisposeEventArgs> DisposeEntryDisposed;
 
-
+        /// <summary>
+        /// <para>初始化MVVMSidekickComponentBase类的新实例</para>
+        /// <para>Initializes a new instance of the MVVMSidekickComponentBase class</para>
+        /// </summary>
         public MVVMSidekickComponentBase()
         {
         }
 
+        /// <summary>
+        /// <para>获取或设置视图模型</para>
+        /// <para>Gets or sets the view model</para>
+        /// </summary>
         [Inject]
+        [DefaultValue(null)]
         public TViewModel ViewModel { get => viewModel; set => viewModel = value; }
 
         /// <summary>
-        /// Shortcut for ViewModel
+        /// <para>视图模型的快捷方式</para>
+        /// <para>Shortcut for ViewModel</para>
         /// </summary>
         protected TViewModel M { get => viewModel; }
 
+        /// <summary>
+        /// <para>获取销毁信息列表</para>
+        /// <para>Gets the dispose info list</para>
+        /// </summary>
         public IList<DisposeEntry> DisposeInfoList => throw new NotImplementedException();
 
 
@@ -104,7 +137,7 @@ namespace MVVMSidekick.Views
                 //ViewModel.PropertyChanged += (o, a) => StateHasChanged();
                 ViewModel.CreatePropertyChangedObservable()
                     .Throttle(TimeSpan.FromSeconds(1d / 60))
-                    .Subscribe(_=> StateHasChanged())
+                    .Subscribe(async _=> await InvokeAsync(()=> StateHasChanged()))
                     .DisposeWith(ViewModel);
             }
 
@@ -177,3 +210,4 @@ namespace MVVMSidekick.Views
         private TViewModel viewModel;
     }
 }
+#endif

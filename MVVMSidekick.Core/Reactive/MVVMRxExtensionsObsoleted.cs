@@ -1,4 +1,9 @@
 ﻿
+/// <summary>
+/// <para>已过时的MVVM反应式扩展，提供已废弃的MVVM反应式编程相关扩展方法</para>
+/// <para>Obsoleted MVVM reactive extensions, providing deprecated MVVM reactive programming related extension methods</para>
+/// </summary>
+
 // ***********************************************************************
 // Assembly         : MVVMSidekick
 // Author           : waywa
@@ -26,18 +31,23 @@ using MVVMSidekick.EventRouting;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
-
-
 //namespace MVVMSidekick
 //{
 
 //    namespace Reactive
 //    {
+//        /// <summary>
+//        /// <para>已过时的MVVM反应式扩展类，包含已废弃的反应式编程扩展方法</para>
+//        /// <para>Obsoleted MVVM reactive extensions class, containing deprecated reactive programming extension methods</para>
+//        /// </summary>
 //        public static class MVVMRxExtensionsObsoleted
 //        {
 //            #region Obsoleted
 
-//            /// <summary>Gets the new value observable.</summary>
+//            /// <summary>
+//            /// <para>获取新值可观察序列</para>
+//            /// <para>Gets the new value observable</para>
+//            /// </summary>
 //            /// <typeparam name="TValue">The type of the value.</typeparam>
 //            /// <param name="source">The source.</param>
 //            /// <returns>

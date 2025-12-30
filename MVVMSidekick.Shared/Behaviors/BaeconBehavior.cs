@@ -1,36 +1,21 @@
-﻿#if !BLAZOR
-#if WPF
-
-using Microsoft.Xaml.Behaviors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-
-
-#elif WINDOWS_UWP
-using Microsoft.Xaml.Interactivity;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Controls;
-#endif
+﻿
+#if !BLAZOR
 
 namespace MVVMSidekick.Behaviors
 {
-
 	/// <summary>
-	/// Bind a beacon to a Content Control, make it work as a stage.
+	/// <para>将信标绑定到内容控件，使其作为舞台工作</para>
+	/// <para>Bind a beacon to a Content Control, make it work as a stage</para>
 	/// </summary>
     public class BaeconBehavior : Behavior<ContentControl>
 	{
 		/// <summary>
-		/// Gets or sets the name of the baecon.
+		/// <para>获取或设置信标的名称</para>
+		/// <para>Gets or sets the name of the beacon</para>
 		/// </summary>
 		/// <value>
-		/// The name of the baecon.
+		/// <para>信标的名称</para>
+		/// <para>The name of the beacon</para>
 		/// </value>
 		public string BaeconName
 		{
@@ -75,8 +60,8 @@ namespace MVVMSidekick.Behaviors
 				return;
 			}
 			DependencyProperty targetProperty = MVVMSidekick.Views.StageManager.BeaconProperty;
-#if WINDOWS_UWP 
-			string path = "BaeconName";
+#if WINDOWS_UWP || WinUI3
+            string path = "BaeconName";
 #elif WPF
             string path = BaeconBehavior.BaeconNameProperty.Name;
 #endif

@@ -16,22 +16,24 @@ using System.Text;
 namespace MVVMSidekick.ViewModels
 {
     /// <summary>
+    /// <para>具有详细子类型类型参数的模型类型</para>
     /// <para>Model type with detail subtype type parameter.</para>
-    /// <para>具有子类详细类型定义的model </para>
+    /// <para>具有子类详细类型定义的模型。</para>
     /// <example>
     /// public class Class1:BindableBase&lt;Class1&gt;  {}
     /// </example>
     /// </summary>
-    /// <typeparam name="TSubClassType">Sub Type / 子类类型</typeparam>
+    /// <typeparam name="TSubClassType">子类类型 / Sub Type</typeparam>
     [DataContract]
     public abstract class BindableBase<TSubClassType> : BindableBase, INotifyDataErrorInfo where TSubClassType : BindableBase<TSubClassType>
     {
 
 
         /// <summary>
+        /// 获取所有错误
         /// Gets all errors.
         /// </summary>
-        /// <returns>ErrorEntity[].</returns>
+        /// <returns>错误实体数组 / ErrorEntity[].</returns>
         public override IEnumerable<ErrorEntity> GetAllErrors()
         {
             var errors = GetFieldNames()
@@ -41,20 +43,26 @@ namespace MVVMSidekick.ViewModels
                  .ToArray();
             return errors;
         }
+        /// <summary>
+        /// 属性容器获取器字典，用于缓存属性访问器
+        /// Property container getters dictionary for caching property accessors
+        /// </summary>
         protected static Dictionary<string, Func<TSubClassType, IValueContainer>>
             _plainPropertyContainerGetters =
               new Dictionary<string, Func<TSubClassType, IValueContainer>>(StringComparer.CurrentCultureIgnoreCase);
 
+        /// <summary>
+        /// 静态构造函数
+        /// Static constructor
+        /// </summary>
         static BindableBase()
         {
 
         }
 
-
-
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="BindableBase{TSubClassType}"/> class.
+        /// 初始化BindableBase类的新实例，设置错误状态监听
+        /// Initializes a new instance of the BindableBase class with error state listening
         /// </summary>
         public BindableBase()
         {
@@ -70,29 +78,23 @@ namespace MVVMSidekick.ViewModels
             //_BindableInstanceIdLocator(this).SetValueAndTryNotify( string.Format("{0}:{1}", this.GetType().Name, base._instanceIdOfThisType));
         }
 
-
-
         /// <summary>
-        /// Gets the bindable instance identifier.
+        /// 获取可绑定实例标识符
+        /// Gets the bindable instance identifier
         /// </summary>
-        /// <value>The bindable instance identifier.</value>
-
+        /// <value>可绑定实例标识符 / The bindable instance identifier</value>
         public override string BindableInstanceId
         {
             get { return _instanceIdOfThisType.ToString(); }
 
         }
 
-
-
-
-
-
         /// <summary>
-        /// 清除值
+        /// 重置属性值为默认值
+        /// Resets property value to default
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="property">The property.</param>
+        /// <typeparam name="T">属性类型 / Property type</typeparam>
+        /// <param name="property">要重置的属性 / The property to reset</param>
         public void ResetPropertyValue<T>(Property<T> property)
         {
             if (property != null)
@@ -140,10 +142,11 @@ namespace MVVMSidekick.ViewModels
         //}
 
         /// <summary>
-        /// 根据索引获取属性值
+        /// 根据列名获取或设置属性值的索引器
+        /// Indexer for getting or setting property values by column name
         /// </summary>
-        /// <param name="colName">Name of the col.</param>
-        /// <returns>属性值</returns>
+        /// <param name="colName">列名/属性名 / Column/property name</param>
+        /// <returns>属性值 / Property value</returns>
         public override object this[string colName]
         {
             get
@@ -160,11 +163,12 @@ namespace MVVMSidekick.ViewModels
         }
 
         /// <summary>
-        /// Gets the or create plain locator.
+        /// 获取或创建普通定位器
+        /// Gets or creates a plain locator
         /// </summary>
-        /// <param name="colName">Name of the col.</param>
-        /// <param name="viewModel">The view model.</param>
-        /// <returns>Func&lt;TSubClassType, IValueContainer&gt;.</returns>
+        /// <param name="colName">列名 / Column name</param>
+        /// <param name="viewModel">视图模型 / View model</param>
+        /// <returns>值容器定位器函数 / Value container locator function</returns>
         private static Func<TSubClassType, IValueContainer> GetOrCreatePlainLocator(string colName, BindableBase viewModel)
         {
             Func<TSubClassType, IValueContainer> pf;
@@ -180,21 +184,21 @@ namespace MVVMSidekick.ViewModels
             return pf;
         }
 
-
-
         /// <summary>
-        /// Gets the error.
+        /// 获取错误消息
+        /// Gets the error message
         /// </summary>
-        /// <value>The error.</value>
+        /// <value>错误消息 / The error message</value>
         public override string ErrorMessage
         {
             get { return _ErrorMessageLocator(this).Value; }
         }
 
         /// <summary>
-        /// Sets the error.
+        /// 设置错误消息
+        /// Sets the error message
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="value">错误消息值 / Error message value</param>
         protected override void SetErrorMessage(string value)
         {
             _ErrorMessageLocator(this).SetValue(value);
@@ -253,15 +257,16 @@ namespace MVVMSidekick.ViewModels
         }
 
         /// <summary>
-        /// 根据属性名取得一个值容器
+        /// 根据属性名获取指定类型的值容器
+        /// Gets a value container of specified type by property name
         /// </summary>
-        /// <typeparam name="TProperty">The type of the property.</typeparam>
-        /// <param name="propertyName">属性名</param>
-        /// <returns>值容器</returns>
+        /// <typeparam name="TProperty">属性类型 / Property type</typeparam>
+        /// <param name="propertyName">属性名 / Property name</param>
+        /// <returns>值容器 / Value container</returns>
         /// <exception cref="System.Exception">
         /// Property Not Exists!
         /// or
-        /// Property ' + propertyName + ' is found but it does not match the property type ' + type of(TProperty).Name + '!
+        /// Property ' + propertyName + ' is found but it does not match the property type ' + typeof(TProperty).Name + '!
         /// </exception>
         public ValueContainer<TProperty> GetValueContainer<TProperty>(string propertyName)
         {
@@ -284,13 +289,12 @@ namespace MVVMSidekick.ViewModels
         }
 
         /// <summary>
-        /// 根据表达式树取得一个值容器
+        /// 根据表达式树获取值容器
+        /// Gets a value container by expression tree
         /// </summary>
-        /// <typeparam name="TProperty">The type of the property.</typeparam>
-        /// <param name="expression">表达式树</param>
-        /// <returns>
-        /// 值容器
-        /// </returns>
+        /// <typeparam name="TProperty">属性类型 / Property type</typeparam>
+        /// <param name="expression">表达式树 / Expression tree</param>
+        /// <returns>值容器 / Value container</returns>
         public ValueContainer<TProperty> GetValueContainer<TProperty>(Expression<Func<TSubClassType, TProperty>> expression)
         {
             var propName = MVVMSidekick.Utilities.ExpressionHelper.GetPropertyName<TSubClassType, TProperty>(expression);
@@ -302,11 +306,12 @@ namespace MVVMSidekick.ViewModels
 
 
         /// <summary>
-        /// 根据属性名取得一个值容器
+        /// 根据属性名获取值容器
+        /// Gets a value container by property name
         /// </summary>
-        /// <param name="propertyName">属性名</param>
-        /// <returns>值容器</returns>
-        /// <exception cref="System.NotImplementedException"></exception>
+        /// <param name="propertyName">属性名 / Property name</param>
+        /// <returns>值容器 / Value container</returns>
+        /// <exception cref="System.NotImplementedException">当前属性未实现 / Current property is not implemented</exception>
         public override IValueContainer GetValueContainer(string propertyName)
         {
             Func<TSubClassType, IValueContainer> contianerGetterCreater;
@@ -324,10 +329,11 @@ namespace MVVMSidekick.ViewModels
 
 
         /// <summary>
-        /// 根据属性名取得多个值容器
+        /// 根据属性名获取多个值容器
+        /// Gets multiple value containers by property names
         /// </summary>
-        /// <param name="propertyNames">The property names.</param>
-        /// <returns>值容器</returns>
+        /// <param name="propertyNames">属性名数组 / Property names array</param>
+        /// <returns>值容器数组 / Value containers array</returns>
         public IValueContainer[] GetValueContainers(params string[] propertyNames)
         {
             return propertyNames.Select(pn => GetValueContainer(pn)).ToArray();
@@ -336,10 +342,11 @@ namespace MVVMSidekick.ViewModels
 
 
         /// <summary>
-        /// 根据表达式树取得多个值容器
+        /// 根据表达式树获取多个值容器
+        /// Gets multiple value containers by expression trees
         /// </summary>
-        /// <param name="expressions">The expressions.</param>
-        /// <returns>值容器</returns>
+        /// <param name="expressions">表达式树数组 / Expression trees array</param>
+        /// <returns>值容器数组 / Value containers array</returns>
         public IValueContainer[] GetValueContainers(params Expression<Func<TSubClassType, object>>[] expressions)
         {
 
@@ -351,25 +358,21 @@ namespace MVVMSidekick.ViewModels
             return rval;
         }
 
-
-
-
-
-
         /// <summary>
         /// 获取所有属性名，包括静态声明和动态添加的
+        /// Gets all property names including statically declared and dynamically added ones
         /// </summary>
-        /// <returns>System.String[].</returns>
+        /// <returns>属性名数组 / Property names array</returns>
         public override string[] GetFieldNames()
         {
             return _plainPropertyContainerGetters.Keys.ToArray();
         }
 
-
         /// <summary>
-        /// 创建一个VM副本
+        /// 创建当前视图模型的副本
+        /// Creates a copy of the current view model
         /// </summary>
-        /// <returns>新引用</returns>
+        /// <returns>新的视图模型实例 / New view model instance</returns>
         public TSubClassType Clone()
         {
             var x = (TSubClassType)Activator.CreateInstance(typeof(TSubClassType));
@@ -378,86 +381,17 @@ namespace MVVMSidekick.ViewModels
         }
 
         /// <summary>
-        /// Copyrefs the specified source.
+        /// 将当前视图模型的数据复制到目标视图模型
+        /// Copies current view model data to target view model
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="source">The source.</param>
-        /// <param name="target">The target.</param>
-        static void Copyref<T>(T source, ref T target)
-        {
-
-
-            if (source == null)
-            {
-                target = source;
-                return;
-            }
-
-            var sourcetype = source.GetType().GetTypeInfo();
-            if (sourcetype.IsValueType || source is string)
-            {
-                target = source;
-            }
-
-
-            else if (typeof(ICloneable).IsAssignableFrom(sourcetype))
-            {
-                target = (T)((ICloneable)source).Clone();
-            }
-
-            else if (typeof(System.Collections.IList).GetType().GetTypeInfo().IsAssignableFrom(sourcetype))
-            {
-                var tarcol = target as System.Collections.IList;
-                var scol = source as System.Collections.IList;
-                if (tarcol == null)
-                {
-
-                    var newcol = sourcetype.IsArray ?
-                        Array.CreateInstance(sourcetype.GetElementType(), scol.Count) :
-                        System.Activator.CreateInstance(source.GetType(), new object[0]) as System.Collections.IList;
-
-
-                    tarcol = (System.Collections.IList)newcol;
-                }
-                else
-                {
-                    tarcol.Clear();
-                }
-                if (tarcol != null)
-                {
-
-
-                    foreach (var item in scol)
-                    {
-                        object newv = null;
-                        Copyref(item, ref newv);
-                        tarcol.Add(newv);
-                    }
-                    target = (T)tarcol;
-                }
-                else
-                {
-                    target = default(T);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Copies to.
-        /// </summary>
-        /// <param name="target">The target.</param>
+        /// <param name="target">目标视图模型 / Target view model</param>
         public void CopyTo(TSubClassType target)
         {
             foreach (var item in GetFieldNames())
             {
                 var ctThis = GetValueContainer(item);
                 var ctTarget = target.GetValueContainer(item);
-                if (ctThis.IsCopyToAllowed)
-                {
-                    object temp = null;
-                    Copyref(this[item], ref temp);
-                    target[item] = temp;
-                }
+
 
 
             }
@@ -465,7 +399,8 @@ namespace MVVMSidekick.ViewModels
 
 
         /// <summary>
-        /// Occurs when [errors changed].
+        /// 错误状态发生变化时触发的事件
+        /// Event triggered when error state changes
         /// </summary>
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged
         {
@@ -473,13 +408,12 @@ namespace MVVMSidekick.ViewModels
             remove { _ErrorsChanged -= value; }
         }
 
-
-
         /// <summary>
-        /// Gets the errors.
+        /// 获取指定属性的错误信息
+        /// Gets error information for the specified property
         /// </summary>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns>System.Collections.IEnumerable.</returns>
+        /// <param name="propertyName">属性名 / Property name</param>
+        /// <returns>错误信息集合 / Error information collection</returns>
         public System.Collections.IEnumerable GetErrors(string propertyName)
         {
             if (this.GetFieldNames().Contains(propertyName))
@@ -493,25 +427,11 @@ namespace MVVMSidekick.ViewModels
 
         }
 
-
         /// <summary>
-        /// Gets a value indicating whether this instance has errors.
+        /// 获取或设置一个值，指示此实例是否有错误
+        /// Gets or sets a value indicating whether this instance has errors
         /// </summary>
-        /// <value><c>true</c> if this instance has errors; otherwise, <c>false</c>.</value>
-        //public bool HasErrors
-        //{
-        //    get
-        //    {
-        //        //  return false;
-        //        RefreshErrors();
-        //        return !string.IsNullOrEmpty(this.ErrorMessage);
-
-        //    }
-        //}
-
-
-
-
+        /// <value>如果此实例有错误则为 true，否则为 false / true if this instance has errors; otherwise, false</value>
         public bool HasErrors { get => _HasErrorsLocator(this).Value; set => _HasErrorsLocator(this).SetValueAndTryNotify(value); }
         #region Property bool HasErrors Setup        
         protected Property<bool> _HasErrors = new Property<bool>(_HasErrorsLocator);
@@ -519,8 +439,11 @@ namespace MVVMSidekick.ViewModels
         #endregion
 
         /// <summary>
-        /// Refreshes the errors.
+        /// 生成错误消息的虚方法，可由子类重写以自定义错误消息格式
+        /// Virtual method for generating error messages, can be overridden by subclasses to customize error message format
         /// </summary>
+        /// <param name="errors">错误实体集合 / Error entities collection</param>
+        /// <param name="errorMessageBuilder">错误消息构建器 / Error message builder</param>
         protected virtual void OnGenrateErrorsMessage(IEnumerable<ErrorEntity> errors, StringBuilder errorMessageBuilder)
         {
             var sb = errorMessageBuilder;
@@ -534,18 +457,16 @@ namespace MVVMSidekick.ViewModels
 
         }
 
-
         //public override IDictionary<string,object >  Values
         //{
         //    get { return new BindableAccesser<TSubClassType>(this); }
         //}
+        
         /// <summary>
-        /// 给这个模型分配的消息路由引用（延迟加载）
+        /// 获取或设置分配给此模型的本地事件路由器（延迟加载）
+        /// Gets or sets the local event router assigned to this model (lazy loaded)
         /// </summary>
-        /// <value>The event router.</value>
-
-
-
+        /// <value>本地事件路由器 / The local event router</value>
         public override EventRouter LocalEventRouter
         {
             get =>
@@ -568,36 +489,56 @@ namespace MVVMSidekick.ViewModels
 
     /// <summary>
     /// <para>Base type of bindable model.</para>
-    /// <para>ViewModel 基类</para>
+    /// <para>可绑定模型的基类。</para>
     /// </summary>
     [DataContract]
     public abstract class BindableBase
         : DisposeGroupBase, INotifyPropertyChanged, IBindable, INotifyPropertyChanging
     {
 
-        public abstract IEnumerable<ErrorEntity> GetAllErrors();
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
+        /// 获取所有错误信息的抽象方法
+        /// Abstract method to get all error information
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        /// <returns>错误实体集合 / Error entities collection</returns>
+        public abstract IEnumerable<ErrorEntity> GetAllErrors();
+        
+        /// <summary>
+        /// 释放非托管资源和（可选的）托管资源
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing">如果为 true，则释放托管和非托管资源；如果为 false，则仅释放非托管资源 / true to release both managed and unmanaged resources; false to release only unmanaged resources</param>
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
         }
+        
+        /// <summary>
+        /// 初始化BindableBase类的新实例
+        /// Initializes a new instance of the BindableBase class
+        /// </summary>
         public BindableBase()
         {
             ValueContainers = new ValueContainerIndexer(this);
         }
+        
+        /// <summary>
+        /// 获取此模型的值容器索引器
+        /// Gets the value container indexer for this model
+        /// </summary>
         public ValueContainerIndexer ValueContainers { get; private set; }
 
         /// <summary>
-        /// Occurs when [_ errors changed].
+        /// 错误状态变化事件的内部事件字段
+        /// Internal event field for errors changed event
         /// </summary>
         protected event EventHandler<DataErrorsChangedEventArgs> _ErrorsChanged;
+        
         /// <summary>
-        /// Raises the errors changed.
+        /// 引发错误状态变化事件
+        /// Raises the errors changed event
         /// </summary>
-        /// <param name="propertName">Name of the propert.</param>
+        /// <param name="propertName">属性名 / Property name</param>
         protected internal void RaiseErrorsChanged(string propertName)
         {
             if (_ErrorsChanged != null)
@@ -607,24 +548,23 @@ namespace MVVMSidekick.ViewModels
         }
 
         /// <summary>
-        /// Gets the bindable instance identifier.
+        /// 获取可绑定实例标识符的抽象属性
+        /// Abstract property to get the bindable instance identifier
         /// </summary>
-        /// <value>The bindable instance identifier.</value>
+        /// <value>可绑定实例标识符 / The bindable instance identifier</value>
         abstract public String BindableInstanceId { get; }
 
-
-
-
-
         /// <summary>
-        /// The _ is validation activated
+        /// 验证是否激活的私有字段
+        /// Private field for validation activation state
         /// </summary>
         private bool _IsValidationActivated = false;
+        
         /// <summary>
-        /// <para>Gets ot sets if the validation is activatied. This is a flag only， internal logic is not depend on this.</para>
-        /// <para>读取/设置 此模型是否激活验证。这只是一个标记，内部逻辑并没有参考这个值</para>
+        /// 获取或设置此模型是否激活验证。这只是一个标记，内部逻辑并不依赖此值
+        /// Gets or sets if validation is activated for this model. This is a flag only, internal logic does not depend on this
         /// </summary>
-        /// <value><c>true</c> if this instance is validation activated; otherwise, <c>false</c>.</value>
+        /// <value>如果激活验证则为 true，否则为 false / true if validation is activated; otherwise, false</value>
         public bool IsValidationActivated
         {
             get { return _IsValidationActivated; }
@@ -632,64 +572,48 @@ namespace MVVMSidekick.ViewModels
         }
 
         /// <summary>
-        /// The _ is notification activated
+        /// 通知是否激活的私有字段
+        /// Private field for notification activation state
         /// </summary>
         private bool _IsNotificationActivated = true;
+        
         /// <summary>
-        /// <para>Gets ot sets if the property change notification is activatied. </para>
-        /// <para>读取/设置 此模型是否激活变化通知</para>
+        /// 获取或设置此模型是否激活属性变化通知
+        /// Gets or sets if property change notification is activated for this model
         /// </summary>
-        /// <value><c>true</c> if this instance is notification activated; otherwise, <c>false</c>.</value>
+        /// <value>如果激活通知则为 true，否则为 false / true if notification is activated; otherwise, false</value>
         public bool IsNotificationActivated
         {
             get { return (!IsInDesignMode) ? _IsNotificationActivated : false; }
             set { _IsNotificationActivated = value; }
         }
 
-
-
-
-
-
-        ///// <summary>
-        /////  <para>0 for not disposed, 1 for disposed</para>
-        /////  <para>0 表示没有被Dispose 1 反之</para>
-        ///// </summary>
-        //private int disposedFlag = 0;
-
         #region  Index and property names/索引与字段名
         /// <summary>
-        /// <para>Get all property names that were defined in subtype, or added objectly in runtime</para>
-        /// <para>取得本VM实例已经定义的所有字段名。其中包括静态声明的和动态添加的。</para>
+        /// 获取在子类型中定义的或在运行时动态添加的所有属性名
+        /// Get all property names that were defined in subtype, or added dynamically in runtime
         /// </summary>
-        /// <returns>String[]  Property names/字段名数组</returns>
+        /// <returns>属性名数组 / Property names array</returns>
         public abstract string[] GetFieldNames();
 
-        ///// <summary>
-        ///// <para>Gets or sets  poperty values by property name index.</para>
-        ///// <para>使用索引方式取得/设置字段值</para>
-        ///// </summary>
-        ///// <param name="name">Property name/字段名</param>
-        ///// <returns>Property value/字段值</returns>
         /// <summary>
-        /// Gets or sets the <see cref="System.Object"/> with the specified name.
+        /// 根据名称获取或设置属性值的索引器
+        /// Indexer for getting or setting property values by name
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <returns>System.Object.</returns>
+        /// <param name="name">属性名 / Property name</param>
+        /// <returns>属性值 / Property value</returns>
         public abstract object this[string name] { get; set; }
-
 
         #endregion
 
-
-
         #region Propery Changed Logic/ Propery Changed事件相关逻辑
 
-
         /// <summary>
-        /// Raises the property changed.
+        /// 引发属性已更改事件
+        /// Raises the property changed event
         /// </summary>
-        /// <param name="lazyEAFactory">The lazy ea factory.</param>
+        /// <param name="e">属性更改事件参数 / Property changed event args</param>
+        /// <param name="anotherObjectSurce">可选的事件源对象 / Optional event source object</param>
         protected internal void RaisePropertyChanged(PropertyChangedEventArgs e, object anotherObjectSurce = null)
         {
             this.PropertyChanged?.Invoke(anotherObjectSurce ?? this, e);
@@ -697,124 +621,83 @@ namespace MVVMSidekick.ViewModels
         }
 
         /// <summary>
-        /// <para>Event that raised when properties were changed and Notification was activited</para>
-        /// <para> VM属性任何绑定用值被修改后,在启用通知情况下触发此事件</para>
+        /// 当属性被更改且通知被激活时引发的事件
+        /// Event that raised when properties were changed and notification was activated
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-
         /// <summary>
-        /// Raises the property changed.
+        /// 引发属性正在更改事件
+        /// Raises the property changing event
         /// </summary>
-        /// <param name="lazyEAFactory">The lazy ea factory.</param>
+        /// <param name="e">属性正在更改事件参数 / Property changing event args</param>
+        /// <param name="anotherObjectSurce">可选的事件源对象 / Optional event source object</param>
         protected internal void RaisePropertyChanging(PropertyChangingEventArgs e, object anotherObjectSurce = null)
         {
             this.PropertyChanging?.Invoke(anotherObjectSurce ?? this, e);
         }
 
         /// <summary>
-        /// <para>Event that raised when properties were changed and Notification was activited</para>
-        /// <para> VM属性任何绑定用值被修改后,在启用通知情况下触发此事件</para>
+        /// 当属性即将更改且通知被激活时引发的事件
+        /// Event that raised when properties are about to change and notification was activated
         /// </summary>
         public event PropertyChangingEventHandler PropertyChanging;
-
 
         #endregion
 
         #region 验证与错误相关逻辑
 
-
-
-
-
-
-        ///// <summary>
-        ///// Checks the error.
-        ///// </summary>
-        ///// <param name="test">The test.</param>
-        ///// <param name="errorMessage">The error message.</param>
-        ///// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-        //protected bool CheckError(Func<Boolean> test, string errorMessage)
-        //{
-
-        //    var rval = test();
-        //    if (rval)
-        //    {
-        //        SetErrorAndTryNotify(errorMessage);
-        //    }
-        //    return rval;
-
-        //}
-
-
-        ///// <summary>
-        ///// 验证错误内容
-        ///// </summary>
-        //string IDataErrorInfo.ErrorMessage
-        //{
-        //    get
-        //    {
-        //        return GetError();
-        //    }
-
-
-        //}
         /// <summary>
-        /// <para>Gets the validate error of this model </para>
-        /// <para>取得错误内容</para>
+        /// 获取此模型的验证错误信息
+        /// Gets the validation error information of this model
         /// </summary>
-        /// <value>The error.</value>
+        /// <value>错误信息 / Error information</value>
         public abstract string ErrorMessage { get; }
+        
         /// <summary>
-        /// <para>Sets the validate error of this model </para>
-        /// <para>设置错误内容</para>
+        /// 设置此模型的验证错误信息
+        /// Sets the validation error information of this model
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>ErrorMessage string/错误内容字符串</returns>
+        /// <param name="value">错误信息值 / Error information value</param>
         protected abstract void SetErrorMessage(string value);
 
         /// <summary>
-        /// <para>Sets the validate error of this model and notify </para>
-        /// <para>设置错误内容并且尝试用事件通知</para>
+        /// 设置此模型的验证错误信息并尝试通过事件通知
+        /// Sets the validation error information of this model and tries to notify through events
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>ErrorMessage string/错误内容字符串</returns>
+        /// <param name="value">错误信息值 / Error information value</param>
         protected abstract void SetErrorMessageAndTryNotify(string value);
 
-
-
+        /// <summary>
+        /// 根据属性名获取值容器的抽象方法
+        /// Abstract method to get value container by property name
+        /// </summary>
+        /// <param name="propertyName">属性名 / Property name</param>
+        /// <returns>值容器 / Value container</returns>
         public abstract IValueContainer GetValueContainer(string propertyName);
-
-
-
 
         #endregion
 
-
-        //   public abstract bool IsUIBusy { get; set; }
-
-
-
-
-
-
         /// <summary>
-        /// The Event Router that effects only in this Model Object/本Model生效的EventRouter
+        /// 仅在此模型对象中生效的事件路由器
+        /// The event router that effects only in this model object
         /// </summary>
         public abstract EventRouter LocalEventRouter { get; set; }
 
-
         /// <summary>
-        /// The Event Router that effects Globally /全局生效的Event Router引用
+        /// 全局生效的事件路由器引用
+        /// The event router reference that effects globally
         /// </summary>
-        /// <value>The global event router.</value>
-
+        /// <value>全局事件路由器 / The global event router</value>
         public EventRouter GlobalEventRouter
         {
             get { return EventRouter.Instance; }
         }
 
-
+        /// <summary>
+        /// 获取一个值，指示此实例是否处于设计模式
+        /// Gets a value indicating whether this instance is in design mode
+        /// </summary>
         public bool IsInDesignMode => (ServiceProviderLocator.RootServiceProvider?.GetService<ITellDesignTimeService>() ?? new InDesignTime())?.IsInDesignMode ?? false;
     }
 }

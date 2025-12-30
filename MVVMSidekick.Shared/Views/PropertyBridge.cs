@@ -1,4 +1,12 @@
-﻿//// ***********************************************************************
+﻿/// <summary>
+/// <para>属性桥接器相关代码文件（已注释）</para>
+/// <para>Property bridge related code file (commented out)</para>
+/// </summary>
+/// <remarks>
+/// <para>此文件包含了PropertyBridge类的历史实现代码，目前已被注释掉。PropertyBridge类用于在两个依赖属性之间建立绑定桥梁</para>
+/// <para>This file contains historical implementation code for PropertyBridge class, currently commented out. PropertyBridge class was used to establish binding bridges between two dependency properties</para>
+/// </remarks>
+//// ***********************************************************************
 //// Assembly         : MVVMSidekick_Wp8
 //// Author           : waywa
 //// Created          : 05-17-2014

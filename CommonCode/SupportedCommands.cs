@@ -11,9 +11,16 @@ using System.Xml.Linq;
 
 namespace CommonCode
 {
-
+    /// <summary>
+    /// å‘½ä»¤é›†åˆç±»ï¼Œæä¾›æ”¯æŒçš„å‘½ä»¤è¡Œå‘½ä»¤
+    /// Commands collection class that provides supported command line commands
+    /// </summary>
     public static class Commands
     {
+        /// <summary>
+        /// é™æ€æ„é€ å‡½æ•°ï¼Œåˆå§‹åŒ–å‘½ä»¤å­—å…¸
+        /// Static constructor that initializes the command dictionary
+        /// </summary>
         static Commands()
         {
             var items =
@@ -31,16 +38,27 @@ namespace CommonCode
 
         }
 
+        /// <summary>
+        /// å‘½ä»¤å­—å…¸ï¼Œå­˜å‚¨æ‰€æœ‰å¯ç”¨çš„å‘½ä»¤
+        /// Command dictionary that stores all available commands
+        /// </summary>
         static SortedDictionary<string, ICommandLineCommand>
            dics;
 
+        /// <summary>
+        /// æ ¹æ®å‘½ä»¤åè·å–å‘½ä»¤å®ä¾‹
+        /// Gets a command instance by command name
+        /// </summary>
+        /// <param name="commandName">å‘½ä»¤åç§° / Command name</param>
+        /// <returns>å‘½ä»¤å®ä¾‹ / Command instance</returns>
         public static ICommandLineCommand GetCommand(string commandName)
         {
             return dics[commandName];
         }
 
         /// <summary>
-        /// ½«ËùÓĞµÄ¹¤³Ì ÖĞpackage.config ÎÄ¼şÀïµÄÒÀÀµ°üĞÅÏ¢ ·ÅÈë nuget spec Ë÷ÒıÖĞ£¬±£Ö¤ÒÀÀµ
+        /// ä¾èµ–åŒ…å¤„ç†å‘½ä»¤ï¼Œä»package.configæ–‡ä»¶è¯»å–ä¾èµ–ä¿¡æ¯å¹¶å†™å…¥nuget specé…ç½®ä¸­ï¼Œæ£€æŸ¥ä¾èµ–
+        /// Dependency package processing command that reads dependency information from package.config file and writes to nuget spec configuration for dependency checking
         /// </summary>
         public static readonly ICommandLineCommand DPGRP
         #region DPGRP
@@ -254,7 +272,8 @@ namespace CommonCode
 
 
         /// <summary>
-        /// ¸üĞÂÀ©Õ¹¹¤³ÌÖĞµÄÎÄ¼şÒıÓÃ
+        /// å¤„ç†æ‰©å±•é¡¹ç›®ä¸­çš„æ–‡ä»¶åŒ…å«å‘½ä»¤
+        /// Command to process file inclusions in extension projects
         /// </summary>
         public static readonly ICommandLineCommand DPEXT
         #region DPEXT
@@ -341,7 +360,8 @@ namespace CommonCode
 
 
         /// <summary>
-        /// ¸üĞÂnuget specÖĞµÄ°æ±¾ºÅ
+        /// æ›´æ–°nuget specä¸­çš„ç‰ˆæœ¬å·å‘½ä»¤
+        /// Command to update version numbers in nuget spec
         /// </summary>
         public static readonly ICommandLineCommand UPVER
         #region UPVER
@@ -420,7 +440,7 @@ namespace CommonCode
 
 
         /// <summary>
-        /// ¸üĞÂÃ¿¸öÄ£°åÎÄ¼şÖĞµÄ°ü°æ±¾
+        /// ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ĞµÄ°ï¿½ï¿½æ±¾
         /// </summary>
         public static readonly ICommandLineCommand DPTML
         #region DPTML
@@ -504,9 +524,15 @@ namespace CommonCode
             
                         node.RemoveNodes();
                         var prereleaseString = mainValue.Attribute(XName.Get("prerelease"))?.Value == "true" ? "-prerelease" : "";
-                        if (docp.path.Contains("Blazor.5"))
+                        if (docp.path.Contains("Blazor.5.vstemplate"))
                         {
                             var e = XElement.Parse($@"<package id=""MVVM-Sidekick.BlazorCore5"" version=""0.2107.945.3963"" />");
+                            e.Name = XName.Get("package", node.Name.NamespaceName);
+                            node.Add(e);
+                        }
+                        if (docp.path.Contains("MAUI.Blazor.vstemplate"))
+                        {
+                            var e = XElement.Parse($@"<package id=""MVVM-Sidekick.MAUIBlazor"" version=""0.2503.1052.5174"" />");
                             e.Name = XName.Get("package", node.Name.NamespaceName);
                             node.Add(e);
                         }

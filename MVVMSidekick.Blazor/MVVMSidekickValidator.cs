@@ -9,12 +9,23 @@ using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Components
 {
+    /// <summary>
+    /// MVVMSidekick验证器，用于在Blazor表单中集成MVVM验证功能
+    /// MVVMSidekick validator for integrating MVVM validation functionality in Blazor forms
+    /// </summary>
     public class MVVMSidekickValidator : ComponentBase
     {
+        /// <summary>
+        /// 获取或设置当前编辑上下文
+        /// Gets or sets the current edit context
+        /// </summary>
         [CascadingParameter]
         private EditContext CurrentEditContext { get; set; }
 
-
+        /// <summary>
+        /// 组件初始化时配置验证逻辑
+        /// Configures validation logic when component is initialized
+        /// </summary>
         protected override void OnInitialized()
         {
             if (CurrentEditContext == null)

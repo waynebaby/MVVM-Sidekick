@@ -26,10 +26,15 @@ using Microsoft.Extensions.DependencyInjection;
 namespace MVVMSidekickWPFDemo
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// MainWindow.xaml的交互逻辑，应用程序主窗口
+    /// Interaction logic for MainWindow.xaml, main window of the application
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// 初始化MainWindow的新实例，设置视图模型并初始化组件
+        /// Initializes a new instance of MainWindow, sets view model and initializes components
+        /// </summary>
         public MainWindow()
         {
             ViewDisguise.ViewModel = ServiceProviderLocator.RootServiceProvider.GetRequiredService<MainWindow_Model>();
@@ -39,6 +44,10 @@ namespace MVVMSidekickWPFDemo
         }
 
         #region IView Disguise
+        /// <summary>
+        /// 获取窗口视图伪装对象，用于MVVM绑定
+        /// Gets the window view disguise object for MVVM binding
+        /// </summary>
         public WindowViewDisguise ViewDisguise { get { return this.GetOrCreateViewDisguise(); } }
         #endregion
 

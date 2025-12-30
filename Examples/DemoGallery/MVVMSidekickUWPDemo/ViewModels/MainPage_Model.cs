@@ -17,12 +17,20 @@ using System.Runtime.Serialization;
 namespace MVVMSidekickUWPDemo.ViewModels
 {
 
+    /// <summary>
+    /// 主页面视图模型，提供导航和主要功能的演示
+    /// Main page view model providing navigation and main functionality demonstration
+    /// </summary>
     [DataContract]
     public class MainPage_Model : ViewModel<MainPage_Model>
     {
         // If you have install the code sniplets, use "propvm + [tab] +[tab]" create a property propcmd for command
         // 如果您已经安装了 MVVMSidekick 代码片段，请用 propvm +tab +tab 输入属性 propcmd 输入命令
 
+        /// <summary>
+        /// 初始化MainPage_Model的新实例，在设计模式下设置特殊标题
+        /// Initializes a new instance of MainPage_Model with special title in design mode
+        /// </summary>
         public MainPage_Model()
         {
             if (IsInDesignMode)
@@ -34,18 +42,38 @@ namespace MVVMSidekickUWPDemo.ViewModels
 
         //propvm tab tab string tab Title
 
+        /// <summary>
+        /// 获取或设置页面标题
+        /// Gets or sets the page title
+        /// </summary>
         public string Title { get => _TitleLocator(this).Value; set => _TitleLocator(this).SetValueAndTryNotify(value); }
+        
         #region Property string Title Setup        
+        /// <summary>
+        /// Title属性的内部存储和定位器设置
+        /// Internal storage and locator setup for Title property
+        /// </summary>
         protected Property<string> _Title = new Property<string>(_TitleLocator);
         static Func<BindableBase, ValueContainer<string>> _TitleLocator = RegisterContainerLocator(nameof(Title), m => m.Initialize(nameof(Title), ref m._Title, ref _TitleLocator, () => "Hello World!"));
         #endregion
 
-
+        /// <summary>
+        /// 获取导航框架实例，用于页面导航
+        /// Gets the navigation frame instance for page navigation
+        /// </summary>
         public IStage NavigationFrame => this.StageManager[nameof(NavigationFrame)];
 
-
+        /// <summary>
+        /// 获取导航到计数器页面的命令
+        /// Gets the command to navigate to counter page
+        /// </summary>
         public CommandModel CommandNaviToCounter => _CommandNaviToCounterLocator(this).Value;
+        
         #region Property CommandModel CommandNaviToCounter Setup                
+        /// <summary>
+        /// CommandNaviToCounter命令属性的内部存储和定位器设置，包含导航到计数器页面的逻辑
+        /// Internal storage and locator setup for CommandNaviToCounter command property, containing navigation to counter page logic
+        /// </summary>
         protected Property<CommandModel> _CommandNaviToCounter = new Property<CommandModel>(_CommandNaviToCounterLocator);
         static Func<BindableBase, ValueContainer<CommandModel>> _CommandNaviToCounterLocator = RegisterContainerLocator(nameof(CommandNaviToCounter), m => m.Initialize(nameof(CommandNaviToCounter), ref m._CommandNaviToCounter, ref _CommandNaviToCounterLocator,
               model =>
@@ -70,9 +98,17 @@ namespace MVVMSidekickUWPDemo.ViewModels
               }));
         #endregion
 
-
+        /// <summary>
+        /// 获取导航到获取数据页面的命令
+        /// Gets the command to navigate to fetch data page
+        /// </summary>
         public CommandModel CommandNaviToFetchData => _CommandNaviToFetchDataLocator(this).Value;
+        
         #region Property CommandModel CommandNaviToFetchData Setup                
+        /// <summary>
+        /// CommandNaviToFetchData命令属性的内部存储和定位器设置，包含导航到数据获取页面的逻辑
+        /// Internal storage and locator setup for CommandNaviToFetchData command property, containing navigation to fetch data page logic
+        /// </summary>
         protected Property<CommandModel> _CommandNaviToFetchData = new Property<CommandModel>(_CommandNaviToFetchDataLocator);
         static Func<BindableBase, ValueContainer<CommandModel>> _CommandNaviToFetchDataLocator = RegisterContainerLocator(nameof(CommandNaviToFetchData), m => m.Initialize(nameof(CommandNaviToFetchData), ref m._CommandNaviToFetchData, ref _CommandNaviToFetchDataLocator,
               model =>

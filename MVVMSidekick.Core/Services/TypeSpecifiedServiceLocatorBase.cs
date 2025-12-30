@@ -1,4 +1,9 @@
-﻿// ***********************************************************************
+﻿/// <summary>
+/// <para>类型指定的服务定位器基类，提供基于类型指定的服务定位功能基础实现</para>
+/// <para>Type specified service locator base class, providing base implementation for type-specified service location functionality</para>
+/// </summary>
+
+// ***********************************************************************
 // Assembly         : MVVMSidekick_Wp8
 // Author           : waywa
 // Created          : 05-17-2014
@@ -17,22 +22,24 @@ using System.Threading.Tasks;
 
 namespace MVVMSidekick
 {
-
-
     namespace Services
     {
         /// <summary>
+        /// <para>类型指定的服务定位器基类，为特定类型的服务定位提供基础功能</para>
+        /// <para>Type specified service locator base class, providing base functionality for service location of specific types</para>
+        /// </summary>
         /// Class TypeSpecifiedServiceLocatorBase.
         /// </summary>
-        /// <typeparam name="TSubClass">The type of the t sub class.</typeparam>
-        /// <typeparam name="TService">The type of the t service.</typeparam>
+        /// <typeparam name="TSubClass">子类类型 / The type of the sub class.</typeparam>
+        /// <typeparam name="TService">服务类型 / The type of the service.</typeparam>
         public class TypeSpecifiedServiceLocatorBase<TSubClass, TService> : ITypeSpecifiedServiceLocator<TService>
             where TSubClass : TypeSpecifiedServiceLocatorBase<TSubClass, TService>
         {
             /// <summary>
+            /// 注册指定的实例
             /// Registers the specified instance.
             /// </summary>
-            /// <param name="instance">The instance.</param>
+            /// <param name="instance">实例 / The instance.</param>
             /// <returns>ServiceLocatorEntryStruct&lt;TService&gt;.</returns>
             public ServiceLocatorEntryStruct<TService> Register(TService instance)
             {
@@ -41,10 +48,11 @@ namespace MVVMSidekick
             }
 
             /// <summary>
+            /// 注册指定名称的实例
             /// Registers the specified name.
             /// </summary>
-            /// <param name="name">The name.</param>
-            /// <param name="instance">The instance.</param>
+            /// <param name="name">名称 / The name.</param>
+            /// <param name="instance">实例 / The instance.</param>
             /// <returns>ServiceLocatorEntryStruct&lt;TService&gt;.</returns>
             public ServiceLocatorEntryStruct<TService> Register(string name, TService instance)
             {

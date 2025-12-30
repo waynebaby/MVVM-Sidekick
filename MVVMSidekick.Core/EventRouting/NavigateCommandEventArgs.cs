@@ -25,11 +25,13 @@ namespace MVVMSidekick
     namespace EventRouting
     {
         /// <summary>
-        /// 导航事件数据
+        /// 导航命令事件参数
+        /// Navigate command event arguments
         /// </summary>
         public class NavigateCommandEventArgs : EventArgs
 		{
 			/// <summary>
+			/// 初始化 <see cref="NavigateCommandEventArgs" /> 类的新实例
 			/// Initializes a new instance of the <see cref="NavigateCommandEventArgs" /> class.
 			/// </summary>
 			public NavigateCommandEventArgs()
@@ -37,9 +39,10 @@ namespace MVVMSidekick
 				ParameterDictionary = new Dictionary<string, object>();
 			}
 			/// <summary>
+			/// 使用指定字典初始化 <see cref="NavigateCommandEventArgs" /> 类的新实例
 			/// Initializes a new instance of the <see cref="NavigateCommandEventArgs" /> class.
 			/// </summary>
-			/// <param name="dic">The dic.</param>
+			/// <param name="dic">参数字典 / The parameter dictionary.</param>
 			public NavigateCommandEventArgs(IDictionary<string, object> dic)
 				: this()
 			{
@@ -51,33 +54,38 @@ namespace MVVMSidekick
 
 			}
 			/// <summary>
+			/// 获取或设置参数字典
 			/// Gets or sets the parameter dictionary.
 			/// </summary>
-			/// <value>The parameter dictionary.</value>
+			/// <value>参数字典 / The parameter dictionary.</value>
 			public Dictionary<string, object> ParameterDictionary { get; set; }
 
 			/// <summary>
+			/// 获取或设置源视图类型
 			/// Gets or sets the type of the source view.
 			/// </summary>
-			/// <value>The type of the source view.</value>
+			/// <value>源视图类型 / The type of the source view.</value>
 			public Type SourceViewType { get; set; }
 
 			/// <summary>
+			/// 获取或设置目标视图类型
 			/// Gets or sets the type of the target view.
 			/// </summary>
-			/// <value>The type of the target view.</value>
+			/// <value>目标视图类型 / The type of the target view.</value>
 			public Type TargetViewType { get; set; }
 
 			/// <summary>
+			/// 获取或设置视图模型
 			/// Gets or sets the view model.
 			/// </summary>
-			/// <value>The view model.</value>
+			/// <value>视图模型 / The view model.</value>
 			public IViewModel ViewModel { get; set; }
 
 			/// <summary>
+			/// 获取或设置目标框架
 			/// Gets or sets the target frame.
 			/// </summary>
-			/// <value>The target frame.</value>
+			/// <value>目标框架 / The target frame.</value>
 			public Object TargetFrame { get; set; }
 		}
 

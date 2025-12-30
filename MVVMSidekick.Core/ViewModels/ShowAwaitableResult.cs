@@ -53,20 +53,33 @@ namespace MVVMSidekick
     namespace ViewModels
     {
         /// <summary>
-        /// Struct ShowAwaitableResult
+        /// <para>显示可等待结果结构体</para>
+        /// <para>Structure for show awaitable result</para>
         /// </summary>
-        /// <typeparam name="TViewModel">The type of the t view model.</typeparam>
+        /// <typeparam name="TViewModel">
+        /// <para>视图模型的类型</para>
+        /// <para>The type of the view model</para>
+        /// </typeparam>
         public struct ShowAwaitableResult<TViewModel>
         {
             /// <summary>
-            /// Gets or sets the view model.
+            /// <para>获取或设置视图模型</para>
+            /// <para>Gets or sets the view model</para>
             /// </summary>
-            /// <value>The view model.</value>
+            /// <value>
+            /// <para>视图模型实例</para>
+            /// <para>The view model instance</para>
+            /// </value>
             public TViewModel ViewModel { get; set; }
+            
             /// <summary>
-            /// Gets or sets the closing.
+            /// <para>获取或设置关闭任务</para>
+            /// <para>Gets or sets the closing task</para>
             /// </summary>
-            /// <value>The closing.</value>
+            /// <value>
+            /// <para>表示关闭操作的异步任务</para>
+            /// <para>The asynchronous task representing the closing operation</para>
+            /// </value>
             public Task Closing { get; set; }
 
         }

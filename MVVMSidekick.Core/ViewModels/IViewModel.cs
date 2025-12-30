@@ -26,26 +26,32 @@ namespace MVVMSidekick
     namespace ViewModels
     {
         /// <summary>
-        /// Interface IViewModel
+        /// ViewModel接口，MVVM模式中的核心接口，定义了视图模型的基本功能
+        /// Interface IViewModel - Core interface in MVVM pattern that defines basic functionality for view models
         /// </summary>
         public partial interface IViewModel : IBindable, INotifyPropertyChanged,INotifyPropertyChanging, IViewModelLifetime
         {
 
             /// <summary>
+            /// 等待ViewModel关闭
             /// Waits for close.
             /// </summary>
-            /// <param name="closingCallback">The closing callback.</param>
-            /// <returns>Task.</returns>
+            /// <param name="closingCallback">关闭回调 / The closing callback.</param>
+            /// <returns>异步任务 / Task.</returns>
             Task WaitForClose(Action closingCallback = null);
+            
             /// <summary>
+            /// 获取一个值，该值指示UI是否忙碌
             /// Gets a value indicating whether this instance is UI busy.
             /// </summary>
-            /// <value><c>true</c> if this instance is UI busy; otherwise, <c>false</c>.</value>
+            /// <value>如果UI忙碌则为true，否则为false / <c>true</c> if this instance is UI busy; otherwise, <c>false</c>.</value>
             bool IsUIBusy { get; }
+            
             /// <summary>
+            /// 获取一个值，该值指示是否有返回值
             /// Gets a value indicating whether [have return value].
             /// </summary>
-            /// <value><c>true</c> if [have return value]; otherwise, <c>false</c>.</value>
+            /// <value>如果有返回值则为true，否则为false / <c>true</c> if [have return value]; otherwise, <c>false</c>.</value>
             bool HaveReturnValue { get; }
             /// <summary>
             /// Closes the view and dispose.

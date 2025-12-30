@@ -14,12 +14,13 @@ namespace MVVMSidekick.Common
     {
         /// <summary>
         /// 创建一个当前调用上下文数据
+        /// Creates a current calling context data
         /// </summary>
-        /// <param name="autoFillProperties">if set to <c>true</c> [automatic fill properties].</param>
-        /// <param name="comment">注释</param>
-        /// <param name="caller">调用者</param>
-        /// <param name="file">文件</param>
-        /// <param name="line">行数</param>
+        /// <param name="autoFillProperties">是否自动填充属性 / If set to true, automatically fill properties</param>
+        /// <param name="comment">注释 / Comment</param>
+        /// <param name="caller">调用者 / Caller member name</param>
+        /// <param name="file">文件 / File path</param>
+        /// <param name="line">行数 / Line number</param>
         public CallingCodeContext(bool autoFillProperties, string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
             : this()
         {
@@ -33,16 +34,15 @@ namespace MVVMSidekick.Common
 
         }
 
-
-
         /// <summary>
         /// 创建一个当前调用上下文数据
+        /// Creates a current calling context data
         /// </summary>
-        /// <param name="comment">注释</param>
-        /// <param name="caller">调用者</param>
-        /// <param name="file">文件</param>
-        /// <param name="line">行数</param>
-        /// <returns>数据</returns>
+        /// <param name="comment">注释 / Comment</param>
+        /// <param name="caller">调用者 / Caller member name</param>
+        /// <param name="file">文件 / File path</param>
+        /// <param name="line">行数 / Line number</param>
+        /// <returns>数据 / The context data</returns>
         public static CallingCodeContext Create(string comment = "", [CallerMemberName] string caller = "", [CallerFilePath] string file = "", [CallerLineNumber]int line = -1)
         {
             return new CallingCodeContext
@@ -50,26 +50,26 @@ namespace MVVMSidekick.Common
         }
 
         /// <summary>
-        /// <para>Comment of this Calling .</para>
-        /// <para>对此次Calling 的附加说明</para>
+        /// <para>Comment of this Calling.</para>
+        /// <para>对此次调用的附加说明。</para>
         /// </summary>
         /// <value>The comment.</value>
         public string Comment { get; private set; }
         /// <summary>
-        /// <para>Caller Member Name of this Calling  registeration.</para>
-        /// <para>此次Calling 注册的来源</para>
+        /// <para>Caller Member Name of this Calling registration.</para>
+        /// <para>此次调用注册的来源。</para>
         /// </summary>
         /// <value>The caller.</value>
         public string Caller { get; private set; }
         /// <summary>
-        /// <para>Code file path of this Calling  registeration.</para>
-        /// <para>注册此次Calling 注册的代码文件</para>
+        /// <para>Code file path of this Calling registration.</para>
+        /// <para>注册此次调用的代码文件。</para>
         /// </summary>
         /// <value>The file.</value>
         public string File { get; private set; }
         /// <summary>
-        /// <para>Code line number of this Calling  registeration.</para>
-        /// <para>注册此次Calling 注册的代码行</para>
+        /// <para>Code line number of this Calling registration.</para>
+        /// <para>注册此次调用的代码行。</para>
         /// </summary>
         /// <value>The line.</value>
         public int Line { get; private set; }

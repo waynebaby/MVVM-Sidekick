@@ -1,42 +1,42 @@
 ﻿#if !BLAZOR
-#if WPF
-using MVVMSidekick.EventRouting;
-using MVVMSidekick.ViewModels;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading;
-using System.Windows;
-using Microsoft.Xaml.Behaviors;
-#elif WINDOWS_UWP
 
-using System.Reactive.Linq;
-using System.Linq;
-using System.Threading;
-using Microsoft.Xaml.Interactivity;
-using Windows.UI.Xaml;
-using System;
-using MVVMSidekick.EventRouting;
-using System.Collections.ObjectModel;
-using Windows.UI.Xaml.Data;
-#endif
 using MVVMSidekick.Common;
 
 namespace MVVMSidekick.Behaviors
 {
 
+#if WINDOWS_UWP || WinUI3
 
-#if WINDOWS_UWP
-
-	public class TypeNameStringToTypeConverter : IValueConverter
+    /// <summary>
+    /// <para>类型名称字符串到类型转换器，将类型名称字符串转换为类型对象</para>
+    /// <para>Type name string to type converter, converts type name string to type object</para>
+    /// </summary>
+    public class TypeNameStringToTypeConverter : IValueConverter
 	{
+		/// <summary>
+		/// <para>静态构造函数，初始化Instance属性</para>
+		/// <para>Static constructor, initializes Instance property</para>
+		/// </summary>
 		static TypeNameStringToTypeConverter()
 		{
 			Instance = new TypeNameStringToTypeConverter();
 		}
+		
+		/// <summary>
+		/// <para>获取或设置转换器实例</para>
+		/// <para>Gets or sets the converter instance</para>
+		/// </summary>
 		public static TypeNameStringToTypeConverter Instance { get; set; }
 
+		/// <summary>
+		/// <para>将值转换为目标类型</para>
+		/// <para>Converts value to target type</para>
+		/// </summary>
+		/// <param name="value">要转换的值 / Value to convert</param>
+		/// <param name="targetType">目标类型 / Target type</param>
+		/// <param name="parameter">转换参数 / Conversion parameter</param>
+		/// <param name="language">语言 / Language</param>
+		/// <returns>转换后的对象 / Converted object</returns>
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
 			var inputString = value as string;

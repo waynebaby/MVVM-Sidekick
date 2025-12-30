@@ -27,7 +27,8 @@ using Windows.UI.Xaml.Navigation;
 namespace SubFrameSample
 {
 	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
+	/// <para>可以单独使用或在Frame内导航到的空页面</para>
+	/// <para>An empty page that can be used on its own or navigated to within a Frame</para>
 	/// </summary>
 	public sealed partial class BlankPage1 : MVVMPage
 	{

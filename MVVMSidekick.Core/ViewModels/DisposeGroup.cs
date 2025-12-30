@@ -52,7 +52,8 @@ namespace MVVMSidekick
     namespace ViewModels
     {
         /// <summary>
-        /// 默认的实现
+        /// <para>默认的资源释放组实现，继承自 DisposeGroupBase</para>
+        /// <para>Default implementation of dispose group, inherits from DisposeGroupBase</para>
         /// </summary>
         public class DisposeGroup : DisposeGroupBase
         {

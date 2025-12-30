@@ -54,30 +54,31 @@ namespace MVVMSidekick
     namespace Utilities
     {
         /// <summary>
-        /// Class ColllectionHelper.
+        /// 集合助手类，提供集合操作的扩展方法
+        /// Collection helper class providing extension methods for collection operations
         /// </summary>
-        public static class ColllectionHelper
+        public static class CollectionHelper
 		{
 
-
 			/// <summary>
-			/// To the observable collection.
+			/// 将可枚举对象转换为可观察集合
+			/// Converts enumerable to observable collection
 			/// </summary>
-			/// <typeparam name="T"></typeparam>
-			/// <param name="items">The items.</param>
-			/// <returns>ObservableCollection&lt;T&gt;.</returns>
+			/// <typeparam name="T">元素类型 / Element type</typeparam>
+			/// <param name="items">源项目集合 / Source items collection</param>
+			/// <returns>可观察集合 / Observable collection</returns>
 			public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> items)
 			{
 
 				return new ObservableCollection<T>(items);
 			}
 
-
 			/// <summary>
-			/// Matches the or default.
+			/// 匹配或返回默认值
+			/// Matches or returns default value
 			/// </summary>
-			/// <typeparam name="TKey">The type of the key.</typeparam>
-			/// <typeparam name="TValue">The type of the value.</typeparam>
+			/// <typeparam name="TKey">键类型 / Key type</typeparam>
+			/// <typeparam name="TValue">值类型 / Value type</typeparam>
 			/// <param name="dic">The dic.</param>
 			/// <param name="key">The key.</param>
 			/// <returns>

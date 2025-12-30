@@ -12,18 +12,35 @@ using System.Reactive.Linq;
 namespace MVVMSidekick.Reactive
 {
     /// <summary> 
-    /// Reactive Command
+    /// 响应式命令，实现基于Reactive Extensions的命令模式
+    /// Reactive Command - Implements command pattern based on Reactive Extensions
     /// </summary>
     public class ReactiveCommand : IReactiveCommand, IDisposable
     {
+        /// <summary>
+        /// 可执行状态的行为主题
+        /// Behavior subject for can execute state
+        /// </summary>
         BehaviorSubject<bool> _canExecuteSource;
+        
+        /// <summary>
+        /// 执行事件的主题
+        /// Subject for execute events
+        /// </summary>
         Subject<EventPattern<EventCommandEventArgs>> _executeSource;
+        
+        /// <summary>
+        /// 可执行判断函数
+        /// Function to determine if command can execute
+        /// </summary>
         Func<object, bool> _canExecuteFunc;
 
         /// <summary>
+        /// 初始化ReactiveCommand类的新实例
         /// Initializes a new instance of the <see cref="ReactiveCommand"/> class.
         /// </summary>
-        /// <param name="canExecute">if set to <c>true</c> [can execute].</param>
+        /// <param name="canExecute">是否可以执行 / if set to <c>true</c> [can execute].</param>
+        /// <param name="commandId">命令标识符 / Command identifier</param>
         public ReactiveCommand(bool canExecute = false,string commandId="NO_ID")
         {
             CommandId = commandId;
